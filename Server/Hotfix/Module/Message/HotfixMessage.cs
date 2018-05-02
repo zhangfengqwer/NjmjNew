@@ -40,6 +40,36 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2R_Register)]
+	[ProtoContract]
+	public partial class C2R_Register: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Account;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Password;
+
+	}
+
+	[Message(HotfixOpcode.R2C_Register)]
+	[ProtoContract]
+	public partial class R2C_Register: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.C2G_LoginGate)]
 	[ProtoContract]
 	public partial class C2G_LoginGate: IRequest

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
@@ -79,5 +80,18 @@ namespace ETHotfix
 			}
 			return list;
 		}
-	}
+
+	    public static async Task<List<T>> QueryJsonCurrentDay<T>(this DBProxyComponent self, bool needCache = true) where T : ComponentWithId
+        {
+	        List<T> list = new List<T>();
+	        string json = $"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}";
+	        Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+	        DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
+	        foreach (ComponentWithId disposer in dbQueryJsonResponse.Components)
+	        {
+	            list.Add((T)disposer);
+	        }
+	        return list;
+	    }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using ETModel;
 using MongoDB.Bson;
@@ -11,18 +12,22 @@ namespace ETHotfix
 		protected override async void Run(Session session, C2R_Login message, Action<R2C_Login> reply)
 		{
 			R2C_Login response = new R2C_Login();
+		    Log.Info($"登录:{JsonHelper.ToJson(message)}");
 			try
 			{
-				//if (message.Account != "abcdef" || message.Password != "111111")
-				//{
-				//	response.Error = ErrorCode.ERR_AccountOrPasswordError;
-				//	reply(response);
-				//	return;
-				//}
+			    DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+			    List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Account:'{message.Account}',Password:'{message.Password}'}}");
+			    if (accountInfos.Count == 0)
+			    {
+			        response.Message = "账号或密码错误";
+			        response.Error = ErrorCode.ERR_AccountOrPasswordError;
+			        reply(response);
+			        return;
+			    }
 
-				// 随机分配一个Gate
-				StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
-				//Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
+                // 随机分配一个Gate
+                StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
+//				Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
 				IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
 				Session gateSession = Game.Scene.GetComponent<NetInnerComponent>().Get(innerAddress);
 
