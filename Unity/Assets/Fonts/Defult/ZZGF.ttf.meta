@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c8117b202a941b741b11b80e3e4f24c3
+TrueTypeFontImporter:
+  serializedVersion: 2
+  fontSize: 32
+  fontColor: {r: 1, g: 1, b: 1, a: 1}
+  forceTextureCase: -2
+  characterSpacing: 1
+  characterPadding: 0
+  includeFontData: 1
+  use2xBehaviour: 0
+  fontNames:
+  - zzgf
+  customCharacters: 
+  fontRenderingMode: 0
+  userData: 
