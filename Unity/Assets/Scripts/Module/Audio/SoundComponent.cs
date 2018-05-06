@@ -211,9 +211,9 @@ namespace ETModel
             ResourcesComponent resourcesComponent = Game.Scene.GetComponent<ResourcesComponent>();
             if (!abSounds.ContainsKey(soundName) || abSounds[soundName] == null)
             {
-                await resourcesComponent.LoadBundleAsync("Sounds.unity");
-                abSounds.Add(soundName, GameObject.Instantiate((GameObject)resourcesComponent.GetAsset("Sounds.unity", soundName)).GetComponent<SoundData>());
-                resourcesComponent.UnloadBundle("Sounds.unity");
+                await resourcesComponent.LoadBundleAsync($"Sounds{soundName}.unity3d");
+                abSounds.Add(soundName, GameObject.Instantiate((GameObject)resourcesComponent.GetAsset($"Sounds{soundName}.unity3d", $"Sounds{soundName}")).GetComponent<SoundData>());
+                resourcesComponent.UnloadBundle($"Sounds{soundName}.unity3d");
             }
             return abSounds[soundName];
         }

@@ -200,6 +200,7 @@ namespace ETModel
 				{
 					string assetName = Path.GetFileNameWithoutExtension(s);
 					string path = $"{assetBundleName}/{assetName}".ToLower();
+
 					UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
 					this.resourceCache[path] = resource;
 				}
