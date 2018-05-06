@@ -40,6 +40,10 @@ namespace ETHotfix
 
 	    private async void OnRegister()
 	    {
+	        SoundComponent soundComponent = ETModel.Game.Scene.GetComponent<SoundComponent>();
+
+	        soundComponent.PlayClip("card_nan1_1");
+
 	        SessionWrap realmSessionWrap = null;
 
 	        try
