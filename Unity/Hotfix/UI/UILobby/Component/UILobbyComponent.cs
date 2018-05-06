@@ -1,12 +1,13 @@
 ﻿using System;
 using ETModel;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ETHotfix
 {
 	[ObjectSystem]
-	public class UiLobbyComponentSystem : AwakeSystem<UILobbyComponent>
+	public class UiLobbyComponentSystem : AwakeSystem<UILobbyComponent> 
 	{
 		public override void Awake(UILobbyComponent self)
 		{
@@ -82,8 +83,9 @@ namespace ETHotfix
 			try
 			{
 				G2C_EnterMap g2CEnterMap = (G2C_EnterMap)await SessionComponent.Instance.Session.Call(new C2G_EnterMap());
-				Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILobby);
-			}
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILobby);
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);
