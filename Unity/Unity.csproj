@@ -363,6 +363,8 @@
     <Compile Include="Assets\Scripts\Module\AssetsBundle\BundleDownloaderComponent.cs" />
     <Compile Include="Assets\Scripts\Module\AssetsBundle\ResourcesComponent.cs" />
     <Compile Include="Assets\Scripts\Module\AssetsBundle\VersionConfig.cs" />
+    <Compile Include="Assets\Scripts\Module\Audio\SoundComponent.cs" />
+    <Compile Include="Assets\Scripts\Module\Audio\SoundData.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorNodeConfig.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorTree.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorTreeArgsDict.cs" />
