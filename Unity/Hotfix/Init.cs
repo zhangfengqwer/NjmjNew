@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -7,7 +9,7 @@ namespace ETHotfix
 	{
 		public static void Start()
 		{
-			try
+            try
 			{
 				Game.Scene.ModelScene = ETModel.Game.Scene;
 
@@ -34,7 +36,36 @@ namespace ETHotfix
 			{
 				Log.Error(e);
 			}
-		}
+
+            {
+                // 发牌
+                {
+                    List<MahjongInfo> zhuangjia = new List<MahjongInfo>();
+                    List<MahjongInfo> other1 = new List<MahjongInfo>();
+                    List<MahjongInfo> other2 = new List<MahjongInfo>();
+                    List<MahjongInfo> other3 = new List<MahjongInfo>();
+                    List<MahjongInfo> rest = new List<MahjongInfo>();
+
+                    Logic_NJMJ.getInstance().FaMahjong(zhuangjia, other1, other2, other3, rest);
+                }
+
+                // 胡牌
+                {
+                    List<MahjongInfo> list = new List<MahjongInfo>();
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_5));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
+
+                    bool b = Logic_NJMJ.getInstance().isHuPai(list);
+                    Debug.Log(b);
+                }
+            }
+        }
 
 		public static void Update()
 		{
