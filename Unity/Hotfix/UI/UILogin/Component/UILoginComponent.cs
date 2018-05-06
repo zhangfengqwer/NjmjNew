@@ -20,6 +20,7 @@ namespace ETHotfix
 	{
 	    private InputField account;
 	    private InputField password;
+        
 
 	    private GameObject loginBtn;
 	    private GameObject registerBtn;
@@ -104,7 +105,7 @@ namespace ETHotfix
 				PlayerComponent playerComponent = ETModel.Game.Scene.GetComponent<PlayerComponent>();
 				playerComponent.MyPlayer = player;
 
-				Game.Scene.GetComponent<UIComponent>().Create(UIType.UILobby);
+				Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
 				Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
 			catch (Exception e)
