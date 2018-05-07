@@ -122,6 +122,7 @@
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
     <Compile Include="UI\UILogin\Event\InitSceneStart_CreateLoginUI.cs" />
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
+    <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
     <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
     <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
   </ItemGroup>
