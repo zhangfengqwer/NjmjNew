@@ -32,10 +32,10 @@ namespace ETHotfix
         {
             #region get
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            playerNameTxt = rc.Get<Text>("PlayerNameTxt");
-            goldNumTxt = rc.Get<Text>("GoldNumTxt");
-            wingNumTxt = rc.Get<Text>("WingNumTxt");
-            playerIcon = rc.Get<Image>("PlayerIcon");
+            playerNameTxt = rc.Get<GameObject>("PlayerNameTxt").GetComponent<Text>();
+            goldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
+            wingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
+            playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Image>();
 
             rankBtn = rc.Get<GameObject>("RankBtn").GetComponent<Button>();
             exchangeBtn = rc.Get<GameObject>("ExchangeBtn").GetComponent<Button>();
@@ -89,9 +89,16 @@ namespace ETHotfix
             #endregion
         }
 
-        private void SetPlayerInfo()
+        private async void SetPlayerInfo()
         {
+            long uid = Game.Scene.GetComponent<PlayerInfoComponent>().uid;
+            Debug.Log(Game.Scene.GetComponent<PlayerInfoComponent>().uid);
+            G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+            PlayerInfo info = g2CPlayerInfo.PlayerInfo;
 
+            playerNameTxt.text = info.Name;
+            goldNumTxt.text = info.GoldNum.ToString();
+            wingNumTxt.text = info.WingNum.ToString();
         }
 
     }

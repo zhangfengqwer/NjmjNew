@@ -40,7 +40,7 @@ namespace ETHotfix
 
 				response.Address = outerAddress;
 				response.Key = g2RGetLoginKey.Key;
-				reply(response);
+                reply(response);
 			}
 			catch (Exception e)
 			{

@@ -28,6 +28,7 @@ message C2G_LoginGate // IRequest
 message G2C_LoginGate // IResponse
 {
 	required int64 PlayerId = 1;
+	required int64 Uid = 2;//用户ID
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -47,13 +48,17 @@ message M2C_TestActorResponse // IActorResponse
 
 message PlayerInfo // IMessage
 {
+	required string Name = 1;//用户名称
+	required int64 GoldNum = 2;//金币数量
+	required int64 WingNum  = 3;//元宝数量
 }
 
 message C2G_PlayerInfo // IRequest
 {
+	required long uid = 1;//用户ID
 }
 
 message G2C_PlayerInfo // IResponse
 {
-	repeated PlayerInfo PlayerInfos = 1;
+	required PlayerInfo PlayerInfo = 1;
 }

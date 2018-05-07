@@ -11,17 +11,17 @@ namespace ETHotfix
 			G2C_LoginGate response = new G2C_LoginGate();
 			try
 			{
-				long userId = Game.Scene.GetComponent<NjmjGateSessionKeyComponent>().Get(message.Key);
-				if (userId == 0)
-				{
-					response.Error = ErrorCode.ERR_ConnectGateKeyError;
-					response.Message = "Gate key验证失败!";
-					reply(response);
-					return;
-				}
+			    long userId = Game.Scene.GetComponent<NjmjGateSessionKeyComponent>().Get(message.Key);
+			    if (userId == 0)
+			    {
+			        response.Error = ErrorCode.ERR_ConnectGateKeyError;
+			        response.Message = "Gate key验证失败!";
+			        reply(response);
+			        return;
+			    }
 
 			    //创建User对象
-                User user = UserFactory.Create(userId, session.Id);
+			    User user = UserFactory.Create(userId, session.Id);
 			    await user.AddComponent<ActorComponent>().AddLocation();
 
 			    //添加User对象关联到Session上
@@ -29,19 +29,9 @@ namespace ETHotfix
 			    //添加消息转发组件
 			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
-
-
-
-
-
-
-                //                Player player = ComponentFactory.Create<Player, string>(account);
-                //				Game.Scene.GetComponent<PlayerComponent>().Add(player);
-                //				session.AddComponent<SessionPlayerComponent>().Player = player;
-                //				await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
-                //
-                //				response.PlayerId = player.Id;
-                reply(response);
+                response.PlayerId = user.Id;
+                response.Uid = userId;
+				reply(response);
 
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 			}

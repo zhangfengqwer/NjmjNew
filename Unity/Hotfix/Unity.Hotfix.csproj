@@ -116,6 +116,7 @@
     <Compile Include="Module\Message\HotfixOpcode.cs" />
     <Compile Include="Module\UI\UIType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />

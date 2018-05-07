@@ -22,6 +22,8 @@ namespace ETHotfix
 				Game.Scene.AddComponent<OpcodeTypeComponent>();
 				Game.Scene.AddComponent<MessageDispatherComponent>();
 
+				Game.Scene.AddComponent<PlayerInfoComponent>();
+
 				// 加载热更配置
 				ETModel.Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");
 				Game.Scene.AddComponent<ConfigComponent>();
