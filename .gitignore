@@ -47,6 +47,3 @@ _ReSharper.CSharp/
 .DS_Store
 Server/.DS_Store
 /Server/.vscode/
-/Unity/Assets/Res/Code
-/Server/Hotfix/Server.Hotfix.csproj
-/Unity/Hotfix/*.csproj
