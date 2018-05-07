@@ -20,7 +20,6 @@ namespace ETHotfix
 	{
 	    private InputField account;
 	    private InputField password;
-        
 
 	    private GameObject loginBtn;
 	    private GameObject registerBtn;

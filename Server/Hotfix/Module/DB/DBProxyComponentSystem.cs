@@ -81,7 +81,7 @@ namespace ETHotfix
 			return list;
 		}
 
-	    public static async Task<List<T>> QueryJsonCurrentDay<T>(this DBProxyComponent self, bool needCache = true) where T : ComponentWithId
+	    public static async Task<List<T>> QueryJsonCurrentDay<T>(this DBProxyComponent self) where T : ComponentWithId
         {
 	        List<T> list = new List<T>();
 	        string json = $"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}";
