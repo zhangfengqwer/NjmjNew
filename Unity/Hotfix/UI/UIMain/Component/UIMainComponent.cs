@@ -92,10 +92,8 @@ namespace ETHotfix
         private async void SetPlayerInfo()
         {
             long uid = Game.Scene.GetComponent<PlayerInfoComponent>().uid;
-            Debug.Log(Game.Scene.GetComponent<PlayerInfoComponent>().uid);
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
-            Debug.Log(info.Icon);
             playerIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
