@@ -20,12 +20,14 @@ namespace ETHotfix
 	            {
                     response.Error = ErrorCode.AccountExist;
 	                response.Message = "用户名存在";
-	                reply(response);
+                    response.uid = accountInfos[0].Id;
+                    reply(response);
                     return;
 	            }
 	            AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
 	            accountInfo.Account = message.Account;
 	            accountInfo.Password = message.Password;
+                response.uid = accountInfo.Id;
 	            await proxyComponent.Save(accountInfo);
 
 	            Stopwatch sw = new Stopwatch();

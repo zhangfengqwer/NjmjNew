@@ -25,6 +25,7 @@ namespace ETHotfix
 				await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
 				response.PlayerId = player.Id;
+                response.uid = message.uid;
 				reply(response);
 
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });

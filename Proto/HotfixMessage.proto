@@ -8,6 +8,7 @@ message R2C_Login // IResponse
 {
 	required string Address = 1;
 	required int64 	Key	    = 2;
+	required long uid = 3;//用户UID
 }
 
 message C2R_Register // IRequest
@@ -18,16 +19,19 @@ message C2R_Register // IRequest
 
 message R2C_Register // IResponse
 {
+	required long uid = 1;//用户ID
 }
 
 message C2G_LoginGate // IRequest
 {
 	required int64 Key = 1;	// 帐号
+	required long uid = 2;//用户ID
 }
 
 message G2C_LoginGate // IResponse
 {
 	required int64 PlayerId = 1;
+	required long uid = 2;//用户ID
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -47,13 +51,17 @@ message M2C_TestActorResponse // IActorResponse
 
 message PlayerInfo // IMessage
 {
+	required string Name = 1;//用户名称
+	required int64 GoldNum = 2;//金币数量
+	required int64 WingNum  = 3;//元宝数量
 }
 
 message C2G_PlayerInfo // IRequest
 {
+	required long uid = 1;//用户ID
 }
 
 message G2C_PlayerInfo // IResponse
 {
-	repeated PlayerInfo PlayerInfos = 1;
+	required PlayerInfo PlayerInfo = 1;
 }

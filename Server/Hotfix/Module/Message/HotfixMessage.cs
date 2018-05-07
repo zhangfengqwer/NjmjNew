@@ -38,6 +38,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public long Key;
 
+		[ProtoMember(3, IsRequired = true)]
+		public long uid;
+
 	}
 
 	[Message(HotfixOpcode.C2R_Register)]
@@ -68,6 +71,9 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public long uid;
+
 	}
 
 	[Message(HotfixOpcode.C2G_LoginGate)]
@@ -79,6 +85,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long Key;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long uid;
 
 	}
 
@@ -97,6 +106,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long PlayerId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long uid;
 
 	}
 
@@ -146,6 +158,15 @@ namespace ETHotfix
 	[ProtoContract]
 	public partial class PlayerInfo: IMessage
 	{
+		[ProtoMember(1, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoldNum;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long WingNum;
+
 	}
 
 	[Message(HotfixOpcode.C2G_PlayerInfo)]
@@ -154,6 +175,9 @@ namespace ETHotfix
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long uid;
 
 	}
 
@@ -170,8 +194,8 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1)]
-		public List<PlayerInfo> PlayerInfos = new List<PlayerInfo>();
+		[ProtoMember(1, IsRequired = true)]
+		public PlayerInfo PlayerInfo;
 
 	}
 

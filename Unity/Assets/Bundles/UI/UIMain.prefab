@@ -831,6 +831,8 @@ MonoBehaviour:
     gameObject: {fileID: 1524508766883882}
   - key: PlayerIcon
     gameObject: {fileID: 1243431400741860}
+  - key: PlayerNameTxt
+    gameObject: {fileID: 1926966922472136}
 --- !u!114 &114300670102430080
 MonoBehaviour:
   m_ObjectHideFlags: 1
