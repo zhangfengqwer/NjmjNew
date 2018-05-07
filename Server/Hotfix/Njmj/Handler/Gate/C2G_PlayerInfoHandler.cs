@@ -22,6 +22,7 @@ namespace ETHotfix
                     response.PlayerInfo.Name = playerInfo.Name;
                     response.PlayerInfo.GoldNum = playerInfo.GoldNum;
                     response.PlayerInfo.WingNum = playerInfo.WingNum;
+                    response.PlayerInfo.Icon = playerInfo.Icon;
                     reply(response);
                     return;
                 }
@@ -31,11 +32,13 @@ namespace ETHotfix
                 playerBaseInfo.Name = "默认";
                 playerBaseInfo.GoldNum = 10;
                 playerBaseInfo.WingNum = 0;
+                playerBaseInfo.Icon = "Icon1";
                 await proxyComponent.Save(playerBaseInfo);
 
                 response.PlayerInfo.Name = playerBaseInfo.Name;
                 response.PlayerInfo.GoldNum = playerBaseInfo.GoldNum;
                 response.PlayerInfo.WingNum = playerBaseInfo.WingNum;
+                response.PlayerInfo.Icon = playerBaseInfo.Icon;
                 reply(response);
             }
             catch(Exception e)

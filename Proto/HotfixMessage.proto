@@ -51,6 +51,7 @@ message PlayerInfo // IMessage
 	required string Name = 1;//用户名称
 	required int64 GoldNum = 2;//金币数量
 	required int64 WingNum  = 3;//元宝数量
+	required string Icon = 4;//用户头像
 }
 
 message C2G_PlayerInfo // IRequest

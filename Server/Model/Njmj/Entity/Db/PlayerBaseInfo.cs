@@ -7,5 +7,6 @@ namespace ETModel
         public string Name { get; set; }
         public int GoldNum { get; set; }
         public int WingNum { get; set; }
+        public string Icon { get; set; }
     }
 }

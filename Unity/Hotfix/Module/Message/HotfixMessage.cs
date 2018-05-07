@@ -158,6 +158,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public long WingNum;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.C2G_PlayerInfo)]
