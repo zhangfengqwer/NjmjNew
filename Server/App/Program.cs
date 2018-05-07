@@ -110,6 +110,9 @@ namespace App
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
 
+                        //MapGlobalCoponent
+                        Game.Scene.AddComponent<RoomComponent>();
+
                         break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();

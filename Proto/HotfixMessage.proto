@@ -62,3 +62,41 @@ message G2C_PlayerInfo // IResponse
 {
 	required PlayerInfo PlayerInfo = 1;
 }
+
+message C2G_EnterRoom //IRequest
+{
+	
+}
+
+message G2C_EnterRoom //IResponse
+{
+	repeated GamerInfo Gamers = 1;
+}
+
+#region Map-Client
+
+message GamerInfo //IMessage
+{
+ 	required int64 UserID = 1;
+    required bool IsReady = 2;
+    required int  SeatIndex = 3;
+}
+
+message G2M_PlayerEnterRoom //IRequest
+{
+	required int64 UserId = 1;
+	required int64 SessionId = 2;
+	required int64 PlayId = 3;
+}
+
+message M2G_PlayerEnterRoom //IResponse
+{
+	repeated GamerInfo Gamers = 1;
+}
+
+message Actor_GamerEnterRoom // IActorMessage
+{
+    repeated GamerInfo Gamers = 1;
+}
+
+#endregion

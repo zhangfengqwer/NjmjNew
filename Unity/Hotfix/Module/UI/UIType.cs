@@ -9,5 +9,6 @@ namespace ETHotfix
 	    public const string UILogin = "UILogin";
 	    public const string UILobby = "UILobby";
         public const string UIMain = "UIMain";//main主界面
+        public const string UIRoom = "UIRoom";
     }
 }
