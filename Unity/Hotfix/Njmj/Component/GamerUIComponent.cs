@@ -26,9 +26,9 @@ namespace ETHotfix
         public string NickName { get { return name.text; } }
 
         private Image head;
-        private Text prompt;
+//        private Text prompt;
         private Text name;
-        private Text money;
+//        private Text money;
 
         public void Start()
         {
@@ -46,12 +46,12 @@ namespace ETHotfix
             ResetPrompt();
         
             this.name.text = "空位";
-            this.money.text = "";
+//            this.money.text = "";
 
             this.Panel = null;
-            this.prompt = null;
+//            this.prompt = null;
             this.name = null;
-            this.money = null;
+//            this.money = null;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ETHotfix
         /// </summary>
         public void SetReady()
         {
-            prompt.text = "准备！";
+//            prompt.text = "准备！";
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace ETHotfix
         /// </summary>
         public void SetPlayCardsError()
         {
-            prompt.text = "您出的牌不符合规则！";
+//            prompt.text = "您出的牌不符合规则！";
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace ETHotfix
         /// </summary>
         public void SetDiscard()
         {
-            prompt.text = "不出";
+//            prompt.text = "不出";
         }
 
         /// <summary>
@@ -127,11 +127,11 @@ namespace ETHotfix
         {
             if (isGrab)
             {
-                prompt.text = "抢地主";
+//                prompt.text = "抢地主";
             }
             else
             {
-                prompt.text = "不抢";
+//                prompt.text = "不抢";
             }
         }
 
@@ -140,7 +140,7 @@ namespace ETHotfix
         /// </summary>
         public void ResetPrompt()
         {
-            prompt.text = "";
+//            prompt.text = "";
         }
 
         /// <summary>

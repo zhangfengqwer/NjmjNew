@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETHotfix
 {
+    [ObjectSystem]
     public class PlayerInfoComponentSystem : AwakeSystem<PlayerInfoComponent>
     {
         public override void Awake(PlayerInfoComponent self)
