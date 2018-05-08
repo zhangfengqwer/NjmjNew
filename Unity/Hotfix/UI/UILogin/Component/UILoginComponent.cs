@@ -32,6 +32,8 @@ namespace ETHotfix
 
         public void Awake()
 		{
+            ToastScript.clear();
+
             initData();
         }
 
@@ -43,13 +45,19 @@ namespace ETHotfix
 
 	        try
 	        {
-	            if (string.IsNullOrEmpty(inputField_Phone.text) || string.IsNullOrEmpty(inputField_YanZhengMa.text))
+	            if (string.IsNullOrEmpty(inputField_Phone.text))
 	            {
-	                Log.Error("账号或密码为空");
-	                return;
+                    ToastScript.createToast("请输入手机号");
+                    return;
 	            }
 
-	            IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                if (string.IsNullOrEmpty(inputField_YanZhengMa.text))
+                {
+                    ToastScript.createToast("请输入验证码");
+                    return;
+                }
+
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 	            Session realmSession = Game.Scene.ModelScene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
 
 	            realmSessionWrap = new SessionWrap(realmSession);
@@ -62,7 +70,7 @@ namespace ETHotfix
 	            }
 	            else
 	            {
-	                Log.Info("注册成功");
+                    ToastScript.createToast("注册成功");
 
                     OnLoginPhone();
 	            }
@@ -109,7 +117,7 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            Log.Debug("暂未开放");
+            ToastScript.createToast("暂未开放");
         }
 
         public void onClickBackStart()
@@ -141,12 +149,13 @@ namespace ETHotfix
 				Game.Scene.AddComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
 				ETModel.Game.Scene.AddComponent<SessionComponent>().Session = gateSession;
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
-                Log.Info("登陆gate成功!");
+
+                ToastScript.createToast("登录成功");
 
                 // 创建Player
-//                Player player = ETModel.ComponentFactory.CreateWithId<Player>(g2CLoginGate.PlayerId);
-//				PlayerComponent playerComponent = ETModel.Game.Scene.GetComponent<PlayerComponent>();
-//				playerComponent.MyPlayer = player;
+                //                Player player = ETModel.ComponentFactory.CreateWithId<Player>(g2CLoginGate.PlayerId);
+                //				PlayerComponent playerComponent = ETModel.Game.Scene.GetComponent<PlayerComponent>();
+                //				playerComponent.MyPlayer = player;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
 
