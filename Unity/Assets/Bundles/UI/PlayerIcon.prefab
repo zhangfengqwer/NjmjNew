@@ -104,6 +104,8 @@ MonoBehaviour:
     gameObject: {fileID: 1133399834994578}
   - key: Icon2
     gameObject: {fileID: 1096865183626542}
+  - key: 1
+    gameObject: {fileID: 2800000, guid: 499523fc37d97c3468bc39392e52c7e6, type: 3}
 --- !u!114 &114938994568687610
 MonoBehaviour:
   m_ObjectHideFlags: 1

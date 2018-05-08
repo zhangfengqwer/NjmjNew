@@ -119,6 +119,7 @@ namespace ETHotfix
         {
             long uid = Game.Scene.GetComponent<PlayerInfoComponent>().uid;
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+            Log.Info(JsonHelper.ToJson(g2CPlayerInfo));
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
             playerIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             playerNameTxt.text = info.Name;
