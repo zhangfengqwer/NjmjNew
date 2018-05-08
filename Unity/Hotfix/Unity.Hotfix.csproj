@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hotfix</RootNamespace>
     <AssemblyName>Hotfix</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>D:\Program Files\Unity-2017\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,8 +71,18 @@
     <Compile Include="Base\Object\IChangeSystem.cs" />
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
-    <Compile Include="Component\GamerComponent.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
+    <Compile Include="Njmj\Component\GamerComponent.cs" />
+    <Compile Include="Njmj\Component\GamerUIComponent.cs" />
+    <Compile Include="Njmj\Entity\Gamer.cs" />
+    <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerEnterRoomHandler.cs" />
+    <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
+    <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
+    <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
+    <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
+    <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
+    <Compile Include="Utils\AudioScript.cs" />
     <Compile Include="HP_Logic\Common_Random.cs" />
     <Compile Include="HP_Logic\Consts.cs" />
     <Compile Include="HP_Logic\Logic_NJMJ.cs" />
@@ -123,17 +133,10 @@
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
     <Compile Include="UI\UILogin\Event\InitSceneStart_CreateLoginUI.cs" />
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
-    <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
-    <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
-    <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
-    <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
-    <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
-    <Compile Include="Utils\AudioScript.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Connected Services\" />
-    <Folder Include="UI\UIMain\Event\" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Unity.csproj">
@@ -146,8 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Entity\Config\BuffConfig.cs.meta" />
-    <None Include="Entity\Config\UnitConfig.cs.meta" />
+    <Folder Include="UI\UIMain\Event\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
