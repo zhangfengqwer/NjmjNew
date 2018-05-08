@@ -123,6 +123,8 @@
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
     <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
+    <Compile Include="Utils\AudioScript.cs" />
+    <Compile Include="Utils\CommonUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\UIMain\Event\" />

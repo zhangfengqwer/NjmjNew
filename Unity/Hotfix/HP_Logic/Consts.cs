@@ -8,6 +8,15 @@ namespace ETHotfix
 {
     public class Consts
     {
+        public enum MahjongType
+        {
+            Wan,
+            Tiao,
+            Tong,
+            Feng,
+            Hua,
+        }
+
         public enum MahjongWeight
         {
             // 万：1-9
@@ -81,6 +90,32 @@ namespace ETHotfix
             Hua_LanHua = 63,
             Hua_ZhuZi = 65,
             Hua_JuHua = 67,
+        }
+
+        // 胡牌类型
+        public enum HuPaiType
+        {
+            Normal,                     // 小胡，最垃圾的胡牌
+            MenQing,                    // 门清
+            HunYiSe,                    // 混一色
+            QingYiSe,                   // 清一色
+            DuiDuiHu,                   // 对对胡
+            QuanQiuDuDiao,              // 全球独钓
+            QiDui_Normal,               // 七对：普通
+            QiDui_HaoHua,               // 七对：豪华
+            QiDui_ChaoHaoHua,           // 七对：超豪华
+            QiDui_ChaoChaoHaoHua,       // 七对：超超豪华
+            YaJue,                      // 压绝
+            WuHuaGuo,                   // 无花果
+            GangHouKaiHua_Small,        // 杠后开花：小
+            GangHouKaiHua_Big,          // 杠后开花：大
+            TianHu,                     // 天胡
+            DiHu,                       // 地胡
+            HaiDiLaoYue,                // 海底捞月
+
+            // 下面这两个由外面的逻辑自行判断
+            BiXiaHu,                    // 比下胡
+            BaoPai,                     // 包牌
         }
     }
 }
