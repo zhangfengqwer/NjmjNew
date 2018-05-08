@@ -4,6 +4,7 @@ using ETModel;
 
 namespace ETHotfix
 {
+    [MessageHandler(AppType.Gate)]
     public class C2G_UpdatePlayerInfoHandler : AMRpcHandler<C2G_UpdatePlayerInfo, G2C_UpdatePlayerInfo>
     {
         protected override async void Run(Session session, C2G_UpdatePlayerInfo message, Action<G2C_UpdatePlayerInfo> reply)
@@ -22,7 +23,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    playerInfo.uid = message.Uid;
+                    playerInfo.Id = message.Uid;
                     playerInfo.Name = message.playerInfo.Name;
                     playerInfo.GoldNum = message.playerInfo.GoldNum;
                     playerInfo.WingNum = message.playerInfo.WingNum;
