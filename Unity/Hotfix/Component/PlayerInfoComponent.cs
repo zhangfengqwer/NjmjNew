@@ -20,9 +20,17 @@ namespace ETHotfix
         public static PlayerInfoComponent Instance;
 
         public long uid;//用户UID
-        public string userName;//用户名称
-        public int goldNum;//金币数量
-        public int wingNum;//元宝数量
+        private PlayerInfo playerInfo;
+
+        public void SetPlayerInfo(PlayerInfo playerInfo)
+        {
+            this.playerInfo = playerInfo;
+        }
+
+        public PlayerInfo GetPlayerInfo()
+        {
+            return playerInfo;
+        }
 
         public void Awake()
         {

@@ -100,6 +100,17 @@ message Actor_GamerEnterRoom // IActorMessage
     repeated GamerInfo Gamers = 1;
 }
 
+message C2G_UpdatePlayerInfo //IRequest
+{
+	required long Uid = 1;
+	required PlayerInfo playerInfo = 2;
+}
+
+message G2C_UpdatePlayerInfo //IResponse
+{
+	required PlayerInfo playerInfo = 1;
+}
+
 message C2M_ActorGamerEnterRoom // IActorRequest
 {
 	required string Info = 1;
