@@ -16,8 +16,8 @@ namespace ETHotfix
 
     public class UIIconComponent :Component
     {
-        private Image icon1;
-        private Image icon2;
+        private Sprite icon1;
+        private Sprite icon2;
         private Dictionary<string, Sprite> iconDic = new Dictionary<string, Sprite>();
 
         public void Awake()
@@ -25,12 +25,17 @@ namespace ETHotfix
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             resourcesComponent.LoadBundle($"{UIType.UIIcon}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{UIType.UIIcon}.unity3d", $"{UIType.UIIcon}");
+            Texture2D texture1 = bundleGameObject.Get<Texture2D>("Icon1");
+            icon1 = CreateSprite(texture1);
+            Texture2D texture2 = bundleGameObject.Get<Texture2D>("Icon2");
+            icon2 = CreateSprite(texture2);
+            AddSprite("Icon1",icon1);
+            AddSprite("Icon2", icon2);
+        }
 
-            ReferenceCollector rc = bundleGameObject.GetComponent<ReferenceCollector>();
-            icon1 = rc.Get<GameObject>("Icon1").GetComponent<Image>();
-            icon2 = rc.Get<GameObject>("Icon2").GetComponent<Image>();
-            AddSprite("Icon1",icon1.sprite);
-            AddSprite("Icon2", icon2.sprite);
+        private Sprite CreateSprite(Texture2D texture)
+        {
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         }
 
         private void AddSprite(string key,Sprite value)

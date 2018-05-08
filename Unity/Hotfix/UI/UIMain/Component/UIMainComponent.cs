@@ -55,6 +55,7 @@ namespace ETHotfix
             {
                 //打开排行榜
                 Log.Debug("打开排行榜");
+                
             });
 
             exchangeBtn.onClick.Add(() =>
@@ -117,11 +118,17 @@ namespace ETHotfix
 
         private async void SetPlayerInfo()
         {
-            long uid = Game.Scene.GetComponent<PlayerInfoComponent>().uid;
+            PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
+            long uid = playerInfoComponent.uid;
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
             Log.Info(JsonHelper.ToJson(g2CPlayerInfo));
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
-            playerIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
+            
+            Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
+            if (icon != null)
+                playerIcon.sprite = icon;
+            else
+                Log.Warning("icon数据为空，请重新注册");
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();

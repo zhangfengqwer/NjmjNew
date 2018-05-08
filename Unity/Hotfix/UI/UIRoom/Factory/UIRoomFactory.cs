@@ -19,6 +19,7 @@ namespace ETHotfix
 		        UI ui = ComponentFactory.Create<UI, GameObject>(room);
 
 				ui.AddComponent<UIRoomComponent>();
+	            ui.AddComponent<GamerComponent>();
 				return ui;
 	        }
 	        catch (Exception e)

@@ -215,9 +215,6 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1)]
-		public List<GamerInfo> Gamers = new List<GamerInfo>();
-
 	}
 
 	[Message(HotfixOpcode.GamerInfo)]
@@ -249,7 +246,7 @@ namespace ETHotfix
 		public long SessionId;
 
 		[ProtoMember(3, IsRequired = true)]
-		public long PlayId;
+		public long PlayerId;
 
 	}
 
@@ -266,8 +263,8 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1)]
-		public List<GamerInfo> Gamers = new List<GamerInfo>();
+		[ProtoMember(1, IsRequired = true)]
+		public long GameId;
 
 	}
 
@@ -286,4 +283,64 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_UpdatePlayerInfo)]
+	[ProtoContract]
+	public partial class C2G_UpdatePlayerInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UpdatePlayerInfo)]
+	[ProtoContract]
+	public partial class G2C_UpdatePlayerInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
+	}
+
+	[Message(HotfixOpcode.C2M_ActorGamerEnterRoom)]
+	[ProtoContract]
+	public partial class C2M_ActorGamerEnterRoom: IActorRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Info;
+
+	}
+
+    [Message(HotfixOpcode.M2C_ActorGamerEnterRoom)]
+    [ProtoContract]
+    public partial class M2C_ActorGamerEnterRoom : IActorResponse
+    {
+        [ProtoMember(90, IsRequired = true)] public int RpcId { get; set; }
+
+        [ProtoMember(91, IsRequired = true)] public int Error { get; set; }
+
+        [ProtoMember(92, IsRequired = true)] public string Message { get; set; }
+
+        [ProtoMember(1, IsRequired = true)] public string Info;
+    }
 }
