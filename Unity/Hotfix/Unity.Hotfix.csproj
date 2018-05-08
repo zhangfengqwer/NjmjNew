@@ -72,7 +72,7 @@
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
-    <Compile Include="Handler\Actor_GamerEnterRoomHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerEnterRoomHandler.cs" />
     <Compile Include="HP_Logic\Common_Random.cs" />
     <Compile Include="HP_Logic\Consts.cs" />
     <Compile Include="HP_Logic\Logic_NJMJ.cs" />
