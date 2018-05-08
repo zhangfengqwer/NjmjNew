@@ -20,9 +20,6 @@
         //玩家GateActorID
         public long PlayerID { get; set; }
 
-        //客户端与网关服务器的SessionID
-        public long GateSessionID { get; set; }
-
         //玩家所在房间ID
         public long RoomID { get; set; }
 

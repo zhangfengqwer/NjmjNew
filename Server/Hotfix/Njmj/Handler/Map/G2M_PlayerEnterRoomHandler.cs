@@ -13,7 +13,11 @@ namespace ETHotfix
 		    Log.Info(JsonHelper.ToJson(message));
             try
 			{
-			    RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+			    Gamer gamer = GamerFactory.Create(message.PlayerId, message.UserId);
+			    await gamer.AddComponent<ActorComponent>().AddLocation();
+			    gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
+
+                RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 			    //获得空闲的房间
 			    Room idleRoom = roomComponent.GetIdleRoom();
 			    if (idleRoom == null)
@@ -21,9 +25,7 @@ namespace ETHotfix
 			    	idleRoom = ComponentFactory.Create<Room>();
 			    	roomComponent.Add(idleRoom);
 			    }
-			    Gamer gamer = ComponentFactory.CreateWithId<Gamer, long>(IdGenerater.GenerateId(), message.UserId);
-			    gamer.PlayerID = message.PlayId;
-			    gamer.GateSessionID = message.SessionId;
+			  
 
 			    idleRoom.Add(gamer);
 
@@ -34,6 +36,7 @@ namespace ETHotfix
 			        roomComponent.idleRooms.Remove(idleRoom);
 			    }
 
+                List<GamerInfo> Gamers = new List<GamerInfo>();
                 foreach (var item in idleRoom.seats)
                 {
                     GamerInfo gamerInfo = new GamerInfo();
@@ -41,22 +44,21 @@ namespace ETHotfix
                     gamerInfo.SeatIndex = item.Value;
                     Gamer temp = idleRoom.Get(item.Key);
                     gamerInfo.IsReady = temp.IsReady;
-                    response.Gamers.Add(gamerInfo);
+                    Gamers.Add(gamerInfo);
                 }
 
 			    ActorProxyComponent proxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
-
 			    ActorProxy actorProxy = proxyComponent.Get(message.SessionId);
 
 			    actorProxy.Send(new Actor_GamerEnterRoom()
 			    {
-                    Gamers = response.Gamers
+                    Gamers = Gamers
                 });
 
-                Log.Info(JsonHelper.ToJson(response));
-
+			    response.GameId = gamer.Id;
+			    Log.Info(JsonHelper.ToJson(response));
 			    reply(response);
-			}
+            }
 			catch (Exception e)
 			{
 				ReplyError(response, e, reply);

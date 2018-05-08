@@ -25,11 +25,12 @@ namespace ETHotfix
 			    {
 			        UserId = user.UserID,
 			        SessionId = session.Id,
-			        PlayId = user.Id,
+			        PlayerId = user.Id,
 			    });
 
 			    Log.Info(JsonHelper.ToJson(m2GPlayerEnterRoom));
-			    response.Gamers = new List<GamerInfo>(m2GPlayerEnterRoom.Gamers);
+
+			    session.GetComponent<SessionUserComponent>().User.ActorID = m2GPlayerEnterRoom.GameId;
 
                 reply(response);
 			}
