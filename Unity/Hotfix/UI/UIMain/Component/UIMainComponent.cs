@@ -55,7 +55,7 @@ namespace ETHotfix
             {
                 //打开排行榜
                 Log.Debug("打开排行榜");
-                
+                UpdateInfoTest();
             });
 
             exchangeBtn.onClick.Add(() =>
@@ -100,6 +100,17 @@ namespace ETHotfix
             #endregion
         }
 
+        private async void UpdateInfoTest()
+        {
+            PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
+            long uid = playerInfoComponent.uid;
+            playerInfoComponent.GetPlayerInfo().GoldNum += 100;
+            playerInfoComponent.GetPlayerInfo().Name = "张";
+            playerInfoComponent.GetPlayerInfo().Icon = "Icon2";
+            G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
+            UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
+        }
+
         private async void OnEnterRoom()
         {
             G2C_EnterRoom g2CEnterRoom = (G2C_EnterRoom) await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_EnterRoom());
@@ -123,7 +134,12 @@ namespace ETHotfix
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
             Log.Info(JsonHelper.ToJson(g2CPlayerInfo));
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
-            
+            playerInfoComponent.SetPlayerInfo(info);
+            UpDatePlayerInfo(info);
+        }
+
+        private void UpDatePlayerInfo(PlayerInfo info)
+        {
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)
                 playerIcon.sprite = icon;
