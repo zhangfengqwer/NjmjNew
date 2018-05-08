@@ -20,7 +20,7 @@ namespace ETHotfix
 	            {
                     response.Error = ErrorCode.AccountExist;
 	                response.Message = "用户名存在";
-	                reply(response);
+                    reply(response);
                     return;
 	            }
 	            AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
@@ -31,7 +31,10 @@ namespace ETHotfix
 	            Stopwatch sw = new Stopwatch();
 	            sw.Start();
 	            List<AccountInfo> infos = await proxyComponent.QueryJsonCurrentDay<AccountInfo>();
-	            sw.Stop();
+
+	            AccountInfo info = await proxyComponent.Query<AccountInfo>(accountInfo.Id);
+	            Log.Info($"根据id查询:{info.Account}");
+                sw.Stop();
 	            Log.Info($"查询时间:{sw.ElapsedMilliseconds}");
 	            Log.Info($"当天的注册有:{infos.Count}");
 

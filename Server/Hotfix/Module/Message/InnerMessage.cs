@@ -450,7 +450,7 @@ namespace ETHotfix
 		public int RpcId { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public string Account;
+		public long UserId;
 
 	}
 

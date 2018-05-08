@@ -151,7 +151,7 @@
 
 	message R2G_GetLoginKey // IRequest
 	{
-		required string Account = 1;
+		required int64 UserId = 1;
 	}
 
 	message G2R_GetLoginKey // IResponse
