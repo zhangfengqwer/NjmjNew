@@ -33,8 +33,8 @@ namespace ETHotfix
 				}
 				case IActorRequest iActorRequest: // gate session收到actor rpc消息，先向actor 发送rpc请求，再将请求结果返回客户端
 				{
-					long unitId = session.GetComponent<SessionPlayerComponent>().Player.UnitId;
-					ActorProxy actorProxy = Game.Scene.GetComponent<ActorProxyComponent>().Get(unitId);
+				    long actorId = session.GetComponent<SessionUserComponent>().User.ActorID;
+				    ActorProxy actorProxy = Game.Scene.GetComponent<ActorProxyComponent>().Get(actorId);
 
 					int rpcId = iActorRequest.RpcId; // 这里要保存客户端的rpcId
 					IResponse response = await actorProxy.Call(iActorRequest);
@@ -45,8 +45,8 @@ namespace ETHotfix
 				}
 				case IActorMessage iActorMessage: // gate session收到actor消息直接转发给actor自己去处理
 				{
-					long unitId = session.GetComponent<SessionPlayerComponent>().Player.UnitId;
-					ActorProxy actorProxy = Game.Scene.GetComponent<ActorProxyComponent>().Get(unitId);
+					long unitId = session.GetComponent<SessionUserComponent>().User.ActorID;
+                    ActorProxy actorProxy = Game.Scene.GetComponent<ActorProxyComponent>().Get(unitId);
 					actorProxy.Send(iActorMessage);
 					return;
 				}

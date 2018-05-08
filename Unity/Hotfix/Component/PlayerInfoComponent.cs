@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace ETHotfix
 {
-    //public class PlayerInfoComponentSystem : AwakeSystem<PlayerInfoComponent>
-    //{
-    //    public override void Awake(PlayerInfoComponent self)
-    //    {
-            
-    //    }
-    //}
+    [ObjectSystem]
+    public class PlayerInfoComponentSystem : AwakeSystem<PlayerInfoComponent>
+    {
+        public override void Awake(PlayerInfoComponent self)
+        {
+            self.Awake();
+        }
+    }
     
     public class PlayerInfoComponent : Component
     {
+        public static PlayerInfoComponent Instance;
+
         public long uid;//用户UID
         private PlayerInfo playerInfo;
 
@@ -28,6 +31,11 @@ namespace ETHotfix
         public PlayerInfo GetPlayerInfo()
         {
             return playerInfo;
+        }
+
+        public void Awake()
+        {
+            Instance = this;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace ETHotfix
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{UIType.UIIcon}.unity3d", $"{UIType.UIIcon}");
             Texture2D texture1 = bundleGameObject.Get<Texture2D>("Icon1");
             icon1 = CreateSprite(texture1);
-            Texture2D texture2 = bundleGameObject.Get<Texture2D>("Icon1");
+            Texture2D texture2 = bundleGameObject.Get<Texture2D>("Icon2");
             icon2 = CreateSprite(texture2);
             AddSprite("Icon1",icon1);
             AddSprite("Icon2", icon2);

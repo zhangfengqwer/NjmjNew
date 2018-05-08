@@ -25,6 +25,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\Http\" />
-    <Folder Include="Njmj\Handler\Map\" />
   </ItemGroup>
 </Project>
