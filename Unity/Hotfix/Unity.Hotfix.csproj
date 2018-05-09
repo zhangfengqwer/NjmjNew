@@ -71,7 +71,6 @@
     <Compile Include="Base\Object\IChangeSystem.cs" />
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
-    <Compile Include="Entity\Config\ShopConfig.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerExitRoomHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerEnterRoomHandler.cs" />

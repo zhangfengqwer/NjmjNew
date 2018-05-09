@@ -23,7 +23,8 @@ namespace ETHotfix
                 {
                     // 先校验验证码
                     {
-                        if (message.Code.CompareTo("123456") != 0)
+                        string str = HttpUtil.CheckSms("1",message.Phone, message.Code);
+                        if (!CommonUtil.checkSmsCode(str))
                         {
                             response.Message = "验证码错误";
                             response.Error = ErrorCode.ERR_PhoneCodeError;

@@ -12,6 +12,15 @@ message R2C_PhoneLogin // IResponse
 	required string Token	= 3;
 }
 
+message C2R_SendSms // IRequest
+{
+	required string	Phone	 = 1;	// 手机号
+}
+
+message R2C_SendSms // IResponse
+{
+}
+
 message C2R_Login // IRequest
 {
 	required string	Account	 = 1;	// 帐号

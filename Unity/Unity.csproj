@@ -343,7 +343,6 @@
     <Compile Include="Assets\Scripts\Component\GlobalConfigComponent.cs" />
     <Compile Include="Assets\Scripts\Component\SceneChangeComponent.cs" />
     <Compile Include="Assets\Scripts\Component\TimerComponent.cs" />
-    <Compile Include="Assets\Scripts\Entity\Config\ShopConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Config\UnitConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Game.cs" />
     <Compile Include="Assets\Scripts\Entity\Hotfix.cs" />
