@@ -4,6 +4,48 @@ using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 namespace ETHotfix
 {
+	[Message(HotfixOpcode.C2R_PhoneLogin)]
+	[ProtoContract]
+	public partial class C2R_PhoneLogin: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Phone;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Code;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Token;
+
+	}
+
+	[Message(HotfixOpcode.R2C_PhoneLogin)]
+	[ProtoContract]
+	public partial class R2C_PhoneLogin: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Address;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long Key;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Token;
+
+	}
+
 	[Message(HotfixOpcode.C2R_Login)]
 	[ProtoContract]
 	public partial class C2R_Login: IRequest
