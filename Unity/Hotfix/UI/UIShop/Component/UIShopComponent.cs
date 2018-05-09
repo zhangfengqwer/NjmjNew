@@ -80,7 +80,7 @@ namespace ETHotfix
                     }
                 }
             });
-
+            wingToggle.onValueChanged.Invoke(true);
             goldToggle.onValueChanged.AddListener((bool isOn) =>
             {
                 if (isOn)
