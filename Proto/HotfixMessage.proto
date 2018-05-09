@@ -52,6 +52,7 @@ message G2C_LoginGate // IResponse
 {
 	required int64 PlayerId = 1;
 	required int64 Uid = 2;//用户ID
+	repeated ShopInfo ShopInfoList = 3;//商店商品
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -75,6 +76,16 @@ message PlayerInfo // IMessage
 	required int64 GoldNum = 2;//金币数量
 	required int64 WingNum  = 3;//元宝数量
 	required string Icon = 4;//用户头像
+}
+
+message ShopInfo //IMessage
+{
+	required long Id = 1;//物品ID
+	required int ShopType = 2;//商品类型
+	required string Name = 3;//商品名称
+	required string Desc = 4;//商品介绍
+	required int Price = 5;//商品单价
+	required string Icon = 6;//商品图标
 }
 
 message C2G_PlayerInfo // IRequest

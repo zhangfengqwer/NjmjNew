@@ -22,6 +22,7 @@ namespace ETHotfix
 
         public long uid;//用户UID
         private PlayerInfo playerInfo;
+        private List<ShopInfo> shopInfoList;//商店信息
 
         public void SetPlayerInfo(PlayerInfo playerInfo)
         {
@@ -31,6 +32,16 @@ namespace ETHotfix
         public PlayerInfo GetPlayerInfo()
         {
             return playerInfo;
+        }
+
+        public void SetShopInfoList(List<ShopInfo> shopInfoList)
+        {
+            this.shopInfoList = shopInfoList;
+        }
+
+        public List<ShopInfo> GetShopInfoList()
+        {
+            return shopInfoList;
         }
 
         public void Awake()
