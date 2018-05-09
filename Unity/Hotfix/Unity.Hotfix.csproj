@@ -125,6 +125,8 @@
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
+    <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
+    <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
     <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
