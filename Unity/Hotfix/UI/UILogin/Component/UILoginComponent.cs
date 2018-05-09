@@ -32,6 +32,8 @@ namespace ETHotfix
 
         private Text text_yanzhengmadaojishi;
 
+        bool isLoginSuccess = false;
+
         public void Awake()
 		{
             ToastScript.clear();
@@ -152,6 +154,11 @@ namespace ETHotfix
             int time = 60;
             while (time >= 0)
             {
+                if (isLoginSuccess)
+                {
+                    return;
+                }
+
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                 --time;
 
@@ -187,6 +194,7 @@ namespace ETHotfix
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
 
                 ToastScript.createToast("登录成功");
+                isLoginSuccess = true;
 
                 {
                     // 保存Phone
