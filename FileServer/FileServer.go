@@ -7,5 +7,5 @@ import (
 
 func main() {
 	// Simple static webserver:
-	log.Fatal(http.ListenAndServe(":8080", http.FileServer(http.Dir("../Release/"))))
+	log.Fatal(http.ListenAndServe(":8384", http.FileServer(http.Dir("../Release/"))))
 }
