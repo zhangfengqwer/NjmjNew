@@ -76,7 +76,7 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (false)
+            if (true)
             {
                 phone = "";
                 token = "";
@@ -154,13 +154,13 @@ namespace ETHotfix
             int time = 60;
             while (time >= 0)
             {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+                --time;
+
                 if (isLoginSuccess)
                 {
                     return;
                 }
-
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-                --time;
 
                 text_yanzhengmadaojishi.text = time.ToString();
             }
