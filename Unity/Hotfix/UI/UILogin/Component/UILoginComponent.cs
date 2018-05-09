@@ -74,11 +74,17 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            //if ((phone.CompareTo("") != 0) && (token.CompareTo("") != 0))
-            //{
-            //    OnLoginPhone(phone, "", token);
-            //}
-            //else
+            if (false)
+            {
+                phone = "";
+                token = "";
+            }
+
+            if ((phone.CompareTo("") != 0) && (token.CompareTo("") != 0))
+            {
+                OnLoginPhone(phone, "", token);
+            }
+            else
             {
                 panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -139,8 +145,6 @@ namespace ETHotfix
                 sessionWrap?.Dispose();
                 Log.Error(e);
             }
-            
-            //ToastScript.createToast("验证码为123456");
         }
 
         public async void startPhoneCodeTimer()
