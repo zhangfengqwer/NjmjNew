@@ -143,6 +143,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public long Uid;
 
+		[ProtoMember(3)]
+		public List<ShopInfo> ShopInfoList = new List<ShopInfo>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -201,6 +204,30 @@ namespace ETHotfix
 		public long WingNum;
 
 		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.ShopInfo)]
+	[ProtoContract]
+	public partial class ShopInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long Id;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int ShopType;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(4, IsRequired = true)]
+		public string Desc;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int Price;
+
+		[ProtoMember(6, IsRequired = true)]
 		public string Icon;
 
 	}

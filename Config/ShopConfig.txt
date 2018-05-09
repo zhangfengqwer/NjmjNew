@@ -1,0 +1,17 @@
+{"_id":1,"shopType":1,"Name":"60元宝","Desc":"60元宝","Price":6,"Icon":"wing1"}
+{"_id":2,"shopType":1,"Name":"300元宝","Desc":"300元宝","Price":30,"Icon":"wing2"}
+{"_id":3,"shopType":1,"Name":"500元宝","Desc":"500元宝","Price":50,"Icon":"wing3"}
+{"_id":4,"shopType":1,"Name":"1180元宝","Desc":"1180元宝","Price":118,"Icon":"wing4"}
+{"_id":5,"shopType":2,"Name":"小金币袋","Desc":"购买获得10000金币;VIP折扣价8","Price":10,"Icon":"gold1"}
+{"_id":6,"shopType":2,"Name":"金币袋","Desc":"购买获得330000金币;VIP折扣价240","Price":300,"Icon":"gold2"}
+{"_id":7,"shopType":2,"Name":"金币罐","Desc":"购买获得575000金币;VIP折扣价400","Price":500,"Icon":"gold3"}
+{"_id":8,"shopType":2,"Name":"金币箱","Desc":"购买获得1150000金币;VIP折扣价800","Price":1000,"Icon":"gold4"}
+{"_id":9,"shopType":3,"Name":"紫金石 x 100","Desc":"比赛道具用于报名参顶级比赛;VIP折扣价800","Price":1000,"Icon":"purpleStone"}
+{"_id":10,"shopType":3,"Name":"30天表情包","Desc":"使用后可在房间使用特殊表情;VIP折扣价96","Price":120,"Icon":"expression"}
+{"_id":11,"shopType":3,"Name":"喇叭","Desc":"喇叭喊话全服可见;VIP折扣价8","Price":10,"Icon":"wing"}
+{"_id":12,"shopType":3,"Name":"压缩药瓶","Desc":"在比赛中使用后,恢复5000生命值;VIP折扣价8","Price":10,"Icon":"bottle"}
+{"_id":13,"shopType":3,"Name":"绿钻石","Desc":"比赛道具用于报名参加低级比赛;VIP折扣价48","Price":60,"Icon":"greenDiamond"}
+{"_id":14,"shopType":3,"Name":"蓝钻石","Desc":"比赛道具用于报名参高级比赛;VIP折扣价96","Price":120,"Icon":"blueDiamond"}
+{"_id":15,"shopType":4,"Name":"vip7天体验卡","Desc":"vip7天体验卡","Price":70,"Icon":"vipSe"}
+{"_id":16,"shopType":4,"Name":"vip月卡","Desc":"vip月卡","Price":300,"Icon":"vipMo"}
+{"_id":17,"shopType":4,"Name":"vip季卡","Desc":"vip季卡","Price":800,"Icon":"vipJi"}

@@ -147,7 +147,8 @@ namespace ETHotfix
                 }
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-
+                Game.Scene.GetComponent<PlayerInfoComponent>().SetShopInfoList(g2CLoginGate.ShopInfoList);
+                Debug.Log(JsonHelper.ToJson(g2CLoginGate.ShopInfoList));
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}

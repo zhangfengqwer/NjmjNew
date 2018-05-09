@@ -117,5 +117,6 @@
     <Folder Include="Module\Message\Network\KCP\" />
     <Folder Include="Module\Message\Network\TCP\" />
     <Folder Include="Module\Numeric\" />
+    <Folder Include="Njmj\Config\" />
   </ItemGroup>
 </Project>

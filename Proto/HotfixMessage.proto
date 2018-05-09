@@ -43,6 +43,7 @@ message G2C_LoginGate // IResponse
 {
 	required int64 PlayerId = 1;
 	required int64 Uid = 2;//用户ID
+	repeated ShopInfo ShopInfoList = 3;//商店商品
 }
 
 message G2C_TestHotfixMessage // IMessage
