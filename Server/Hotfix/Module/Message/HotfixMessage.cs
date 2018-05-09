@@ -255,7 +255,7 @@ namespace ETHotfix
 		public int Price;
 
 		[ProtoMember(6, IsRequired = true)]
-		public string Icon;
+		public int CurrencyType;
 
 	}
 

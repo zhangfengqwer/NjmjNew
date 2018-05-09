@@ -18,6 +18,10 @@ namespace ETHotfix
     {
         private Sprite icon1;
         private Sprite icon2;
+        private Sprite icon3;
+        private Sprite icon4;
+        private Sprite icon5;
+        private Sprite icon6;
         private Dictionary<string, Sprite> iconDic = new Dictionary<string, Sprite>();
 
         public void Awake()
@@ -29,8 +33,20 @@ namespace ETHotfix
             icon1 = CreateSprite(texture1);
             Texture2D texture2 = bundleGameObject.Get<Texture2D>("Icon2");
             icon2 = CreateSprite(texture2);
+            Texture2D texture3 = bundleGameObject.Get<Texture2D>("1001");
+            icon3 = CreateSprite(texture3);
+            Texture2D texture4 = bundleGameObject.Get<Texture2D>("1002");
+            icon4 = CreateSprite(texture4);
+            Texture2D texture5 = bundleGameObject.Get<Texture2D>("1003");
+            icon5 = CreateSprite(texture5);
+            Texture2D texture6 = bundleGameObject.Get<Texture2D>("1004");
+            icon6 = CreateSprite(texture6);
             AddSprite("Icon1",icon1);
             AddSprite("Icon2", icon2);
+            AddSprite("1001", icon3);
+            AddSprite("1002", icon4);
+            AddSprite("1003", icon5);
+            AddSprite("1004", icon6);
         }
 
         private Sprite CreateSprite(Texture2D texture)

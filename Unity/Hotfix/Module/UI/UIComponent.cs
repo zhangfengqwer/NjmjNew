@@ -100,7 +100,6 @@ namespace ETHotfix
 			{
 				UI ui = UiTypes[type].Create(this.GetParent<Scene>(), type, Root);
                 uis.Add(type, ui);
-
 				// 设置canvas
 				string cavasName = ui.GameObject.GetComponent<CanvasConfig>().CanvasName;
 				ui.GameObject.transform.SetParent(this.Root.Get<GameObject>(cavasName).transform, false);
@@ -111,6 +110,23 @@ namespace ETHotfix
 				throw new Exception($"{type} UI 错误: {e}");
 			}
 		}
+
+        public UI Create(string type,GameObject root)
+        {
+            try
+            {
+                UI ui = UiTypes[type].Create(this.GetParent<Scene>(), type, Root);
+                uis.Add(type, ui);
+                // 设置canvas
+                string cavasName = ui.GameObject.GetComponent<CanvasConfig>().CanvasName;
+                ui.GameObject.transform.SetParent(root.Get<GameObject>(cavasName).transform, false);
+                return ui;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"{type} UI 错误: {e}");
+            }
+        }
 
 		public void Add(string type, UI ui)
 		{

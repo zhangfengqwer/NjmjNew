@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 224342748331444798}
   - component: {fileID: 222570335057776198}
   - component: {fileID: 114312026091131826}
+  - component: {fileID: 114737978395733438}
+  - component: {fileID: 114619011184865438}
   m_Layer: 5
   m_Name: UIWingItem
   m_TagString: Untagged
@@ -262,6 +264,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &114619011184865438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875755055914344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8347f75bbf20473292de676504ad7398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanvasName: Grid
 --- !u!114 &114638511744436502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,6 +303,26 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114737978395733438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875755055914344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: Icon
+    gameObject: {fileID: 1331810823092826}
+  - key: NameTxt
+    gameObject: {fileID: 1524243831968478}
+  - key: PriceTxt
+    gameObject: {fileID: 1944506790988792}
+  - key: BuyBtn
+    gameObject: {fileID: 1116847456154956}
 --- !u!114 &114966704762261724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,8 +443,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 644, y: -64}
-  m_SizeDelta: {x: 12, y: 1529}
+  m_AnchoredPosition: {x: 500.3, y: -64}
+  m_SizeDelta: {x: 12, y: 1238.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224342748331444798
 RectTransform:
@@ -486,7 +520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 536.80005, y: -36}
+  m_AnchoredPosition: {x: 772, y: -36}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224931067468719328
@@ -504,6 +538,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 781.6001, y: -36}
+  m_AnchoredPosition: {x: 1053, y: -36}
   m_SizeDelta: {x: 158, y: 68}
   m_Pivot: {x: 0.5, y: 0.5}
