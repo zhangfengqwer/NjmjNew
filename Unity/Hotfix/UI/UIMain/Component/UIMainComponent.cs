@@ -120,18 +120,7 @@ namespace ETHotfix
 
         private async void OnEnterRoom()
         {
-            G2C_EnterRoom g2CEnterRoom = (G2C_EnterRoom) await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_EnterRoom());
-
-            if (g2CEnterRoom.Error != ErrorCode.ERR_Success)
-            {
-                Log.Error(g2CEnterRoom.Message);
-            }
-            else
-            {
-                Log.Debug("进入房间成功:"+JsonHelper.ToJson(g2CEnterRoom));
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
-            }
+            Game.Scene.GetComponent<SessionWrapComponent>().Session.Send(new C2G_EnterRoom());
         }
 
         private async void SetPlayerInfo()

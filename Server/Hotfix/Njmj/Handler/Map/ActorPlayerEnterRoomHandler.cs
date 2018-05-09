@@ -10,13 +10,24 @@ namespace ETHotfix
 	{
 	    protected override async Task Run(Gamer gamer, C2M_ActorGamerEnterRoom message, Action<M2C_ActorGamerEnterRoom> reply)
 	    {
-	        await Task.CompletedTask;
-
 	        Log.Info(JsonHelper.ToJson(message));
-
 	        M2C_ActorGamerEnterRoom response = new M2C_ActorGamerEnterRoom();
+	        try
+	        {
+	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+	            Room room = roomComponent.Get(gamer.RoomID);
 
-	        reply(response);
+	            room.Broadcast(new Actor_GamerExitRoom()
+	            {
+	                Uid = gamer.UserID
+	            });
+
+	            reply(response);
+	        }
+	        catch (Exception e)
+	        {
+	            ReplyError(response, e, reply);
+	        }
 	    }
 	}
 }

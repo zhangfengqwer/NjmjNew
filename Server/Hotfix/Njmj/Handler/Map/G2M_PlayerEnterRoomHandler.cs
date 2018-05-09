@@ -25,7 +25,6 @@ namespace ETHotfix
 			    	idleRoom = ComponentFactory.Create<Room>();
 			    	roomComponent.Add(idleRoom);
 			    }
-			  
 
 			    idleRoom.Add(gamer);
 
@@ -46,14 +45,11 @@ namespace ETHotfix
                     gamerInfo.IsReady = temp.IsReady;
                     Gamers.Add(gamerInfo);
                 }
-
-			    ActorProxyComponent proxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
-			    ActorProxy actorProxy = proxyComponent.Get(message.SessionId);
-
-			    actorProxy.Send(new Actor_GamerEnterRoom()
+			    
+			    idleRoom.Broadcast(new Actor_GamerEnterRoom()
 			    {
-                    Gamers = Gamers
-                });
+			        Gamers = Gamers
+			    });
 
 			    response.GameId = gamer.Id;
 			    Log.Info(JsonHelper.ToJson(response));
