@@ -90,6 +90,13 @@ namespace ETHotfix
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
 
+            playerIcon.GetComponent<Button>().onClick.Add(() =>
+            {
+                //打开用户基本信息界面
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
+                SetUIHideOrOpen(false);
+            });
+
             #endregion
 
             #region set playerInfo 
@@ -148,6 +155,11 @@ namespace ETHotfix
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
+        }
+
+        public void SetUIHideOrOpen(bool isHide)
+        {
+            GetParent<UI>().GameObject.SetActive(isHide);
         }
     }
 }
