@@ -121,4 +121,19 @@ message M2C_ActorGamerEnterRoom // IActorResponse
 	required string Info = 1;
 }
 
+message C2M_ActorGamerExitRoom // IActorRequest
+{
+
+}
+
+message M2C_ActorGamerExitRoom // IActorResponse
+{
+
+}
+
+message Actor_GamerExitRoom // IActorMessage
+{
+    required long Uid = 1;
+}
+
 #endregion

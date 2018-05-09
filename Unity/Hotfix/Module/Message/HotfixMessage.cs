@@ -331,20 +331,64 @@ namespace ETHotfix
 
 	}
 
-    [Message(HotfixOpcode.M2C_ActorGamerEnterRoom)]
-    [ProtoContract]
-    public partial class M2C_ActorGamerEnterRoom: IActorResponse
-    {
-        [ProtoMember(90, IsRequired = true)]
-        public int RpcId { get; set; }
+	[Message(HotfixOpcode.M2C_ActorGamerEnterRoom)]
+	[ProtoContract]
+	public partial class M2C_ActorGamerEnterRoom: IActorResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
 
-        [ProtoMember(91, IsRequired = true)]
-        public int Error { get; set; }
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
 
-        [ProtoMember(92, IsRequired = true)]
-        public string Message { get; set; }
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
-        [ProtoMember(1, IsRequired = true)]
-        public string Info;
-    }
+		[ProtoMember(1, IsRequired = true)]
+		public string Info;
+
+	}
+
+	[Message(HotfixOpcode.C2M_ActorGamerExitRoom)]
+	[ProtoContract]
+	public partial class C2M_ActorGamerExitRoom: IActorRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.M2C_ActorGamerExitRoom)]
+	[ProtoContract]
+	public partial class M2C_ActorGamerExitRoom: IActorResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerExitRoom)]
+	[ProtoContract]
+	public partial class Actor_GamerExitRoom: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
 }

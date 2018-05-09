@@ -15,7 +15,12 @@ namespace ETHotfix
             try
             {
                 Log.Info($"收到actor:{JsonHelper.ToJson(message)}");
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
 

@@ -19,7 +19,9 @@ namespace ETHotfix
 	public class UIRoomComponent: Component
 	{
 	    private Button changeTableBtn;
-	    public readonly GameObject[] GamersPanel = new GameObject[4];
+	    private Button exitBtn;
+
+        public readonly GameObject[] GamersPanel = new GameObject[4];
 
 	    public void Awake()
 	    {
@@ -31,7 +33,17 @@ namespace ETHotfix
 	        GamersPanel[3] = rc.Get<GameObject>("Left");
 
 	        this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
+	        this.exitBtn = rc.Get<GameObject>("ExitBtn").GetComponent<Button>();
+
 	        this.changeTableBtn.onClick.Add(OnChangeTable);
+	        this.exitBtn.onClick.Add(OnExit);
+	    }
+
+	    private async void OnExit()
+	    {
+            M2C_ActorGamerExitRoom exitRoom = (M2C_ActorGamerExitRoom)await SessionWrapComponent.Instance.Session.Call(
+                new C2M_ActorGamerExitRoom());
+	     
 	    }
 
 	    private async void OnChangeTable()
@@ -57,7 +69,8 @@ namespace ETHotfix
 	    public void RemoveGamer(long id)
 	    {
 	        Gamer gamer = GetParent<UI>().GetComponent<GamerComponent>().Remove(id);
-	        gamer.Dispose();
+	        gamer.GetComponent<GamerUIComponent>().Panel.SetActive(false);
+            gamer.Dispose();
 	    }
     }
 }
