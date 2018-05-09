@@ -1,3 +1,17 @@
+message C2R_PhoneLogin // IRequest
+{
+	required string	Phone	 = 1;	// 手机号
+	required string	Code = 2;		// 验证码
+	required string	Token = 3;
+}
+
+message R2C_PhoneLogin // IResponse
+{
+	required string Address = 1;
+	required int64 	Key	    = 2;
+	required string Token	= 3;
+}
+
 message C2R_Login // IRequest
 {
 	required string	Account	 = 1;	// 帐号

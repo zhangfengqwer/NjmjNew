@@ -74,6 +74,8 @@ namespace ETHotfix
             {
                 //打开商城
                 Log.Debug("打开商城界面");
+                ShopConfig unitConfig = (ShopConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(ShopConfig), 1);
+                Debug.Log(JsonHelper.ToJson(unitConfig));
             });
 
             taskBtn.onClick.Add(() =>
