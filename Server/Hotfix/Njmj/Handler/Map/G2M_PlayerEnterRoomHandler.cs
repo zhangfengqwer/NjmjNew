@@ -17,15 +17,18 @@ namespace ETHotfix
 			    await gamer.AddComponent<ActorComponent>().AddLocation();
 			    gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
-
-
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 			    //获得空闲的房间
 			    Room idleRoom = roomComponent.GetIdleRoom();
 			    if (idleRoom == null)
 			    {
 			    	idleRoom = ComponentFactory.Create<Room>();
-			    	roomComponent.Add(idleRoom);
+			        idleRoom.AddComponent<DeskComponent>();
+//			        idleRoom.AddComponent<DeskCardsCacheComponent>();
+			        idleRoom.AddComponent<GameControllerComponent>();
+			        idleRoom.AddComponent<OrderControllerComponent>();
+
+                    roomComponent.Add(idleRoom);
 			    }
 
 			    idleRoom.Add(gamer);

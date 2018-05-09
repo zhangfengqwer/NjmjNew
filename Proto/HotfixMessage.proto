@@ -136,4 +136,9 @@ message Actor_GamerExitRoom // IActorMessage
     required long Uid = 1;
 }
 
+message Actor_GamerReady // IActorMessage
+{
+    required long Uid = 1;
+}
+
 #endregion

@@ -27,5 +27,6 @@ namespace ETModel
 		 public const ushort C2M_ActorGamerExitRoom = 10023;
 		 public const ushort M2C_ActorGamerExitRoom = 10024;
 		 public const ushort Actor_GamerExitRoom = 10025;
+		 public const ushort Actor_GamerReady = 10026;
 	}
 }

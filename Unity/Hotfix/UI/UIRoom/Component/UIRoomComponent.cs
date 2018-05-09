@@ -18,10 +18,11 @@ namespace ETHotfix
 	
 	public class UIRoomComponent: Component
 	{
-	    private Button changeTableBtn;
-	    private Button exitBtn;
+	    public readonly GameObject[] GamersPanel = new GameObject[4];
 
-        public readonly GameObject[] GamersPanel = new GameObject[4];
+        private Button changeTableBtn;
+	    private Button exitBtn;
+	    private Button readyBtn;
 
 	    public void Awake()
 	    {
@@ -33,10 +34,17 @@ namespace ETHotfix
 	        GamersPanel[3] = rc.Get<GameObject>("Left");
 
 	        this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
+	        this.readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
 	        this.exitBtn = rc.Get<GameObject>("ExitBtn").GetComponent<Button>();
 
 	        this.changeTableBtn.onClick.Add(OnChangeTable);
 	        this.exitBtn.onClick.Add(OnExit);
+	        this.readyBtn.onClick.Add(OnReady);
+	    }
+
+	    private async void OnReady()
+	    {
+	        SessionWrapComponent.Instance.Session.Send(new Actor_GamerReady());
 	    }
 
 	    private async void OnExit()

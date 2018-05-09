@@ -16,13 +16,22 @@ namespace ETHotfix
             {
                 Log.Info($"收到actor:{JsonHelper.ToJson(message)}");
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
-
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
+
+                Gamer[] gamers = gamerComponent.GetAll();
+
+                for (int i = 0; i < gamers.Length; i++)
+                {
+                    if (gamers[i] == null)
+                        continue;
+                    if (gamers[i].UserID != 0)
+                    {
+                        roomComponent.RemoveGamer(gamers[i].UserID);
+                    }
+                }
 
                 GamerInfo localGamer = null;
                 for (int i = 0; i < message.Gamers.Count; i++)
@@ -54,7 +63,9 @@ namespace ETHotfix
                     }
 
                     //排序
-                    gamerInfo.SeatIndex = Math.Abs(gamerInfo.SeatIndex - localGamer.SeatIndex);
+                    int index = gamerInfo.SeatIndex - localGamer.SeatIndex;
+                    if (index < 0) index += 4;
+                    gamerInfo.SeatIndex = index;
                     //根据座位的indax添加玩家
                     roomComponent.AddGamer(gamer, gamerInfo.SeatIndex);
                 }
