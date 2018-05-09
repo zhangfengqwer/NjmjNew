@@ -43,8 +43,10 @@ namespace ETHotfix
 	    {
             M2C_ActorGamerExitRoom exitRoom = (M2C_ActorGamerExitRoom)await SessionWrapComponent.Instance.Session.Call(
                 new C2M_ActorGamerExitRoom());
-	     
-	    }
+
+	        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+	        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+        }
 
 	    private async void OnChangeTable()
 	    {

@@ -162,7 +162,7 @@ namespace ETHotfix
 
             if (this.Panel != null)
             {
-                
+                name.text = this.GetParent<Gamer>().UserID + "";
             }
         }
 

@@ -17,6 +17,8 @@ namespace ETHotfix
 			    await gamer.AddComponent<ActorComponent>().AddLocation();
 			    gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
+
+
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 			    //获得空闲的房间
 			    Room idleRoom = roomComponent.GetIdleRoom();
@@ -51,7 +53,9 @@ namespace ETHotfix
 			        Gamers = Gamers
 			    });
 
-			    response.GameId = gamer.Id;
+			    Log.Info($"玩家{message.UserId}进入房间");
+
+                response.GameId = gamer.Id;
 			    Log.Info(JsonHelper.ToJson(response));
 			    reply(response);
             }

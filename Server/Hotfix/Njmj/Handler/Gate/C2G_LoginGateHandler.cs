@@ -26,8 +26,9 @@ namespace ETHotfix
 
 			    //添加User对象关联到Session上
 			    session.AddComponent<SessionUserComponent>().User = user;
-			    //添加消息转发组件
-			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
+
+                //添加消息转发组件
+                await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
                 response.PlayerId = user.Id;
                 response.Uid = userId;
