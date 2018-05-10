@@ -184,7 +184,16 @@ namespace ETHotfix
 			    if (r2CLogin.Error != ErrorCode.ERR_Success)
 			    {
                     ToastScript.createToast(r2CLogin.Message);
-			        return;
+
+                    if (r2CLogin.Error == ErrorCode.ERR_TokenError)
+                    {
+                        PlayerPrefs.SetString("Phone", "");
+                        PlayerPrefs.SetString("Token", "");
+
+                        panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
+                    }
+
+                    return;
 			    }
 
                 connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
