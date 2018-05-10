@@ -38,14 +38,14 @@ namespace ETHotfix
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
-            panel_guize = rc.Get<GameObject>("panel_guize");
-            panel_kefu = rc.Get<GameObject>("panel_kefu");
-            panel_guanyu = rc.Get<GameObject>("panel_guanyu");
+            panel_guize = rc.Get<GameObject>("Panel_guize");
+            panel_kefu = rc.Get<GameObject>("Panel_kefu");
+            panel_guanyu = rc.Get<GameObject>("Panel_guanyu");
 
-            btn_guize = rc.Get<GameObject>("btn_guize").GetComponent<Button>();
-            btn_kefu = rc.Get<GameObject>("btn_kefu").GetComponent<Button>();
-            btn_guanyu = rc.Get<GameObject>("btn_guanyu").GetComponent<Button>();
-            btn_jiazhangjianhu = rc.Get<GameObject>("btn_jiazhangjianhu").GetComponent<Button>();
+            btn_guize = rc.Get<GameObject>("Button_guize").GetComponent<Button>();
+            btn_kefu = rc.Get<GameObject>("Button_kefu").GetComponent<Button>();
+            btn_guanyu = rc.Get<GameObject>("Button_guanyu").GetComponent<Button>();
+            btn_jiazhangjianhu = rc.Get<GameObject>("Button_jiazhangjianhu").GetComponent<Button>();
 
             btn_guize.onClick.Add(onClick_guize);
             btn_kefu.onClick.Add(onClick_kefu);
@@ -79,25 +79,37 @@ namespace ETHotfix
             {
                 case 1:
                     {
-                        btn_guize.transform.localScale = new Vector3(1,1,1);
-                        btn_kefu.transform.localScale = new Vector3(0,0,0);
-                        btn_guanyu.transform.localScale = new Vector3(0,0,0);
+                        panel_guize.transform.localScale = new Vector3(1,1,1);
+                        panel_kefu.transform.localScale = new Vector3(0,0,0);
+                        panel_guanyu.transform.localScale = new Vector3(0,0,0);
+
+                        btn_guize.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_yxgz_pressed");
+                        btn_kefu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_kefu");
+                        btn_guanyu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_guanyu");
                     }
                     break;
 
                 case 2:
                     {
-                        btn_guize.transform.localScale = new Vector3(0,0,0);
-                        btn_kefu.transform.localScale = new Vector3(1,1,1);
-                        btn_guanyu.transform.localScale = new Vector3(0, 0, 0);
+                        panel_guize.transform.localScale = new Vector3(0,0,0);
+                        panel_kefu.transform.localScale = new Vector3(1,1,1);
+                        panel_guanyu.transform.localScale = new Vector3(0, 0, 0);
+
+                        btn_guize.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_yxgz");
+                        btn_kefu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_kefu_pressed");
+                        btn_guanyu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_guanyu");
                     }
                     break;
 
                 case 3:
                     {
-                        btn_guize.transform.localScale = new Vector3(0,0,0);
-                        btn_kefu.transform.localScale = new Vector3(0, 0, 0);
-                        btn_guanyu.transform.localScale = new Vector3(1,1,1);
+                        panel_guize.transform.localScale = new Vector3(0,0,0);
+                        panel_kefu.transform.localScale = new Vector3(0, 0, 0);
+                        panel_guanyu.transform.localScale = new Vector3(1,1,1);
+
+                        btn_guize.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_yxgz");
+                        btn_kefu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_kefu");
+                        btn_guanyu.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_help", "btn_guanyu_pressed");
                     }
                     break;
             }

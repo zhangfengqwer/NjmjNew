@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 114027285082717040}
   - component: {fileID: 114365805067020342}
   m_Layer: 5
-  m_Name: Button_jiangzhangjianhu
+  m_Name: Button_jiazhangjianhu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,7 +480,7 @@ MonoBehaviour:
     gameObject: {fileID: 1060670482239728}
   - key: Panel_guanyu
     gameObject: {fileID: 1867302433792302}
-  - key: Button_jiangzhangjianhu
+  - key: Button_jiazhangjianhu
     gameObject: {fileID: 1169068695925696}
 --- !u!114 &114140154767799930
 MonoBehaviour:
@@ -1225,8 +1225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 790.58, y: 415.94}
-  m_SizeDelta: {x: 237, y: 102}
+  m_AnchoredPosition: {x: 730, y: 384.47}
+  m_SizeDelta: {x: 360, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224308089085504408
 RectTransform:
@@ -1358,8 +1358,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.2, y: 415.94}
-  m_SizeDelta: {x: 237, y: 102}
+  m_AnchoredPosition: {x: 70, y: 384.47}
+  m_SizeDelta: {x: 360, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224587799428241136
 RectTransform:
@@ -1492,8 +1492,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 540.8, y: 415.94}
-  m_SizeDelta: {x: 237, y: 102}
+  m_AnchoredPosition: {x: 400, y: 384.47}
+  m_SizeDelta: {x: 360, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224970746504483286
 RectTransform:
