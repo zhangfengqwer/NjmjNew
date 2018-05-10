@@ -22,6 +22,7 @@ namespace ETHotfix
         private GameObject panel_kefu;
         private GameObject panel_guanyu;
 
+        private Button btn_back;
         private Button btn_guize;
         private Button btn_kefu;
         private Button btn_guanyu;
@@ -42,15 +43,22 @@ namespace ETHotfix
             panel_kefu = rc.Get<GameObject>("Panel_kefu");
             panel_guanyu = rc.Get<GameObject>("Panel_guanyu");
 
+            btn_back = rc.Get<GameObject>("Button_back").GetComponent<Button>();
             btn_guize = rc.Get<GameObject>("Button_guize").GetComponent<Button>();
             btn_kefu = rc.Get<GameObject>("Button_kefu").GetComponent<Button>();
             btn_guanyu = rc.Get<GameObject>("Button_guanyu").GetComponent<Button>();
             btn_jiazhangjianhu = rc.Get<GameObject>("Button_jiazhangjianhu").GetComponent<Button>();
 
+            btn_back.onClick.Add(onClick_back);
             btn_guize.onClick.Add(onClick_guize);
             btn_kefu.onClick.Add(onClick_kefu);
             btn_guanyu.onClick.Add(onClick_guanyu);
             btn_jiazhangjianhu.onClick.Add(onClick_jiazhangjianhu);
+        }
+
+        public void onClick_back()
+        {
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIHelp);
         }
 
         public void onClick_guize()
@@ -70,7 +78,7 @@ namespace ETHotfix
 
         public void onClick_jiazhangjianhu()
         {
-
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIJiaZhangJianHu);
         }
 
         public void showPanel(int tab)
