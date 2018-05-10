@@ -16,6 +16,7 @@ namespace ETHotfix
         public const string UIShop = "UIShop";//商城界面
         public const string UIWingItem = "UIWingItem";//元宝Item
         public const string UIGoldItem = "UIGoldItem";//金币Item
+        public const string UIPropItem = "UIPropItem";//道具Item
 
     }
 }
