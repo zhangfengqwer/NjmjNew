@@ -34,6 +34,15 @@ namespace ETHotfix
             AddSprite(shopBundle, "1006");
             AddSprite(shopBundle, "1007");
             AddSprite(shopBundle, "1008");
+            AddSprite(shopBundle, "1009");
+            AddSprite(shopBundle, "1010");
+            AddSprite(shopBundle, "1011");
+            AddSprite(shopBundle, "1012");
+            AddSprite(shopBundle, "1013");
+            AddSprite(shopBundle, "1014");
+            AddSprite(shopBundle, "1015");
+            AddSprite(shopBundle, "1016");
+            AddSprite(shopBundle, "1017");
         }
 
         private void AddSprite(GameObject bundle,string iconName)

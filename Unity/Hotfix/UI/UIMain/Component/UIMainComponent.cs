@@ -76,13 +76,7 @@ namespace ETHotfix
                 Log.Debug("打开商城界面");
                 //ShopConfig unitConfig = (ShopConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(ShopConfig), 1);
                 //Debug.Log(JsonHelper.ToJson(unitConfig));
-                if(Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop) != null)
-                {
-                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>() != null)
-                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetUIHideOrOpen(true);
-                }
-                else
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
             });
 
             taskBtn.onClick.Add(() =>
