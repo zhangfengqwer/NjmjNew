@@ -92,6 +92,8 @@ namespace ETHotfix
             {
                 //打开领奖界面
                 Log.Debug("打开领奖界面");
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
