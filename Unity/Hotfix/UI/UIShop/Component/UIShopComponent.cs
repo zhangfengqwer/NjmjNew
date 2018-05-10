@@ -1,10 +1,12 @@
 ﻿using ETModel;
+using ProtoBuf;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ETHotfix
 {
+    [ProtoContract]
     public enum ShopType
     {
         Wing = 1,
@@ -51,8 +53,7 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         //全部ui缓存字典
         private Dictionary<ShopType, List<UI>> uiDic = new Dictionary<ShopType, List<UI>>();
-        //计时器
-        private int count = 0;
+        private float size;
         #endregion 
 
         public void Awake()
@@ -79,6 +80,9 @@ namespace ETHotfix
             buttonDic.Add(ShopType.Prop, proBtn.gameObject);
             #endregion
 
+            //打开界面的时候刷新
+            SetGrid();
+
             AddShopInfoByType();
 
             #region buttonClickEvt
@@ -97,8 +101,18 @@ namespace ETHotfix
                 ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
             });
 
+            returnBtn.onClick.Add(() =>
+            {
+                SetUIHideOrOpen(false);
+            });
+
             wingBtn.onClick.Invoke();
             #endregion
+        }
+
+        public void SetUIHideOrOpen(bool isHide)
+        {
+            GetParent<UI>().GameObject.SetActive(isHide);
         }
 
         public void SetOpenItemPos(int index,ShopType type,float height)
@@ -114,6 +128,13 @@ namespace ETHotfix
                     propGrid.transform.GetChild(i).localPosition = new Vector3(propGrid.transform.GetChild(i).localPosition.x, propGrid.transform.GetChild(i).localPosition.y - 120, 0);
                 }
             }
+        }
+
+        private void SetGrid()
+        {
+            SetPropItemDesActiveFalse();
+            if (size != 0)
+                propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
         }
 
         public void SetCloseItemPos(int index)
@@ -234,6 +255,23 @@ namespace ETHotfix
                         break;
                 }
             }
+            if (type == ShopType.Prop)
+                size = propGrid.GetComponent<RectTransform>().rect.height;
+        }
+        
+        private void SetPropItemDesActiveFalse()
+        {
+            if(propGrid.transform.childCount> 0)
+            {
+                for(int i = 0;i< propGrid.transform.childCount; ++i)
+                {
+                    GameObject obj = propGrid.transform.GetChild(i).gameObject;
+                    if (obj.transform.Find("CloseBtn").gameObject.activeInHierarchy)
+                        obj.transform.Find("CloseBtn").gameObject.SetActive(false);
+                    obj.transform.Find("OpenBtn").gameObject.SetActive(true);
+                }
+            }
+            
         }
 
         /// <summary>
