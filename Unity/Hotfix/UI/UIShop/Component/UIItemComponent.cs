@@ -20,6 +20,7 @@ namespace ETHotfix
         private Text priceTxt;
         private Button buyBtn;
         private ReferenceCollector rc;
+        private int index;
 
         public void Awake()
         {
@@ -51,6 +52,28 @@ namespace ETHotfix
             string[] strArr = info.Desc.Split(';');
             descTxt.text = strArr[0];
             disCountTxt.text = strArr[1];
+        }
+
+        public void SetPropItem(ShopInfo info,int index)
+        {
+            SetCommonItem(info);
+            this.index = index;
+            Button openBtn = rc.Get<GameObject>("OpenBtn").GetComponent<Button>();
+            Button closeBtn = rc.Get<GameObject>("CloseBtn").GetComponent<Button>();
+            GameObject desImg = rc.Get<GameObject>("DesImg");
+            float height = desImg.GetComponent<RectTransform>().rect.height;
+            openBtn.onClick.Add(() =>
+            {
+                openBtn.gameObject.SetActive(false);
+                closeBtn.gameObject.SetActive(true);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetOpenItemPos(index, ShopType.Prop, height);
+            });
+            closeBtn.onClick.Add(() =>
+            {
+                closeBtn.gameObject.SetActive(false);
+                openBtn.gameObject.SetActive(true);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetCloseItemPos(index);
+            });
         }
     }
 }
