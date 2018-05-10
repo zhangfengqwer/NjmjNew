@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ETModel;
 
 namespace ETHotfix
@@ -26,12 +27,25 @@ namespace ETHotfix
 
 			    //添加User对象关联到Session上
 			    session.AddComponent<SessionUserComponent>().User = user;
-
+                ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+                List<ShopInfo> shopInfoList = new List<ShopInfo>();
+                for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+                {
+                    ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), i);
+                    ShopInfo info = new ShopInfo();
+                    info.Id = config.Id;
+                    info.Name = config.Name;
+                    info.Price = config.Price;
+                    info.ShopType = config.shopType;
+                    info.Desc = config.Desc;
+                    shopInfoList.Add(info);
+                }
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
                 response.PlayerId = user.Id;
                 response.Uid = userId;
+                response.ShopInfoList = shopInfoList;
 				reply(response);
 
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
@@ -41,5 +55,11 @@ namespace ETHotfix
 				ReplyError(response, e, reply);
 			}
 		}
+
+        private void AddShopInfo()
+        {
+            
+
+        }
 	}
 }

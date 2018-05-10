@@ -164,6 +164,8 @@ namespace ETHotfix
             if (this.Panel != null)
             {
                 name.text = this.GetParent<Gamer>().UserID + "";
+//                GameObject asset = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset("PlayerIcon.unity3d", "PlayerIcon");
+//                head.sprite = asset.Get<Sprite>("Icon2");
             }
         }
 

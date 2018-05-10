@@ -14,15 +14,21 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到actor:{JsonHelper.ToJson(message)}");
-
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
+                Log.Info($"收到玩家进入:{JsonHelper.ToJson(message)}");
+                //第一次进入创建UIRoom
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+                }
+              
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer[] gamers = gamerComponent.GetAll();
 
+                //清空座位
                 for (int i = 0; i < gamers.Length; i++)
                 {
                     if (gamers[i] == null)
@@ -52,6 +58,7 @@ namespace ETHotfix
                 for (int i = 0; i < message.Gamers.Count; i++)
                 {
                     GamerInfo gamerInfo = message.Gamers[i];
+                   
                     Gamer gamer;
                     if (gamerInfo.UserID == localGamer.UserID)
                     {
@@ -65,9 +72,9 @@ namespace ETHotfix
                     //排序
                     int index = gamerInfo.SeatIndex - localGamer.SeatIndex;
                     if (index < 0) index += 4;
-                    gamerInfo.SeatIndex = index;
+
                     //根据座位的indax添加玩家
-                    roomComponent.AddGamer(gamer, gamerInfo.SeatIndex);
+                    roomComponent.AddGamer(gamer, index);
                 }
             }
             catch (Exception e)

@@ -21,8 +21,8 @@ namespace ETHotfix
                 gamer.IsReady = true;
 	            //消息广播给其他人
 	            room.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
-
-	            Gamer[] gamers = room.GetAll();
+	          
+                Gamer[] gamers = room.GetAll();
                 //房间内有4名玩家且全部准备则开始游戏
 	            if (room.Count == 4 && gamers.Where(g => g.IsReady).Count() == 4)
 	            {
@@ -39,7 +39,27 @@ namespace ETHotfix
 	                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 	                gameController.DealCards();
 
-	            }
+                    //发牌
+	                foreach (var itemGame in gamers)
+	                {
+	                    List<MahjongInfo> mahjongInfos = itemGame.GetComponent<HandCardsComponent>().library;
+	                    foreach (var mahjongInfo in mahjongInfos)
+	                    {
+	                        mahjongInfo.weight = (byte) mahjongInfo.m_weight;
+	                    }
+
+	                    ActorProxy actorProxy = itemGame.GetComponent<UnitGateComponent>().GetActorProxy();
+                        actorProxy.Send(new Actor_StartGame()
+                        {
+                            Mahjongs = itemGame.GetComponent<HandCardsComponent>().library
+                        });
+                    }
+
+	                room.State = RoomState.Game;
+
+	                roomComponent.gameRooms.Add(room.Id, room);
+	                roomComponent.readyRooms.Remove(room.Id);
+                }
 
             }
 	        catch (Exception e)

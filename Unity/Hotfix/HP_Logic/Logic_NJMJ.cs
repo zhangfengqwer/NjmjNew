@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ETModel;
+using ProtoBuf;
 using static ETHotfix.Consts;
 
 namespace ETHotfix
 {
+    [ProtoContract]
     public class MahjongInfo
     {
+        [ProtoMember(1)]
+        public byte weight;
+
         public MahjongWeight m_weight;
 
         public MahjongInfo(MahjongWeight weight)
         {
             m_weight = weight;
         }
+        //pb反序列化必须需要无参数的构造函数
+        public MahjongInfo()
+        {
+
+        }
+
     }
 
     public class HuPaiNeedData

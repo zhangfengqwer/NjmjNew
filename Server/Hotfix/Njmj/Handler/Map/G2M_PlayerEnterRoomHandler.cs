@@ -29,7 +29,7 @@ namespace ETHotfix
 			        idleRoom.AddComponent<OrderControllerComponent>();
 
                     roomComponent.Add(idleRoom);
-			    }
+                }
 
 			    idleRoom.Add(gamer);
 

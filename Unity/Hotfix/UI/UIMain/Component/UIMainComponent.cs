@@ -74,6 +74,8 @@ namespace ETHotfix
             {
                 //打开商城
                 Log.Debug("打开商城界面");
+                //ShopConfig unitConfig = (ShopConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(ShopConfig), 1);
+                //Debug.Log(JsonHelper.ToJson(unitConfig));
             });
 
             taskBtn.onClick.Add(() =>
@@ -123,8 +125,7 @@ namespace ETHotfix
             G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
                 new C2G_EnterRoom());
 
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+          
 
         }
 

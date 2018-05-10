@@ -44,19 +44,18 @@ namespace ETHotfix
 
 	    private async void OnReady()
 	    {
-	        SessionWrapComponent.Instance.Session.Send(new Actor_GamerReady());
+	        SessionWrapComponent.Instance.Session.Send(new Actor_GamerReady()
+	        {
+                    Uid = PlayerInfoComponent.Instance.uid
+	        });
 	    }
 
 	    private async void OnExit()
 	    {
-            M2C_ActorGamerExitRoom exitRoom = (M2C_ActorGamerExitRoom)await SessionWrapComponent.Instance.Session.Call(
-                new C2M_ActorGamerExitRoom());
+	        SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true});
+	    }
 
-	        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
-	        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-        }
-
-	    private async void OnChangeTable()
+        private async void OnChangeTable()
 	    {
 
 	    }

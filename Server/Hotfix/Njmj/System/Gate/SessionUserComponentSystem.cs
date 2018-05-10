@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using ETModel;
 
@@ -9,13 +10,12 @@ namespace ETHotfix
     [ObjectSystem]
     public class SessionUserComponentDestroySystem : DestroySystem<SessionUserComponent>
     {
-        public override void Destroy(SessionUserComponent self)
+        public override async void Destroy(SessionUserComponent self)
         {
             //释放User对象时将User对象从管理组件中移除
             Game.Scene.GetComponent<UserComponent>()?.Remove(self.User.UserID);
 
             StartConfigComponent config = Game.Scene.GetComponent<StartConfigComponent>();
-            ActorProxyComponent actorProxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
 
             //正在匹配中发送玩家退出匹配请求
             if (self.User.IsMatching)
@@ -28,9 +28,14 @@ namespace ETHotfix
             //正在游戏中发送玩家退出房间请求
             if (self.User.ActorID != 0)
             {
-                Log.Info($"session释放,玩家脱出");
+                Log.Info($"session释放,玩家MapId：{self.User.ActorID}");
+
+                ActorProxyComponent actorProxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
                 ActorProxy actorProxy = actorProxyComponent.Get(self.User.ActorID);
-                actorProxy.Send(new C2M_ActorGamerExitRoom());
+                actorProxy.Send(new Actor_GamerExitRoom()
+                {
+                    IsFromClient = false,
+                });
             }
 
             //向登录服务器发送玩家下线消息
