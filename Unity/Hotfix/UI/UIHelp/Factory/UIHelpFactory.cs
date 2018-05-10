@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ETHotfix
 {
-    [UIFactory(UIType.UILogin)]
+    [UIFactory(UIType.UIHelp)]
     public class UIHelpFactory : IUIFactory
     {
         public UI Create(Scene scene, string type, GameObject gameObject)
@@ -18,7 +18,7 @@ namespace ETHotfix
 				login.layer = LayerMask.NameToLayer(LayerNames.UI);
 		        UI ui = ComponentFactory.Create<UI, GameObject>(login);
 
-				ui.AddComponent<UILoginComponent>();
+				ui.AddComponent<UIHelpComponent>();
 				return ui;
 	        }
 	        catch (Exception e)
