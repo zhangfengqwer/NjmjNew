@@ -53,7 +53,6 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         //全部ui缓存字典
         private Dictionary<ShopType, List<UI>> uiDic = new Dictionary<ShopType, List<UI>>();
-        private float size;
         #endregion 
 
         public void Awake()
@@ -96,14 +95,11 @@ namespace ETHotfix
             proBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
-                size = propGrid.GetComponent<RectTransform>().rect.height;
-                Debug.Log(size);
             });
 
             vipBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
-                size = vipGrid.GetComponent<RectTransform>().rect.height;
             });
 
             returnBtn.onClick.Add(() =>

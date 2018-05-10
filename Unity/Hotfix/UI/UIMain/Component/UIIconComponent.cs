@@ -48,7 +48,6 @@ namespace ETHotfix
         private void AddSprite(GameObject bundle,string iconName)
         {
             texture = bundle.Get<Texture2D>(iconName);
-            Debug.Log(texture);
             icon = CreateSprite(texture);
             AddSprite(iconName, icon);
         }
