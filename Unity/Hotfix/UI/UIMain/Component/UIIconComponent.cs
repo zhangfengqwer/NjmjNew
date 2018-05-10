@@ -16,21 +16,39 @@ namespace ETHotfix
 
     public class UIIconComponent :Component
     {
-        private Sprite icon1;
-        private Sprite icon2;
+        private Sprite icon;
+        private Texture2D texture;
         private Dictionary<string, Sprite> iconDic = new Dictionary<string, Sprite>();
 
         public void Awake()
         {
+            GameObject playerIconBundle = GetBundleByUIType(UIType.UIPlayerIcon);
+            GameObject shopBundle = GetBundleByUIType(UIType.UIShopIcon);
+            AddSprite(playerIconBundle, "Icon1");
+            AddSprite(playerIconBundle, "Icon2");
+            AddSprite(shopBundle, "1001");
+            AddSprite(shopBundle, "1002");
+            AddSprite(shopBundle, "1003");
+            AddSprite(shopBundle, "1004");
+            AddSprite(shopBundle, "1005");
+            AddSprite(shopBundle, "1006");
+            AddSprite(shopBundle, "1007");
+            AddSprite(shopBundle, "1008");
+        }
+
+        private void AddSprite(GameObject bundle,string iconName)
+        {
+            texture = bundle.Get<Texture2D>(iconName);
+            Debug.Log(texture);
+            icon = CreateSprite(texture);
+            AddSprite(iconName, icon);
+        }
+
+        private GameObject GetBundleByUIType(string type)
+        {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{UIType.UIIcon}.unity3d");
-            GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{UIType.UIIcon}.unity3d", $"{UIType.UIIcon}");
-            Texture2D texture1 = bundleGameObject.Get<Texture2D>("Icon1");
-            icon1 = CreateSprite(texture1);
-            Texture2D texture2 = bundleGameObject.Get<Texture2D>("Icon2");
-            icon2 = CreateSprite(texture2);
-            AddSprite("Icon1",icon1);
-            AddSprite("Icon2", icon2);
+            resourcesComponent.LoadBundle($"{type}.unity3d");
+             return (GameObject)resourcesComponent.GetAsset($"{type}.unity3d", $"{type}");
         }
 
         private Sprite CreateSprite(Texture2D texture)

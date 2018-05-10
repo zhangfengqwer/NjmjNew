@@ -33,13 +33,15 @@ namespace ETHotfix
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
                 {
-                    ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), i);
+                    int id = 1000 + i;
+                    ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
                     ShopInfo info = new ShopInfo();
                     info.Id = config.Id;
                     info.Name = config.Name;
                     info.Price = config.Price;
                     info.ShopType = config.shopType;
                     info.Desc = config.Desc;
+                    info.CurrencyType = config.CurrencyType;
                     shopInfoList.Add(info);
                 }
                 response.PlayerId = user.Id;
