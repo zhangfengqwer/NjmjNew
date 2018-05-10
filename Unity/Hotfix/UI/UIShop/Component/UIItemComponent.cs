@@ -53,8 +53,32 @@ namespace ETHotfix
             descTxt.text = strArr[0];
             disCountTxt.text = strArr[1];
         }
-
+        Button openBtn;
+        Button closeBtn;
         public void SetPropItem(ShopInfo info,int index)
+        {
+            SetCommonItem(info);
+            this.index = index;
+            if(openBtn == null && closeBtn == null)
+            {
+                openBtn = rc.Get<GameObject>("OpenBtn").GetComponent<Button>();
+                closeBtn = rc.Get<GameObject>("CloseBtn").GetComponent<Button>();
+                openBtn.onClick.Add(() =>
+                {
+                    openBtn.gameObject.SetActive(false);
+                    closeBtn.gameObject.SetActive(true);
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetOpenItemPos(index, ShopType.Prop);
+                });
+                closeBtn.onClick.Add(() =>
+                {
+                    closeBtn.gameObject.SetActive(false);
+                    openBtn.gameObject.SetActive(true);
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetCloseItemPos(index);
+                });
+            }     
+        }
+
+        public void SetVipItem(ShopInfo info, int index)
         {
             SetCommonItem(info);
             this.index = index;
@@ -66,7 +90,7 @@ namespace ETHotfix
             {
                 openBtn.gameObject.SetActive(false);
                 closeBtn.gameObject.SetActive(true);
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetOpenItemPos(index, ShopType.Prop, height);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().SetOpenItemPos(index, ShopType.Vip);
             });
             closeBtn.onClick.Add(() =>
             {

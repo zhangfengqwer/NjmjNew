@@ -80,9 +80,6 @@ namespace ETHotfix
             buttonDic.Add(ShopType.Prop, proBtn.gameObject);
             #endregion
 
-            //打开界面的时候刷新
-            SetGrid();
-
             AddShopInfoByType();
 
             #region buttonClickEvt
@@ -99,6 +96,14 @@ namespace ETHotfix
             proBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
+                size = propGrid.GetComponent<RectTransform>().rect.height;
+                Debug.Log(size);
+            });
+
+            vipBtn.onClick.Add(() =>
+            {
+                ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
+                size = vipGrid.GetComponent<RectTransform>().rect.height;
             });
 
             returnBtn.onClick.Add(() =>
@@ -113,38 +118,67 @@ namespace ETHotfix
         public void SetUIHideOrOpen(bool isHide)
         {
             GetParent<UI>().GameObject.SetActive(isHide);
+            if (isHide)
+            {
+                wingBtn.onClick.Invoke();
+                //打开界面的时候刷新
+                SetGrid();
+            }
         }
 
-        public void SetOpenItemPos(int index,ShopType type,float height)
+        public void SetOpenItemPos(int index,ShopType type)
         {
             if (type == ShopType.Prop)
             {
-                propGrid.GetComponent<GridLayoutGroup>().enabled = false;
-                propGrid.GetComponent<ContentSizeFitter>().enabled = false;
-                float dis = propGrid.GetComponent<RectTransform>().rect.height + 150;
-                propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
-                for(int i = index + 1; i< propGrid.transform.childCount; ++i)
-                {
-                    propGrid.transform.GetChild(i).localPosition = new Vector3(propGrid.transform.GetChild(i).localPosition.x, propGrid.transform.GetChild(i).localPosition.y - 120, 0);
-                }
+                SetScrollV(propGrid, index);
+            }
+            if(type == ShopType.Vip)
+            {
+                SetScrollV(vipGrid,index);
+            }
+        }
+
+        private void SetScrollV(GameObject grid,int index)
+        {
+            Debug.Log("========");
+            Debug.Log(grid.GetComponent<RectTransform>().rect.height);
+            SetGridEnable(grid, false);
+            float dis = grid.GetComponent<RectTransform>().rect.height + 150;
+            grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
+            for (int i = index + 1; i < grid.transform.childCount; ++i)
+            {
+                grid.transform.GetChild(i).localPosition = new Vector3(grid.transform.GetChild(i).localPosition.x, grid.transform.GetChild(i).localPosition.y - 120, 0);
+            }
+        }
+
+        private void SetScrollD(GameObject grid,int index)
+        {
+            float dis = grid.GetComponent<RectTransform>().rect.height - 150;
+            grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
+            for (int i = index + 1; i < grid.transform.childCount; ++i)
+            {
+                grid.transform.GetChild(i).localPosition = new Vector3(grid.transform.GetChild(i).localPosition.x, grid.transform.GetChild(i).localPosition.y + 120, 0);
             }
         }
 
         private void SetGrid()
         {
-            SetPropItemDesActiveFalse();
-            if (size != 0)
-                propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
+            SetPropItemDesActiveFalse(propGrid);
+            SetPropItemDesActiveFalse(vipGrid);
+            SetGridEnable(propGrid,true);
+            SetGridEnable(vipGrid,true);
+        }
+
+        private void SetGridEnable(GameObject grid,bool isEnable)
+        {
+            grid.GetComponent<GridLayoutGroup>().enabled = isEnable;
+            grid.GetComponent<ContentSizeFitter>().enabled = isEnable;
         }
 
         public void SetCloseItemPos(int index)
         {
-            float dis = propGrid.GetComponent<RectTransform>().rect.height - 150;
-            propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
-            for (int i = index + 1; i < propGrid.transform.childCount; ++i)
-            {
-                propGrid.transform.GetChild(i).localPosition = new Vector3(propGrid.transform.GetChild(i).localPosition.x, propGrid.transform.GetChild(i).localPosition.y + 120, 0);
-            }
+            SetScrollD(propGrid, index);
+            SetScrollD(vipGrid, index);
         }
 
         /// <summary>
@@ -252,22 +286,20 @@ namespace ETHotfix
                         uiList[i].GetComponent<UIItemComponent>().SetPropItem(shopInfoList[i],i);
                         break;
                     case ShopType.Vip:
+                        uiList[i].GetComponent<UIItemComponent>().SetVipItem(shopInfoList[i], i);
                         break;
                 }
             }
-            if (type == ShopType.Prop)
-                size = propGrid.GetComponent<RectTransform>().rect.height;
         }
         
-        private void SetPropItemDesActiveFalse()
+        private void SetPropItemDesActiveFalse(GameObject grid)
         {
-            if(propGrid.transform.childCount> 0)
+            if(grid.transform.childCount > 0)
             {
-                for(int i = 0;i< propGrid.transform.childCount; ++i)
+                for(int i = 0;i< grid.transform.childCount; ++i)
                 {
-                    GameObject obj = propGrid.transform.GetChild(i).gameObject;
-                    if (obj.transform.Find("CloseBtn").gameObject.activeInHierarchy)
-                        obj.transform.Find("CloseBtn").gameObject.SetActive(false);
+                    GameObject obj = grid.transform.GetChild(i).gameObject;
+                    obj.transform.Find("CloseBtn").gameObject.SetActive(false);
                     obj.transform.Find("OpenBtn").gameObject.SetActive(true);
                 }
             }
