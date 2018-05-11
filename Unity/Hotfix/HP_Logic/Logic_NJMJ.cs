@@ -63,6 +63,7 @@ namespace ETHotfix
         static Logic_NJMJ s_instance = null;
 
         List<MahjongInfo> m_mahjongList = new List<MahjongInfo>();
+        List<MahjongInfo> m_differenceMahjongList = new List<MahjongInfo>();
 
         public static Logic_NJMJ getInstance()
         {
@@ -165,6 +166,49 @@ namespace ETHotfix
                     m_mahjongList.Add(new MahjongInfo(MahjongWeight.Hua_ZhuZi));
                     m_mahjongList.Add(new MahjongInfo(MahjongWeight.Hua_JuHua));
                 }
+            }
+
+            {
+                // 万
+                for (int i = 1; i <= 9; i++)
+                {
+                    m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)i));
+                }
+
+                // 条
+                for (int i = 11; i <= 19; i++)
+                {
+                    m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)i));
+                }
+
+                // 筒
+                for (int i = 21; i <= 29; i++)
+                {
+                    m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)i));
+                }
+
+                // 东南西北
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)31));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)33));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)35));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)37));
+
+                // 中发白
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)41));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)43));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)45));
+
+                // 春夏秋冬
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)51));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)53));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)55));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)57));
+
+                // 梅兰竹菊
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)61));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)63));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)65));
+                m_differenceMahjongList.Add(new MahjongInfo((MahjongWeight)67));
             }
         }
 
@@ -938,6 +982,31 @@ namespace ETHotfix
             }
 
             return false;
+        }
+
+        // 供外部调用：检查听的牌，为空则没听牌
+        public List<MahjongInfo> checkTingPaiList(List<MahjongInfo> list)
+        {
+            List<MahjongInfo> tingpaiList = new List<MahjongInfo>();
+
+            for(int i = 0; i < m_differenceMahjongList.Count; i++)
+            {
+                List<MahjongInfo> temp = new List<MahjongInfo>();
+                for (int j = 0; j < list.Count; j++)
+                {
+                    temp.Add(list[j]);
+                }
+
+                MahjongInfo mahjongInfoTemp = m_differenceMahjongList[i];
+                temp.Add(mahjongInfoTemp);
+
+                if (isHuPai(temp))
+                {
+                    tingpaiList.Add(mahjongInfoTemp);
+                }
+            }
+
+            return tingpaiList;
         }
     }
 }

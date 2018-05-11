@@ -58,40 +58,54 @@ namespace ETHotfix
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_7));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_8));
+                    //list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
 
                     // 判断是否胡牌
-                    bool b = Logic_NJMJ.getInstance().isHuPai(list);
-                    if (b)
+                    List<MahjongInfo> listTemp = Logic_NJMJ.getInstance().checkTingPaiList(list);
+                    if (listTemp.Count == 0)
                     {
-                        HuPaiNeedData huPaiNeedData = new HuPaiNeedData();
-                        huPaiNeedData.restMahjongCount = 100;
-                        huPaiNeedData.isSelfZhuaPai = true;
-                        huPaiNeedData.isZhuangJia = true;
-                        huPaiNeedData.isGangFaWanPai = true;
-
-                        // 最新的牌
-                        huPaiNeedData.my_lastMahjong = new MahjongInfo(Consts.MahjongWeight.Tong_6);
-
-                        // 碰的牌
-                        huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
-                        huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
-                        huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
-
-                        // 获取胡牌类型
-                        List<HuPaiType> list2 = Logic_NJMJ.getInstance().getHuPaiType(list, huPaiNeedData);
-                        for (int i = 0; i < list2.Count; i++)
-                        {
-                            Log.Debug(list2[i].ToString());
-                        }
+                        Log.Debug("没有听牌");
                     }
                     else
                     {
-                        Log.Debug("无法胡牌");
+                        for (int i = 0; i < listTemp.Count; i++)
+                        {
+                            Log.Debug(listTemp[i].m_weight+ "、");
+                        }
                     }
+
+                    //// 判断是否胡牌
+                    //bool b = Logic_NJMJ.getInstance().isHuPai(list);
+                    //if (b)
+                    //{
+                    //    HuPaiNeedData huPaiNeedData = new HuPaiNeedData();
+                    //    huPaiNeedData.restMahjongCount = 100;
+                    //    huPaiNeedData.isSelfZhuaPai = true;
+                    //    huPaiNeedData.isZhuangJia = true;
+                    //    huPaiNeedData.isGangFaWanPai = true;
+
+                    //    // 最新的牌
+                    //    huPaiNeedData.my_lastMahjong = new MahjongInfo(Consts.MahjongWeight.Tong_6);
+
+                    //    // 碰的牌
+                    //    huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
+                    //    huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
+                    //    huPaiNeedData.my_pengList.Add(new MahjongInfo(MahjongWeight.Tong_6));
+
+                    //    // 获取胡牌类型
+                    //    List<HuPaiType> list2 = Logic_NJMJ.getInstance().getHuPaiType(list, huPaiNeedData);
+                    //    for (int i = 0; i < list2.Count; i++)
+                    //    {
+                    //        Log.Debug(list2[i].ToString());
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Log.Debug("无法胡牌");
+                    //}
                 }
             }
         }
