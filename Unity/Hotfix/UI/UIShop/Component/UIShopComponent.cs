@@ -1,10 +1,12 @@
 ﻿using ETModel;
+using ProtoBuf;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ETHotfix
 {
+    [ProtoContract]
     public enum ShopType
     {
         Wing = 1,
@@ -51,8 +53,6 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         //全部ui缓存字典
         private Dictionary<ShopType, List<UI>> uiDic = new Dictionary<ShopType, List<UI>>();
-        //计时器
-        private int count = 0;
         #endregion 
 
         public void Awake()
@@ -97,32 +97,80 @@ namespace ETHotfix
                 ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
             });
 
+            vipBtn.onClick.Add(() =>
+            {
+                ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
+            });
+
+            returnBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
+            });
+
             wingBtn.onClick.Invoke();
             #endregion
+        }
+
+        public override void Dispose()
+        {
+            buttonDic.Clear();
+            itemDic.Clear();
+            shopInfoDic.Clear();
+            shopInfoList.Clear();
+            itemList.Clear();
+            uiList.Clear();
+            uiDic.Clear();
         }
 
         public void SetOpenItemPos(int index,ShopType type,float height)
         {
             if (type == ShopType.Prop)
             {
-                propGrid.GetComponent<GridLayoutGroup>().enabled = false;
-                propGrid.GetComponent<ContentSizeFitter>().enabled = false;
-                float dis = propGrid.GetComponent<RectTransform>().rect.height + 150;
-                propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
-                for(int i = index + 1; i< propGrid.transform.childCount; ++i)
-                {
-                    propGrid.transform.GetChild(i).localPosition = new Vector3(propGrid.transform.GetChild(i).localPosition.x, propGrid.transform.GetChild(i).localPosition.y - 120, 0);
-                }
+                SetScrollV(propGrid, index, height);
+            }
+            if(type == ShopType.Vip)
+            {
+                SetScrollV(vipGrid,index, height);
             }
         }
 
-        public void SetCloseItemPos(int index)
+        private void SetScrollV(GameObject grid,int index,float height)
         {
-            float dis = propGrid.GetComponent<RectTransform>().rect.height - 150;
-            propGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
-            for (int i = index + 1; i < propGrid.transform.childCount; ++i)
+            SetGridEnable(grid, false);
+            float dis = grid.GetComponent<RectTransform>().rect.height + height;
+            grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
+            for (int i = index + 1; i < grid.transform.childCount; ++i)
             {
-                propGrid.transform.GetChild(i).localPosition = new Vector3(propGrid.transform.GetChild(i).localPosition.x, propGrid.transform.GetChild(i).localPosition.y + 120, 0);
+                grid.transform.GetChild(i).localPosition = new Vector3(grid.transform.GetChild(i).localPosition.x, grid.transform.GetChild(i).localPosition.y - height, 0);
+            }
+        }
+
+        private void SetScrollD(GameObject grid,int index,float height)
+        {
+            float dis = grid.GetComponent<RectTransform>().rect.height - height;
+            grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dis);
+            for (int i = index + 1; i < grid.transform.childCount; ++i)
+            {
+                grid.transform.GetChild(i).localPosition = new Vector3(grid.transform.GetChild(i).localPosition.x, grid.transform.GetChild(i).localPosition.y + height, 0);
+            }
+        }
+
+        private void SetGridEnable(GameObject grid,bool isEnable)
+        {
+            grid.GetComponent<GridLayoutGroup>().enabled = isEnable;
+            grid.GetComponent<ContentSizeFitter>().enabled = isEnable;
+        }
+
+        public void SetCloseItemPos(int index,ShopType type,float height)
+        {
+            switch (type)
+            {
+                case ShopType.Prop:
+                    SetScrollD(propGrid, index, height);
+                    break;
+                case ShopType.Vip:
+                    SetScrollD(vipGrid, index, height);
+                    break;
             }
         }
 
@@ -228,9 +276,10 @@ namespace ETHotfix
                         uiList[i].GetComponent<UIItemComponent>().SetGoldItem(shopInfoList[i]);
                         break;
                     case ShopType.Prop:
-                        uiList[i].GetComponent<UIItemComponent>().SetPropItem(shopInfoList[i],i);
+                        uiList[i].GetComponent<UIItemComponent>().SetItem(shopInfoList[i],i,type);
                         break;
                     case ShopType.Vip:
+                        uiList[i].GetComponent<UIItemComponent>().SetItem(shopInfoList[i], i,type);
                         break;
                 }
             }

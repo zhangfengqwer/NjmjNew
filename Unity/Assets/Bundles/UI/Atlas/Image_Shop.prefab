@@ -55,6 +55,24 @@ MonoBehaviour:
     gameObject: {fileID: 2800000, guid: ab780d398568c534a953ae6197d3b3cb, type: 3}
   - key: 1008
     gameObject: {fileID: 2800000, guid: ef16c3bd3caeabd42a784f8f147f2b04, type: 3}
+  - key: 1009
+    gameObject: {fileID: 2800000, guid: 7246eebf85fe3b34285a6be7e63655e8, type: 3}
+  - key: 1010
+    gameObject: {fileID: 2800000, guid: 8e61b4ab49bc1ef41ad41fb38ef5ad27, type: 3}
+  - key: 1011
+    gameObject: {fileID: 2800000, guid: aac832d7b3267f24a8385ff9b149e608, type: 3}
+  - key: 1013
+    gameObject: {fileID: 2800000, guid: d8f49309ef5c1fe45b8a0186bb85f91b, type: 3}
+  - key: 1014
+    gameObject: {fileID: 2800000, guid: d85e163f6ffb5da4cb1534ea5163c0a9, type: 3}
+  - key: 1015
+    gameObject: {fileID: 2800000, guid: 73dc4d0c40c1d85458548a2c29ef7ebe, type: 3}
+  - key: 1017
+    gameObject: {fileID: 2800000, guid: 23d59727ac00275439c4dd427f7199b8, type: 3}
+  - key: 1016
+    gameObject: {fileID: 2800000, guid: a3079b5da1590d245b8247a71795a187, type: 3}
+  - key: 1012
+    gameObject: {fileID: 2800000, guid: 523b027725a3c3d4b9d5d057e5f5f0a2, type: 3}
 --- !u!224 &224533785993547676
 RectTransform:
   m_ObjectHideFlags: 1
