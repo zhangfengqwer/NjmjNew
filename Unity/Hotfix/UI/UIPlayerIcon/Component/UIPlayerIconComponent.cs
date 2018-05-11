@@ -19,6 +19,8 @@ namespace ETHotfix
         private Button saveBtn;
         private GameObject grid;
         private Image curIcon;
+        private GameObject tip;
+        private Button sureBtn;
         private const int iconCount = 10;
         private GameObject iconObj;
         private string curIconStr = "";
@@ -33,6 +35,8 @@ namespace ETHotfix
             saveBtn = rc.Get<GameObject>("SaveBtn").GetComponent<Button>();
             grid = rc.Get<GameObject>("Grid");
             curIcon = rc.Get<GameObject>("CurIcon").GetComponent<Image>();
+            tip = rc.Get<GameObject>("Tip");
+            sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             iconObj = CommonUtil.getGameObjByBundle(UIType.UIIconItem);
             curIconStr = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon;
             curIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(curIconStr);
@@ -45,9 +49,15 @@ namespace ETHotfix
 
             saveBtn.onClick.Add(() =>
             {
+                tip.SetActive(true);
                 Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon = curIcon.sprite.name.ToString();
                 PlayerInfo playerInfo = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo();
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().UpDatePlayerInfo();
+            });
+
+            sureBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIIcon);
             });
         }
 
