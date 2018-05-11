@@ -22,9 +22,9 @@ namespace ETHotfix
 			    Room idleRoom = roomComponent.GetIdleRoom();
 			    if (idleRoom == null)
 			    {
-			    	idleRoom = ComponentFactory.Create<Room>();
-			    	roomComponent.Add(idleRoom);
-			    }
+			        idleRoom = RoomFactory.Create();
+			        roomComponent.Add(idleRoom);
+                }
 
 			    idleRoom.Add(gamer);
 
@@ -51,7 +51,9 @@ namespace ETHotfix
 			        Gamers = Gamers
 			    });
 
-			    response.GameId = gamer.Id;
+			    Log.Info($"玩家{message.UserId}进入房间");
+
+                response.GameId = gamer.Id;
 			    Log.Info(JsonHelper.ToJson(response));
 			    reply(response);
             }

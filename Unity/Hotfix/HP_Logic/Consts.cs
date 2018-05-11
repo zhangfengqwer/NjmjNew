@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProtoBuf;
 
 namespace ETHotfix
 {
@@ -17,7 +18,7 @@ namespace ETHotfix
             Hua,
         }
 
-        public enum MahjongWeight
+        public enum MahjongWeight : byte
         {
             // 万：1-9
             // 条：11-19

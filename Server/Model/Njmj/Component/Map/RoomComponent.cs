@@ -9,7 +9,7 @@ namespace ETModel
     {
         //所有房间列表
         public readonly Dictionary<long, Room> rooms = new Dictionary<long, Room>();
-
+        
         //游戏中房间列表
         public readonly Dictionary<long, Room> gameRooms = new Dictionary<long, Room>();
 

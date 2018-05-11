@@ -120,7 +120,11 @@ namespace ETHotfix
 
         private async void OnEnterRoom()
         {
-            Game.Scene.GetComponent<SessionWrapComponent>().Session.Send(new C2G_EnterRoom());
+            G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
+                new C2G_EnterRoom());
+
+          
+
         }
 
         private async void SetPlayerInfo()

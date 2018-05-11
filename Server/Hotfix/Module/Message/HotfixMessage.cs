@@ -379,6 +379,39 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.G2M_PlayerExitRoom)]
+	[ProtoContract]
+	public partial class G2M_PlayerExitRoom: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UserId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GameId;
+
+	}
+
+	[Message(HotfixOpcode.M2G_PlayerExitRoom)]
+	[ProtoContract]
+	public partial class M2G_PlayerExitRoom: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long GameId;
+
+	}
+
 	[Message(HotfixOpcode.C2G_UpdatePlayerInfo)]
 	[ProtoContract]
 	public partial class C2G_UpdatePlayerInfo: IRequest
@@ -445,33 +478,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.C2M_ActorGamerExitRoom)]
-	[ProtoContract]
-	public partial class C2M_ActorGamerExitRoom: IActorRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(93, IsRequired = true)]
-		public long ActorId { get; set; }
-
-	}
-
-	[Message(HotfixOpcode.M2C_ActorGamerExitRoom)]
-	[ProtoContract]
-	public partial class M2C_ActorGamerExitRoom: IActorResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-	}
-
 	[Message(HotfixOpcode.Actor_GamerExitRoom)]
 	[ProtoContract]
 	public partial class Actor_GamerExitRoom: IActorMessage
@@ -485,56 +491,65 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
-	}
-
-	[Message(HotfixOpcode.Email)]
-	[ProtoContract]
-	public partial class Email: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public string EmailTitle;
-
 		[ProtoMember(2, IsRequired = true)]
-		public string Content;
-
-		[ProtoMember(3, IsRequired = true)]
-		public string Date;
-
-		[ProtoMember(4, IsRequired = true)]
-		public bool IsRead;
-
-		[ProtoMember(5, IsRequired = true)]
-		public string RewardItem;
+		public bool IsFromClient;
 
 	}
 
-	[Message(HotfixOpcode.C2G_Eamil)]
+	[Message(HotfixOpcode.M2G_Actor_GamerExitRoom)]
 	[ProtoContract]
-	public partial class C2G_Eamil: IRequest
+	public partial class M2G_Actor_GamerExitRoom: IActorMessage
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerReady)]
+	[ProtoContract]
+	public partial class Actor_GamerReady: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
 	}
 
-	[Message(HotfixOpcode.G2C_Eamil)]
+	[Message(HotfixOpcode.Actor_StartGame)]
 	[ProtoContract]
-	public partial class G2C_Eamil: IResponse
+	public partial class Actor_StartGame: IActorMessage
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 		[ProtoMember(1)]
-		public List<Email> EmailInfoList = new List<Email>();
+		public List<MahjongInfo> Mahjongs = new List<MahjongInfo>();
+
+	}
+
+	[Message(HotfixOpcode.Actor_ChangeTable)]
+	[ProtoContract]
+	public partial class Actor_ChangeTable: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long Uid;
 
 	}
 

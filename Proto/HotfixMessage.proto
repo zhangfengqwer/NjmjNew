@@ -134,6 +134,17 @@ message Actor_GamerEnterRoom // IActorMessage
     repeated GamerInfo Gamers = 1;
 }
 
+message G2M_PlayerExitRoom //IRequest
+{
+	required int64 UserId = 1;
+	required int64 GameId = 2;
+}
+
+message M2G_PlayerExitRoom //IResponse
+{
+	required int64 GameId = 1;
+}
+
 message C2G_UpdatePlayerInfo //IRequest
 {
 	required long Uid = 1;
@@ -155,19 +166,31 @@ message M2C_ActorGamerEnterRoom // IActorResponse
 	required string Info = 1;
 }
 
-message C2M_ActorGamerExitRoom // IActorRequest
-{
-
-}
-
-message M2C_ActorGamerExitRoom // IActorResponse
-{
-
-}
 
 message Actor_GamerExitRoom // IActorMessage
 {
     required long Uid = 1;
+    required bool IsFromClient = 2;
+}
+
+message M2G_Actor_GamerExitRoom // IActorMessage
+{
+   
+}
+
+message Actor_GamerReady // IActorMessage
+{
+    required long Uid = 1;
+}
+
+message Actor_StartGame // IActorMessage
+{
+    repeated MahjongInfo Mahjongs = 1;
+}
+
+message Actor_ChangeTable // IActorMessage
+{
+    optional long Uid = 1;
 }
 
 message Email //IMessage

@@ -26,9 +26,9 @@ namespace ETHotfix
         public string NickName { get { return name.text; } }
 
         private Image head;
-//        private Text prompt;
+        private Text prompt;
         private Text name;
-//        private Text money;
+        //        private Text money;
 
         public void Start()
         {
@@ -66,6 +66,7 @@ namespace ETHotfix
             //绑定关联
             this.head = this.Panel.Get<GameObject>("Head").GetComponent<Image>();
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
+            this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
 
             UpdatePanel();
         }
@@ -77,6 +78,7 @@ namespace ETHotfix
         {
             if (this.Panel != null)
             {
+                ResetPrompt();
                 SetUserInfo();
             }
         }
@@ -101,7 +103,7 @@ namespace ETHotfix
         /// </summary>
         public void SetReady()
         {
-//            prompt.text = "准备！";
+            prompt.text = "准备！";
         }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace ETHotfix
         /// </summary>
         public void ResetPrompt()
         {
-//            prompt.text = "";
+            prompt.text = "";
         }
 
         /// <summary>
@@ -162,7 +164,10 @@ namespace ETHotfix
 
             if (this.Panel != null)
             {
-                
+                name.text = this.GetParent<Gamer>().UserID + "";
+               
+                //                GameObject asset = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset("PlayerIcon.unity3d", "PlayerIcon");
+                //                head.sprite = asset.Get<Sprite>("Icon2");
             }
         }
 

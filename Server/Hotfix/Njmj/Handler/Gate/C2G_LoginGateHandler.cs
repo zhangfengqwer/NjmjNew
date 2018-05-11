@@ -28,8 +28,6 @@ namespace ETHotfix
 
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
-			    //添加消息转发组件
-			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
@@ -45,6 +43,9 @@ namespace ETHotfix
                     info.CurrencyType = config.CurrencyType;
                     shopInfoList.Add(info);
                 }
+                //添加消息转发组件
+                await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
+
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
