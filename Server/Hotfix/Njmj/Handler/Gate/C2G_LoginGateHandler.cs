@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using ETModel;
 
 namespace ETHotfix
@@ -25,8 +26,8 @@ namespace ETHotfix
 			    User user = UserFactory.Create(userId, session.Id);
 			    await user.AddComponent<ActorComponent>().AddLocation();
 
-			    //添加User对象关联到Session上
-			    session.AddComponent<SessionUserComponent>().User = user;
+                //添加User对象关联到Session上
+                session.AddComponent<SessionUserComponent>().User = user;
 			    //添加消息转发组件
 			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
@@ -47,7 +48,25 @@ namespace ETHotfix
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-				reply(response);
+
+                #region emailTest
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                EmailInfo emailInfo = ComponentFactory.CreateWithId<EmailInfo>(IdGenerater.GenerateId());
+                emailInfo.UId = userId;
+                emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                emailInfo.Date = new StringBuilder()
+                                .Append(CommonUtil.getCurYear())
+                                .Append("-")
+                                .Append(CommonUtil.getCurMonth())
+                                .Append("-")
+                                .Append(CommonUtil.getCurDay()).ToString();
+                emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                emailInfo.IsRead = false;
+                emailInfo.RewardItem = "1009,100;1013,100";
+                await proxyComponent.Save(emailInfo);
+                #endregion
+
+                reply(response);
 
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 			}

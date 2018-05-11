@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using ETModel;
 using MongoDB.Bson;
 
@@ -24,8 +25,8 @@ namespace ETHotfix
 			        reply(response);
 			        return;
 			    }
-
-			    AccountInfo accountInfo = accountInfos[0];
+                
+                AccountInfo accountInfo = accountInfos[0];
 
 			    // 随机分配一个Gate
                 StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();

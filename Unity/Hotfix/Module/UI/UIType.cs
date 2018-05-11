@@ -18,9 +18,11 @@ namespace ETHotfix
         public const string UIGoldItem = "UIGoldItem";//金币Item
         public const string UIPropItem = "UIPropItem";//道具Item
         public const string UIHelp= "UIHelp";
-		public const string UIVipItem = "UIVIPItem";
+		public const string UIVipItem = "UIVIPItem";//VIPitem
 		public const string UIJiaZhangJianHu = "UIJiaZhangJianHu";
-        public const string UIIcon = "UIPlayerIcon";
-        public const string UIIconItem = "UIIcon";
+        public const string UIIcon = "UIPlayerIcon";//用户更换头像界面
+        public const string UIIconItem = "UIIcon";//用户头像item
+        public const string UIEmail = "UIEmail";//邮箱界面
+        public const string UIEmailItem = "UIEmaiItem";//邮箱Item
     }
 }
