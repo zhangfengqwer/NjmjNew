@@ -80,6 +80,7 @@ namespace ETHotfix
             {
                 //打开任务面板
                 Log.Debug("打开任务界面");
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIEmail);
             });
 
             awardBtn.onClick.Add(() =>

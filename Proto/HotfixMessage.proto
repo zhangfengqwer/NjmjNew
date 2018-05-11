@@ -193,4 +193,23 @@ message Actor_ChangeTable // IActorMessage
     optional long Uid = 1;
 }
 
+message Email //IMessage
+{
+	required string EmailTitle = 1;//邮件标题
+	required string Content = 2;//邮件内容
+	required string Date = 3;//邮件日期
+	required bool IsRead = 4;//是否已经读过
+	required string RewardItem = 5;//奖励物品
+}
+
+message C2G_Eamil //IRequest
+{
+	required long Uid = 1;//用户ID
+}
+
+message G2C_Eamil //IResponse
+{
+	repeated Email EmailInfoList = 1;//邮件列表
+}
+
 #endregion
