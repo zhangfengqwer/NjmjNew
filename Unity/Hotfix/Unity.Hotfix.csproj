@@ -125,6 +125,8 @@
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIHelp\Component\UIHelpComponent.cs" />
     <Compile Include="UI\UIHelp\Factory\UIHelpFactory.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Component\UIJiaZhangJianHu.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Factory\UIJiaZhangJianHu.cs" />
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
