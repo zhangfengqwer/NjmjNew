@@ -11,7 +11,8 @@ namespace ETModel
 		public int shopType;
 		public string Name;
 		public string Desc;
+		public int CurrencyType;
 		public int Price;
-		public string Icon;
+		public string Items;
 	}
 }

@@ -85,7 +85,7 @@ message ShopInfo //IMessage
 	required string Name = 3;//商品名称
 	required string Desc = 4;//商品介绍
 	required int Price = 5;//商品单价
-	required string Icon = 6;//商品图标
+	required int CurrencyType = 6;//商品图标
 }
 
 message C2G_PlayerInfo // IRequest

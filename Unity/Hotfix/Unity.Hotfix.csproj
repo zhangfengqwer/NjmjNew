@@ -125,9 +125,16 @@
     <Compile Include="Njmj\Factory\GamerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
+    <Compile Include="UI\UIHelp\Component\UIHelpComponent.cs" />
+    <Compile Include="UI\UIHelp\Factory\UIHelpFactory.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Component\UIJiaZhangJianHu.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Factory\UIJiaZhangJianHu.cs" />
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconItemComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Factory\UIPlayerIconFactory.cs" />
     <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
     <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
@@ -137,6 +144,9 @@
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
     <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
+    <Compile Include="UI\UIShop\Component\UIItemComponent.cs" />
+    <Compile Include="UI\UIShop\Component\UIShopComponent.cs" />
+    <Compile Include="UI\UIShop\Factory\UIShopFactory.cs" />
     <Compile Include="Utils\AudioScript.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
   </ItemGroup>
