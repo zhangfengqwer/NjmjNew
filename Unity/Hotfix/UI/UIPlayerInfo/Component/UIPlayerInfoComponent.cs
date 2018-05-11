@@ -16,6 +16,7 @@ namespace ETHotfix
     public class UIPlayerInfoComponent : Component
     {
         private Button returnBtn;
+        private Button playerIcon;
         private Text accountTxt;
         private Text nameTxt;
         private Text uid;
@@ -27,6 +28,7 @@ namespace ETHotfix
             accountTxt = rc.Get<GameObject>("AccountTxt").GetComponent<Text>();
             nameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
             uid = rc.Get<GameObject>("UID").GetComponent<Text>();
+            playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
 
             returnBtn.onClick.Add(() =>
             {
@@ -39,6 +41,12 @@ namespace ETHotfix
             nameTxt.text = playerInfo.Name;
             accountTxt.text = playerInfo.Name;
             uid.text = pc.uid.ToString();
+
+            playerIcon.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIIcon);
+            });
+
         }
     }
 }

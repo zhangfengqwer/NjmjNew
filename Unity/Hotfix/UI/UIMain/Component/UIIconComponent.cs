@@ -24,8 +24,16 @@ namespace ETHotfix
         {
             GameObject playerIconBundle = GetBundleByUIType(UIType.UIPlayerIcon);
             GameObject shopBundle = GetBundleByUIType(UIType.UIShopIcon);
-            AddSprite(playerIconBundle, "Icon1");
-            AddSprite(playerIconBundle, "Icon2");
+            AddSprite(playerIconBundle, "f_icon1");
+            AddSprite(playerIconBundle, "f_icon2");
+            AddSprite(playerIconBundle, "f_icon3");
+            AddSprite(playerIconBundle, "f_icon4");
+            AddSprite(playerIconBundle, "f_icon5");
+            AddSprite(playerIconBundle, "m_icon1");
+            AddSprite(playerIconBundle, "m_icon2");
+            AddSprite(playerIconBundle, "m_icon3");
+            AddSprite(playerIconBundle, "m_icon4");
+            AddSprite(playerIconBundle, "m_icon5");
             AddSprite(shopBundle, "1001");
             AddSprite(shopBundle, "1002");
             AddSprite(shopBundle, "1003");
@@ -47,8 +55,9 @@ namespace ETHotfix
 
         private void AddSprite(GameObject bundle,string iconName)
         {
-            texture = bundle.Get<Texture2D>(iconName);
-            icon = CreateSprite(texture);
+            icon = bundle.Get<Sprite>(iconName);
+            //texture = bundle.Get<Texture2D>(iconName);
+            //icon = CreateSprite(texture);
             AddSprite(iconName, icon);
         }
 

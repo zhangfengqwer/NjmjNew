@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,7 +42,10 @@ namespace ETHotfix
             UIIconComponent iconComp = Game.Scene.GetComponent<UIIconComponent>();
             icon.sprite = iconComp.GetSprite(info.Id.ToString());
             nameTxt.text = info.Name;
-            priceTxt.text = info.Price.ToString();
+            if (info.ShopType == (int)ShopType.Wing)
+                priceTxt.text = new StringBuilder().Append(info.Price).Append("元").ToString();
+            else
+                priceTxt.text = info.Price.ToString();
         }
 
         public void SetGoldItem(ShopInfo info)

@@ -55,7 +55,6 @@ namespace ETHotfix
             {
                 //打开排行榜
                 Log.Debug("打开排行榜");
-                UpdateInfoTest();
             });
 
             exchangeBtn.onClick.Add(() =>
@@ -110,13 +109,10 @@ namespace ETHotfix
             #endregion
         }
 
-        private async void UpdateInfoTest()
+        public async void UpDatePlayerInfo()
         {
             PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
             long uid = playerInfoComponent.uid;
-            playerInfoComponent.GetPlayerInfo().GoldNum += 100;
-            playerInfoComponent.GetPlayerInfo().Name = "张";
-            playerInfoComponent.GetPlayerInfo().Icon = "Icon2";
             G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
             UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
         }
@@ -137,7 +133,7 @@ namespace ETHotfix
             UpDatePlayerInfo(info);
         }
 
-        private void UpDatePlayerInfo(PlayerInfo info)
+        public void UpDatePlayerInfo(PlayerInfo info)
         {
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)

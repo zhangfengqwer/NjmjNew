@@ -19,5 +19,8 @@ namespace ETHotfix
         public const string UIPropItem = "UIPropItem";//道具Item
         public const string UIHelp= "UIHelp";
 		public const string UIVipItem = "UIVIPItem";
-		public const string UIJiaZhangJianHu = "UIJiaZhangJianHu";    }
+		public const string UIJiaZhangJianHu = "UIJiaZhangJianHu";
+        public const string UIIcon = "UIPlayerIcon";
+        public const string UIIconItem = "UIIcon";
+    }
 }

@@ -39,10 +39,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-  - key: Icon1
-    gameObject: {fileID: 2800000, guid: 499523fc37d97c3468bc39392e52c7e6, type: 3}
-  - key: Icon2
-    gameObject: {fileID: 2800000, guid: 83c41a90bff76e042871e898cfac1760, type: 3}
+  - key: f_icon1
+    gameObject: {fileID: 21300000, guid: 4f0a024d5bfda8c46aee02c767fcda4e, type: 3}
+  - key: f_icon2
+    gameObject: {fileID: 21300000, guid: 9def0985323e95645ad4a64af60be314, type: 3}
+  - key: f_icon3
+    gameObject: {fileID: 21300000, guid: ee2990e5867c5a1458fb5ad85cc4546a, type: 3}
+  - key: f_icon4
+    gameObject: {fileID: 21300000, guid: 99604cb1f4566f941bcee4a6ec4ec2ac, type: 3}
+  - key: f_icon5
+    gameObject: {fileID: 21300000, guid: 4dfe0a95efd97904b82613b0b426ea37, type: 3}
+  - key: m_icon1
+    gameObject: {fileID: 21300000, guid: a8b530e6f401a214ea92c356e02f7249, type: 3}
+  - key: m_icon2
+    gameObject: {fileID: 21300000, guid: 35c8a0f4afe5f6b42a6da9c6ad2b431c, type: 3}
+  - key: m_icon3
+    gameObject: {fileID: 21300000, guid: dc74b1e6aef9b0f4483bebf0d9c948ae, type: 3}
+  - key: m_icon4
+    gameObject: {fileID: 21300000, guid: 4a9686b57b0620041ac62323f4c9977d, type: 3}
+  - key: m_icon5
+    gameObject: {fileID: 21300000, guid: ba97ab353bbb949438fc4d8a99cd5687, type: 3}
 --- !u!224 &224580704893454692
 RectTransform:
   m_ObjectHideFlags: 1

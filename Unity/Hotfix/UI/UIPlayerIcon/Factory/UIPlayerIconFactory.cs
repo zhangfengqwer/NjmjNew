@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ETHotfix
 {
-    [UIFactory(UIType.UIWingItem)]
-    public class UIWingItemFactory : IUIFactory
+    [UIFactory(UIType.UIIcon)]
+    class UIPlayerIconFactory : IUIFactory
     {
         public UI Create(Scene scene, string type, GameObject gameobject)
         {
@@ -14,10 +14,10 @@ namespace ETHotfix
                 ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
                 resourcesComponent.LoadBundle($"{type}.unity3d");
                 GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{type}.unity3d", $"{type}");
-                GameObject wingItem = UnityEngine.Object.Instantiate(bundleGameObject);
-                wingItem.layer = LayerMask.NameToLayer(LayerNames.UI);
-                UI ui = ComponentFactory.Create<UI, GameObject>(wingItem);
-                ui.AddComponent<UIWingComponent>();
+                GameObject uiplayicon = UnityEngine.Object.Instantiate(bundleGameObject);
+                uiplayicon.layer = LayerMask.NameToLayer(LayerNames.UI);
+                UI ui = ComponentFactory.Create<UI, GameObject>(uiplayicon);
+                ui.AddComponent<UIPlayerIconComponent>();
                 return ui;
             }
             catch (Exception e)
