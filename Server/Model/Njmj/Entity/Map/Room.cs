@@ -45,13 +45,13 @@ namespace ETModel
         }
 
         /// <summary>
-        /// 获取玩家
+        /// 根据userid获取玩家
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Gamer Get(long id)
+        public Gamer Get(long userId)
         {
-            int seatIndex = GetGamerSeat(id);
+            int seatIndex = GetGamerSeat(userId);
             if (seatIndex >= 0)
             {
                 return gamers[seatIndex];
@@ -74,9 +74,9 @@ namespace ETModel
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int GetGamerSeat(long id)
+        public int GetGamerSeat(long userId)
         {
-            if (seats.TryGetValue(id, out int seatIndex))
+            if (seats.TryGetValue(userId, out int seatIndex))
             {
                 return seatIndex;
             }
@@ -89,14 +89,14 @@ namespace ETModel
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Gamer Remove(long id)
+        public Gamer Remove(long userId)
         {
-            int seatIndex = GetGamerSeat(id);
+            int seatIndex = GetGamerSeat(userId);
             if (seatIndex >= 0)
             {
                 Gamer gamer = gamers[seatIndex];
                 gamers[seatIndex] = null;
-                seats.Remove(id);
+                seats.Remove(userId);
 
                 gamer.RoomID = 0;
                 return gamer;

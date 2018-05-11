@@ -37,9 +37,10 @@ namespace ETHotfix
 	                }
 
 	                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
-	                gameController.DealCards();
+	                //发牌
+                    gameController.DealCards();
 
-                    //发牌
+                    //给客户端传送数据
 	                foreach (var itemGame in gamers)
 	                {
 	                    List<MahjongInfo> mahjongInfos = itemGame.GetComponent<HandCardsComponent>().library;
@@ -51,7 +52,7 @@ namespace ETHotfix
 	                    ActorProxy actorProxy = itemGame.GetComponent<UnitGateComponent>().GetActorProxy();
                         actorProxy.Send(new Actor_StartGame()
                         {
-                            Mahjongs = itemGame.GetComponent<HandCardsComponent>().library
+                            Mahjongs = itemGame.GetComponent<HandCardsComponent>().GetAll()
                         });
                     }
 
@@ -60,7 +61,6 @@ namespace ETHotfix
 	                roomComponent.gameRooms.Add(room.Id, room);
 	                roomComponent.readyRooms.Remove(room.Id);
                 }
-
             }
 	        catch (Exception e)
 	        {

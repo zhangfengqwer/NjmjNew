@@ -19,5 +19,24 @@ namespace ETHotfix
                 actorProxy.Send(message);
             }
         }
+
+        public static void BroadGamerEnter(this Room self)
+        {
+            List<GamerInfo> Gamers = new List<GamerInfo>();
+            foreach (var item in self.seats)
+            {
+                GamerInfo gamerInfo = new GamerInfo();
+                gamerInfo.UserID = item.Key;
+                gamerInfo.SeatIndex = item.Value;
+                Gamer temp = self.Get(item.Key);
+                gamerInfo.IsReady = temp.IsReady;
+                Gamers.Add(gamerInfo);
+            }
+
+            self.Broadcast(new Actor_GamerEnterRoom()
+            {
+                Gamers = Gamers
+            });
+        }
     }
 }

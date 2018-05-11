@@ -9,7 +9,7 @@ namespace ETHotfix
     public static class RoomComponentSystem
     {
         /// <summary>
-        /// 根据id获取房间
+        /// 根据房间id获取房间
         /// </summary>
         /// <param name="self"></param>
         /// <param name="id"></param>

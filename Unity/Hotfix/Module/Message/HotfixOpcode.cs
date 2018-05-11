@@ -35,5 +35,6 @@ namespace ETModel
 		 public const ushort M2G_Actor_GamerExitRoom = 10031;
 		 public const ushort Actor_GamerReady = 10032;
 		 public const ushort Actor_StartGame = 10033;
+		 public const ushort Actor_ChangeTable = 10034;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using ETModel;
+﻿using System.Collections.Generic;
+using ETModel;
 
 namespace ETHotfix
 {
@@ -9,9 +10,9 @@ namespace ETHotfix
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static MahjongInfo[] GetAll(this HandCardsComponent self)
+        public static List<MahjongInfo> GetAll(this HandCardsComponent self)
         {
-            return self.library.ToArray();
+            return self.library;
         }
 
         /// <summary>

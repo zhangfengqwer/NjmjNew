@@ -57,8 +57,8 @@ namespace ETHotfix
 
         private async void OnChangeTable()
 	    {
-
-	    }
+	        SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable());
+        }
 
 	    /// <summary>
 	    /// 添加玩家

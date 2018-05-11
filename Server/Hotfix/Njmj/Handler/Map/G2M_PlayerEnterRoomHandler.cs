@@ -22,13 +22,8 @@ namespace ETHotfix
 			    Room idleRoom = roomComponent.GetIdleRoom();
 			    if (idleRoom == null)
 			    {
-			    	idleRoom = ComponentFactory.Create<Room>();
-			        idleRoom.AddComponent<DeskComponent>();
-//			        idleRoom.AddComponent<DeskCardsCacheComponent>();
-			        idleRoom.AddComponent<GameControllerComponent>();
-			        idleRoom.AddComponent<OrderControllerComponent>();
-
-                    roomComponent.Add(idleRoom);
+			        idleRoom = RoomFactory.Create();
+			        roomComponent.Add(idleRoom);
                 }
 
 			    idleRoom.Add(gamer);

@@ -188,4 +188,9 @@ message Actor_StartGame // IActorMessage
     repeated MahjongInfo Mahjongs = 1;
 }
 
+message Actor_ChangeTable // IActorMessage
+{
+    optional long Uid = 1;
+}
+
 #endregion

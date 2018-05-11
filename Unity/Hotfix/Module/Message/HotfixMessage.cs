@@ -538,4 +538,19 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_ChangeTable)]
+	[ProtoContract]
+	public partial class Actor_ChangeTable: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long Uid;
+
+	}
+
 }

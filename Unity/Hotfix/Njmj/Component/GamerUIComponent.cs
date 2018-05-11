@@ -78,6 +78,7 @@ namespace ETHotfix
         {
             if (this.Panel != null)
             {
+                ResetPrompt();
                 SetUserInfo();
             }
         }
@@ -141,7 +142,7 @@ namespace ETHotfix
         /// </summary>
         public void ResetPrompt()
         {
-//            prompt.text = "";
+            prompt.text = "";
         }
 
         /// <summary>
@@ -164,8 +165,9 @@ namespace ETHotfix
             if (this.Panel != null)
             {
                 name.text = this.GetParent<Gamer>().UserID + "";
-//                GameObject asset = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset("PlayerIcon.unity3d", "PlayerIcon");
-//                head.sprite = asset.Get<Sprite>("Icon2");
+               
+                //                GameObject asset = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset("PlayerIcon.unity3d", "PlayerIcon");
+                //                head.sprite = asset.Get<Sprite>("Icon2");
             }
         }
 

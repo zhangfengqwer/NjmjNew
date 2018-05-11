@@ -270,7 +270,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scene\SceneInit.cs" />
     <Compile Include="Assets\Scripts\Base\DoubleMap.cs" />
     <Compile Include="Assets\Scripts\Base\Event\Env.cs" />
     <Compile Include="Assets\Scripts\Base\Event\EnvKey.cs" />
@@ -509,6 +508,7 @@
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_CameraComponent_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_CanvasConfig_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_Component_Binding.cs" />
+    <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_ComponentFactory_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_ComponentWithId_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_DoubleMap_2_UInt16_Type_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\ETModel_Entity_Binding.cs" />
@@ -684,6 +684,7 @@
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Enviorment\CLRRedirections.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Enviorment\CrossBindingAdaptor.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Enviorment\DelegateManager.cs" />
+    <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Enviorment\InvocationContext.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Enviorment\ValueTypeBinder.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Extensions.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\ILRuntime\Runtime\Intepreter\DelegateAdapter.cs" />
