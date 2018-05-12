@@ -24,5 +24,6 @@ namespace ETHotfix
         public const string UIIconItem = "UIIcon";//用户头像item
         public const string UIEmail = "UIEmail";//邮箱界面
         public const string UIEmailItem = "UIEmaiItem";//邮箱Item
+        public const string UIRewardItem = "UIRewardItem";//奖励物品
     }
 }

@@ -127,6 +127,7 @@
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailItemComponent.cs" />
+    <Compile Include="UI\UIEmail\Component\UIRewardItemComponent.cs" />
     <Compile Include="UI\UIEmail\Factory\UIEmailFactory.cs" />
     <Compile Include="UI\UIHelp\Component\UIHelpComponent.cs" />
     <Compile Include="UI\UIHelp\Factory\UIHelpFactory.cs" />

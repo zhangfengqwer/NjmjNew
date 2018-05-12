@@ -553,4 +553,91 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Email)]
+	[ProtoContract]
+	public partial class Email: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string EmailTitle;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Content;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Date;
+
+		[ProtoMember(4, IsRequired = true)]
+		public bool IsRead;
+
+		[ProtoMember(5, IsRequired = true)]
+		public string RewardItem;
+
+		[ProtoMember(6, IsRequired = true)]
+		public long EId;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Email)]
+	[ProtoContract]
+	public partial class C2G_Email: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Email)]
+	[ProtoContract]
+	public partial class G2C_Email: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<Email> EmailInfoList = new List<Email>();
+
+	}
+
+	[Message(HotfixOpcode.C2G_UpdateEmail)]
+	[ProtoContract]
+	public partial class C2G_UpdateEmail: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long EId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsRead;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UpdateEmail)]
+	[ProtoContract]
+	public partial class G2C_UpdateEmail: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long EId;
+
+	}
+
 }
