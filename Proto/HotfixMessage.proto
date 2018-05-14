@@ -3,6 +3,9 @@ message C2R_PhoneLogin // IRequest
 	required string	Phone	 = 1;	// 手机号
 	required string	Code = 2;		// 验证码
 	required string	Token = 3;
+	required string	MachineId = 4;
+	required string	ChannelName = 5;
+	required string	ClientVersion = 6;
 }
 
 message R2C_PhoneLogin // IResponse
@@ -10,6 +13,24 @@ message R2C_PhoneLogin // IResponse
 	required string Address = 1;
 	required int64 	Key	    = 2;
 	required string Token	= 3;
+}
+
+message C2R_ThirdLogin // IRequest
+{
+	required string	Third_Id	 = 1;
+	required string	MachineId = 2;
+	required string	ChannelName = 3;
+	required string	ClientVersion = 4;
+}
+
+message R2C_ThirdLogin // IResponse
+{
+	required string Address = 1;
+	required int64 	Key	    = 2;
+}
+
+message Actor_ForceOffline // IActorMessage
+{
 }
 
 message C2R_SendSms // IRequest

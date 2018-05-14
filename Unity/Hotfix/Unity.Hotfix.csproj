@@ -123,11 +123,12 @@
     <Compile Include="Njmj\Component\GamerUIComponent.cs" />
     <Compile Include="Njmj\Entity\Gamer.cs" />
     <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Platform\ChannelHelper.cs" />
+    <Compile Include="Platform\PlatformHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailItemComponent.cs" />
-    <Compile Include="UI\UIEmail\Component\UIRewardItemComponent.cs" />
     <Compile Include="UI\UIEmail\Factory\UIEmailFactory.cs" />
     <Compile Include="UI\UIHelp\Component\UIHelpComponent.cs" />
     <Compile Include="UI\UIHelp\Factory\UIHelpFactory.cs" />
