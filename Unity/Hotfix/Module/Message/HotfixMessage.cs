@@ -97,6 +97,18 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_ForceOffline)]
+	[ProtoContract]
+	public partial class Actor_ForceOffline: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.C2R_SendSms)]
 	[ProtoContract]
 	public partial class C2R_SendSms: IRequest

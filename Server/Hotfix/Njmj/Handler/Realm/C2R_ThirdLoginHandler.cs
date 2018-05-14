@@ -36,6 +36,8 @@ namespace ETHotfix
                     response.Address = outerAddress;
                     response.Key = g2RGetLoginKey.Key;
                     reply(response);
+
+                    ClientManager.addClientInfo(session, accountInfo.Id);
                 }
                 // 用户不存在，走注册流程
                 else
@@ -61,6 +63,8 @@ namespace ETHotfix
                     response.Address = outerAddress;
                     response.Key = g2RGetLoginKey.Key;
                     reply(response);
+
+                    ClientManager.addClientInfo(session, accountInfo.Id);
                 }
 	        }
 	        catch (Exception e)

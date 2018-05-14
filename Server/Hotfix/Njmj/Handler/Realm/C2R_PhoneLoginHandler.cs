@@ -56,6 +56,8 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        ClientManager.addClientInfo(session, accountInfo.Id);
                     }
                     // 用户不存在，走注册流程
                     else
@@ -83,6 +85,8 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        ClientManager.addClientInfo(session, accountInfo.Id);
                     }
                 }
                 // 用Token登录
@@ -107,6 +111,8 @@ namespace ETHotfix
                             response.Key = g2RGetLoginKey.Key;
                             response.Token = accountInfo.Token;
                             reply(response);
+
+                            ClientManager.addClientInfo(session, accountInfo.Id);
                         }
                         else
                         {
