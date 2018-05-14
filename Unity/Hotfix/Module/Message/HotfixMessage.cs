@@ -236,6 +236,9 @@ namespace ETHotfix
 		[ProtoMember(3, TypeName = "ETHotfix.ShopInfo")]
 		public List<ShopInfo> ShopInfoList = new List<ShopInfo>();
 
+		[ProtoMember(4, TypeName = "ETHotfix.TaskInfo")]
+		public List<TaskInfo> TaskInfoList = new List<TaskInfo>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -319,6 +322,102 @@ namespace ETHotfix
 
 		[ProtoMember(6, IsRequired = true)]
 		public int CurrencyType;
+
+	}
+
+	[Message(HotfixOpcode.TaskProgress)]
+	[ProtoContract]
+	public partial class TaskProgress: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int TaskId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int Progress;
+
+	}
+
+	[Message(HotfixOpcode.C2G_UpdateTaskProgress)]
+	[ProtoContract]
+	public partial class C2G_UpdateTaskProgress: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public TaskProgress TaskPrg;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UpdateTaskProgress)]
+	[ProtoContract]
+	public partial class G2C_UpdateTaskProgress: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public TaskProgress TaskPrg;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Task)]
+	[ProtoContract]
+	public partial class C2G_Task: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Task)]
+	[ProtoContract]
+	public partial class G2C_Task: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, TypeName = "ETHotfix.TaskProgress")]
+		public List<TaskProgress> TaskProgressList = new List<TaskProgress>();
+
+	}
+
+	[Message(HotfixOpcode.TaskInfo)]
+	[ProtoContract]
+	public partial class TaskInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long Id;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string TaskName;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Desc;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int Reward;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int Target;
 
 	}
 

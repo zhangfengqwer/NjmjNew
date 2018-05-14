@@ -61,6 +61,7 @@ namespace ETHotfix
             {
                 //打开兑换界面
                 Log.Debug("打开兑换界面");
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
             });
 
             activeBtn.onClick.Add(() =>
