@@ -10,5 +10,6 @@ namespace ETModel
         public int CurProgress { get; set; }
         public int Target { get; set; }
         public bool IsComplete { get; set; }
+        public bool IsGet { get; set; }
     }
 }

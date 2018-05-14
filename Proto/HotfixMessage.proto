@@ -116,6 +116,7 @@ message TaskProgress //IMessage
 	required int Progress = 2;
 	required int Target = 3;
 	required bool IsComplete = 4;//是否已经完成
+	required bool IsGet = 5;//是否领取奖励
 }
 
 message C2G_UpdateTaskProgress //IRequest

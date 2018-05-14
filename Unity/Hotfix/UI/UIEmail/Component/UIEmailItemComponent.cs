@@ -97,7 +97,7 @@ namespace ETHotfix
                 {
                     obj = GameObject.Instantiate(rewardItem);
                     obj.transform.SetParent(itemGrid.transform);
-                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localScale = new Vector3(0.5f, 0.5f, 1);
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIRewardItemComponent>();
