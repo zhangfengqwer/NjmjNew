@@ -217,16 +217,28 @@ message Email //IMessage
 	required string Date = 3;//邮件日期
 	required bool IsRead = 4;//是否已经读过
 	required string RewardItem = 5;//奖励物品
+	required long EId = 6;//邮箱ID
 }
 
-message C2G_Eamil //IRequest
+message C2G_Email //IRequest
 {
 	required long Uid = 1;//用户ID
 }
 
-message G2C_Eamil //IResponse
+message G2C_Email //IResponse
 {
 	repeated Email EmailInfoList = 1;//邮件列表
+}
+
+message C2G_UpdateEmail //IRequest
+{
+	required long EId = 1;
+	required bool IsRead = 2;
+}
+
+message G2C_UpdateEmail //IResponse
+{
+	required long EId = 1; 
 }
 
 #endregion

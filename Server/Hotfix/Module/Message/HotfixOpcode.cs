@@ -39,7 +39,9 @@ namespace ETModel
 		 public const ushort Actor_StartGame = 10035;
 		 public const ushort Actor_ChangeTable = 10036;
 		 public const ushort Email = 10037;
-		 public const ushort C2G_Eamil = 10038;
-		 public const ushort G2C_Eamil = 10039;
+		 public const ushort C2G_Email = 10038;
+		 public const ushort G2C_Email = 10039;
+		 public const ushort C2G_UpdateEmail = 10040;
+		 public const ushort G2C_UpdateEmail = 10041;
 	}
 }
