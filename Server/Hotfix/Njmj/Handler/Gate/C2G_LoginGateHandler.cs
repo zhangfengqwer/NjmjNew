@@ -29,6 +29,7 @@ namespace ETHotfix
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+                #region AddShopInfo
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
                 {
@@ -43,18 +44,36 @@ namespace ETHotfix
                     info.CurrencyType = config.CurrencyType;
                     shopInfoList.Add(info);
                 }
+                #endregion
+
+                #region AddTaskInfo
+                List<TaskInfo> taskInfoList = new List<TaskInfo>();
+                for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
+                {
+                    int id = 100 + i;
+                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                    TaskInfo info = new TaskInfo();
+                    info.Id = config.Id;
+                    info.TaskName = config.Name;
+                    info.Reward = config.Reward;
+                    info.Desc = config.Desc;
+                    info.Target = config.Target;
+                    taskInfoList.Add(info);
+                }
+                #endregion
+
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-
-                #region emailTest
+                response.TaskInfoList = taskInfoList;
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {
+                    #region emailTest
                     EmailInfo emailInfo = new EmailInfo();
                     emailInfo.UId = userId;
                     //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";

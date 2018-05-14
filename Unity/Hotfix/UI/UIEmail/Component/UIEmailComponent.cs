@@ -111,6 +111,10 @@ namespace ETHotfix
         public override void Dispose()
         {
             base.Dispose();
+            for(int i = 0;i< grid.transform.childCount; ++i)
+            {
+                //设置当前未读文本邮件为已读
+            }
             emailItemList.Clear();
             uiList.Clear();
             emailList.Clear();

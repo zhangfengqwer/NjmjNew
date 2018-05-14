@@ -53,6 +53,7 @@ message G2C_LoginGate // IResponse
 	required int64 PlayerId = 1;
 	required int64 Uid = 2;//用户ID
 	repeated ShopInfo ShopInfoList = 3;//商店商品
+	repeated TaskInfo TaskInfoList = 4;//任务列表
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -86,6 +87,42 @@ message ShopInfo //IMessage
 	required string Desc = 4;//商品介绍
 	required int Price = 5;//商品单价
 	required int CurrencyType = 6;//商品图标
+}
+
+message TaskProgress //IMessage
+{
+	required int TaskId = 1;
+	required int Progress = 2;
+}
+
+message C2G_UpdateTaskProgress //IRequest
+{
+	required long UId = 1;
+	required TaskProgress TaskPrg = 2;
+}
+
+message G2C_UpdateTaskProgress //IResponse
+{
+	required TaskProgress TaskPrg = 1;
+}
+
+message C2G_Task //IRequest
+{
+	required long uid = 1;
+}
+
+message G2C_Task //IResponse
+{
+	repeated TaskProgress TaskProgressList = 1;
+}
+
+message TaskInfo //IMessage
+{
+	required long Id = 1;//任务ID
+	required string TaskName = 2;//任务名称
+	required string Desc = 3;//任务描述
+	required int Reward = 4;//任务达到之后的奖励
+	required int Target = 5;//任务完成目标
 }
 
 message C2G_PlayerInfo // IRequest
