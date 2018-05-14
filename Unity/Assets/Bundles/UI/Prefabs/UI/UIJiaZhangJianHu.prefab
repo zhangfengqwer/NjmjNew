@@ -389,10 +389,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c8117b202a941b741b11b80e3e4f24c3, type: 3}
-    m_FontSize: 66
+    m_FontSize: 46
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 66
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c8117b202a941b741b11b80e3e4f24c3, type: 3}
-    m_FontSize: 42
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -474,7 +474,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u300A\u5BB6\u957F\u76D1\u62A4\u5DE5\u7A0B\u300B\u8BF4\u660E\r\n\u201C\u7F51\u7EDC\u6E38\u620F\u672A\u6210\u5E74\u4EBA\u5BB6\u957F\u76D1\u62A4\u5DE5\u7A0B\u201D\u662F\u4E00\u9879\u7531\u56FD\u5185\u7F51\u7EDC\u6E38\u620F\u4F01\u4E1A\u5171\u540C\u53D1\u8D77\u5E76\u53C2\u4E0E\u5B9E\u65BD\uFF0C\u7531\u4E2D\u534E\u4EBA\u6C11\u5171\u548C\u56FD\u6587\u5316\u90E8\u6307\u5BFC\uFF0C\u65E8\u5728\u52A0\u5F3A\u5BB6\u957F\u5BF9\u672A\u6210\u5E74\u4EBA\u53C2\u4E0E\u7F51\u7EDC\u6E38\u620F\u7684\u76D1\u62A4\uFF0C\u5F15\u5BFC\u672A\u6210\u5E74\u4EBA\u5065\u5EB7\u3001\u7EFF\u8272\u53C2\u4E0E\u7F51\u7EDC\u6E38\u620F\uFF0C\u548C\u8C10\u5BB6\u5EAD\u5173\u7CFB\u7684\u793E\u4F1A\u6027\u516C\u76CA\u884C\u52A8\u3002\u5B83\u63D0\u4F9B\u4E86\u4E00\u79CD\u5207\u5B9E\u53EF\u884C\u7684\u65B9\u6CD5\uFF0C\u4E00\u79CD\u5BB6\u957F\u5B9E\u65BD\u76D1\u63A7\u7684\u7BA1\u9053\uFF0C\u4F7F\u5BB6\u957F\u7EA0\u6B63\u90E8\u5206\u672A\u6210\u5E74\u5B50\u5973\u6C89\u8FF7\u6E38\u620F\u7684\u884C\u4E3A\u6210\u4E3A\u53EF\u80FD\u3002
+  m_Text: "\u201C\u7F51\u7EDC\u6E38\u620F\u672A\u6210\u5E74\u4EBA\u5BB6\u957F\u76D1\u62A4\u5DE5\u7A0B\u201D\u662F\u4E00\u9879\u7531\u56FD\u5185\u7F51\u7EDC\u6E38\u620F\u4F01\u4E1A\u5171\u540C\u53D1\u8D77\u5E76\u53C2\u4E0E\u5B9E\u65BD\uFF0C\u7531\u4E2D\u534E\u4EBA\u6C11\u5171\u548C\u56FD\u6587\u5316\u90E8\u6307\u5BFC\uFF0C\u65E8\u5728\u52A0\u5F3A\u5BB6\u957F\u5BF9\u672A\u6210\u5E74\u4EBA\u53C2\u4E0E\u7F51\u7EDC\u6E38\u620F\u7684\u76D1\u62A4\uFF0C\u5F15\u5BFC\u672A\u6210\u5E74\u4EBA\u5065\u5EB7\u3001\u7EFF\u8272\u53C2\u4E0E\u7F51\u7EDC\u6E38\u620F\uFF0C\u548C\u8C10\u5BB6\u5EAD\u5173\u7CFB\u7684\u793E\u4F1A\u6027\u516C\u76CA\u884C\u52A8\u3002\u5B83\u63D0\u4F9B\u4E86\u4E00\u79CD\u5207\u5B9E\u53EF\u884C\u7684\u65B9\u6CD5\uFF0C\u4E00\u79CD\u5BB6\u957F\u5B9E\u65BD\u76D1\u63A7\u7684\u7BA1\u9053\uFF0C\u4F7F\u5BB6\u957F\u7EA0\u6B63\u90E8\u5206\u672A\u6210\u5E74\u5B50\u5973\u6C89\u8FF7\u6E38\u620F\u7684\u884C\u4E3A\u6210\u4E3A\u53EF\u80FD\u3002
     \r\n\u8BE5\u9879\u793E\u4F1A\u516C\u76CA\u884C\u52A8\u5145\u5206\u53CD\u6620\u4E86\u4E2D\u56FD\u7F51\u7EDC\u6E38\u620F\u884C\u4E1A\u9AD8\u5EA6\u7684\u793E\u4F1A\u8D23\u4EFB\u611F\uFF0C\u5BF9\u672A\u6210\u5E74\u73A9\u5BB6\u5408\u6CD5\u6743\u76CA\u7684\u5173\u6CE8\u53CA\u5BF9\u7528\u5B9E\u9645\u884C\u52A8\u8425\u9020\u548C\u8C10\u793E\u4F1A\u7684\u613F\u671B\u3002
     \r\n\u201C\u5BB6\u957F\u76D1\u62A4\u673A\u5236\u201D\u662F\u5E7B\u6E38\u5728\u8FD9\u4E00\u516C\u76CA\u884C\u52A8\u4E2D\uFF0C\u9488\u5BF9\u76EE\u524D\u672A\u6210\u5E74\u4EBA\u7F3A\u4E4F\u81EA\u63A7\u53CA\u81EA\u5F8B\u80FD\u529B\uFF0C\u5BB9\u6613\u9677\u5165\u6C89\u8FF7\uFF1B\u5C11\u6570\u76D1\u62A4\u4EBA\u7F3A\u5C11\u65F6\u95F4\u7167\u987E\u672A\u6210\u5E74\u4EBA\uFF0C\u4E0D\u80FD\u53CA\u65F6\u76D1\u7763\u672A\u6210\u5E74\u4EBA\u6E38\u620F\u65F6\u95F4\u7684\u73B0\u72B6\uFF0C\u800C\u63A8\u51FA\u7684\u4E00\u79CD\u53EF\u7531\u5BB6\u957F\u5B9E\u65BD\u76D1\u63A7\uFF0C\u7EA0\u6B63\u90E8\u5206\u672A\u6210\u5E74\u5B50\u5973\u6C89\u8FF7\u6E38\u620F\u7684\u4FDD\u62A4\u673A\u5236\u3002
     \r\n\r\n\u300A\u672A\u6210\u5E74\u4EBA\u5065\u5EB7\u53C2\u4E0E\u7F51\u7EDC\u6E38\u620F\u63D0\u793A\u300B
@@ -545,7 +545,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1400, y: 930}
+  m_SizeDelta: {x: 1000, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224195847963667230
 RectTransform:
@@ -562,8 +562,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 686, y: 369.9}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 479.9, y: 212.8}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224292873880396586
 RectTransform:
@@ -581,7 +581,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 6, y: 0}
-  m_SizeDelta: {x: 1277, y: 0}
+  m_SizeDelta: {x: 900, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224293958832596116
 RectTransform:
@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 364.1}
-  m_SizeDelta: {x: 1202.7, y: 102}
+  m_AnchoredPosition: {x: 0, y: 230.9}
+  m_SizeDelta: {x: 784.69, y: 102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224606254926288928
 RectTransform:
@@ -637,7 +637,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1486.5}
+  m_SizeDelta: {x: 0, y: 1677}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224646101555481074
 RectTransform:
@@ -655,8 +655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -53.47}
-  m_SizeDelta: {x: 1304.2, y: 721.6}
+  m_AnchoredPosition: {x: 0, y: -32.2}
+  m_SizeDelta: {x: 900, y: 433}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224933844430522056
 RectTransform:

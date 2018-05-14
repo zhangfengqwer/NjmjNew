@@ -37,8 +37,15 @@ namespace ETHotfix
             taskNameTxt = rc.Get<GameObject>("TaskNameTxt").GetComponent<Text>();
         }
 
-        public void SetTaskItemInfo(TaskInfo info,int curProgress)
+        public void SetTaskItemInfo(TaskInfo info,TaskProgress curProgress)
         {
+            if(curProgress == null)
+            {
+                curProgress = new TaskProgress();
+                curProgress.Progress = 0;
+                curProgress.IsComplete = false;
+            }
+
             string iconName = new StringBuilder().Append("Task")
                                                  .Append(info.Id).ToString();
             taskNameTxt.text = info.TaskName;
@@ -46,10 +53,23 @@ namespace ETHotfix
             taskIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(iconName);
             rewardTxt.text = new StringBuilder().Append("金币")
                                                 .Append(info.Reward).ToString();
-
-            targetTxt.text = new StringBuilder().Append(curProgress)
+            if(curProgress.IsComplete)
+            {
+                SetState(true);
+            }
+            else
+            {
+                SetState(false);
+                targetTxt.text = new StringBuilder().Append(curProgress.Progress)
                                                 .Append("/")
                                                 .Append(info.Target).ToString();
+            }
+        }
+
+        private void SetState(bool isComplete)
+        {
+            completeTxt.SetActive(isComplete);
+            goingTxt.SetActive(!isComplete);
         }
     }
 }

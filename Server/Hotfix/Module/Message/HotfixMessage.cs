@@ -335,6 +335,12 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int Progress;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int Target;
+
+		[ProtoMember(4, IsRequired = true)]
+		public bool IsComplete;
+
 	}
 
 	[Message(HotfixOpcode.C2G_UpdateTaskProgress)]
@@ -405,7 +411,7 @@ namespace ETHotfix
 	public partial class TaskInfo: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public long Id;
+		public int Id;
 
 		[ProtoMember(2, IsRequired = true)]
 		public string TaskName;

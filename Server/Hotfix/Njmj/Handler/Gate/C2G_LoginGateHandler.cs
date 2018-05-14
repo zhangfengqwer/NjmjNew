@@ -53,7 +53,7 @@ namespace ETHotfix
                     int id = 100 + i;
                     TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
                     TaskInfo info = new TaskInfo();
-                    info.Id = config.Id;
+                    info.Id = (int)config.Id;
                     info.TaskName = config.Name;
                     info.Reward = config.Reward;
                     info.Desc = config.Desc;
