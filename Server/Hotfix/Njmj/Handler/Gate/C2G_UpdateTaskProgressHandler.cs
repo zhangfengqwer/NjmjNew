@@ -14,26 +14,32 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<TaskProgressInfo> taskProgressList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId}}}");
-                if(taskProgressList.Count <= 0)
+                List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId},TaskId:{message.TaskPrg.TaskId}}}");
+                TaskProgressInfo progress = new TaskProgressInfo();
+                if (taskProgressInfoList.Count > 0)
                 {
-                    response.Message = "任务正在进行中";
-                    response.TaskPrg = null;
-                    reply(response);
+                    for(int i = 0;i < taskProgressInfoList.Count; ++i)
+                    {
+                        progress = taskProgressInfoList[i];
+                        if (progress.CurProgress == message.TaskPrg.Target)
+                            progress.IsComplete = true;
+                        else
+                            progress.IsComplete = false;
+                    }
                 }
-                else
-                {
-                    TaskProgressInfo progress = new TaskProgressInfo();
-                    TaskProgress taskProgress = new TaskProgress();
-                    progress.UId = message.UId;
-                    progress.TaskId = message.TaskPrg.TaskId;
-                    progress.CurProgress = message.TaskPrg.Progress;
+                TaskProgress taskProgress = new TaskProgress();
+                progress.UId = message.UId;
+                progress.TaskId = message.TaskPrg.TaskId;
+                progress.CurProgress = message.TaskPrg.Progress;
+                progress.Target = message.TaskPrg.Target;
 
-                    DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
-                    response.TaskPrg.TaskId = progress.TaskId;
-                    response.TaskPrg.Progress = progress.CurProgress;
-                    reply(response);
-                }
+                DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
+                response.TaskPrg = new TaskProgress();
+                response.TaskPrg.TaskId = progress.TaskId;
+                response.TaskPrg.Progress = progress.CurProgress;
+                response.TaskPrg.Target = progress.Target;
+                response.TaskPrg.IsComplete = progress.IsComplete;
+                reply(response);
             }
             catch(Exception e)
             {

@@ -34,6 +34,7 @@ namespace ETHotfix
 
             returnBtn.onClick.Add(() =>
             {
+                TaskTest();
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UITask);
             });
             taskInfoList = Game.Scene.GetComponent<PlayerInfoComponent>().GetTaskInfoList();
@@ -41,8 +42,16 @@ namespace ETHotfix
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
             RequestTaskInfo();
+        }
 
-            CreateTaskItem();
+        private async void TaskTest()
+        {
+            long uid = PlayerInfoComponent.Instance.uid;
+            TaskProgress taskProgress = new TaskProgress();
+            taskProgress.TaskId = 101;
+            taskProgress.Progress = 30;
+            taskProgress.Target = 30;
+            G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = uid,TaskPrg = taskProgress });
         }
 
         private async void RequestTaskInfo()
@@ -50,11 +59,13 @@ namespace ETHotfix
             long uid = PlayerInfoComponent.Instance.uid;
             G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = uid });
             taskProgressList = g2cTask.TaskProgressList;
+            CreateTaskItem();
         }
 
         private void CreateTaskItem()
         {
             GameObject obj = null;
+            TaskProgress progress = null;
             for(int i = 0;i< taskInfoList.Count; ++i)
             {
                 if (i < taskItemList.Count)
@@ -70,19 +81,19 @@ namespace ETHotfix
                     taskItemList.Add(obj);
                     uiList.Add(ui);
                 }
-               // int progress = GetProgressByTaskID(taskInfoList[i].Id);
-                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(taskInfoList[i], 0);
+                progress = GetProgressByTaskID(taskInfoList[i].Id);
+                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(taskInfoList[i], progress);
             }
         }
 
-        private int GetProgressByTaskID(int TaskId)
+        private TaskProgress GetProgressByTaskID(int TaskId)
         {
-            for(int i = 0;i< taskProgressList.Count; ++i)
+            for (int i = 0;i< taskProgressList.Count; ++i)
             {
                 if (taskProgressList[i].TaskId == TaskId)
-                    return taskProgressList[i].Progress;
+                    return taskProgressList[i];
             }
-            return 0;
+            return null;
         }
         public override void Dispose()
         {

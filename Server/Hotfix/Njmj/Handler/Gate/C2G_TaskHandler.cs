@@ -29,6 +29,7 @@ namespace ETHotfix
                         TaskProgress taskProgress = new TaskProgress();
                         taskProgress.TaskId = taskProgressInfoList[i].TaskId;
                         taskProgress.Progress = taskProgressInfoList[i].CurProgress;
+                        taskProgress.IsComplete = taskProgressInfoList[i].IsComplete;
                         taskProgressList.Add(taskProgress);
                     }
                     response.TaskProgressList = taskProgressList;
