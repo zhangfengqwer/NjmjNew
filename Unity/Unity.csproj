@@ -270,6 +270,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Njmj\Audio\SoundComponent.cs" />
+    <Compile Include="Assets\Njmj\Audio\SoundData.cs" />
+    <Compile Include="Assets\Njmj\MonoScript\HandCardSprite.cs" />
     <Compile Include="Assets\Scripts\Base\DoubleMap.cs" />
     <Compile Include="Assets\Scripts\Base\Event\Env.cs" />
     <Compile Include="Assets\Scripts\Base\Event\EnvKey.cs" />
@@ -368,8 +371,6 @@
     <Compile Include="Assets\Scripts\Module\AssetsBundle\BundleDownloaderComponent.cs" />
     <Compile Include="Assets\Scripts\Module\AssetsBundle\ResourcesComponent.cs" />
     <Compile Include="Assets\Scripts\Module\AssetsBundle\VersionConfig.cs" />
-    <Compile Include="Assets\Scripts\Module\Audio\SoundComponent.cs" />
-    <Compile Include="Assets\Scripts\Module\Audio\SoundData.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorNodeConfig.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorTree.cs" />
     <Compile Include="Assets\Scripts\Module\BehaviorTree\BehaviorTreeArgsDict.cs" />

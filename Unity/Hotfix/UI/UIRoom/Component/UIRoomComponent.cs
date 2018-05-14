@@ -81,5 +81,10 @@ namespace ETHotfix
 	        gamer.GetComponent<GamerUIComponent>().Panel.SetActive(false);
             gamer.Dispose();
 	    }
-    }
+
+	    public void StartGame()
+	    {
+
+	    }
+	}
 }
