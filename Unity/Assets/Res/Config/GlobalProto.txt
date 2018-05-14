@@ -1,1 +1,1 @@
-{"AssetBundleServerUrl":"http://fwdown.hy51v.com/njmj/test/AssetBundle/","Address":"127.0.0.1:10002"}
+{"AssetBundleServerUrl":"http://fwdown.hy51v.com/njmj/test/AssetBundle/","Address":"10.224.5.31:10002"}

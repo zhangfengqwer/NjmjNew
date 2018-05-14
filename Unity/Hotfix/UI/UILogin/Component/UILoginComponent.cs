@@ -20,6 +20,7 @@ namespace ETHotfix
 	{
         private GameObject panel_start;
         private GameObject panel_phoneLogin;
+        private GameObject DebugAccount;
 
         private InputField inputField_Phone;
 	    private InputField inputField_YanZhengMa;
@@ -69,6 +70,35 @@ namespace ETHotfix
                 // 隐藏手机登录界面
                 panel_phoneLogin.transform.localScale = Vector3.zero;
             }
+
+            {
+                DebugAccount = rc.Get<GameObject>("DebugAccount");
+                DebugAccount.transform.Find("Button_player1").GetComponent<Button>().onClick.Add(onClickDebugAccount1);
+                DebugAccount.transform.Find("Button_player2").GetComponent<Button>().onClick.Add(onClickDebugAccount2);
+                DebugAccount.transform.Find("Button_player3").GetComponent<Button>().onClick.Add(onClickDebugAccount3);
+                DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
+            }
+        }
+
+        
+        public void onClickDebugAccount1()
+        {
+            OnLoginPhone("1", "", "1");
+        }
+
+        public void onClickDebugAccount2()
+        {
+            OnLoginPhone("2", "", "2");
+        }
+
+        public void onClickDebugAccount3()
+        {
+            OnLoginPhone("3", "", "3");
+        }
+
+        public void onClickDebugAccount4()
+        {
+            OnLoginPhone("4", "", "4");
         }
 
         public void onClickOpenPhoneLogin()

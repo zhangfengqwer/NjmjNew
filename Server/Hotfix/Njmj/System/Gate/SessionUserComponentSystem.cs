@@ -39,9 +39,9 @@ namespace ETHotfix
             }
 
             //向登录服务器发送玩家下线消息
-            //      IPEndPoint realmIPEndPoint = config.RealmConfig.GetComponent<InnerConfig>().IPEndPoint;
-            //      Session realmSession = Game.Scene.GetComponent<NetInnerComponent>().Get(realmIPEndPoint);
-            //      realmSession.Send(new G2R_PlayerOffline_Ntt() { UserID = this.User.UserID });
+            //IPEndPoint realmIPEndPoint = config.RealmConfig.GetComponent<InnerConfig>().IPEndPoint;
+            //Session realmSession = Game.Scene.GetComponent<NetInnerComponent>().Get(realmIPEndPoint);
+            //realmSession.Send(new Actor_ForceOffline());
 
             self.User.Dispose();
             self.User = null;
