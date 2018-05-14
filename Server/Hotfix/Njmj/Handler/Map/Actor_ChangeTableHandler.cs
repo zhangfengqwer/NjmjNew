@@ -9,7 +9,6 @@ namespace ETHotfix
 	[ActorMessageHandler(AppType.Map)]
 	public class Actor_ChangeTableHandler : AMActorHandler<Gamer,Actor_ChangeTable>
 	{
-
 	    protected override async Task Run(Gamer gamer, Actor_ChangeTable message)
 	    {
             try
