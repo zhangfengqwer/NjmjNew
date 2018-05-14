@@ -6,16 +6,15 @@ using System.Text;
 namespace ETHotfix
 {
     [MessageHandler(AppType.Gate)]
-    public class C2G_EmailHandler : AMRpcHandler<C2G_Eamil, G2C_Eamil>
+    public class C2G_EmailHandler : AMRpcHandler<C2G_Email, G2C_Email>
     {
-        protected override async void Run(Session session, C2G_Eamil message, Action<G2C_Eamil> reply)
+        protected override async void Run(Session session, C2G_Email message, Action<G2C_Email> reply)
         {
-            G2C_Eamil response = new G2C_Eamil();
+            G2C_Email response = new G2C_Email();
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.Uid}}}");
-                Email email = new Email();
                 List<Email> emailList = new List<Email>();
                 if(emailInfos.Count > 0)
                 {
@@ -23,11 +22,13 @@ namespace ETHotfix
                     for(int i = 0;i< emailInfos.Count; ++i)
                     {
                         EmailInfo info = emailInfos[i];
+                        Email email = new Email();
                         email.EmailTitle = info.EmailTitle;
                         email.Content = info.Content;
                         email.IsRead = info.IsRead;
                         email.RewardItem = info.RewardItem;
                         email.Date = info.Date;
+                        email.EId = info.Id;
                         emailList.Add(email);
                     }
                     response.EmailInfoList = emailList;

@@ -22,8 +22,8 @@ namespace ETHotfix
 
         public void Awake()
         {
-            GameObject playerIconBundle = GetBundleByUIType(UIType.UIPlayerIcon);
-            GameObject shopBundle = GetBundleByUIType(UIType.UIShopIcon);
+            GameObject playerIconBundle = CommonUtil.getGameObjByBundle(UIType.UIPlayerIcon);
+            GameObject shopBundle = CommonUtil.getGameObjByBundle(UIType.UIShopIcon);
             AddSprite(playerIconBundle, "f_icon1");
             AddSprite(playerIconBundle, "f_icon2");
             AddSprite(playerIconBundle, "f_icon3");
@@ -59,13 +59,6 @@ namespace ETHotfix
             //texture = bundle.Get<Texture2D>(iconName);
             //icon = CreateSprite(texture);
             AddSprite(iconName, icon);
-        }
-
-        private GameObject GetBundleByUIType(string type)
-        {
-            ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{type}.unity3d");
-             return (GameObject)resourcesComponent.GetAsset($"{type}.unity3d", $"{type}");
         }
 
         private Sprite CreateSprite(Texture2D texture)

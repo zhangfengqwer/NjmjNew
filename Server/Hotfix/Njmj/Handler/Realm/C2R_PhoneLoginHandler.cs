@@ -56,13 +56,19 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        ClientManager.addClientInfo(session, accountInfo.Id);
                     }
                     // 用户不存在，走注册流程
                     else
                     {
                         AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
                         accountInfo.Phone = message.Phone;
-                        accountInfo.Token = CommonUtil.getToken(message.Phone); ;
+                        accountInfo.Token = CommonUtil.getToken(message.Phone);
+                        accountInfo.MachineId = message.MachineId;
+                        accountInfo.ChannelName = message.MachineId;
+                        accountInfo.ClientVersion = message.ClientVersion;
+
                         await proxyComponent.Save(accountInfo);
 
                         // 随机分配一个Gate
@@ -79,6 +85,8 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        ClientManager.addClientInfo(session, accountInfo.Id);
                     }
                 }
                 // 用Token登录
@@ -103,6 +111,8 @@ namespace ETHotfix
                             response.Key = g2RGetLoginKey.Key;
                             response.Token = accountInfo.Token;
                             reply(response);
+
+                            ClientManager.addClientInfo(session, accountInfo.Id);
                         }
                         else
                         {

@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,9 +25,11 @@ namespace ETHotfix
         private GameObject emailItem = null;
         private List<GameObject> emailItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
+        public static UIEmailComponent Instance { get; private set; }
 
         public void Awake()
         {
+            Instance = this;
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             grid = rc.Get<GameObject>("Grid");
@@ -47,9 +50,9 @@ namespace ETHotfix
             try
             {
                 long uid = PlayerInfoComponent.Instance.uid;
-                G2C_Eamil g2cEmail = (G2C_Eamil)await SessionWrapComponent.Instance.Session.Call(new C2G_Eamil() { Uid = uid });
+                G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
                 emailList = g2cEmail.EmailInfoList;
-                Debug.Log(emailList);
+                Debug.Log(JsonHelper.ToJson(emailList));
                 if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
                 {
                     CreateEmailItemList();
@@ -79,11 +82,43 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIEmailItemComponent>();
+                    if (emailList[i].IsRead)
+                        obj.transform.SetAsFirstSibling();
                     uiList.Add(ui);
                     emailItemList.Add(obj);
                 }
                 uiList[i].GetComponent<UIEmailItemComponent>().SetEmailData(emailList[i]);
             }
+            emailCountTxt.text = new StringBuilder()
+                                .Append(emailList.Count)
+                                .Append("/")
+                                .Append(50).ToString();
+        }
+
+        /// <summary>
+        /// 排序 暂时不用
+        /// </summary>
+        public void SortList()
+        {
+            for(int i = 0; i < grid.transform.childCount; ++i)
+            {
+                Transform tr = grid.transform.GetChild(i);
+                if (tr.Find("Flag").gameObject.activeInHierarchy)
+                    tr.SetAsFirstSibling();
+            }
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            for(int i = 0;i< grid.transform.childCount; ++i)
+            {
+                //设置当前未读文本邮件为已读
+            }
+            emailItemList.Clear();
+            uiList.Clear();
+            emailList.Clear();
+            Instance = null;
         }
     }
 }
