@@ -20,6 +20,15 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public string Token;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string MachineId;
+
+		[ProtoMember(5, IsRequired = true)]
+		public string ChannelName;
+
+		[ProtoMember(6, IsRequired = true)]
+		public string ClientVersion;
+
 	}
 
 	[Message(HotfixOpcode.R2C_PhoneLogin)]
@@ -43,6 +52,48 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public string Token;
+
+	}
+
+	[Message(HotfixOpcode.C2R_ThirdLogin)]
+	[ProtoContract]
+	public partial class C2R_ThirdLogin: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Third_Id;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string MachineId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string ChannelName;
+
+		[ProtoMember(4, IsRequired = true)]
+		public string ClientVersion;
+
+	}
+
+	[Message(HotfixOpcode.R2C_ThirdLogin)]
+	[ProtoContract]
+	public partial class R2C_ThirdLogin: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Address;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long Key;
 
 	}
 
@@ -550,6 +601,57 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = false)]
 		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.Email)]
+	[ProtoContract]
+	public partial class Email: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string EmailTitle;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Content;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Date;
+
+		[ProtoMember(4, IsRequired = true)]
+		public bool IsRead;
+
+		[ProtoMember(5, IsRequired = true)]
+		public string RewardItem;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Eamil)]
+	[ProtoContract]
+	public partial class C2G_Eamil: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Eamil)]
+	[ProtoContract]
+	public partial class G2C_Eamil: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<Email> EmailInfoList = new List<Email>();
 
 	}
 

@@ -62,7 +62,11 @@ namespace ETHotfix
                     {
                         AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
                         accountInfo.Phone = message.Phone;
-                        accountInfo.Token = CommonUtil.getToken(message.Phone); ;
+                        accountInfo.Token = CommonUtil.getToken(message.Phone);
+                        accountInfo.MachineId = message.MachineId;
+                        accountInfo.ChannelName = message.MachineId;
+                        accountInfo.ClientVersion = message.ClientVersion;
+
                         await proxyComponent.Save(accountInfo);
 
                         // 随机分配一个Gate

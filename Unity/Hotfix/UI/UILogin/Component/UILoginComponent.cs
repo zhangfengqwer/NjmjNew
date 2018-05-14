@@ -111,7 +111,8 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            ToastScript.createToast("暂未开放");
+            string Third_Id = "wx_123";
+            OnThirdLogin(Third_Id);
         }
 
         public void onClickBackStart()
@@ -178,7 +179,7 @@ namespace ETHotfix
 
 				Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
 				sessionWrap = new SessionWrap(session);
-				R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin) await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token });
+				R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin) await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token , MachineId = PlatformHelper.GetMacId(), ChannelName  = PlatformHelper .GetChannelName(), ClientVersion = PlatformHelper .GetVersionName()});
 				sessionWrap.Dispose();
 
 			    if (r2CLogin.Error != ErrorCode.ERR_Success)
@@ -224,5 +225,45 @@ namespace ETHotfix
 				Log.Error(e);
 			}
 		}
-	}
+
+        public async void OnThirdLogin(string third_id)
+        {
+            SessionWrap sessionWrap = null;
+            try
+            {
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+
+                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                sessionWrap = new SessionWrap(session);
+                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
+                sessionWrap.Dispose();
+
+                if (r2CLogin.Error != ErrorCode.ERR_Success)
+                {
+                    ToastScript.createToast(r2CLogin.Message);
+
+                    return;
+                }
+
+                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                Game.Scene.AddComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
+                ETModel.Game.Scene.AddComponent<SessionComponent>().Session = gateSession;
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
+
+                ToastScript.createToast("登录成功");
+                isLoginSuccess = true;
+
+                Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
+                Game.Scene.GetComponent<PlayerInfoComponent>().SetShopInfoList(g2CLoginGate.ShopInfoList);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
+            }
+            catch (Exception e)
+            {
+                sessionWrap?.Dispose();
+                Log.Error(e);
+            }
+        }
+    }
 }
