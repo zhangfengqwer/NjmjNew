@@ -14,16 +14,26 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                TaskProgressInfo progress = new TaskProgressInfo();
-                TaskProgress taskProgress = new TaskProgress();
-                progress.UId = message.UId;
-                progress.TaskId = message.TaskPrg.TaskId;
-                progress.CurProgress = message.TaskPrg.Progress;
+                List<TaskProgressInfo> taskProgressList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId}}}");
+                if(taskProgressList.Count <= 0)
+                {
+                    response.Message = "任务正在进行中";
+                    response.TaskPrg = null;
+                    reply(response);
+                }
+                else
+                {
+                    TaskProgressInfo progress = new TaskProgressInfo();
+                    TaskProgress taskProgress = new TaskProgress();
+                    progress.UId = message.UId;
+                    progress.TaskId = message.TaskPrg.TaskId;
+                    progress.CurProgress = message.TaskPrg.Progress;
 
-                DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
-                response.TaskPrg.TaskId = progress.TaskId;
-                response.TaskPrg.Progress = progress.CurProgress;
-                reply(response);
+                    DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
+                    response.TaskPrg.TaskId = progress.TaskId;
+                    response.TaskPrg.Progress = progress.CurProgress;
+                    reply(response);
+                }
             }
             catch(Exception e)
             {

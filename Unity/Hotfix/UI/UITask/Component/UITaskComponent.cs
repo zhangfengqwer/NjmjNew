@@ -23,6 +23,7 @@ namespace ETHotfix
         private List<GameObject> taskItemList = new List<GameObject>();
         private List<TaskInfo> taskInfoList = new List<TaskInfo>();
         private List<UI> uiList = new List<UI>();
+        private List<TaskProgress> taskProgressList = new List<TaskProgress>();
 
         public void Awake()
         {
@@ -39,7 +40,16 @@ namespace ETHotfix
             Debug.Log(JsonHelper.ToJson(taskInfoList));
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
+            RequestTaskInfo();
+
             CreateTaskItem();
+        }
+
+        private async void RequestTaskInfo()
+        {
+            long uid = PlayerInfoComponent.Instance.uid;
+            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = uid });
+            taskProgressList = g2cTask.TaskProgressList;
         }
 
         private void CreateTaskItem()
@@ -60,10 +70,20 @@ namespace ETHotfix
                     taskItemList.Add(obj);
                     uiList.Add(ui);
                 }
+               // int progress = GetProgressByTaskID(taskInfoList[i].Id);
                 uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(taskInfoList[i], 0);
             }
         }
 
+        private int GetProgressByTaskID(int TaskId)
+        {
+            for(int i = 0;i< taskProgressList.Count; ++i)
+            {
+                if (taskProgressList[i].TaskId == TaskId)
+                    return taskProgressList[i].Progress;
+            }
+            return 0;
+        }
         public override void Dispose()
         {
             //taskInfoList.Clear();
