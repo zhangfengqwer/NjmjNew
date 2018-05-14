@@ -49,12 +49,12 @@ namespace ETHotfix
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
+
+                #region emailTest
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
-                emailInfos.Clear();
                 if (emailInfos.Count <= 0)
                 {
-                    #region emailTest
                     EmailInfo emailInfo = new EmailInfo();
                     emailInfo.UId = userId;
                     //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
