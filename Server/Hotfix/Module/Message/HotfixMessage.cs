@@ -341,6 +341,9 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public bool IsComplete;
 
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsGet;
+
 	}
 
 	[Message(HotfixOpcode.C2G_UpdateTaskProgress)]

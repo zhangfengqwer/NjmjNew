@@ -46,7 +46,7 @@ namespace ETHotfix
                 curProgress.IsComplete = false;
             }
 
-            string iconName = new StringBuilder().Append("Task")
+            string iconName = new StringBuilder().Append("Task_")
                                                  .Append(info.Id).ToString();
             taskNameTxt.text = info.TaskName;
             descTxt.text = info.Desc;
@@ -56,6 +56,8 @@ namespace ETHotfix
             if(curProgress.IsComplete)
             {
                 SetState(true);
+                //判断是否已领取
+                
             }
             else
             {

@@ -32,6 +32,7 @@ namespace ETHotfix
                 progress.TaskId = message.TaskPrg.TaskId;
                 progress.CurProgress = message.TaskPrg.Progress;
                 progress.Target = message.TaskPrg.Target;
+                progress.IsGet = message.TaskPrg.IsGet;
 
                 DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
                 response.TaskPrg = new TaskProgress();
@@ -39,6 +40,7 @@ namespace ETHotfix
                 response.TaskPrg.Progress = progress.CurProgress;
                 response.TaskPrg.Target = progress.Target;
                 response.TaskPrg.IsComplete = progress.IsComplete;
+                response.TaskPrg.IsGet = progress.IsGet;
                 reply(response);
             }
             catch(Exception e)

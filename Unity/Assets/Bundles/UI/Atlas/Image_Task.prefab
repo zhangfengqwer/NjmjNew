@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1055748095853256}
+  m_IsPrefabParent: 1
+--- !u!1 &1055748095853256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224695750923695960}
+  - component: {fileID: 114209868832074282}
+  m_Layer: 5
+  m_Name: Image_Task
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114209868832074282
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1055748095853256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: Task_101
+    gameObject: {fileID: 21300000, guid: 51de0d6f2f4e11c4eaf78d15ff6bcff5, type: 3}
+  - key: Task_102
+    gameObject: {fileID: 21300000, guid: 81a5aa00176ca974bba80c260690387e, type: 3}
+  - key: Task_103
+    gameObject: {fileID: 21300000, guid: 97b187b49e3660d48b13343b01dcc144, type: 3}
+  - key: Task_104
+    gameObject: {fileID: 21300000, guid: f37696f7e26f477458e596343790af7b, type: 3}
+  - key: Task_105
+    gameObject: {fileID: 21300000, guid: 6c22df1cb70d72e4cb44fc8abfc635fe, type: 3}
+  - key: Task_106
+    gameObject: {fileID: 21300000, guid: cfc066808c458a244a23655ee98fd076, type: 3}
+--- !u!224 &224695750923695960
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1055748095853256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
