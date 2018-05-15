@@ -9,13 +9,14 @@ namespace ETModel
         public readonly List<MahjongInfo> library = new List<MahjongInfo>();
 
         //身份
-//        public Identity AccessIdentity { get; set; }
+        public bool IsBranker { get; set; }
 
         //是否托管
         public bool IsTrusteeship { get; set; }
 
         //手牌数
         public int CardsCount { get { return library.Count; } }
+
 
         public override void Dispose()
         {

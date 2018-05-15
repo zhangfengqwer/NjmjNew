@@ -15,9 +15,9 @@ namespace ETHotfix
         {
             try
             {
-                foreach (var VARIABLE in message.Mahjongs)
+                foreach (var mahjong in message.Mahjongs)
                 {
-                    
+                    mahjong.m_weight = (Consts.MahjongWeight) mahjong.weight;
                 }
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
@@ -41,10 +41,8 @@ namespace ETHotfix
                     if (gamer.UserID == gamerComponent.LocalGamer.UserID)
                     {
                         //本地玩家添加手牌
-//                        handCards.AddCards(message.Mahjongs);
+                        handCards.AddCards(message.Mahjongs);
                     }
-
-
                 }
 
                 Log.Info($"收到开始:{JsonHelper.ToJson(message)}");

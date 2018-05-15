@@ -60,6 +60,31 @@ namespace ETHotfix
 
 	                roomComponent.gameRooms.Add(room.Id, room);
 	                roomComponent.readyRooms.Remove(room.Id);
+
+                    //判断停牌，胡牌
+	                foreach (var _gamer in gamers)
+	                {
+	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+	                    if (handCardsComponent.IsBranker)
+	                    {
+                            //庄家胡牌
+	                        if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
+	                        {
+
+	                        }
+	                    }
+	                    else
+	                    {
+                            //其他听牌
+	                        List<MahjongInfo> checkTingPaiList = Logic_NJMJ.getInstance().checkTingPaiList(handCardsComponent.GetAll());
+	                        if (checkTingPaiList.Count > 0)
+	                        {
+
+	                        }
+                        }
+	                }
+
+
                 }
             }
 	        catch (Exception e)

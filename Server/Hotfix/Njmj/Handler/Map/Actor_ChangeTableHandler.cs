@@ -39,6 +39,12 @@ namespace ETHotfix
 	            //消息广播给其他人
 	            gamerRoom.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 
+	            if (gamerRoom.seats.Count == 3)
+	            {
+	                roomComponent.idleRooms.Add(gamerRoom);
+	                roomComponent.readyRooms.Remove(gamerRoom.Id);
+                }
+
 	            gamer.IsReady = false;
                 idleRoom.Add(gamer);
 	            idleRoom.BroadGamerEnter();

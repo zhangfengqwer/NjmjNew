@@ -13,6 +13,11 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void DealCards(this GameControllerComponent self)
         {
+            if (self == null)
+            {
+                Log.Error("当前为null");
+                return;
+            }
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
             DeskComponent deskComponent = room.GetComponent<DeskComponent>();

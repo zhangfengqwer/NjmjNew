@@ -71,6 +71,7 @@
     <Compile Include="Base\Object\IChangeSystem.cs" />
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
+    <Compile Include="Njmj\Component\HandCardsComponent.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />

@@ -22,7 +22,8 @@ namespace ETHotfix
         private readonly Dictionary<string, GameObject> cardsSprite = new Dictionary<string, GameObject>();
         private readonly List<MahjongInfo> handCards = new List<MahjongInfo>();
         private readonly List<MahjongInfo> playCards = new List<MahjongInfo>();
-
+        private GameObject cardRight;
+        private GameObject cardLeft;
 
         public GameObject Panel { get; private set; }
 //        public Identity AccessIdentity { get; set; }
@@ -30,7 +31,8 @@ namespace ETHotfix
         public void Awake(GameObject panel)
         {
             this.Panel = panel;
-
+            this.cardRight = panel.Get<GameObject>("CardRight");
+            this.cardLeft = panel.Get<GameObject>("CardLeft");
         }
 
         public override void Dispose()
@@ -59,8 +61,8 @@ namespace ETHotfix
         /// </summary>
         public void Appear()
         {
-            _poker?.SetActive(true);
-            _handCards?.SetActive(true);
+//            _poker?.SetActive(true);
+//            _handCards?.SetActive(true);
         }
 
         /// <summary>
@@ -68,8 +70,7 @@ namespace ETHotfix
         /// </summary>
         public void Hide()
         {
-            _poker?.SetActive(false);
-            _handCards?.SetActive(false);
+
         }
 
         /// <summary>
@@ -77,12 +78,12 @@ namespace ETHotfix
         /// </summary>
         /// <param name="card"></param>
         /// <returns></returns>
-        public GameObject GetSprite(MahjongInfo card)
-        {
-            GameObject cardSprite;
-//            cardsSprite.TryGetValue(card.GetName(), out cardSprite);
-            return cardSprite;
-        }
+//        public GameObject GetSprite(MahjongInfo card)
+//        {
+////            GameObject cardSprite;
+//////            cardsSprite.TryGetValue(card.GetName(), out cardSprite);
+////            return cardSprite;
+//        }
 
         /// <summary>
         /// 设置手牌数量
@@ -90,7 +91,7 @@ namespace ETHotfix
         /// <param name="num"></param>
         public void SetHandCardsNum(int num)
         {
-            _pokerNum.text = num.ToString();
+//            _pokerNum.text = num.ToString();
         }
 
         /// <summary>
@@ -239,19 +240,57 @@ namespace ETHotfix
         /// <param name="cardName"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        private GameObject CreateCardSprite(string prefabName, string cardName, Transform parent)
+//        private GameObject CreateCardSprite(string prefabName, string cardName, Transform parent)
+//        {
+////            GameObject cardSpritePrefab = Game.Scene.GetComponent<ResourcesComponent>().GetAsset($"{prefabName}.unity3d", prefabName);
+////            GameObject cardSprite = UnityEngine.Object.Instantiate(cardSpritePrefab);
+////
+////            cardSprite.name = cardName;
+////            cardSprite.layer = LayerMask.NameToLayer("UI");
+////            cardSprite.transform.SetParent(parent.transform, false);
+////
+////            Sprite sprite = CardHelper.GetCardSprite(cardName);
+////            cardSprite.GetComponent<Image>().sprite = sprite;
+////
+////            return cardSprite;
+//        }
+        public void AddCards(List<MahjongInfo> mahjongs)
         {
-//            GameObject cardSpritePrefab = Game.Scene.GetComponent<ResourcesComponent>().GetAsset($"{prefabName}.unity3d", prefabName);
-//            GameObject cardSprite = UnityEngine.Object.Instantiate(cardSpritePrefab);
-//
-//            cardSprite.name = cardName;
-//            cardSprite.layer = LayerMask.NameToLayer("UI");
-//            cardSprite.transform.SetParent(parent.transform, false);
-//
-//            Sprite sprite = CardHelper.GetCardSprite(cardName);
-//            cardSprite.GetComponent<Image>().sprite = sprite;
-//
-//            return cardSprite;
+            for (int i = 0; i < mahjongs.Count; i++)
+            {
+                if (i > 13)
+                {
+                    AddCard(mahjongs[i], cardRight.transform);
+                }
+                else
+                {
+                    AddCard(mahjongs[i],cardLeft.transform);
+                }
+            }
+//            CreateCardSprite(mahjongs.);
+        }
+
+        private void AddCard(MahjongInfo mahjong, Transform parent)
+        {
+            GameObject cardSprite = this.CreateCardSprite("card_" + mahjong.weight, parent);
+        }
+
+        private GameObject CreateCardSprite(string cardName,Transform parent)
+        {
+            ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            resourcesComponent.LoadBundle($"Image_Game.unity3d");
+            resourcesComponent.LoadBundle($"ItemCard.unity3d");
+
+            GameObject obj = (GameObject)resourcesComponent.GetAsset("Image_Game.unity3d", "Image_Game");
+            GameObject itemObj = (GameObject)resourcesComponent.GetAsset("ItemCard.unity3d", "ItemCard");
+
+            Sprite sprite = obj.Get<Sprite>(cardName);
+            GameObject ItemCard = GameObject.Instantiate(itemObj,parent);
+            ItemCard.GetComponent<Image>().sprite = sprite;
+            ItemCard.name = cardName;
+            ItemCard.layer = LayerMask.NameToLayer("UI");
+
+            return ItemCard;
         }
     }
 }
