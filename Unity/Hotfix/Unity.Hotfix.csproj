@@ -74,6 +74,7 @@
     <Compile Include="Njmj\Component\HandCardsComponent.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerPlayCardHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerExitRoomHandler.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
     <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
+    <Compile Include="UI\UIRoom\Event\GamerPlayCard.cs" />
     <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
     <Compile Include="UI\UILogin\Event\InitSceneStart_CreateLoginUI.cs" />

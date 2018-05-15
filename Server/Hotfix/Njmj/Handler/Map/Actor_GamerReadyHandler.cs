@@ -37,11 +37,18 @@ namespace ETHotfix
 	                }
 
 	                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
+	                OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
+
+                    //随机庄家
+	                int number = RandomHelper.RandomNumber(0, 12);
+	                int i = number % 4;
+                    room.gamers[i].GetComponent<HandCardsComponent>().IsBanker = true;
+
 	                //发牌
                     gameController.DealCards();
-
+	                orderController.Start(gamers[0].UserID);
                     //给客户端传送数据
-	                foreach (var itemGame in gamers)
+                    foreach (var itemGame in gamers)
 	                {
 	                    List<MahjongInfo> mahjongInfos = itemGame.GetComponent<HandCardsComponent>().library;
 	                    foreach (var mahjongInfo in mahjongInfos)
@@ -58,14 +65,27 @@ namespace ETHotfix
 
 	                room.State = RoomState.Game;
 
-	                roomComponent.gameRooms.Add(room.Id, room);
+	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
+	                {
+	                    roomComponent.gameRooms.Remove(room.Id);
+	                }
+
+                    roomComponent.gameRooms.Add(room.Id, room);
 	                roomComponent.readyRooms.Remove(room.Id);
+
+
+                    //排序
+	                foreach (var _gamer in gamers)
+	                {
+	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+	                    handCardsComponent.Sort();
+                    }
 
                     //判断停牌，胡牌
 	                foreach (var _gamer in gamers)
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
-	                    if (handCardsComponent.IsBranker)
+                        if (handCardsComponent.IsBanker)
 	                    {
                             //庄家胡牌
 	                        if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
@@ -83,8 +103,6 @@ namespace ETHotfix
 	                        }
                         }
 	                }
-
-
                 }
             }
 	        catch (Exception e)

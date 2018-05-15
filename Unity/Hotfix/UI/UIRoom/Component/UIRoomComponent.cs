@@ -84,7 +84,8 @@ namespace ETHotfix
 
 	    public void StartGame()
 	    {
-
+	        this.changeTableBtn.gameObject.SetActive(false);
+	        this.readyBtn.gameObject.SetActive(false);
 	    }
 	}
 }

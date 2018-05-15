@@ -33,6 +33,10 @@ namespace ETHotfix
 
         }
 
+        public override bool Equals(object obj)
+        {
+            return m_weight == ((MahjongInfo)obj).m_weight;
+        }
     }
 
     public class HuPaiNeedData

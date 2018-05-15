@@ -254,6 +254,13 @@ message Actor_ChangeTable // IActorMessage
     optional long Uid = 1;
 }
 
+message Actor_GamerPlayCard // IActorMessage
+{
+    required int weight = 1;
+    optional long Uid = 2;
+    required int index = 3;
+}
+
 message Email //IMessage
 {
 	required string EmailTitle = 1;//邮件标题

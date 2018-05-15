@@ -23,6 +23,8 @@ namespace ETHotfix
 			    if (idleRoom == null)
 			    {
 			        idleRoom = RoomFactory.Create();
+			        Log.Debug("创建房间：" + idleRoom.Id);
+
 			        roomComponent.Add(idleRoom);
                 }
 

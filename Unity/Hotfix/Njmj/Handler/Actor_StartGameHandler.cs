@@ -23,6 +23,8 @@ namespace ETHotfix
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.StartGame();
+
 
                 foreach (var gamer in gamerComponent.GetAll())
                 {
@@ -44,6 +46,10 @@ namespace ETHotfix
                         handCards.AddCards(message.Mahjongs);
                     }
                 }
+
+                HandCardsComponent localHandCards = gamerComponent.LocalGamer.GetComponent<HandCardsComponent>();
+
+
 
                 Log.Info($"收到开始:{JsonHelper.ToJson(message)}");
             }

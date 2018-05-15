@@ -724,6 +724,27 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerPlayCard)]
+	[ProtoContract]
+	public partial class Actor_GamerPlayCard: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int weight;
+
+		[ProtoMember(2, IsRequired = false)]
+		public long Uid;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int index;
+
+	}
+
 	[Message(HotfixOpcode.Email)]
 	[ProtoContract]
 	public partial class Email: IMessage

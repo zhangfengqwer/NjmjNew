@@ -9,7 +9,7 @@ namespace ETModel
         public readonly List<MahjongInfo> library = new List<MahjongInfo>();
 
         //身份
-        public bool IsBranker { get; set; }
+        public bool IsBanker { get; set; }
 
         //是否托管
         public bool IsTrusteeship { get; set; }
