@@ -357,7 +357,7 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public TaskProgress TaskPrg;
+		public TaskInfo TaskPrg;
 
 	}
 
@@ -375,7 +375,7 @@ namespace ETHotfix
 		public string Message { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public TaskProgress TaskPrg;
+		public TaskInfo TaskPrg;
 
 	}
 
@@ -404,8 +404,8 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1, TypeName = "ETHotfix.TaskProgress")]
-		public List<TaskProgress> TaskProgressList = new List<TaskProgress>();
+		[ProtoMember(1, TypeName = "ETHotfix.TaskInfo")]
+		public List<TaskInfo> TaskProgressList = new List<TaskInfo>();
 
 	}
 
@@ -427,6 +427,15 @@ namespace ETHotfix
 
 		[ProtoMember(5, IsRequired = true)]
 		public int Target;
+
+		[ProtoMember(6, IsRequired = true)]
+		public int Progress;
+
+		[ProtoMember(7, IsRequired = true)]
+		public bool IsComplete;
+
+		[ProtoMember(8, IsRequired = true)]
+		public bool IsGet;
 
 	}
 

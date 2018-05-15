@@ -14,36 +14,48 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId},TaskId:{message.TaskPrg.TaskId}}}");
+                TaskInfo taskInfo = new TaskInfo();
+                response.TaskPrg = new TaskInfo();
                 TaskProgressInfo progress = new TaskProgressInfo();
+                List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId},TaskId:{message.TaskPrg.Id}}}");
+                
                 if (taskProgressInfoList.Count > 0)
                 {
-                    for(int i = 0;i < taskProgressInfoList.Count; ++i)
+                    for(int i = 0;i< taskProgressInfoList.Count; ++i)
                     {
                         progress = taskProgressInfoList[i];
-                        if (progress.CurProgress == message.TaskPrg.Target)
-                            progress.IsComplete = true;
+                        progress.TaskId = message.TaskPrg.Id;
+                        progress.CurProgress = message.TaskPrg.Progress;
+                        if (message.TaskPrg.IsGet)
+                        {
+                            progress.IsGet = true;
+                        }
                         else
-                            progress.IsComplete = false;
+                        {
+                            if (message.TaskPrg.Progress == progress.Target)
+                            {
+                                progress.IsComplete = true;
+                            }
+                            else
+                            {
+                                progress.IsComplete = false;
+                            }
+                        }
+                        await proxyComponent.Save(progress);
                     }
+                    taskInfo.Id = progress.TaskId;
+                    taskInfo.IsGet = progress.IsGet;
+                    taskInfo.IsComplete = progress.IsComplete;
+                    response.TaskPrg = taskInfo;
                 }
-                TaskProgress taskProgress = new TaskProgress();
-                progress.UId = message.UId;
-                progress.TaskId = message.TaskPrg.TaskId;
-                progress.CurProgress = message.TaskPrg.Progress;
-                progress.Target = message.TaskPrg.Target;
-                progress.IsGet = message.TaskPrg.IsGet;
-
-                DBHelper.AddTaskProgressInfoToDB(message.UId, progress);
-                response.TaskPrg = new TaskProgress();
-                response.TaskPrg.TaskId = progress.TaskId;
-                response.TaskPrg.Progress = progress.CurProgress;
-                response.TaskPrg.Target = progress.Target;
-                response.TaskPrg.IsComplete = progress.IsComplete;
-                response.TaskPrg.IsGet = progress.IsGet;
+                else
+                {
+                    response.Message = "不存在该任务ID";
+                    response.TaskPrg = null;
+                }
                 reply(response);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ReplyError(response, e, reply);
             }

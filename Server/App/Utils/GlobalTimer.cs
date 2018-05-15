@@ -45,6 +45,13 @@ namespace App
 
                 // 刷新签到
             }
+
+            #region TaskTest
+            if((hour == 14) && (min == 59) && (sec == 0))
+            {
+                Game.Scene.AddComponent<DBOperatorComponet>();
+            }
+            #endregion
         }
     }
 }

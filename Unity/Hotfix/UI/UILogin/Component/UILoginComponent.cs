@@ -223,7 +223,6 @@ namespace ETHotfix
 
                         panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
                     }
-
                     return;
 			    }
 
@@ -232,7 +231,7 @@ namespace ETHotfix
 				Game.Scene.AddComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
 				ETModel.Game.Scene.AddComponent<SessionComponent>().Session = gateSession;
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
-                Debug.Log(JsonHelper.ToJson(g2CLoginGate.TaskInfoList));
+
                 ToastScript.createToast("登录成功");
                 isLoginSuccess = true;
 
@@ -245,7 +244,9 @@ namespace ETHotfix
                 }
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-                Game.Scene.GetComponent<PlayerInfoComponent>().SetInfoList(g2CLoginGate.ShopInfoList, g2CLoginGate.TaskInfoList);
+                G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
+                PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
+                PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
@@ -285,7 +286,9 @@ namespace ETHotfix
                 isLoginSuccess = true;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-                Game.Scene.GetComponent<PlayerInfoComponent>().SetInfoList(g2CLoginGate.ShopInfoList,g2CLoginGate.TaskInfoList);
+                G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
+                PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
+                PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }

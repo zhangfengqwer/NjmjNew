@@ -104,12 +104,11 @@ namespace App
 						Game.Scene.AddComponent<ConfigComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
+                        Game.Scene.AddComponent<DBOperatorComponet>();
                         // Game.Scene.AddComponent<HttpComponent>();
-
 					    //GateGlobalComponent
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
-
                         //MapGlobalCoponent
                         Game.Scene.AddComponent<RoomComponent>();
 
