@@ -1,5 +1,6 @@
 ﻿using ETModel;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +40,23 @@ namespace ETHotfix
             });
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
+            progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
+                                                  .Append(GetProgress())
+                                                  .Append("/")
+                                                  .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
+                                                  .ToString();
             CreateTaskItem();
+        }
+
+        private int GetProgress()
+        {
+            int count = 0;
+            for(int i = 0;i< PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            {
+                if (PlayerInfoComponent.Instance.GetTaskInfoList()[i].IsComplete)
+                    count++;
+            }
+            return count;
         }
 
         private async void TaskTest()
@@ -47,7 +64,7 @@ namespace ETHotfix
             long uid = PlayerInfoComponent.Instance.uid;
             TaskInfo taskProgress = new TaskInfo();
             taskProgress.Id = 102;
-            taskProgress.Progress = 5;
+            taskProgress.Progress = 10;
             G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = uid, TaskPrg = taskProgress });
         }
 
