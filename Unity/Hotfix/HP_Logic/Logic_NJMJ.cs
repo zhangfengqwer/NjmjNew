@@ -21,6 +21,12 @@ namespace ETHotfix
         {
             m_weight = weight;
         }
+
+        public MahjongInfo(int weight)
+        {
+            m_weight = (MahjongWeight)weight;
+        }
+
         //pb反序列化必须需要无参数的构造函数
         public MahjongInfo()
         {
@@ -97,7 +103,7 @@ namespace ETHotfix
                 {
                     for (int j = 1; j <= 4; j++)
                     {
-                        m_mahjongList.Add(new MahjongInfo(MahjongWeight.Wan_1 + 0));
+                        m_mahjongList.Add(new MahjongInfo((int)MahjongWeight.Wan_1 + (i - 1)));
                     }
                 }
 
@@ -106,7 +112,7 @@ namespace ETHotfix
                 {
                     for (int j = 1; j <= 4; j++)
                     {
-                        m_mahjongList.Add(new MahjongInfo(MahjongWeight.Tiao_1 + 10));
+                        m_mahjongList.Add(new MahjongInfo((int)MahjongWeight.Tiao_1 + (i - 1)));
                     }
                 }
 
@@ -115,7 +121,7 @@ namespace ETHotfix
                 {
                     for (int j = 1; j <= 4; j++)
                     {
-                        m_mahjongList.Add(new MahjongInfo(MahjongWeight.Tong_1 + 20));
+                        m_mahjongList.Add(new MahjongInfo((int)MahjongWeight.Tong_1 + (i - 1)));
                     }
                 }
 
