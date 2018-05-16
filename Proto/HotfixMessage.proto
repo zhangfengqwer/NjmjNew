@@ -288,4 +288,14 @@ message G2C_UpdateEmail //IResponse
 	required long EId = 1; 
 }
 
+message C2G_DailySign // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_DailySign // IResponse
+{
+	required string Reward = 1;
+}
+
 #endregion

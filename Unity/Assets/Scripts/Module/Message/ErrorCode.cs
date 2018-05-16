@@ -15,6 +15,7 @@ namespace ETModel
         public const int ERR_PhoneCodeError = 109;
 
         public const int AccountExist = 110;
+        public const int TodayHasSign = 111;
 
         public const int ERR_Exception = 1000;
 

@@ -44,7 +44,7 @@ namespace ETHotfix
 
             playerIcon.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIIcon);
+                CommonUtil.ShowUI(UIType.UIIcon);
             });
 
         }

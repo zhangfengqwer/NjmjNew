@@ -28,5 +28,6 @@ namespace ETHotfix
         public const string UITask = "UITask";//任务
         public const string UITaskItem = "UITaskItem";//任务Item
         public const string UITaskIcon = "Image_Task";//任务Icon
+        public const string UIDaily = "UIDaily";
     }
 }

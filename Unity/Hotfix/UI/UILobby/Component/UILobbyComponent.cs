@@ -83,7 +83,7 @@ namespace ETHotfix
 			try
 			{
 				G2C_EnterMap g2CEnterMap = (G2C_EnterMap)await SessionComponent.Instance.Session.Call(new C2G_EnterMap());
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                CommonUtil.ShowUI(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILobby);
             }
 			catch (Exception e)

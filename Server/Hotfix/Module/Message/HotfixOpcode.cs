@@ -50,5 +50,7 @@ namespace ETModel
 		 public const ushort G2C_Email = 10046;
 		 public const ushort C2G_UpdateEmail = 10047;
 		 public const ushort G2C_UpdateEmail = 10048;
+		 public const ushort C2G_DailySign = 10049;
+		 public const ushort G2C_DailySign = 10050;
 	}
 }
