@@ -37,14 +37,10 @@ namespace Hotfix
                 temp.prop_id = (int)jd[i]["prop_id"];
                 temp.prop_name = (string)jd[i]["prop_name"];
                 temp.desc = (string)jd[i]["desc"];
+                temp.type = (int)jd[i]["type"];
 
                 m_propInfoList.Add(temp);
             }
-
-            //for (int i = 0; i < m_propInfoList.Count; i++)
-            //{
-            //    Log.Debug(m_propInfoList[i].desc + "、");
-            //}
         }
 
         public List<PropInfo> getPropInfoList()
@@ -74,5 +70,6 @@ namespace Hotfix
         public int prop_id = 0;
         public string prop_name = "";
         public string desc = "";
+        public int type = 0;            // 0：不可以直接使用   1：可以直接使用
     }
 }
