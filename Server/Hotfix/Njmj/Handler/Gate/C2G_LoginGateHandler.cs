@@ -29,6 +29,8 @@ namespace ETHotfix
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                
                 #region AddShopInfo
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
@@ -42,24 +44,23 @@ namespace ETHotfix
                     info.ShopType = config.shopType;
                     info.Desc = config.Desc;
                     info.CurrencyType = config.CurrencyType;
+                    info.Items = config.Items;
                     shopInfoList.Add(info);
                 }
                 #endregion
 
-                #region AddTaskInfo
-                //List<TaskInfo> taskInfoList = new List<TaskInfo>();
-                //for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
-                //{
-                //    int id = 100 + i;
-                //    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
-                //    TaskInfo info = new TaskInfo();
-                //    info.Id = (int)config.Id;
-                //    info.TaskName = config.Name;
-                //    info.Reward = config.Reward;
-                //    info.Desc = config.Desc;
-                //    info.Target = config.Target;
-                //    taskInfoList.Add(info);
-                //}
+                #region AddItemInfo
+                List<ItemInfo> itemInfoList = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{userId}}}");
+                if (itemInfoList.Count <= 0)
+                {
+                    for (int i = 1; i < 9; ++i)
+                    {
+                        ItemInfo item = new ItemInfo();
+                        item.BagId = 100 + i;
+                        item.Count = 10 + i;
+                        DBHelper.AddItemToDB(userId, item);
+                    }
+                }
                 #endregion
 
                 //添加消息转发组件
@@ -68,7 +69,7 @@ namespace ETHotfix
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {

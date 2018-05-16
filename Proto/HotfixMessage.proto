@@ -107,7 +107,8 @@ message ShopInfo //IMessage
 	required string Name = 3;//商品名称
 	required string Desc = 4;//商品介绍
 	required int Price = 5;//商品单价
-	required int CurrencyType = 6;//商品图标
+	required int CurrencyType = 6;//
+	required string Items = 7;
 }
 
 message TaskProgress //IMessage
@@ -160,6 +161,17 @@ message C2G_PlayerInfo // IRequest
 message G2C_PlayerInfo // IResponse
 {
 	required PlayerInfo PlayerInfo = 1;
+}
+
+message G2C_UseItem //IResponse
+{
+	required int result = 1;//0,使用失败 1.使用成功
+}
+
+message C2G_UseItem //IRequest
+{
+	required long UId = 1;
+	required int ItemId = 2;
 }
 
 message C2G_EnterRoom //IRequest
@@ -275,6 +287,22 @@ message C2G_Email //IRequest
 message G2C_Email //IResponse
 {
 	repeated Email EmailInfoList = 1;//邮件列表
+}
+
+message Item //IMessage
+{
+	required int64 ItemId = 1;//物品ID
+	required int Count = 2;//拥有数量
+}
+
+message C2G_BagOperation //IRequest
+{
+	required long UId  = 1;//用户ID
+}
+
+message G2C_BagOperation //IResponse
+{
+	repeated Item ItemList = 1;//物品列表
 }
 
 message C2G_UpdateEmail //IRequest
