@@ -848,6 +848,45 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public string Reward;
 
+		[ProtoMember(2, IsRequired = true)]
+		public string TomorrowReward;
+
+	}
+
+	[Message(HotfixOpcode.C2G_DailySignState)]
+	[ProtoContract]
+	public partial class C2G_DailySignState: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_DailySignState)]
+	[ProtoContract]
+	public partial class G2C_DailySignState: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool TodayIsSign;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string TodayReward;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string TomorrowReward;
+
 	}
 
 }

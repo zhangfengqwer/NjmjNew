@@ -542,7 +542,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7B2C\u4E8C\u5929\n\u5956\u52B1<color=#FF8604FF>5500</color>\u91D1\u5E01"
+  m_Text: "\u5956\u52B1<color=#FF8604FF>5500</color>\u91D1\u5E01"
 --- !u!114 &114183847027238570
 MonoBehaviour:
   m_ObjectHideFlags: 1

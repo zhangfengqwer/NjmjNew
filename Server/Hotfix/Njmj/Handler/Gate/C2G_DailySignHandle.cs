@@ -58,26 +58,20 @@ namespace ETHotfix
                 }
 
                 {
-                    //Log.Debug("连续签到天数：" + curLianXuSignDays.ToString());
-                    int num = 100 * curLianXuSignDays;
-                    if (num > 500)
-                    {
-                        num = 500;
-                    }
+                    string reward = getReward(curLianXuSignDays);
 
                     // 更新用户数据
                     {
                         List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
                         if (playerBaseInfo.Count > 0)
                         {
-                            playerBaseInfo[0].GoldNum += num;
+                            playerBaseInfo[0].GoldNum += getRewardNum(curLianXuSignDays);
                             await proxyComponent.Save(playerBaseInfo[0]);
                         }
                     }
 
-                    string reward = "1:" + num.ToString();
-
                     response.Reward = reward;
+                    response.TomorrowReward = getReward(curLianXuSignDays + 1);
                     reply(response);
 
                     DailySign dailySign = ComponentFactory.CreateWithId<DailySign>(IdGenerater.GenerateId());
@@ -90,6 +84,30 @@ namespace ETHotfix
             {
                 ReplyError(response, e, reply);
             }
+        }
+
+        static public string getReward(int day)
+        {
+            return "1:" + getRewardNum(day).ToString();
+        }
+
+        static public int getRewardNum(int day)
+        {
+            int minNum = 100;
+            int maxNum = 500;
+
+            int num = minNum * day;
+            if (num > maxNum)
+            {
+                num = maxNum;
+            }
+
+            if (num == 0)
+            {
+                num = minNum;
+            }
+
+            return num;
         }
     }
 }

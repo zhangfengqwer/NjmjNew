@@ -296,6 +296,19 @@ message C2G_DailySign // IRequest
 message G2C_DailySign // IResponse
 {
 	required string Reward = 1;
+	required string TomorrowReward = 2;
+}
+
+message C2G_DailySignState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_DailySignState // IResponse
+{
+	required bool TodayIsSign = 1;
+	required string TodayReward = 2;
+	required string TomorrowReward = 3;
 }
 
 #endregion

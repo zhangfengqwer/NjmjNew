@@ -32,6 +32,8 @@ namespace ETHotfix
             ToastScript.clear();
 
             initData();
+
+            RequestDailySignState();
         }
 
         public void initData()
@@ -87,6 +89,31 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
         }
 
+        private async void RequestDailySignState()
+        {
+            G2C_DailySignState g2cDailySignState = (G2C_DailySignState)await SessionWrapComponent.Instance.Session.Call(new C2G_DailySignState { Uid = PlayerInfoComponent.Instance.uid });
+
+            bool TodayIsSign = g2cDailySignState.TodayIsSign;
+            if (TodayIsSign)
+            {
+                Button btn = Item2.transform.Find("Button").GetComponent<Button>();
+                btn.interactable = false;
+                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_daily", "DayDo_tomorrow");
+
+                string TomorrowReward = g2cDailySignState.TomorrowReward;
+                int prop_id = CommonUtil.splitStr_Start(TomorrowReward, ':');
+                int prop_num = CommonUtil.splitStr_End(TomorrowReward, ':');
+                Item2.transform.Find("Text").GetComponent<Text>().text = ("奖励 <color=#FF8604FF>" + prop_num + "</color>金币");
+            }
+            else
+            {
+                string TodayReward = g2cDailySignState.TodayReward;
+                int prop_id = CommonUtil.splitStr_Start(TodayReward, ':');
+                int prop_num = CommonUtil.splitStr_End(TodayReward, ':');
+                Item2.transform.Find("Text").GetComponent<Text>().text = ("奖励 <color=#FF8604FF>" + prop_num + "</color>金币");
+            }
+        }
+
         private async void RequestDailySign()
         {
             G2C_DailySign g2cDailySign = (G2C_DailySign)await SessionWrapComponent.Instance.Session.Call(new C2G_DailySign { Uid = PlayerInfoComponent.Instance.uid });
@@ -100,6 +127,17 @@ namespace ETHotfix
 
             string reward = g2cDailySign.Reward;
             ToastScript.createToast("签到奖励：" + reward);
+
+            {
+                Button btn = Item2.transform.Find("Button").GetComponent<Button>();
+                btn.interactable = false;
+                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_daily", "DayDo_tomorrow");
+
+                string TomorrowReward = g2cDailySign.TomorrowReward;
+                int prop_id = CommonUtil.splitStr_Start(TomorrowReward, ':');
+                int prop_num = CommonUtil.splitStr_End(TomorrowReward, ':');
+                Item2.transform.Find("Text").GetComponent<Text>().text = ("奖励 <color=#FF8604FF>" + prop_num + "</color>金币");
+            }
         }
     }
 }
