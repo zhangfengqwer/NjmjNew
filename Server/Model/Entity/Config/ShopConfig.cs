@@ -14,5 +14,6 @@ namespace ETModel
 		public int CurrencyType;
 		public int Price;
 		public string Items;
+		public string Icon;
 	}
 }

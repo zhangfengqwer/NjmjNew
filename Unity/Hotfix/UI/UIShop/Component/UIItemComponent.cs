@@ -41,6 +41,7 @@ namespace ETHotfix
         public void SetCommonItem(ShopInfo info)
         {
             nameTxt.text = info.Name;
+            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (info.ShopType == (int)ShopType.Wing)
                 priceTxt.text = new StringBuilder().Append(info.Price).Append("元").ToString();
             else
@@ -52,13 +53,6 @@ namespace ETHotfix
             SetCommonItem(info);
             int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
             int prop_num = CommonUtil.splitStr_End(info.Items, ':');
-
-            string index = info.Id.ToString().Substring(3);
-            string spriteName = new StringBuilder().Append("item")
-                                                   .Append(index)
-                                                   .Append("_")
-                                                   .Append(prop_id).ToString();
-            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
         }
 
         public void SetGoldItem(ShopInfo info)
@@ -70,12 +64,7 @@ namespace ETHotfix
             string[] itemsArr = info.Items.Split(';');
             int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
             int prop_num = CommonUtil.splitStr_End(info.Items, ':');
-            string index = info.Id.ToString().Substring(3);
-            string spriteName = new StringBuilder().Append("item")
-                                                   .Append(index)
-                                                   .Append("_")
-                                                   .Append(prop_id).ToString();
-            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
+            
             descTxt.text = strArr[0];
             disCountTxt.text = strArr[1];
         }
@@ -85,10 +74,8 @@ namespace ETHotfix
         public void SetItem(ShopInfo info,int index,ShopType shopType)
         {
             SetCommonItem(info);
-            string[] itemsArr = info.Items.Split(';');
             int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
             int prop_num = CommonUtil.splitStr_End(info.Items, ':');
-            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(prop_id.ToString());
             this.index = index;
             float height = 0;
             if(openBtn == null && closeBtn == null)

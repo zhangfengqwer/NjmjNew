@@ -326,6 +326,9 @@ namespace ETHotfix
 		[ProtoMember(7, IsRequired = true)]
 		public string Items;
 
+		[ProtoMember(8, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.TaskProgress)]

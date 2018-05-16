@@ -109,6 +109,7 @@ message ShopInfo //IMessage
 	required int Price = 5;//商品单价
 	required int CurrencyType = 6;//
 	required string Items = 7;
+	required string Icon = 8;
 }
 
 message TaskProgress //IMessage
