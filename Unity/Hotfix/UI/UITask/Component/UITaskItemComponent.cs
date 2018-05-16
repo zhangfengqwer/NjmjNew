@@ -68,7 +68,6 @@ namespace ETHotfix
             taskIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(iconName);
             rewardTxt.text = new StringBuilder().Append("金币")
                                                 .Append(info.Reward).ToString();
-            Debug.Log(JsonHelper.ToJson(taskProgress));
             if(taskProgress.IsComplete)
             {
                 goingTxt.SetActive(false);

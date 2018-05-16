@@ -74,7 +74,7 @@ namespace ETHotfix
                 {
                     obj = GameObject.Instantiate(iconObj);
                     obj.transform.SetParent(grid.transform);
-                    obj.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+                    obj.transform.localScale = Vector3.one;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIPlayerIconItemComponent>();
                     iconList.Add(obj);
