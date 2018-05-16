@@ -30,6 +30,7 @@ namespace ETHotfix
         private GameObject bgItem = null;
         private List<GameObject> bgItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
+        private Item item;
         //private int row = 3;//初始三行
         //private int itemCount = 3;//每行个数
 
@@ -49,7 +50,10 @@ namespace ETHotfix
             });
             bagItem = CommonUtil.getGameObjByBundle(UIType.UIBagItem);
             bgItem = CommonUtil.getGameObjByBundle(UIType.UIBagBgL);
-
+            useBtn.onClick.Add(() =>
+            {
+                UseItem(item);
+            });
             GetBagInfoList();
         }
 
@@ -85,9 +89,25 @@ namespace ETHotfix
 
         public void SetItemInfo(Item item)
         {
+            this.item = item;
             PropInfo propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
+            if (propInfo == null)
+                Debug.LogError("道具信息错误");
+            useBtn.gameObject.SetActive(propInfo.type == 1);
             uiItemIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(propInfo.prop_id.ToString());
             descTxt.text = propInfo.desc;
+        }
+
+        private async void UseItem(Item item)
+        {
+            G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+            if (g2cBag.result == 1)
+            {
+                Debug.Log("Use Success");
+                GetBagInfoList();
+            }   
+            else
+                Debug.Log("Use Fail");
         }
 
         //private void SetBagItemL(int count)

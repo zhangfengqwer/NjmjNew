@@ -472,6 +472,39 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.G2C_UseItem)]
+	[ProtoContract]
+	public partial class G2C_UseItem: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int result;
+
+	}
+
+	[Message(HotfixOpcode.C2G_UseItem)]
+	[ProtoContract]
+	public partial class C2G_UseItem: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int ItemId;
+
+	}
+
 	[Message(HotfixOpcode.C2G_EnterRoom)]
 	[ProtoContract]
 	public partial class C2G_EnterRoom: IRequest

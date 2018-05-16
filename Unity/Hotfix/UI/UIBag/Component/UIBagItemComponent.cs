@@ -32,7 +32,6 @@ namespace ETHotfix
             uiBagItem.GetComponent<Button>().onClick.Add(() =>
             {
                 //显示物品信息
-                Debug.Log(item);
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIBag).GetComponent<UIBagComponent>().SetItemInfo(item);
             });
         }

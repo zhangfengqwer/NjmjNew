@@ -141,7 +141,11 @@ namespace ETHotfix
             PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
             long uid = playerInfoComponent.uid;
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
-            Log.Info(JsonHelper.ToJson(g2CPlayerInfo));
+            if (g2CPlayerInfo == null)
+            {
+                Debug.Log("用户信息错误");
+                return;
+            }
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
             playerInfoComponent.SetPlayerInfo(info);
             UpDatePlayerInfo(info);
