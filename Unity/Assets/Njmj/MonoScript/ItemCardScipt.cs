@@ -7,8 +7,10 @@ using UnityEngine.EventSystems;
 
 public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    public RectTransform _rectTransform;
+    private RectTransform _rectTransform;
+    [HideInInspector]
     public int weight;
+    [HideInInspector]
     public int index;
 
     private Vector3 beginPosition;

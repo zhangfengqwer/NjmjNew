@@ -17,6 +17,12 @@ namespace ETModel
             return DateTime.Now.ToString();
         }
 
+        // 格式2017-07-12 15:05:03
+        public static string getCurTimeNormalFormat()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         /// <summary>
         /// 32位MD5加密
         /// </summary>

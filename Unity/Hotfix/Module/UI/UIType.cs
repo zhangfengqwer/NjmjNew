@@ -28,5 +28,9 @@ namespace ETHotfix
         public const string UITask = "UITask";//任务
         public const string UITaskItem = "UITaskItem";//任务Item
         public const string UITaskIcon = "Image_Task";//任务Icon
+		public const string UIBag = "UIBag";//背包
+        public const string UIBagItem = "UIBagItem";//背包Item
+        public const string UIBagBgL = "UIBagBgL";//背包Item背景隔板
+ 		public const string UIDaily = "UIDaily";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using Hotfix;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,13 +40,25 @@ namespace ETHotfix
 
         public void SetCommonItem(ShopInfo info)
         {
-            UIIconComponent iconComp = Game.Scene.GetComponent<UIIconComponent>();
-            icon.sprite = iconComp.GetSprite(info.Id.ToString());
             nameTxt.text = info.Name;
             if (info.ShopType == (int)ShopType.Wing)
                 priceTxt.text = new StringBuilder().Append(info.Price).Append("元").ToString();
             else
                 priceTxt.text = info.Price.ToString();
+        }
+
+        public void SetWingItem(ShopInfo info)
+        {
+            SetCommonItem(info);
+            string[] itemsArr = info.Items.Split(';');
+            int itemId = int.Parse(itemsArr[0]);
+            int getCount = int.Parse(itemsArr[1]);
+            string index = info.Id.ToString().Substring(3);
+            string spriteName = new StringBuilder().Append("item")
+                                                   .Append(index)
+                                                   .Append("_")
+                                                   .Append(itemId).ToString();
+            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
         }
 
         public void SetGoldItem(ShopInfo info)
@@ -54,6 +67,15 @@ namespace ETHotfix
             Text disCountTxt = rc.Get<GameObject>("DisCountTxt").GetComponent<Text>();
             Text descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
             string[] strArr = info.Desc.Split(';');
+            string[] itemsArr = info.Items.Split(';');
+            int itemId = int.Parse(itemsArr[0]);
+            int getCount = int.Parse(itemsArr[1]);
+            string index = info.Id.ToString().Substring(3);
+            string spriteName = new StringBuilder().Append("item")
+                                                   .Append(index)
+                                                   .Append("_")
+                                                   .Append(itemId).ToString();
+            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
             descTxt.text = strArr[0];
             disCountTxt.text = strArr[1];
         }
@@ -63,6 +85,10 @@ namespace ETHotfix
         public void SetItem(ShopInfo info,int index,ShopType shopType)
         {
             SetCommonItem(info);
+            string[] itemsArr = info.Items.Split(';');
+            int itemId = int.Parse(itemsArr[0]);
+            int getCount = int.Parse(itemsArr[1]);
+            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(itemId.ToString());
             this.index = index;
             float height = 0;
             if(openBtn == null && closeBtn == null)

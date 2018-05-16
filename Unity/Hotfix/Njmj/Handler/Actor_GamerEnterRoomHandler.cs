@@ -18,7 +18,7 @@ namespace ETHotfix
                 //第一次进入创建UIRoom
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
                 {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
+                    CommonUtil.ShowUI(UIType.UIRoom);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
                 }
               

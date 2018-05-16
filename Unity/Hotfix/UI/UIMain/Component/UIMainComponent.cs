@@ -55,6 +55,7 @@ namespace ETHotfix
             {
                 //打开排行榜
                 Log.Debug("打开排行榜");
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBag);
             });
 
             exchangeBtn.onClick.Add(() =>
@@ -89,7 +90,9 @@ namespace ETHotfix
                 //打开领奖界面
                 Log.Debug("打开领奖界面");
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
+                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
@@ -109,6 +112,8 @@ namespace ETHotfix
             SetPlayerInfo();
 
             #endregion
+
+            CommonUtil.ShowUI(UIType.UIDaily);
         }
 
         private async void RequestTaskInfo()
@@ -140,7 +145,11 @@ namespace ETHotfix
             PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
             long uid = playerInfoComponent.uid;
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
-            Log.Info(JsonHelper.ToJson(g2CPlayerInfo));
+            if (g2CPlayerInfo == null)
+            {
+                Debug.Log("用户信息错误");
+                return;
+            }
             PlayerInfo info = g2CPlayerInfo.PlayerInfo;
             playerInfoComponent.SetPlayerInfo(info);
             UpDatePlayerInfo(info);

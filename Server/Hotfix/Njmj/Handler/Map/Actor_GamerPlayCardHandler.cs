@@ -84,7 +84,7 @@ namespace ETHotfix
                         {
                             actorGamerGrabCard = new Actor_GamerGrabCard()
                             {
-                                Uid = _gamer.UserID,
+                                Uid = currentGamer.UserID,
                                 weight = (int) grabMahjong.m_weight
                             };
                         }
@@ -92,7 +92,7 @@ namespace ETHotfix
                         {
                             actorGamerGrabCard = new Actor_GamerGrabCard()
                             {
-                                Uid = _gamer.UserID,
+                                Uid = currentGamer.UserID,
                             };
                         }
                         actorProxy.Send(actorGamerGrabCard);

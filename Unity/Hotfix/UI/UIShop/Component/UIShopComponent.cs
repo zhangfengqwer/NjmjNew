@@ -107,7 +107,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
             });
 
-            wingBtn.onClick.Invoke();
+            ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             #endregion
         }
 
@@ -270,7 +270,7 @@ namespace ETHotfix
                 switch (type)
                 {
                     case ShopType.Wing:
-                        uiList[i].GetComponent<UIItemComponent>().SetCommonItem(shopInfoList[i]);
+                        uiList[i].GetComponent<UIItemComponent>().SetWingItem(shopInfoList[i]);
                         break;
                     case ShopType.Gold:
                         uiList[i].GetComponent<UIItemComponent>().SetGoldItem(shopInfoList[i]);

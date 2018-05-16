@@ -17,7 +17,7 @@ namespace ETHotfix
                 ToastScript.createToast("您的账号已在别处登录，请重新登录");
 
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+                CommonUtil.ShowUI(UIType.UILogin);
             }
             catch (Exception e)
             {

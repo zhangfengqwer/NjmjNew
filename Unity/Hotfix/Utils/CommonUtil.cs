@@ -18,6 +18,12 @@ namespace ETHotfix
             return DateTime.Now.ToString();
         }
 
+        // 格式2017-07-12 15:05:03
+        public static string getCurTimeNormalFormat()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         /// <summary>
         /// 32位MD5加密
         /// </summary>
@@ -325,6 +331,11 @@ namespace ETHotfix
             resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
             return bundleGameObject;
+        }
+
+        static public UI ShowUI(string type)
+        {
+            return Game.Scene.GetComponent<UIComponent>().Create(type);
         }
     }
 }

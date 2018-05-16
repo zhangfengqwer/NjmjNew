@@ -40,6 +40,7 @@ namespace ETHotfix
         private GameObject itemObj;
         private GameObject grabObj;
         private GameObject showCard;
+        private GameObject cardDisplay;
 
         public int Index { get; set; }
         public GameObject Panel { get; private set; }
@@ -50,6 +51,7 @@ namespace ETHotfix
             this.Index = index;
             this.CardBottom = panel.Get<GameObject>("CardBottom");
             this.showCard = panel.Get<GameObject>("ShowCard");
+            this.cardDisplay = panel.Get<GameObject>("CardDisplay");
 
             switch (index)
             {
@@ -94,6 +96,8 @@ namespace ETHotfix
             this.resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             this.resourcesComponent.LoadBundle($"{PrefabName}.unity3d");
             this.resourcesComponent.LoadBundle($"{ItemName}.unity3d");
+            this.resourcesComponent.LoadBundle($"Item_Horizontal_Card.unity3d");
+            this.resourcesComponent.LoadBundle($"Item_Vertical_Card.unity3d");
 
             this.prefabObj = (GameObject) this.resourcesComponent.GetAsset($"{this.PrefabName}.unity3d", this.PrefabName);
             this.itemObj = (GameObject) this.resourcesComponent.GetAsset($"{this.ItemName}.unity3d", this.ItemName);
@@ -207,6 +211,13 @@ namespace ETHotfix
             UpdateCards();
 
             //显示出牌
+            GameObject obj = (GameObject)this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
+            GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
+            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
+
+            instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
+            instantiate.layer = LayerMask.NameToLayer("UI");
+
             ShowCard(mahjong.weight);
         }
 
@@ -352,6 +363,11 @@ namespace ETHotfix
             {
                 GameObject cardSprite = this.CreateCardSprite($"{Direction}_back1", i * this.postionX, i * this.postionY);
             }
+
+            if (Direction.Equals("left"))
+            {
+                grabObj.transform.SetAsLastSibling();
+            }
         }
 
         //其他人抓牌
@@ -363,6 +379,37 @@ namespace ETHotfix
         public void PlayOtherCard(MahjongInfo mahjongInfo)
         {
             grabObj.SetActive(false);
+
+            //显示出牌
+            //显示出牌
+            string item1 = null;
+            string item2 = null;
+            string item3 = null;
+            if (Index == 1)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Right_Card";
+                item3 = "right_" + mahjongInfo.weight;
+            }
+            else if (Index == 2)
+            {
+                item1 = "Item_Vertical_Card";
+                item2 = "Image_Top_Card";
+                item3 = "card_" + mahjongInfo.weight;
+            }
+            else if (Index == 3)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Left_Card";
+                item3 = "left_" + mahjongInfo.weight;
+            }
+            GameObject obj = (GameObject)this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
+            GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
+            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
+
+            instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
+            instantiate.layer = LayerMask.NameToLayer("UI");
+
             ShowCard(mahjongInfo.weight);
         }
     }

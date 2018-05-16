@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using ETModel;
+using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -233,6 +234,9 @@ namespace ETHotfix
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
 
                 ToastScript.createToast("登录成功");
+
+                getAllData();
+
                 isLoginSuccess = true;
 
                 {
@@ -283,6 +287,9 @@ namespace ETHotfix
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
+
+                getAllData();
+
                 isLoginSuccess = true;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
@@ -297,6 +304,11 @@ namespace ETHotfix
                 sessionWrap?.Dispose();
                 Log.Error(e);
             }
+        }
+
+        public void getAllData()
+        {
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
         }
     }
 }
