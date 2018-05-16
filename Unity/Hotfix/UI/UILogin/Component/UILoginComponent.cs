@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using ETModel;
+using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -291,12 +292,19 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
+
+                getAllData();
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
                 Log.Error(e);
             }
+        }
+
+        public void getAllData()
+        {
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
         }
     }
 }
