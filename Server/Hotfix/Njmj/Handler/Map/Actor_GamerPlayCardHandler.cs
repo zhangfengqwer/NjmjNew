@@ -34,12 +34,21 @@ namespace ETHotfix
                     return;
                 }
 
-                MahjongInfo info = mahjongInfos[message.index];
-                if (info.weight == message.weight)
+                int index = -1;
+                for (int i = 0; i < mahjongInfos.Count; i++)
+                {
+                    if (mahjongInfos[i].m_weight == mahjongInfo.m_weight)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+              
+                if (index >= 0)
                 {
                     Log.Debug("玩家出牌:" + message.weight);
 
-                    mahjongInfos.RemoveAt(message.index);
+                    mahjongInfos.RemoveAt(index);
 
                     room.Broadcast(new Actor_GamerPlayCard()
                     {
@@ -50,6 +59,45 @@ namespace ETHotfix
 
                     //下一个人出牌
 //                    orderController.Turn();
+                    var currentGamer = room.Get(orderController.CurrentAuthority);
+                    HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
+                    DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+
+                    int number = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
+                    MahjongInfo grabMahjong = deskComponent.RestLibrary[number];
+                    //发牌
+                    cardsComponent.AddCard(grabMahjong);
+                    deskComponent.RestLibrary.RemoveAt(number);
+
+                    Logic_NJMJ.getInstance().SortMahjong(cardsComponent.GetAll());
+
+                    //发送抓牌消息
+                    foreach (Gamer _gamer in room.gamers)
+                    {
+                        if (_gamer == null || _gamer.isOffline)
+                        {
+                            continue;
+                        }
+                        ActorProxy actorProxy = _gamer.GetComponent<UnitGateComponent>().GetActorProxy();
+                        Actor_GamerGrabCard actorGamerGrabCard;
+                        if (_gamer.UserID == orderController.CurrentAuthority)
+                        {
+                            actorGamerGrabCard = new Actor_GamerGrabCard()
+                            {
+                                Uid = _gamer.UserID,
+                                weight = (int) grabMahjong.m_weight
+                            };
+                        }
+                        else
+                        {
+                            actorGamerGrabCard = new Actor_GamerGrabCard()
+                            {
+                                Uid = _gamer.UserID,
+                            };
+                        }
+                        actorProxy.Send(actorGamerGrabCard);
+                    }
+
                 }
                 else
                 {

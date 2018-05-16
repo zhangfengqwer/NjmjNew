@@ -61,7 +61,7 @@ namespace ETHotfix
             {
                 //打开兑换界面
                 Log.Debug("打开兑换界面");
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIEmail);
             });
 
             activeBtn.onClick.Add(() =>
@@ -81,7 +81,7 @@ namespace ETHotfix
             {
                 //打开任务面板
                 Log.Debug("打开任务界面");
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIEmail);
+                RequestTaskInfo();
             });
 
             awardBtn.onClick.Add(() =>
@@ -109,6 +109,13 @@ namespace ETHotfix
             SetPlayerInfo();
 
             #endregion
+        }
+
+        private async void RequestTaskInfo()
+        {
+            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
+            PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
         }
 
         public async void UpDatePlayerInfo()

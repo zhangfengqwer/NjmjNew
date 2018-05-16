@@ -122,12 +122,12 @@ message TaskProgress //IMessage
 message C2G_UpdateTaskProgress //IRequest
 {
 	required long UId = 1;
-	required TaskProgress TaskPrg = 2;
+	required TaskInfo TaskPrg = 2;
 }
 
 message G2C_UpdateTaskProgress //IResponse
 {
-	required TaskProgress TaskPrg = 1;
+	required TaskInfo TaskPrg = 1;
 }
 
 message C2G_Task //IRequest
@@ -137,7 +137,7 @@ message C2G_Task //IRequest
 
 message G2C_Task //IResponse
 {
-	repeated TaskProgress TaskProgressList = 1;
+	repeated TaskInfo TaskProgressList = 1;
 }
 
 message TaskInfo //IMessage
@@ -147,6 +147,9 @@ message TaskInfo //IMessage
 	required string Desc = 3;//任务描述
 	required int Reward = 4;//任务达到之后的奖励
 	required int Target = 5;//任务完成目标
+	required int Progress = 6;//当前进度
+	required bool IsComplete = 7;//是否已经完成
+	required bool IsGet = 8;//是否获取
 }
 
 message C2G_PlayerInfo // IRequest
@@ -259,6 +262,12 @@ message Actor_GamerPlayCard // IActorMessage
     required int weight = 1;
     optional long Uid = 2;
     required int index = 3;
+}
+
+message Actor_GamerGrabCard // IActorMessage
+{
+ 	required int weight = 1;
+    required long Uid = 2;
 }
 
 message Email //IMessage

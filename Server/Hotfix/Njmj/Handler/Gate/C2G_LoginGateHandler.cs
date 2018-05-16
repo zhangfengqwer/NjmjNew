@@ -47,19 +47,19 @@ namespace ETHotfix
                 #endregion
 
                 #region AddTaskInfo
-                List<TaskInfo> taskInfoList = new List<TaskInfo>();
-                for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
-                {
-                    int id = 100 + i;
-                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
-                    TaskInfo info = new TaskInfo();
-                    info.Id = (int)config.Id;
-                    info.TaskName = config.Name;
-                    info.Reward = config.Reward;
-                    info.Desc = config.Desc;
-                    info.Target = config.Target;
-                    taskInfoList.Add(info);
-                }
+                //List<TaskInfo> taskInfoList = new List<TaskInfo>();
+                //for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
+                //{
+                //    int id = 100 + i;
+                //    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                //    TaskInfo info = new TaskInfo();
+                //    info.Id = (int)config.Id;
+                //    info.TaskName = config.Name;
+                //    info.Reward = config.Reward;
+                //    info.Desc = config.Desc;
+                //    info.Target = config.Target;
+                //    taskInfoList.Add(info);
+                //}
                 #endregion
 
                 //添加消息转发组件
@@ -68,7 +68,6 @@ namespace ETHotfix
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-                response.TaskInfoList = taskInfoList;
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)

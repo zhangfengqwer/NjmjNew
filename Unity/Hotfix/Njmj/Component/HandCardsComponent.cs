@@ -22,8 +22,6 @@ namespace ETHotfix
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
 
-
-        private readonly List<MahjongInfo> playCards = new List<MahjongInfo>();
         private GameObject cardRight;
         private GameObject cardLeft;
 
@@ -73,12 +71,12 @@ namespace ETHotfix
         /// </summary>
         public void Hide()
         {
+
         }
 
         /// <summary>
         /// 获取卡牌精灵
         /// </summary>
-        /// <param name="card"></param>
         /// <returns></returns>
         public GameObject GetSprite(int index)
         {
@@ -175,27 +173,72 @@ namespace ETHotfix
                 ItemCards.RemoveAt(index);
             }
 
-            UpdateCards(index);
+            UpdateCards();
         }
 
-        public void AddCard(MahjongInfo mahjong)
+        /// <summary>
+        /// 抓牌
+        /// </summary>
+        /// <param name="mahjong"></param>
+        public void GrabCard(MahjongInfo mahjong)
         {
-            handCards.Add(mahjong);
+
+            GameObject cardSprite = this.CreateCardSprite("card_" + mahjong.weight, cardLeft.transform, 0);
+            SetPosition(cardSprite, 792 + width * 2);
+
+            //查询插入的index
+            int index = -1;
+            for (int i = 0; i < handCards.Count - 1; i++)
+            {
+                if (mahjong.m_weight < handCards[0].m_weight)
+                {
+                    index = -1;
+                    break;
+                }
+
+                if (mahjong.m_weight >= handCards[handCards.Count - 1].m_weight)
+                {
+                    index = handCards.Count - 1;
+                    break;
+                }
+
+                MahjongInfo mahjongInfo1 = this.handCards[i];
+                MahjongInfo mahjongInfo2 = this.handCards[i + 1];
+                if (mahjongInfo1.m_weight <= mahjong.m_weight && mahjongInfo2.m_weight > mahjong.m_weight)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            index++;
+            handCards.Insert(index, mahjong);
+            ItemCards.Insert(index, cardSprite);
+
+            //大于index的item本身的index需要加1
+            for (int i = 0; i < ItemCards.Count; i++)
+            {
+                if (i > index)
+                {
+                    ItemCards[i].GetComponent<ItemCardScipt>().index = i;
+                }
+            }
+
+            //设置item
+            cardSprite.GetComponent<ItemCardScipt>().weight = mahjong.weight;
+            cardSprite.GetComponent<ItemCardScipt>().index = index;
         }
 
         /// <summary>
         /// 更新ui
         /// </summary>
-        private void UpdateCards(int index)
+        private void UpdateCards()
         {
             for (int i = 0; i < handCards.Count; i++)
             {
-                if (i >= index)
-                {
-                    GameObject itemCard = this.GetSprite(i);
-                    SetPosition(itemCard, (i) * width);
-                    itemCard.GetComponent<ItemCardScipt>().index = i;
-                }
+                GameObject itemCard = this.GetSprite(i);
+                SetPosition(itemCard, (i) * width);
+                itemCard.GetComponent<ItemCardScipt>().index = i;
             }
         }
 
@@ -254,6 +297,14 @@ namespace ETHotfix
         private void SetPosition(GameObject obj, int postionX)
         {
             obj.transform.localPosition = new Vector3(postionX, obj.transform.localPosition.y, obj.transform.localPosition.z);
+        }
+
+        /// <summary>
+        /// 其他人的牌
+        /// </summary>
+        /// <param name="messageMahjongs"></param>
+        public void AddOtherCards(List<MahjongInfo> messageMahjongs)
+        {
         }
     }
 }

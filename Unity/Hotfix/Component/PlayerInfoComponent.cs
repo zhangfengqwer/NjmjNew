@@ -35,9 +35,14 @@ namespace ETHotfix
             return playerInfo;
         }
 
-        public void SetInfoList(List<ShopInfo> shopInfoList,List<TaskInfo> taskInfoList)
+        public void SetShopInfoList(List<ShopInfo> shopInfoList)
         {
             this.shopInfoList = shopInfoList;
+            
+        }
+
+        public void SetTaskInfoList(List<TaskInfo> taskInfoList)
+        {
             this.taskInfoList = taskInfoList;
         }
 
