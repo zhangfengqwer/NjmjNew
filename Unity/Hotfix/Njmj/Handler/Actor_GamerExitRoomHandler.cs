@@ -22,7 +22,7 @@ namespace ETHotfix
 
                 if (gamerComponent.LocalGamer.UserID == message.Uid)
                 {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                    CommonUtil.ShowUI(UIType.UIMain);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
                 }
                 else

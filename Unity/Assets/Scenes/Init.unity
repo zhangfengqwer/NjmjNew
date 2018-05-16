@@ -465,6 +465,8 @@ MonoBehaviour:
     gameObject: {fileID: 1305671803}
   - key: RoomCanvas
     gameObject: {fileID: 2007784675}
+  - key: CommonCanvas
+    gameObject: {fileID: 2079415185}
 --- !u!1 &1848209001
 GameObject:
   m_ObjectHideFlags: 0

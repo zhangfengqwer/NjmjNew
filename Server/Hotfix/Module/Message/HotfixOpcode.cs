@@ -55,5 +55,7 @@ namespace ETModel
 		 public const ushort G2C_BagOperation = 10051;
 		 public const ushort C2G_UpdateEmail = 10052;
 		 public const ushort G2C_UpdateEmail = 10053;
+		 public const ushort C2G_DailySign = 10049;
+		 public const ushort G2C_DailySign = 10050;
 	}
 }

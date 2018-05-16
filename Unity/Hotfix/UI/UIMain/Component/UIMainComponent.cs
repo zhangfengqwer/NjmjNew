@@ -90,7 +90,9 @@ namespace ETHotfix
                 //打开领奖界面
                 Log.Debug("打开领奖界面");
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
+                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
@@ -110,6 +112,8 @@ namespace ETHotfix
             SetPlayerInfo();
 
             #endregion
+
+            CommonUtil.ShowUI(UIType.UIDaily);
         }
 
         private async void RequestTaskInfo()

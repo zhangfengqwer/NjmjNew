@@ -78,7 +78,7 @@ namespace ETHotfix
 
         public void onClick_jiazhangjianhu()
         {
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIJiaZhangJianHu);
+            CommonUtil.ShowUI(UIType.UIJiaZhangJianHu);
         }
 
         public void showPanel(int tab)
