@@ -107,7 +107,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
             });
 
-            wingBtn.onClick.Invoke();
+            ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             #endregion
         }
 

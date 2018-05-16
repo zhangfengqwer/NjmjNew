@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using Hotfix;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,12 +26,17 @@ namespace ETHotfix
         private GameObject grid;
         private GameObject bgGrid;
         private Button returnBtn;
+        private GameObject useBg;
+        private Button sureBtn;
+        private Button cancelBtn;
+        private Text useTxt;
         private GameObject bagItem = null;
         private List<GameObject> bagItemList = new List<GameObject>();
         private GameObject bgItem = null;
         private List<GameObject> bgItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
         private Item item;
+        private PropInfo propInfo;
         //private int row = 3;//初始三行
         //private int itemCount = 3;//每行个数
 
@@ -43,16 +49,33 @@ namespace ETHotfix
             grid = rc.Get<GameObject>("Grid");
             bgGrid = rc.Get<GameObject>("BgGrid");
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
-
+            useBg = rc.Get<GameObject>("UseBg");
+            sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
+            cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
+            useTxt = rc.Get<GameObject>("UseTxt").GetComponent<Text>();
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);
             });
             bagItem = CommonUtil.getGameObjByBundle(UIType.UIBagItem);
             bgItem = CommonUtil.getGameObjByBundle(UIType.UIBagBgL);
+            useBg.SetActive(false);
+
             useBtn.onClick.Add(() =>
             {
+                useBg.SetActive(true);
+                useTxt.text = new StringBuilder().Append("是否使用道具")
+                                                 .Append("\"")
+                                                 .Append(propInfo.prop_name)
+                                                 .Append("\"").ToString();
+            });
+            sureBtn.onClick.Add(() =>
+            {
                 UseItem(item);
+            });
+            cancelBtn.onClick.Add(() =>
+            {
+                useBg.SetActive(false);
             });
             GetBagInfoList();
         }
@@ -69,6 +92,8 @@ namespace ETHotfix
             GameObject obj = null;
             for (int i = 0; i < itemList.Count; ++i)
             {
+                if (itemList[i].Count == 0)
+                    continue;
                 if (i < bagItemList.Count)
                     obj = bagItemList[i];
                 else
@@ -82,7 +107,10 @@ namespace ETHotfix
                     ui.AddComponent<UIBagItemComponent>();
                     uiList.Add(ui);
                 }
-                SetItemInfo(itemList[0]);
+                if (item != null)
+                    SetItemInfo(item);
+                else
+                    SetItemInfo(itemList[0]);
                 uiList[i].GetComponent<UIBagItemComponent>().SetItemInfo(itemList[i], i + 1);
             }
         }
@@ -90,7 +118,7 @@ namespace ETHotfix
         public void SetItemInfo(Item item)
         {
             this.item = item;
-            PropInfo propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
+            propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
             if (propInfo == null)
                 Debug.LogError("道具信息错误");
             useBtn.gameObject.SetActive(propInfo.type == 1);
@@ -105,9 +133,15 @@ namespace ETHotfix
             {
                 Debug.Log("Use Success");
                 GetBagInfoList();
+                useBg.SetActive(false);
             }   
             else
                 Debug.Log("Use Fail");
+        }
+
+        private void RefreshUI()
+        {
+
         }
 
         //private void SetBagItemL(int count)
