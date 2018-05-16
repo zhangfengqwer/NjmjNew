@@ -48,7 +48,10 @@ namespace ETModel
 		 public const ushort Email = 10044;
 		 public const ushort C2G_Email = 10045;
 		 public const ushort G2C_Email = 10046;
-		 public const ushort C2G_UpdateEmail = 10047;
-		 public const ushort G2C_UpdateEmail = 10048;
+		 public const ushort Item = 10047;
+		 public const ushort C2G_BagOperation = 10048;
+		 public const ushort G2C_BagOperation = 10049;
+		 public const ushort C2G_UpdateEmail = 10050;
+		 public const ushort G2C_UpdateEmail = 10051;
 	}
 }

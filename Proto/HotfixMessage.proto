@@ -277,6 +277,24 @@ message G2C_Email //IResponse
 	repeated Email EmailInfoList = 1;//邮件列表
 }
 
+message Item //IMessage
+{
+	required int64 ItemId = 1;//物品ID
+	required int Count = 2;//拥有数量
+	required bool IsUse = 3;//是否可以使用
+}
+
+message C2G_BagOperation //IRequest
+{
+	required long UId  = 1;//用户ID
+	required int operationType = 2;//操作类型(1,查看，2,添加，3，使用或删除)
+}
+
+message G2C_BagOperation //IResponse
+{
+	repeated Item ItemList = 1;//物品列表
+}
+
 message C2G_UpdateEmail //IRequest
 {
 	required long EId = 1;
