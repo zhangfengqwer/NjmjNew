@@ -53,5 +53,14 @@ namespace ETHotfix
                 }
             }
         }
+
+        public static async void AddItemToDB(long uid,ItemInfo info)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ItemInfo itemInfo = ComponentFactory.CreateWithId<ItemInfo>(IdGenerater.GenerateId());
+            itemInfo = info;
+            itemInfo.UId = uid;
+            await proxyComponent.Save(itemInfo);
+        }
     }
 }

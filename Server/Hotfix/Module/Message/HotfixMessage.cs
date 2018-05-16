@@ -323,6 +323,9 @@ namespace ETHotfix
 		[ProtoMember(6, IsRequired = true)]
 		public int CurrencyType;
 
+		[ProtoMember(7, IsRequired = true)]
+		public string Items;
+
 	}
 
 	[Message(HotfixOpcode.TaskProgress)]
@@ -797,9 +800,6 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int Count;
 
-		[ProtoMember(3, IsRequired = true)]
-		public bool IsUse;
-
 	}
 
 	[Message(HotfixOpcode.C2G_BagOperation)]
@@ -811,9 +811,6 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long UId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int operationType;
 
 	}
 

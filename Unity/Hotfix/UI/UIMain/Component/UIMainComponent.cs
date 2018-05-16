@@ -55,6 +55,7 @@ namespace ETHotfix
             {
                 //打开排行榜
                 Log.Debug("打开排行榜");
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBag);
             });
 
             exchangeBtn.onClick.Add(() =>

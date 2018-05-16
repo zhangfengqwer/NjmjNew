@@ -107,7 +107,8 @@ message ShopInfo //IMessage
 	required string Name = 3;//商品名称
 	required string Desc = 4;//商品介绍
 	required int Price = 5;//商品单价
-	required int CurrencyType = 6;//商品图标
+	required int CurrencyType = 6;//
+	required string Items = 7;
 }
 
 message TaskProgress //IMessage
@@ -281,13 +282,11 @@ message Item //IMessage
 {
 	required int64 ItemId = 1;//物品ID
 	required int Count = 2;//拥有数量
-	required bool IsUse = 3;//是否可以使用
 }
 
 message C2G_BagOperation //IRequest
 {
 	required long UId  = 1;//用户ID
-	required int operationType = 2;//操作类型(1,查看，2,添加，3，使用或删除)
 }
 
 message G2C_BagOperation //IResponse

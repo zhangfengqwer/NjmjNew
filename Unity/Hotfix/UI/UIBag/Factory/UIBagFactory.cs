@@ -1,12 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ETModel;
+using System;
+using UnityEngine;
 
-namespace Hotfix.UI.UIBag.Factory
+namespace ETHotfix
 {
-    class UIBagFactory
+    [UIFactory(UIType.UIBag)]
+    public class UIBagFactory :IUIFactory
     {
+        public UI Create(Scene scene, string type, GameObject gameobject)
+        {
+            try
+            {
+                ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+                resourcesComponent.LoadBundle($"{type}.unity3d");
+                GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{type}.unity3d", $"{type}");
+                GameObject bag = UnityEngine.Object.Instantiate(bundleGameObject);
+                bag.layer = LayerMask.NameToLayer(LayerNames.UI);
+                UI ui = ComponentFactory.Create<UI, GameObject>(bag);
+                ui.AddComponent<UIBagComponent>();
+                return ui;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return null;
+            }
+        }
+
+        public void Remove(string type)
+        {
+            ETModel.Game.Scene.GetComponent<ResourcesComponent>().UnloadBundle($"{type}.unity3d");
+        }
     }
 }
