@@ -234,6 +234,9 @@ namespace ETHotfix
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
 
                 ToastScript.createToast("登录成功");
+
+                getAllData();
+
                 isLoginSuccess = true;
 
                 {
@@ -284,6 +287,9 @@ namespace ETHotfix
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
+
+                getAllData();
+
                 isLoginSuccess = true;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
@@ -292,8 +298,6 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
-
-                getAllData();
             }
             catch (Exception e)
             {

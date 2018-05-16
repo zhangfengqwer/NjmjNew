@@ -41,10 +41,10 @@ namespace Hotfix
                 m_propInfoList.Add(temp);
             }
 
-            for (int i = 0; i < m_propInfoList.Count; i++)
-            {
-                Log.Debug(m_propInfoList[i].desc + "、");
-            }
+            //for (int i = 0; i < m_propInfoList.Count; i++)
+            //{
+            //    Log.Debug(m_propInfoList[i].desc + "、");
+            //}
         }
 
         public List<PropInfo> getPropInfoList()
