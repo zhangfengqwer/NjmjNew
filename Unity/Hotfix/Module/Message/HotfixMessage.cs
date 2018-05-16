@@ -716,6 +716,9 @@ namespace ETHotfix
 		[ProtoMember(1, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> Mahjongs = new List<MahjongInfo>();
 
+		[ProtoMember(2, IsRequired = true)]
+		public long BankerUserId;
+
 	}
 
 	[Message(HotfixOpcode.Actor_ChangeTable)]

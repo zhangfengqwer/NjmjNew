@@ -250,6 +250,7 @@ message Actor_GamerReady // IActorMessage
 message Actor_StartGame // IActorMessage
 {
     repeated MahjongInfo Mahjongs = 1;
+    required long BankerUserId = 2;
 }
 
 message Actor_ChangeTable // IActorMessage

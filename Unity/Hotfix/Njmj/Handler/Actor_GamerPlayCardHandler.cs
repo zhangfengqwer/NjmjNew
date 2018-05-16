@@ -22,8 +22,15 @@ namespace ETHotfix
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
-                handCardsComponent.PlayCard(mahjongInfo,message.index);
 
+                if (PlayerInfoComponent.Instance.uid == message.Uid)
+                {
+                    handCardsComponent.PlayCard(mahjongInfo, message.index);
+                }
+                else
+                {
+                    handCardsComponent.PlayOtherCard(mahjongInfo);
+                }
             }
             catch (Exception e)
             {

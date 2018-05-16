@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1725597870832896}
+  m_IsPrefabParent: 1
+--- !u!1 &1725597870832896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4594575248668480}
+  - component: {fileID: 114771252658864642}
+  m_Layer: 0
+  m_Name: Image_Right_Card
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4594575248668480
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1725597870832896}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8428061, y: -0.05982239, z: 100.150345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114771252658864642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1725597870832896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: right_1
+    gameObject: {fileID: 21300000, guid: 2652342bd898b0b4e8f967dc9b8d31dc, type: 3}
+  - key: right_2
+    gameObject: {fileID: 21300000, guid: c0f2cebb8c0e3de49b80240a520c3bc7, type: 3}
+  - key: right_3
+    gameObject: {fileID: 21300000, guid: 4b73e37ef4eb9ba4085f22ebb1769303, type: 3}
+  - key: right_4
+    gameObject: {fileID: 21300000, guid: 1f134d843fde00c498d560b991fd35b0, type: 3}
+  - key: right_5
+    gameObject: {fileID: 21300000, guid: 3167152a291a919468e64642c613c967, type: 3}
+  - key: right_6
+    gameObject: {fileID: 21300000, guid: ebffa83b17d6dde4ca07128980c1364c, type: 3}
+  - key: right_7
+    gameObject: {fileID: 21300000, guid: 85e488f900a65ad40a5a8f3a3d9781bc, type: 3}
+  - key: right_8
+    gameObject: {fileID: 21300000, guid: bfb6fc86f58d7f7489c630be788c213a, type: 3}
+  - key: right_9
+    gameObject: {fileID: 21300000, guid: 434c7cb7eb494e94daea8535c3f3463e, type: 3}
+  - key: right_11
+    gameObject: {fileID: 21300000, guid: cdf07d876ef09b94fa3649f9090409da, type: 3}
+  - key: right_12
+    gameObject: {fileID: 21300000, guid: fcf974fa4b774704f8da0d5aab8d97cf, type: 3}
+  - key: right_13
+    gameObject: {fileID: 21300000, guid: 2f94e7cb229212f4093f6687fd311d04, type: 3}
+  - key: right_14
+    gameObject: {fileID: 21300000, guid: 0d4d46726b42eab49b719f6e6c20a9f1, type: 3}
+  - key: right_15
+    gameObject: {fileID: 21300000, guid: d3d6ce775daea2a408c6776b2586beab, type: 3}
+  - key: right_16
+    gameObject: {fileID: 21300000, guid: fa7bd3c5af2b2b74098df415a9875190, type: 3}
+  - key: right_17
+    gameObject: {fileID: 21300000, guid: 34be412d7f6c34244833a8d41262ba13, type: 3}
+  - key: right_18
+    gameObject: {fileID: 21300000, guid: f309cc1e26942d74c95419639c20a051, type: 3}
+  - key: right_19
+    gameObject: {fileID: 21300000, guid: 0727948e441a09d4e83c2706968e2672, type: 3}
+  - key: right_21
+    gameObject: {fileID: 21300000, guid: 6e272c3df80ef9e45b5ecce978c86d25, type: 3}
+  - key: right_22
+    gameObject: {fileID: 21300000, guid: 607e8d61b5e3d0c4fa50f1f216e07d98, type: 3}
+  - key: right_23
+    gameObject: {fileID: 21300000, guid: bf71a022b6b2c9240a8cb1b55fe43568, type: 3}
+  - key: right_24
+    gameObject: {fileID: 21300000, guid: 9ab110c39b4edde42ac76f51fd7c5dfb, type: 3}
+  - key: right_25
+    gameObject: {fileID: 21300000, guid: 7512bbcd0e55ef440940529676874a22, type: 3}
+  - key: right_26
+    gameObject: {fileID: 21300000, guid: b9034a645f15e244fbdfb2715d6dd05a, type: 3}
+  - key: right_27
+    gameObject: {fileID: 21300000, guid: 72c1d05f15cee4045a55677d8bade3cd, type: 3}
+  - key: right_28
+    gameObject: {fileID: 21300000, guid: 5fb2f771ef00c39459fc201564aefa23, type: 3}
+  - key: right_29
+    gameObject: {fileID: 21300000, guid: 6f8c5b7525155ba47b5492f1e3d33967, type: 3}
+  - key: right_31
+    gameObject: {fileID: 21300000, guid: 2e9be107f70d6b04197a10a512c05817, type: 3}
+  - key: right_33
+    gameObject: {fileID: 21300000, guid: 1dd92a76669c5414890e33ef0122e85a, type: 3}
+  - key: right_35
+    gameObject: {fileID: 21300000, guid: f23649989a1e1594fb29b8d0bd8a13a9, type: 3}
+  - key: right_37
+    gameObject: {fileID: 21300000, guid: dca7756d0655e734a8625d6b16370713, type: 3}
+  - key: right_41
+    gameObject: {fileID: 21300000, guid: 689297538000cfc4c9db0f1697826cf8, type: 3}
+  - key: right_43
+    gameObject: {fileID: 21300000, guid: 7f8dc6210c5bd1b4096d626b471d5e06, type: 3}
+  - key: right_45
+    gameObject: {fileID: 21300000, guid: a57e9bb1a63d7e24fbe76dc411a1853b, type: 3}
+  - key: right_51
+    gameObject: {fileID: 21300000, guid: f44c8032bb9265c4db18f71eb4a1d705, type: 3}
+  - key: right_53
+    gameObject: {fileID: 21300000, guid: 02952347b659c4a41ad6e70a878d9c75, type: 3}
+  - key: right_55
+    gameObject: {fileID: 21300000, guid: df65ba2d75a72d24cae8a13544d1d619, type: 3}
+  - key: right_57
+    gameObject: {fileID: 21300000, guid: 8c90e206fa446de4881f89a8a5323123, type: 3}
+  - key: right_61
+    gameObject: {fileID: 21300000, guid: 446aeb8f3617fce4fbe49679e11a133c, type: 3}
+  - key: right_63
+    gameObject: {fileID: 21300000, guid: fc4a653bb558baf41a5a255a6808b9a9, type: 3}
+  - key: right_65
+    gameObject: {fileID: 21300000, guid: 142f689306d8eeb40b918ae95ba9e195, type: 3}
+  - key: right_67
+    gameObject: {fileID: 21300000, guid: 1742e984939e93e48a9d345e86ecb632, type: 3}
+  - key: right_back
+    gameObject: {fileID: 21300000, guid: 63bd66a3c83cc7f41a76c1f9cfa96b2b, type: 3}
+  - key: right_back1
+    gameObject: {fileID: 21300000, guid: a500c7aae3510c74e946a27c5d526c25, type: 3}

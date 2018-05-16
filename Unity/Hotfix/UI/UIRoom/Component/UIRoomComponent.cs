@@ -68,7 +68,7 @@ namespace ETHotfix
 	    public void AddGamer(Gamer gamer, int index)
 	    {
 	        GetParent<UI>().GetComponent<GamerComponent>().Add(gamer, index);
-	        gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index]);
+	        gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index],index);
 	    }
 
 	    /// <summary>

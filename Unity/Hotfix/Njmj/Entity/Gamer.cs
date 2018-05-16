@@ -16,5 +16,8 @@ namespace ETHotfix
 
         //是否离线
         public bool isOffline { get; set; }
+
+        //是否是庄家
+        public bool IsBanker { get; set; }
     }
 }

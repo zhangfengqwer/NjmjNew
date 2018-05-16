@@ -58,7 +58,7 @@ namespace ETHotfix
                     });
 
                     //下一个人出牌
-//                    orderController.Turn();
+                    orderController.Turn();
                     var currentGamer = room.Get(orderController.CurrentAuthority);
                     HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
                     DeskComponent deskComponent = room.GetComponent<DeskComponent>();

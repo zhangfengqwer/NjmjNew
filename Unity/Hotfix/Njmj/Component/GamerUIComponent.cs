@@ -29,6 +29,7 @@ namespace ETHotfix
         private Text prompt;
         private Text name;
         //        private Text money;
+        public int Index { get; set; }
 
         public void Start()
         {
@@ -58,11 +59,12 @@ namespace ETHotfix
         /// 设置面板
         /// </summary>
         /// <param name="panel"></param>
-        public void SetPanel(GameObject panel)
+        /// <param name="index"></param>
+        public void SetPanel(GameObject panel, int index)
         {
             panel.SetActive(true);
             this.Panel = panel;
-
+            this.Index = index;
             //绑定关联
             this.head = this.Panel.Get<GameObject>("Head").GetComponent<Image>();
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
@@ -70,6 +72,7 @@ namespace ETHotfix
 
             UpdatePanel();
         }
+
 
         /// <summary>
         /// 更新面板

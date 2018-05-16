@@ -9,10 +9,13 @@ using UnityEngine;
 namespace ETHotfix
 {
     [MessageHandler]
-    public class Actor_StartGameHandler : AMHandler<Actor_StartGame>
+    public class Actor_StartGameHandler: AMHandler<Actor_StartGame>
     {
         protected override async void Run(Session session, Actor_StartGame message)
         {
+
+            Log.Debug($"收到开始:{JsonHelper.ToJson(message)}");
+
             try
             {
                 foreach (var mahjong in message.Mahjongs)
@@ -25,7 +28,6 @@ namespace ETHotfix
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 uiRoomComponent.StartGame();
 
-
                 foreach (var gamer in gamerComponent.GetAll())
                 {
                     GamerUIComponent gamerUi = gamer.GetComponent<GamerUIComponent>();
@@ -37,7 +39,17 @@ namespace ETHotfix
                     }
                     else
                     {
-                        handCards = gamer.AddComponent<HandCardsComponent, GameObject>(gamerUi.Panel);
+                        handCards = gamer.AddComponent<HandCardsComponent, GameObject, int>(gamerUi.Panel,gamerUi.Index);
+                    }
+
+                    //设置庄家
+                    if (gamer.UserID == message.BankerUserId)
+                    {
+                        gamer.IsBanker = true;
+                    }
+                    else
+                    {
+                        gamer.IsBanker = false;
                     }
 
                     if (gamer.UserID == gamerComponent.LocalGamer.UserID)
@@ -45,13 +57,12 @@ namespace ETHotfix
                         //本地玩家添加手牌
                         handCards.AddCards(message.Mahjongs);
                     }
+                    else
+                    {
+                        handCards.AddOtherCards(gamer.IsBanker);
+                    }
                 }
 
-                HandCardsComponent localHandCards = gamerComponent.LocalGamer.GetComponent<HandCardsComponent>();
-
-
-
-                Log.Info($"收到开始:{JsonHelper.ToJson(message)}");
             }
             catch (Exception e)
             {

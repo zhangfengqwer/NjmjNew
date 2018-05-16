@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1026832714583658}
+  m_IsPrefabParent: 1
+--- !u!1 &1026832714583658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4339060375398766}
+  - component: {fileID: 114879843875983856}
+  m_Layer: 0
+  m_Name: Image_Bottom_Card
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4339060375398766
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1026832714583658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8428061, y: -0.05982239, z: 100.150345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114879843875983856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1026832714583658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: bottom_1
+    gameObject: {fileID: 21300000, guid: 0553d1ce33895974fb02bb766da1d46a, type: 3}
+  - key: bottom_2
+    gameObject: {fileID: 21300000, guid: 2d46f0f8f4994cc42a868fa9e780b2ae, type: 3}
+  - key: bottom_3
+    gameObject: {fileID: 21300000, guid: 49e3be4a5b9e2a34a927f788c9cad017, type: 3}
+  - key: bottom_4
+    gameObject: {fileID: 21300000, guid: 04c8523eb15d1d947ab96051f710d2b3, type: 3}
+  - key: bottom_5
+    gameObject: {fileID: 21300000, guid: 75101a1b267be8349a25aa73b2bf5857, type: 3}
+  - key: bottom_6
+    gameObject: {fileID: 21300000, guid: 02a9b2c481ffd614bb51e642f15a3107, type: 3}
+  - key: bottom_7
+    gameObject: {fileID: 21300000, guid: 29976000296ba5441a8888ccbc77b814, type: 3}
+  - key: bottom_8
+    gameObject: {fileID: 21300000, guid: 741bec9e12a4f1542aab8e1a2c97078e, type: 3}
+  - key: bottom_9
+    gameObject: {fileID: 21300000, guid: 249eb5398a8b5da428605b0b8f40bfe8, type: 3}
+  - key: bottom_11
+    gameObject: {fileID: 21300000, guid: a48e5c224216a76419464802fb5eddf5, type: 3}
+  - key: bottom_12
+    gameObject: {fileID: 21300000, guid: 9115031477f2635448d7f8c3fd5ef4a9, type: 3}
+  - key: bottom_13
+    gameObject: {fileID: 21300000, guid: d85bf6810db160e43b123971e8b7c826, type: 3}
+  - key: bottom_14
+    gameObject: {fileID: 21300000, guid: a43fa062426afff4b8798c8c060dca22, type: 3}
+  - key: bottom_15
+    gameObject: {fileID: 21300000, guid: 168eff5741559c14d8680d11e3a1e41f, type: 3}
+  - key: bottom_16
+    gameObject: {fileID: 21300000, guid: e7c3c3e9debdc4b41ae737126467e8e1, type: 3}
+  - key: bottom_17
+    gameObject: {fileID: 21300000, guid: 416fdce709625a840a68e685a4d42588, type: 3}
+  - key: bottom_18
+    gameObject: {fileID: 21300000, guid: 551649a95a8c6da468a6a19c4d030426, type: 3}
+  - key: bottom_19
+    gameObject: {fileID: 21300000, guid: 3d835f39a393a4348a4b841131ca3bdd, type: 3}
+  - key: bottom_21
+    gameObject: {fileID: 21300000, guid: 50e428debf96cd84c81c92fe2ee4ce92, type: 3}
+  - key: bottom_22
+    gameObject: {fileID: 21300000, guid: 83fc6426cc9109447909f99a79960286, type: 3}
+  - key: bottom_23
+    gameObject: {fileID: 21300000, guid: eaaf49ce35bb4fe40a6e25a030d65703, type: 3}
+  - key: bottom_24
+    gameObject: {fileID: 21300000, guid: 630344ad33499e249bb118f928f204e8, type: 3}
+  - key: bottom_25
+    gameObject: {fileID: 21300000, guid: ef32a9c5205a69e4c8d9f90acd4eb289, type: 3}
+  - key: bottom_26
+    gameObject: {fileID: 21300000, guid: e71e60aa758c1724cb8228fdab853e5b, type: 3}
+  - key: bottom_27
+    gameObject: {fileID: 21300000, guid: 01a13a6b7f578f54ba0690b7e64bd9ac, type: 3}
+  - key: bottom_28
+    gameObject: {fileID: 21300000, guid: b0629a229874f064baa2c125b06d6e28, type: 3}
+  - key: bottom_29
+    gameObject: {fileID: 21300000, guid: d0335bdf2c4232d44bf9d49761e74937, type: 3}
+  - key: bottom_31
+    gameObject: {fileID: 21300000, guid: a28d27883babe494cb400556536be7eb, type: 3}
+  - key: bottom_33
+    gameObject: {fileID: 21300000, guid: 8a8117260e7d2884595a7f901c60685f, type: 3}
+  - key: bottom_35
+    gameObject: {fileID: 21300000, guid: 44bac9e61492cd747a758a56ebbaea5a, type: 3}
+  - key: bottom_37
+    gameObject: {fileID: 21300000, guid: 52f3de12d0e0d164cbc40ee05d9675a1, type: 3}
+  - key: bottom_41
+    gameObject: {fileID: 21300000, guid: 4d84cd25e658b224aaede7d92d689ec3, type: 3}
+  - key: bottom_43
+    gameObject: {fileID: 21300000, guid: ee14f44dc3be2d64fa2d671d145f97b5, type: 3}
+  - key: bottom_45
+    gameObject: {fileID: 21300000, guid: 57b9d53b727f922469ee36fceb8c7691, type: 3}
+  - key: bottom_51
+    gameObject: {fileID: 21300000, guid: 1c2a71697da934142ad94b06064c8077, type: 3}
+  - key: bottom_53
+    gameObject: {fileID: 21300000, guid: 3384c0d806f7c3c41a91a2c3633f6eb9, type: 3}
+  - key: bottom_55
+    gameObject: {fileID: 21300000, guid: 58fdf63d7ae80694bb225f1db067929b, type: 3}
+  - key: bottom_57
+    gameObject: {fileID: 21300000, guid: ef6adce2137c58f46a75c018ae82eb70, type: 3}
+  - key: bottom_61
+    gameObject: {fileID: 21300000, guid: ad455b03a61916242b0a3c54d1329353, type: 3}
+  - key: bottom_63
+    gameObject: {fileID: 21300000, guid: 2c0bb5dfe6e75b04288729e5cb473877, type: 3}
+  - key: bottom_65
+    gameObject: {fileID: 21300000, guid: 5fb43e455eee7ef468474a52853dab33, type: 3}
+  - key: bottom_67
+    gameObject: {fileID: 21300000, guid: 94e8b13f2b34b6149ae58595e431a598, type: 3}
+  - key: bottom_back
+    gameObject: {fileID: 21300000, guid: e760b69ca6638d54ca4b74dced4d0040, type: 3}
+  - key: bottom_back1
+    gameObject: {fileID: 21300000, guid: 4c2fd18107e206c4c917a508981a5439, type: 3}
