@@ -50,14 +50,14 @@ namespace ETHotfix
         public void SetWingItem(ShopInfo info)
         {
             SetCommonItem(info);
-            string[] itemsArr = info.Items.Split(';');
-            int itemId = int.Parse(itemsArr[0]);
-            int getCount = int.Parse(itemsArr[1]);
+            int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
+            int prop_num = CommonUtil.splitStr_End(info.Items, ':');
+
             string index = info.Id.ToString().Substring(3);
             string spriteName = new StringBuilder().Append("item")
                                                    .Append(index)
                                                    .Append("_")
-                                                   .Append(itemId).ToString();
+                                                   .Append(prop_id).ToString();
             icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
         }
 
@@ -68,13 +68,13 @@ namespace ETHotfix
             Text descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
             string[] strArr = info.Desc.Split(';');
             string[] itemsArr = info.Items.Split(';');
-            int itemId = int.Parse(itemsArr[0]);
-            int getCount = int.Parse(itemsArr[1]);
+            int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
+            int prop_num = CommonUtil.splitStr_End(info.Items, ':');
             string index = info.Id.ToString().Substring(3);
             string spriteName = new StringBuilder().Append("item")
                                                    .Append(index)
                                                    .Append("_")
-                                                   .Append(itemId).ToString();
+                                                   .Append(prop_id).ToString();
             icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
             descTxt.text = strArr[0];
             disCountTxt.text = strArr[1];
@@ -86,9 +86,9 @@ namespace ETHotfix
         {
             SetCommonItem(info);
             string[] itemsArr = info.Items.Split(';');
-            int itemId = int.Parse(itemsArr[0]);
-            int getCount = int.Parse(itemsArr[1]);
-            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(itemId.ToString());
+            int prop_id = CommonUtil.splitStr_Start(info.Items, ':');
+            int prop_num = CommonUtil.splitStr_End(info.Items, ':');
+            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(prop_id.ToString());
             this.index = index;
             float height = 0;
             if(openBtn == null && closeBtn == null)
