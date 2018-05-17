@@ -62,6 +62,7 @@ namespace ETHotfix
                 else
                 {
                     //接购买SDK
+                    Debug.Log("暂时还未接sdk");
                 }
             });
         }
