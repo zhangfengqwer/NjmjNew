@@ -35,11 +35,11 @@ namespace ETHotfix
             AddSprite(playerIconBundle, "m_icon3");
             AddSprite(playerIconBundle, "m_icon4");
             AddSprite(playerIconBundle, "m_icon5");
-            AddSprite(shopBundle, "item1_2");
+            AddSprite(shopBundle, "2");
             AddSprite(shopBundle, "item2_2");
             AddSprite(shopBundle, "item3_2");
             AddSprite(shopBundle, "item4_2");
-            AddSprite(shopBundle, "item1_1");
+            AddSprite(shopBundle, "1");
             AddSprite(shopBundle, "item2_1");
             AddSprite(shopBundle, "item3_1");
             AddSprite(shopBundle, "item4_1");

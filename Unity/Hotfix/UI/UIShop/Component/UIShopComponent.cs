@@ -36,6 +36,10 @@ namespace ETHotfix
         private GameObject goldGrid;
         private GameObject propGrid;
         private GameObject vipGrid;
+        private GameObject buyTip;
+        private Button sureBtn;
+        private Button cancelBtn;
+        private Text buyTxt;
         #endregion
 
         #region field
@@ -53,7 +57,9 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         //全部ui缓存字典
         private Dictionary<ShopType, List<UI>> uiDic = new Dictionary<ShopType, List<UI>>();
-        #endregion 
+        private bool isCanBuy = false;
+        private ShopInfo shopInfo;
+        #endregion
 
         public void Awake()
         {
@@ -69,6 +75,11 @@ namespace ETHotfix
             goldGrid = rc.Get<GameObject>("GoldGrid");
             propGrid = rc.Get<GameObject>("PropGrid");
             vipGrid = rc.Get<GameObject>("VipGrid");
+            buyTip = rc.Get<GameObject>("BuyTip");
+            sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
+            cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
+            buyTxt = rc.Get<GameObject>("BuyTxt").GetComponent<Text>();
+
             shopInfoList = playerInfoCom.GetShopInfoList();
             #endregion
 
@@ -107,8 +118,30 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
             });
 
+            sureBtn.onClick.Add(() =>
+            {
+                if (isCanBuy)
+                {
+                    if (shopInfo == null)
+                        return;
+                    BuyItem();
+                }
+                else
+                    buyTip.SetActive(false);
+            });
+
+            cancelBtn.onClick.Add(() =>
+            {
+                buyTip.SetActive(false);
+            });
+
             ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             #endregion
+        }
+
+        private void SureBuyItem()
+        {
+            
         }
 
         public override void Dispose()
@@ -120,6 +153,33 @@ namespace ETHotfix
             itemList.Clear();
             uiList.Clear();
             uiDic.Clear();
+        }
+
+        public void BuyTip(ShopInfo info,string tip,bool isCanBuy)
+        {
+            buyTip.SetActive(true);
+            shopInfo = info;
+            buyTxt.text = tip;
+            this.isCanBuy = isCanBuy;
+        }
+
+        private async void BuyItem()
+        {
+            BuyShopInfo info = new BuyShopInfo();
+            int shopId = CommonUtil.splitStr_Start(shopInfo.Items.ToString(), ':');
+            int count = CommonUtil.splitStr_End(shopInfo.Items.ToString(), ':');
+            info.ShopId = shopId;
+            info.Count = count;
+            info.Cost = shopInfo.Price;
+            G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
+                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info });
+            if (g2cBuyItem.Result)
+            {
+                Debug.Log("购买成功");
+                buyTip.SetActive(false);
+            }   
+            else
+                Debug.Log("购买失败");
         }
 
         public void SetOpenItemPos(int index,ShopType type,float height)

@@ -104,6 +104,7 @@ namespace ETHotfix
                     rewardItemList.Add(obj);
                     uiList.Add(ui);
                 }
+                Debug.Log(rewardList[i].rewardSpriteName);
                 uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].rewardSpriteName, rewardList[i].rewardNum);
             }
         }

@@ -99,6 +99,8 @@ namespace ETHotfix
 
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
+                //test 添加元宝
+                UpDatePlayerInfo();
                 //打开用户基本信息界面
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
                 SetUIHideOrOpen(false);
@@ -127,6 +129,7 @@ namespace ETHotfix
         {
             PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
             long uid = playerInfoComponent.uid;
+            playerInfoComponent.GetPlayerInfo().WingNum = 1000;
             G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
             UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
         }
@@ -157,6 +160,7 @@ namespace ETHotfix
 
         public void UpDatePlayerInfo(PlayerInfo info)
         {
+            PlayerInfoComponent.Instance.SetPlayerInfo(info);
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)
                 playerIcon.sprite = icon;

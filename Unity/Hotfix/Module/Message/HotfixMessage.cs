@@ -326,6 +326,72 @@ namespace ETHotfix
 		[ProtoMember(7, IsRequired = true)]
 		public string Items;
 
+		[ProtoMember(8, IsRequired = true)]
+		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.BuyShopInfo)]
+	[ProtoContract]
+	public partial class BuyShopInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int ShopId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int Count;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Cost;
+
+	}
+
+	[Message(HotfixOpcode.C2G_BuyItem)]
+	[ProtoContract]
+	public partial class C2G_BuyItem: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public BuyShopInfo Info;
+
+	}
+
+	[Message(HotfixOpcode.Actor_UpDateData)]
+	[ProtoContract]
+	public partial class Actor_UpDateData: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BuyItem)]
+	[ProtoContract]
+	public partial class G2C_BuyItem: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool Result;
+
 	}
 
 	[Message(HotfixOpcode.TaskProgress)]
