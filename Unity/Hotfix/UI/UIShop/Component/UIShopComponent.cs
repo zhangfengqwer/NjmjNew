@@ -127,7 +127,10 @@ namespace ETHotfix
                     BuyItem();
                 }
                 else
+                {
                     buyTip.SetActive(false);
+                    ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
+                }
             });
 
             cancelBtn.onClick.Add(() =>
@@ -137,11 +140,6 @@ namespace ETHotfix
 
             ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             #endregion
-        }
-
-        private void SureBuyItem()
-        {
-            
         }
 
         public override void Dispose()
@@ -176,10 +174,13 @@ namespace ETHotfix
             if (g2cBuyItem.Result)
             {
                 Debug.Log("购买成功");
+                ToastScript.createToast("购买成功");
                 buyTip.SetActive(false);
-            }   
+            }
             else
-                Debug.Log("购买失败");
+            {
+                ToastScript.createToast("购买失败");
+            }
         }
 
         public void SetOpenItemPos(int index,ShopType type,float height)
