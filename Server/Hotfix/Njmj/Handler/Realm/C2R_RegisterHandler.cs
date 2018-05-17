@@ -23,7 +23,7 @@ namespace ETHotfix
                     reply(response);
                     return;
 	            }
-	            AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
+	            AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
 	            accountInfo.Account = message.Account;
 	            accountInfo.Password = message.Password;
 	            await proxyComponent.Save(accountInfo);
