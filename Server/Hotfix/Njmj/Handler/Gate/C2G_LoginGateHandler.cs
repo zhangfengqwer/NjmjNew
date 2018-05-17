@@ -59,7 +59,8 @@ namespace ETHotfix
                         ItemInfo item = new ItemInfo();
                         item.BagId = 100 + i;
                         item.Count = 10 + i;
-                        DBHelper.AddItemToDB(userId, item);
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
                     }
                 }
                 #endregion

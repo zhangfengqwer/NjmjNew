@@ -129,6 +129,7 @@
     <Compile Include="Njmj\Component\GamerUIComponent.cs" />
     <Compile Include="Njmj\Entity\Gamer.cs" />
     <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Njmj\Handler\Actor_UpdatePlayerInfo.cs" />
     <Compile Include="Platform\ChannelHelper.cs" />
     <Compile Include="Platform\PlatformHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

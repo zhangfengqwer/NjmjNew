@@ -112,6 +112,29 @@ message ShopInfo //IMessage
 	required string Icon = 8;
 }
 
+message BuyShopInfo //IMessage
+{
+	required int ShopId = 1;
+	required int Count = 2;
+	required int Cost = 3;
+}
+
+message C2G_BuyItem //IRequest
+{
+	required long UId = 1;	
+	required BuyShopInfo Info = 2;
+}
+
+message Actor_UpDateData //IActorMessage
+{
+	required PlayerInfo playerInfo = 1;
+}
+
+message G2C_BuyItem //IResponse
+{
+	required bool Result = 1; 
+}
+
 message TaskProgress //IMessage
 {
 	required int TaskId = 1;
