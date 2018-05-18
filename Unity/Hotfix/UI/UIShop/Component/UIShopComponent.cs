@@ -163,14 +163,13 @@ namespace ETHotfix
 
         private async void BuyItem()
         {
-            BuyShopInfo info = new BuyShopInfo();
+            GetItemInfo info = new GetItemInfo();
             int shopId = CommonUtil.splitStr_Start(shopInfo.Items.ToString(), ':');
             int count = CommonUtil.splitStr_End(shopInfo.Items.ToString(), ':');
-            info.ShopId = shopId;
+            info.ItemID = shopId;
             info.Count = count;
-            info.Cost = shopInfo.Price;
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
-                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info });
+                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = shopInfo.Price });
             if (g2cBuyItem.Result)
             {
                 Debug.Log("购买成功");

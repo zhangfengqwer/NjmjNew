@@ -20,7 +20,7 @@ namespace ETModel
 		 public const ushort M2C_TestActorResponse = 10016;
 		 public const ushort PlayerInfo = 10017;
 		 public const ushort ShopInfo = 10018;
-		 public const ushort BuyShopInfo = 10019;
+		 public const ushort GetItemInfo = 10019;
 		 public const ushort C2G_BuyItem = 10020;
 		 public const ushort Actor_UpDateData = 10021;
 		 public const ushort G2C_BuyItem = 10022;
@@ -52,16 +52,18 @@ namespace ETModel
 		 public const ushort Actor_StartGame = 10048;
 		 public const ushort Actor_ChangeTable = 10049;
 		 public const ushort Email = 10050;
-		 public const ushort C2G_Email = 10051;
-		 public const ushort G2C_Email = 10052;
-		 public const ushort Item = 10053;
-		 public const ushort C2G_BagOperation = 10054;
-		 public const ushort G2C_BagOperation = 10055;
-		 public const ushort C2G_UpdateEmail = 10056;
-		 public const ushort G2C_UpdateEmail = 10057;
-		 public const ushort C2G_DailySign = 10058;
-		 public const ushort G2C_DailySign = 10059;
-		 public const ushort C2G_DailySignState = 10060;
-		 public const ushort G2C_DailySignState = 10061;
+		 public const ushort C2G_GetItem = 10051;
+		 public const ushort G2C_GetItem = 10052;
+		 public const ushort C2G_Email = 10053;
+		 public const ushort G2C_Email = 10054;
+		 public const ushort Bag = 10055;
+		 public const ushort C2G_BagOperation = 10056;
+		 public const ushort G2C_BagOperation = 10057;
+		 public const ushort C2G_UpdateEmail = 10058;
+		 public const ushort G2C_UpdateEmail = 10059;
+		 public const ushort C2G_DailySign = 10060;
+		 public const ushort G2C_DailySign = 10061;
+		 public const ushort C2G_DailySignState = 10062;
+		 public const ushort G2C_DailySignState = 10063;
 	}
 }

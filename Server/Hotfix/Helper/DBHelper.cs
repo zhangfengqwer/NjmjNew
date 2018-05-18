@@ -54,10 +54,10 @@ namespace ETHotfix
             }
         }
 
-        public static async void AddItemToDB(ItemInfo info)
+        public static async void AddItemToDB(UserBag info)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            ItemInfo itemInfo = ComponentFactory.CreateWithId<ItemInfo>(IdGenerater.GenerateId());
+            UserBag itemInfo = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
             itemInfo = info;
             await proxyComponent.Save(itemInfo);
         }

@@ -7,8 +7,8 @@ namespace ETHotfix
 {
     public class RewardStruct
     {
-        public string rewardSpriteName;
-        public string rewardNum;
+        public int itemId;
+        public int rewardNum;
     }
 
     [ObjectSystem]
@@ -49,8 +49,32 @@ namespace ETHotfix
             rewardItem = CommonUtil.getGameObjByBundle(UIType.UIRewardItem);
             readBtn.onClick.Add(() =>
             {
-                ReadEmail();
+                //ReadEmail();
             });
+            get.onClick.Add(() =>
+            {
+                GetItem();
+            });
+        }
+
+        private async void GetItem()
+        {
+            List<GetItemInfo> itemList = new List<GetItemInfo>();
+            for(int i = 0;i< rewardList.Count; ++i)
+            {
+                GetItemInfo itemInfo = new GetItemInfo();
+                itemInfo.ItemID = rewardList[i].itemId;
+                itemInfo.Count = rewardList[i].rewardNum;
+                itemList.Add(itemInfo);
+            }
+            G2C_GetItem g2cGetItem = (G2C_GetItem)await SessionWrapComponent.Instance
+                .Session.Call(new C2G_GetItem
+                {
+                    UId = PlayerInfoComponent.Instance.uid,
+                    InfoList = itemList
+                });
+            get.gameObject.SetActive(false);
+            ReadEmail();
         }
 
         private async void ReadEmail()
@@ -69,17 +93,17 @@ namespace ETHotfix
             isRead = email.IsRead;
             string reward = email.RewardItem;
             flag.SetActive(isRead);
-            get.gameObject.SetActive(false);
             if (reward != null && !reward.Equals(""))
             {
-                get.gameObject.SetActive(true);
+                get.gameObject.SetActive(isRead);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
                 {
-                    string[] itemArr = rewardArr[i].Split(',');
+                    int itemId = CommonUtil.splitStr_Start(rewardArr[i], ',');
+                    int rewardNum = CommonUtil.splitStr_End(rewardArr[i], ',');
                     RewardStruct rewardStruct = new RewardStruct();
-                    rewardStruct.rewardSpriteName = itemArr[0];
-                    rewardStruct.rewardNum = itemArr[1];
+                    rewardStruct.itemId = itemId;
+                    rewardStruct.rewardNum = rewardNum;
                     rewardList.Add(rewardStruct);
                 }
                 SetRewardItemInfo();
@@ -104,8 +128,7 @@ namespace ETHotfix
                     rewardItemList.Add(obj);
                     uiList.Add(ui);
                 }
-                Debug.Log(rewardList[i].rewardSpriteName);
-                uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].rewardSpriteName, rewardList[i].rewardNum);
+                uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].itemId.ToString(), rewardList[i].rewardNum);
             }
         }
 

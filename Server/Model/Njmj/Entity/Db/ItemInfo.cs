@@ -1,6 +1,6 @@
 ﻿namespace ETModel
 {
-    public class ItemInfo : EntityDB
+    public class UserBag : EntityDB
     {
         public long UId { get; set; }
         public int BagId { get; set; }

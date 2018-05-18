@@ -112,17 +112,17 @@ message ShopInfo //IMessage
 	required string Icon = 8;
 }
 
-message BuyShopInfo //IMessage
+message GetItemInfo //IMessage
 {
-	required int ShopId = 1;
+	required int ItemID = 1;
 	required int Count = 2;
-	required int Cost = 3;
 }
 
 message C2G_BuyItem //IRequest
 {
 	required long UId = 1;	
-	required BuyShopInfo Info = 2;
+	required GetItemInfo Info = 2;
+	required int Cost = 3;
 }
 
 message Actor_UpDateData //IActorMessage
@@ -303,6 +303,17 @@ message Email //IMessage
 	required long EId = 6;//邮箱ID
 }
 
+message C2G_GetItem //IRequest
+{
+	required long UId = 1;
+	repeated GetItemInfo InfoList = 2;
+}
+
+message G2C_GetItem //IResponse
+{
+	required bool Result = 1;
+}
+
 message C2G_Email //IRequest
 {
 	required long Uid = 1;//用户ID
@@ -313,7 +324,7 @@ message G2C_Email //IResponse
 	repeated Email EmailInfoList = 1;//邮件列表
 }
 
-message Item //IMessage
+message Bag //IMessage
 {
 	required int64 ItemId = 1;//物品ID
 	required int Count = 2;//拥有数量
@@ -326,7 +337,7 @@ message C2G_BagOperation //IRequest
 
 message G2C_BagOperation //IResponse
 {
-	repeated Item ItemList = 1;//物品列表
+	repeated Bag ItemList = 1;//物品列表
 }
 
 message C2G_UpdateEmail //IRequest

@@ -19,7 +19,7 @@ namespace ETHotfix
         private Text countTxt;
         private GameObject uiBagBgL;
         private Image uiBagIcon;
-        private Item item;
+        private Bag item;
 
         public void Awake()
         {
@@ -36,7 +36,7 @@ namespace ETHotfix
             });
         }
 
-        public void SetItemInfo(Item item,int index)
+        public void SetItemInfo(Bag item,int index)
         {
             this.item = item;
             if (index % 3 == 1)

@@ -331,18 +331,15 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.BuyShopInfo)]
+	[Message(HotfixOpcode.GetItemInfo)]
 	[ProtoContract]
-	public partial class BuyShopInfo: IMessage
+	public partial class GetItemInfo: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public int ShopId;
+		public int ItemID;
 
 		[ProtoMember(2, IsRequired = true)]
 		public int Count;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int Cost;
 
 	}
 
@@ -357,7 +354,10 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public BuyShopInfo Info;
+		public GetItemInfo Info;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Cost;
 
 	}
 
@@ -859,6 +859,39 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_GetItem)]
+	[ProtoContract]
+	public partial class C2G_GetItem: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, TypeName = "ETHotfix.GetItemInfo")]
+		public List<GetItemInfo> InfoList = new List<GetItemInfo>();
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetItem)]
+	[ProtoContract]
+	public partial class G2C_GetItem: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool Result;
+
+	}
+
 	[Message(HotfixOpcode.C2G_Email)]
 	[ProtoContract]
 	public partial class C2G_Email: IRequest
@@ -889,9 +922,9 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.Item)]
+	[Message(HotfixOpcode.Bag)]
 	[ProtoContract]
-	public partial class Item: IMessage
+	public partial class Bag: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
 		public long ItemId;
@@ -926,8 +959,8 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1, TypeName = "ETHotfix.Item")]
-		public List<Item> ItemList = new List<Item>();
+		[ProtoMember(1, TypeName = "ETHotfix.Bag")]
+		public List<Bag> ItemList = new List<Bag>();
 
 	}
 

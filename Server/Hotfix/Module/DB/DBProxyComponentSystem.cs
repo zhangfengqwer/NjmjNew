@@ -93,5 +93,17 @@ namespace ETHotfix
 	        }
 	        return list;
 	    }
+
+        public static async Task<List<T>> QueryJsonPlayerInfo<T>(this DBProxyComponent self, string json) where T : PlayerBaseInfo
+        {
+            List<T> list = new List<T>();
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            DBQueryJsonPlayerInfoResponse dbQueryJsonResponse = (DBQueryJsonPlayerInfoResponse)await session.Call(new DBQueryJsonPlayerInfoRequest { CollectionName = typeof(T).Name, Json = json });
+            foreach (PlayerBaseInfo component in dbQueryJsonResponse.Components)
+            {
+                list.Add((T)component);
+            }
+            return list;
+        }
     }
 }
