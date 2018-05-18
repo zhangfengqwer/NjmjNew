@@ -126,9 +126,9 @@ message C2G_BuyItem //IRequest
 	required int Cost = 3;
 }
 
-message Actor_UpDateData //IActorMessage
+message Actor_RefreshRank //IActorMessage
 {
-	required PlayerInfo playerInfo = 1;
+	repeated PlayerInfo playerInfo = 1;
 }
 
 message G2C_BuyItem //IResponse

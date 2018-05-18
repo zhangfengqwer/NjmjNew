@@ -364,9 +364,9 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.Actor_UpDateData)]
+	[Message(HotfixOpcode.Actor_RefreshRank)]
 	[ProtoContract]
-	public partial class Actor_UpDateData: IActorMessage
+	public partial class Actor_RefreshRank: IActorMessage
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
@@ -374,8 +374,8 @@ namespace ETHotfix
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
 
-		[ProtoMember(1, IsRequired = true)]
-		public PlayerInfo playerInfo;
+		[ProtoMember(1)]
+		public List<PlayerInfo> playerInfo = new List<PlayerInfo>();
 
 	}
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using ETModel;
 
@@ -65,18 +64,7 @@ namespace ETHotfix
                     }
                 }
                 #endregion
-                System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                //List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{}}");
-                List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
 
-                stopwatch.Stop();
-                TimeSpan timespan = stopwatch.Elapsed;
-                double sencond = timespan.Seconds;
-                double milliseconds = timespan.TotalMilliseconds;
-                Log.Debug(sencond.ToString());
-                Log.Debug(milliseconds.ToString());
-                Log.Debug(JsonHelper.ToJson(playerBaseInfo));
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 

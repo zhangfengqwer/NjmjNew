@@ -22,7 +22,7 @@ namespace ETModel
 		 public const ushort ShopInfo = 10018;
 		 public const ushort GetItemInfo = 10019;
 		 public const ushort C2G_BuyItem = 10020;
-		 public const ushort Actor_UpDateData = 10021;
+		 public const ushort Actor_RefreshRank = 10021;
 		 public const ushort G2C_BuyItem = 10022;
 		 public const ushort TaskProgress = 10023;
 		 public const ushort C2G_UpdateTaskProgress = 10024;

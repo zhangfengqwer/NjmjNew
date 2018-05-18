@@ -8,14 +8,13 @@ using ETModel;
 namespace ETHotfix
 {
     [MessageHandler]
-    public class Actor_UpdatePlayerInfo:AMHandler<Actor_UpDateData>
+    public class Actor_RefreshRankHandler : AMHandler<Actor_RefreshRank>
     {
-        protected override void Run(Session session, Actor_UpDateData message)
+        protected override void Run(Session session, Actor_RefreshRank message)
         {
             try
             {
-                //Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>()
-                //    .UpDatePlayerInfo(message.playerInfo);
+                
             }
             catch (Exception e)
             {
