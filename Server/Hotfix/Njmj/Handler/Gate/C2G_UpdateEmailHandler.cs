@@ -22,7 +22,7 @@ namespace ETHotfix
                 else
                 {
                     emailInfo.Id = message.EId;
-                    emailInfo.IsRead = message.IsRead;
+                    //emailInfo.State = message.state;
                     await proxyComponent.Save(emailInfo);
                     reply(response);
                 }

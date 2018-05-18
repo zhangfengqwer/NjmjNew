@@ -46,15 +46,14 @@ namespace ETHotfix
                         }
                     }
                 }
-
-                playerInfo.GoldNum = baseInfo.GoldNum;
-                playerInfo.WingNum = baseInfo.WingNum;
-                playerInfo.Icon = baseInfo.Icon;
-                playerInfo.Name = baseInfo.Name;
+                List<EmailInfo> emailInfoList = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.UId},_id:{message.MailId}}}");
+                if(emailInfoList.Count > 0)
+                {
+                    emailInfoList[0].State = 1;
+                    await proxyComponent.Save(emailInfoList[0]);
+                }
                 response.Result = true;
-                
                 reply(response);
-                session.Send(new Actor_UpDateData { playerInfo = playerInfo });
             }
             catch(Exception e)
             {

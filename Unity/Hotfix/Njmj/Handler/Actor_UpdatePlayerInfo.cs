@@ -14,8 +14,8 @@ namespace ETHotfix
         {
             try
             {
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>()
-                    .UpDatePlayerInfo(message.playerInfo);
+                //Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>()
+                //    .UpDatePlayerInfo(message.playerInfo);
             }
             catch (Exception e)
             {

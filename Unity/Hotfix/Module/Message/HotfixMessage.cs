@@ -239,6 +239,9 @@ namespace ETHotfix
 		[ProtoMember(4, TypeName = "ETHotfix.TaskInfo")]
 		public List<TaskInfo> TaskInfoList = new List<TaskInfo>();
 
+		[ProtoMember(5, TypeName = "ETHotfix.Bag")]
+		public List<Bag> BagList = new List<Bag>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -849,7 +852,7 @@ namespace ETHotfix
 		public string Date;
 
 		[ProtoMember(4, IsRequired = true)]
-		public bool IsRead;
+		public int State;
 
 		[ProtoMember(5, IsRequired = true)]
 		public string RewardItem;
@@ -871,6 +874,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, TypeName = "ETHotfix.GetItemInfo")]
 		public List<GetItemInfo> InfoList = new List<GetItemInfo>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public long MailId;
 
 	}
 
@@ -927,7 +933,7 @@ namespace ETHotfix
 	public partial class Bag: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public long ItemId;
+		public int ItemId;
 
 		[ProtoMember(2, IsRequired = true)]
 		public int Count;

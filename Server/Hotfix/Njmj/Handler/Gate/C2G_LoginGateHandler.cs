@@ -69,31 +69,33 @@ namespace ETHotfix
                 stopwatch.Start();
                 //List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{}}");
                 List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
-                Log.Debug(JsonHelper.ToJson(playerBaseInfo));
-                playerBaseInfo.Sort((PlayerBaseInfo l, PlayerBaseInfo r) =>
-                {
-                    long lindex = l.GoldNum;
-                    long rindex = r.GoldNum;
-                    if (lindex > rindex)
-                        return -1;
-                    else if (lindex < rindex)
-                        return 1;
-                    return 0;
-                });
+
                 stopwatch.Stop();
                 TimeSpan timespan = stopwatch.Elapsed;
                 double sencond = timespan.Seconds;
                 double milliseconds = timespan.TotalMilliseconds;
                 Log.Debug(sencond.ToString());
                 Log.Debug(milliseconds.ToString());
-
+                Log.Debug(JsonHelper.ToJson(playerBaseInfo));
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-                
+
+                List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
+                response.BagList = new List<Bag>();
+                List<Bag> bagList = new List<Bag>();
+                for(int i = 0;i< bagInfoList.Count; ++i)
+                {
+                    Bag bag = new Bag();
+                    bag.ItemId = bagInfoList[i].BagId;
+                    bag.Count = bagInfoList[i].Count;
+                    bagList.Add(bag);
+                }
+                response.BagList = bagList;
+
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {
@@ -110,7 +112,7 @@ namespace ETHotfix
                                     .Append(CommonUtil.getCurDay()).ToString();
                     //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
                     emailInfo.Content = "加入南京麻将，就有好礼相送";
-                    emailInfo.IsRead = true;
+                    emailInfo.State = 0;
                     emailInfo.RewardItem = "2,100;1,100";
                     DBHelper.AddEmailInfoToDB(emailInfo);
                     #endregion
