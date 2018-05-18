@@ -32,6 +32,7 @@ namespace ETHotfix
                 }
                 response.playerInfo = message.playerInfo;
                 reply(response);
+                session.Send(new Actor_UpDateData { playerInfo = response.playerInfo });
             }
             catch(Exception e)
             {

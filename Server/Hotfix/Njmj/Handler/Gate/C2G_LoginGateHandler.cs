@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ETModel;
 
@@ -30,7 +31,7 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                
+
                 #region AddShopInfo
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
@@ -51,12 +52,12 @@ namespace ETHotfix
                 #endregion
 
                 #region AddItemInfo
-                List<ItemInfo> itemInfoList = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{userId}}}");
+                List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 if (itemInfoList.Count <= 0)
                 {
                     for (int i = 1; i < 9; ++i)
                     {
-                        ItemInfo item = new ItemInfo();
+                        UserBag item = new UserBag();
                         item.BagId = 100 + i;
                         item.Count = 10 + i;
                         item.UId = userId;
@@ -64,6 +65,27 @@ namespace ETHotfix
                     }
                 }
                 #endregion
+                System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                //List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{}}");
+                List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
+                Log.Debug(JsonHelper.ToJson(playerBaseInfo));
+                playerBaseInfo.Sort((PlayerBaseInfo l, PlayerBaseInfo r) =>
+                {
+                    long lindex = l.GoldNum;
+                    long rindex = r.GoldNum;
+                    if (lindex > rindex)
+                        return -1;
+                    else if (lindex < rindex)
+                        return 1;
+                    return 0;
+                });
+                stopwatch.Stop();
+                TimeSpan timespan = stopwatch.Elapsed;
+                double sencond = timespan.Seconds;
+                double milliseconds = timespan.TotalMilliseconds;
+                Log.Debug(sencond.ToString());
+                Log.Debug(milliseconds.ToString());
 
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
@@ -93,9 +115,8 @@ namespace ETHotfix
                     DBHelper.AddEmailInfoToDB(emailInfo);
                     #endregion
                 }
-
+                
                 reply(response);
-
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 			}
 			catch (Exception e)

@@ -93,9 +93,20 @@
 		required string Json = 2;
 	}
 
+	message DBQueryJsonPlayerInfoRequest // IRequest
+	{
+		required string CollectionName = 1;
+		required string Json = 2;
+	}
+
 	message DBQueryJsonResponse // IResponse
 	{
 		repeated ComponentWithId Components = 1;
+	}
+
+	message DBQueryJsonPlayerInfoResponse // IResponse
+	{
+		repeated PlayerBaseInfo Components = 1;
 	}
 
 	message ObjectAddRequest // IRequest

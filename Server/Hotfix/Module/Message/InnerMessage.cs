@@ -271,6 +271,21 @@ namespace ETHotfix
 
 	}
 
+	[Message(InnerOpcode.DBQueryJsonPlayerInfoRequest)]
+	[ProtoContract]
+	public partial class DBQueryJsonPlayerInfoRequest: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string CollectionName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Json;
+
+	}
+
 	[Message(InnerOpcode.DBQueryJsonResponse)]
 	[ProtoContract]
 	public partial class DBQueryJsonResponse: IResponse
@@ -286,6 +301,24 @@ namespace ETHotfix
 
 		[ProtoMember(1)]
 		public List<ComponentWithId> Components = new List<ComponentWithId>();
+
+	}
+
+	[Message(InnerOpcode.DBQueryJsonPlayerInfoResponse)]
+	[ProtoContract]
+	public partial class DBQueryJsonPlayerInfoResponse: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<PlayerBaseInfo> Components = new List<PlayerBaseInfo>();
 
 	}
 

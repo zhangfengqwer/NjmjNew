@@ -15,15 +15,24 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.UId);
                 PlayerInfo playerInfo = new PlayerInfo();
-                baseInfo.WingNum -= message.Info.Cost;
+                baseInfo.WingNum -= message.Cost;
                 //购买元宝
-                if (message.Info.ShopId == 1)
+                if (message.Info.ItemID == 1)
                 {
                     baseInfo.GoldNum += message.Info.Count;
+                    await proxyComponent.Save(baseInfo);
+
+                    playerInfo.GoldNum = baseInfo.GoldNum;
+                    playerInfo.WingNum = baseInfo.WingNum;
+                    playerInfo.Icon = baseInfo.Icon;
+                    playerInfo.Name = baseInfo.Name;
+                    response.Result = true;
+                    reply(response);
+                    session.Send(new Actor_UpDateData { playerInfo = playerInfo });
                 }
                 else
                 {
-                    List<ItemInfo> itemInfos = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{message.UId},BagId:{message.Info.ShopId}}}");
+                    List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{message.Info.ItemID}}}");
                     if (itemInfos.Count > 0)
                     {
                         itemInfos[0].Count += message.Info.Count;
@@ -31,23 +40,15 @@ namespace ETHotfix
                     }
                     else
                     {
-                        ItemInfo itemInfo = new ItemInfo();
-                        itemInfo.BagId = message.Info.ShopId;
+                        UserBag itemInfo = new UserBag();
+                        itemInfo.BagId = message.Info.ItemID;
                         itemInfo.UId = message.UId;
                         itemInfo.Count = message.Info.Count;
                         DBHelper.AddItemToDB(itemInfo);
                     }
+                    response.Result = true;
+                    reply(response);
                 }
-                response.Result = true;
-                await proxyComponent.Save(baseInfo);
-
-                playerInfo.GoldNum = baseInfo.GoldNum;
-                playerInfo.WingNum = baseInfo.WingNum;
-                playerInfo.Icon = baseInfo.Icon;
-                playerInfo.Name = baseInfo.Name;
-
-                reply(response);
-                session.Send(new Actor_UpDateData { playerInfo = playerInfo });
             }
             catch(Exception e)
             {
