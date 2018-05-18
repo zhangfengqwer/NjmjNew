@@ -69,6 +69,11 @@ namespace ETHotfix
             {
                 //打开活动界面
                 Log.Debug("打开活动界面");
+
+                UI ui = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult);
+                GameResultNeedData data = new GameResultNeedData();
+                data.isZiMo = true;
+                ui.GetComponent<UIGameResultComponent>().setData(data);
             });
 
             shopBtn.onClick.Add(() =>
