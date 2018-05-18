@@ -100,7 +100,7 @@ namespace ETHotfix
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
                 //test 添加元宝
-                UpDatePlayerInfo();
+                /*UpDatePlayerInfo();*/
                 //打开用户基本信息界面
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
                 SetUIHideOrOpen(false);
@@ -125,14 +125,14 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
         }
 
-        public async void UpDatePlayerInfo()
-        {
-            PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
-            long uid = playerInfoComponent.uid;
-            playerInfoComponent.GetPlayerInfo().WingNum = 1000;
-            G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
-            UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
-        }
+        //public async void UpDatePlayerInfo()
+        //{
+        //    PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
+        //    long uid = playerInfoComponent.uid;
+        //    playerInfoComponent.GetPlayerInfo().WingNum = 1000;
+        //    G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
+        //    UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
+        //}
 
         private async void OnEnterRoom()
         {
@@ -145,30 +145,15 @@ namespace ETHotfix
 
         private async void SetPlayerInfo()
         {
-            PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
-            long uid = playerInfoComponent.uid;
+            long uid = PlayerInfoComponent.Instance.uid;
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
             if (g2CPlayerInfo == null)
             {
                 Debug.Log("用户信息错误");
                 return;
             }
-            PlayerInfo info = g2CPlayerInfo.PlayerInfo;
-            playerInfoComponent.SetPlayerInfo(info);
-            UpDatePlayerInfo(info);
-        }
-
-        public void UpDatePlayerInfo(PlayerInfo info)
-        {
-            PlayerInfoComponent.Instance.SetPlayerInfo(info);
-            Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
-            if (icon != null)
-                playerIcon.sprite = icon;
-            else
-                Log.Warning("icon数据为空，请重新注册");
-            playerNameTxt.text = info.Name;
-            goldNumTxt.text = info.GoldNum.ToString();
-            wingNumTxt.text = info.WingNum.ToString();
+            PlayerInfoComponent.Instance.SetPlayerInfo(g2CPlayerInfo.PlayerInfo);
+            refreshUI();
         }
 
         public void SetUIHideOrOpen(bool isHide)
@@ -178,7 +163,15 @@ namespace ETHotfix
 
         public void refreshUI()
         {
-
+            PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
+            Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
+            if (icon != null)
+                playerIcon.sprite = icon;
+            else
+                Log.Warning("icon数据为空，请重新注册");
+            playerNameTxt.text = info.Name;
+            goldNumTxt.text = info.GoldNum.ToString();
+            wingNumTxt.text = info.WingNum.ToString();
         }
     }
 }

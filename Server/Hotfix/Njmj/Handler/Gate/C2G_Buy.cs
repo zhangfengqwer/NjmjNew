@@ -14,21 +14,14 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.UId);
-                PlayerInfo playerInfo = new PlayerInfo();
                 baseInfo.WingNum -= message.Cost;
                 //购买元宝
                 if (message.Info.ItemID == 1)
                 {
                     baseInfo.GoldNum += message.Info.Count;
                     await proxyComponent.Save(baseInfo);
-
-                    playerInfo.GoldNum = baseInfo.GoldNum;
-                    playerInfo.WingNum = baseInfo.WingNum;
-                    playerInfo.Icon = baseInfo.Icon;
-                    playerInfo.Name = baseInfo.Name;
                     response.Result = true;
                     reply(response);
-                    session.Send(new Actor_UpDateData { playerInfo = playerInfo });
                 }
                 else
                 {

@@ -80,11 +80,11 @@ namespace ETHotfix
             GetBagInfoList();
         }
 
-        private async void GetBagInfoList()
+        private void GetBagInfoList()
         {
-            long uid = PlayerInfoComponent.Instance.uid;
-            G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
-            CreateItemList(g2cBag.ItemList);
+            //long uid = PlayerInfoComponent.Instance.uid;
+            //G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
+            CreateItemList(PlayerInfoComponent.Instance.GetBagInfoList());
         }
 
         private void CreateItemList(List<Bag> itemList)
@@ -129,6 +129,7 @@ namespace ETHotfix
         private async void UseItem(Bag item)
         {
             G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+            GameUtil.changeData(item.ItemId, -1);
             if (g2cBag.result == 1)
             {
                 Debug.Log("Use Success");
@@ -137,11 +138,6 @@ namespace ETHotfix
             }   
             else
                 Debug.Log("Use Fail");
-        }
-
-        private void RefreshUI()
-        {
-
         }
 
         //private void SetBagItemL(int count)
@@ -173,6 +169,7 @@ namespace ETHotfix
             base.Dispose();
             uiList.Clear();
             bagItemList.Clear();
+            item = null;
         }
     }
 }

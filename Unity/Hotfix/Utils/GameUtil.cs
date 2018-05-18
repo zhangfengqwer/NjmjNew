@@ -11,7 +11,7 @@ namespace ETHotfix
         /*
          * 101:1000
          */
-        static public void changeDataWithStr(string reward)
+        static public void changeDataWithStr(string reward,char splitType)
         {
             List<string> list1 = new List<string>();
             CommonUtil.splitStr(reward, list1, ';');
@@ -19,7 +19,7 @@ namespace ETHotfix
             for (int i = 0; i < list1.Count; i++)
             {
                 List<string> list2 = new List<string>();
-                CommonUtil.splitStr(list1[i], list2, ':');
+                CommonUtil.splitStr(list1[i], list2, splitType);
 
                 int id = int.Parse(list2[0]);
                 int num = int.Parse(list2[1]);

@@ -75,6 +75,7 @@ message G2C_LoginGate // IResponse
 	required int64 Uid = 2;//用户ID
 	repeated ShopInfo ShopInfoList = 3;//商店商品
 	repeated TaskInfo TaskInfoList = 4;//任务列表
+	repeated Bag BagList = 5;//背包列表
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -298,7 +299,7 @@ message Email //IMessage
 	required string EmailTitle = 1;//邮件标题
 	required string Content = 2;//邮件内容
 	required string Date = 3;//邮件日期
-	required bool IsRead = 4;//是否已经读过
+	required int State = 4 [default = 0];//邮件状态 1 已读，2 删除
 	required string RewardItem = 5;//奖励物品
 	required long EId = 6;//邮箱ID
 }
@@ -307,6 +308,7 @@ message C2G_GetItem //IRequest
 {
 	required long UId = 1;
 	repeated GetItemInfo InfoList = 2;
+	required long MailId = 3; 
 }
 
 message G2C_GetItem //IResponse
@@ -326,7 +328,7 @@ message G2C_Email //IResponse
 
 message Bag //IMessage
 {
-	required int64 ItemId = 1;//物品ID
+	required int ItemId = 1;//物品ID
 	required int Count = 2;//拥有数量
 }
 

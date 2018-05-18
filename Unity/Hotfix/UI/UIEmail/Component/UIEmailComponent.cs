@@ -82,7 +82,7 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIEmailItemComponent>();
-                    if (emailList[i].IsRead)
+                    if (emailList[i].State == 1)
                         obj.transform.SetAsFirstSibling();
                     uiList.Add(ui);
                     emailItemList.Add(obj);

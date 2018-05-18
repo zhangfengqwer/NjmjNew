@@ -30,7 +30,7 @@ namespace ETHotfix
         private Text date;
         private GameObject flag;
         private Email email;
-        private bool isRead;
+        private int state;
         private GameObject rewardItem;
         private List<GameObject> rewardItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
@@ -71,16 +71,11 @@ namespace ETHotfix
                 .Session.Call(new C2G_GetItem
                 {
                     UId = PlayerInfoComponent.Instance.uid,
-                    InfoList = itemList
+                    InfoList = itemList,
+                    MailId = email.EId
                 });
             get.gameObject.SetActive(false);
-            ReadEmail();
-        }
-
-        private async void ReadEmail()
-        {
-            G2C_UpdateEmail c2gUpdateEmail = (G2C_UpdateEmail)await
-                SessionWrapComponent.Instance.Session.Call(new C2G_UpdateEmail() { EId = email.EId, IsRead = false });
+            GameUtil.changeDataWithStr(email.RewardItem, ',');
             flag.SetActive(false);
         }
 
@@ -90,12 +85,12 @@ namespace ETHotfix
             title.text = email.EmailTitle;
             content.text = email.Content;
             date.text = email.Date;
-            isRead = email.IsRead;
+            state = email.State;
             string reward = email.RewardItem;
-            flag.SetActive(isRead);
+            flag.SetActive(state == 0);
             if (reward != null && !reward.Equals(""))
             {
-                get.gameObject.SetActive(isRead);
+                get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
                 {

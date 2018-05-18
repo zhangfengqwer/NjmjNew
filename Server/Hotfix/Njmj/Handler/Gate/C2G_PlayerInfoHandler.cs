@@ -40,7 +40,7 @@ namespace ETHotfix
                     playerBaseInfo.Name = "默认";
                     playerBaseInfo.GoldNum = 10;
                     playerBaseInfo.WingNum = 0;
-                    playerBaseInfo.Icon = "Icon1";
+                    playerBaseInfo.Icon = "f_icon1";
                     await proxyComponent.Save(playerBaseInfo);
 
                     response.PlayerInfo.Name = playerBaseInfo.Name;

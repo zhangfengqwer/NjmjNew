@@ -174,6 +174,10 @@ namespace ETHotfix
             {
                 Debug.Log("购买成功");
                 ToastScript.createToast("购买成功");
+                GameUtil.changeData(shopId, count);
+                PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
+                    ().refreshUI();
                 buyTip.SetActive(false);
             }
             else
