@@ -175,5 +175,10 @@ namespace ETHotfix
         {
             GetParent<UI>().GameObject.SetActive(isHide);
         }
+
+        public void refreshUI()
+        {
+
+        }
     }
 }
