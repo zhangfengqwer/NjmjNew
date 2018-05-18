@@ -85,7 +85,7 @@ namespace ETHotfix
 
         public async void startTimer()
         {
-            int time = 10;
+            int time = 15;
             while (time >= 0)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);

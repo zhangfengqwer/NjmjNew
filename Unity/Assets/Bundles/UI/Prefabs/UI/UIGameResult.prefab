@@ -1237,7 +1237,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u51C6\u5907\u5012\u8BA1\u65F6 10"
+  m_Text: "\u51C6\u5907\u5012\u8BA1\u65F6 15"
 --- !u!114 &114656820227117340
 MonoBehaviour:
   m_ObjectHideFlags: 1
