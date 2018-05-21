@@ -7,5 +7,7 @@ namespace ETModel
         public long GoldNum { get; set; }
         public long WingNum { get; set; }
         public string Icon { get; set; }
+        public bool IsRealName = false;
+        public bool IsBindPhone = false;
     }
 }

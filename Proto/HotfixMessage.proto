@@ -376,4 +376,15 @@ message G2C_DailySignState // IResponse
 	required string TomorrowReward = 3;
 }
 
+message C2G_RealName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+	required string	IDNumber	 = 3;
+}
+
+message G2C_RealName // IResponse
+{
+}
+
 #endregion

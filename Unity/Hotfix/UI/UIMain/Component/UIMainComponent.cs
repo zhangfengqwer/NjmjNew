@@ -97,7 +97,9 @@ namespace ETHotfix
 
                 // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
+                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
+
+                RequestRealName();
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
@@ -121,6 +123,21 @@ namespace ETHotfix
             #endregion
 
             CommonUtil.ShowUI(UIType.UIDaily);
+        }
+
+        private async void RequestRealName()
+        {
+            G2C_RealName g2cRealName = (G2C_RealName)await SessionWrapComponent.Instance.Session.Call(new C2G_RealName { Uid = PlayerInfoComponent.Instance.uid,Name = "黄品", IDNumber = "320724199310256015" });
+
+            if (g2cRealName.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2cRealName.Message);
+                return;
+            }
+            else
+            {
+                ToastScript.createToast("实名认证成功");
+            }
         }
 
         private async void RequestTaskInfo()

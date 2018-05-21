@@ -1072,4 +1072,37 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_RealName)]
+	[ProtoContract]
+	public partial class C2G_RealName: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string IDNumber;
+
+	}
+
+	[Message(HotfixOpcode.G2C_RealName)]
+	[ProtoContract]
+	public partial class G2C_RealName: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 }
