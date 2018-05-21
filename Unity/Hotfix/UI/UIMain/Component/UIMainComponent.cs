@@ -69,6 +69,11 @@ namespace ETHotfix
             {
                 //打开活动界面
                 Log.Debug("打开活动界面");
+
+                UI ui = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult);
+                GameResultNeedData data = new GameResultNeedData();
+                data.isZiMo = true;
+                ui.GetComponent<UIGameResultComponent>().setData(data);
             });
 
             shopBtn.onClick.Add(() =>
@@ -92,7 +97,9 @@ namespace ETHotfix
 
                 // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
+                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
+
+                RequestRealName();
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
@@ -118,7 +125,7 @@ namespace ETHotfix
             CommonUtil.ShowUI(UIType.UIDaily);
         }
 
-        public async void GetRankInfo()
+		public async void GetRankInfo()
         {
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
                 .Session.Call(new C2G_Rank { });
@@ -126,6 +133,20 @@ namespace ETHotfix
             Debug.Log(JsonHelper.ToJson(g2cRank.rankList));
         }
 
+		 private async void RequestRealName()
+        {
+            G2C_RealName g2cRealName = (G2C_RealName)await SessionWrapComponent.Instance.Session.Call(new C2G_RealName { Uid = PlayerInfoComponent.Instance.uid,Name = "黄品", IDNumber = "320724199310256015" });
+
+            if (g2cRealName.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2cRealName.Message);
+                return;
+            }
+            else
+            {
+                ToastScript.createToast("实名认证成功");
+            }
+        }
         private async void RequestTaskInfo()
         {
             G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });

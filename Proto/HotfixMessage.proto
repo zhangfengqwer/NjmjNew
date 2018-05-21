@@ -126,6 +126,11 @@ message C2G_BuyItem //IRequest
 	required int Cost = 3;
 }
 
+message Actor_UpDateData //IActorMessage
+{
+	required PlayerInfo playerInfo = 1;
+}
+
 message G2C_BuyItem //IResponse
 {
 	required bool Result = 1; 
@@ -371,21 +376,15 @@ message G2C_DailySignState // IResponse
 	required string TomorrowReward = 3;
 }
 
-message G2C_Rank // IResponse
+message C2G_RealName // IRequest
 {
-	repeated Rank rankList = 1;
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+	required string	IDNumber	 = 3;
 }
 
-message C2G_Rank // IRequest
+message G2C_RealName // IResponse
 {
-	
-}
-
-message Rank // IMessage
-{
-	required string PlayerName = 1;//玩家名称
-	required long GoldNum = 2;//金币
-	required long GoldTicket = 3;//金券
 }
 
 #endregion

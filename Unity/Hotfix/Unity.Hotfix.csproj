@@ -140,6 +140,8 @@
     <Compile Include="UI\UIBag\Component\UIBagComponent.cs" />
     <Compile Include="UI\UIBag\Component\UIBagItemComponent.cs" />
     <Compile Include="UI\UIBag\Factory\UIBagFactory.cs" />
+    <Compile Include="UI\UIGameResult\Component\UIGameResultComponent.cs" />
+    <Compile Include="UI\UIGameResult\Factory\UIGameResultFactory.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIEmailItemComponent.cs" />
     <Compile Include="UI\UIEmail\Component\UIRewardItemComponent.cs" />
