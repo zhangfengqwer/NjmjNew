@@ -74,5 +74,7 @@ namespace ETModel
 		 public const ushort G2C_BindPhone = 10070;
 		 public const ushort C2G_SendSms = 10071;
 		 public const ushort G2C_SendSms = 10072;
+		 public const ushort C2G_ChangeName = 10073;
+		 public const ushort G2C_ChangeName = 10074;
 	}
 }

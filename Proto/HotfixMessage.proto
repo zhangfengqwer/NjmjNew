@@ -426,4 +426,14 @@ message G2C_SendSms // IResponse
 {
 }
 
+message C2G_ChangeName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+}
+
+message G2C_ChangeName // IResponse
+{
+}
+
 #endregion
