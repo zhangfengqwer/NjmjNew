@@ -99,7 +99,9 @@ namespace ETHotfix
 
                 // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
 
-                RequestRealName();
+                // RequestRealName();
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);

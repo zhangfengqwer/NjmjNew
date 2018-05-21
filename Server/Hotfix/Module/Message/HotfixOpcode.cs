@@ -67,5 +67,9 @@ namespace ETModel
 		 public const ushort G2C_DailySignState = 10063;
 		 public const ushort C2G_RealName = 10064;
 		 public const ushort G2C_RealName = 10065;
+		 public const ushort C2G_BindPhone = 10066;
+		 public const ushort G2C_BindPhone = 10067;
+		 public const ushort C2G_SendSms = 10068;
+		 public const ushort G2C_SendSms = 10069;
 	}
 }

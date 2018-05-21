@@ -33,5 +33,6 @@ namespace ETHotfix
         public const string UIBagBgL = "UIBagBgL";//背包Item背景隔板
  		public const string UIDaily = "UIDaily";
         public const string UIGameResult = "UIGameResult";
+        public const string UIBindPhone = "UIBindPhone";
     }
 }

@@ -387,4 +387,25 @@ message G2C_RealName // IResponse
 {
 }
 
+message C2G_BindPhone // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+	required string	Code = 3;		// 验证码
+}
+
+message G2C_BindPhone // IResponse
+{
+}
+
+message C2G_SendSms // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+}
+
+message G2C_SendSms // IResponse
+{
+}
+
 #endregion

@@ -34,8 +34,7 @@ namespace ETHotfix
                     realName.Name = message.Name;
                     realName.IDNumber = message.IDNumber;
                     await proxyComponent.Save(realName);
-
-                    proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                    
                     List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
                     if (playerBaseInfos.Count > 0)
                     {
