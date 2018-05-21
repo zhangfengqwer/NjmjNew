@@ -1018,9 +1018,9 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.Rank)]
+	[Message(HotfixOpcode.WealthRank)]
 	[ProtoContract]
-	public partial class Rank: IMessage
+	public partial class WealthRank: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
 		public string PlayerName;
@@ -1030,6 +1030,21 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public long GoldTicket;
+
+	}
+
+	[Message(HotfixOpcode.GameRank)]
+	[ProtoContract]
+	public partial class GameRank: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string PlayerName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int WinCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int TotalCount;
 
 	}
 
@@ -1055,8 +1070,11 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1, TypeName = "ETHotfix.Rank")]
-		public List<Rank> RankList = new List<Rank>();
+		[ProtoMember(1, TypeName = "ETHotfix.WealthRank")]
+		public List<WealthRank> RankList = new List<WealthRank>();
+
+		[ProtoMember(2, TypeName = "ETHotfix.GameRank")]
+		public List<GameRank> GameRankList = new List<GameRank>();
 
 	}
 

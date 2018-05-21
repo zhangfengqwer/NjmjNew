@@ -97,7 +97,6 @@
 	{
 		required string CollectionName = 1;
 		required string Json = 2;
-		required bool RankType = 3;
 	}
 
 	message DBQueryJsonResponse // IResponse
@@ -105,7 +104,18 @@
 		repeated ComponentWithId Components = 1;
 	}
 
+	message DBQueryJsonGamePlayerRequest // IRequest
+	{
+		required string CollectionName = 1;
+		required string Json = 2;
+	}
+
 	message DBQueryJsonPlayerInfoResponse // IResponse
+	{
+		repeated PlayerBaseInfo Components = 1;
+	}
+
+	message DBQueryJsonGamePlayerResponse // IResponse
 	{
 		repeated PlayerBaseInfo Components = 1;
 	}

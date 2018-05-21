@@ -12,7 +12,8 @@ namespace ETHotfix
             G2C_Rank response = new G2C_Rank();
             try
             {
-                response.RankList = Game.Scene.GetComponent<RankDataComponent>().GetRankData();
+                response.RankList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
+                response.GameRankList = Game.Scene.GetComponent<RankDataComponent>().GetGameRankData();
                 reply(response);
             }
             catch(Exception e)

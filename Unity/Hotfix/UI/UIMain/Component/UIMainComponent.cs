@@ -137,6 +137,7 @@ namespace ETHotfix
                 .Session.Call(new C2G_Rank { });
             //设置排行榜信息
             Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
+            Debug.Log("===" + JsonHelper.ToJson(g2cRank.GameRankList));
         }
 
         private async void RequestTaskInfo()

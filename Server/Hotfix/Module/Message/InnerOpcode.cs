@@ -21,20 +21,22 @@ namespace ETModel
 		 public const ushort DBQueryJsonRequest = 1017;
 		 public const ushort DBQueryJsonPlayerInfoRequest = 1018;
 		 public const ushort DBQueryJsonResponse = 1019;
-		 public const ushort DBQueryJsonPlayerInfoResponse = 1020;
-		 public const ushort ObjectAddRequest = 1021;
-		 public const ushort ObjectAddResponse = 1022;
-		 public const ushort ObjectRemoveRequest = 1023;
-		 public const ushort ObjectRemoveResponse = 1024;
-		 public const ushort ObjectLockRequest = 1025;
-		 public const ushort ObjectLockResponse = 1026;
-		 public const ushort ObjectUnLockRequest = 1027;
-		 public const ushort ObjectUnLockResponse = 1028;
-		 public const ushort ObjectGetRequest = 1029;
-		 public const ushort ObjectGetResponse = 1030;
-		 public const ushort R2G_GetLoginKey = 1031;
-		 public const ushort G2R_GetLoginKey = 1032;
-		 public const ushort G2M_CreateUnit = 1033;
-		 public const ushort M2G_CreateUnit = 1034;
+		 public const ushort DBQueryJsonGamePlayerRequest = 1020;
+		 public const ushort DBQueryJsonPlayerInfoResponse = 1021;
+		 public const ushort DBQueryJsonGamePlayerResponse = 1022;
+		 public const ushort ObjectAddRequest = 1023;
+		 public const ushort ObjectAddResponse = 1024;
+		 public const ushort ObjectRemoveRequest = 1025;
+		 public const ushort ObjectRemoveResponse = 1026;
+		 public const ushort ObjectLockRequest = 1027;
+		 public const ushort ObjectLockResponse = 1028;
+		 public const ushort ObjectUnLockRequest = 1029;
+		 public const ushort ObjectUnLockResponse = 1030;
+		 public const ushort ObjectGetRequest = 1031;
+		 public const ushort ObjectGetResponse = 1032;
+		 public const ushort R2G_GetLoginKey = 1033;
+		 public const ushort G2R_GetLoginKey = 1034;
+		 public const ushort G2M_CreateUnit = 1035;
+		 public const ushort M2G_CreateUnit = 1036;
 	}
 }
