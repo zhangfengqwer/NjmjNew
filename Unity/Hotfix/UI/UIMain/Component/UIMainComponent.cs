@@ -130,7 +130,7 @@ namespace ETHotfix
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
                 .Session.Call(new C2G_Rank { });
             //设置排行榜信息
-            Debug.Log(JsonHelper.ToJson(g2cRank.rankList));
+            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
         }
 
 		 private async void RequestRealName()

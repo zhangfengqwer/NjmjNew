@@ -61,11 +61,14 @@ namespace ETModel
 		 public const ushort G2C_BagOperation = 10057;
 		 public const ushort C2G_UpdateEmail = 10058;
 		 public const ushort G2C_UpdateEmail = 10059;
-		 public const ushort C2G_DailySign = 10060;
-		 public const ushort G2C_DailySign = 10061;
-		 public const ushort C2G_DailySignState = 10062;
-		 public const ushort G2C_DailySignState = 10063;
-		 public const ushort C2G_RealName = 10064;
-		 public const ushort G2C_RealName = 10065;
+		 public const ushort Rank = 10060;
+		 public const ushort C2G_Rank = 10061;
+		 public const ushort G2C_Rank = 10062;
+		 public const ushort C2G_DailySign = 10063;
+		 public const ushort G2C_DailySign = 10064;
+		 public const ushort C2G_DailySignState = 10065;
+		 public const ushort G2C_DailySignState = 10066;
+		 public const ushort C2G_RealName = 10067;
+		 public const ushort G2C_RealName = 10068;
 	}
 }
