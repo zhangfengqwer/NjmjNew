@@ -52,7 +52,7 @@ namespace ETHotfix
 
             changeNameBtn.onClick.Add(() =>
             {
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
             });
 
             PlayerInfoComponent pc = Game.Scene.GetComponent<PlayerInfoComponent>();
