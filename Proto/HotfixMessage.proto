@@ -368,21 +368,29 @@ message G2C_UpdateEmail //IResponse
 	required long EId = 1; 
 }
 
-message Rank // IMessage
+message WealthRank // IMessage
 {
 	required string PlayerName = 1;
 	required long GoldNum = 2;
 	required long GoldTicket = 3;
 }
 
+message GameRank // IMessage
+{
+	required string PlayerName = 1;
+	required int WinCount = 2;
+	required int TotalCount = 3;
+}
+
 message C2G_Rank //IRequest
 {
-
+	
 }
 
 message G2C_Rank //IResponse
 {
-	repeated Rank RankList = 1;
+	repeated WealthRank RankList = 1;
+	repeated GameRank GameRankList = 2;
 }
 
 message C2G_DailySign // IRequest

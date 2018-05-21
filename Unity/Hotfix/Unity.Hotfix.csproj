@@ -166,8 +166,6 @@
     <Compile Include="UI\UIPlayerIcon\Factory\UIPlayerIconFactory.cs" />
     <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
     <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
-    <Compile Include="UI\UIRealName\Component\UIRealNameComponent.cs" />
-    <Compile Include="UI\UIRealName\Factory\UIRealNameFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
     <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />

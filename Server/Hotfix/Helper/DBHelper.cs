@@ -55,36 +55,13 @@ namespace ETHotfix
                 }
             }
         }
-
-        static List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
-        static List<Rank> rankList = new List<Rank>();
+        
         public static async void RefreshRankFromDB()
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            rankList.Clear();
-            playerBaseInfoList.Clear();
-            System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
-            //发送给客户端刷新数据
-            
-            for(int i = 0;i< playerBaseInfoList.Count; ++i)
-            {
-                Rank rank = new Rank();
-                rank.PlayerName = playerBaseInfoList[i].Name;
-                rank.GoldNum = playerBaseInfoList[i].GoldNum;
-                rankList.Add(rank);
-            }
-            Game.Scene.GetComponent<RankDataComponent>().SetRankData(rankList);
-            if (playerBaseInfoList.Count > 0)
-                playerBaseInfoList.Clear();
+            RefreshWealthRank();
+            RefreshGameRank();
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
             Game.Scene.GetComponent<DBOperatorComponet>().IsStop = true;
-            stopwatch.Stop();
-            TimeSpan timespan = stopwatch.Elapsed;
-            double sencond = timespan.Seconds;
-            double milliseconds = timespan.TotalMilliseconds;
-            Log.Debug(JsonHelper.ToJson(playerBaseInfoList));
         }
 
         public static async void AddItemToDB(UserBag info)
@@ -95,10 +72,48 @@ namespace ETHotfix
             await proxyComponent.Save(itemInfo);
         }
 
-        public static async void RefreshRecord()
+        private static List<PlayerBaseInfo> gamePlayerList = new List<PlayerBaseInfo>();
+        static List<GameRank> gameRankList = new List<GameRank>();
+        public static async void RefreshGameRank()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            
+            gamePlayerList.Clear();
+            gameRankList.Clear();
+            gamePlayerList.AddRange(await proxyComponent.QueryJsonGamePlayer<PlayerBaseInfo>($"{{}}"));
+            for (int i = 0; i < playerBaseInfoList.Count; ++i)
+            {
+                GameRank rank = new GameRank();
+                rank.PlayerName = gamePlayerList[i].Name;
+                rank.WinCount = gamePlayerList[i].WinGameCount;
+                rank.TotalCount = gamePlayerList[i].TotalGameCount;
+                gameRankList.Add(rank);
+            }
+            Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(gameRankList);
+        }
+
+        static List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
+        static List<WealthRank> rankList = new List<WealthRank>();
+        public async static void RefreshWealthRank()
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            rankList.Clear();
+            playerBaseInfoList.Clear();
+            System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
+           
+            for (int i = 0; i < playerBaseInfoList.Count; ++i)
+            {
+                WealthRank rank = new WealthRank();
+                rank.PlayerName = playerBaseInfoList[i].Name;
+                rank.GoldNum = playerBaseInfoList[i].GoldNum;
+                rankList.Add(rank);
+            }
+            Game.Scene.GetComponent<RankDataComponent>().SetWealthRankData(rankList);
+            stopwatch.Stop();
+            TimeSpan timespan = stopwatch.Elapsed;
+            double sencond = timespan.Seconds;
+            double milliseconds = timespan.TotalMilliseconds;
         }
     }
 }
