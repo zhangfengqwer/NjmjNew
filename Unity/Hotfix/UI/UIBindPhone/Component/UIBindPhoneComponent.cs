@@ -138,8 +138,9 @@ namespace ETHotfix
                     return;
                 }
 
-                ToastScript.createToast("实名认证成功");
-
+                ToastScript.createToast("绑定手机号成功");
+                PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone = true;
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
                 isSuccess = true;
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBindPhone);
 			}

@@ -23,6 +23,9 @@ namespace ETHotfix
                     response.PlayerInfo.GoldNum = playerInfo.GoldNum;
                     response.PlayerInfo.WingNum = playerInfo.WingNum;
                     response.PlayerInfo.Icon = playerInfo.Icon;
+                    response.PlayerInfo.IsRealName = playerInfo.IsRealName;
+                    response.PlayerInfo.IsBindPhone = playerInfo.IsBindPhone;
+                    response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
                     reply(response);
                     return;
                 }
@@ -41,6 +44,11 @@ namespace ETHotfix
                     playerBaseInfo.GoldNum = 10;
                     playerBaseInfo.WingNum = 0;
                     playerBaseInfo.Icon = "f_icon1";
+                    playerBaseInfo.IsBindPhone = false;
+                    playerBaseInfo.IsRealName = false;
+                    playerBaseInfo.TotalGameCount = 0;
+                    playerBaseInfo.WingNum = 0;
+                    playerBaseInfo.RestChangeNameCount = 1;
                     await proxyComponent.Save(playerBaseInfo);
 
                     response.PlayerInfo.Name = playerBaseInfo.Name;

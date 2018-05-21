@@ -68,7 +68,7 @@ namespace ETHotfix
                 playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()
             });
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
-            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().UpdateIcon();
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
         }
 
         private void CreatePlayerIconList()

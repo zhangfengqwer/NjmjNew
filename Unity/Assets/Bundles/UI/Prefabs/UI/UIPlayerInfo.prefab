@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 114003209375163912}
   - component: {fileID: 114765939523228860}
   m_Layer: 5
-  m_Name: NoBindPhoneTxt
+  m_Name: RealNameTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2307,6 +2307,10 @@ MonoBehaviour:
     gameObject: {fileID: 1833787684495676}
   - key: ChangeNameBtn
     gameObject: {fileID: 1022423840696040}
+  - key: RealNameTxt
+    gameObject: {fileID: 1844479037538230}
+  - key: NoBindPhoneTxt
+    gameObject: {fileID: 1109939835978442}
 --- !u!114 &114834839839322004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3633,6 +3637,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 334, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 228.7, y: 0.0000009536743}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}

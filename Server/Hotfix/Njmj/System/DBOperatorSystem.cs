@@ -7,14 +7,13 @@ namespace ETHotfix
     {
         public override void Update(DBOperatorComponet self)
         {
-            self.JudgeTime();
+            self.JudgeTimeAsync();
         }
     }
 
     public static class DBOepration
     {
-
-        public static void JudgeTime(this DBOperatorComponet componet)
+        public static async void JudgeTimeAsync(this DBOperatorComponet componet)
         {
             int year = CommonUtil.getCurYear();
             int month = CommonUtil.getCurMonth();
@@ -31,10 +30,12 @@ namespace ETHotfix
                 DBHelper.RefreshDB();
                 // 刷新签到
             }
-
-            if ((sec == 0))
+            
+            if ((sec == 0) && componet.IsStop)
             {
+                componet.IsStop = false;
                 DBHelper.RefreshRankFromDB();
+                Log.Info("=====");
             }
         }
     }

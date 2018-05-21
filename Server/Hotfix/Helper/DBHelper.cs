@@ -61,8 +61,8 @@ namespace ETHotfix
         public static async void RefreshRankFromDB()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            if (rankList.Count > 0)
-                rankList.Clear();
+            rankList.Clear();
+            playerBaseInfoList.Clear();
             System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
@@ -78,6 +78,8 @@ namespace ETHotfix
             Game.Scene.GetComponent<RankDataComponent>().SetRankData(rankList);
             if (playerBaseInfoList.Count > 0)
                 playerBaseInfoList.Clear();
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+            Game.Scene.GetComponent<DBOperatorComponet>().IsStop = true;
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             double sencond = timespan.Seconds;

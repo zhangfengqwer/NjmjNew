@@ -86,6 +86,8 @@ namespace ETHotfix
             }
 
             ToastScript.createToast("认证成功");
+            PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName = true;
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRealName);
         }
     }

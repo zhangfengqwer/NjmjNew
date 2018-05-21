@@ -22,6 +22,9 @@ namespace ETHotfix
         private Button changeNameBtn;
         private Button realNameBtn;
         private Button bindPhoneBtn;
+        private Text noBindPhoneTxt;
+        private Text realNameTxt;
+        //private PlayerInfo 
 
         public void Awake()
         {
@@ -33,6 +36,8 @@ namespace ETHotfix
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
             realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
+            realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
+            noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
 
             bindPhoneBtn.onClick.Add(() =>
             {
@@ -49,7 +54,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetUIHideOrOpen(true);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
             });
-
+            
             changeNameBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
@@ -59,18 +64,39 @@ namespace ETHotfix
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;
             uIDTxt.text = pc.uid.ToString();
+            if (playerInfo.IsRealName)
+                realNameTxt.text = "已实名";
+            if (playerInfo.IsBindPhone)
+                noBindPhoneTxt.text = "已绑定";
             playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
                 .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+
             playerIcon.onClick.Add(() =>
             {
                 CommonUtil.ShowUI(UIType.UIIcon);
             });
+
+            Init();
         }
 
-        public void UpdateIcon()
+        private void Init()
+        {
+            bindPhoneBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone);
+            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount >= 0);
+            realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
+
+        }
+
+        public void Update()
         {
             playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
                 .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            Debug.Log(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
+            nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+                realNameTxt.text = "已实名";
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone)
+                noBindPhoneTxt.text = "已绑定";
         }
     }
 }
