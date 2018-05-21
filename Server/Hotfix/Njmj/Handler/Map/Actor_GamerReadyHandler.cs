@@ -38,32 +38,76 @@ namespace ETHotfix
 
 	                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 	                OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
+	                DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
                     //随机庄家
-	                int number = RandomHelper.RandomNumber(0, 12);
+                    int number = RandomHelper.RandomNumber(0, 12);
 	                int i = number % 4;
-                    room.gamers[i].GetComponent<HandCardsComponent>().IsBanker = true;
+	                Gamer bankerGamer = room.gamers[i];
+	                HandCardsComponent bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
+	                bankerHandCards.IsBanker = true;
 
 	                //发牌
                     gameController.DealCards();
-	                orderController.Start(gamers[0].UserID);
-                    //给客户端传送数据
-                    foreach (var itemGame in gamers)
+	                orderController.Start(bankerGamer.UserID);
+
+                    //去除花牌
+	                foreach (var _gamer in gamers)
 	                {
-	                    List<MahjongInfo> mahjongInfos = itemGame.GetComponent<HandCardsComponent>().library;
+	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+	                    List<MahjongInfo> handCards = handCardsComponent.GetAll();
+
+	                    for (int j = handCards.Count - 1; j >= 0; j--)
+	                    {
+	                        MahjongInfo mahjongInfo = handCards[j];
+
+	                        if (mahjongInfo.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
+	                        {
+	                            handCards.RemoveAt(j);
+	                            mahjongInfo.weight = (byte) mahjongInfo.m_weight;
+                                handCardsComponent.FaceCards.Add(mahjongInfo);
+	                        }
+                        }
+
+                        //加牌
+	                    int handCardsCount = handCards.Count;
+	                    for (int j = 0; j < 13 - handCardsCount; j++)
+	                    {
+	                        GetCardNotFace(deskComponent, handCardsComponent);
+	                    }
+                    }
+
+                    //庄家多发一张牌
+	                GetCardNotFace(deskComponent, bankerHandCards);
+
+                    //给客户端传送数据
+	                Actor_StartGame actorStartGame = new Actor_StartGame();
+	                foreach (var itemGame in gamers)
+	                {
+	                    GamerData gamerData = new GamerData();
+	                    HandCardsComponent handCardsComponent = itemGame.GetComponent<HandCardsComponent>();
+
+	                    List<MahjongInfo> mahjongInfos = handCardsComponent.library;
 	                    foreach (var mahjongInfo in mahjongInfos)
 	                    {
 	                        mahjongInfo.weight = (byte) mahjongInfo.m_weight;
 	                    }
 
-	                    ActorProxy actorProxy = itemGame.GetComponent<UnitGateComponent>().GetActorProxy();
-                        actorProxy.Send(new Actor_StartGame()
-                        {
-                            Mahjongs = itemGame.GetComponent<HandCardsComponent>().GetAll()
-                        });
+	                    gamerData.UserID = itemGame.UserID;
+                        gamerData.handCards = mahjongInfos;
+                        gamerData.faceCards = handCardsComponent.FaceCards;
+	                    if (handCardsComponent.IsBanker)
+	                    {
+                            gamerData.IsBanker = true;
+                        }
+	                    gamerData.SeatIndex = room.seats[itemGame.UserID];
+	                    actorStartGame.GamerDatas.Add(gamerData);
                     }
+	                actorStartGame.restCount = deskComponent.RestLibrary.Count;
+                    //发送消息
+                    room.Broadcast(actorStartGame);
 
-	                room.State = RoomState.Game;
+                    room.State = RoomState.Game;
 
 	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
 	                {
@@ -73,36 +117,44 @@ namespace ETHotfix
                     roomComponent.gameRooms.Add(room.Id, room);
 	                roomComponent.readyRooms.Remove(room.Id);
 
-
                     //排序
-	                foreach (var _gamer in gamers)
+                    foreach (var _gamer in gamers)
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 	                    handCardsComponent.Sort();
                     }
 
-                    //判断停牌，胡牌
-	                foreach (var _gamer in gamers)
+	                foreach (var _gamer in room.GetAll())
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
-                        if (handCardsComponent.IsBanker)
-	                    {
-                            //庄家胡牌
-	                        if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
-	                        {
 
-	                        }
-	                    }
+	                    List<MahjongInfo> cards = handCardsComponent.GetAll();
+
+	                    if (handCardsComponent.IsBanker)
+	                    {
+	                        if (Logic_NJMJ.getInstance().isHuPai(cards))
+	                        {
+                                //ToDo 胡牌
+	                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                            canOperation.Uid = _gamer.UserID;
+                                _gamer.IsCanHu = true;
+	                            canOperation.OperationType = 2;
+	                            room.GamerBroadcast(_gamer, canOperation);
+                                _gamer.isGangFaWanPai = true;
+                            }
+                        }
 	                    else
 	                    {
-                            //其他听牌
-	                        List<MahjongInfo> checkTingPaiList = Logic_NJMJ.getInstance().checkTingPaiList(handCardsComponent.GetAll());
+	                        List<MahjongInfo> checkTingPaiList = Logic_NJMJ.getInstance().checkTingPaiList(cards);
 	                        if (checkTingPaiList.Count > 0)
 	                        {
+	                            _gamer.isFaWanPaiTingPai = true;
+                            }
+	                    }
+                    }
 
-	                        }
-                        }
-	                }
+	                //是否超时
+	                room.StartTime();
                 }
             }
 	        catch (Exception e)
@@ -110,6 +162,31 @@ namespace ETHotfix
 	            Log.Error(e);
             }
 	        await Task.CompletedTask;
+	    }
+
+        /// <summary>
+        /// 发牌（不包括花牌）
+        /// </summary>
+        /// <param name="deskComponent"></param>
+        /// <param name="handCardsComponent"></param>
+	    private static void GetCardNotFace(DeskComponent deskComponent,HandCardsComponent handCardsComponent)
+	    {
+	        while (true)
+	        {
+	            int cardIndex = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
+	            MahjongInfo grabMahjong = deskComponent.RestLibrary[cardIndex];
+	            //花牌
+	            if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
+	            {
+	                handCardsComponent.FaceCards.Add(grabMahjong);
+                }
+	            else
+	            {
+	                handCardsComponent.GetAll().Add(grabMahjong);
+	                break;
+                }
+                deskComponent.RestLibrary.RemoveAt(cardIndex);
+            }
 	    }
 	}
 }

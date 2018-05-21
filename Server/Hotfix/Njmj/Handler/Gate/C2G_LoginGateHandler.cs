@@ -45,6 +45,7 @@ namespace ETHotfix
                     info.Desc = config.Desc;
                     info.CurrencyType = config.CurrencyType;
                     info.Items = config.Items;
+                    info.Icon = config.Icon;
                     shopInfoList.Add(info);
                 }
                 #endregion
@@ -87,7 +88,7 @@ namespace ETHotfix
                     //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
                     emailInfo.Content = "加入南京麻将，就有好礼相送";
                     emailInfo.IsRead = true;
-                    emailInfo.RewardItem = "1009,100;1013,100";
+                    emailInfo.RewardItem = "2,100;1,100";
                     DBHelper.AddEmailInfoToDB(emailInfo);
                     #endregion
                 }

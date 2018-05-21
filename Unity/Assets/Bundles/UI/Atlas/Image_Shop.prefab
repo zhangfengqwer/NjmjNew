@@ -57,10 +57,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: a3079b5da1590d245b8247a71795a187, type: 3}
   - key: 109
     gameObject: {fileID: 21300000, guid: 23d59727ac00275439c4dd427f7199b8, type: 3}
-  - key: item1_1
-    gameObject: {fileID: 21300000, guid: 42480eb3de1e8f54eb60ecf183c2512f, type: 3}
-  - key: item1_2
-    gameObject: {fileID: 21300000, guid: ce5502eee0b2bc046a7965e5c4e057b6, type: 3}
   - key: item2_1
     gameObject: {fileID: 21300000, guid: e0503b847bb4ee747a04b3bca277a909, type: 3}
   - key: item2_2
@@ -73,6 +69,10 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: ef16c3bd3caeabd42a784f8f147f2b04, type: 3}
   - key: item4_2
     gameObject: {fileID: 21300000, guid: 82ed5a408706c9d44ac0cf0ce228204c, type: 3}
+  - key: 1
+    gameObject: {fileID: 21300000, guid: 42480eb3de1e8f54eb60ecf183c2512f, type: 3}
+  - key: 2
+    gameObject: {fileID: 21300000, guid: ce5502eee0b2bc046a7965e5c4e057b6, type: 3}
 --- !u!224 &224533785993547676
 RectTransform:
   m_ObjectHideFlags: 1

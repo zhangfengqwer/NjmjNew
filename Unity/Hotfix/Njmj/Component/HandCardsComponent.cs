@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,11 +7,11 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class HandCardsComponentAwakeSystem: AwakeSystem<HandCardsComponent, GameObject, int>
+    public class HandCardsComponentAwakeSystem: AwakeSystem<HandCardsComponent, GameObject, int, int>
     {
-        public override void Awake(HandCardsComponent self, GameObject panel, int index)
+        public override void Awake(HandCardsComponent self, GameObject panel, int index, int seatIndex)
         {
-            self.Awake(panel, index);
+            self.Awake(panel, index, seatIndex);
         }
     }
 
@@ -31,7 +32,7 @@ namespace ETHotfix
 
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
-
+        private List<MahjongInfo> faceCards = new List<MahjongInfo>();
         private GameObject CardBottom;
 
         private int width = 66;
@@ -41,17 +42,31 @@ namespace ETHotfix
         private GameObject grabObj;
         private GameObject showCard;
         private GameObject cardDisplay;
+        private GameObject directionObj;
+        private GameObject bg;
+        private GameObject pengObj;
+        private Image faceImage;
+        private Image faceImageGe;
+
+        //当前抓牌的索引
+        private int grabIndex;
 
         public int Index { get; set; }
         public GameObject Panel { get; private set; }
 
-        public void Awake(GameObject panel, int index)
+        public void Awake(GameObject panel, int index, int seatIndex)
         {
             this.Panel = panel;
             this.Index = index;
             this.CardBottom = panel.Get<GameObject>("CardBottom");
             this.showCard = panel.Get<GameObject>("ShowCard");
             this.cardDisplay = panel.Get<GameObject>("CardDisplay");
+            this.directionObj = panel.Get<GameObject>("Direction");
+            this.pengObj = panel.Get<GameObject>("Peng");
+            this.bg = panel.Get<GameObject>("Bg");
+            this.faceImage = panel.Get<GameObject>("FaceImage").GetComponent<Image>();
+            this.faceImageGe = panel.Get<GameObject>("FaceImageGe").GetComponent<Image>();
+            Image image = this.directionObj.GetComponent<Image>();
 
             switch (index)
             {
@@ -67,7 +82,6 @@ namespace ETHotfix
                     ItemName = "Item_Right_Card";
                     postionX = 0;
                     postionY = -34;
-
                     grabPostionX = 0;
                     grabPostionY = 51;
                     Direction = "right";
@@ -89,10 +103,27 @@ namespace ETHotfix
                     grabPostionX = 0;
                     grabPostionY = -457;
                     Direction = "left";
-
                     break;
             }
 
+            //设置东南西北
+            switch (seatIndex)
+            {
+                case 0:
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "desk_dong");
+                    break;
+                case 1:
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "desk_nan");
+                    break;
+                case 2:
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "desk_xi");
+                    break;
+                case 3:
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "desk_bei");
+                    break;
+            }
+
+            //Load AB
             this.resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             this.resourcesComponent.LoadBundle($"{PrefabName}.unity3d");
             this.resourcesComponent.LoadBundle($"{ItemName}.unity3d");
@@ -125,7 +156,7 @@ namespace ETHotfix
         public void Reset()
         {
             ClearHandCards();
-            ClearPlayCards();
+            //            ClearPlayCards();
         }
 
         /// <summary>
@@ -171,11 +202,11 @@ namespace ETHotfix
         }
 
         /// <summary>
-        /// 清空出牌
+        /// 得到牌
         /// </summary>
-        public void ClearPlayCards()
+        public List<MahjongInfo> GetAllCards()
         {
-            //            ClearCards(playCards);
+            return handCards;
         }
 
         /// <summary>
@@ -211,27 +242,24 @@ namespace ETHotfix
             UpdateCards();
 
             //显示出牌
-            GameObject obj = (GameObject)this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
-            GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
+            GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
+            GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
             GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
 
             instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
             instantiate.layer = LayerMask.NameToLayer("UI");
-
             ShowCard(mahjong.weight);
         }
 
         public async void ShowCard(byte mahjongWeight)
         {
             this.resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            GameObject obj = (GameObject)this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
+            GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
             showCard.GetComponent<Image>().sprite = obj.Get<Sprite>("card_" + mahjongWeight);
+
             showCard.SetActive(true);
-
             await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
-
             showCard.SetActive(false);
-
         }
 
         /// <summary>
@@ -241,7 +269,7 @@ namespace ETHotfix
         public void GrabCard(MahjongInfo mahjong)
         {
             GameObject cardSprite = this.CreateCardSprite($"{Direction}_" + mahjong.weight, 0, 0);
-            SetPosition(cardSprite, 1041, 0);
+            SetPosition(cardSprite, (handCards.Count) * postionX + 30, 0);
 
             //查询插入的index
             int index = -1;
@@ -284,6 +312,8 @@ namespace ETHotfix
             //设置item
             cardSprite.GetComponent<ItemCardScipt>().weight = mahjong.weight;
             cardSprite.GetComponent<ItemCardScipt>().index = index;
+
+            grabIndex = index;
         }
 
         /// <summary>
@@ -309,7 +339,7 @@ namespace ETHotfix
             {
                 if (i > 12)
                 {
-                    AddCard(mahjongs[i], 1041, 0, i);
+                    AddCard(mahjongs[i], (mahjongs.Count - 1) * postionX + 30, 0, i);
                 }
                 else
                 {
@@ -350,6 +380,18 @@ namespace ETHotfix
         }
 
         /// <summary>
+        /// 获取精灵
+        /// </summary>
+        /// <param name="prefabName"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Sprite GetSprite(string prefabName, string name)
+        {
+            GameObject asset = (GameObject) this.resourcesComponent.GetAsset($"{prefabName}.unity3d", prefabName);
+            return asset.Get<Sprite>(name);
+        }
+
+        /// <summary>
         /// 其他人的牌
         /// </summary>
         /// <param name="messageMahjongs"></param>
@@ -357,7 +399,7 @@ namespace ETHotfix
         {
             this.grabObj = this.CreateCardSprite($"{this.Direction}_back1", this.grabPostionX, this.grabPostionY);
 
-            if(!isBanker) grabObj.SetActive(false);
+            if (!isBanker) grabObj.SetActive(false);
 
             for (int i = 0; i < 13; i++)
             {
@@ -376,7 +418,7 @@ namespace ETHotfix
             grabObj.SetActive(true);
         }
 
-        public void PlayOtherCard(MahjongInfo mahjongInfo)
+        public void PlayOtherCard(MahjongInfo mahjongInfo, GameObject currentItem)
         {
             grabObj.SetActive(false);
 
@@ -403,14 +445,230 @@ namespace ETHotfix
                 item2 = "Image_Left_Card";
                 item3 = "left_" + mahjongInfo.weight;
             }
-            GameObject obj = (GameObject)this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
-            GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
-            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
 
+            GameObject obj = (GameObject) this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
+            GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
+            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
             instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
             instantiate.layer = LayerMask.NameToLayer("UI");
+            currentItem = instantiate;
 
             ShowCard(mahjongInfo.weight);
+        }
+
+        public void ShowBg()
+        {
+            bg.SetActive(true);
+        }
+
+        public void CloseBg()
+        {
+            bg.SetActive(false);
+        }
+
+        public void SetPeng(int type, MahjongInfo mahjong)
+        {
+            GameObject obj = null;
+            if (type == 0)
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Peng_Card");
+                //更新手牌
+                for (int i = 0; i < 2; i++)
+                {
+                    int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
+                    this.RemoveCard(index);
+                }
+            }
+            else if (type == 1)
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+                //更新手牌
+                for (int i = 0; i < 3; i++)
+                {
+                    int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
+                    this.RemoveCard(index);
+                }
+            }
+
+            UpdateCards();
+            //显示碰
+            GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject.transform.GetChild(i).GetComponent<Image>().sprite =
+                        CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+            }
+
+            Vector3 localPosition = this.CardBottom.transform.localPosition;
+            this.CardBottom.transform.localPosition = new Vector3(localPosition.x + (postionX + 10) * 2, localPosition.y + (postionY + 10) * 2, localPosition.z);
+        }
+
+        private int num = 0;
+
+        /// <summary>
+        /// 其他人碰刚
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="mahjongInfo"></param>
+        public void SetOtherPeng(int type, MahjongInfo mahjongInfo)
+        {
+            GameObject obj = null;
+            int temp = 0;
+            if (type == 0)
+            {
+                if (Index == 2)
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Peng_Card");
+                }
+                else
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Right_Peng_Card");
+                }
+
+                temp = 2;
+            }
+            else if (type == 1)
+            {
+                if (Index == 2)
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+                }
+                else
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Right_Gang_Card");
+                }
+
+                temp = 3;
+            }
+
+            GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+
+            gameObject.transform.localPosition = new Vector3(num * (postionX + 10) * 3, num * (postionY + 10) * 3, 0);
+
+            //显示出牌
+            string item1 = null;
+            string item2 = null;
+            string item3 = null;
+            if (Index == 1)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Right_Card";
+                item3 = "right_" + mahjongInfo.weight;
+            }
+            else if (Index == 2)
+            {
+                item1 = "Item_Vertical_Card";
+                item2 = "Image_Top_Card";
+                item3 = "card_" + mahjongInfo.weight;
+            }
+            else if (Index == 3)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Left_Card";
+                item3 = "left_" + mahjongInfo.weight;
+            }
+
+            for (int i = 1; i < 3; i++)
+            {
+                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle(item2, item3);
+            }
+
+            num++;
+
+            if (Index == 3)
+            {
+                for (int i = 0; i < temp; i++)
+                {
+                    GameObject.Destroy(CardBottom.transform.GetChild(i).gameObject);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < temp; i++)
+                {
+                    int childCount = this.CardBottom.transform.childCount;
+                    Log.Info("childCount:" + childCount);
+                    GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
+                }
+
+                Vector3 localPosition = this.CardBottom.transform.localPosition;
+                float x = localPosition.x - postionX * 1f;
+                float y = localPosition.y - postionY * 1f;
+
+                this.CardBottom.transform.localPosition = new Vector3(x, y, localPosition.z);
+            }
+        }
+
+        private void DeleteAllItem(GameObject gameObject)
+        {
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                GameObject.Destroy(gameObject.transform.GetChild(i));
+            }
+        }
+
+        /// <summary>
+        /// 去除手牌
+        /// </summary>
+        /// <param name="index"></param>
+        private void RemoveCard(int index)
+        {
+            GameObject gameObject = this.GetSprite(index);
+            GameObject.Destroy(gameObject);
+            this.handCards.RemoveAt(index);
+            this.ItemCards.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// 设置花牌
+        /// </summary>
+        /// <param name="gameDataFaceCards"></param>
+        public void SetFaceCards(List<MahjongInfo> gameDataFaceCards)
+        {
+            faceCards = gameDataFaceCards;
+
+            int geWei = gameDataFaceCards.Count % 10;
+            int shiWei = gameDataFaceCards.Count / 10;
+            if (shiWei > 0)
+            {
+                faceImageGe.gameObject.SetActive(true);
+                faceImage.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + shiWei);
+                faceImageGe.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + geWei);
+            }
+            else
+            {
+                faceImageGe.gameObject.SetActive(false);
+                faceImage.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + gameDataFaceCards.Count);
+            }
+        }
+
+        /// <summary>
+        /// 收到补花
+        /// </summary>
+        /// <param name="mahjongInfo"></param>
+        /// <param name="b"></param>
+        public async void BuHua(MahjongInfo mahjongInfo, bool isSelf)
+        {
+            SoundComponent.Instance.PlayClip("effect_nv1_buhua");
+
+            //补花数量
+            faceCards.Add(mahjongInfo);
+            SetFaceCards(faceCards);
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
+
+            //删除花牌
+            if (isSelf)
+            {
+                GameObject gameObject = this.GetSprite(grabIndex);
+                GameObject.Destroy(gameObject);
+                handCards.RemoveAt(grabIndex);
+                ItemCards.RemoveAt(grabIndex);
+                UpdateCards();
+            }
+            else
+            {
+                grabObj.SetActive(false);
+            }
         }
     }
 }

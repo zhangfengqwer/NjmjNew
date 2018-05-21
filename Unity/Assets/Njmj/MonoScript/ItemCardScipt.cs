@@ -19,12 +19,17 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
     void Start()
     {
         _rectTransform = gameObject.GetComponent<RectTransform>();
+        Log.Info("开始");
+
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Log.Info("开始tuozhai");
         this.beginPosition = this.SetDraggedPosition(eventData);
+        Log.Debug(beginPosition.x + "");
+        Log.Debug(beginPosition.y + "");
     }
 
     private Vector3 SetDraggedPosition(PointerEventData eventData)
@@ -44,6 +49,10 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
         double sqrt = Math.Sqrt((endPosion.x - this.beginPosition.x) * (endPosion.x - this.beginPosition.x) 
                                 + (endPosion.y - this.beginPosition.y) * (endPosion.y - this.beginPosition.y));
+
+        Log.Debug(endPosion.y+"");
+        Log.Debug(beginPosition.y+"");
+        Log.Debug(sqrt+"");
 
         if (endPosion.y - beginPosition.y > 1 && sqrt > 1.5)
         {

@@ -18,6 +18,7 @@ namespace ETHotfix
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte)message.weight, m_weight = (Consts.MahjongWeight)message.weight };
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
@@ -31,6 +32,9 @@ namespace ETHotfix
                     handCardsComponent.GrabOtherCard();
                 }
 
+                //显示黄色bg
+                uiRoomComponent.ShowTurn(message.Uid);
+                uiRoomComponent.ClosePropmtBtn();
             }
             catch (Exception e)
             {

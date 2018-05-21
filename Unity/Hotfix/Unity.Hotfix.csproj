@@ -79,6 +79,10 @@
     <Compile Include="Njmj\Component\HandCardsComponent.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerHuPaiHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerOperateHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerGrabCardHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerPlayCardHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />

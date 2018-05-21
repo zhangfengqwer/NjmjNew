@@ -29,6 +29,22 @@
         //是否离线
         public bool isOffline { get; set; }
 
+        // 是否是刚发完牌
+        public bool isGangFaWanPai = false;
+
+        // 是否是刚发完牌就听牌
+        public bool isFaWanPaiTingPai = false;
+
+        // 是否是杠完补牌
+        public bool isGangEndBuPai = false;
+
+        // 是否是抓到硬花补牌
+        public bool isGetYingHuaBuPai = false;
+
+        public bool IsCanPeng { get; set; }
+        public bool IsCanGang { get; set; }
+        public bool IsCanHu { get; set; }
+
         public void Awake(long id)
         {
             this.UserID = id;

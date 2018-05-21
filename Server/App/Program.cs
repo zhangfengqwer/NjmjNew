@@ -107,6 +107,7 @@ namespace App
 		                Game.Scene.AddComponent<ServerFrameComponent>();
 		                Game.Scene.AddComponent<ActorManagerComponent>();
 		                Game.Scene.AddComponent<DBOperatorComponet>();
+
 		                // Game.Scene.AddComponent<HttpComponent>();
 		                //GateGlobalComponent
 		                Game.Scene.AddComponent<UserComponent>();
@@ -125,7 +126,6 @@ namespace App
 
 		        // 全局定时器
                 GlobalTimer.getInstance().start();
-
                 while (true)
 				{
 					try

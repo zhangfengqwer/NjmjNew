@@ -33,6 +33,11 @@ namespace ETHotfix
             List<MahjongInfo> mahjongInfos4 = gamers[3].GetComponent<HandCardsComponent>().library;
 
             Logic_NJMJ.getInstance().FaMahjong(mahjongInfos1, mahjongInfos2, mahjongInfos3, mahjongInfos4,deskComponent.RestLibrary);
+
+            foreach (var card in deskComponent.RestLibrary)
+            {
+                card.weight = (byte) card.m_weight;
+            }
         }
     }
 }

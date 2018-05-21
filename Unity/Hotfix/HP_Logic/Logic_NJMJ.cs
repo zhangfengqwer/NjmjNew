@@ -33,10 +33,6 @@ namespace ETHotfix
 
         }
 
-        public override bool Equals(object obj)
-        {
-            return m_weight == ((MahjongInfo)obj).m_weight;
-        }
     }
 
     public class HuPaiNeedData
@@ -270,7 +266,7 @@ namespace ETHotfix
 
             // 先给庄家发牌:14张
             {
-                for (int i = 0; i < 14; i++)
+                for (int i = 0; i < 13; i++)
                 {
                     int r = Common_Random.getRandom(0, mahjongList.Count - 1);
                     zhuangjia.Add(mahjongList[r]);
@@ -1029,6 +1025,31 @@ namespace ETHotfix
             }
 
             return tingpaiList;
+        }
+
+        public int GetIndex(List<MahjongInfo> mahjongInfos, MahjongInfo mahjongInfo)
+        {
+
+            int index = -1;
+            for (int i = 0; i < mahjongInfos.Count; i++)
+            {
+                if (mahjongInfos[i].m_weight == mahjongInfo.m_weight)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        public void RemoveCard(List<MahjongInfo> mahjongInfos, MahjongInfo mahjongInfo)
+        {
+            int index = GetIndex(mahjongInfos, mahjongInfo);
+            if (index >= 0)
+            {
+                mahjongInfos.RemoveAt(index);
+            }
         }
     }
 }

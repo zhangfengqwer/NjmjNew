@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1455398847902292}
+  m_RootGameObject: {fileID: 1725239398577666}
   m_IsPrefabParent: 1
---- !u!1 &1455398847902292
+--- !u!1 &1725239398577666
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4144859988228970}
-  - component: {fileID: 82707774330988494}
-  - component: {fileID: 114192024426680822}
+  - component: {fileID: 4149507801732434}
+  - component: {fileID: 82961567316955490}
+  - component: {fileID: 114588855180206754}
   m_Layer: 0
   m_Name: Soundscard_nv2_29
   m_TagString: Untagged
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4144859988228970
+--- !u!4 &4149507801732434
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1455398847902292}
+  m_GameObject: {fileID: 1725239398577666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82707774330988494
+--- !u!82 &82961567316955490
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1455398847902292}
+  m_GameObject: {fileID: 1725239398577666}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -121,18 +121,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114192024426680822
+--- !u!114 &114588855180206754
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1455398847902292}
+  m_GameObject: {fileID: 1725239398577666}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fac24a5532e2c042b773d43ec5a8280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 82707774330988494}
+  audio: {fileID: 82961567316955490}
   isForceReplay: 0
   isLoop: 0
   volume: 1

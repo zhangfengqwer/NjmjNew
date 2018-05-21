@@ -19,18 +19,33 @@ namespace ETHotfix
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
+                HandCardsComponent cardsComponent = gamerComponent.LocalGamer.GetComponent<HandCardsComponent>();
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     handCardsComponent.PlayCard(mahjongInfo, message.index);
+//                    uiRoomComponent.CanTing(cardsComponent.GetAllCards());
                 }
                 else
                 {
-                    handCardsComponent.PlayOtherCard(mahjongInfo);
+                    handCardsComponent.PlayOtherCard(mahjongInfo,uiRoomComponent.currentItem);
                 }
+
+//                if (uiRoomComponent.Operate(cardsComponent.GetAllCards(), mahjongInfo))
+//                {
+//                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerCanOperation());
+//                }
+//                else
+//                {
+////                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerCanOperation()
+////                    {
+////                            OperationType = 4
+////                    });
+//                }
             }
             catch (Exception e)
             {
