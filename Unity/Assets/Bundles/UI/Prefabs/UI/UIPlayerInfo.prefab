@@ -2301,6 +2301,12 @@ MonoBehaviour:
     gameObject: {fileID: 1946662166589464}
   - key: UIDTxt
     gameObject: {fileID: 1326891341897786}
+  - key: BindPhoneBtn
+    gameObject: {fileID: 1885516652645372}
+  - key: RealNameBtn
+    gameObject: {fileID: 1833787684495676}
+  - key: ChangeNameBtn
+    gameObject: {fileID: 1022423840696040}
 --- !u!114 &114834839839322004
 MonoBehaviour:
   m_ObjectHideFlags: 1

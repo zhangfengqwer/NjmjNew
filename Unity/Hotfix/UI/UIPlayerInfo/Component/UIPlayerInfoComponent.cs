@@ -19,6 +19,9 @@ namespace ETHotfix
         private Button playerIcon;
         private Text nameTxt;
         private Text uIDTxt;
+        private Button changeNameBtn;
+        private Button realNameBtn;
+        private Button bindPhoneBtn;
 
         public void Awake()
         {
@@ -27,6 +30,14 @@ namespace ETHotfix
             nameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
             uIDTxt = rc.Get<GameObject>("UIDTxt").GetComponent<Text>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
+            changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
+            realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
+            bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
+
+            bindPhoneBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
+            });
 
             returnBtn.onClick.Add(() =>
             {
@@ -46,9 +57,10 @@ namespace ETHotfix
             });
         }
 
-        //public void UpdateIcon()
-        //{
-        //    playerIcon
-        //}
+        public void UpdateIcon()
+        {
+            playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
+                .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+        }
     }
 }
