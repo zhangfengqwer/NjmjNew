@@ -364,21 +364,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.Actor_RefreshRank)]
-	[ProtoContract]
-	public partial class Actor_RefreshRank: IActorMessage
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(93, IsRequired = true)]
-		public long ActorId { get; set; }
-
-		[ProtoMember(1)]
-		public List<PlayerInfo> playerInfo = new List<PlayerInfo>();
-
-	}
-
 	[Message(HotfixOpcode.G2C_BuyItem)]
 	[ProtoContract]
 	public partial class G2C_BuyItem: IResponse
@@ -1069,6 +1054,48 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public string TomorrowReward;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Rank)]
+	[ProtoContract]
+	public partial class G2C_Rank: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<Rank> rankList = new List<Rank>();
+
+	}
+
+	[Message(HotfixOpcode.C2G_Rank)]
+	[ProtoContract]
+	public partial class C2G_Rank: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Rank)]
+	[ProtoContract]
+	public partial class Rank: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string PlayerName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoldNum;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long GoldTicket;
 
 	}
 

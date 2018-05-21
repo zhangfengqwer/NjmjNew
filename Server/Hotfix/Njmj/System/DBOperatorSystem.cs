@@ -34,7 +34,7 @@ namespace ETHotfix
 
             if ((sec == 0))
             {
-                //DBHelper.RefreshRankFromDB();
+                DBHelper.RefreshRankFromDB();
             }
         }
     }

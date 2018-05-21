@@ -63,7 +63,15 @@ namespace ETHotfix
             stopwatch.Start();
             List<PlayerBaseInfo> playerBaseInfoList = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
             //发送给客户端刷新数据
-            //session.Send(new Actor_RefreshRank { PlayerInfoList = playerBaseInfoList });
+            List<Rank> rankList = new List<Rank>();
+            for(int i = 0;i< playerBaseInfoList.Count; ++i)
+            {
+                Rank rank = new Rank();
+                rank.PlayerName = playerBaseInfoList[i].Name;
+                rank.GoldNum = playerBaseInfoList[i].GoldNum;
+                rankList.Add(rank);
+            }
+            Game.Scene.GetComponent<RankDataComponent>().SetRankData(rankList);
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             double sencond = timespan.Seconds;
