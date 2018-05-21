@@ -26,11 +26,24 @@ namespace ETHotfix
                 }
 
                 playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
-                
-                playerBaseInfos[0].Name = message.Name;
-                await proxyComponent.Save(playerBaseInfos[0]);
 
-                reply(response);
+                if (playerBaseInfos[0].RestChangeNameCount > 0)
+                {
+                    playerBaseInfos[0].Name = message.Name;
+                    --playerBaseInfos[0].RestChangeNameCount;
+                    await proxyComponent.Save(playerBaseInfos[0]);
+
+                    reply(response);
+                }
+                else
+                {
+                    // 昵称重复
+                    response.Error = ErrorCode.TodayHasSign;
+                    response.Message = "您的修改昵称次数已用完";
+                    reply(response);
+
+                    return;
+                }
             }
             catch(Exception e)
             {
