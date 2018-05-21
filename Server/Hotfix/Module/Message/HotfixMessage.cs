@@ -302,6 +302,21 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string Icon;
 
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsRealName;
+
+		[ProtoMember(6, IsRequired = true)]
+		public bool IsBindPhone;
+
+		[ProtoMember(7, IsRequired = true)]
+		public bool IsChangeName;
+
+		[ProtoMember(8, IsRequired = true)]
+		public int TotalGameCount;
+
+		[ProtoMember(9, IsRequired = true)]
+		public int WinGameCount;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]

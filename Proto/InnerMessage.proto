@@ -97,6 +97,7 @@
 	{
 		required string CollectionName = 1;
 		required string Json = 2;
+		required bool RankType = 3;
 	}
 
 	message DBQueryJsonResponse // IResponse

@@ -50,6 +50,11 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
             });
 
+            changeNameBtn.onClick.Add(() =>
+            {
+                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
+            });
+
             PlayerInfoComponent pc = Game.Scene.GetComponent<PlayerInfoComponent>();
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;

@@ -92,5 +92,11 @@ namespace ETHotfix
             itemInfo = info;
             await proxyComponent.Save(itemInfo);
         }
+
+        public static async void RefreshRecord()
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            
+        }
     }
 }

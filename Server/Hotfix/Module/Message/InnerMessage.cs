@@ -284,6 +284,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public string Json;
 
+		[ProtoMember(3, IsRequired = true)]
+		public bool RankType;
+
 	}
 
 	[Message(InnerOpcode.DBQueryJsonResponse)]
