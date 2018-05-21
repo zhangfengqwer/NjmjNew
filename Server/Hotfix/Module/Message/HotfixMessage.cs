@@ -1147,4 +1147,67 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_BindPhone)]
+	[ProtoContract]
+	public partial class C2G_BindPhone: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Phone;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Code;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BindPhone)]
+	[ProtoContract]
+	public partial class G2C_BindPhone: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_SendSms)]
+	[ProtoContract]
+	public partial class C2G_SendSms: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Phone;
+
+	}
+
+	[Message(HotfixOpcode.G2C_SendSms)]
+	[ProtoContract]
+	public partial class G2C_SendSms: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 }
