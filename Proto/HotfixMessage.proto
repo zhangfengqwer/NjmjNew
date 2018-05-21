@@ -29,6 +29,15 @@ message R2C_ThirdLogin // IResponse
 	required int64 	Key	    = 2;
 }
 
+message C2R_ChangeAccount // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message R2C_ChangeAccount // IResponse
+{
+}
+
 message Actor_ForceOffline // IActorMessage
 {
 }

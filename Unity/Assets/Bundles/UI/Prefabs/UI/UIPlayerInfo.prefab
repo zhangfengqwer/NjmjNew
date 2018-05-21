@@ -2311,6 +2311,8 @@ MonoBehaviour:
     gameObject: {fileID: 1844479037538230}
   - key: NoBindPhoneTxt
     gameObject: {fileID: 1109939835978442}
+  - key: ChangeAccountBtn
+    gameObject: {fileID: 1682871454331416}
 --- !u!114 &114834839839322004
 MonoBehaviour:
   m_ObjectHideFlags: 1

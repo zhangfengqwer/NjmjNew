@@ -1,4 +1,6 @@
 ﻿using ETModel;
+using System;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,29 +17,34 @@ namespace ETHotfix
 
     public class UIPlayerInfoComponent : Component
     {
-        private Button returnBtn;
-        private Button playerIcon;
         private Text nameTxt;
         private Text uIDTxt;
+        private Text noBindPhoneTxt;
+        private Text realNameTxt;
+
+        private Button returnBtn;
+        private Button playerIcon;
         private Button changeNameBtn;
         private Button realNameBtn;
         private Button bindPhoneBtn;
-        private Text noBindPhoneTxt;
-        private Text realNameTxt;
-        //private PlayerInfo 
+        private Button ChangeAccountBtn;
 
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
+            
             nameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
             uIDTxt = rc.Get<GameObject>("UIDTxt").GetComponent<Text>();
+            realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
+            noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
+
+            returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
             realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
-            realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
-            noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
+            ChangeAccountBtn = rc.Get<GameObject>("ChangeAccountBtn").GetComponent<Button>();
+
 
             bindPhoneBtn.onClick.Add(() =>
             {
@@ -58,6 +65,11 @@ namespace ETHotfix
             changeNameBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
+            });
+
+            ChangeAccountBtn.onClick.Add(() =>
+            {
+                onClickChangeAccount();
             });
 
             PlayerInfoComponent pc = Game.Scene.GetComponent<PlayerInfoComponent>();
@@ -97,6 +109,28 @@ namespace ETHotfix
                 realNameTxt.text = "已实名";
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone)
                 noBindPhoneTxt.text = "已绑定";
+        }
+
+        public async void onClickChangeAccount()
+        {
+            SessionWrap sessionWrap = null;
+            try
+            {
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+
+                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                sessionWrap = new SessionWrap(session);
+                R2C_ChangeAccount r2CData = (R2C_ChangeAccount)await sessionWrap.Call(new C2R_ChangeAccount() { Uid = PlayerInfoComponent.Instance.uid });
+                sessionWrap.Dispose();
+
+                Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+            }
+            catch (Exception e)
+            {
+                sessionWrap?.Dispose();
+                Log.Error(e);
+            }
         }
     }
 }
