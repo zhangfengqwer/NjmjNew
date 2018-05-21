@@ -1,6 +1,8 @@
 ﻿
 using ETModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ETHotfix
 {
@@ -52,6 +54,31 @@ namespace ETHotfix
                     }
                 }
             }
+        }
+
+        public static async void RefreshRankFromDB()
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            List<PlayerBaseInfo> playerBaseInfoList = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
+            //发送给客户端刷新数据
+            List<Rank> rankList = new List<Rank>();
+            for(int i = 0;i< playerBaseInfoList.Count; ++i)
+            {
+                Rank rank = new Rank();
+                rank.PlayerName = playerBaseInfoList[i].Name;
+                rank.GoldNum = playerBaseInfoList[i].GoldNum;
+                rankList.Add(rank);
+            }
+            Game.Scene.GetComponent<RankDataComponent>().SetRankData(rankList);
+            stopwatch.Stop();
+            TimeSpan timespan = stopwatch.Elapsed;
+            double sencond = timespan.Seconds;
+            double milliseconds = timespan.TotalMilliseconds;
+            //Log.Debug(sencond.ToString());
+            //Log.Debug(milliseconds.ToString());
+            //Log.Debug(JsonHelper.ToJson(playerBaseInfoList));
         }
 
         public static async void AddItemToDB(UserBag info)

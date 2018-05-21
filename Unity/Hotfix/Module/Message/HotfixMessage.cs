@@ -1003,6 +1003,48 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Rank)]
+	[ProtoContract]
+	public partial class Rank: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string PlayerName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoldNum;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long GoldTicket;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Rank)]
+	[ProtoContract]
+	public partial class C2G_Rank: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.G2C_Rank)]
+	[ProtoContract]
+	public partial class G2C_Rank: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, TypeName = "ETHotfix.Rank")]
+		public List<Rank> RankList = new List<Rank>();
+
+	}
+
 	[Message(HotfixOpcode.C2G_DailySign)]
 	[ProtoContract]
 	public partial class C2G_DailySign: IRequest

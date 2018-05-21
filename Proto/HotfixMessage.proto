@@ -348,9 +348,27 @@ message C2G_UpdateEmail //IRequest
 	required bool IsRead = 2;
 }
 
+
 message G2C_UpdateEmail //IResponse
 {
 	required long EId = 1; 
+}
+
+message Rank // IMessage
+{
+	required string PlayerName = 1;
+	required long GoldNum = 2;
+	required long GoldTicket = 3;
+}
+
+message C2G_Rank //IRequest
+{
+
+}
+
+message G2C_Rank //IResponse
+{
+	repeated Rank RankList = 1;
 }
 
 message C2G_DailySign // IRequest

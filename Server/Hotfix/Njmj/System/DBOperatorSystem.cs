@@ -13,10 +13,6 @@ namespace ETHotfix
 
     public static class DBOepration
     {
-        public static void Refresh()
-        {
-            DBHelper.RefreshDB();
-        }
 
         public static void JudgeTime(this DBOperatorComponet componet)
         {
@@ -32,13 +28,13 @@ namespace ETHotfix
             {
                 Log.Info("刷新数据库");
                 // 刷新任务
-                Refresh();
+                DBHelper.RefreshDB();
                 // 刷新签到
             }
 
             if ((sec == 0))
             {
-
+                DBHelper.RefreshRankFromDB();
             }
         }
     }

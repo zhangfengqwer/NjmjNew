@@ -117,17 +117,25 @@ namespace ETHotfix
 
             #endregion
 
-            #region set playerInfo 
+            #region set Info 
 
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
             SetPlayerInfo();
-
+            GetRankInfo();
             #endregion
 
             CommonUtil.ShowUI(UIType.UIDaily);
         }
 
-        private async void RequestRealName()
+		public async void GetRankInfo()
+        {
+            G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
+                .Session.Call(new C2G_Rank { });
+            //设置排行榜信息
+            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
+        }
+
+		 private async void RequestRealName()
         {
             G2C_RealName g2cRealName = (G2C_RealName)await SessionWrapComponent.Instance.Session.Call(new C2G_RealName { Uid = PlayerInfoComponent.Instance.uid,Name = "黄品", IDNumber = "320724199310256015" });
 
@@ -141,7 +149,6 @@ namespace ETHotfix
                 ToastScript.createToast("实名认证成功");
             }
         }
-
         private async void RequestTaskInfo()
         {
             G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
