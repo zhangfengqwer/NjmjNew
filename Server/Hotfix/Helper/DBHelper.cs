@@ -56,14 +56,20 @@ namespace ETHotfix
             }
         }
 
+        static List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
+        static List<Rank> rankList = new List<Rank>();
         public static async void RefreshRankFromDB()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            if (playerBaseInfoList.Count > 0)
+                playerBaseInfoList.Clear();
+            if (rankList.Count > 0)
+                rankList.Clear();
             System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            List<PlayerBaseInfo> playerBaseInfoList = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
+            playerBaseInfoList = await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}");
             //发送给客户端刷新数据
-            List<Rank> rankList = new List<Rank>();
+            
             for(int i = 0;i< playerBaseInfoList.Count; ++i)
             {
                 Rank rank = new Rank();

@@ -17,17 +17,15 @@ namespace ETHotfix
     {
         private Button returnBtn;
         private Button playerIcon;
-        private Text accountTxt;
         private Text nameTxt;
-        private Text uid;
+        private Text uIDTxt;
 
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
-            accountTxt = rc.Get<GameObject>("AccountTxt").GetComponent<Text>();
             nameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
-            uid = rc.Get<GameObject>("UID").GetComponent<Text>();
+            uIDTxt = rc.Get<GameObject>("UIDTxt").GetComponent<Text>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
 
             returnBtn.onClick.Add(() =>
@@ -39,14 +37,18 @@ namespace ETHotfix
             PlayerInfoComponent pc = Game.Scene.GetComponent<PlayerInfoComponent>();
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;
-            accountTxt.text = playerInfo.Name;
-            uid.text = pc.uid.ToString();
-
+            uIDTxt.text = pc.uid.ToString();
+            playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
+                .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             playerIcon.onClick.Add(() =>
             {
                 CommonUtil.ShowUI(UIType.UIIcon);
             });
-
         }
+
+        //public void UpdateIcon()
+        //{
+        //    playerIcon
+        //}
     }
 }
