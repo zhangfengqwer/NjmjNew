@@ -34,5 +34,7 @@ namespace ETHotfix
  		public const string UIDaily = "UIDaily";
         public const string UIGameResult = "UIGameResult";
         public const string UIBindPhone = "UIBindPhone";
+        public const string UIRealName = "UIRealName";
+        
     }
 }
