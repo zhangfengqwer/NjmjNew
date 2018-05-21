@@ -154,6 +154,8 @@
     <Compile Include="UI\UIJiaZhangJianHu\Factory\UIJiaZhangJianHu.cs" />
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
+    <Compile Include="UI\UIBindPhone\Component\UIBindPhoneComponent.cs" />
+    <Compile Include="UI\UIBindPhone\Factory\UIBindPhoneFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
     <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconComponent.cs" />
     <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconItemComponent.cs" />
