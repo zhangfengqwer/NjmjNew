@@ -9,6 +9,7 @@ namespace ETModel
         public string Icon { get; set; }
         public bool IsRealName = false;
         public bool IsBindPhone = false;
+        public int RestChangeNameCount = 1;
         public int TotalGameCount { get; set; }
         public int WinGameCount { get; set; }
     }

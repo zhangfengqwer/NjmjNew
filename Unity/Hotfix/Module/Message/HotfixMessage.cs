@@ -309,7 +309,7 @@ namespace ETHotfix
 		public bool IsBindPhone;
 
 		[ProtoMember(7, IsRequired = true)]
-		public bool IsChangeName;
+		public int RestChangeNameCount;
 
 		[ProtoMember(8, IsRequired = true)]
 		public int TotalGameCount;

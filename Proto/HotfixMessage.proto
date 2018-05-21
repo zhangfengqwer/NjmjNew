@@ -101,7 +101,7 @@ message PlayerInfo // IMessage
 	required string Icon = 4;//用户头像
 	required bool IsRealName = 5;//是否已经实名认证
 	required bool IsBindPhone = 6;//是否绑定手机号
-	required bool IsChangeName = 7;//是否已经改过一次名字
+	required int RestChangeNameCount = 7;//是否已经改过一次名字
 	required int TotalGameCount = 8;//总局数
 	required int WinGameCount = 9;//胜局数
 }
