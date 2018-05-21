@@ -103,7 +103,9 @@ namespace ETHotfix
 
                 // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
 
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
+                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
+
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
             });
 
             enterRoomBtn.onClick.Add(OnEnterRoom);
