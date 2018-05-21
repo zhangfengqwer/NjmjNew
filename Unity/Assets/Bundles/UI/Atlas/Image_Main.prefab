@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1687606446606536}
+  m_IsPrefabParent: 1
+--- !u!1 &1687606446606536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4474487799772922}
+  - component: {fileID: 114011926685885714}
+  m_Layer: 0
+  m_Name: Image_Main
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4474487799772922
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687606446606536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.92733234, y: -0.77636975, z: 99.90276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114011926685885714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687606446606536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: beijing
+    gameObject: {fileID: 21300000, guid: 59a7aeef7e8555c40a355cab6d5323fb, type: 3}
+  - key: btn_bb
+    gameObject: {fileID: 21300000, guid: 9c10be30f3f689f47acec83c792f9c5b, type: 3}
+  - key: btn_beijing
+    gameObject: {fileID: 21300000, guid: fcd0b027264a42c4f92fe10f7dc2852e, type: 3}
+  - key: btn_bsc
+    gameObject: {fileID: 21300000, guid: f0ee55077c5fee64194743d3d662a2a3, type: 3}
+  - key: btn_cfb1
+    gameObject: {fileID: 21300000, guid: ee21967479c8d6849b94ce37c83dfc81, type: 3}
+  - key: btn_cfb2
+    gameObject: {fileID: 21300000, guid: 3e8df680a82845744b409192b34a8d13, type: 3}
+  - key: btn_cj
+    gameObject: {fileID: 21300000, guid: 58849eedac5722e46baa957d92193c0c, type: 3}
+  - key: btn_hd
+    gameObject: {fileID: 21300000, guid: 5256922028d734d47b5a5e4e6403d177, type: 3}
+  - key: btn_hfs
+    gameObject: {fileID: 21300000, guid: 3d62f3591ae95884f8c8ddc0ae494049, type: 3}
+  - key: btn_hong
+    gameObject: {fileID: 21300000, guid: 158aa104dbe0d8e48bbf9228ab65853e, type: 3}
+  - key: btn_jbs
+    gameObject: {fileID: 21300000, guid: 218f71761cee77a40a231f0897ad3d74, type: 3}
+  - key: btn_jyc
+    gameObject: {fileID: 21300000, guid: 59540ce896e5b304db083173e4b83ca3, type: 3}
+  - key: btn_mrbz
+    gameObject: {fileID: 21300000, guid: 5b072a8bc3e56704ab48a75d2115c8b3, type: 3}
+  - key: btn_rw
+    gameObject: {fileID: 21300000, guid: 74f06ff6c65c546438b45b00202ba79c, type: 3}
+  - key: btn_sc
+    gameObject: {fileID: 21300000, guid: c0dbdeab64a0ffc49ad4f58be8e2c41b, type: 3}
+  - key: btn_wh
+    gameObject: {fileID: 21300000, guid: ebc61b1de4ff53b4c98839c9f85c3c97, type: 3}
+  - key: btn_xg
+    gameObject: {fileID: 21300000, guid: e2f9a6657aaa8d24a9cf075aad8bf8b0, type: 3}
+  - key: btn_xsc
+    gameObject: {fileID: 21300000, guid: 1f9eaeaa1c810624894793bb26f45ff2, type: 3}
+  - key: btn_xxc
+    gameObject: {fileID: 21300000, guid: 7c8043a291c13c145a392dac177df567, type: 3}
+  - key: btn_yj
+    gameObject: {fileID: 21300000, guid: 9704a1cba1ff26f4aa87761f89bf6776, type: 3}
+  - key: btn_you
+    gameObject: {fileID: 21300000, guid: 8be27ec9addb11f40ae7df95439f8950, type: 3}
+  - key: btn_zjb1
+    gameObject: {fileID: 21300000, guid: 44807ab488b6d1a459e2ca25858a66a1, type: 3}
+  - key: btn_zjb2
+    gameObject: {fileID: 21300000, guid: 5947b87f9e831d244a7a3c248ca5fad7, type: 3}
+  - key: btn_zp
+    gameObject: {fileID: 21300000, guid: 1c8d3ad4a9faf184bbbec9361ad66b65, type: 3}
+  - key: btn_zuo
+    gameObject: {fileID: 21300000, guid: 2ad5d3278c7fb25418f8e4cb64e2f071, type: 3}
+  - key: jgf
+    gameObject: {fileID: 21300000, guid: 5ad12d1f72ef71940a5287c5489d8374, type: 3}
+  - key: jgf2
+    gameObject: {fileID: 21300000, guid: 9ebc9d412f298034cad3cac24f9842b5, type: 3}
+  - key: laba
+    gameObject: {fileID: 21300000, guid: 061832451001eb848a3099c981822c63, type: 3}
+  - key: laba_bj
+    gameObject: {fileID: 21300000, guid: 72749b074f0343a4b83ac050efa2cfcc, type: 3}
+  - key: line
+    gameObject: {fileID: 21300000, guid: 1c75ec463ac0fb94684fdb244800fdd6, type: 3}
+  - key: one
+    gameObject: {fileID: 21300000, guid: 8031efd114bc6044ebc39825ec2ec73f, type: 3}
+  - key: three
+    gameObject: {fileID: 21300000, guid: ecb1e5c498333304294a011c2a8d213b, type: 3}
+  - key: touxiangkuang
+    gameObject: {fileID: 21300000, guid: 6b2c1a589211a0f458e79e27e58b81f0, type: 3}
+  - key: touxiangkuang2
+    gameObject: {fileID: 21300000, guid: cadc36000128a8e43b8cfe75cd967e9f, type: 3}
+  - key: two
+    gameObject: {fileID: 21300000, guid: 34709b4f3c8de2a4f9d111f7bc22a6d8, type: 3}
+  - key: yingxiongbang
+    gameObject: {fileID: 21300000, guid: 5eb22e826ae726e44a5098fc607e6e35, type: 3}

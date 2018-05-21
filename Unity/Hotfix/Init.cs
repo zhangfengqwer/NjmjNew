@@ -58,24 +58,29 @@ namespace ETHotfix
                 // 测试
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_7));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_8));
-                    //list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_6));
+                    list.Add(new MahjongInfo(6));
+                    list.Add(new MahjongInfo(7));
+                    list.Add(new MahjongInfo(8));
+                    list.Add(new MahjongInfo(11));
+                    list.Add(new MahjongInfo(12));
+                    list.Add(new MahjongInfo(14));
+                    list.Add(new MahjongInfo(16));
+                    list.Add(new MahjongInfo(17));
+                    list.Add(new MahjongInfo(27));
+                    list.Add(new MahjongInfo(29));
+                    list.Add(new MahjongInfo(31));
+                    list.Add(new MahjongInfo(33));
+                    list.Add(new MahjongInfo(35));
+                    list.Add(new MahjongInfo(0));
 
                     // 判断是否胡牌
-                    List<MahjongInfo> listTemp = Logic_NJMJ.getInstance().checkTingPaiList(list);
-                    if (listTemp.Count == 0)
+                    if (Logic_NJMJ.getInstance().isHuPai(list))
                     {
-                        Log.Debug("没有听牌");
+                        Log.Debug("胡牌");
                     }
                     else
                     {
-                        for (int i = 0; i < listTemp.Count; i++)
-                        {
-                            Log.Debug(listTemp[i].m_weight+ "、");
-                        }
+                        Log.Debug("没有胡牌");
                     }
 
                     //// 判断是否胡牌

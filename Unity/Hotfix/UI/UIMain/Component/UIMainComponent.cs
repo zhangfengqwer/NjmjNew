@@ -1,4 +1,5 @@
-﻿using ETModel;
+﻿using DG.Tweening;
+using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,96 +20,134 @@ namespace ETHotfix
         private Text goldNumTxt;
         private Text wingNumTxt;
 
-        private Button rankBtn;
-        private Button exchangeBtn;
-        private Button activeBtn;
-        private Button shopBtn;
-        private Button taskBtn;
-        private Button awardBtn;
-        private Button enterRoomBtn;
-
         private Image playerIcon;
+
+        private GameObject BtnList_Down;
+        private GameObject BtnList_Up;
+        private GameObject Rank;
+        private GameObject ChoiceRoomType;
+        private GameObject Relax;
 
         public void Awake()
         {
-            #region get
-
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             playerNameTxt = rc.Get<GameObject>("PlayerNameTxt").GetComponent<Text>();
             goldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
             wingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Image>();
 
-            rankBtn = rc.Get<GameObject>("RankBtn").GetComponent<Button>();
-            exchangeBtn = rc.Get<GameObject>("ExchangeBtn").GetComponent<Button>();
-            activeBtn = rc.Get<GameObject>("ActiveBtn").GetComponent<Button>();
-            shopBtn = rc.Get<GameObject>("ShopBtn").GetComponent<Button>();
-            taskBtn = rc.Get<GameObject>("TaskBtn").GetComponent<Button>();
-            awardBtn = rc.Get<GameObject>("AwardBtn").GetComponent<Button>();
-            enterRoomBtn = rc.Get<GameObject>("EnterRoomBtn").GetComponent<Button>();
+            BtnList_Down = rc.Get<GameObject>("BtnList_Down");
+            BtnList_Up = rc.Get<GameObject>("BtnList_Up");
+            Rank = rc.Get<GameObject>("Rank");
+            ChoiceRoomType = rc.Get<GameObject>("ChoiceRoomType");
+            Relax = rc.Get<GameObject>("Relax");
 
-            #endregion
-
-            #region buttonClick
-
-            rankBtn.onClick.Add(() =>
+            // 转盘
+            BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
             {
-                //打开排行榜
-                Log.Debug("打开排行榜");
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBag);
+                // 向左
+                if (BtnList_Down.transform.localPosition.x > 500)
+                {
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false);
+                    BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main","btn_you");
+                }
+                // 向右
+                else
+                {
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false);
+                    BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "btn_zuo");
+                }
             });
 
-            exchangeBtn.onClick.Add(() =>
+            // 商城
+            BtnList_Down.transform.Find("Grid/Btn_Shop").GetComponent<Button>().onClick.Add(() =>
             {
-                //打开兑换界面
-                Log.Debug("打开兑换界面");
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIEmail);
-            });
-
-            activeBtn.onClick.Add(() =>
-            {
-                //打开活动界面
-                Log.Debug("打开活动界面");
-
-                UI ui = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult);
-                GameResultNeedData data = new GameResultNeedData();
-                data.isZiMo = true;
-                ui.GetComponent<UIGameResultComponent>().setData(data);
-            });
-
-            shopBtn.onClick.Add(() =>
-            {
-                //打开商城
-                Log.Debug("打开商城界面");
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
             });
 
-            taskBtn.onClick.Add(() =>
+            // 活动
+            BtnList_Down.transform.Find("Grid/Btn_Activity").GetComponent<Button>().onClick.Add(() =>
             {
-                //打开任务面板
-                Log.Debug("打开任务界面");
-                RequestTaskInfo();
+                ToastScript.createToast("暂未开放：活动");
             });
 
-            awardBtn.onClick.Add(() =>
+            // 任务
+            BtnList_Down.transform.Find("Grid/Btn_Task").GetComponent<Button>().onClick.Add(() =>
             {
-                //打开领奖界面
-                Log.Debug("打开领奖界面");
-
-                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
-
-                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
-
-                // RequestRealName();
-
-                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
-
-                // Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
-
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChangeName);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
             });
 
-            enterRoomBtn.onClick.Add(OnEnterRoom);
+            // 成就
+            BtnList_Down.transform.Find("Grid/Btn_ChengJiu").GetComponent<Button>().onClick.Add(() =>
+            {
+                ToastScript.createToast("暂未开放：成就");
+            });
+
+            // 背包
+            BtnList_Down.transform.Find("Grid/Btn_Bag").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBag);
+            });
+
+            // 转盘
+            BtnList_Down.transform.Find("Grid/Btn_ZhuanPan").GetComponent<Button>().onClick.Add(() =>
+            {
+                ToastScript.createToast("暂未开放：转盘");
+            });
+
+            // 每日必做
+            BtnList_Up.transform.Find("Btn_Daily").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDaily);
+            });
+
+            // 邮箱
+            BtnList_Up.transform.Find("Btn_Mail").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIEmail);
+            });
+
+            // 帮助
+            BtnList_Up.transform.Find("Btn_Help").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIHelp);
+            });
+
+            // 休闲场
+            ChoiceRoomType.transform.Find("Btn_relax").GetComponent<Button>().onClick.Add(() =>
+            {
+                ChoiceRoomType.transform.Find("Btn_relax").transform.localScale = Vector3.zero;
+                ChoiceRoomType.transform.Find("Btn_pvp").transform.localScale = Vector3.zero;
+
+                ChoiceRoomType.transform.Find("Relax").transform.localScale = new Vector3(1,1,1);
+            });
+
+            // 比赛场
+            ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
+            {
+                ToastScript.createToast("暂未开放：比赛场");
+            });
+
+            // 休闲场返回按钮
+            ChoiceRoomType.transform.Find("Relax/Btn_back").GetComponent<Button>().onClick.Add(() =>
+            {
+                ChoiceRoomType.transform.Find("Btn_relax").transform.localScale = new Vector3(1, 1, 1);
+                ChoiceRoomType.transform.Find("Btn_pvp").transform.localScale = new Vector3(1, 1, 1);
+
+                ChoiceRoomType.transform.Find("Relax").transform.localScale = Vector3.zero;
+            });
+
+            // 休闲场-新手场
+            ChoiceRoomType.transform.Find("Relax/Btn_xinshou").GetComponent<Button>().onClick.Add(() =>
+            {
+                OnEnterRoom();
+            });
+
+            // 休闲场-精英场
+            ChoiceRoomType.transform.Find("Relax/Btn_jingying").GetComponent<Button>().onClick.Add(() =>
+            {
+                OnEnterRoom();
+            });
 
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
@@ -119,14 +158,9 @@ namespace ETHotfix
                 SetUIHideOrOpen(false);
             });
 
-            #endregion
-
-            #region set Info 
-
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
             SetPlayerInfo();
             GetRankInfo();
-            #endregion
 
             CommonUtil.ShowUI(UIType.UIDaily);
         }
