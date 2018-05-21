@@ -39,6 +39,11 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
             });
 
+            realNameBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
+            });
+
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetUIHideOrOpen(true);

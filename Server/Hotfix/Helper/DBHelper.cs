@@ -56,14 +56,11 @@ namespace ETHotfix
             }
         }
 
-        static List<PlayerBaseInfo> playerBaseInfoList;
+        static List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
         static List<Rank> rankList = new List<Rank>();
         public static async void RefreshRankFromDB()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            playerBaseInfoList = new List<PlayerBaseInfo>();
-            if (playerBaseInfoList.Count > 0)
-                playerBaseInfoList.Clear();
             if (rankList.Count > 0)
                 rankList.Clear();
             System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
@@ -79,12 +76,12 @@ namespace ETHotfix
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetRankData(rankList);
+            if (playerBaseInfoList.Count > 0)
+                playerBaseInfoList.Clear();
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             double sencond = timespan.Seconds;
             double milliseconds = timespan.TotalMilliseconds;
-            //Log.Debug(sencond.ToString());
-            //Log.Debug(milliseconds.ToString());
             Log.Debug(JsonHelper.ToJson(playerBaseInfoList));
         }
 
