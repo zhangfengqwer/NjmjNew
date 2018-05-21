@@ -14,7 +14,7 @@ namespace ETHotfix
             try
             {
                 // 当前连续签到天数
-                int curLianXuSignDays = 0;
+                int curLianXuSignDays = 1;
                 bool TodayIsSign = false;
 
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
