@@ -17,8 +17,7 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{_id:{message.Uid}}}");
-
-                Log.Debug("----uid = " + message.Uid.ToString() + "     " + accountInfos.Count.ToString());
+                
                 if (!string.IsNullOrEmpty(accountInfos[0].Phone))
                 {
                     response.Message = "您已绑定手机号，请勿重复绑定";
