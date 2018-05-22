@@ -92,5 +92,29 @@ namespace ETHotfix
                 }
             }
         }
+
+        static public int GetDataCount(int id)
+        {
+            if (id == 1)
+            {
+                return (int)PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum;
+            }
+            else if (id == 2)
+            {
+                return (int)PlayerInfoComponent.Instance.GetPlayerInfo().WingNum;
+            }
+            else
+            {
+                for (int i = 0; i < PlayerInfoComponent.Instance.GetBagInfoList().Count; i++)
+                {
+                    if (PlayerInfoComponent.Instance.GetBagInfoList()[i].ItemId == id)
+                    {
+                        return PlayerInfoComponent.Instance.GetBagInfoList()[i].Count;
+                    }
+                }
+            }
+
+            return 0;
+        }
     }
 }
