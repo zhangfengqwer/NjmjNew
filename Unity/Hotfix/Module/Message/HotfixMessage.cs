@@ -1300,4 +1300,76 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_UseHuaFei)]
+	[ProtoContract]
+	public partial class C2G_UseHuaFei: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int HuaFei;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Phone;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseHuaFei)]
+	[ProtoContract]
+	public partial class G2C_UseHuaFei: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_UseHuaFeiState)]
+	[ProtoContract]
+	public partial class C2G_UseHuaFeiState: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseHuaFeiState)]
+	[ProtoContract]
+	public partial class G2C_UseHuaFeiState: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int HuaFei_1_RestCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int HuaFei_5_RestCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int HuaFei_10_RestCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int HuaFei_20_RestCount;
+
+	}
+
 }
