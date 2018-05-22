@@ -165,6 +165,8 @@
     <Compile Include="UI\UIBag\Component\UIBagComponent.cs" />
     <Compile Include="UI\UIBag\Component\UIBagItemComponent.cs" />
     <Compile Include="UI\UIBag\Factory\UIBagFactory.cs" />
+    <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
+    <Compile Include="UI\UIUseLaBa\Factory\UIUseLaBaFactory.cs" />
     <Compile Include="UI\UIChangeName\Component\UIChangeNameComponent.cs" />
     <Compile Include="UI\UIChangeName\Factory\UIChangeNameFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIRankItemComponent.cs" />

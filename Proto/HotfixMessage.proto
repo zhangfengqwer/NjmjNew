@@ -554,4 +554,14 @@ message G2C_SetPlayerSound // IResponse
 {
 }
 
+message C2G_UseLaBa // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Content	 = 2;
+}
+
+message G2C_UseLaBa // IResponse
+{
+}
+
 #endregion
