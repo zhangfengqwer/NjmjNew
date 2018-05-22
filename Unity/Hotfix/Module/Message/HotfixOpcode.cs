@@ -94,5 +94,6 @@ namespace ETModel
 		 public const ushort G2C_SetPlayerSound = 10090;
 		 public const ushort C2G_UseLaBa = 10091;
 		 public const ushort G2C_UseLaBa = 10092;
+		 public const ushort Actor_LaBa = 10093;
 	}
 }

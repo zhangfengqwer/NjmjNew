@@ -1606,4 +1606,19 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_LaBa)]
+	[ProtoContract]
+	public partial class Actor_LaBa: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string LaBaContent;
+
+	}
+
 }

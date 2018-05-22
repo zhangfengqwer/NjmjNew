@@ -33,7 +33,9 @@ namespace ETHotfix
 
                     // 全服广播
                     {
-
+                        Actor_LaBa actor_LaBa = new Actor_LaBa();
+                        actor_LaBa.LaBaContent = message.Content;
+                        Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
                     }
                 }
             }

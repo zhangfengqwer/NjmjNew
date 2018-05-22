@@ -385,6 +385,16 @@ namespace ETHotfix
             HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
         }
 
+        public void addLaBaContent(string content)
+        {
+            labaList.Add(content);
+
+            if (LaBa.transform.Find("Text_content").GetComponent<Text>().text.CompareTo("") == 0)
+            {
+                LaBa.transform.Find("Text_content").GetComponent<Text>().text = content;
+            }
+        }
+
         public async void checkLaBa()
         {
             while (true)

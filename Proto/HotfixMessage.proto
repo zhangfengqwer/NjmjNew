@@ -564,4 +564,9 @@ message G2C_UseLaBa // IResponse
 {
 }
 
+message Actor_LaBa // IActorMessage
+{
+    required string LaBaContent = 1;
+}
+
 #endregion
