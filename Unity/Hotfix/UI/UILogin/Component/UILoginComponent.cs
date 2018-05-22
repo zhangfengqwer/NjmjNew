@@ -253,7 +253,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
-
+                PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
@@ -300,6 +300,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
+                PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }

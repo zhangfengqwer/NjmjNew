@@ -78,7 +78,7 @@ namespace ETHotfix
             uIDTxt.text = pc.uid.ToString();
             if (playerInfo.IsRealName)
                 realNameTxt.text = "已实名";
-            if (string.IsNullOrEmpty(playerInfo.Phone))
+            if (!string.IsNullOrEmpty(playerInfo.Phone))
                 noBindPhoneTxt.text = "已绑定";
             playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
                 .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);

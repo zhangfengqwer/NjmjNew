@@ -85,6 +85,7 @@ message G2C_LoginGate // IResponse
 	repeated ShopInfo ShopInfoList = 3;//商店商品
 	repeated TaskInfo TaskInfoList = 4;//任务列表
 	repeated Bag BagList = 5;//背包列表
+	repeated Chat ChatList = 6;//
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -128,6 +129,12 @@ message ShopInfo //IMessage
 	required int CurrencyType = 6;//
 	required string Items = 7;
 	required string Icon = 8;
+}
+
+message Chat //IMessage
+{
+	required int Id = 1;
+	required string Content = 2;
 }
 
 message GetItemInfo //IMessage

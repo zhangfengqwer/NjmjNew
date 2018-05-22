@@ -35,6 +35,13 @@ namespace ETHotfix
         private Button gangBtn;
         private Button pengBtn;
 
+        private Button ChatBtn;//聊天按钮
+        private GameObject Chat;//聊天框
+        private Button ExpressionBtn;
+        private Button ShortBtn;
+        private GameObject ExpressionGrid;
+        private GameObject ShortGrid;
+
         public GameObject currentItem = new GameObject();
         private Text restText;
         private GameObject players;
@@ -58,6 +65,13 @@ namespace ETHotfix
             HeadPanel[2] = head.Get<GameObject>("Top");
             HeadPanel[3] = head.Get<GameObject>("Left");
 
+            ChatBtn = rc.Get<GameObject>("ChatBtn").GetComponent<Button>();
+            Chat = rc.Get<GameObject>("Chat");
+            ExpressionBtn = Chat.transform.Find("ExpressionBtn").GetComponent<Button>();
+            ShortBtn = Chat.transform.Find("ShortBtn").GetComponent<Button>();
+            ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
+            ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
+
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
 
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -78,6 +92,16 @@ namespace ETHotfix
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
+            ChatBtn.onClick.Add(() =>
+            {
+                Chat.gameObject.SetActive(true);
+                //选中表情包界面
+            });
+
+            ExpressionBtn.onClick.Add(() =>
+            {
+
+            });
         }
 
         private async void OnReady()

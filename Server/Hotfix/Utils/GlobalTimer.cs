@@ -1,14 +1,9 @@
-﻿using ETModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿
+using ETModel;
 
-namespace App
+namespace ETHotfix
 {
-    class GlobalTimer
+    public class GlobalTimer
     {
         static GlobalTimer s_instance = null;
 
@@ -41,17 +36,20 @@ namespace App
             // 每日零点
             if ((hour == 0) && (min == 0) && (sec == 0))
             {
+                Log.Info("刷新数据库");
                 // 刷新任务
-
+                DBHelper.RefreshDB();
                 // 刷新签到
             }
 
             #region TaskTest
-            if((hour == 14) && (min == 59) && (sec == 0))
+            if ((sec == 0))
             {
-                Game.Scene.AddComponent<DBOperatorComponet>();
+                DBHelper.RefreshRankFromDB();
+                //Game.Scene.AddComponent<DBOperatorComponet>();
             }
             #endregion
         }
     }
 }
+
