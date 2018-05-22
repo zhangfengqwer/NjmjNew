@@ -1019,8 +1019,23 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
-		[ProtoMember(2)]
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsZiMo;
+
+		[ProtoMember(3)]
 		public List<GamerData> GamerDatas = new List<GamerData>();
+
+		[ProtoMember(4, IsRequired = true)]
+		public int YingHuaCount;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int RuanHuaCount;
+
+		[ProtoMember(6)]
+		public List<int> HuPaiTypes = new List<int>();
+
+		[ProtoMember(7, IsRequired = false)]
+		public long FangPaoUid;
 
 	}
 

@@ -39,5 +39,15 @@ namespace ETHotfix
                 card.weight = (byte) card.m_weight;
             }
         }
+        /// <summary>
+        /// 游戏结束
+        /// </summary>
+        /// <param name="self"></param>
+        public static void GameOver(this GameControllerComponent self)
+        {
+            Room room = self.GetParent<Room>();
+            room.IsGameOver = true;
+            room.State = RoomState.Ready;
+        }
     }
 }

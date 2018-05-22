@@ -17,9 +17,14 @@ namespace ETModel
         //碰
         public readonly List<MahjongInfo> PengCards = new List<MahjongInfo>();
 
-        //杠牌
+        //明杠牌
         public readonly List<MahjongInfo> GangCards = new List<MahjongInfo>();
 
+        //明杠牌
+        public readonly List<MahjongInfo> MingGangCards = new List<MahjongInfo>();
+
+        //暗杠牌
+        public readonly List<MahjongInfo> AnGangCards = new List<MahjongInfo>();
         //身份
         public bool IsBanker { get; set; }
 

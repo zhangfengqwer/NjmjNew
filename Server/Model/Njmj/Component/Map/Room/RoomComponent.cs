@@ -26,7 +26,7 @@ namespace ETModel
         public int GameRoomCount { get { return gameRooms.Count; } }
 
         //等待中房间数
-        public int ReadyRoomCount { get { return readyRooms.Where(p => p.Value.Count < 3).Count(); } }
+        public int ReadyRoomCount { get { return readyRooms.Where(p => p.Value.Count < 4).Count(); } }
 
         //空闲房间数
         public int IdleRoomCount { get { return idleRooms.Count; } }

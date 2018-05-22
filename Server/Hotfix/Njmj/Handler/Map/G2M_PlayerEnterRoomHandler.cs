@@ -13,6 +13,8 @@ namespace ETHotfix
 		    Log.Info(JsonHelper.ToJson(message));
             try
 			{
+			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
+
 			    Gamer gamer = GamerFactory.Create(message.PlayerId, message.UserId);
 			    await gamer.AddComponent<ActorComponent>().AddLocation();
 			    gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
