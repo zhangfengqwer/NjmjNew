@@ -14,8 +14,9 @@ namespace ETHotfix
             try
 			{
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
+//			    roomCompnent.Get()
 
-			    Gamer gamer = GamerFactory.Create(message.PlayerId, message.UserId);
+                Gamer gamer = GamerFactory.Create(message.PlayerId, message.UserId);
 			    await gamer.AddComponent<ActorComponent>().AddLocation();
 			    gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
