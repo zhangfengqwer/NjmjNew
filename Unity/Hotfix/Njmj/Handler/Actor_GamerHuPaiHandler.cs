@@ -15,11 +15,16 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到胡");
+                Log.Info($"收到胡:" + JsonHelper.ToJson(message));
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 Gamer gamer = gamerComponent.Get(message.Uid);
+
+                UIGameResultComponent gameResultComponent =
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
+
+                gameResultComponent.setData(message, gamerComponent,100);
 
             }
             catch (Exception e)
