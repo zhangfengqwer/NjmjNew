@@ -79,5 +79,9 @@ namespace ETModel
 		 public const ushort G2C_SendSms = 10075;
 		 public const ushort C2G_ChangeName = 10076;
 		 public const ushort G2C_ChangeName = 10077;
+		 public const ushort C2G_UseHuaFei = 10078;
+		 public const ushort G2C_UseHuaFei = 10079;
+		 public const ushort C2G_UseHuaFeiState = 10080;
+		 public const ushort G2C_UseHuaFeiState = 10081;
 	}
 }

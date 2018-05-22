@@ -465,4 +465,28 @@ message G2C_ChangeName // IResponse
 {
 }
 
+message C2G_UseHuaFei // IRequest
+{
+	required long	Uid	 = 1;
+	required int	HuaFei	 = 2;
+	required string	Phone	 = 3;
+}
+
+message G2C_UseHuaFei // IResponse
+{
+}
+
+message C2G_UseHuaFeiState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_UseHuaFeiState // IResponse
+{
+	required int	HuaFei_1_RestCount	 = 1;
+	required int	HuaFei_5_RestCount	 = 2;
+	required int	HuaFei_10_RestCount	 = 3;
+	required int	HuaFei_20_RestCount	 = 4;
+}
+
 #endregion
