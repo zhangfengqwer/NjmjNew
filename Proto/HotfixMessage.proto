@@ -539,4 +539,14 @@ message G2C_UseHuaFeiState // IResponse
 	required int	HuaFei_20_RestCount	 = 4;
 }
 
+message C2G_SetPlayerSound // IRequest
+{
+	required long	Uid	 = 1;
+	required int	PlayerSound	 = 2;
+}
+
+message G2C_SetPlayerSound // IResponse
+{
+}
+
 #endregion

@@ -90,5 +90,7 @@ namespace ETModel
 		 public const ushort G2C_UseHuaFei = 10086;
 		 public const ushort C2G_UseHuaFeiState = 10087;
 		 public const ushort G2C_UseHuaFeiState = 10088;
+		 public const ushort C2G_SetPlayerSound = 10089;
+		 public const ushort G2C_SetPlayerSound = 10090;
 	}
 }
