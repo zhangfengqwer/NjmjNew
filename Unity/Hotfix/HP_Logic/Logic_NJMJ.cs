@@ -412,17 +412,18 @@ namespace ETHotfix
                             {
                                 ++findCount;
                                 list_temp.RemoveAt(k);
-                                if (findCount == 2)
-                                {
-                                    if (list_temp.Count == 0)
-                                    {
-                                        return true;
-                                    }
-                                    else if (isAllShunZiOrKeZi(list_temp))
-                                    {
-                                        return true;
-                                    }
-                                }
+                            }
+                        }
+
+                        if (findCount == 2)
+                        {
+                            if (list_temp.Count == 0)
+                            {
+                                return true;
+                            }
+                            else if (isAllShunZiOrKeZi(list_temp))
+                            {
+                                return true;
                             }
                         }
                     }
