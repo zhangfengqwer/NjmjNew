@@ -56,14 +56,24 @@ namespace ETHotfix
                     {
                         //游戏结束结算
                         gameController.GameOver();
+                        roomComponent.gameRooms.Remove(room.Id);
+                        roomComponent.idleRooms.Add(room);
+
                     }
                  
                 }
                 //放弃
                 else if (message.OperationType == 3)
                 {
-                    room.tokenSource.Cancel();
-                    room.GamerGrabCard();
+                    if (orderController.CurrentAuthority == gamer.UserID)
+                    {
+//                        room.tokenSource.Cancel();
+                    }
+                    else
+                    {
+                        room.tokenSource.Cancel();
+                        room.GamerGrabCard();
+                    }
                 }
                 else
                 {

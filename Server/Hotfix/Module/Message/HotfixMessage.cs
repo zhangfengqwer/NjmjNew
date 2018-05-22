@@ -1042,6 +1042,18 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerReconnet)]
+	[ProtoContract]
+	public partial class Actor_GamerReconnet: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.Email)]
 	[ProtoContract]
 	public partial class Email: IMessage

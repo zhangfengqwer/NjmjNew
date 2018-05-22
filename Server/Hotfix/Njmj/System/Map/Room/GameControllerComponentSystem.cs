@@ -21,11 +21,6 @@ namespace ETHotfix
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
 
-//            foreach (var gamer in gamers)
-//            {
-//                gamer.GetComponent<HandCardsComponent>().IsBanker
-//            }
-
             DeskComponent deskComponent = room.GetComponent<DeskComponent>();
             List<MahjongInfo> mahjongInfos1 = gamers[0].GetComponent<HandCardsComponent>().library;
             List<MahjongInfo> mahjongInfos2 = gamers[1].GetComponent<HandCardsComponent>().library;

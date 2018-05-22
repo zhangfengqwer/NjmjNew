@@ -88,6 +88,9 @@ namespace ETHotfix
         private async void OnExit()
         {
             SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
         }
 
         private async void OnChangeTable()
@@ -282,11 +285,6 @@ namespace ETHotfix
             }
 
             giveUpBtn.gameObject.SetActive(true);
-        }
-
-        public void AddReadyGamer(Gamer gamer, int index)
-        {
-
         }
     }
 }

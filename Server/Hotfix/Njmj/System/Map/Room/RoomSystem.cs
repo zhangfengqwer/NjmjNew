@@ -156,7 +156,6 @@ namespace ETHotfix
                 gamer.isGangFaWanPai = false;
             }
 
-
             OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
             orderController.Turn();
             var currentGamer = room.Get(orderController.CurrentAuthority);

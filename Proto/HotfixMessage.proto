@@ -366,6 +366,11 @@ message Actor_GamerHuPai // IActorMessage
    optional long FangPaoUid = 7;
 }
 
+message Actor_GamerReconnet // IActorMessage
+{
+   
+}
+
 message Email //IMessage
 {
 	required string EmailTitle = 1;//邮件标题
