@@ -447,7 +447,6 @@ message G2C_Rank //IResponse
 {
 	repeated WealthRank RankList = 1;
 	repeated GameRank GameRankList = 2;
-	required PlayerInfo PlayerInfo = 3;
 }
 
 message C2G_DailySign // IRequest
