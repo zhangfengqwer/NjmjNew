@@ -79,15 +79,8 @@ namespace ETHotfix
                     return;
                 }
 
-                List<MahjongInfo> mahjongInfos = gamer.GetComponent<HandCardsComponent>().GetAll();
-                int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
-
-                Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
-                {
-                    Uid = gamer.UserID,
-                    weight = (int) mahjongInfos[randomNumber].m_weight,
-                    index = randomNumber
-                });
+                gamer.GetComponent<HandCardsComponent>().PopCard();
+               
             }
             else
             {

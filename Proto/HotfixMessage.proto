@@ -358,7 +358,12 @@ message Actor_GamerCanOperation // IActorMessage
 message Actor_GamerHuPai // IActorMessage
 {
    required long Uid = 1;
-   repeated GamerData GamerDatas = 2;
+   required bool IsZiMo = 2;
+   repeated GamerData GamerDatas = 3;
+   required int YingHuaCount = 4;
+   required int RuanHuaCount = 5;
+   repeated int HuPaiTypes = 6;
+   optional long FangPaoUid = 7;
 }
 
 message Email //IMessage

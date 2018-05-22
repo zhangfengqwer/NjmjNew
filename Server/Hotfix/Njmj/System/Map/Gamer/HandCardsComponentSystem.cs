@@ -24,15 +24,6 @@ namespace ETHotfix
             self.library.Add(card);
         }
 
-        /// <summary>
-        /// 出牌
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="card"></param>
-        public static void PopCard(this HandCardsComponent self, MahjongInfo card)
-        {
-            self.library.Remove(card);
-        }
 
         /// <summary>
         /// 手牌排序
@@ -42,5 +33,24 @@ namespace ETHotfix
         {
             Logic_NJMJ.getInstance().SortMahjong(self.library);
         }
+
+        /// <summary>
+        /// 出牌
+        /// </summary>
+        /// <param name="self"></param>
+        public static void PopCard(this HandCardsComponent self)
+        {
+            Gamer gamer = self.GetParent<Gamer>();
+            List<MahjongInfo> mahjongInfos = self.GetAll();
+            int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
+
+            Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
+            {
+                Uid = gamer.UserID,
+                weight = (int)mahjongInfos[randomNumber].m_weight,
+                index = randomNumber
+            });
+        }
+
     }
 }

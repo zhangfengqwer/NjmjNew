@@ -94,6 +94,12 @@
     <Compile Include="Entity\Config\PropConfig.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerGrabCardHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerHuPaiHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerOperateHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerPlayCardHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_RankUpdate.cs" />
     <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyHandler.cs" />
@@ -165,8 +171,7 @@
     <Compile Include="UI\UIChangeName\Factory\UIChangeNameFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIRankItemComponent.cs" />
     <Compile Include="Njmj\Component\HandCardsComponent.cs" />
-    <Compile Include="UI\UISet\Component\UISetComponent.cs" />
-    <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
+    <Compile Include="UI\UIRoom\Event\GamerPlayCard.cs" />
     <Compile Include="UI\UIUseHuaFei\Component\UIUseHuaFeiComponent.cs" />
     <Compile Include="UI\UIUseHuaFei\Factory\UIUseHuaFeiFactory.cs" />
     <Compile Include="UI\UIRealName\Component\UIRealNameComponent.cs" />

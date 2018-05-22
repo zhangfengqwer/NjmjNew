@@ -23,25 +23,21 @@ namespace ETHotfix
 
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
+                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
-
-//                if (orderController.CurrentAuthority != gamer.UserID)
-//                {
-//                    Log.Warning("没有轮到当前玩家出牌:" + gamer.UserID);
-//                    Log.Warning("当前出牌玩家:" + orderController.CurrentAuthority);
-//                    return;
-//                }
 
                 //胡牌
                 if (message.OperationType == 2)
                 {
                     //自摸
+                    bool isFinish = false;
                     if (orderController.CurrentAuthority == gamer.UserID)
                     {
                         if (Logic_NJMJ.getInstance().isHuPai(mahjongInfos))
                         {
-                            HuPai(gamer, room, mahjongInfos);
+                            HuPai(gamer, room, mahjongInfos,true);
+                            isFinish = true;
                         }
                     }
                     //放炮
@@ -51,8 +47,15 @@ namespace ETHotfix
                         {
                             List<MahjongInfo> temp = new List<MahjongInfo>(mahjongInfos);
                             temp.Add(deskComponent.CurrentCard);
-                            HuPai(gamer, room, temp);
+                            HuPai(gamer, room, temp, false);
+                            isFinish = true;
                         }
+                    }
+
+                    if (isFinish)
+                    {
+                        //游戏结束结算
+                        gameController.GameOver();
                     }
                  
                 }
@@ -137,13 +140,14 @@ namespace ETHotfix
             }
 	    }
 
-        /// <summary>
-        ///  胡牌
-        /// </summary>
-        /// <param name="gamer"></param>
-        /// <param name="room"></param>
-        /// <param name="mahjongInfos"></param>
-	    private static void HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos)
+	    /// <summary>
+	    ///  胡牌
+	    /// </summary>
+	    /// <param name="gamer"></param>
+	    /// <param name="room"></param>
+	    /// <param name="mahjongInfos"></param>
+	    /// <param name="b"></param>
+	    private static void HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
 	    {
 	        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
@@ -175,7 +179,8 @@ namespace ETHotfix
 
 	        foreach (var _gamer in room.GetAll())
 	        {
-	            if (_gamer.UserID == gamer.UserID)
+
+                if (_gamer.UserID == gamer.UserID)
 	                continue;
 	            HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 	            temp.Add(handCardsComponent.PengCards);
@@ -183,6 +188,7 @@ namespace ETHotfix
 	            //设置其他人的牌
                 GamerData gamerData = new GamerData();
 	            gamerData.handCards = handCardsComponent.GetAll();
+	            gamerData.UserID = _gamer.UserID;
 	            actorGamerHuPai.GamerDatas.Add(gamerData);
 	        }
 
@@ -192,7 +198,29 @@ namespace ETHotfix
 
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
 
-	        room.Broadcast(actorGamerHuPai);
+            //自摸
+	        actorGamerHuPai.IsZiMo = isZimo;
+	        if (!isZimo)
+	        {
+	            actorGamerHuPai.FangPaoUid = orderController.CurrentAuthority;
+	        }
+            //硬花
+	        actorGamerHuPai.YingHuaCount = handCards.FaceCards.Count;
+            //软花
+	        foreach (var card in handCards.GangCards)
+	        {
+	            if (card.m_weight >= Consts.MahjongWeight.Feng_Dong)
+	            {
+	                actorGamerHuPai.RuanHuaCount += 2;
+	            }
+	        }
+            //胡牌类型
+	        foreach (var type in huPaiTypes)
+	        {
+	            actorGamerHuPai.HuPaiTypes.Add((int) type);
+            }
+
+            room.Broadcast(actorGamerHuPai);
 
 	        room.IsGameOver = true;
 	        gamer.IsCanHu = false;
