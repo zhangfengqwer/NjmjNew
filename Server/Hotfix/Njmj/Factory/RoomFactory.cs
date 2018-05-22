@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             Room idleRoom = ComponentFactory.Create<Room>();
             idleRoom.AddComponent<DeskComponent>();
-            //idleRoom.AddComponent<DeskCardsCacheComponent>();
+//            idleRoom.AddComponent<DeskCardsCacheComponent>();
             idleRoom.AddComponent<GameControllerComponent>();
             idleRoom.AddComponent<OrderControllerComponent>();
             return idleRoom;

@@ -48,7 +48,9 @@ namespace ETHotfix
                 //房间没人就释放
 	            if (room.seats.Count == 0)
 	            {
+	                Log.Debug($"房间释放:{room.Id}");
 	                room.Dispose();
+	                roomComponent.RemoveRoom(room);
 	            }
             }
 	        catch (Exception e)

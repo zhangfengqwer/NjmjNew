@@ -22,6 +22,7 @@ namespace ETHotfix
                     response.PlayerInfo.Name = playerInfo.Name;
                     response.PlayerInfo.GoldNum = playerInfo.GoldNum;
                     response.PlayerInfo.WingNum = playerInfo.WingNum;
+                    response.PlayerInfo.HuaFeiNum = playerInfo.HuaFeiNum;
                     response.PlayerInfo.Icon = playerInfo.Icon;
                     response.PlayerInfo.IsRealName = playerInfo.IsRealName;
                     response.PlayerInfo.Phone = playerInfo.Phone;

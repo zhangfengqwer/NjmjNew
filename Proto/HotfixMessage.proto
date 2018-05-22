@@ -115,6 +115,7 @@ message PlayerInfo // IMessage
 	required int WinGameCount = 9;//胜局数
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
+	required float HuaFeiNum  = 12;//话费数量
 }
 
 message ShopInfo //IMessage
@@ -234,6 +235,8 @@ message GamerInfo //IMessage
     required int  SeatIndex = 3;
 }
 
+
+
 message G2M_PlayerEnterRoom //IRequest
 {
 	required int64 UserId = 1;
@@ -302,12 +305,60 @@ message Actor_GamerReady // IActorMessage
 
 message Actor_StartGame // IActorMessage
 {
-    repeated MahjongInfo Mahjongs = 1;
+    repeated GamerData GamerDatas = 1;
+    required int restCount = 2;
+}
+
+message GamerData //IMessage
+{
+ 	required int64 UserID = 1;
+    required int SeatIndex = 2;
+ 	repeated MahjongInfo handCards = 3;
+	repeated MahjongInfo faceCards = 4;
+	required bool IsBanker = 5;
 }
 
 message Actor_ChangeTable // IActorMessage
 {
     optional long Uid = 1;
+}
+
+message Actor_GamerPlayCard // IActorMessage
+{
+    required int weight = 1;
+    optional long Uid = 2;
+    required int index = 3;
+}
+
+message Actor_GamerGrabCard // IActorMessage
+{
+ 	required int weight = 1;
+    required long Uid = 2;
+}
+
+message Actor_GamerBuHua // IActorMessage
+{
+    required int weight = 1;
+    required long Uid = 2;
+}
+
+message Actor_GamerOperation // IActorMessage
+{
+   optional long Uid = 1;
+   required int OperationType = 2;
+   required int weight = 3;
+}
+
+message Actor_GamerCanOperation // IActorMessage
+{
+   optional long Uid = 1;
+   required int OperationType = 2;
+}
+
+message Actor_GamerHuPai // IActorMessage
+{
+   required long Uid = 1;
+   repeated GamerData GamerDatas = 2;
 }
 
 message Email //IMessage

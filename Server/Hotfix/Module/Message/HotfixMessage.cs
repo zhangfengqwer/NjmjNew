@@ -350,6 +350,9 @@ namespace ETHotfix
 		[ProtoMember(11, IsRequired = true)]
 		public string VipTime;
 
+		[ProtoMember(12, IsRequired = true)]
+		public float HuaFeiNum;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]
@@ -867,7 +870,31 @@ namespace ETHotfix
 		public long ActorId { get; set; }
 
 		[ProtoMember(1)]
-		public List<MahjongInfo> Mahjongs = new List<MahjongInfo>();
+		public List<GamerData> GamerDatas = new List<GamerData>();
+
+		[ProtoMember(2, IsRequired = true)]
+		public int restCount;
+
+	}
+
+	[Message(HotfixOpcode.GamerData)]
+	[ProtoContract]
+	public partial class GamerData: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long UserID;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int SeatIndex;
+
+		[ProtoMember(3)]
+		public List<MahjongInfo> handCards = new List<MahjongInfo>();
+
+		[ProtoMember(4)]
+		public List<MahjongInfo> faceCards = new List<MahjongInfo>();
+
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsBanker;
 
 	}
 
@@ -883,6 +910,120 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = false)]
 		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerPlayCard)]
+	[ProtoContract]
+	public partial class Actor_GamerPlayCard: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int weight;
+
+		[ProtoMember(2, IsRequired = false)]
+		public long Uid;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int index;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerGrabCard)]
+	[ProtoContract]
+	public partial class Actor_GamerGrabCard: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int weight;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerBuHua)]
+	[ProtoContract]
+	public partial class Actor_GamerBuHua: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int weight;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerOperation)]
+	[ProtoContract]
+	public partial class Actor_GamerOperation: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int OperationType;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int weight;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerCanOperation)]
+	[ProtoContract]
+	public partial class Actor_GamerCanOperation: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int OperationType;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerHuPai)]
+	[ProtoContract]
+	public partial class Actor_GamerHuPai: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2)]
+		public List<GamerData> GamerDatas = new List<GamerData>();
 
 	}
 

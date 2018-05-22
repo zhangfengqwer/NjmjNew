@@ -28,7 +28,13 @@ namespace ETHotfix
         private Image head;
         private Text prompt;
         private Text name;
+
+        private Image readyHead;
+        private Text readyName;
+        private Text readyText;
+
         //        private Text money;
+        public int Index { get; set; }
 
         public void Start()
         {
@@ -58,18 +64,25 @@ namespace ETHotfix
         /// 设置面板
         /// </summary>
         /// <param name="panel"></param>
-        public void SetPanel(GameObject panel)
+        /// <param name="gameObject"></param>
+        /// <param name="index"></param>
+        public void SetPanel(GameObject panel, GameObject readyPanel, int index)
         {
             panel.SetActive(true);
             this.Panel = panel;
-
+            this.Index = index;
             //绑定关联
             this.head = this.Panel.Get<GameObject>("Head").GetComponent<Image>();
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
 
+            this.readyHead = readyPanel.Get<GameObject>("Image").GetComponent<Image>();
+            this.readyName = readyPanel.Get<GameObject>("Name").GetComponent<Text>();
+            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
+
             UpdatePanel();
         }
+
 
         /// <summary>
         /// 更新面板
@@ -104,6 +117,14 @@ namespace ETHotfix
         public void SetReady()
         {
             prompt.text = "准备！";
+            readyText.text = "已准备";
+
+            if (this.GetParent<Gamer>().UserID == PlayerInfoComponent.Instance.uid)
+            {
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.readyBtn.interactable = false;
+            }
         }
 
         /// <summary>
@@ -143,6 +164,13 @@ namespace ETHotfix
         public void ResetPrompt()
         {
             prompt.text = "";
+            readyText.text = "";
+            if (this.GetParent<Gamer>().UserID == PlayerInfoComponent.Instance.uid)
+            {
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.readyBtn.interactable = true;
+            }
         }
 
         /// <summary>
@@ -165,9 +193,9 @@ namespace ETHotfix
             if (this.Panel != null)
             {
                 name.text = this.GetParent<Gamer>().UserID + "";
-               
-                //                GameObject asset = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset("PlayerIcon.unity3d", "PlayerIcon");
-                //                head.sprite = asset.Get<Sprite>("Icon2");
+                readyName.text = this.GetParent<Gamer>().UserID + "";
+                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+                head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
             }
         }
 
@@ -183,5 +211,6 @@ namespace ETHotfix
             //重置玩家UI
             ResetPanel();
         }
+
     }
 }

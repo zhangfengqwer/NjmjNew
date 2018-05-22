@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1474804916199598}
+  m_RootGameObject: {fileID: 1199440566635952}
   m_IsPrefabParent: 1
---- !u!1 &1474804916199598
+--- !u!1 &1199440566635952
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4901524519384030}
-  - component: {fileID: 82913428286633294}
-  - component: {fileID: 114283435746100572}
+  - component: {fileID: 4596868654134272}
+  - component: {fileID: 82773321087188440}
+  - component: {fileID: 114634618932599834}
   m_Layer: 0
   m_Name: Soundstalk_nv_gang_2
   m_TagString: Untagged
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4901524519384030
+--- !u!4 &4596868654134272
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474804916199598}
+  m_GameObject: {fileID: 1199440566635952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82913428286633294
+--- !u!82 &82773321087188440
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474804916199598}
+  m_GameObject: {fileID: 1199440566635952}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -121,18 +121,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114283435746100572
+--- !u!114 &114634618932599834
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474804916199598}
+  m_GameObject: {fileID: 1199440566635952}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fac24a5532e2c042b773d43ec5a8280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 82913428286633294}
+  audio: {fileID: 82773321087188440}
   isForceReplay: 0
   isLoop: 0
   volume: 1

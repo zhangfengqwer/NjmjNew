@@ -9,18 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1558857317493774}
+  m_RootGameObject: {fileID: 1609301425021688}
   m_IsPrefabParent: 1
---- !u!1 &1558857317493774
+--- !u!1 &1609301425021688
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4833043459672794}
-  - component: {fileID: 82638467967067360}
-  - component: {fileID: 114296897603515072}
+  - component: {fileID: 4560281290463320}
+  - component: {fileID: 82113165214638458}
+  - component: {fileID: 114453732992246612}
   m_Layer: 0
   m_Name: Soundstalk_nan_peng_3
   m_TagString: Untagged
@@ -28,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4833043459672794
+--- !u!4 &4560281290463320
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1558857317493774}
+  m_GameObject: {fileID: 1609301425021688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,12 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82638467967067360
+--- !u!82 &82113165214638458
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1558857317493774}
+  m_GameObject: {fileID: 1609301425021688}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -121,18 +121,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114296897603515072
+--- !u!114 &114453732992246612
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1558857317493774}
+  m_GameObject: {fileID: 1609301425021688}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fac24a5532e2c042b773d43ec5a8280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 82638467967067360}
+  audio: {fileID: 82113165214638458}
   isForceReplay: 0
   isLoop: 0
   volume: 1

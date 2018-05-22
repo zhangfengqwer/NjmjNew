@@ -26,9 +26,11 @@ namespace ETHotfix
         private Text playerNameTxt;
         private Text goldNumTxt;
         private Text wingNumTxt;
+        private Text HuaFeiNumTxt;
 
         private Image playerIcon;
 
+        private GameObject PlayerInfoBg;
         private GameObject BtnList_Down;
         private GameObject BtnList_Up;
         private GameObject Rank;
@@ -51,8 +53,10 @@ namespace ETHotfix
             playerNameTxt = rc.Get<GameObject>("PlayerNameTxt").GetComponent<Text>();
             goldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
             wingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
+            HuaFeiNumTxt = rc.Get<GameObject>("HuaFeiNumTxt").GetComponent<Text>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Image>();
 
+            PlayerInfoBg = rc.Get<GameObject>("PlayerInfoBg");
             BtnList_Down = rc.Get<GameObject>("BtnList_Down");
             BtnList_Up = rc.Get<GameObject>("BtnList_Up");
             Rank = rc.Get<GameObject>("Rank");
@@ -169,11 +173,14 @@ namespace ETHotfix
                 OnEnterRoom();
             });
 
+            PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
+                SetUIHideOrOpen(false);
+            });
+
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
-                //test 添加元宝
-                /*UpDatePlayerInfo();*/
-                //打开用户基本信息界面
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
                 SetUIHideOrOpen(false);
             });
@@ -348,6 +355,7 @@ namespace ETHotfix
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
+            HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
         }
     }
 }

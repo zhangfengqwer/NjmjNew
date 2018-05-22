@@ -15,19 +15,8 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                // 1元
-                List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{Uid:{message.Uid},HuaFei:{1}}}");
-                if (useHuaFeis.Count > 0)
-                {
-                    response.HuaFei_1_RestCount = 0;
-                }
-                else
-                {
-                    response.HuaFei_1_RestCount = 1;
-                }
-                
                 // 5元
-                useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{5}}}");
+                List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{5}}}");
                 if (useHuaFeis.Count > 0)
                 {
                     response.HuaFei_5_RestCount = 0;
@@ -35,28 +24,6 @@ namespace ETHotfix
                 else
                 {
                     response.HuaFei_5_RestCount = 1;
-                }
-
-                // 10元
-                useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{10}}}");
-                if (useHuaFeis.Count > 0)
-                {
-                    response.HuaFei_10_RestCount = 0;
-                }
-                else
-                {
-                    response.HuaFei_10_RestCount = 1;
-                }
-
-                // 20元
-                useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{20}}}");
-                if (useHuaFeis.Count > 0)
-                {
-                    response.HuaFei_20_RestCount = 0;
-                }
-                else
-                {
-                    response.HuaFei_20_RestCount = 1;
                 }
 
                 reply(response);

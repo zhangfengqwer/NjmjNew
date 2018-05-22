@@ -13,6 +13,9 @@ namespace ETModel
         //当前庄家
         public long ZhuangJia { get; set; }
 
+        //当前出牌
+        public MahjongInfo CurrentCard;
+
         public override void Dispose()
         {
             if(this.IsDisposed)
