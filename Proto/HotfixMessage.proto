@@ -109,10 +109,12 @@ message PlayerInfo // IMessage
 	required int64 WingNum  = 3;//元宝数量
 	required string Icon = 4;//用户头像
 	required bool IsRealName = 5;//是否已经实名认证
-	required bool IsBindPhone = 6;//是否绑定手机号
+	required string Phone = 6; //
 	required int RestChangeNameCount = 7;//是否已经改过一次名字
 	required int TotalGameCount = 8;//总局数
 	required int WinGameCount = 9;//胜局数
+	required int PlayerSound = 10;//
+	required string VipTime = 11; //
 }
 
 message ShopInfo //IMessage
@@ -373,6 +375,7 @@ message WealthRank // IMessage
 	required string PlayerName = 1;
 	required long GoldNum = 2;
 	required long GoldTicket = 3;
+	required string Icon = 4;
 }
 
 message GameRank // IMessage
@@ -380,17 +383,20 @@ message GameRank // IMessage
 	required string PlayerName = 1;
 	required int WinCount = 2;
 	required int TotalCount = 3;
+	required string Icon = 4;
 }
 
 message C2G_Rank //IRequest
 {
-	
+	required long Uid = 1;
+	required int RankType = 2 [default = 0];
 }
 
 message G2C_Rank //IResponse
 {
 	repeated WealthRank RankList = 1;
 	repeated GameRank GameRankList = 2;
+	required PlayerInfo PlayerInfo = 3;
 }
 
 message C2G_DailySign // IRequest
@@ -436,6 +442,7 @@ message C2G_BindPhone // IRequest
 
 message G2C_BindPhone // IResponse
 {
+
 }
 
 message C2G_SendSms // IRequest

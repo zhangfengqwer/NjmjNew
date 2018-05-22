@@ -333,7 +333,7 @@ namespace ETHotfix
 		public bool IsRealName;
 
 		[ProtoMember(6, IsRequired = true)]
-		public bool IsBindPhone;
+		public string Phone;
 
 		[ProtoMember(7, IsRequired = true)]
 		public int RestChangeNameCount;
@@ -343,6 +343,12 @@ namespace ETHotfix
 
 		[ProtoMember(9, IsRequired = true)]
 		public int WinGameCount;
+
+		[ProtoMember(10, IsRequired = true)]
+		public int PlayerSound;
+
+		[ProtoMember(11, IsRequired = true)]
+		public string VipTime;
 
 	}
 
@@ -1058,6 +1064,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public long GoldTicket;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.GameRank)]
@@ -1073,6 +1082,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int TotalCount;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.C2G_Rank)]
@@ -1081,6 +1093,12 @@ namespace ETHotfix
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int RankType;
 
 	}
 
@@ -1102,6 +1120,9 @@ namespace ETHotfix
 
 		[ProtoMember(2)]
 		public List<GameRank> GameRankList = new List<GameRank>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public PlayerInfo PlayerInfo;
 
 	}
 

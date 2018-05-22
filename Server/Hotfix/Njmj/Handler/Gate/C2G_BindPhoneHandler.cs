@@ -42,14 +42,6 @@ namespace ETHotfix
 
                 accountInfos[0].Phone = message.Phone;
                 await proxyComponent.Save(accountInfos[0]);
-
-                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
-                if (playerBaseInfos.Count > 0)
-                {
-                    playerBaseInfos[0].IsBindPhone = true;
-                    await proxyComponent.Save(playerBaseInfos[0]);
-                }
-
                 reply(response);
             }
 	        catch (Exception e)

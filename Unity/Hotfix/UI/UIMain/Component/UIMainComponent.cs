@@ -1,10 +1,17 @@
 ﻿using DG.Tweening;
 using ETModel;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ETHotfix
 {
+    public class MyRankStruct
+    {
+        public bool isRank;
+        public int numb;
+    }
+
     [ObjectSystem]
     public class UIMainComponentSystem: AwakeSystem<UIMainComponent>
     {
@@ -27,6 +34,16 @@ namespace ETHotfix
         private GameObject Rank;
         private GameObject ChoiceRoomType;
         private GameObject Relax;
+        private GameObject RankItem;
+        public GameObject Btn_GoldSelect;
+        public GameObject Btn_GameSelect;
+        public GameObject Grid;
+
+        private List<WealthRank> wealthRankList = new List<WealthRank>();
+        private List<GameRank> gameRankList = new List<GameRank>();
+        private List<GameObject> rankItemList = new List<GameObject>();
+        private List<UI> uiList = new List<UI>();
+        private PlayerInfo myPlayer;
 
         public void Awake()
         {
@@ -41,7 +58,9 @@ namespace ETHotfix
             Rank = rc.Get<GameObject>("Rank");
             ChoiceRoomType = rc.Get<GameObject>("ChoiceRoomType");
             Relax = rc.Get<GameObject>("Relax");
-
+            Btn_GoldSelect = rc.Get<GameObject>("Btn_GoldSelect");
+            Btn_GameSelect = rc.Get<GameObject>("Btn_GameSelect");
+            Grid = rc.Get<GameObject>("Grid");
             // 转盘
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
             {
@@ -159,6 +178,19 @@ namespace ETHotfix
                 SetUIHideOrOpen(false);
             });
 
+            RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
+            
+            
+            Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
+            {
+                ShowGoldRank();
+            });
+
+            Rank.transform.Find("Btn_game").GetComponent<Button>().onClick.Add(() =>
+            {
+                ShowGameRank();
+            });
+
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
             SetPlayerInfo();
             GetRankInfo();
@@ -166,13 +198,97 @@ namespace ETHotfix
             CommonUtil.ShowUI(UIType.UIDaily);
         }
 
+        private void ShowGoldRank()
+        {
+            GameObject obj = null;
+            MyRankStruct myRank = IsContains(myPlayer.Name);
+            WealthRank wealthRank = new WealthRank();
+            wealthRank.GoldNum = myPlayer.GoldNum;
+            wealthRank.Icon = myPlayer.Icon;
+            wealthRank.PlayerName = myPlayer.Name;
+            obj = GameObject.Instantiate(RankItem);
+            obj.transform.SetParent(Grid.transform);
+            obj.transform.SetAsFirstSibling();
+            obj.transform.localScale = Vector3.one;
+            obj.transform.localPosition = Vector3.zero;
+            UI ui1 = ComponentFactory.Create<UI, GameObject>(obj);
+            ui1.AddComponent<UIRankItemComponent>();
+            ui1.GetComponent<UIRankItemComponent>().SetGoldItem(wealthRank, myRank.numb);
+
+            Btn_GoldSelect.gameObject.SetActive(true);
+            Btn_GameSelect.gameObject.SetActive(false);
+            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            
+            for (int i = 0; i < wealthRankList.Count; ++i)
+            {
+                if (i < rankItemList.Count)
+                    obj = rankItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(RankItem);
+                    obj.transform.SetParent(Grid.transform);
+                    obj.transform.localPosition = Vector3.zero;
+                    obj.transform.localScale = Vector3.one;
+                    rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+            }
+        }
+
+        private MyRankStruct IsContains(string name)
+        {
+            MyRankStruct myRank = new MyRankStruct();
+            for (int i = 0;i< wealthRankList.Count; ++i)
+            {
+                if (wealthRankList[i].PlayerName == name)
+                {
+                    myRank.isRank = true;
+                    myRank.numb = i+1;
+                    return myRank;
+                }
+            }
+            myRank.isRank = false;
+            myRank.numb = 31;
+            return myRank;
+        }
+
+        private void ShowGameRank()
+        {
+            Btn_GoldSelect.gameObject.SetActive(false);
+            Btn_GameSelect.gameObject.SetActive(true);
+            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            GameObject obj = null;
+            for (int i = 0; i < gameRankList.Count; ++i)
+            {
+                if (i < rankItemList.Count)
+                    obj = rankItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(RankItem);
+                    obj.transform.SetParent(Grid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+            }
+        }
+
 		public async void GetRankInfo()
         {
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
-                .Session.Call(new C2G_Rank { });
+                .Session.Call(new C2G_Rank { Uid = PlayerInfoComponent.Instance.uid,RankType = 0 });
             //设置排行榜信息
-            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
-            Debug.Log("===" + JsonHelper.ToJson(g2cRank.GameRankList));
+            wealthRankList = g2cRank.RankList;
+            gameRankList = g2cRank.GameRankList;
+            myPlayer = g2cRank.PlayerInfo;
+            ShowGoldRank();
         }
 
         private async void RequestTaskInfo()
