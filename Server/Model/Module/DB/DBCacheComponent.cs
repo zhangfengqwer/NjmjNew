@@ -156,8 +156,8 @@ namespace ETModel
         public Task<List<PlayerBaseInfo>> GetGamePlayerJson(string collectionName, string json)
         {
             TaskCompletionSource<List<PlayerBaseInfo>> tcs = new TaskCompletionSource<List<PlayerBaseInfo>>();
-            DBQueryGamePlayerTask dbQueryPlayerInfoJsonTask = ComponentFactory.Create<DBQueryGamePlayerTask, string, string, TaskCompletionSource<List<PlayerBaseInfo>>>(collectionName, json, tcs);
-            this.tasks[(int)((ulong)dbQueryPlayerInfoJsonTask.Id % taskCount)].Add(dbQueryPlayerInfoJsonTask);
+            DBQueryGamePlayerTask dbQueryGameJsonTask = ComponentFactory.Create<DBQueryGamePlayerTask, string, string, TaskCompletionSource<List<PlayerBaseInfo>>>(collectionName, json, tcs);
+            this.tasks[(int)((ulong)dbQueryGameJsonTask.Id % taskCount)].Add(dbQueryGameJsonTask);
             return tcs.Task;
         }
     }

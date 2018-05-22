@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1465990113872430}
+  m_IsPrefabParent: 1
+--- !u!1 &1465990113872430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4058154770310700}
+  - component: {fileID: 114413756078535268}
+  m_Layer: 0
+  m_Name: Expression
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4058154770310700
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465990113872430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114413756078535268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1465990113872430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: Expression_1
+    gameObject: {fileID: 1135911452805078, guid: af4c703ecfa08c6409afcc94b633a39e,
+      type: 2}
+  - key: Expression_2
+    gameObject: {fileID: 1741387404803640, guid: 7c86cd9ffaba81b418ec9fdf01f17fac,
+      type: 2}
+  - key: Expression_3
+    gameObject: {fileID: 1709479353050198, guid: 41b365cf062359945aa5f18edddaf27d,
+      type: 2}
+  - key: Expression_4
+    gameObject: {fileID: 1213235551324186, guid: 71ae015d16ed8cc40813ba68c9b0cc88,
+      type: 2}
+  - key: Expression_5
+    gameObject: {fileID: 1898421258702374, guid: 4f3e3b5c09e802045a541ea3b0ace20d,
+      type: 2}
+  - key: Expression_6
+    gameObject: {fileID: 1133031510166700, guid: 631ef16e267919648abcab36a08b0856,
+      type: 2}
+  - key: Expression_7
+    gameObject: {fileID: 1230649207950274, guid: ac97bbe3a49f577498aa71b094c63820,
+      type: 2}
+  - key: Expression_8
+    gameObject: {fileID: 1570933451582684, guid: 092cf751e12209742a5df41434165759,
+      type: 2}
+  - key: Expression_9
+    gameObject: {fileID: 1722562377804212, guid: 21aebc0916079a146b625d6fd54c8fc8,
+      type: 2}
+  - key: Expression_10
+    gameObject: {fileID: 1105094696069074, guid: d32521163954e7d44a1bcee45b88bebc,
+      type: 2}
+  - key: Expression_11
+    gameObject: {fileID: 1286243302241194, guid: 80fadb1deea56a24c9cfa09d332f935a,
+      type: 2}
+  - key: Expression_12
+    gameObject: {fileID: 1799088870534404, guid: 6c3e6e26be7ebce4baf47dee6826a98a,
+      type: 2}
+  - key: Expression_13
+    gameObject: {fileID: 1120687719813466, guid: a58667610d04ab54b9709d3ad849ba7c,
+      type: 2}
+  - key: Expression_14
+    gameObject: {fileID: 1377274163055044, guid: 9638b8fc11bb72740b6d29afbcae335a,
+      type: 2}
+  - key: Expression_15
+    gameObject: {fileID: 1521263673472598, guid: be55478701f2b0946a899ba547af886b,
+      type: 2}
+  - key: Expression_16
+    gameObject: {fileID: 1141775989132704, guid: aa393f3983498544ebb09edc771c80a0,
+      type: 2}
+  - key: Expression_17
+    gameObject: {fileID: 1826906447706886, guid: 76b9c5147ff6df241ac207710a5131d6,
+      type: 2}
+  - key: Expression_18
+    gameObject: {fileID: 1839702667875220, guid: dae57dc916a75fd4f91710e30caa58f3,
+      type: 2}
+  - key: ExpressionImg_1
+    gameObject: {fileID: 2800000, guid: ffd7fd0adecc3e745bc735cfa348fca9, type: 3}
+  - key: ExpressionImg_2
+    gameObject: {fileID: 2800000, guid: 7931606e227048442a071e4c9ad19bd2, type: 3}
+  - key: ExpressionImg_3
+    gameObject: {fileID: 2800000, guid: fd8537e1fee22b7478e8d80dcc008772, type: 3}
+  - key: ExpressionImg_4
+    gameObject: {fileID: 2800000, guid: b8eb1e1f34bef8e47a9e584fb2fa85a3, type: 3}
+  - key: ExpressionImg_5
+    gameObject: {fileID: 2800000, guid: 764b2553bb39f5543837267a5a1a3be7, type: 3}
+  - key: ExpressionImg_6
+    gameObject: {fileID: 2800000, guid: 0455f5412334b7044921ac35d1b5cec3, type: 3}
+  - key: ExpressionImg_7
+    gameObject: {fileID: 2800000, guid: eed1e4cf851a936488f012708f6eed24, type: 3}
+  - key: ExpressionImg_8
+    gameObject: {fileID: 2800000, guid: 9576017f28f836e448ed30676c56bba7, type: 3}
+  - key: ExpressionImg_9
+    gameObject: {fileID: 2800000, guid: 98bb26a400edce040936f9200f2353df, type: 3}
+  - key: ExpressionImg_10
+    gameObject: {fileID: 2800000, guid: 3bfd96d1642aaff42ac72b14774f48f1, type: 3}
+  - key: ExpressionImg_11
+    gameObject: {fileID: 2800000, guid: 0c21be9e23ee6e8449ed6edc9388f529, type: 3}
+  - key: ExpressionImg_12
+    gameObject: {fileID: 2800000, guid: 02e0c0df19237b849a9c529a7fec8312, type: 3}
+  - key: ExpressionImg_13
+    gameObject: {fileID: 2800000, guid: 2191c37ea960bd74fabe593288f59be3, type: 3}
+  - key: ExpressionImg_14
+    gameObject: {fileID: 2800000, guid: 17e6d9b165b643d4cafef87c1293a9f6, type: 3}
+  - key: ExpressionImg_15
+    gameObject: {fileID: 2800000, guid: 523626acaec19404db6f22700740c676, type: 3}
+  - key: ExpressionImg_16
+    gameObject: {fileID: 2800000, guid: e10bb632c7ad1214691de3d71ad59c35, type: 3}
+  - key: ExpressionImg_17
+    gameObject: {fileID: 2800000, guid: 123b2c9ec20a590439df3849d8cc5049, type: 3}
+  - key: ExpressionImg_18
+    gameObject: {fileID: 2800000, guid: d61eaed529ab43a479c440ca791c5d2d, type: 3}

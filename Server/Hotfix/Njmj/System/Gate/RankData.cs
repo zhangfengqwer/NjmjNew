@@ -18,6 +18,8 @@ namespace ETHotfix
         private static List<GameRank> gameRankList = new List<GameRank>();
         public static void Awake(this RankDataComponent component)
         {
+            // 全局定时器
+            GlobalTimer.getInstance().start();
             InitWealthRankInfo();
             InitGameRankInfo();
         }

@@ -199,10 +199,8 @@ namespace ETModel
                 }
             }
 
+//            tokenSource.Cancel();
             State = RoomState.Idle;
-            tokenSource.Cancel();
         }
-
-
     }
 }

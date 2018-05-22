@@ -142,37 +142,11 @@ namespace ETHotfix
             }
 
             base.Dispose();
-            resourcesComponent.UnloadBundle($"{PrefabName}.unity3d");
-            resourcesComponent.UnloadBundle($"{ItemName}.unity3d");
             prefabObj = null;
             itemObj = null;
             grabObj = null;
-            Reset();
-        }
-
-        /// <summary>
-        /// 重置
-        /// </summary>
-        public void Reset()
-        {
-            ClearHandCards();
-            //            ClearPlayCards();
-        }
-
-        /// <summary>
-        /// 显示玩家游戏UI
-        /// </summary>
-        public void Appear()
-        {
-            //            _poker?.SetActive(true);
-            //            _handCards?.SetActive(true);
-        }
-
-        /// <summary>
-        /// 隐藏玩家游戏UI
-        /// </summary>
-        public void Hide()
-        {
+            faceImage = null;
+            faceImageGe = null;
         }
 
         /// <summary>
@@ -500,7 +474,8 @@ namespace ETHotfix
             }
 
             Vector3 localPosition = this.CardBottom.transform.localPosition;
-            this.CardBottom.transform.localPosition = new Vector3(localPosition.x + (postionX + 10) * 2, localPosition.y + (postionY + 10) * 2, localPosition.z);
+            this.CardBottom.transform.localPosition =
+                    new Vector3(localPosition.x + (postionX + 10) * 2, localPosition.y + (postionY + 10) * 2, localPosition.z);
         }
 
         private int num = 0;

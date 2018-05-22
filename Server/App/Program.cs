@@ -104,7 +104,7 @@ namespace App
 						Game.Scene.AddComponent<ConfigComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
-                        Game.Scene.AddComponent<DBOperatorComponet>();
+                        //Game.Scene.AddComponent<DBOperatorComponet>();
                         Game.Scene.AddComponent<RankDataComponent>();
                         // Game.Scene.AddComponent<HttpComponent>();
 					    //GateGlobalComponent
@@ -122,8 +122,7 @@ namespace App
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
 
-                // 全局定时器
-                GlobalTimer.getInstance().start();
+                
 
                 while (true)
 				{

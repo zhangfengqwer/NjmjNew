@@ -60,7 +60,7 @@ namespace ETHotfix
                     response.PlayerInfo.WingNum = playerBaseInfo.WingNum;
                     response.PlayerInfo.Icon = playerBaseInfo.Icon;
 
-                    Log.Info(JsonHelper.ToJson(response));
+                    //Log.Info(JsonHelper.ToJson(response));
                 }
                 
                 reply(response);

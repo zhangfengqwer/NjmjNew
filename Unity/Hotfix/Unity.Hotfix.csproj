@@ -102,6 +102,7 @@
     <Compile Include="Njmj\Handler\Actor_GamerOperateHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerPlayCardHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_RankUpdate.cs" />
+    <Compile Include="Njmj\Handler\Actor_LaBa.cs" />
     <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerExitRoomHandler.cs" />

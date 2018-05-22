@@ -269,6 +269,9 @@ namespace ETHotfix
 		[ProtoMember(5, TypeName = "ETHotfix.Bag")]
 		public List<Bag> BagList = new List<Bag>();
 
+		[ProtoMember(6, TypeName = "ETHotfix.Chat")]
+		public List<Chat> ChatList = new List<Chat>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -382,6 +385,18 @@ namespace ETHotfix
 
 		[ProtoMember(8, IsRequired = true)]
 		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.Chat)]
+	[ProtoContract]
+	public partial class Chat: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int Id;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Content;
 
 	}
 
@@ -1615,6 +1630,21 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Actor_LaBa)]
+	[ProtoContract]
+	public partial class Actor_LaBa: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string LaBaContent;
 
 	}
 

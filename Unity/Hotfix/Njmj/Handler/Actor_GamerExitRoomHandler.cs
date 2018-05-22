@@ -17,6 +17,8 @@ namespace ETHotfix
                 Log.Info($"收到退出:{JsonHelper.ToJson(message)}");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
 
+                if (uiRoom == null) return;
+
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 

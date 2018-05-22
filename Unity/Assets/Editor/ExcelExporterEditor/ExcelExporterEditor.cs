@@ -98,6 +98,9 @@ public class ExcelExporterEditor : EditorWindow
 			{
 				continue;
 			}
+            if (Path.GetFileName(filePath) == "ShopConfig" ||
+                Path.GetFileName(filePath) == "TaskConfig")
+                continue;
 
 			ExportClass(filePath, exportDir);
 		}
