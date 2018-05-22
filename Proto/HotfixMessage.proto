@@ -317,7 +317,7 @@ message Actor_GamerCanOperation // IActorMessage
 message Actor_GamerHuPai // IActorMessage
 {
    required long Uid = 1;
-
+   repeated GamerData GamerDatas = 2;
 }
 
 message Email //IMessage

@@ -905,6 +905,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
+		[ProtoMember(2, TypeName = "ETHotfix.GamerData")]
+		public List<GamerData> GamerDatas = new List<GamerData>();
+
 	}
 
 	[Message(HotfixOpcode.Email)]

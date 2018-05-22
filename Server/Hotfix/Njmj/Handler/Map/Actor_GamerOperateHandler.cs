@@ -179,12 +179,16 @@ namespace ETHotfix
 	                continue;
 	            HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 	            temp.Add(handCardsComponent.PengCards);
+
+	            //设置其他人的牌
+                GamerData gamerData = new GamerData();
+	            gamerData.handCards = handCardsComponent.GetAll();
+	            actorGamerHuPai.GamerDatas.Add(gamerData);
 	        }
 
 	        huPaiNeedData.other1_pengList = temp[0];
 	        huPaiNeedData.other2_pengList = temp[1];
 	        huPaiNeedData.other3_pengList = temp[2];
-
 
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
 
