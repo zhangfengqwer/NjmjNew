@@ -25,7 +25,7 @@ namespace ETHotfix
 	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
 	                    gamer.AddComponent<TrusteeshipComponent>();
 
-	                Log.Info($"玩家{message.UserID}断开，切换为自动模式");
+	                Log.Info($"玩家{message.Uid}断开，切换为自动模式");
                 }
                 else
 	            {
