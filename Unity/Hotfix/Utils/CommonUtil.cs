@@ -325,6 +325,17 @@ namespace ETHotfix
             return sprite;
         }
 
+        static public GameObject getGameObjByBundle(string bundleName, string fileName)
+        {
+            ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
+
+            GameObject go = bundleGameObject.Get<GameObject>($"{fileName}");
+
+            return go;
+        }
+
         static public GameObject getGameObjByBundle(string bundleName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();

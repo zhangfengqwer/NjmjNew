@@ -41,7 +41,12 @@ namespace ETHotfix
         private Button ShortBtn;
         private GameObject ExpressionGrid;
         private GameObject ShortGrid;
-
+        private GameObject ExpressionItem;
+        private List<GameObject> ExpressionItemList = new List<GameObject>();
+        private GameObject ChatItem;
+        private List<GameObject> ChatItemList = new List<GameObject>();
+        private List<UI> uiList = new List<UI>();
+        private List<UI> chatUiList = new List<UI>();
         public GameObject currentItem = new GameObject();
         private Text restText;
         private GameObject players;
@@ -88,7 +93,8 @@ namespace ETHotfix
             gangBtn.onClick.Add(() => OnOperate(1));
             huBtn.onClick.Add(() => OnOperate(2));
             giveUpBtn.onClick.Add(() => OnOperate(3));
-
+            ExpressionItem = CommonUtil.getGameObjByBundle(UIType.UIExpression);
+            ChatItem = CommonUtil.getGameObjByBundle(UIType.UIChatItem);
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
@@ -96,12 +102,71 @@ namespace ETHotfix
             {
                 Chat.gameObject.SetActive(true);
                 //选中表情包界面
+                CreatExpressions();
             });
 
             ExpressionBtn.onClick.Add(() =>
             {
-
+                CreatExpressions();
             });
+
+            ShortBtn.onClick.Add(() =>
+            {
+                CreateChatItems();
+            });
+        }
+
+        private void CreateChatItems()
+        {
+            ExpressionBtn.transform.GetChild(0).gameObject.SetActive(false);
+            ShortBtn.transform.GetChild(0).gameObject.SetActive(true);
+            GameObject obj = null;
+            for (int i = 0; i < PlayerInfoComponent.Instance.GetChatList().Count; ++i)
+            {
+                if (i < ChatItemList.Count)
+                    obj = ChatItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(ChatItem);
+                    obj.transform.SetParent(ShortGrid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    ChatItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIChatItemComponent>();
+                    chatUiList.Add(ui);
+                }
+                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i], i + 1);
+            }
+        }
+
+        private void CreatExpressions()
+        {
+            ExpressionBtn.transform.GetChild(0).gameObject.SetActive(true);
+            ShortBtn.transform.GetChild(0).gameObject.SetActive(false);
+            GameObject obj = null;
+            for(int i = 0;i< 18; ++i)
+            {
+                if (i < ExpressionItemList.Count)
+                    obj = ExpressionItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(ExpressionItem);
+                    obj.transform.SetParent(ExpressionGrid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    ExpressionItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIExpressionComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
+            }
+        }
+
+        public void CloseChatUI()
+        {
+            Chat.SetActive(false);
         }
 
         private async void OnReady()

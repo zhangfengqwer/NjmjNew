@@ -263,7 +263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1138286208174318
 GameObject:
   m_ObjectHideFlags: 1
@@ -347,7 +347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1188406014639898
 GameObject:
   m_ObjectHideFlags: 1
@@ -531,6 +531,7 @@ GameObject:
   - component: {fileID: 222264821887665018}
   - component: {fileID: 114986651323780376}
   - component: {fileID: 114844563985257686}
+  - component: {fileID: 114238018031016836}
   m_Layer: 5
   m_Name: Scroll
   m_TagString: Untagged
@@ -1504,6 +1505,7 @@ GameObject:
   - component: {fileID: 222998932681574216}
   - component: {fileID: 114277300141904662}
   - component: {fileID: 114547339208333362}
+  - component: {fileID: 114940156806825648}
   m_Layer: 5
   m_Name: Scroll
   m_TagString: Untagged
@@ -2755,6 +2757,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114238018031016836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320476740008620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
 --- !u!114 &114244010079629602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2918,7 +2932,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1777929810906178}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -5077,7 +5091,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 591c576f8db1bcc4eb7e35237d67e125, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09c11098b0ca05240a184d6458cc977a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5176,6 +5190,18 @@ MonoBehaviour:
   m_Spacing: {x: -1.8, y: -8.3}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &114940156806825648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1777929810906178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
 --- !u!114 &114944743180526986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5285,7 +5311,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1320476740008620}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

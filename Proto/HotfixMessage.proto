@@ -576,4 +576,22 @@ message Actor_LaBa // IActorMessage
     required string LaBaContent = 1;
 }
 
+message C2G_Chat // IRequest
+{
+	required int ChatType = 1;
+	required string Value = 2;
+}
+
+message G2C_Chat // IResponse
+{
+
+}
+
+message Actor_Chat // IActorMessage
+{
+	required int ChatType = 1;
+	required string Value = 2;
+}
+
+
 #endregion

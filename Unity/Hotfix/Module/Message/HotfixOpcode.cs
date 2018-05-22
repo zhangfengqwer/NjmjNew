@@ -96,5 +96,8 @@ namespace ETModel
 		 public const ushort C2G_UseLaBa = 10092;
 		 public const ushort G2C_UseLaBa = 10093;
 		 public const ushort Actor_LaBa = 10094;
+		 public const ushort C2G_Chat = 10095;
+		 public const ushort G2C_Chat = 10096;
+		 public const ushort Actor_Chat = 10097;
 	}
 }

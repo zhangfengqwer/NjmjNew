@@ -45,8 +45,12 @@ namespace ETHotfix
             #region TaskTest
             if ((sec == 0))
             {
-                DBHelper.RefreshRankFromDB();
+                DBHelper.RefreshGameRank();
                 //Game.Scene.AddComponent<DBOperatorComponet>();
+            }
+            if((sec == 30))
+            {
+                DBHelper.RefreshWealthRank();
             }
             #endregion
         }
