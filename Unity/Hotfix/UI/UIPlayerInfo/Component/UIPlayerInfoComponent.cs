@@ -78,7 +78,7 @@ namespace ETHotfix
             uIDTxt.text = pc.uid.ToString();
             if (playerInfo.IsRealName)
                 realNameTxt.text = "已实名";
-            if (playerInfo.IsBindPhone)
+            if (string.IsNullOrEmpty(playerInfo.Phone))
                 noBindPhoneTxt.text = "已绑定";
             playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
                 .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
@@ -93,7 +93,7 @@ namespace ETHotfix
 
         private void Init()
         {
-            bindPhoneBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone);
+            bindPhoneBtn.gameObject.SetActive(!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount >= 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
 
@@ -107,7 +107,7 @@ namespace ETHotfix
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
                 realNameTxt.text = "已实名";
-            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone)
+            if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
                 noBindPhoneTxt.text = "已绑定";
         }
 

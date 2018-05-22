@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 namespace ETHotfix
 {
+    public class MyRankStruct
+    {
+        public bool isRank;
+        public int numb;
+    }
+
     [ObjectSystem]
     public class UIMainComponentSystem: AwakeSystem<UIMainComponent>
     {
@@ -193,10 +199,25 @@ namespace ETHotfix
 
         private void ShowGoldRank()
         {
+            GameObject obj = null;
+            MyRankStruct myRank = IsContains(myPlayer.Name);
+            WealthRank wealthRank = new WealthRank();
+            wealthRank.GoldNum = myPlayer.GoldNum;
+            wealthRank.Icon = myPlayer.Icon;
+            wealthRank.PlayerName = myPlayer.Name;
+            obj = GameObject.Instantiate(RankItem);
+            obj.transform.SetParent(Grid.transform);
+            obj.transform.SetAsFirstSibling();
+            obj.transform.localScale = Vector3.one;
+            obj.transform.localPosition = Vector3.zero;
+            UI ui1 = ComponentFactory.Create<UI, GameObject>(obj);
+            ui1.AddComponent<UIRankItemComponent>();
+            ui1.GetComponent<UIRankItemComponent>().SetGoldItem(wealthRank, myRank.numb);
+
             Btn_GoldSelect.gameObject.SetActive(true);
             Btn_GameSelect.gameObject.SetActive(false);
-            //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
-            GameObject obj = null;
+            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
@@ -216,11 +237,28 @@ namespace ETHotfix
             }
         }
 
+        private MyRankStruct IsContains(string name)
+        {
+            MyRankStruct myRank = new MyRankStruct();
+            for (int i = 0;i< wealthRankList.Count; ++i)
+            {
+                if (wealthRankList[i].PlayerName == name)
+                {
+                    myRank.isRank = true;
+                    myRank.numb = i+1;
+                    return myRank;
+                }
+            }
+            myRank.isRank = false;
+            myRank.numb = 31;
+            return myRank;
+        }
+
         private void ShowGameRank()
         {
             Btn_GoldSelect.gameObject.SetActive(false);
             Btn_GameSelect.gameObject.SetActive(true);
-            //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
             for (int i = 0; i < gameRankList.Count; ++i)
             {

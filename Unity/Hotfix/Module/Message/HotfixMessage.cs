@@ -333,7 +333,7 @@ namespace ETHotfix
 		public bool IsRealName;
 
 		[ProtoMember(6, IsRequired = true)]
-		public bool IsBindPhone;
+		public string Phone;
 
 		[ProtoMember(7, IsRequired = true)]
 		public int RestChangeNameCount;
@@ -343,6 +343,12 @@ namespace ETHotfix
 
 		[ProtoMember(9, IsRequired = true)]
 		public int WinGameCount;
+
+		[ProtoMember(10, IsRequired = true)]
+		public int PlayerSound;
+
+		[ProtoMember(11, IsRequired = true)]
+		public string VipTime;
 
 	}
 

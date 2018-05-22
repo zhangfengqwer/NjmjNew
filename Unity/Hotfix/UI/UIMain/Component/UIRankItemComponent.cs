@@ -42,6 +42,11 @@ namespace ETHotfix
                                               .ToString();
             RankTxt.text = index.ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(wealth.Icon);
+            int rIcon = index;
+            if (index == 31)
+                RankTxt.text = "未上榜";
+            if (RankImg.gameObject.activeInHierarchy)
+                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite("Rank_" + rIcon);
         }
 
         public void SetGameItem(GameRank gameRank,int index)
@@ -54,6 +59,9 @@ namespace ETHotfix
                                               .ToString();
             RankTxt.text = index.ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(gameRank.Icon);
+            int rIcon = index + 1;
+            if (RankImg.gameObject.activeInHierarchy)
+                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite("Rank_" + rIcon);
         }
     }
 }

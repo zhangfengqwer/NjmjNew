@@ -139,7 +139,7 @@ namespace ETHotfix
                 }
 
                 ToastScript.createToast("绑定手机号成功");
-                PlayerInfoComponent.Instance.GetPlayerInfo().IsBindPhone = true;
+                //PlayerInfoComponent.Instance.GetPlayerInfo().Phone = ;
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
                 isSuccess = true;
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBindPhone);
