@@ -26,13 +26,13 @@ namespace ETHotfix
 			self.dbAddress = dbStartConfig.GetComponent<InnerConfig>().IPEndPoint;
 		}
 
-		public static async Task Save(this DBProxyComponent self, ComponentWithId component, bool needCache = true)
+		public static async Task Save(this DBProxyComponent self, ComponentWithId component, bool needCache = false)
 		{
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
 			await session.Call(new DBSaveRequest { Component = component, NeedCache = needCache});
 		}
 
-		public static async Task SaveBatch(this DBProxyComponent self, List<ComponentWithId> components, bool needCache = true)
+		public static async Task SaveBatch(this DBProxyComponent self, List<ComponentWithId> components, bool needCache = false)
 		{
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
 			await session.Call(new DBSaveBatchRequest { Components = components, NeedCache = needCache});
@@ -50,14 +50,14 @@ namespace ETHotfix
 			await session.Call(new DBSaveRequest { Component = component,  NeedCache = false, CollectionName = "Log" });
 		}
 
-		public static async Task<T> Query<T>(this DBProxyComponent self, long id, bool needCache = true) where T: ComponentWithId
+		public static async Task<T> Query<T>(this DBProxyComponent self, long id, bool needCache = false) where T: ComponentWithId
 		{
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
 			DBQueryResponse dbQueryResponse = (DBQueryResponse)await session.Call(new DBQueryRequest { CollectionName = typeof(T).Name, Id = id, NeedCache = needCache });
 			return (T)dbQueryResponse.Component;
 		}
 
-		public static async Task<List<T>> QueryBatch<T>(this DBProxyComponent self, List<long> ids, bool needCache = true) where T : ComponentWithId
+		public static async Task<List<T>> QueryBatch<T>(this DBProxyComponent self, List<long> ids, bool needCache = false) where T : ComponentWithId
 		{
 			List<T> list = new List<T>();
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);

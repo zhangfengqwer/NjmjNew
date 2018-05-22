@@ -350,6 +350,9 @@ namespace ETHotfix
 		[ProtoMember(11, IsRequired = true)]
 		public string VipTime;
 
+		[ProtoMember(12, IsRequired = true)]
+		public float HuaFeiNum;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]
@@ -1274,9 +1277,6 @@ namespace ETHotfix
 		[ProtoMember(2, TypeName = "ETHotfix.GameRank")]
 		public List<GameRank> GameRankList = new List<GameRank>();
 
-		[ProtoMember(3, IsRequired = true)]
-		public PlayerInfo PlayerInfo;
-
 	}
 
 	[Message(HotfixOpcode.C2G_DailySign)]
@@ -1543,6 +1543,36 @@ namespace ETHotfix
 
 		[ProtoMember(4, IsRequired = true)]
 		public int HuaFei_20_RestCount;
+
+	}
+
+	[Message(HotfixOpcode.C2G_SetPlayerSound)]
+	[ProtoContract]
+	public partial class C2G_SetPlayerSound: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int PlayerSound;
+
+	}
+
+	[Message(HotfixOpcode.G2C_SetPlayerSound)]
+	[ProtoContract]
+	public partial class G2C_SetPlayerSound: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
 	}
 

@@ -115,6 +115,7 @@ message PlayerInfo // IMessage
 	required int WinGameCount = 9;//胜局数
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
+	required float HuaFeiNum  = 12;//话费数量
 }
 
 message ShopInfo //IMessage
@@ -451,7 +452,6 @@ message G2C_Rank //IResponse
 {
 	repeated WealthRank RankList = 1;
 	repeated GameRank GameRankList = 2;
-	required PlayerInfo PlayerInfo = 3;
 }
 
 message C2G_DailySign // IRequest
@@ -542,6 +542,16 @@ message G2C_UseHuaFeiState // IResponse
 	required int	HuaFei_5_RestCount	 = 2;
 	required int	HuaFei_10_RestCount	 = 3;
 	required int	HuaFei_20_RestCount	 = 4;
+}
+
+message C2G_SetPlayerSound // IRequest
+{
+	required long	Uid	 = 1;
+	required int	PlayerSound	 = 2;
+}
+
+message G2C_SetPlayerSound // IResponse
+{
 }
 
 #endregion

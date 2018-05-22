@@ -16,25 +16,37 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 if (message.HuaFei == 5)
                 {
-                    List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{message.HuaFei}}}");
-                    if (useHuaFeis.Count > 0)
+                    List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Uid:{message.Uid}}}");
+                    if (playerBaseInfos[0].HuaFeiNum >= 5)
                     {
-                        response.Error = ErrorCode.TodayHasSign;
-                        response.Message = "您今天的兑换机会已用完";
-                        reply(response);
+                        List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{message.HuaFei}}}");
+                        if (useHuaFeis.Count > 0)
+                        {
+                            response.Error = ErrorCode.TodayHasSign;
+                            response.Message = "您今天的兑换机会已用完";
+                            reply(response);
 
-                        return;
+                            return;
+                        }
+                        else
+                        {
+                            // 充值话费
+                            UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
+                            useHuaFei.Uid = message.Uid;
+                            useHuaFei.HuaFei = message.HuaFei;
+                            useHuaFei.Phone = message.Phone;
+                            await proxyComponent.Save(useHuaFei);
+
+                            reply(response);
+                        }
                     }
                     else
                     {
-                        // 充值话费
-                        UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
-                        useHuaFei.Uid = message.Uid;
-                        useHuaFei.HuaFei = message.HuaFei;
-                        useHuaFei.Phone = message.Phone;
-                        await proxyComponent.Save(useHuaFei);
-
+                        response.Error = ErrorCode.TodayHasSign;
+                        response.Message = "您的话费余额不足";
                         reply(response);
+
+                        return;
                     }
                 }
                 else

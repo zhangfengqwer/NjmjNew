@@ -107,7 +107,7 @@ namespace ETHotfix
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
                 realNameTxt.text = "已实名";
-            if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
                 noBindPhoneTxt.text = "已绑定";
         }
 

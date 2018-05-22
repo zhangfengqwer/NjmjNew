@@ -14,22 +14,31 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo my = await proxyComponent.Query<PlayerBaseInfo>(message.Uid);
-                PlayerInfo myPlayer = new PlayerInfo();
-                myPlayer.GoldNum = my.GoldNum;
-                myPlayer.Icon = my.Icon;
-                myPlayer.TotalGameCount = my.TotalGameCount;
-                myPlayer.Name = my.Name;
-                response.PlayerInfo = myPlayer;
+                WealthRank wealthRank = new WealthRank();
+                GameRank gameRank = new GameRank();
+                wealthRank.Icon = my.Icon;
+                wealthRank.PlayerName = my.Name;
+                wealthRank.GoldNum = my.GoldNum;
+
+                gameRank.PlayerName = my.Name;
+                gameRank.Icon = my.Icon;
+                gameRank.TotalCount = my.TotalGameCount;
                 if (message.RankType == 1)
                 {
                     response.RankList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
+                    response.RankList.Add(wealthRank);
                 }
                 else if (message.RankType == 2)
+                {
                     response.GameRankList = Game.Scene.GetComponent<RankDataComponent>().GetGameRankData();
+                    response.GameRankList.Add(gameRank);
+                }
                 else
                 {
                     response.RankList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
                     response.GameRankList = Game.Scene.GetComponent<RankDataComponent>().GetGameRankData();
+                    response.RankList.Add(wealthRank);
+                    response.GameRankList.Add(gameRank);
                 }
                 reply(response);
             }
