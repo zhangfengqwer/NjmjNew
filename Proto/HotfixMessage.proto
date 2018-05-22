@@ -115,6 +115,7 @@ message PlayerInfo // IMessage
 	required int WinGameCount = 9;//胜局数
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
+	required float HuaFeiNum  = 12;//话费数量
 }
 
 message ShopInfo //IMessage

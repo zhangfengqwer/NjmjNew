@@ -350,6 +350,9 @@ namespace ETHotfix
 		[ProtoMember(11, IsRequired = true)]
 		public string VipTime;
 
+		[ProtoMember(12, IsRequired = true)]
+		public float HuaFeiNum;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]

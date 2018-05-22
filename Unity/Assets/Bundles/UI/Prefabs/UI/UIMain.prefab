@@ -1653,6 +1653,8 @@ MonoBehaviour:
     gameObject: {fileID: 1441102947425472}
   - key: PlayerInfoBg
     gameObject: {fileID: 1463836453694304}
+  - key: HuaFeiNumTxt
+    gameObject: {fileID: 1219197335831032}
 --- !u!114 &114300843134441312
 MonoBehaviour:
   m_ObjectHideFlags: 1

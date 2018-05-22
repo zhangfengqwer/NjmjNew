@@ -14,7 +14,7 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                
+
                 // 5元
                 List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{5}}}");
                 if (useHuaFeis.Count > 0)
