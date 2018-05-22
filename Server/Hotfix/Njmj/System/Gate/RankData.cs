@@ -33,6 +33,7 @@ namespace ETHotfix
                 WealthRank rank = new WealthRank();
                 rank.PlayerName = playerBaseInfoList[i].Name;
                 rank.GoldNum = playerBaseInfoList[i].GoldNum;
+                rank.Icon = playerBaseInfoList[i].Icon;
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetWealthRankData(rankList);
@@ -52,6 +53,7 @@ namespace ETHotfix
                 rank.PlayerName = playerBaseInfoList[i].Name;
                 rank.WinCount = playerBaseInfoList[i].WinGameCount;
                 rank.TotalCount = playerBaseInfoList[i].TotalGameCount;
+                rank.Icon = playerBaseInfoList[i].Icon;
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(rankList);

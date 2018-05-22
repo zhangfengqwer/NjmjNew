@@ -1058,6 +1058,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public long GoldTicket;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.GameRank)]
@@ -1073,6 +1076,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int TotalCount;
 
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
 	}
 
 	[Message(HotfixOpcode.C2G_Rank)]
@@ -1081,6 +1087,12 @@ namespace ETHotfix
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int RankType;
 
 	}
 
@@ -1102,6 +1114,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, TypeName = "ETHotfix.GameRank")]
 		public List<GameRank> GameRankList = new List<GameRank>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public PlayerInfo PlayerInfo;
 
 	}
 
