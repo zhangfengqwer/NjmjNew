@@ -13,8 +13,19 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void DealCards(this GameControllerComponent self)
         {
+            if (self == null)
+            {
+                Log.Error("当前为null:GameControllerComponent.DealCards");
+                return;
+            }
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
+
+//            foreach (var gamer in gamers)
+//            {
+//                gamer.GetComponent<HandCardsComponent>().IsBanker
+//            }
+
             DeskComponent deskComponent = room.GetComponent<DeskComponent>();
             List<MahjongInfo> mahjongInfos1 = gamers[0].GetComponent<HandCardsComponent>().library;
             List<MahjongInfo> mahjongInfos2 = gamers[1].GetComponent<HandCardsComponent>().library;
@@ -22,6 +33,11 @@ namespace ETHotfix
             List<MahjongInfo> mahjongInfos4 = gamers[3].GetComponent<HandCardsComponent>().library;
 
             Logic_NJMJ.getInstance().FaMahjong(mahjongInfos1, mahjongInfos2, mahjongInfos3, mahjongInfos4,deskComponent.RestLibrary);
+
+            foreach (var card in deskComponent.RestLibrary)
+            {
+                card.weight = (byte) card.m_weight;
+            }
         }
     }
 }

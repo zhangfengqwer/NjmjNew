@@ -12,7 +12,6 @@ namespace ETHotfix
         public static void Init(this OrderControllerComponent self, long id)
         {
             self.FirstAuthority = new System.Collections.Generic.KeyValuePair<long, bool>(id, false);
-            self.Biggest = 0;
             self.CurrentAuthority = id;
             self.SelectLordIndex = 1;
             self.GamerLandlordState.Clear();
@@ -24,7 +23,6 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void Start(this OrderControllerComponent self, long id)
         {
-            self.Biggest = id;
             self.CurrentAuthority = id;
         }
 

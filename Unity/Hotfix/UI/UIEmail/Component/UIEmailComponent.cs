@@ -108,7 +108,7 @@ namespace ETHotfix
             }
         }
 
-        public override void Dispose()
+        public override async void Dispose()
         {
             base.Dispose();
             for(int i = 0;i< grid.transform.childCount; ++i)
@@ -119,6 +119,16 @@ namespace ETHotfix
             uiList.Clear();
             emailList.Clear();
             Instance = null;
+
+            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            {
+                string versionUrl = GlobalConfigComponent.Instance.GlobalProto.GetUrl() + "StreamingAssets/" + "Version.txt";
+                //Log.Debug(versionUrl);
+                await webRequestAsync.DownloadAsync(versionUrl);
+
+                string test = webRequestAsync.Request.downloadHandler.text;
+                //Log.Debug(JsonHelper.ToJson(this.VersionConfig));
+            }
         }
     }
 }

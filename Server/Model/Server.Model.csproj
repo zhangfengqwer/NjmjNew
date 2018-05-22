@@ -128,9 +128,4 @@
     <Folder Include="Module\Numeric\" />
     <Folder Include="Njmj\Config\" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Libs\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

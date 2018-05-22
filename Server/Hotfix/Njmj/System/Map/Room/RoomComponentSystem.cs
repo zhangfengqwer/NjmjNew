@@ -44,5 +44,11 @@ namespace ETHotfix
                 return null;
             }
         }
+
+        public static void RemoveRoom(this RoomComponent self,Room room)
+        {
+            self.rooms.Remove(room.Id);
+            self.idleRooms.Remove(room);
+        }
     }
 }
