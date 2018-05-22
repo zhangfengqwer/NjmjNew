@@ -63,20 +63,21 @@ namespace ETModel
 		 public const ushort G2C_BagOperation = 10059;
 		 public const ushort C2G_UpdateEmail = 10060;
 		 public const ushort G2C_UpdateEmail = 10061;
-		 public const ushort Rank = 10062;
-		 public const ushort C2G_Rank = 10063;
-		 public const ushort G2C_Rank = 10064;
-		 public const ushort C2G_DailySign = 10065;
-		 public const ushort G2C_DailySign = 10066;
-		 public const ushort C2G_DailySignState = 10067;
-		 public const ushort G2C_DailySignState = 10068;
-		 public const ushort C2G_RealName = 10069;
-		 public const ushort G2C_RealName = 10070;
-		 public const ushort C2G_BindPhone = 10071;
-		 public const ushort G2C_BindPhone = 10072;
-		 public const ushort C2G_SendSms = 10073;
-		 public const ushort G2C_SendSms = 10074;
-		 public const ushort C2G_ChangeName = 10075;
-		 public const ushort G2C_ChangeName = 10076;
+		 public const ushort WealthRank = 10062;
+		 public const ushort GameRank = 10063;
+		 public const ushort C2G_Rank = 10064;
+		 public const ushort G2C_Rank = 10065;
+		 public const ushort C2G_DailySign = 10066;
+		 public const ushort G2C_DailySign = 10067;
+		 public const ushort C2G_DailySignState = 10068;
+		 public const ushort G2C_DailySignState = 10069;
+		 public const ushort C2G_RealName = 10070;
+		 public const ushort G2C_RealName = 10071;
+		 public const ushort C2G_BindPhone = 10072;
+		 public const ushort G2C_BindPhone = 10073;
+		 public const ushort C2G_SendSms = 10074;
+		 public const ushort G2C_SendSms = 10075;
+		 public const ushort C2G_ChangeName = 10076;
+		 public const ushort G2C_ChangeName = 10077;
 	}
 }
