@@ -18,40 +18,52 @@ namespace ETHotfix
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 
-	            //人满了
-	            if (room.seats.Count == 4)
+	            if (room.State == RoomState.Game)
 	            {
-	                roomComponent.readyRooms.Remove(room.Id);
-	                roomComponent.idleRooms.Add(room);
-	            }
-              
-	            //玩家主动退出 通知gate
-	            if (message.IsFromClient)
-	            {
-	                ActorProxyComponent proxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
-	                ActorProxy actorProxy = proxyComponent.Get(gamer.PlayerID);
-	                actorProxy.Send(new M2G_Actor_GamerExitRoom());
+	                gamer.isOffline = true;
+	                //玩家断开添加自动出牌组件
+	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
+	                    gamer.AddComponent<TrusteeshipComponent>();
 
-	                //消息广播给其他人
-	                room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
-	                //房间移除玩家
-	                room.Remove(gamer.UserID);
+	                Log.Info($"玩家{message.Uid}断开，切换为自动模式");
                 }
-	            else //游戏崩溃
+                else
 	            {
-	                //房间移除玩家
-	                room.Remove(gamer.UserID);
-                    //消息广播给其他人
-                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+	                //人满了
+	                if (room.seats.Count == 4)
+	                {
+	                    roomComponent.readyRooms.Remove(room.Id);
+	                    roomComponent.idleRooms.Add(room);
+	                }
+
+	                //玩家主动退出 通知gate
+	                if (message.IsFromClient)
+	                {
+	                    ActorProxyComponent proxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
+	                    ActorProxy actorProxy = proxyComponent.Get(gamer.PlayerID);
+	                    actorProxy.Send(new M2G_Actor_GamerExitRoom());
+
+	                    //消息广播给其他人
+	                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+	                    //房间移除玩家
+	                    room.Remove(gamer.UserID);
+	                }
+	                else //游戏崩溃
+	                {
+	                    //房间移除玩家
+	                    room.Remove(gamer.UserID);
+	                    //消息广播给其他人
+	                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+	                }
+	                gamer.Dispose();
+	                //房间没人就释放
+	                if (room.seats.Count == 0)
+	                {
+	                    Log.Debug($"房间释放:{room.Id}");
+	                    room.Dispose();
+	                    roomComponent.RemoveRoom(room);
+	                }
                 }
-	            gamer.Dispose();
-                //房间没人就释放
-	            if (room.seats.Count == 0)
-	            {
-	                Log.Debug($"房间释放:{room.Id}");
-	                room.Dispose();
-	                roomComponent.RemoveRoom(room);
-	            }
             }
 	        catch (Exception e)
 	        {

@@ -348,7 +348,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
@@ -441,7 +441,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8BF7\u8F93\u5165\u60A8\u8981\u53D1\u9001\u7684\u6D88\u606F"
+  m_Text: "\u8BF7\u8F93\u5165\u60A8\u8981\u53D1\u9001\u7684\u6D88\u606F\uFF0C30\u5B57\u4EE5\u5185\u3002"
 --- !u!114 &114620538577719880
 MonoBehaviour:
   m_ObjectHideFlags: 1

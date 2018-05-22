@@ -28,24 +28,11 @@ namespace ETHotfix
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     handCardsComponent.PlayCard(mahjongInfo, message.index);
-//                    uiRoomComponent.CanTing(cardsComponent.GetAllCards());
                 }
                 else
                 {
                     handCardsComponent.PlayOtherCard(mahjongInfo,uiRoomComponent.currentItem);
                 }
-
-//                if (uiRoomComponent.Operate(cardsComponent.GetAllCards(), mahjongInfo))
-//                {
-//                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerCanOperation());
-//                }
-//                else
-//                {
-////                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerCanOperation()
-////                    {
-////                            OperationType = 4
-////                    });
-//                }
             }
             catch (Exception e)
             {

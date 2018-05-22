@@ -1037,8 +1037,23 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
-		[ProtoMember(2)]
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsZiMo;
+
+		[ProtoMember(3)]
 		public List<GamerData> GamerDatas = new List<GamerData>();
+
+		[ProtoMember(4, IsRequired = true)]
+		public int YingHuaCount;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int RuanHuaCount;
+
+		[ProtoMember(6)]
+		public List<int> HuPaiTypes = new List<int>();
+
+		[ProtoMember(7, IsRequired = false)]
+		public long FangPaoUid;
 
 	}
 
@@ -1543,6 +1558,66 @@ namespace ETHotfix
 
 		[ProtoMember(4, IsRequired = true)]
 		public int HuaFei_20_RestCount;
+
+	}
+
+	[Message(HotfixOpcode.C2G_SetPlayerSound)]
+	[ProtoContract]
+	public partial class C2G_SetPlayerSound: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int PlayerSound;
+
+	}
+
+	[Message(HotfixOpcode.G2C_SetPlayerSound)]
+	[ProtoContract]
+	public partial class G2C_SetPlayerSound: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_UseLaBa)]
+	[ProtoContract]
+	public partial class C2G_UseLaBa: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Content;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseLaBa)]
+	[ProtoContract]
+	public partial class G2C_UseLaBa: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
 	}
 

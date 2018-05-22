@@ -26,6 +26,7 @@ namespace ETHotfix
                     response.PlayerInfo.Icon = playerInfo.Icon;
                     response.PlayerInfo.IsRealName = playerInfo.IsRealName;
                     response.PlayerInfo.Phone = playerInfo.Phone;
+                    response.PlayerInfo.PlayerSound = playerInfo.PlayerSound;
                     response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
                     reply(response);
                     return;

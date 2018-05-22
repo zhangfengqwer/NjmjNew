@@ -74,11 +74,13 @@ namespace ETHotfix
 
         // 自己杠掉的牌:杠掉的四张只要add一个就行
         public List<MahjongInfo> my_gangList = new List<MahjongInfo>();
+
     }
 
     public class Logic_NJMJ
     {
         static Logic_NJMJ s_instance = null;
+        public Dictionary<HuPaiType, int> HuPaiHuaCount = new Dictionary<HuPaiType, int>();
 
         List<MahjongInfo> m_mahjongList = new List<MahjongInfo>();
         List<MahjongInfo> m_differenceMahjongList = new List<MahjongInfo>();
@@ -89,9 +91,31 @@ namespace ETHotfix
             {
                 s_instance = new Logic_NJMJ();
                 s_instance.initMahjongList();
+                s_instance.initHuaCount();
             }
 
             return s_instance;
+        }
+
+        private void initHuaCount()
+        {
+            HuPaiHuaCount.Add(HuPaiType.Normal, 1);
+            HuPaiHuaCount.Add(HuPaiType.MenQing, 1);
+            HuPaiHuaCount.Add(HuPaiType.HunYiSe, 1);
+            HuPaiHuaCount.Add(HuPaiType.QingYiSe, 1);
+            HuPaiHuaCount.Add(HuPaiType.DuiDuiHu, 1);
+            HuPaiHuaCount.Add(HuPaiType.QuanQiuDuDiao, 1);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_Normal, 1);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_HaoHua, 1);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoHaoHua, 1);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoChaoHaoHua, 1);
+            HuPaiHuaCount.Add(HuPaiType.YaJue, 1);
+            HuPaiHuaCount.Add(HuPaiType.WuHuaGuo, 1);
+            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Small, 1);
+            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Big, 1);
+            HuPaiHuaCount.Add(HuPaiType.TianHu, 1);
+            HuPaiHuaCount.Add(HuPaiType.DiHu, 1);
+            HuPaiHuaCount.Add(HuPaiType.HaiDiLaoYue, 1);
         }
 
         void initMahjongList()

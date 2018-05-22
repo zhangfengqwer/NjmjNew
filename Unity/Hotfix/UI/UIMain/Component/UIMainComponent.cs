@@ -23,6 +23,9 @@ namespace ETHotfix
 
     public class UIMainComponent: Component
     {
+        private bool isDispose = false;
+        private List<string> labaList = new List<string>() { "1","2","3"};
+
         private Text playerNameTxt;
         private Text goldNumTxt;
         private Text wingNumTxt;
@@ -30,6 +33,7 @@ namespace ETHotfix
 
         private Image playerIcon;
 
+        private GameObject LaBa;
         private GameObject PlayerInfoBg;
         private GameObject BtnList_Down;
         private GameObject BtnList_Up;
@@ -56,6 +60,7 @@ namespace ETHotfix
             HuaFeiNumTxt = rc.Get<GameObject>("HuaFeiNumTxt").GetComponent<Text>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Image>();
 
+            LaBa = rc.Get<GameObject>("LaBa");
             PlayerInfoBg = rc.Get<GameObject>("PlayerInfoBg");
             BtnList_Down = rc.Get<GameObject>("BtnList_Down");
             BtnList_Up = rc.Get<GameObject>("BtnList_Up");
@@ -65,6 +70,7 @@ namespace ETHotfix
             Btn_GoldSelect = rc.Get<GameObject>("Btn_GoldSelect");
             Btn_GameSelect = rc.Get<GameObject>("Btn_GameSelect");
             Grid = rc.Get<GameObject>("Grid");
+
             // 转盘
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
             {
@@ -80,6 +86,12 @@ namespace ETHotfix
                     BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false);
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "btn_zuo");
                 }
+            });
+
+            // 喇叭
+            LaBa.transform.Find("Btn_laba").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa);
             });
 
             // 商城
@@ -104,7 +116,8 @@ namespace ETHotfix
             BtnList_Down.transform.Find("Grid/Btn_ChengJiu").GetComponent<Button>().onClick.Add(() =>
             {
                 //ToastScript.createToast("暂未开放：成就");
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
+                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
             });
 
             // 背包
@@ -203,6 +216,20 @@ namespace ETHotfix
             GetRankInfo();
 
             CommonUtil.ShowUI(UIType.UIDaily);
+
+            checkLaBa();
+        }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            base.Dispose();
+
+            isDispose = true;
         }
 
         private void ShowGoldRank()
@@ -356,6 +383,33 @@ namespace ETHotfix
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
             HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
+        }
+
+        public async void checkLaBa()
+        {
+            while (true)
+            {
+                if (labaList.Count > 0)
+                {
+                    LaBa.transform.Find("Text_content").GetComponent<Text>().text = labaList[0];
+                }
+                else
+                {
+                    LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
+                }
+
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+
+                if (isDispose)
+                {
+                    return;
+                }
+
+                if (labaList.Count > 0)
+                {
+                    labaList.RemoveAt(0);
+                }
+            }
         }
     }
 }

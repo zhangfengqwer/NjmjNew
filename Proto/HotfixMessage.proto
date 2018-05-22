@@ -365,7 +365,12 @@ message Actor_GamerCanOperation // IActorMessage
 message Actor_GamerHuPai // IActorMessage
 {
    required long Uid = 1;
-   repeated GamerData GamerDatas = 2;
+   required bool IsZiMo = 2;
+   repeated GamerData GamerDatas = 3;
+   required int YingHuaCount = 4;
+   required int RuanHuaCount = 5;
+   repeated int HuPaiTypes = 6;
+   optional long FangPaoUid = 7;
 }
 
 message Email //IMessage
@@ -544,6 +549,26 @@ message G2C_UseHuaFeiState // IResponse
 	required int	HuaFei_5_RestCount	 = 2;
 	required int	HuaFei_10_RestCount	 = 3;
 	required int	HuaFei_20_RestCount	 = 4;
+}
+
+message C2G_SetPlayerSound // IRequest
+{
+	required long	Uid	 = 1;
+	required int	PlayerSound	 = 2;
+}
+
+message G2C_SetPlayerSound // IResponse
+{
+}
+
+message C2G_UseLaBa // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Content	 = 2;
+}
+
+message G2C_UseLaBa // IResponse
+{
 }
 
 #endregion

@@ -196,6 +196,7 @@ namespace ETHotfix
                 readyName.text = this.GetParent<Gamer>().UserID + "";
                 readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
                 head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+                this.GetParent<Gamer>().Head = playerInfo.PlayerInfo.Icon;
             }
         }
 
@@ -209,7 +210,7 @@ namespace ETHotfix
             base.Dispose();
 
             //重置玩家UI
-            ResetPanel();
+//            ResetPanel();
         }
 
     }
