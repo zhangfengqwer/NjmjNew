@@ -9,6 +9,23 @@ namespace ETHotfix
 	[ActorMessageHandler(AppType.Map)]
 	public class Actor_GamerReadyHandler : AMActorHandler<Gamer,Actor_GamerReady>
 	{
+	    private static List<MahjongInfo> list = new List<MahjongInfo>()
+	    {
+            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+            new MahjongInfo(Consts.MahjongWeight.Wan_5),
+            new MahjongInfo(Consts.MahjongWeight.Wan_5),
+	    };
 
 	    protected override async Task Run(Gamer gamer, Actor_GamerReady message)
 	    {
@@ -80,8 +97,11 @@ namespace ETHotfix
                     //庄家多发一张牌
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
+//	                List<MahjongInfo> infos = bankerHandCards.GetAll();
+	                bankerHandCards.library = list;
+
                     //给客户端传送数据
-	                Actor_StartGame actorStartGame = new Actor_StartGame();
+                    Actor_StartGame actorStartGame = new Actor_StartGame();
 	                foreach (var itemGame in gamers)
 	                {
 	                    GamerData gamerData = new GamerData();
@@ -175,8 +195,11 @@ namespace ETHotfix
 	        {
 	            int cardIndex = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
 	            MahjongInfo grabMahjong = deskComponent.RestLibrary[cardIndex];
-	            //花牌
-	            if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
+
+	            deskComponent.RestLibrary.RemoveAt(cardIndex);
+
+                //花牌
+                if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
 	            {
 	                handCardsComponent.FaceCards.Add(grabMahjong);
                 }
@@ -185,7 +208,6 @@ namespace ETHotfix
 	                handCardsComponent.GetAll().Add(grabMahjong);
 	                break;
                 }
-                deskComponent.RestLibrary.RemoveAt(cardIndex);
             }
 	    }
 	}

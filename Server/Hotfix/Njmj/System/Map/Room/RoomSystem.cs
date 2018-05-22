@@ -158,6 +158,12 @@ namespace ETHotfix
         /// <param name="room"></param>
         public static async void GamerGrabCard(this Room room)
         {
+            foreach (var gamer in room.GetAll())
+            {
+                gamer.isGangFaWanPai = false;
+            }
+
+
             OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
             orderController.Turn();
             var currentGamer = room.Get(orderController.CurrentAuthority);

@@ -6,7 +6,7 @@ namespace ETModel
     public class HandCardsComponent : Component
     {
         //所有手牌
-        public readonly List<MahjongInfo> library = new List<MahjongInfo>();
+        public List<MahjongInfo> library = new List<MahjongInfo>();
 
         //出的牌
         public readonly List<MahjongInfo> PlayCards = new List<MahjongInfo>();

@@ -406,7 +406,8 @@ namespace ETHotfix
             }
             catch (Exception ex)
             {
-                Console.WriteLine("异常：" + ex);
+                Log.Error("异常：" + ex);
+                Log.Error("传来的牌：" + JsonHelper.ToJson(list));
             }
 
             return false;
@@ -442,7 +443,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-                        Console.WriteLine("找到对子：" + list[i].m_weight);
+//                        Console.WriteLine("找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                     }
                 }
@@ -460,8 +461,8 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-                        Console.WriteLine("找到对子：" + list[i].m_weight);
-                        Console.WriteLine("找到对子：" + list[i].m_weight);
+//                        Console.WriteLine("找到对子：" + list[i].m_weight);
+//                        Console.WriteLine("找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                         list_double.Add(list[i]);
                     }
@@ -501,7 +502,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-                        Console.WriteLine("找到刻子：" + list[i].m_weight);
+//                        Console.WriteLine("找到刻子：" + list[i].m_weight);
                         list_three.Add(list[i]);
                     }
                 }
@@ -517,7 +518,7 @@ namespace ETHotfix
             {
                 str += (list[i].m_weight + "、");
             }
-            Console.WriteLine(str);
+//            Console.WriteLine(str);
 
             if (list.Count % 3 != 0)
             {
@@ -551,7 +552,7 @@ namespace ETHotfix
                 // 顺子找到了
                 if ((second != null) && (third != null))
                 {
-                    Console.WriteLine("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+//                    Console.WriteLine("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                     list.Remove(first);
                     list.Remove(second);
                     list.Remove(third);
@@ -580,7 +581,7 @@ namespace ETHotfix
                     // 刻子找到了
                     if ((second != null) && (third != null))
                     {
-                        Console.WriteLine("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+//                        Console.WriteLine("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                         list.Remove(first);
                         list.Remove(second);
                         list.Remove(third);
@@ -1006,24 +1007,31 @@ namespace ETHotfix
         public List<MahjongInfo> checkTingPaiList(List<MahjongInfo> list)
         {
             List<MahjongInfo> tingpaiList = new List<MahjongInfo>();
-
-            for(int i = 0; i < m_differenceMahjongList.Count; i++)
+            try
             {
-                List<MahjongInfo> temp = new List<MahjongInfo>();
-                for (int j = 0; j < list.Count; j++)
+                for (int i = 0; i < m_differenceMahjongList.Count; i++)
                 {
-                    temp.Add(list[j]);
+                    List<MahjongInfo> temp = new List<MahjongInfo>();
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        temp.Add(list[j]);
+                    }
+
+                    MahjongInfo mahjongInfoTemp = m_differenceMahjongList[i];
+                    temp.Add(mahjongInfoTemp);
+
+                    if (isHuPai(temp))
+                    {
+                        tingpaiList.Add(mahjongInfoTemp);
+                    }
                 }
 
-                MahjongInfo mahjongInfoTemp = m_differenceMahjongList[i];
-                temp.Add(mahjongInfoTemp);
-
-                if (isHuPai(temp))
-                {
-                    tingpaiList.Add(mahjongInfoTemp);
-                }
             }
-
+            catch (Exception e)
+            {
+                Log.Error("听牌：" + e);
+            }
+           
             return tingpaiList;
         }
 

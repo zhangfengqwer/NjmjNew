@@ -36,34 +36,25 @@ namespace ETHotfix
                 //胡牌
                 if (message.OperationType == 2)
                 {
-                    if (room.CanHu(deskComponent.CurrentCard, mahjongInfos))
+                    //自摸
+                    if (orderController.CurrentAuthority == gamer.UserID)
                     {
-                        //ToDo 胡牌
-                        room.tokenSource.Cancel();
-
-                        Actor_GamerHuPai actorGamerHuPai = new Actor_GamerHuPai();
-                        actorGamerHuPai.Uid = gamer.UserID;
-
-                        HuPaiNeedData huPaiNeedData = new HuPaiNeedData();
-                        huPaiNeedData.my_lastMahjong = room.my_lastMahjong;
-                        huPaiNeedData.restMahjongCount = deskComponent.RestLibrary.Count;
-                        huPaiNeedData.isSelfZhuaPai = orderController.CurrentAuthority == gamer.UserID;
-                        huPaiNeedData.isZhuangJia = handCards.IsBanker;
-                        huPaiNeedData.isGetYingHuaBuPai = gamer.isGetYingHuaBuPai;
-                        huPaiNeedData.isGangEndBuPai = gamer.isGangEndBuPai;
-                        huPaiNeedData.isGangFaWanPai = gamer.isGangEndBuPai;
-                        huPaiNeedData.isFaWanPaiTingPai = gamer.isFaWanPaiTingPai;
-                        huPaiNeedData.my_yingHuaList = handCards.FaceCards;
-                        huPaiNeedData.my_gangList = handCards.GangCards;
-
-                        List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
-
-                        room.Broadcast(actorGamerHuPai);
-
-                        room.IsGameOver = true;
-                        gamer.IsCanHu = false;
-                        Log.Info("有人胡牌:"+JsonHelper.ToJson(huPaiTypes));
+                        if (Logic_NJMJ.getInstance().isHuPai(mahjongInfos))
+                        {
+                            HuPai(gamer, room, mahjongInfos);
+                        }
                     }
+                    //放炮
+                    else
+                    {
+                        if (room.CanHu(deskComponent.CurrentCard, mahjongInfos))
+                        {
+                            List<MahjongInfo> temp = new List<MahjongInfo>(mahjongInfos);
+                            temp.Add(deskComponent.CurrentCard);
+                            HuPai(gamer, room, temp);
+                        }
+                    }
+                 
                 }
                 //放弃
                 else if (message.OperationType == 3)
@@ -143,6 +134,68 @@ namespace ETHotfix
 	        catch (Exception e)
 	        {
 	            Log.Error(e);
+            }
+	    }
+
+        /// <summary>
+        ///  胡牌
+        /// </summary>
+        /// <param name="gamer"></param>
+        /// <param name="room"></param>
+        /// <param name="mahjongInfos"></param>
+	    private static void HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos)
+	    {
+	        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
+	        HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
+
+            room.tokenSource.Cancel();
+
+	        Actor_GamerHuPai actorGamerHuPai = new Actor_GamerHuPai();
+	        actorGamerHuPai.Uid = gamer.UserID;
+
+	        HuPaiNeedData huPaiNeedData = new HuPaiNeedData();
+	        huPaiNeedData.my_lastMahjong = room.my_lastMahjong;
+	        huPaiNeedData.restMahjongCount = deskComponent.RestLibrary.Count;
+	        huPaiNeedData.isSelfZhuaPai = orderController.CurrentAuthority == gamer.UserID;
+	        huPaiNeedData.isZhuangJia = handCards.IsBanker;
+	        huPaiNeedData.isGetYingHuaBuPai = gamer.isGetYingHuaBuPai;
+
+	        huPaiNeedData.isGangEndBuPai = gamer.isGangEndBuPai;
+
+	        huPaiNeedData.isGangFaWanPai = gamer.isGangFaWanPai;
+
+	        huPaiNeedData.isFaWanPaiTingPai = gamer.isFaWanPaiTingPai;
+	        huPaiNeedData.my_yingHuaList = handCards.FaceCards;
+
+	        huPaiNeedData.my_gangList = handCards.GangCards;
+	        huPaiNeedData.my_pengList = handCards.PengCards;
+
+	        List<List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
+
+	        foreach (var _gamer in room.GetAll())
+	        {
+	            if (_gamer.UserID == gamer.UserID)
+	                continue;
+	            HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+	            temp.Add(handCardsComponent.PengCards);
+	        }
+
+	        huPaiNeedData.other1_pengList = temp[0];
+	        huPaiNeedData.other2_pengList = temp[1];
+	        huPaiNeedData.other3_pengList = temp[2];
+
+
+            List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
+
+	        room.Broadcast(actorGamerHuPai);
+
+	        room.IsGameOver = true;
+	        gamer.IsCanHu = false;
+	        Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
+	        foreach (var item in huPaiTypes)
+	        {
+	            Log.Info("有人胡牌:" + item.ToString());
             }
 	    }
 

@@ -20,14 +20,16 @@ namespace ETHotfix
     public class UIRoomComponent: Component
     {
         public readonly GameObject[] GamersPanel = new GameObject[4];
+        public readonly GameObject[] HeadPanel = new GameObject[4];
 
         private Button changeTableBtn;
         private Button exitBtn;
-        private Button readyBtn;
+        public Button readyBtn;
         private Image timeImage;
 
         private GameObject desk;
-
+        //控制时间
+        private GameObject head;
         private Button giveUpBtn;
         private Button huBtn;
         private Button gangBtn;
@@ -36,6 +38,7 @@ namespace ETHotfix
         public GameObject currentItem = new GameObject();
         private Text restText;
         private GameObject players;
+        private CancellationTokenSource tokenSource;
 
         public void Awake()
         {
@@ -48,6 +51,13 @@ namespace ETHotfix
             this.players = rc.Get<GameObject>("Players");
 
             this.desk = rc.Get<GameObject>("Desk");
+            this.head = rc.Get<GameObject>("Head");
+
+            HeadPanel[0] = head.Get<GameObject>("Bottom");
+            HeadPanel[1] = head.Get<GameObject>("Right");
+            HeadPanel[2] = head.Get<GameObject>("Top");
+            HeadPanel[3] = head.Get<GameObject>("Left");
+
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
 
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -93,7 +103,7 @@ namespace ETHotfix
         public void AddGamer(Gamer gamer, int index)
         {
             GetParent<UI>().GetComponent<GamerComponent>().Add(gamer, index);
-            gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index], index);
+            gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index],this.HeadPanel[index],  index);
         }
 
         /// <summary>
@@ -112,13 +122,13 @@ namespace ETHotfix
             this.changeTableBtn.gameObject.SetActive(false);
             this.readyBtn.gameObject.SetActive(false);
             this.desk.SetActive(true);
+            this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
             players.SetActive(true);
             //剩余牌数
             restText.text = $"剩余牌数：{messageRestCount}";
         }
 
-        //控制时间
-        private CancellationTokenSource tokenSource;
+
 
         /// <summary>
         /// 开始倒计时
@@ -272,6 +282,11 @@ namespace ETHotfix
             }
 
             giveUpBtn.gameObject.SetActive(true);
+        }
+
+        public void AddReadyGamer(Gamer gamer, int index)
+        {
+
         }
     }
 }
