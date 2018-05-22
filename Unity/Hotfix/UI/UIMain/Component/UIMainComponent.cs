@@ -200,26 +200,13 @@ namespace ETHotfix
         private void ShowGoldRank()
         {
             GameObject obj = null;
-            MyRankStruct myRank = IsContains(myPlayer.Name);
-            WealthRank wealthRank = new WealthRank();
-            wealthRank.GoldNum = myPlayer.GoldNum;
-            wealthRank.Icon = myPlayer.Icon;
-            wealthRank.PlayerName = myPlayer.Name;
-            obj = GameObject.Instantiate(RankItem);
-            obj.transform.SetParent(Grid.transform);
-            obj.transform.SetAsFirstSibling();
-            obj.transform.localScale = Vector3.one;
-            obj.transform.localPosition = Vector3.zero;
-            UI ui1 = ComponentFactory.Create<UI, GameObject>(obj);
-            ui1.AddComponent<UIRankItemComponent>();
-            ui1.GetComponent<UIRankItemComponent>().SetGoldItem(wealthRank, myRank.numb);
-
             Btn_GoldSelect.gameObject.SetActive(true);
             Btn_GameSelect.gameObject.SetActive(false);
             //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
+                Debug.Log("=====");
                 if (i < rankItemList.Count)
                     obj = rankItemList[i];
                 else
@@ -235,6 +222,21 @@ namespace ETHotfix
                 }
                 uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
             }
+
+            MyRankStruct myRank = IsContains(myPlayer.Name);
+            WealthRank wealthRank = new WealthRank();
+            wealthRank.GoldNum = myPlayer.GoldNum;
+            wealthRank.Icon = myPlayer.Icon;
+            wealthRank.PlayerName = myPlayer.Name;
+            obj = GameObject.Instantiate(RankItem);
+            obj.transform.SetParent(Grid.transform);
+            obj.transform.SetAsFirstSibling();
+            obj.transform.localScale = Vector3.one;
+            obj.transform.localPosition = Vector3.zero;
+            UI ui1 = ComponentFactory.Create<UI, GameObject>(obj);
+            ui1.AddComponent<UIRankItemComponent>();
+            ui1.GetComponent<UIRankItemComponent>().SetGoldItem(wealthRank, myRank.numb);
+
         }
 
         private MyRankStruct IsContains(string name)

@@ -32,19 +32,23 @@ namespace ETHotfix
             RankTxt = rc.Get<GameObject>("RankTxt").GetComponent<Text>();
         }
 
-        public void SetGoldItem(WealthRank wealth,int index)
+        public void SetGoldItem(WealthRank wealth, int index)
         {
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
+            if (RankTxt.gameObject.activeInHierarchy)
+            {
+                if (index == 31)
+                    RankTxt.text = "未上榜";
+                else
+                    RankTxt.text = index.ToString();
+            }
             NameTxt.text = wealth.PlayerName;
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(wealth.GoldNum)
                                               .ToString();
-            RankTxt.text = index.ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(wealth.Icon);
             int rIcon = index;
-            if (index == 31)
-                RankTxt.text = "未上榜";
             if (RankImg.gameObject.activeInHierarchy)
                 RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite("Rank_" + rIcon);
         }
