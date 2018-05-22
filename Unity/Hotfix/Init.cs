@@ -58,20 +58,20 @@ namespace ETHotfix
                 // 测试
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
-                    list.Add(new MahjongInfo(6));
+                    list.Add(new MahjongInfo(1));
+                    list.Add(new MahjongInfo(2));
+                    list.Add(new MahjongInfo(3));
+                    list.Add(new MahjongInfo(5));
                     list.Add(new MahjongInfo(7));
                     list.Add(new MahjongInfo(8));
-                    list.Add(new MahjongInfo(11));
-                    list.Add(new MahjongInfo(12));
-                    list.Add(new MahjongInfo(14));
-                    list.Add(new MahjongInfo(16));
-                    list.Add(new MahjongInfo(17));
-                    list.Add(new MahjongInfo(27));
+                    list.Add(new MahjongInfo(18));
+                    list.Add(new MahjongInfo(21));
+                    list.Add(new MahjongInfo(23));
+                    list.Add(new MahjongInfo(24));
+                    list.Add(new MahjongInfo(26));
+                    list.Add(new MahjongInfo(26));
+                    list.Add(new MahjongInfo(28));
                     list.Add(new MahjongInfo(29));
-                    list.Add(new MahjongInfo(31));
-                    list.Add(new MahjongInfo(33));
-                    list.Add(new MahjongInfo(35));
-                    list.Add(new MahjongInfo(0));
 
                     // 判断是否胡牌
                     if (Logic_NJMJ.getInstance().isHuPai(list))
