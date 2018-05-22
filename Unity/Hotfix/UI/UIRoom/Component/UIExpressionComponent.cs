@@ -26,7 +26,7 @@ namespace ETHotfix
             UIExpression = rc.Get<GameObject>("UIExpression");
         }
 
-        public void SetExpression()
+        public void SetExpression(string expresstion)
         {
             
         }
