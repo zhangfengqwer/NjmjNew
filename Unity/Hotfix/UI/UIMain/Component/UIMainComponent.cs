@@ -172,55 +172,16 @@ namespace ETHotfix
             });
 
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
+            
+            
             Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
             {
-                
-                Btn_GoldSelect.gameObject.SetActive(true);
-                Btn_GameSelect.gameObject.SetActive(false);
-                //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
-                GameObject obj = null;
-                for(int i = 0;i< wealthRankList.Count; ++i)
-                {
-                    if (i < rankItemList.Count)
-                        obj = rankItemList[i];
-                    else
-                    {
-                        obj = GameObject.Instantiate(RankItem);
-                        obj.transform.SetParent(Grid.transform);
-                        obj.transform.localPosition = Vector3.zero;
-                        obj.transform.localScale = Vector3.one;
-                        rankItemList.Add(obj);
-                        UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                        ui.AddComponent<UIRankItemComponent>();
-                        uiList.Add(ui);
-                    }
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
-                }
+                ShowGoldRank();
             });
 
             Rank.transform.Find("Btn_game").GetComponent<Button>().onClick.Add(() =>
             {
-                Btn_GoldSelect.gameObject.SetActive(false);
-                Btn_GameSelect.gameObject.SetActive(true);
-                //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
-                GameObject obj = null;
-                for (int i = 0; i < gameRankList.Count; ++i)
-                {
-                    if (i < rankItemList.Count)
-                        obj = rankItemList[i];
-                    else
-                    {
-                        obj = GameObject.Instantiate(RankItem);
-                        obj.transform.SetParent(Grid.transform);
-                        obj.transform.localScale = Vector3.one;
-                        obj.transform.localPosition = Vector3.zero;
-                        rankItemList.Add(obj);
-                        UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                        ui.AddComponent<UIRankItemComponent>();
-                        uiList.Add(ui);
-                    }
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
-                }
+                ShowGameRank();
             });
 
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
@@ -228,6 +189,56 @@ namespace ETHotfix
             GetRankInfo();
 
             CommonUtil.ShowUI(UIType.UIDaily);
+        }
+
+        private void ShowGoldRank()
+        {
+            Btn_GoldSelect.gameObject.SetActive(true);
+            Btn_GameSelect.gameObject.SetActive(false);
+            //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            GameObject obj = null;
+            for (int i = 0; i < wealthRankList.Count; ++i)
+            {
+                if (i < rankItemList.Count)
+                    obj = rankItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(RankItem);
+                    obj.transform.SetParent(Grid.transform);
+                    obj.transform.localPosition = Vector3.zero;
+                    obj.transform.localScale = Vector3.one;
+                    rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+            }
+        }
+
+        private void ShowGameRank()
+        {
+            Btn_GoldSelect.gameObject.SetActive(false);
+            Btn_GameSelect.gameObject.SetActive(true);
+            //Rank.transform.Find("Scroll/Grid").parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            GameObject obj = null;
+            for (int i = 0; i < gameRankList.Count; ++i)
+            {
+                if (i < rankItemList.Count)
+                    obj = rankItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(RankItem);
+                    obj.transform.SetParent(Grid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+            }
         }
 
 		public async void GetRankInfo()
@@ -238,6 +249,7 @@ namespace ETHotfix
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
             myPlayer = g2cRank.PlayerInfo;
+            ShowGoldRank();
         }
 
         private async void RequestTaskInfo()
