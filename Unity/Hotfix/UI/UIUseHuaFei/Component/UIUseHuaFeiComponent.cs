@@ -51,12 +51,18 @@ namespace ETHotfix
         
         public void onClick_huafei5()
         {
+            if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            {
+                ToastScript.createToast("请先绑定手机号");
+                return;
+            }
+
             RequestUseHuaFei(5);
         }
         
         private async void RequestUseHuaFeiState()
         {
-            G2C_UseHuaFeiState g2cUseHuaFeiState = (G2C_UseHuaFeiState)await SessionWrapComponent.Instance.Session.Call(new C2G_UseHuaFeiState { Uid = PlayerInfoComponent.Instance.uid });
+            G2C_UseHuaFeiState g2cUseHuaFeiState = (G2C_UseHuaFeiState)await SessionWrapComponent.Instance.Session.Call(new C2G_UseHuaFeiState { Uid = PlayerInfoComponent.Instance.uid});
             
             int HuaFei_5_RestCount = g2cUseHuaFeiState.HuaFei_5_RestCount;
             
@@ -65,7 +71,7 @@ namespace ETHotfix
 
         private async void RequestUseHuaFei(int huafei)
         {
-            G2C_UseHuaFei g2cUseHuaFei = (G2C_UseHuaFei)await SessionWrapComponent.Instance.Session.Call(new C2G_UseHuaFei { Uid = PlayerInfoComponent.Instance.uid, HuaFei = huafei });
+            G2C_UseHuaFei g2cUseHuaFei = (G2C_UseHuaFei)await SessionWrapComponent.Instance.Session.Call(new C2G_UseHuaFei { Uid = PlayerInfoComponent.Instance.uid, HuaFei = huafei, Phone = PlayerInfoComponent.Instance.GetPlayerInfo().Phone });
 
             if (g2cUseHuaFei.Error != ErrorCode.ERR_Success)
             {
