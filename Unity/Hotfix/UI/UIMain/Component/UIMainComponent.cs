@@ -24,7 +24,7 @@ namespace ETHotfix
     public class UIMainComponent: Component
     {
         private bool isDispose = false;
-        private List<string> labaList = new List<string>() { "1","2","3"};
+        private List<string> labaList = new List<string>();
 
         private Text playerNameTxt;
         private Text goldNumTxt;
@@ -402,23 +402,19 @@ namespace ETHotfix
                 if (labaList.Count > 0)
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = labaList[0];
+                    labaList.RemoveAt(0);
                 }
                 else
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
                 }
 
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
-
                 if (isDispose)
                 {
                     return;
                 }
 
-                if (labaList.Count > 0)
-                {
-                    labaList.RemoveAt(0);
-                }
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
             }
         }
     }

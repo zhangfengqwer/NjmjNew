@@ -61,7 +61,7 @@ namespace ETHotfix
             RefreshWealthRank();
             RefreshGameRank();
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-            Game.Scene.GetComponent<DBOperatorComponet>().IsStop = true;
+            //Game.Scene.GetComponent<DBOperatorComponet>().IsStop = true;
         }
 
         public static async void AddItemToDB(UserBag info)

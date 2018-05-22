@@ -350,6 +350,7 @@
     <None Include="Assets\DOTween\Editor\DOTweenEditor.XML" />
     <None Include="Assets\DOTween\readme.txt" />
     <None Include="Assets\Res\Config\BuffConfig.txt" />
+    <None Include="Assets\Res\Config\ChatConfig.txt" />
     <None Include="Assets\Res\Config\GlobalProto.txt" />
     <None Include="Assets\Res\Config\ShopConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />

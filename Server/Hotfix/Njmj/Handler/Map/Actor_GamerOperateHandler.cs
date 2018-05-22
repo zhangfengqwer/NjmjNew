@@ -179,6 +179,7 @@ namespace ETHotfix
 
 	        foreach (var _gamer in room.GetAll())
 	        {
+	            _gamer.RemoveComponent<TrusteeshipComponent>();
 
                 if (_gamer.UserID == gamer.UserID)
 	                continue;
