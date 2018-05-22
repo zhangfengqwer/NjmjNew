@@ -38,7 +38,7 @@ namespace ETHotfix
             RankTxt.gameObject.SetActive(index >= 3);
             if (RankTxt.gameObject.activeInHierarchy)
             {
-                if (index == 31)
+                if (index == 30)
                     RankTxt.text = "未上榜";
                 else
                     RankTxt.text = index.ToString();
@@ -48,9 +48,11 @@ namespace ETHotfix
                                               .Append(wealth.GoldNum)
                                               .ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(wealth.Icon);
-            int rIcon = index;
+            string rIcon = new StringBuilder().Append("Rank_")
+                                              .Append(index)
+                                              .ToString() ;
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite("Rank_" + rIcon);
+                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(rIcon);
         }
 
         public void SetGameItem(GameRank gameRank,int index)
@@ -63,9 +65,11 @@ namespace ETHotfix
                                               .ToString();
             RankTxt.text = index.ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(gameRank.Icon);
-            int rIcon = index + 1;
+            string rIcon = new StringBuilder().Append("Rank_")
+                                           .Append(index)
+                                           .ToString();
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite("Rank_" + rIcon);
+                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(rIcon);
         }
     }
 }

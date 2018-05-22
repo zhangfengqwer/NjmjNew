@@ -221,40 +221,39 @@ namespace ETHotfix
                     ui.AddComponent<UIRankItemComponent>();
                     uiList.Add(ui);
                 }
-                uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
-            }
-
-            MyRankStruct myRank = IsContains(myPlayer.Name);
-            WealthRank wealthRank = new WealthRank();
-            wealthRank.GoldNum = myPlayer.GoldNum;
-            wealthRank.Icon = myPlayer.Icon;
-            wealthRank.PlayerName = myPlayer.Name;
-            obj = GameObject.Instantiate(RankItem);
-            obj.transform.SetParent(Grid.transform);
-            obj.transform.SetAsFirstSibling();
-            obj.transform.localScale = Vector3.one;
-            obj.transform.localPosition = Vector3.zero;
-            UI ui1 = ComponentFactory.Create<UI, GameObject>(obj);
-            ui1.AddComponent<UIRankItemComponent>();
-            ui1.GetComponent<UIRankItemComponent>().SetGoldItem(wealthRank, myRank.numb);
-
-        }
-
-        private MyRankStruct IsContains(string name)
-        {
-            MyRankStruct myRank = new MyRankStruct();
-            for (int i = 0;i< wealthRankList.Count; ++i)
-            {
-                if (wealthRankList[i].PlayerName == name)
+                if (i == wealthRankList.Count - 1)
                 {
-                    myRank.isRank = true;
-                    myRank.numb = i+1;
-                    return myRank;
+                    obj.transform.SetAsFirstSibling();
+                    int index = GetMyWealthRank();
+                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], index);
+                }
+                else
+                {
+                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
                 }
             }
-            myRank.isRank = false;
-            myRank.numb = 31;
-            return myRank;
+        }
+
+        public int GetMyWealthRank()
+        {
+            WealthRank wealth = wealthRankList[wealthRankList.Count - 1];
+            for(int i = 0;i< wealthRankList.Count; ++i)
+            {
+                if (wealth.PlayerName.Equals(wealthRankList[i].PlayerName))
+                    return i;
+            }
+            return -1;
+        }
+
+        public int GetMyGameRank()
+        {
+            GameRank wealth = gameRankList[gameRankList.Count - 1];
+            for (int i = 0; i < gameRankList.Count; ++i)
+            {
+                if (wealth.PlayerName.Equals(gameRankList[i].PlayerName))
+                    return i;
+            }
+            return -1;
         }
 
         private void ShowGameRank()
@@ -278,6 +277,8 @@ namespace ETHotfix
                     ui.AddComponent<UIRankItemComponent>();
                     uiList.Add(ui);
                 }
+                if (i == gameRankList.Count - 1)
+                    obj.transform.SetAsFirstSibling();
                 uiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
             }
         }
@@ -289,7 +290,7 @@ namespace ETHotfix
             //设置排行榜信息
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
-            myPlayer = g2cRank.PlayerInfo;
+            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
             ShowGoldRank();
         }
 

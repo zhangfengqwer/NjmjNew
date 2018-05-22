@@ -59,9 +59,9 @@ namespace ETHotfix
             AddSprite(taskBundle, "Task_104");
             AddSprite(taskBundle, "Task_105");
             AddSprite(taskBundle, "Task_106");
+            AddSprite(rankBundle, "Rank_0");
             AddSprite(rankBundle, "Rank_1");
             AddSprite(rankBundle, "Rank_2");
-            AddSprite(rankBundle, "Rank_3");
         }
 
         private void AddSprite(GameObject bundle,string iconName)

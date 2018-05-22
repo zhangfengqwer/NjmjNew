@@ -86,7 +86,7 @@ namespace ETHotfix
                 rank.PlayerName = gamePlayerList[i].Name;
                 rank.WinCount = gamePlayerList[i].WinGameCount;
                 rank.TotalCount = gamePlayerList[i].TotalGameCount;
-                rank.Icon = gamePlayerList[i].Name;
+                rank.Icon = gamePlayerList[i].Icon;
                 gameRankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(gameRankList);
@@ -102,14 +102,17 @@ namespace ETHotfix
             System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
-           
+            List<WealthRank> wealthList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
             for (int i = 0; i < playerBaseInfoList.Count; ++i)
             {
                 WealthRank rank = new WealthRank();
                 rank.PlayerName = playerBaseInfoList[i].Name;
                 rank.GoldNum = playerBaseInfoList[i].GoldNum;
-                rank.Icon = playerBaseInfoList[i].Name;
+                rank.Icon = playerBaseInfoList[i].Icon;
                 rankList.Add(rank);
+            }
+            for(int i = 0;i< wealthList.Count; ++i)
+            {
             }
             Game.Scene.GetComponent<RankDataComponent>().SetWealthRankData(rankList);
             stopwatch.Stop();
