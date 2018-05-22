@@ -30,7 +30,7 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                
+
                 #region AddShopInfo
                 List<ShopInfo> shopInfoList = new List<ShopInfo>();
                 for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
@@ -51,15 +51,16 @@ namespace ETHotfix
                 #endregion
 
                 #region AddItemInfo
-                List<ItemInfo> itemInfoList = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{userId}}}");
+                List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 if (itemInfoList.Count <= 0)
                 {
                     for (int i = 1; i < 9; ++i)
                     {
-                        ItemInfo item = new ItemInfo();
+                        UserBag item = new UserBag();
                         item.BagId = 100 + i;
                         item.Count = 10 + i;
-                        DBHelper.AddItemToDB(userId, item);
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
                     }
                 }
                 #endregion
@@ -70,7 +71,19 @@ namespace ETHotfix
                 response.PlayerId = user.Id;
                 response.Uid = userId;
                 response.ShopInfoList = shopInfoList;
-                
+
+                List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
+                response.BagList = new List<Bag>();
+                List<Bag> bagList = new List<Bag>();
+                for(int i = 0;i< bagInfoList.Count; ++i)
+                {
+                    Bag bag = new Bag();
+                    bag.ItemId = bagInfoList[i].BagId;
+                    bag.Count = bagInfoList[i].Count;
+                    bagList.Add(bag);
+                }
+                response.BagList = bagList;
+
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {
@@ -87,14 +100,13 @@ namespace ETHotfix
                                     .Append(CommonUtil.getCurDay()).ToString();
                     //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
                     emailInfo.Content = "加入南京麻将，就有好礼相送";
-                    emailInfo.IsRead = true;
+                    emailInfo.State = 0;
                     emailInfo.RewardItem = "2,100;1,100";
                     DBHelper.AddEmailInfoToDB(emailInfo);
                     #endregion
                 }
-
+                
                 reply(response);
-
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 			}
 			catch (Exception e)

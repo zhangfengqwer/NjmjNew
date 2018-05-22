@@ -35,7 +35,7 @@ namespace ETHotfix
         private GameObject bgItem = null;
         private List<GameObject> bgItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
-        private Item item;
+        private Bag item;
         private PropInfo propInfo;
         //private int row = 3;//初始三行
         //private int itemCount = 3;//每行个数
@@ -80,14 +80,14 @@ namespace ETHotfix
             GetBagInfoList();
         }
 
-        private async void GetBagInfoList()
+        private void GetBagInfoList()
         {
-            long uid = PlayerInfoComponent.Instance.uid;
-            G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
-            CreateItemList(g2cBag.ItemList);
+            //long uid = PlayerInfoComponent.Instance.uid;
+            //G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
+            CreateItemList(PlayerInfoComponent.Instance.GetBagInfoList());
         }
 
-        private void CreateItemList(List<Item> itemList)
+        private void CreateItemList(List<Bag> itemList)
         {
             GameObject obj = null;
             for (int i = 0; i < itemList.Count; ++i)
@@ -115,7 +115,7 @@ namespace ETHotfix
             }
         }
 
-        public void SetItemInfo(Item item)
+        public void SetItemInfo(Bag item)
         {
             this.item = item;
             propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
@@ -126,9 +126,10 @@ namespace ETHotfix
             descTxt.text = propInfo.desc;
         }
 
-        private async void UseItem(Item item)
+        private async void UseItem(Bag item)
         {
             G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+            GameUtil.changeData(item.ItemId, -1);
             if (g2cBag.result == 1)
             {
                 Debug.Log("Use Success");
@@ -137,11 +138,6 @@ namespace ETHotfix
             }   
             else
                 Debug.Log("Use Fail");
-        }
-
-        private void RefreshUI()
-        {
-
         }
 
         //private void SetBagItemL(int count)
@@ -173,6 +169,7 @@ namespace ETHotfix
             base.Dispose();
             uiList.Clear();
             bagItemList.Clear();
+            item = null;
         }
     }
 }

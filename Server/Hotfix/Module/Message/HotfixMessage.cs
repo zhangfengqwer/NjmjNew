@@ -97,6 +97,33 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2R_ChangeAccount)]
+	[ProtoContract]
+	public partial class C2R_ChangeAccount: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.R2C_ChangeAccount)]
+	[ProtoContract]
+	public partial class R2C_ChangeAccount: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.Actor_ForceOffline)]
 	[ProtoContract]
 	public partial class Actor_ForceOffline: IActorMessage
@@ -239,6 +266,9 @@ namespace ETHotfix
 		[ProtoMember(4)]
 		public List<TaskInfo> TaskInfoList = new List<TaskInfo>();
 
+		[ProtoMember(5)]
+		public List<Bag> BagList = new List<Bag>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -299,6 +329,27 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string Icon;
 
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsRealName;
+
+		[ProtoMember(6, IsRequired = true)]
+		public string Phone;
+
+		[ProtoMember(7, IsRequired = true)]
+		public int RestChangeNameCount;
+
+		[ProtoMember(8, IsRequired = true)]
+		public int TotalGameCount;
+
+		[ProtoMember(9, IsRequired = true)]
+		public int WinGameCount;
+
+		[ProtoMember(10, IsRequired = true)]
+		public int PlayerSound;
+
+		[ProtoMember(11, IsRequired = true)]
+		public string VipTime;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]
@@ -328,6 +379,69 @@ namespace ETHotfix
 
 		[ProtoMember(8, IsRequired = true)]
 		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.GetItemInfo)]
+	[ProtoContract]
+	public partial class GetItemInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int ItemID;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int Count;
+
+	}
+
+	[Message(HotfixOpcode.C2G_BuyItem)]
+	[ProtoContract]
+	public partial class C2G_BuyItem: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public GetItemInfo Info;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Cost;
+
+	}
+
+	[Message(HotfixOpcode.Actor_UpDateData)]
+	[ProtoContract]
+	public partial class Actor_UpDateData: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BuyItem)]
+	[ProtoContract]
+	public partial class G2C_BuyItem: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool Result;
 
 	}
 
@@ -924,13 +1038,49 @@ namespace ETHotfix
 		public string Date;
 
 		[ProtoMember(4, IsRequired = true)]
-		public bool IsRead;
+		public int State;
 
 		[ProtoMember(5, IsRequired = true)]
 		public string RewardItem;
 
 		[ProtoMember(6, IsRequired = true)]
 		public long EId;
+
+	}
+
+	[Message(HotfixOpcode.C2G_GetItem)]
+	[ProtoContract]
+	public partial class C2G_GetItem: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2)]
+		public List<GetItemInfo> InfoList = new List<GetItemInfo>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public long MailId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetItem)]
+	[ProtoContract]
+	public partial class G2C_GetItem: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool Result;
 
 	}
 
@@ -964,12 +1114,12 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.Item)]
+	[Message(HotfixOpcode.Bag)]
 	[ProtoContract]
-	public partial class Item: IMessage
+	public partial class Bag: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public long ItemId;
+		public int ItemId;
 
 		[ProtoMember(2, IsRequired = true)]
 		public int Count;
@@ -1002,7 +1152,7 @@ namespace ETHotfix
 		public string Message { get; set; }
 
 		[ProtoMember(1)]
-		public List<Item> ItemList = new List<Item>();
+		public List<Bag> ItemList = new List<Bag>();
 
 	}
 
@@ -1036,6 +1186,81 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long EId;
+
+	}
+
+	[Message(HotfixOpcode.WealthRank)]
+	[ProtoContract]
+	public partial class WealthRank: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string PlayerName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoldNum;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long GoldTicket;
+
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.GameRank)]
+	[ProtoContract]
+	public partial class GameRank: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string PlayerName;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int WinCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int TotalCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public string Icon;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Rank)]
+	[ProtoContract]
+	public partial class C2G_Rank: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int RankType;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Rank)]
+	[ProtoContract]
+	public partial class G2C_Rank: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<WealthRank> RankList = new List<WealthRank>();
+
+		[ProtoMember(2)]
+		public List<GameRank> GameRankList = new List<GameRank>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public PlayerInfo PlayerInfo;
 
 	}
 
@@ -1105,6 +1330,204 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public string TomorrowReward;
+
+	}
+
+	[Message(HotfixOpcode.C2G_RealName)]
+	[ProtoContract]
+	public partial class C2G_RealName: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string IDNumber;
+
+	}
+
+	[Message(HotfixOpcode.G2C_RealName)]
+	[ProtoContract]
+	public partial class G2C_RealName: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_BindPhone)]
+	[ProtoContract]
+	public partial class C2G_BindPhone: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Phone;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Code;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BindPhone)]
+	[ProtoContract]
+	public partial class G2C_BindPhone: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_SendSms)]
+	[ProtoContract]
+	public partial class C2G_SendSms: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Phone;
+
+	}
+
+	[Message(HotfixOpcode.G2C_SendSms)]
+	[ProtoContract]
+	public partial class G2C_SendSms: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_ChangeName)]
+	[ProtoContract]
+	public partial class C2G_ChangeName: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Name;
+
+	}
+
+	[Message(HotfixOpcode.G2C_ChangeName)]
+	[ProtoContract]
+	public partial class G2C_ChangeName: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_UseHuaFei)]
+	[ProtoContract]
+	public partial class C2G_UseHuaFei: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int HuaFei;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Phone;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseHuaFei)]
+	[ProtoContract]
+	public partial class G2C_UseHuaFei: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_UseHuaFeiState)]
+	[ProtoContract]
+	public partial class C2G_UseHuaFeiState: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseHuaFeiState)]
+	[ProtoContract]
+	public partial class G2C_UseHuaFeiState: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int HuaFei_1_RestCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int HuaFei_5_RestCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int HuaFei_10_RestCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int HuaFei_20_RestCount;
 
 	}
 

@@ -25,7 +25,7 @@ namespace ETHotfix
                         Email email = new Email();
                         email.EmailTitle = info.EmailTitle;
                         email.Content = info.Content;
-                        email.IsRead = info.IsRead;
+                        email.State = info.State;
                         email.RewardItem = info.RewardItem;
                         email.Date = info.Date;
                         email.EId = info.Id;

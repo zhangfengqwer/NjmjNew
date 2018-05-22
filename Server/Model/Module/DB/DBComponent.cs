@@ -32,9 +32,9 @@ namespace ETModel
 			return this.database.GetCollection<ComponentWithId>(name);
 		}
 
-	    public IMongoCollection<PlayerBaseInfo> GetPlayerBaseInfoCollection(string name)
-		{
-			return this.database.GetCollection<PlayerBaseInfo>(name);
-		}
-	}
+        public IMongoCollection<PlayerBaseInfo> GetPlayerBaseInfoCollection(string name)
+        {
+            return this.database.GetCollection<PlayerBaseInfo>(name);
+        }
+    }
 }

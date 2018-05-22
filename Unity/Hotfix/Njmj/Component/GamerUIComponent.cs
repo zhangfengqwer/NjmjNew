@@ -164,6 +164,13 @@ namespace ETHotfix
         public void ResetPrompt()
         {
             prompt.text = "";
+            readyText.text = "";
+            if (this.GetParent<Gamer>().UserID == PlayerInfoComponent.Instance.uid)
+            {
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.readyBtn.interactable = true;
+            }
         }
 
         /// <summary>

@@ -7,18 +7,13 @@ namespace ETHotfix
     {
         public override void Update(DBOperatorComponet self)
         {
-            self.JudgeTime();
+            self.JudgeTimeAsync();
         }
     }
 
     public static class DBOepration
     {
-        public static void Refresh()
-        {
-            DBHelper.RefreshDB();
-        }
-
-        public static void JudgeTime(this DBOperatorComponet componet)
+        public static async void JudgeTimeAsync(this DBOperatorComponet componet)
         {
             int year = CommonUtil.getCurYear();
             int month = CommonUtil.getCurMonth();
@@ -28,12 +23,19 @@ namespace ETHotfix
             int sec = CommonUtil.getCurSecond();
 
             // 每日零点
-            if ((hour == 17) && (min == 0) && (sec == 0))
+            if ((hour == 0) && (min == 0) && (sec == 0))
             {
-                // 刷新任务
                 Log.Info("刷新数据库");
-                Refresh();
+                // 刷新任务
+                DBHelper.RefreshDB();
                 // 刷新签到
+            }
+            
+            if ((sec == 0) && componet.IsStop)
+            {
+                componet.IsStop = false;
+                DBHelper.RefreshRankFromDB();
+                Log.Info("=====");
             }
         }
     }

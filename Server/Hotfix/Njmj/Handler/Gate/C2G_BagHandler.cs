@@ -13,12 +13,12 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<ItemInfo> bagInfoList = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{message.UId}}}");
-                response.ItemList = new List<Item>();
-                List<Item> itemList = new List<Item>();
+                List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId}}}");
+                response.ItemList = new List<Bag>();
+                List<Bag> itemList = new List<Bag>();
                 for(int i = 0;i< bagInfoList.Count; ++i)
                 {
-                    Item item = new Item();
+                    Bag item = new Bag();
                     item.ItemId = bagInfoList[i].BagId;
                     item.Count = bagInfoList[i].Count;
                     itemList.Add(item);

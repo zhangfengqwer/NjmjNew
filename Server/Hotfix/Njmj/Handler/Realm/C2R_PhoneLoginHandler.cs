@@ -60,7 +60,7 @@ namespace ETHotfix
                     // 用户不存在，走注册流程
                     else
                     {
-                        AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
+                        AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
                         accountInfo.Phone = message.Phone;
                         accountInfo.Token = CommonUtil.getToken(message.Phone);
                         accountInfo.MachineId = message.MachineId;

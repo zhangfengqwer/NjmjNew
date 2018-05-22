@@ -25,10 +25,11 @@ namespace ETHotfix
             itemNum = rc.Get<GameObject>("ItemNum").GetComponent<Text>();
         }
 
-        public void SetRewardInfo(string spriteName,string num)
+        public void SetRewardInfo(string spriteName,int num)
         {
             rewardItem.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(spriteName);
-            itemNum.text = num;
+            rewardItem.SetNativeSize();
+            itemNum.text = num.ToString();
         }
     }
 }

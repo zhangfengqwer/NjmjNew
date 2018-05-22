@@ -29,6 +29,15 @@ message R2C_ThirdLogin // IResponse
 	required int64 	Key	    = 2;
 }
 
+message C2R_ChangeAccount // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message R2C_ChangeAccount // IResponse
+{
+}
+
 message Actor_ForceOffline // IActorMessage
 {
 }
@@ -75,6 +84,7 @@ message G2C_LoginGate // IResponse
 	required int64 Uid = 2;//用户ID
 	repeated ShopInfo ShopInfoList = 3;//商店商品
 	repeated TaskInfo TaskInfoList = 4;//任务列表
+	repeated Bag BagList = 5;//背包列表
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -98,6 +108,13 @@ message PlayerInfo // IMessage
 	required int64 GoldNum = 2;//金币数量
 	required int64 WingNum  = 3;//元宝数量
 	required string Icon = 4;//用户头像
+	required bool IsRealName = 5;//是否已经实名认证
+	required string Phone = 6; //
+	required int RestChangeNameCount = 7;//是否已经改过一次名字
+	required int TotalGameCount = 8;//总局数
+	required int WinGameCount = 9;//胜局数
+	required int PlayerSound = 10;//
+	required string VipTime = 11; //
 }
 
 message ShopInfo //IMessage
@@ -110,6 +127,29 @@ message ShopInfo //IMessage
 	required int CurrencyType = 6;//
 	required string Items = 7;
 	required string Icon = 8;
+}
+
+message GetItemInfo //IMessage
+{
+	required int ItemID = 1;
+	required int Count = 2;
+}
+
+message C2G_BuyItem //IRequest
+{
+	required long UId = 1;	
+	required GetItemInfo Info = 2;
+	required int Cost = 3;
+}
+
+message Actor_UpDateData //IActorMessage
+{
+	required PlayerInfo playerInfo = 1;
+}
+
+message G2C_BuyItem //IResponse
+{
+	required bool Result = 1; 
 }
 
 message TaskProgress //IMessage
@@ -325,9 +365,21 @@ message Email //IMessage
 	required string EmailTitle = 1;//邮件标题
 	required string Content = 2;//邮件内容
 	required string Date = 3;//邮件日期
-	required bool IsRead = 4;//是否已经读过
+	required int State = 4 [default = 0];//邮件状态 1 已读，2 删除
 	required string RewardItem = 5;//奖励物品
 	required long EId = 6;//邮箱ID
+}
+
+message C2G_GetItem //IRequest
+{
+	required long UId = 1;
+	repeated GetItemInfo InfoList = 2;
+	required long MailId = 3; 
+}
+
+message G2C_GetItem //IResponse
+{
+	required bool Result = 1;
 }
 
 message C2G_Email //IRequest
@@ -340,9 +392,9 @@ message G2C_Email //IResponse
 	repeated Email EmailInfoList = 1;//邮件列表
 }
 
-message Item //IMessage
+message Bag //IMessage
 {
-	required int64 ItemId = 1;//物品ID
+	required int ItemId = 1;//物品ID
 	required int Count = 2;//拥有数量
 }
 
@@ -353,7 +405,7 @@ message C2G_BagOperation //IRequest
 
 message G2C_BagOperation //IResponse
 {
-	repeated Item ItemList = 1;//物品列表
+	repeated Bag ItemList = 1;//物品列表
 }
 
 message C2G_UpdateEmail //IRequest
@@ -362,9 +414,39 @@ message C2G_UpdateEmail //IRequest
 	required bool IsRead = 2;
 }
 
+
 message G2C_UpdateEmail //IResponse
 {
 	required long EId = 1; 
+}
+
+message WealthRank // IMessage
+{
+	required string PlayerName = 1;
+	required long GoldNum = 2;
+	required long GoldTicket = 3;
+	required string Icon = 4;
+}
+
+message GameRank // IMessage
+{
+	required string PlayerName = 1;
+	required int WinCount = 2;
+	required int TotalCount = 3;
+	required string Icon = 4;
+}
+
+message C2G_Rank //IRequest
+{
+	required long Uid = 1;
+	required int RankType = 2 [default = 0];
+}
+
+message G2C_Rank //IResponse
+{
+	repeated WealthRank RankList = 1;
+	repeated GameRank GameRankList = 2;
+	required PlayerInfo PlayerInfo = 3;
 }
 
 message C2G_DailySign // IRequest
@@ -388,6 +470,73 @@ message G2C_DailySignState // IResponse
 	required bool TodayIsSign = 1;
 	required string TodayReward = 2;
 	required string TomorrowReward = 3;
+}
+
+message C2G_RealName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+	required string	IDNumber	 = 3;
+}
+
+message G2C_RealName // IResponse
+{
+}
+
+message C2G_BindPhone // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+	required string	Code = 3;		// 验证码
+}
+
+message G2C_BindPhone // IResponse
+{
+
+}
+
+message C2G_SendSms // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+}
+
+message G2C_SendSms // IResponse
+{
+}
+
+message C2G_ChangeName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+}
+
+message G2C_ChangeName // IResponse
+{
+}
+
+message C2G_UseHuaFei // IRequest
+{
+	required long	Uid	 = 1;
+	required int	HuaFei	 = 2;
+	required string	Phone	 = 3;
+}
+
+message G2C_UseHuaFei // IResponse
+{
+}
+
+message C2G_UseHuaFeiState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_UseHuaFeiState // IResponse
+{
+	required int	HuaFei_1_RestCount	 = 1;
+	required int	HuaFei_5_RestCount	 = 2;
+	required int	HuaFei_10_RestCount	 = 3;
+	required int	HuaFei_20_RestCount	 = 4;
 }
 
 #endregion

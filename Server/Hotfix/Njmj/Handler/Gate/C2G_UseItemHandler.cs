@@ -13,7 +13,7 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<ItemInfo> itemInfos = await proxyComponent.QueryJson<ItemInfo>($"{{UId:{message.UId},BagId:{message.ItemId}}}");
+                List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{message.ItemId}}}");
                 if(itemInfos.Count <0)
                 {
                     response.Message = "数据不一致";

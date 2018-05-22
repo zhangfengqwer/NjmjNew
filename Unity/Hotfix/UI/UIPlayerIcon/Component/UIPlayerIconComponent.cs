@@ -50,15 +50,25 @@ namespace ETHotfix
             saveBtn.onClick.Add(() =>
             {
                 tip.SetActive(true);
-                Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon = curIcon.sprite.name.ToString();
-                PlayerInfo playerInfo = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo();
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().UpDatePlayerInfo();
+                UpdateIcon();
             });
 
             sureBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIIcon);
             });
+        }
+
+        private async void UpdateIcon()
+        {
+            Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon = curIcon.sprite.name.ToString();
+            G2C_UpdatePlayerInfo g2CPlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo()
+            {
+                Uid = PlayerInfoComponent.Instance.uid,
+                playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()
+            });
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
         }
 
         private void CreatePlayerIconList()

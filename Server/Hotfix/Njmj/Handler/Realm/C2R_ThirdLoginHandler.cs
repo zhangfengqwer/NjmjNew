@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using ETModel;
+using MongoDB.Driver;
 
 namespace ETHotfix
 {
@@ -40,7 +41,7 @@ namespace ETHotfix
                 // 用户不存在，走注册流程
                 else
                 {
-                    AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(IdGenerater.GenerateId());
+                    AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
                     accountInfo.Third_Id = message.Third_Id;
                     accountInfo.MachineId = message.MachineId;
                     accountInfo.ChannelName = message.MachineId;

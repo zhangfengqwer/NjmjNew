@@ -2,6 +2,6 @@
 {
     public class DBOperatorComponet : Component
     {
-        public bool IsOpearte = false;
+        public bool IsStop = true;
     }
 }

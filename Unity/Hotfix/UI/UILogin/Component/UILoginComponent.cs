@@ -142,7 +142,7 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            string Third_Id = "wx_123";
+            string Third_Id = "wx_123456";
             OnThirdLogin(Third_Id);
         }
 
@@ -229,8 +229,8 @@ namespace ETHotfix
 
                 connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
 				Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-				Game.Scene.AddComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
-				ETModel.Game.Scene.AddComponent<SessionComponent>().Session = gateSession;
+				Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
+				ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
 				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
 
                 ToastScript.createToast("登录成功");
@@ -249,8 +249,11 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
                 G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
+
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
+                PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
+
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
@@ -282,8 +285,8 @@ namespace ETHotfix
 
                 connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                Game.Scene.AddComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
-                ETModel.Game.Scene.AddComponent<SessionComponent>().Session = gateSession;
+                Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
+                ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
@@ -296,6 +299,7 @@ namespace ETHotfix
                 G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
+                PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }

@@ -14,7 +14,7 @@ namespace ETHotfix
 			{
 				DBCacheComponent dbCacheComponent = Game.Scene.GetComponent<DBCacheComponent>();
 				List<ComponentWithId> components = await dbCacheComponent.GetJson(message.CollectionName, message.Json);
-				response.Components = components;
+                response.Components = components;
 
 				reply(response);
 			}

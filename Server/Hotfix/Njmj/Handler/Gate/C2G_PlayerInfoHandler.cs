@@ -23,6 +23,9 @@ namespace ETHotfix
                     response.PlayerInfo.GoldNum = playerInfo.GoldNum;
                     response.PlayerInfo.WingNum = playerInfo.WingNum;
                     response.PlayerInfo.Icon = playerInfo.Icon;
+                    response.PlayerInfo.IsRealName = playerInfo.IsRealName;
+                    response.PlayerInfo.Phone = playerInfo.Phone;
+                    response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
                     reply(response);
                     return;
                 }
@@ -40,7 +43,14 @@ namespace ETHotfix
                     playerBaseInfo.Name = "默认";
                     playerBaseInfo.GoldNum = 10;
                     playerBaseInfo.WingNum = 0;
-                    playerBaseInfo.Icon = "Icon1";
+                    playerBaseInfo.Icon = "f_icon1";
+                    playerBaseInfo.Phone = "";
+                    playerBaseInfo.IsRealName = false;
+                    playerBaseInfo.TotalGameCount = 0;
+                    playerBaseInfo.WingNum = 0;
+                    playerBaseInfo.VipTime = "2018-05-18 00:00:00";
+                    playerBaseInfo.PlayerSound = Common_Random.getRandom(1,4);
+                    playerBaseInfo.RestChangeNameCount = 1;
                     await proxyComponent.Save(playerBaseInfo);
 
                     response.PlayerInfo.Name = playerBaseInfo.Name;

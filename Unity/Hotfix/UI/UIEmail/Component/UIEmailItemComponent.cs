@@ -7,8 +7,8 @@ namespace ETHotfix
 {
     public class RewardStruct
     {
-        public string rewardSpriteName;
-        public string rewardNum;
+        public int itemId;
+        public int rewardNum;
     }
 
     [ObjectSystem]
@@ -30,7 +30,7 @@ namespace ETHotfix
         private Text date;
         private GameObject flag;
         private Email email;
-        private bool isRead;
+        private int state;
         private GameObject rewardItem;
         private List<GameObject> rewardItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
@@ -49,14 +49,33 @@ namespace ETHotfix
             rewardItem = CommonUtil.getGameObjByBundle(UIType.UIRewardItem);
             readBtn.onClick.Add(() =>
             {
-                ReadEmail();
+                //ReadEmail();
+            });
+            get.onClick.Add(() =>
+            {
+                GetItem();
             });
         }
 
-        private async void ReadEmail()
+        private async void GetItem()
         {
-            G2C_UpdateEmail c2gUpdateEmail = (G2C_UpdateEmail)await
-                SessionWrapComponent.Instance.Session.Call(new C2G_UpdateEmail() { EId = email.EId, IsRead = false });
+            List<GetItemInfo> itemList = new List<GetItemInfo>();
+            for(int i = 0;i< rewardList.Count; ++i)
+            {
+                GetItemInfo itemInfo = new GetItemInfo();
+                itemInfo.ItemID = rewardList[i].itemId;
+                itemInfo.Count = rewardList[i].rewardNum;
+                itemList.Add(itemInfo);
+            }
+            G2C_GetItem g2cGetItem = (G2C_GetItem)await SessionWrapComponent.Instance
+                .Session.Call(new C2G_GetItem
+                {
+                    UId = PlayerInfoComponent.Instance.uid,
+                    InfoList = itemList,
+                    MailId = email.EId
+                });
+            get.gameObject.SetActive(false);
+            GameUtil.changeDataWithStr(email.RewardItem, ',');
             flag.SetActive(false);
         }
 
@@ -66,20 +85,20 @@ namespace ETHotfix
             title.text = email.EmailTitle;
             content.text = email.Content;
             date.text = email.Date;
-            isRead = email.IsRead;
+            state = email.State;
             string reward = email.RewardItem;
-            flag.SetActive(isRead);
-            get.gameObject.SetActive(false);
+            flag.SetActive(state == 0);
             if (reward != null && !reward.Equals(""))
             {
-                get.gameObject.SetActive(true);
+                get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
                 {
-                    string[] itemArr = rewardArr[i].Split(',');
+                    int itemId = CommonUtil.splitStr_Start(rewardArr[i], ',');
+                    int rewardNum = CommonUtil.splitStr_End(rewardArr[i], ',');
                     RewardStruct rewardStruct = new RewardStruct();
-                    rewardStruct.rewardSpriteName = itemArr[0];
-                    rewardStruct.rewardNum = itemArr[1];
+                    rewardStruct.itemId = itemId;
+                    rewardStruct.rewardNum = rewardNum;
                     rewardList.Add(rewardStruct);
                 }
                 SetRewardItemInfo();
@@ -104,8 +123,7 @@ namespace ETHotfix
                     rewardItemList.Add(obj);
                     uiList.Add(ui);
                 }
-                Debug.Log(rewardList[i].rewardSpriteName);
-                uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].rewardSpriteName, rewardList[i].rewardNum);
+                uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].itemId.ToString(), rewardList[i].rewardNum);
             }
         }
 

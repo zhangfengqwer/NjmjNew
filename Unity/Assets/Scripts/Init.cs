@@ -31,9 +31,10 @@ namespace ETModel
 				Game.Scene.AddComponent<UnitComponent>();
 				Game.Scene.AddComponent<ClientFrameComponent>();
 				Game.Scene.AddComponent<UIComponent>();
+                Game.Scene.AddComponent<SessionComponent>();
 
                 //新增Component
-			    Game.Scene.AddComponent<SoundComponent>();
+                Game.Scene.AddComponent<SoundComponent>();
 
 				// 下载ab包
 				await BundleHelper.DownloadBundle();
@@ -50,7 +51,7 @@ namespace ETModel
 				Game.Hotfix.GotoHotfix();
 
                 Game.EventSystem.Run(EventIdType.TestHotfixSubscribMonoEvent, "TestHotfixSubscribMonoEvent");
-			}
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);

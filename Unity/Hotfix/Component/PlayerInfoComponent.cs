@@ -24,6 +24,7 @@ namespace ETHotfix
         private PlayerInfo playerInfo;
         private List<ShopInfo> shopInfoList;//商店信息
         private List<TaskInfo> taskInfoList;//任务信息
+        private List<Bag> bagInfoList;//背包信息
 
         public void SetPlayerInfo(PlayerInfo playerInfo)
         {
@@ -38,7 +39,11 @@ namespace ETHotfix
         public void SetShopInfoList(List<ShopInfo> shopInfoList)
         {
             this.shopInfoList = shopInfoList;
-            
+        }
+
+        public void SetBagInfoList(List<Bag> bagInfoList)
+        {
+            this.bagInfoList = bagInfoList;
         }
 
         public void SetTaskInfoList(List<TaskInfo> taskInfoList)
@@ -54,6 +59,11 @@ namespace ETHotfix
         public List<TaskInfo> GetTaskInfoList()
         {
             return taskInfoList;
+        }
+
+        public List<Bag> GetBagInfoList()
+        {
+            return bagInfoList;
         }
 
         public void Awake()
