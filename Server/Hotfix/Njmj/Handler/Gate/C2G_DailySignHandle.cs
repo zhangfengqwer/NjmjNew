@@ -93,10 +93,11 @@ namespace ETHotfix
 
         static public int getRewardNum(int day)
         {
-            int minNum = 100;
-            int maxNum = 500;
+            int minNum = 5000;
+            int maxNum = 7500;
+            int addNum = 500;
 
-            int num = minNum * day;
+            int num = minNum + ((day - 1) * addNum);
             if (num > maxNum)
             {
                 num = maxNum;

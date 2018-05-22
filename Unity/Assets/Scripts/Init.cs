@@ -51,7 +51,7 @@ namespace ETModel
 				Game.Hotfix.GotoHotfix();
 
                 Game.EventSystem.Run(EventIdType.TestHotfixSubscribMonoEvent, "TestHotfixSubscribMonoEvent");
-			}
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);

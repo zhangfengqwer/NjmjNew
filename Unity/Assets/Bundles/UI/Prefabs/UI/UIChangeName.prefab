@@ -265,10 +265,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c8117b202a941b741b11b80e3e4f24c3, type: 3}
-    m_FontSize: 23
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -490,10 +490,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: c8117b202a941b741b11b80e3e4f24c3, type: 3}
-    m_FontSize: 23
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -597,7 +597,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5B9E\u540D\u8BA4\u8BC1"
+  m_Text: "\u4FEE\u6539\u6635\u79F0"
 --- !u!114 &114631114769845594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -926,7 +926,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 784.69, y: 102}
+  m_SizeDelta: {x: 643.88, y: 102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224830446960269130
 RectTransform:
