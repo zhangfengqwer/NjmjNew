@@ -14,9 +14,9 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
+                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(message.Uid);
 
-                if (playerBaseInfos[0].ZhuanPanCount <= 0)
+                if (playerBaseInfo.ZhuanPanCount <= 0)
                 {
                     response.Error = ErrorCode.TodayHasSign;
                     response.Message = "您的抽奖次数不足";
@@ -26,27 +26,27 @@ namespace ETHotfix
                 }
                 else
                 {
-                    playerBaseInfos[0].ZhuanPanCount -= 1;
-                    playerBaseInfos[0].LuckyValue += 1;
-                    playerBaseInfos[0].GoldNum += 1;
+                    playerBaseInfo.ZhuanPanCount -= 1;
+                    playerBaseInfo.LuckyValue += 1;
 
-                    response.itemId = getRewardItemId(playerBaseInfos[0].LuckyValue);
+                    response.itemId = getRewardItemId(playerBaseInfo.LuckyValue);
                     response.reward = getReward(response.itemId);
 
-                    DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
+                    await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
 
                     // 满98后重置
-                    if (playerBaseInfos[0].LuckyValue >= 98)
+                    if (playerBaseInfo.LuckyValue >= 98)
                     {
-                        playerBaseInfos[0].LuckyValue = 0;
+                        playerBaseInfo.LuckyValue = 0;
                     }
                     
-                    await proxyComponent.Save(playerBaseInfos[0]);
+                    await proxyComponent.Save(playerBaseInfo);
                     reply(response);
                 }
             }
             catch (Exception e)
             {
+                Log.Debug(e.ToString());
                 ReplyError(response, e, reply);
             }
         }

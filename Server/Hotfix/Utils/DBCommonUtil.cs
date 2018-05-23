@@ -50,7 +50,19 @@ namespace ETHotfix
             }
         }
 
-        public static async void changeWealthWithStr(long uid, string reward)
+        public static async Task<PlayerBaseInfo> getPlayerBaseInfo(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            if (playerBaseInfos.Count > 0)
+            {
+                return playerBaseInfos[0];
+            }
+
+            return null;
+        }
+
+        public static async Task changeWealthWithStr(long uid, string reward)
         {
             List<string> list1 = new List<string>();
             CommonUtil.splitStr(reward, list1, ';');
@@ -63,11 +75,11 @@ namespace ETHotfix
                 int id = int.Parse(list2[0]);
                 float num = float.Parse(list2[1]);
 
-                ChangeWealth(uid,id, num);
+                await ChangeWealth(uid,id, num);
             }
         }
 
-        public static async void ChangeWealth(long uid, int propId, float propNum)
+        public static async Task ChangeWealth(long uid, int propId, float propNum)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             switch (propId)
@@ -137,7 +149,7 @@ namespace ETHotfix
             }
         }
 
-        public static async void Log_Login(long uid)
+        public static async Task Log_Login(long uid)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 

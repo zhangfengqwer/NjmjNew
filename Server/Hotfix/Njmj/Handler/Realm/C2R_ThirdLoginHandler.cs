@@ -39,7 +39,7 @@ namespace ETHotfix
                     reply(response);
 
                     // 登录日志
-                    //DBCommonUtil.Log_Login(accountInfo.Id);
+                    await DBCommonUtil.Log_Login(accountInfo.Id);
                 }
                 // 用户不存在，走注册流程
                 else
@@ -70,7 +70,7 @@ namespace ETHotfix
                     reply(response);
 
                     // 登录日志
-                    //DBCommonUtil.Log_Login(accountInfo.Id);
+                    await DBCommonUtil.Log_Login(accountInfo.Id);
                 }
 	        }
 	        catch (Exception e)

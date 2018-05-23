@@ -142,7 +142,7 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            string Third_Id = "wx_1234567";
+            string Third_Id = "wx_123456790";
             OnThirdLogin(Third_Id);
         }
 
