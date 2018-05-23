@@ -356,6 +356,9 @@ namespace ETHotfix
 		[ProtoMember(12, IsRequired = true)]
 		public float HuaFeiNum;
 
+		[ProtoMember(13, IsRequired = true)]
+		public string EmogiTime;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]

@@ -4059,10 +4059,14 @@ MonoBehaviour:
     gameObject: {fileID: 1158032756058830}
   - key: ChatBtn
     gameObject: {fileID: 1683892390156196}
-  - key: ChatL
+  - key: ChatB
     gameObject: {fileID: 1930702916208158}
-  - key: ChatLTxt
-    gameObject: {fileID: 1332643106768170}
+  - key: ChatR
+    gameObject: {fileID: 1152394047505914}
+  - key: ChatT
+    gameObject: {fileID: 1776253984494434}
+  - key: ChatL
+    gameObject: {fileID: 1072276437240788}
 --- !u!114 &114490483006245640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6555,7 +6559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300.4501, y: -236.00005}
+  m_AnchoredPosition: {x: -236, y: 32}
   m_SizeDelta: {x: 479, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224116119887172872
@@ -8475,7 +8479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 479, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224896404488719864

@@ -48,8 +48,8 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         private List<UI> chatUiList = new List<UI>();
         public GameObject currentItem = new GameObject();
-        private GameObject ChatL;
-        private Text ChatLTxt;
+        private GameObject[] chatObjArr = new GameObject[4];
+
         private Text restText;
         private GameObject players;
         private CancellationTokenSource tokenSource;
@@ -78,8 +78,12 @@ namespace ETHotfix
             ShortBtn = Chat.transform.Find("ShortBtn").GetComponent<Button>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
             ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
-            ChatL = rc.Get<GameObject>("ChatL");
-            ChatLTxt = rc.Get<GameObject>("ChatLTxt").GetComponent<Text>();
+
+            chatObjArr[0] = rc.Get<GameObject>("ChatB");
+            chatObjArr[1] = rc.Get<GameObject>("ChatL");
+            chatObjArr[2] = rc.Get<GameObject>("ChatB");
+            chatObjArr[3] = rc.Get<GameObject>("ChatR");
+
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
 
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -170,21 +174,20 @@ namespace ETHotfix
         public void ShowChatContent(string content,long UId)
         {
             int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
-            ChatL.gameObject.SetActive(true);
-            ChatLTxt.text = content;
-            
-            StartTimer();
+            chatObjArr[index].SetActive(true);
+            chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
+            StartTimer(index);
         }
 
-        private async void StartTimer()
+        private async void StartTimer(int index)
         {
-            int time = 30;
+            int time = 8;
             while (time >= 0)
             {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
                 --time;
             }
-            ChatL.SetActive(false);
+            chatObjArr[index].SetActive(false);
         }
 
         public void CloseChatUI()
