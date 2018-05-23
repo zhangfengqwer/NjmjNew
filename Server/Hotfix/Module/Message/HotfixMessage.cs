@@ -389,6 +389,9 @@ namespace ETHotfix
 		[ProtoMember(8, IsRequired = true)]
 		public string Icon;
 
+		[ProtoMember(9, IsRequired = true)]
+		public int VipPrice;
+
 	}
 
 	[Message(HotfixOpcode.Chat)]
@@ -462,7 +465,7 @@ namespace ETHotfix
 		public string Message { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public bool Result;
+		public long Count;
 
 	}
 
@@ -829,6 +832,33 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public PlayerInfo playerInfo;
+
+	}
+
+	[Message(HotfixOpcode.C2G_UpdateChengjiu)]
+	[ProtoContract]
+	public partial class C2G_UpdateChengjiu: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UpdateChengjiu)]
+	[ProtoContract]
+	public partial class G2C_UpdateChengjiu: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
 	}
 
