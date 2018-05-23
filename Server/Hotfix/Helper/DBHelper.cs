@@ -88,7 +88,7 @@ namespace ETHotfix
             gamePlayerList.Clear();
             gameRankList.Clear();
             gamePlayerList.AddRange(await proxyComponent.QueryJsonGamePlayer<PlayerBaseInfo>($"{{}}"));
-            for (int i = 0; i < playerBaseInfoList.Count; ++i)
+            for (int i = 0; i < gamePlayerList.Count; ++i)
             {
                 GameRank rank = new GameRank();
                 rank.PlayerName = gamePlayerList[i].Name;
