@@ -98,8 +98,9 @@ public class ExcelExporterEditor : EditorWindow
 			{
 				continue;
 			}
-            if (Path.GetFileName(filePath) == "ShopConfig" ||
-                Path.GetFileName(filePath) == "TaskConfig")
+            if (/*Path.GetFileName(filePath) == "ShopConfig.xlsx" ||*/
+                Path.GetFileName(filePath) == "TaskConfig.xlsx" 
+                || Path.GetFileName(filePath) == "ChatConfig.xlsx")
                 continue;
 
 			ExportClass(filePath, exportDir);

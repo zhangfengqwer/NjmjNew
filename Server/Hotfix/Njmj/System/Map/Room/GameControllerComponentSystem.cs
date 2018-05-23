@@ -83,6 +83,9 @@ namespace ETHotfix
                 room?.Dispose();
                 roomComponent.RemoveRoom(room);
             }
+
+            //传数据
+            
         }
     }
 }

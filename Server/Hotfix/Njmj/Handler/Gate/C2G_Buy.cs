@@ -20,7 +20,7 @@ namespace ETHotfix
                 {
                     baseInfo.GoldNum += message.Info.Count;
                     await proxyComponent.Save(baseInfo);
-                    response.Result = true;
+                    response.Count = message.Info.Count;
                     reply(response);
                 }
                 else
@@ -39,7 +39,7 @@ namespace ETHotfix
                         itemInfo.Count = message.Info.Count;
                         DBHelper.AddItemToDB(itemInfo);
                     }
-                    response.Result = true;
+                    response.Count = message.Info.Count;
                     reply(response);
                 }
             }

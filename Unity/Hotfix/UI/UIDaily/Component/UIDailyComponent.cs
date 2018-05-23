@@ -30,7 +30,6 @@ namespace ETHotfix
         public void Awake()
 		{
             ToastScript.clear();
-
             initData();
 
             RequestDailySignState();
@@ -65,6 +64,14 @@ namespace ETHotfix
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIDaily);
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
+
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop) != null)
+            {
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>() != null)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().ShowVipTab();
+                }
+            }
         }
 
         public void onClick_item2()
@@ -80,7 +87,8 @@ namespace ETHotfix
 
         public void onClick_item4()
         {
-            ToastScript.createToast("暂未开放");
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIDaily);
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
         }
 
         public void onClick_item5()

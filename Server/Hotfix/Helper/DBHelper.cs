@@ -27,6 +27,14 @@ namespace ETHotfix
             await proxyComponent.Save(taskInfo);
         }
 
+        public static async void AddChengjiuInfoToDB(long uid,ChengjiuInfo info)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ChengjiuInfo chengjiuInfo = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+            chengjiuInfo = info;
+            await proxyComponent.Save(chengjiuInfo);
+        }
+
         public static async void RefreshDB()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
@@ -87,6 +95,7 @@ namespace ETHotfix
                 rank.WinCount = gamePlayerList[i].WinGameCount;
                 rank.TotalCount = gamePlayerList[i].TotalGameCount;
                 rank.Icon = gamePlayerList[i].Icon;
+                rank.UId = gamePlayerList[i].Id;
                 gameRankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(gameRankList);
@@ -109,6 +118,7 @@ namespace ETHotfix
                 rank.PlayerName = playerBaseInfoList[i].Name;
                 rank.GoldNum = playerBaseInfoList[i].GoldNum;
                 rank.Icon = playerBaseInfoList[i].Icon;
+                rank.UId = playerBaseInfoList[i].Id;
                 rankList.Add(rank);
             }
             for(int i = 0;i< wealthList.Count; ++i)

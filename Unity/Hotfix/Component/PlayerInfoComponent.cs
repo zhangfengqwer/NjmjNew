@@ -26,6 +26,7 @@ namespace ETHotfix
         private List<TaskInfo> taskInfoList;//任务信息
         private List<Bag> bagInfoList;//背包信息
         private List<Chat> chatList;//聊天信息
+        private List<TaskInfo> chengjiuList;
 
         public void SetPlayerInfo(PlayerInfo playerInfo)
         {
@@ -75,6 +76,15 @@ namespace ETHotfix
         public List<Chat> GetChatList()
         {
             return chatList;
+        }
+
+        public void SetChengjiuList(List<TaskInfo> chengjiuList)
+        {
+            this.chengjiuList = chengjiuList;
+        }
+        public List<TaskInfo> GetChengjiuList()
+        {
+            return chengjiuList;
         }
 
         public void Awake()

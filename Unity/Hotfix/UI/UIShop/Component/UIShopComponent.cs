@@ -168,22 +168,20 @@ namespace ETHotfix
             int count = CommonUtil.splitStr_End(shopInfo.Items.ToString(), ':');
             info.ItemID = shopId;
             info.Count = count;
+            long price = 0;
+            if (GameUtil.isVIP())
+                price = shopInfo.VipPrice;
+            else
+                price = shopInfo.Price;
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
-                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = shopInfo.Price });
-            if (g2cBuyItem.Result)
-            {
+                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price });
                 Debug.Log("购买成功");
                 ToastScript.createToast("购买成功");
-                GameUtil.changeData(shopId, count);
+                GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
                 PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
                     ().refreshUI();
                 buyTip.SetActive(false);
-            }
-            else
-            {
-                ToastScript.createToast("购买失败");
-            }
         }
 
         public void SetOpenItemPos(int index,ShopType type,float height)
@@ -252,6 +250,11 @@ namespace ETHotfix
                 shopInfoList = new List<ShopInfo>();
             GameObject bundle = GetItemBundleByType(uiType);
             CreateShopInfoList(shopInfoList, bundle, shopType, parent);
+        }
+
+        public void ShowVipTab()
+        {
+            ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
         }
 
         /// <summary>

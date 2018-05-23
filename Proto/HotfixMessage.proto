@@ -130,6 +130,7 @@ message ShopInfo //IMessage
 	required int CurrencyType = 6;//
 	required string Items = 7;
 	required string Icon = 8;
+	required int VipPrice = 9;
 }
 
 message Chat //IMessage
@@ -158,7 +159,7 @@ message Actor_UpDateData //IActorMessage
 
 message G2C_BuyItem //IResponse
 {
-	required bool Result = 1; 
+	required long Count = 1;
 }
 
 message TaskProgress //IMessage
@@ -191,6 +192,16 @@ message G2C_Task //IResponse
 	repeated TaskInfo TaskProgressList = 1;
 }
 
+message C2G_Chengjiu //IRequest
+{
+	required long Uid = 1;
+}
+
+message G2C_Chengjiu //IResponse
+{
+	repeated TaskInfo ChengjiuList = 1;
+}
+
 message TaskInfo //IMessage
 {
 	required int Id = 1;//任务ID
@@ -202,6 +213,7 @@ message TaskInfo //IMessage
 	required bool IsComplete = 7;//是否已经完成
 	required bool IsGet = 8;//是否获取
 }
+
 
 message C2G_PlayerInfo // IRequest
 {
@@ -283,6 +295,16 @@ message C2G_UpdatePlayerInfo //IRequest
 message G2C_UpdatePlayerInfo //IResponse
 {
 	required PlayerInfo playerInfo = 1;
+}
+
+message C2G_UpdateChengjiu //IRequest
+{
+	required long Uid = 1;
+}
+
+message G2C_UpdateChengjiu //IResponse
+{
+
 }
 
 message C2M_ActorGamerEnterRoom // IActorRequest
@@ -451,6 +473,7 @@ message WealthRank // IMessage
 	required long GoldNum = 2;
 	required long GoldTicket = 3;
 	required string Icon = 4;
+	required long UId = 5;
 }
 
 message GameRank // IMessage
@@ -459,6 +482,7 @@ message GameRank // IMessage
 	required int WinCount = 2;
 	required int TotalCount = 3;
 	required string Icon = 4;
+	required long UId = 5;
 }
 
 message C2G_Rank //IRequest
@@ -471,6 +495,8 @@ message G2C_Rank //IResponse
 {
 	repeated WealthRank RankList = 1;
 	repeated GameRank GameRankList = 2;
+	required GameRank OwnGameRank = 3;
+	required WealthRank OwnWealthRank = 4;
 }
 
 message C2G_DailySign // IRequest

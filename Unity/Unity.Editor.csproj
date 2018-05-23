@@ -432,7 +432,6 @@
     <None Include="Assets\Res\Config\BuffConfig.txt" />
     <None Include="Assets\Res\Config\ChatConfig.txt" />
     <None Include="Assets\Res\Config\GlobalProto.txt" />
-    <None Include="Assets\Res\Config\ShopConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\link.xml" />

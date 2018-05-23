@@ -15,5 +15,6 @@ namespace ETModel
 		public int Price;
 		public string Items;
 		public string Icon;
-	}
+        public int VipPrice;
+    }
 }

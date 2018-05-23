@@ -37,7 +37,7 @@ namespace ETHotfix
                     }
                 }
                 taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
-                if (taskProgressInfoList.Count < 0)
+                if (taskProgressInfoList.Count <= 0)
                     Log.Warning("数据未写进数据库");
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {

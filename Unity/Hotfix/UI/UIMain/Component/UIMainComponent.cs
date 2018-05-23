@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using ETModel;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,12 +45,22 @@ namespace ETHotfix
         public GameObject Btn_GoldSelect;
         public GameObject Btn_GameSelect;
         public GameObject Grid;
+        #region myRank
+        public Text GoldTxt;
+        private Text NameTxt;
+        private Text RankTxt;
+        private Image Icon;
+        private GameObject RankImg;
+        #endregion
 
         private List<WealthRank> wealthRankList = new List<WealthRank>();
         private List<GameRank> gameRankList = new List<GameRank>();
         private List<GameObject> rankItemList = new List<GameObject>();
+        private List<GameObject> gameItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
-        private PlayerInfo myPlayer;
+        private List<UI> gameUiList = new List<UI>();
+        private GameRank ownGameRank;
+        private WealthRank ownWealthRank;
 
         public void Awake()
         {
@@ -71,19 +82,32 @@ namespace ETHotfix
             Btn_GameSelect = rc.Get<GameObject>("Btn_GameSelect");
             Grid = rc.Get<GameObject>("Grid");
 
+            GoldTxt = rc.Get<GameObject>("GoldTxt").GetComponent<Text>();
+            NameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
+            RankTxt = rc.Get<GameObject>("RankTxt").GetComponent<Text>();
+            Icon = rc.Get<GameObject>("Icon").GetComponent<Image>();
+            RankImg = rc.Get<GameObject>("RankImg");
+
             // 转盘
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
             {
                 // 向左
                 if (BtnList_Down.transform.localPosition.x > 500)
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false);
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false).OnComplete(() =>
+                    {
+                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = Vector3.zero;
+                    });
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main","btn_you");
                 }
                 // 向右
                 else
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false);
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false).OnComplete(() =>
+                    {
+                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = new Vector3(1, 1, 1);
+                    });
+
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "btn_zuo");
                 }
             });
@@ -117,7 +141,8 @@ namespace ETHotfix
             {
                 //ToastScript.createToast("暂未开放：成就");
                 //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
+                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChengjiu);
             });
 
             // 背包
@@ -186,6 +211,11 @@ namespace ETHotfix
                 OnEnterRoom();
             });
 
+            PlayerInfoBg.transform.Find("HuaFeiBg/Btn_DuiHuan").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
+            });
+
             PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
@@ -198,17 +228,25 @@ namespace ETHotfix
                 SetUIHideOrOpen(false);
             });
 
+            PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
+                SetUIHideOrOpen(false);
+            });
+
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
             
             
             Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
             {
                 ShowGoldRank();
+                SetMyRank();
             });
 
             Rank.transform.Find("Btn_game").GetComponent<Button>().onClick.Add(() =>
             {
                 ShowGameRank();
+                SetMyGameRank();
             });
 
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
@@ -241,7 +279,6 @@ namespace ETHotfix
             
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
-                Debug.Log("=====");
                 if (i < rankItemList.Count)
                     obj = rankItemList[i];
                 else
@@ -251,43 +288,12 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     obj.transform.localScale = Vector3.one;
                     rankItemList.Add(obj);
-                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                    ui.AddComponent<UIRankItemComponent>();
-                    uiList.Add(ui);
                 }
-                if (i == wealthRankList.Count - 1)
-                {
-                    obj.transform.SetAsFirstSibling();
-                    int index = GetMyWealthRank();
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], index);
-                }
-                else
-                {
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
-                }
+                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                ui.AddComponent<UIRankItemComponent>();
+                uiList.Add(ui);
+                uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
             }
-        }
-
-        public int GetMyWealthRank()
-        {
-            WealthRank wealth = wealthRankList[wealthRankList.Count - 1];
-            for(int i = 0;i< wealthRankList.Count; ++i)
-            {
-                if (wealth.PlayerName.Equals(wealthRankList[i].PlayerName))
-                    return i;
-            }
-            return -1;
-        }
-
-        public int GetMyGameRank()
-        {
-            GameRank wealth = gameRankList[gameRankList.Count - 1];
-            for (int i = 0; i < gameRankList.Count; ++i)
-            {
-                if (wealth.PlayerName.Equals(gameRankList[i].PlayerName))
-                    return i;
-            }
-            return -1;
         }
 
         private void ShowGameRank()
@@ -307,13 +313,11 @@ namespace ETHotfix
                     obj.transform.localScale = Vector3.one;
                     obj.transform.localPosition = Vector3.zero;
                     rankItemList.Add(obj);
-                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                    ui.AddComponent<UIRankItemComponent>();
-                    uiList.Add(ui);
                 }
-                if (i == gameRankList.Count - 1)
-                    obj.transform.SetAsFirstSibling();
-                uiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                ui.AddComponent<UIRankItemComponent>();
+                gameUiList.Add(ui);
+                gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
             }
         }
 
@@ -326,6 +330,120 @@ namespace ETHotfix
             gameRankList = g2cRank.GameRankList;
             Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
             ShowGoldRank();
+            ownWealthRank = g2cRank.OwnWealthRank;
+            ownGameRank = g2cRank.OwnGameRank;
+
+            SetMyRank();
+        }
+
+        public bool IsInRank(long uid)
+        {
+            for (int i = 0; i < wealthRankList.Count; ++i)
+            {
+                if (wealthRankList[i].UId == uid)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool IsInGameRank(long uid)
+        {
+            for(int i = 0;i< gameRankList.Count; ++i)
+            {
+                if (gameRankList[i].UId == uid)
+                    return true;
+            }
+            return false;
+        }
+
+        private int GetGameIndext(long uid)
+        {
+            for (int i = 0; i < gameRankList.Count; ++i)
+            {
+                if (gameRankList[i].UId == uid)
+                    return i;
+            }
+            return -1;
+        }
+
+        private int GetWealthIndext(long uid)
+        {
+            for (int i = 0; i < wealthRankList.Count; ++i)
+            {
+                if (wealthRankList[i].UId == uid)
+                    return i;
+            }
+            return -1;
+        }
+
+        private void SetMyRank()
+        {
+            string str = "";
+            if (!IsInRank(ownWealthRank.UId))
+            {
+                RankTxt.gameObject.SetActive(true);
+                RankImg.SetActive(false);
+                str = "未上榜";
+            }
+            else
+            {
+                int index = GetWealthIndext(ownWealthRank.UId);
+                if (index < 3 && index != -1)
+                {
+                    RankTxt.gameObject.SetActive(false);
+                    RankImg.SetActive(true);
+                    string iconName = new StringBuilder().Append("Rank_")
+                                                         .Append(index + 1).ToString();
+                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("uirankicon", iconName);
+                }
+                else
+                {
+                    RankTxt.gameObject.SetActive(true);
+                    RankImg.SetActive(false);
+                    str = (index + 1).ToString();
+                }
+            }
+            RankTxt.text = str;
+            NameTxt.text = ownWealthRank.PlayerName;
+            GoldTxt.text = new StringBuilder().Append("金币:")
+                                              .Append(ownWealthRank.GoldNum)
+                                              .ToString();
+            Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownWealthRank.Icon);
+        }
+
+        private void SetMyGameRank()
+        {
+            string str = "";
+            if (!IsInGameRank(ownGameRank.UId))
+            {
+                RankTxt.gameObject.SetActive(true);
+                RankImg.SetActive(false);
+                str = "未上榜";
+            }
+            else
+            {
+                int index = GetGameIndext(ownGameRank.UId);
+                if (index < 3 && index != -1)
+                {
+                    RankTxt.gameObject.SetActive(false);
+                    RankImg.SetActive(true);
+                    string iconName = new StringBuilder().Append("Rank_")
+                                                         .Append(index + 1).ToString();
+                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("uirankicon", iconName);
+                }
+                else
+                {
+                    RankTxt.gameObject.SetActive(true);
+                    RankImg.SetActive(false);
+                    str = (index + 1).ToString();
+                }
+                RankTxt.text = str;
+            }
+            NameTxt.text = ownGameRank.PlayerName;
+            GoldTxt.text = new StringBuilder().Append("总局数:")
+                                              .Append(ownGameRank.TotalCount)
+                                              .ToString();
+            Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownGameRank.Icon);
         }
 
         private async void RequestTaskInfo()
@@ -376,13 +494,23 @@ namespace ETHotfix
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)
+            {
                 playerIcon.sprite = icon;
+            }
             else
+            {
                 Log.Warning("icon数据为空，请重新注册");
+            }
+
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
             HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
+
+            if (GameUtil.isVIP())
+            {
+                PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
         }
 
         public void addLaBaContent(string content)

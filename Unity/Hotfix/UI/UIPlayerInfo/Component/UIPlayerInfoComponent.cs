@@ -29,6 +29,8 @@ namespace ETHotfix
         private Button bindPhoneBtn;
         private Button ChangeAccountBtn;
 
+        private GameObject PlayerFrame;
+
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
@@ -45,6 +47,7 @@ namespace ETHotfix
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
             ChangeAccountBtn = rc.Get<GameObject>("ChangeAccountBtn").GetComponent<Button>();
 
+            PlayerFrame = rc.Get<GameObject>("PlayerFrame");
 
             bindPhoneBtn.onClick.Add(() =>
             {
@@ -93,10 +96,14 @@ namespace ETHotfix
 
         private void Init()
         {
-            bindPhoneBtn.gameObject.SetActive(!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
-            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount >= 0);
+            bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
 
+            if (GameUtil.isVIP())
+            {
+                PlayerFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
         }
 
         public void Update()
