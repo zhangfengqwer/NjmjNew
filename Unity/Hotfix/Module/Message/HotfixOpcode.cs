@@ -105,5 +105,9 @@ namespace ETModel
 		 public const ushort C2G_Chat = 10101;
 		 public const ushort G2C_Chat = 10102;
 		 public const ushort Actor_Chat = 10103;
+		 public const ushort C2G_UseZhuanPan = 10104;
+		 public const ushort G2C_UseZhuanPan = 10105;
+		 public const ushort C2G_GetZhuanPanState = 10106;
+		 public const ushort G2C_GetZhuanPanState = 10107;
 	}
 }
