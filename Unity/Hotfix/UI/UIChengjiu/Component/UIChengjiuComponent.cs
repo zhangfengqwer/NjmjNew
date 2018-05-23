@@ -29,6 +29,7 @@ namespace ETHotfix
         private Text ContentTxt;
         private Text NameTxt;
         private GameObject Detail;
+        private GameObject AlGet;
 
         private GameObject item;
         private List<GameObject> itemList = new List<GameObject>();
@@ -48,7 +49,7 @@ namespace ETHotfix
             ProgressTxt = rc.Get<GameObject>("ProgressTxt").GetComponent<Text>();
             RewardTxt = rc.Get<GameObject>("RewardTxt").GetComponent<Text>();
             item = CommonUtil.getGameObjByBundle(UIType.UIChengjiuItem);
-
+            AlGet = rc.Get<GameObject>("AlGet");
             ReturnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChengjiu);
@@ -83,10 +84,10 @@ namespace ETHotfix
             }
         }
 
-        public void SetDetail(TaskInfo info)
+        public void SetDetail(TaskInfo info,bool isGet)
         {
             Detail.SetActive(true);
-            ProgressTxt.text = new StringBuilder().Append(0)
+            ProgressTxt.text = new StringBuilder().Append(info.Progress)
                                                   .Append("/")
                                                   .Append(info.Target).ToString();
             ContentTxt.text = info.Desc;
@@ -96,6 +97,11 @@ namespace ETHotfix
             string icon = new StringBuilder().Append("chengjiu_")
                                              .Append(info.Id).ToString();
             ChengIcon.sprite = CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
+            AlGet.SetActive(isGet);
+            if(AlGet.gameObject.activeInHierarchy)
+                ProgressTxt.text = new StringBuilder().Append(info.Target)
+                                                  .Append("/")
+                                                  .Append(info.Target).ToString();
         }
 
         public override void Dispose()

@@ -20,17 +20,36 @@ namespace ETHotfix
     {
         private Text Content;
         private GameObject Line;
+        private GameObject Flag;
+        private Button NoticeBtn;
+        private NoticeInfo info;
 
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             Content = rc.Get<GameObject>("Content").GetComponent<Text>();
             Line = rc.Get<GameObject>("Line");
+            Flag = rc.Get<GameObject>("Flag");
+            NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
+
+            NoticeBtn.onClick.Add(() =>
+            {
+                PlayerPrefs.SetInt(info.Id.ToString(), 1);
+                Debug.Log("===");
+                Flag.SetActive(false);
+            });
+
         }
 
-        public void SetText(string text)
+        public void SetText(NoticeInfo info)
         {
-            Content.text = text;
+            this.info = info;
+            Debug.Log(info.Id);
+            Content.text = info.Content;
+            int state = PlayerPrefs.GetInt(info.Id.ToString());
+            Flag.SetActive(!(state == 1));
+            if (Flag.activeInHierarchy)
+                this.GetParent<UI>().GameObject.transform.SetAsFirstSibling();
         }
 
         public int GetTextRow()
@@ -40,7 +59,9 @@ namespace ETHotfix
 
         public void SetLine()
         {
-            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, 109 - 34 * GetTextRow(), 0);
+            Debug.Log(GetTextRow());
+            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -56 - 34 * GetTextRow(), 0);
+            Debug.Log(Line.transform.localPosition);
         }
     }
 }

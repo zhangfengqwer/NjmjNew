@@ -257,6 +257,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
+                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
@@ -306,6 +307,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
+                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }

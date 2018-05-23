@@ -86,6 +86,7 @@ message G2C_LoginGate // IResponse
 	repeated TaskInfo TaskInfoList = 4;//任务列表
 	repeated Bag BagList = 5;//背包列表
 	repeated Chat ChatList = 6;//
+	repeated NoticeInfo NoticeInfoList = 7;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -310,12 +311,13 @@ message G2C_UpdatePlayerInfo //IResponse
 
 message C2G_UpdateChengjiu //IRequest
 {
-	required long Uid = 1;
+	required long UId = 1;
+	required TaskInfo TaskPrg = 2;
 }
 
 message G2C_UpdateChengjiu //IResponse
 {
-
+	required TaskInfo TaskPrg = 1;
 }
 
 message C2M_ActorGamerEnterRoom // IActorRequest
@@ -338,6 +340,13 @@ message Actor_GamerExitRoom // IActorMessage
 message M2G_Actor_GamerExitRoom // IActorMessage
 {
    
+}
+
+message NoticeInfo //IMessage
+{
+	required int Id = 1;
+	required string Name = 2;
+	required string Content = 3;
 }
 
 message Actor_GamerReady // IActorMessage

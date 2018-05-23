@@ -272,6 +272,9 @@ namespace ETHotfix
 		[ProtoMember(6)]
 		public List<Chat> ChatList = new List<Chat>();
 
+		[ProtoMember(7)]
+		public List<NoticeInfo> NoticeInfoList = new List<NoticeInfo>();
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -876,7 +879,10 @@ namespace ETHotfix
 		public int RpcId { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public long Uid;
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public TaskInfo TaskPrg;
 
 	}
 
@@ -892,6 +898,9 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public TaskInfo TaskPrg;
 
 	}
 
@@ -955,6 +964,21 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.NoticeInfo)]
+	[ProtoContract]
+	public partial class NoticeInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int Id;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Content;
 
 	}
 
