@@ -94,13 +94,20 @@ namespace ETHotfix
                 // 向左
                 if (BtnList_Down.transform.localPosition.x > 500)
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false);
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false).OnComplete(() =>
+                    {
+                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = Vector3.zero;
+                    });
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main","btn_you");
                 }
                 // 向右
                 else
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false);
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false).OnComplete(() =>
+                    {
+                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = new Vector3(1, 1, 1);
+                    });
+
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "btn_zuo");
                 }
             });
@@ -202,6 +209,11 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Relax/Btn_jingying").GetComponent<Button>().onClick.Add(() =>
             {
                 OnEnterRoom();
+            });
+
+            PlayerInfoBg.transform.Find("HuaFeiBg/Btn_DuiHuan").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
             });
 
             PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
