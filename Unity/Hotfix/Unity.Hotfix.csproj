@@ -154,6 +154,8 @@
     <Compile Include="Njmj\Component\GamerUIComponent.cs" />
     <Compile Include="Njmj\Entity\Gamer.cs" />
     <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIReady\Component\UIReadyComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIReady\Factory\UIRoomFactory.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -175,7 +177,7 @@
     <Compile Include="UI\UIChangeName\Factory\UIChangeNameFactory.cs" />
     <Compile Include="UI\UIMain\Component\UIRankItemComponent.cs" />
     <Compile Include="Njmj\Component\HandCardsComponent.cs" />
-    <Compile Include="UI\UIRoom\Event\GamerPlayCard.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Event\GamerPlayCard.cs" />
     <Compile Include="UI\UIUseHuaFei\Component\UIUseHuaFeiComponent.cs" />
     <Compile Include="UI\UIUseHuaFei\Factory\UIUseHuaFeiFactory.cs" />
     <Compile Include="UI\UIRealName\Component\UIRealNameComponent.cs" />
@@ -202,8 +204,8 @@
     <Compile Include="UI\UIPlayerIcon\Factory\UIPlayerIconFactory.cs" />
     <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
     <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
-    <Compile Include="UI\UIRoom\Component\UIRoomComponent.cs" />
-    <Compile Include="UI\UIRoom\Factory\UIRoomFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Component\UIRoomComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Factory\UIRoomFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
     <Compile Include="UI\UILogin\Event\InitSceneStart_CreateLoginUI.cs" />
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
@@ -221,7 +223,7 @@
     <Compile Include="Utils\HttpReqUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Njmj\UI\" />
+    <Folder Include="Njmj\UI\Game\UIReady\Event\" />
     <Folder Include="UI\UIMain\Event\" />
   </ItemGroup>
   <ItemGroup>

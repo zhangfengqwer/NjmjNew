@@ -57,7 +57,7 @@ namespace ETHotfix
                         //游戏结束结算
                         gameController.GameOver();
                         roomComponent.gameRooms.Remove(room.Id);
-                        roomComponent.idleRooms.Add(room);
+                        roomComponent.readyRooms.Add(room.Id, room);
 
                     }
                  
@@ -67,7 +67,8 @@ namespace ETHotfix
                 {
                     if (orderController.CurrentAuthority == gamer.UserID)
                     {
-//                        room.tokenSource.Cancel();
+                        //                        room.tokenSource.Cancel();
+                       
                     }
                     else
                     {
@@ -85,7 +86,6 @@ namespace ETHotfix
                     while (true)
                     {
 //                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-
                         if (!GetCanHu(room))
                         {
                             break;
@@ -93,7 +93,7 @@ namespace ETHotfix
                     }
 
                     //游戏结束
-                    if (room.IsGameOver) return;
+//                    if (room.IsGameOver) return;
 
                     //碰
                     if (message.OperationType == 0)

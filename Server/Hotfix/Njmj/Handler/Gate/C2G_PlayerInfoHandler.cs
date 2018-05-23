@@ -9,7 +9,7 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, C2G_PlayerInfo message, Action<G2C_PlayerInfo> reply)
         {
-            Log.Info(JsonHelper.ToJson(message));
+//            Log.Info(JsonHelper.ToJson(message));
             G2C_PlayerInfo response = new G2C_PlayerInfo();
             try
             {

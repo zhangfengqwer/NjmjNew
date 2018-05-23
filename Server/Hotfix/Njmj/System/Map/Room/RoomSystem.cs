@@ -258,10 +258,10 @@ namespace ETHotfix
                         List<MahjongInfo> temp = new List<MahjongInfo>(handCardsComponent.GetAll());
                         Logic_NJMJ.getInstance().RemoveCard(temp, grabMahjong);
 
-                        //判断杠
+                        //暗杠
                         if (Logic_NJMJ.getInstance().isCanGang(grabMahjong, temp))
                         {
-                            _gamer.IsCanHu = true;
+                            _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
                             canOperation.Uid = _gamer.UserID;
                             canOperation.OperationType = 1;

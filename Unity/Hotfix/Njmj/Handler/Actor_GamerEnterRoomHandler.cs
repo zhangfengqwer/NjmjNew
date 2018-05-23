@@ -19,10 +19,12 @@ namespace ETHotfix
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
                 {
                     CommonUtil.ShowUI(UIType.UIRoom);
+                    CommonUtil.ShowUI(UIType.UIReady);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
                 }
               
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
@@ -75,6 +77,9 @@ namespace ETHotfix
 
                     //根据座位的indax添加玩家
                     roomComponent.AddGamer(gamer, index);
+
+                    //设置准备
+                    uiReady.GetComponent<UIReadyComponent>().SetPanel(index);
                 }
             }
             catch (Exception e)

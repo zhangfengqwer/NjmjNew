@@ -155,7 +155,35 @@ namespace ETHotfix
             restText.text = $"剩余牌数：{messageRestCount}";
         }
 
+        /// <summary>
+        /// 继续游戏
+        /// </summary>
+        public void ContinueGamer()
+        {
+            this.changeTableBtn.gameObject.SetActive(true);
+            this.readyBtn.gameObject.SetActive(true);
+            this.desk.SetActive(false);
+            this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(true);
+            players.SetActive(false);
 
+            //剩余牌数
+            restText.text = $"";
+            Gamer[] gamers = this.GetParent<UI>().GetComponent<GamerComponent>().GetAll();
+
+            foreach (var gamer in gamers)
+            {
+                gamer.GetComponent<HandCardsComponent>().ClearAll();
+            }
+
+            //清空座位
+            for (int i = 0; i < gamers.Length; i++)
+            {
+                if (gamers[i].UserID != 0)
+                {
+                    RemoveGamer(gamers[i].UserID);
+                }
+            }
+        }
 
         /// <summary>
         /// 开始倒计时

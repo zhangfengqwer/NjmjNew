@@ -645,5 +645,21 @@ namespace ETHotfix
                 grabObj.SetActive(false);
             }
         }
+
+        public void ClearAll()
+        {
+            handCards.Clear();
+            foreach (var obj in ItemCards)
+            {
+                GameObject.Destroy(obj);
+            }
+
+            ItemCards.Clear();
+            faceCards.Clear();
+
+            DeleteAllItem(CardBottom);
+            DeleteAllItem(cardDisplay);
+            DeleteAllItem(pengObj);
+        }
     }
 }
