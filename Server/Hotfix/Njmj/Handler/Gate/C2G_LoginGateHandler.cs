@@ -50,6 +50,8 @@ namespace ETHotfix
                     shopInfoList.Add(info);
                 }
 
+                
+
                 List<Chat> chatConfigList = new List<Chat>();
                 for (int i = 1; i < configCom.GetAll(typeof(ChatConfig)).Length + 1; ++i)
                 {

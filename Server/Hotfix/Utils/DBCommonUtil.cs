@@ -50,6 +50,23 @@ namespace ETHotfix
             }
         }
 
+        public static async void changeWealthWithStr(long uid, string reward)
+        {
+            List<string> list1 = new List<string>();
+            CommonUtil.splitStr(reward, list1, ';');
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                List<string> list2 = new List<string>();
+                CommonUtil.splitStr(list1[i], list2, ':');
+
+                int id = int.Parse(list2[0]);
+                float num = float.Parse(list2[1]);
+
+                ChangeWealth(uid,id, num);
+            }
+        }
+
         public static async void ChangeWealth(long uid, int propId, float propNum)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
@@ -58,7 +75,7 @@ namespace ETHotfix
                 // 金币
                 case 1:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].GoldNum += (int)propNum;
                         if (playerBaseInfos[0].GoldNum < 0)
                         {
@@ -71,7 +88,7 @@ namespace ETHotfix
                 // 元宝
                 case 2:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].WingNum += (int)propNum;
                         if (playerBaseInfos[0].WingNum < 0)
                         {
@@ -84,7 +101,7 @@ namespace ETHotfix
                 // 话费
                 case 3:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].HuaFeiNum += propNum;
                         if (playerBaseInfos[0].HuaFeiNum < 0)
                         {
@@ -119,6 +136,52 @@ namespace ETHotfix
                     break;
             }
         }
-    }
-        
+
+        public static async void Log_Login(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            List<Log_Login> log_Logins = await proxyComponent.QueryJson<Log_Login>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
+            if (log_Logins.Count == 0)
+            {
+                // 今天第一天登录，做一些处理
+                Log.Debug("今天第一天登录");
+
+                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                playerBaseInfos[0].ZhuanPanCount = 3;
+                await proxyComponent.Save(playerBaseInfos[0]);
+            }
+
+            Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
+            log_Login.Uid = uid;
+            await proxyComponent.Save(log_Login);
+        }
+
+        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid,string Phone)
+        {
+            Log.Debug("增加新用户：" + uid.ToString());
+
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            
+            PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
+            playerBaseInfo.Id = uid;
+            playerBaseInfo.Name = uid.ToString();
+            playerBaseInfo.GoldNum = 10;
+            playerBaseInfo.WingNum = 0;
+            playerBaseInfo.Icon = "f_icon1";
+            playerBaseInfo.Phone = "";
+            playerBaseInfo.IsRealName = false;
+            playerBaseInfo.TotalGameCount = 0;
+            playerBaseInfo.WingNum = 0;
+            playerBaseInfo.VipTime = "2018-05-18 00:00:00";
+            playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
+            playerBaseInfo.RestChangeNameCount = 1;
+            await proxyComponent.Save(playerBaseInfo);
+
+            Log.Debug("增加新用户完毕");
+
+            return playerBaseInfo;
+        }
+    } 
 }

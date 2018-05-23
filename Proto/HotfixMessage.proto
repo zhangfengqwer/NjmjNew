@@ -642,6 +642,7 @@ message C2G_UseZhuanPan // IRequest
 message G2C_UseZhuanPan // IResponse
 {
 	required string	reward	 = 1;
+	required int	itemId	 = 2;
 }
 
 message C2G_GetZhuanPanState // IRequest
