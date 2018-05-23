@@ -87,7 +87,7 @@ namespace ETHotfix
         public void SetDetail(TaskInfo info,bool isGet)
         {
             Detail.SetActive(true);
-            ProgressTxt.text = new StringBuilder().Append(0)
+            ProgressTxt.text = new StringBuilder().Append(info.Progress)
                                                   .Append("/")
                                                   .Append(info.Target).ToString();
             ContentTxt.text = info.Desc;
@@ -98,6 +98,10 @@ namespace ETHotfix
                                              .Append(info.Id).ToString();
             ChengIcon.sprite = CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
             AlGet.SetActive(isGet);
+            if(AlGet.gameObject.activeInHierarchy)
+                ProgressTxt.text = new StringBuilder().Append(info.Target)
+                                                  .Append("/")
+                                                  .Append(info.Target).ToString();
         }
 
         public override void Dispose()
