@@ -154,6 +154,8 @@ namespace ETHotfix
 	    /// <param name="b"></param>
 	    private static void HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
 	    {
+	        int huaCount = 0;
+
 	        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	        HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
@@ -175,7 +177,7 @@ namespace ETHotfix
 	        huPaiNeedData.isFaWanPaiTingPai = gamer.isFaWanPaiTingPai;
 	        huPaiNeedData.my_yingHuaList = handCards.FaceCards;
 
-	        huPaiNeedData.my_gangList = handCards.GangCards;
+            huPaiNeedData.my_gangList = handCards.GangCards;
 	        huPaiNeedData.my_pengList = handCards.PengCards;
 
 	        List<List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
@@ -210,13 +212,17 @@ namespace ETHotfix
 	        }
             //硬花
 	        actorGamerHuPai.YingHuaCount = handCards.FaceCards.Count;
+	        //硬花
+	        huaCount += handCards.FaceCards.Count;
             //软花
-	        foreach (var card in handCards.GangCards)
+            foreach (var card in handCards.GangCards)
 	        {
 	            if (card.m_weight >= Consts.MahjongWeight.Feng_Dong)
 	            {
 	                actorGamerHuPai.RuanHuaCount += 2;
-	            }
+                    //软花
+	                huaCount += 2;
+                }
 	        }
             //胡牌类型
 	        foreach (var type in huPaiTypes)
@@ -233,7 +239,20 @@ namespace ETHotfix
 	        {
 	            Log.Info("有人胡牌:" + item.ToString());
             }
-	    }
+
+	        //设置胡牌的花数
+	        for (int j = 0; j < huPaiTypes.Count; j++)
+	        {
+	            Consts.HuPaiType huPaiType = (Consts.HuPaiType)huPaiTypes[j];
+	            int count;
+	            Logic_NJMJ.getInstance().HuPaiHuaCount.TryGetValue(huPaiType, out count);
+                //胡牌花
+	            huaCount += count;
+	        }
+
+            //基数
+            huaCount += 20;
+        }
 
 	    private static bool GetCanHu(Room room)
 	    {
