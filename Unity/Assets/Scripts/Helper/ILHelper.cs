@@ -46,8 +46,18 @@ namespace ETModel
 				appDomain.RegisterCrossBindingAdaptor(adaptor);
 			}
 
-			// 初始化ILRuntime的protobuf
-			InitializeILRuntimeProtobuf(appDomain);
+            {
+                appDomain.DelegateManager.RegisterDelegateConvertor<DG.Tweening.TweenCallback>((act) =>
+                {
+                    return new DG.Tweening.TweenCallback(() =>
+                    {
+                        ((Action)act)();
+                    });
+                });
+            }
+
+            // 初始化ILRuntime的protobuf
+            InitializeILRuntimeProtobuf(appDomain);
 			LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appDomain);
 		}
 
