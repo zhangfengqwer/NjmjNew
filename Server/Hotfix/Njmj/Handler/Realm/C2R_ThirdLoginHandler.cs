@@ -23,7 +23,7 @@ namespace ETHotfix
                 if (accountInfos.Count > 0)
                 {
                     AccountInfo accountInfo = accountInfos[0];
-                    
+
                     // 随机分配一个Gate
                     StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
                     IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
@@ -37,6 +37,9 @@ namespace ETHotfix
                     response.Address = outerAddress;
                     response.Key = g2RGetLoginKey.Key;
                     reply(response);
+
+                    // 登录日志
+                    //DBCommonUtil.Log_Login(accountInfo.Id);
                 }
                 // 用户不存在，走注册流程
                 else
@@ -49,6 +52,9 @@ namespace ETHotfix
 
                     await proxyComponent.Save(accountInfo);
 
+                    // 添加用户信息
+                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.addPlayerBaseInfo(accountInfo.Id, "");
+
                     // 随机分配一个Gate
                     StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
                     IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
@@ -62,6 +68,9 @@ namespace ETHotfix
                     response.Address = outerAddress;
                     response.Key = g2RGetLoginKey.Key;
                     reply(response);
+
+                    // 登录日志
+                    //DBCommonUtil.Log_Login(accountInfo.Id);
                 }
 	        }
 	        catch (Exception e)

@@ -9,13 +9,7 @@ namespace ETHotfix
 {
     public class DBCommonUtil
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="taskId"></param>
-        /// <param name="isGet"></param>
-        public static async Task<TaskInfo> UpdateTask(long uid, int taskId, bool isGet = false)
+        public static async void UpdateTask(long uid,int taskId,bool isGet = false)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             TaskInfo taskInfo = new TaskInfo();
@@ -27,14 +21,17 @@ namespace ETHotfix
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {
                     progress = taskProgressInfoList[i];
-
+                    ++progress.CurProgress;
+                    progress.TaskId = taskId;
+                    progress = taskProgressInfoList[i];
+                    ++progress.CurProgress;
+                    progress.TaskId =taskId;
                     if (isGet)
                     {
                         progress.IsGet = true;
                     }
                     else
                     {
-                        ++progress.CurProgress;
                         if (progress.CurProgress == progress.Target)
                         {
                             progress.IsComplete = true;
@@ -51,47 +48,23 @@ namespace ETHotfix
                 taskInfo.IsComplete = progress.IsComplete;
                 taskInfo.Progress = progress.CurProgress;
             }
-
-            return taskInfo;
         }
 
-        public static async Task<TaskInfo> UpdateChengjiu(long UId, int taskId, bool isGet = false)
+        public static async void changeWealthWithStr(long uid, string reward)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            TaskInfo taskInfo = new TaskInfo();
-            ChengjiuInfo progress = new ChengjiuInfo();
-            List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+            List<string> list1 = new List<string>();
+            CommonUtil.splitStr(reward, list1, ';');
 
-            if (chengjiuInfoList.Count > 0)
+            for (int i = 0; i < list1.Count; i++)
             {
-                for (int i = 0; i < chengjiuInfoList.Count; ++i)
-                {
-                    progress = chengjiuInfoList[i];
-                    progress.TaskId = taskId;
-                    if (isGet)
-                    {
-                        progress.IsGet = true;
-                    }
-                    else
-                    {
-                        ++progress.CurProgress;
-                        if (progress.CurProgress == progress.Target)
-                        {
-                            progress.IsComplete = true;
-                        }
-                        else
-                        {
-                            progress.IsComplete = false;
-                        }
-                    }
-                    await proxyComponent.Save(progress);
-                }
-                taskInfo.Id = progress.TaskId;
-                taskInfo.IsGet = progress.IsGet;
-                taskInfo.IsComplete = progress.IsComplete;
-                taskInfo.Progress = progress.CurProgress;
+                List<string> list2 = new List<string>();
+                CommonUtil.splitStr(list1[i], list2, ':');
+
+                int id = int.Parse(list2[0]);
+                float num = float.Parse(list2[1]);
+
+                ChangeWealth(uid,id, num);
             }
-            return taskInfo;
         }
 
         public static async void ChangeWealth(long uid, int propId, float propNum)
@@ -102,7 +75,7 @@ namespace ETHotfix
                 // 金币
                 case 1:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].GoldNum += (int)propNum;
                         if (playerBaseInfos[0].GoldNum < 0)
                         {
@@ -115,7 +88,7 @@ namespace ETHotfix
                 // 元宝
                 case 2:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].WingNum += (int)propNum;
                         if (playerBaseInfos[0].WingNum < 0)
                         {
@@ -128,7 +101,7 @@ namespace ETHotfix
                 // 话费
                 case 3:
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{UId:{uid}}}");
+                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].HuaFeiNum += propNum;
                         if (playerBaseInfos[0].HuaFeiNum < 0)
                         {
@@ -163,5 +136,52 @@ namespace ETHotfix
                     break;
             }
         }
-    }
+
+        public static async void Log_Login(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            List<Log_Login> log_Logins = await proxyComponent.QueryJson<Log_Login>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
+            if (log_Logins.Count == 0)
+            {
+                // 今天第一天登录，做一些处理
+                Log.Debug("今天第一天登录");
+
+                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                playerBaseInfos[0].ZhuanPanCount = 3;
+                await proxyComponent.Save(playerBaseInfos[0]);
+            }
+
+            Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
+            log_Login.Uid = uid;
+            await proxyComponent.Save(log_Login);
+        }
+
+        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid,string Phone)
+        {
+            Log.Debug("增加新用户：" + uid.ToString());
+
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            
+            PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
+            playerBaseInfo.Id = uid;
+            playerBaseInfo.Name = uid.ToString();
+            playerBaseInfo.GoldNum = 10;
+            playerBaseInfo.WingNum = 0;
+            playerBaseInfo.Icon = "f_icon1";
+            playerBaseInfo.Phone = "";
+            playerBaseInfo.IsRealName = false;
+            playerBaseInfo.TotalGameCount = 0;
+            playerBaseInfo.WingNum = 0;
+            playerBaseInfo.VipTime = "2018-05-18 00:00:00";
+            playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
+            playerBaseInfo.RestChangeNameCount = 1;
+            await proxyComponent.Save(playerBaseInfo);
+
+            Log.Debug("增加新用户完毕");
+
+            return playerBaseInfo;
+        }
+    } 
 }

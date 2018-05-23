@@ -1853,6 +1853,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public string reward;
 
+		[ProtoMember(2, IsRequired = true)]
+		public int itemId;
+
 	}
 
 	[Message(HotfixOpcode.C2G_GetZhuanPanState)]

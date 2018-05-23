@@ -142,7 +142,7 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            string Third_Id = "wx_123456";
+            string Third_Id = "wx_1234567";
             OnThirdLogin(Third_Id);
         }
 
@@ -321,6 +321,7 @@ namespace ETHotfix
         public void getAllData()
         {
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
         }
     }
 }

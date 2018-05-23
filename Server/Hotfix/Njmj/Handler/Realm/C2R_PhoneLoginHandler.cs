@@ -56,6 +56,9 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        // 登录日志
+                        //DBCommonUtil.Log_Login(accountInfo.Id);
                     }
                     // 用户不存在，走注册流程
                     else
@@ -68,6 +71,9 @@ namespace ETHotfix
                         accountInfo.ClientVersion = message.ClientVersion;
 
                         await proxyComponent.Save(accountInfo);
+
+                        // 添加用户信息
+                        PlayerBaseInfo playerBaseInfo = await DBCommonUtil.addPlayerBaseInfo(accountInfo.Id, accountInfo.Phone);
 
                         // 随机分配一个Gate
                         StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
@@ -83,6 +89,9 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
+
+                        // 登录日志
+                        //DBCommonUtil.Log_Login(accountInfo.Id);
                     }
                 }
                 // 用Token登录
@@ -107,6 +116,9 @@ namespace ETHotfix
                             response.Key = g2RGetLoginKey.Key;
                             response.Token = accountInfo.Token;
                             reply(response);
+
+                            // 登录日志
+                            //DBCommonUtil.Log_Login(accountInfo.Id);
                         }
                         else
                         {
