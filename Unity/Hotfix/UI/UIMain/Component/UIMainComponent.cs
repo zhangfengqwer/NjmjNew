@@ -268,6 +268,12 @@ namespace ETHotfix
             base.Dispose();
 
             isDispose = true;
+            wealthRankList.Clear();
+            gameRankList.Clear();
+            rankItemList.Clear();
+            gameItemList.Clear();
+            uiList.Clear();
+            gameUiList.Clear();
         }
 
         private void ShowGoldRank()
