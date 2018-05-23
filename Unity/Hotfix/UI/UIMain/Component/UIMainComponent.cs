@@ -199,6 +199,12 @@ namespace ETHotfix
                 SetUIHideOrOpen(false);
             });
 
+            PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Button>().onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
+                SetUIHideOrOpen(false);
+            });
+
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
             
             
@@ -377,13 +383,23 @@ namespace ETHotfix
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)
+            {
                 playerIcon.sprite = icon;
+            }
             else
+            {
                 Log.Warning("icon数据为空，请重新注册");
+            }
+
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
             HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
+
+            if (GameUtil.isVIP())
+            {
+                PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
         }
 
         public void addLaBaContent(string content)
