@@ -237,6 +237,17 @@ message C2G_UseItem //IRequest
 	required int ItemId = 2;
 }
 
+message C2G_ChangeWealth //IRequest
+{
+	required long UId = 1;
+	required int propId = 2;
+	required float propNum = 3;
+}
+
+message G2C_ChangeWealth //IResponse
+{
+}
+
 message C2G_EnterRoom //IRequest
 {
 	
