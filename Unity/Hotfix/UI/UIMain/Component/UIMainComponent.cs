@@ -142,7 +142,8 @@ namespace ETHotfix
                 //ToastScript.createToast("暂未开放：成就");
                 //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
                 //Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChengjiu);
+                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChengjiu);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIActivity);
             });
 
             // 背包

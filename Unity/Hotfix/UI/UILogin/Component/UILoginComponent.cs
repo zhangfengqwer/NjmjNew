@@ -253,6 +253,7 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
+                Debug.Log(g2cTask.TaskProgressList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);

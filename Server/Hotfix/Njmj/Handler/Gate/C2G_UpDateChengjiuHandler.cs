@@ -6,5 +6,6 @@ namespace ETHotfix.Njmj.Handler.Gate
 {
     class C2G_UpDateChengjiuHandler
     {
+
     }
 }

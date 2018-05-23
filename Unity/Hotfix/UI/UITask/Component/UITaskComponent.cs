@@ -35,7 +35,7 @@ namespace ETHotfix
 
             returnBtn.onClick.Add(() =>
             {
-                TaskTest();
+                //TaskTest();
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UITask);
             });
 
@@ -51,7 +51,7 @@ namespace ETHotfix
         private int GetProgress()
         {
             int count = 0;
-            for(int i = 0;i< PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            for (int i = 0; i < PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
             {
                 if (PlayerInfoComponent.Instance.GetTaskInfoList()[i].IsComplete)
                     count++;
@@ -59,14 +59,14 @@ namespace ETHotfix
             return count;
         }
 
-        private async void TaskTest()
-        {
-            long uid = PlayerInfoComponent.Instance.uid;
-            TaskInfo taskProgress = new TaskInfo();
-            taskProgress.Id = 102;
-            taskProgress.Progress = 10;
-            G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = uid, TaskPrg = taskProgress });
-        }
+        //private async void TaskTest()
+        //{
+        //    long uid = PlayerInfoComponent.Instance.uid;
+        //    TaskInfo taskProgress = new TaskInfo();
+        //    taskProgress.Id = 102;
+        //    taskProgress.Progress = 10;
+        //    G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = uid, TaskPrg = taskProgress });
+        //}
 
         private void CreateTaskItem()
         {
