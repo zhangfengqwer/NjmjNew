@@ -47,5 +47,6 @@ namespace ETHotfix
         public const string UIExpression = "UIExpression";
         public const string UIChengjiu = "UIChengjiu";
         public const string UIChengjiuItem = "UIChengjiuItem";
+        public const string UIVIP = "UIVIP";
     }
 }
