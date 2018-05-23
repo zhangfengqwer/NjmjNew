@@ -94,7 +94,7 @@ namespace ETHotfix
                             endTime = (CommonUtil.timeAddDays(CommonUtil.getCurTimeNormalFormat(), 7));
                         }
 
-                        playerBaseInfo.EmogiTime = endTime;
+                        playerBaseInfo.VipTime = endTime;
                         response.time = endTime;
 
                         await proxyComponent.Save(playerBaseInfo);
@@ -115,7 +115,7 @@ namespace ETHotfix
                             endTime = (CommonUtil.timeAddDays(CommonUtil.getCurTimeNormalFormat(), 30));
                         }
 
-                        playerBaseInfo.EmogiTime = endTime;
+                        playerBaseInfo.VipTime = endTime;
                         response.time = endTime;
 
                         await proxyComponent.Save(playerBaseInfo);
@@ -136,7 +136,7 @@ namespace ETHotfix
                             endTime = (CommonUtil.timeAddDays(CommonUtil.getCurTimeNormalFormat(), 90));
                         }
 
-                        playerBaseInfo.EmogiTime = endTime;
+                        playerBaseInfo.VipTime = endTime;
                         response.time = endTime;
 
                         await proxyComponent.Save(playerBaseInfo);
