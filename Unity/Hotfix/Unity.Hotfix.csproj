@@ -172,6 +172,8 @@
     <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIChatItemComponent.cs" />
     <Compile Include="UI\UIRoom\Component\UIExpressionComponent.cs" />
+    <Compile Include="UI\UISet\Component\UISetComponent.cs" />
+    <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
     <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
     <Compile Include="UI\UIUseLaBa\Factory\UIUseLaBaFactory.cs" />
     <Compile Include="UI\UIChangeName\Component\UIChangeNameComponent.cs" />

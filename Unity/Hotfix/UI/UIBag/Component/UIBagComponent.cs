@@ -1,5 +1,6 @@
 ﻿using ETModel;
 using Hotfix;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -128,16 +129,47 @@ namespace ETHotfix
 
         private async void UseItem(Bag item)
         {
-            G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
-            GameUtil.changeData(item.ItemId, -1);
-            if (g2cBag.result == 1)
+            try
             {
-                Debug.Log("Use Success");
-                GetBagInfoList();
-                useBg.SetActive(false);
-            }   
-            else
-                Debug.Log("Use Fail");
+                G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+                GameUtil.changeData(item.ItemId, -1);
+                if (g2cBag.result == 1)
+                {
+                    ToastScript.createToast("使用成功");
+
+                    GetBagInfoList();
+                    useBg.SetActive(false);
+
+                    switch (item.ItemId)
+                    {
+                        // 表情包
+                        case 104:
+                            {
+                                PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime = g2cBag.time;
+                                Log.Debug("表情包到期时间" + g2cBag.time);
+                            }
+                            break;
+
+                        // VIP体验卡
+                        case 107:
+                        case 108:
+                        case 109:
+                            {
+                                PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
+                                Log.Debug("VIP到期时间" + g2cBag.time);
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    ToastScript.createToast(g2cBag.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Debug("------------------" + ex.ToString());
+            }
         }
 
         //private void SetBagItemL(int count)
