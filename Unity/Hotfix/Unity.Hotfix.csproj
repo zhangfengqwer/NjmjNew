@@ -167,6 +167,9 @@
     <Compile Include="UI\UIBag\Component\UIBagComponent.cs" />
     <Compile Include="UI\UIBag\Component\UIBagItemComponent.cs" />
     <Compile Include="UI\UIBag\Factory\UIBagFactory.cs" />
+    <Compile Include="UI\UIChengjiu\Component\UIChengjiuComponent.cs" />
+    <Compile Include="UI\UIChengjiu\Component\UIChengjiuItemComponent.cs" />
+    <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
     <Compile Include="UI\UIRoom\Component\UIChatItemComponent.cs" />
     <Compile Include="UI\UIRoom\Component\UIExpressionComponent.cs" />
     <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
