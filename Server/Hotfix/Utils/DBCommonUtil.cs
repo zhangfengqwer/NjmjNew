@@ -15,7 +15,7 @@ namespace ETHotfix
         /// <param name="uid"></param>
         /// <param name="taskId"></param>
         /// <param name="isGet"></param>
-        public static async Task<TaskInfo> UpdateTask(long uid,int taskId,bool isGet = false)
+        public static async Task<TaskInfo> UpdateTask(long uid, int taskId, bool isGet = false)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             TaskInfo taskInfo = new TaskInfo();
@@ -27,14 +27,14 @@ namespace ETHotfix
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {
                     progress = taskProgressInfoList[i];
-                    ++progress.CurProgress;
-                
+
                     if (isGet)
                     {
                         progress.IsGet = true;
                     }
                     else
                     {
+                        ++progress.CurProgress;
                         if (progress.CurProgress == progress.Target)
                         {
                             progress.IsComplete = true;
@@ -55,5 +55,5 @@ namespace ETHotfix
             return taskInfo;
         }
     }
-        
+
 }

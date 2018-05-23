@@ -75,7 +75,6 @@ namespace ETHotfix
             //完成一局游戏
 //            DBCommonUtil.UpdateTask(gamer.UserID, 101);
 
-
             roomComponent.gameRooms.Remove(room.Id);
             roomComponent.readyRooms.Add(room.Id, room);
 

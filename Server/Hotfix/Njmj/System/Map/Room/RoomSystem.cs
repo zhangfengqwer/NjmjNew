@@ -196,7 +196,7 @@ namespace ETHotfix
                 if (grabMahjong == null)
                 {
                     //没牌
-                    gameController.GameOver();
+                    gameController.GameOver(0);
                     return;
                 }
             }
