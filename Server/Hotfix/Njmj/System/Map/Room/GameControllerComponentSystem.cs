@@ -34,11 +34,13 @@ namespace ETHotfix
                 card.weight = (byte) card.m_weight;
             }
         }
+
         /// <summary>
         /// 游戏结束
         /// </summary>
         /// <param name="self"></param>
-        public static void GameOver(this GameControllerComponent self)
+        /// <param name="huaCount"></param>
+        public static void GameOver(this GameControllerComponent self, int huaCount)
         {
             Room room = self.GetParent<Room>();
             RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
@@ -58,13 +60,21 @@ namespace ETHotfix
                 gamer.IsCanPeng = false;
                 gamer.IsCanGang = false;
                 gamer.IsCanHu = false;
-
+                gamer.IsWinner = false;
                 if (gamer.isOffline)
                 {
                     room.Remove(gamer.UserID);
                     gamer.isOffline = !gamer.isOffline;
                 }
+
+                //传数据
+                //完成一局游戏
+                DBCommonUtil.UpdateTask(gamer.UserID, 101);
             }
+
+            //完成一局游戏
+//            DBCommonUtil.UpdateTask(gamer.UserID, 101);
+
 
             roomComponent.gameRooms.Remove(room.Id);
             roomComponent.readyRooms.Add(room.Id, room);
@@ -83,11 +93,6 @@ namespace ETHotfix
                 room?.Dispose();
                 roomComponent.RemoveRoom(room);
             }
-
-            //传数据
-
-
-            
         }
     }
 }

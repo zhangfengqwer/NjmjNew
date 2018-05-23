@@ -25,6 +25,9 @@
 
         //是否准备
         public bool IsReady { get; set; }
+        
+        //是否赢
+        public bool IsWinner { get; set; }
 
         //是否离线
         public bool isOffline { get; set; }

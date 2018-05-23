@@ -28,6 +28,7 @@ namespace ETHotfix
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
 
                 //胡牌
+                int huaCount = 0;
                 if (message.OperationType == 2)
                 {
                     //自摸
@@ -36,7 +37,7 @@ namespace ETHotfix
                     {
                         if (Logic_NJMJ.getInstance().isHuPai(mahjongInfos))
                         {
-                            HuPai(gamer, room, mahjongInfos,true);
+                            huaCount = HuPai(gamer, room, mahjongInfos,true);
                             isFinish = true;
                         }
                     }
@@ -47,7 +48,7 @@ namespace ETHotfix
                         {
                             List<MahjongInfo> temp = new List<MahjongInfo>(mahjongInfos);
                             temp.Add(deskComponent.CurrentCard);
-                            HuPai(gamer, room, temp, false);
+                            huaCount = HuPai(gamer, room, temp, false);
                             isFinish = true;
                         }
                     }
@@ -55,7 +56,7 @@ namespace ETHotfix
                     if (isFinish)
                     {
                         //游戏结束结算
-                        gameController.GameOver();
+                        gameController.GameOver(huaCount);
                     }
                 }
                 //放弃
@@ -152,7 +153,7 @@ namespace ETHotfix
 	    /// <param name="room"></param>
 	    /// <param name="mahjongInfos"></param>
 	    /// <param name="b"></param>
-	    private static void HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
+	    private static int HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
 	    {
 	        int huaCount = 0;
 
@@ -234,7 +235,9 @@ namespace ETHotfix
 
 	        room.IsGameOver = true;
 	        gamer.IsCanHu = false;
-	        Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
+            gamer.IsWinner = true;
+
+            Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
 	        foreach (var item in huPaiTypes)
 	        {
 	            Log.Info("有人胡牌:" + item.ToString());
@@ -252,7 +255,10 @@ namespace ETHotfix
 
             //基数
             huaCount += 20;
-        }
+	        huaCount *= 2;
+
+	        return huaCount;
+	    }
 
 	    private static bool GetCanHu(Room room)
 	    {

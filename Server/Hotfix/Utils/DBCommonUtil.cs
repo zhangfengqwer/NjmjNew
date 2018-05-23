@@ -9,7 +9,13 @@ namespace ETHotfix
 {
     public class DBCommonUtil
     {
-        public static async void UpdateTask(long uid,int taskId,bool isGet = false)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="taskId"></param>
+        /// <param name="isGet"></param>
+        public static async Task<TaskInfo> UpdateTask(long uid,int taskId,bool isGet = false)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             TaskInfo taskInfo = new TaskInfo();
@@ -22,10 +28,7 @@ namespace ETHotfix
                 {
                     progress = taskProgressInfoList[i];
                     ++progress.CurProgress;
-                    progress.TaskId = taskId;
-                    progress = taskProgressInfoList[i];
-                    ++progress.CurProgress;
-                    progress.TaskId =taskId;
+                
                     if (isGet)
                     {
                         progress.IsGet = true;
@@ -48,6 +51,8 @@ namespace ETHotfix
                 taskInfo.IsComplete = progress.IsComplete;
                 taskInfo.Progress = progress.CurProgress;
             }
+
+            return taskInfo;
         }
     }
         
