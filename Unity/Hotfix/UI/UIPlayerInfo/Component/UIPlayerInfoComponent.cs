@@ -96,8 +96,8 @@ namespace ETHotfix
 
         private void Init()
         {
-            bindPhoneBtn.gameObject.SetActive(!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
-            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount >= 0);
+            bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
 
             if (GameUtil.isVIP())

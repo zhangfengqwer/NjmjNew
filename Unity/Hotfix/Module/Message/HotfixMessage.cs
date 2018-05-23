@@ -1304,6 +1304,9 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string Icon;
 
+		[ProtoMember(5, IsRequired = true)]
+		public long UId;
+
 	}
 
 	[Message(HotfixOpcode.GameRank)]
@@ -1321,6 +1324,9 @@ namespace ETHotfix
 
 		[ProtoMember(4, IsRequired = true)]
 		public string Icon;
+
+		[ProtoMember(5, IsRequired = true)]
+		public long UId;
 
 	}
 
@@ -1357,6 +1363,12 @@ namespace ETHotfix
 
 		[ProtoMember(2, TypeName = "ETHotfix.GameRank")]
 		public List<GameRank> GameRankList = new List<GameRank>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public GameRank OwnGameRank;
+
+		[ProtoMember(4, IsRequired = true)]
+		public WealthRank OwnWealthRank;
 
 	}
 

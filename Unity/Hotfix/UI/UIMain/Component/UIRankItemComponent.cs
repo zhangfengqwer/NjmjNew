@@ -37,22 +37,18 @@ namespace ETHotfix
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
             if (RankTxt.gameObject.activeInHierarchy)
-            {
-                if (index == 30)
-                    RankTxt.text = "未上榜";
-                else
-                    RankTxt.text = index.ToString();
-            }
+                RankTxt.text = (index + 1).ToString();
             NameTxt.text = wealth.PlayerName;
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(wealth.GoldNum)
                                               .ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(wealth.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
-                                              .Append(index)
+                                              .Append(index + 1)
                                               .ToString() ;
+            Debug.Log(rIcon);
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(rIcon);
+                RankImg.sprite = CommonUtil.getSpriteByBundle("uirankicon", rIcon);
         }
 
         public void SetGameItem(GameRank gameRank,int index)
@@ -66,10 +62,10 @@ namespace ETHotfix
             RankTxt.text = index.ToString();
             Icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(gameRank.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
-                                           .Append(index)
+                                           .Append(index + 1)
                                            .ToString();
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(rIcon);
+                RankImg.sprite = CommonUtil.getSpriteByBundle("uirankicon", rIcon);
         }
     }
 }

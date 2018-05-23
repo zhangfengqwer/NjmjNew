@@ -463,6 +463,7 @@ message WealthRank // IMessage
 	required long GoldNum = 2;
 	required long GoldTicket = 3;
 	required string Icon = 4;
+	required long UId = 5;
 }
 
 message GameRank // IMessage
@@ -471,6 +472,7 @@ message GameRank // IMessage
 	required int WinCount = 2;
 	required int TotalCount = 3;
 	required string Icon = 4;
+	required long UId = 5;
 }
 
 message C2G_Rank //IRequest
@@ -483,6 +485,8 @@ message G2C_Rank //IResponse
 {
 	repeated WealthRank RankList = 1;
 	repeated GameRank GameRankList = 2;
+	required GameRank OwnGameRank = 3;
+	required WealthRank OwnWealthRank = 4;
 }
 
 message C2G_DailySign // IRequest
