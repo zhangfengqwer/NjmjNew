@@ -19,6 +19,10 @@ namespace ETHotfix
                     GameObject obj = GameObject.Instantiate(item);
                     obj.transform.SetParent(GameObject.Find("CommonWorld").transform);
                 }
+                else
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom).GetComponent<UIRoomComponent>().ShowChatContent(message.Value,message.UId);
+                }
             }
             catch (Exception e)
             {

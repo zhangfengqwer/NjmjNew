@@ -1649,6 +1649,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public string Value;
 
+		[ProtoMember(3, IsRequired = true)]
+		public long UId;
+
 	}
 
 	[Message(HotfixOpcode.G2C_Chat)]
@@ -1681,6 +1684,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public string Value;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long UId;
 
 	}
 

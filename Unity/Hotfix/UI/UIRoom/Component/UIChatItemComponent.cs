@@ -41,7 +41,7 @@ namespace ETHotfix
             string aniName = new StringBuilder().Append("Expression_")
                                                 .Append(index).ToString();
             G2C_Chat g2cChat = (G2C_Chat)await Game.Scene.GetComponent<SessionWrapComponent>()
-                .Session.Call(new C2G_Chat { ChatType = 2, Value = ChatTxt.text });
+                .Session.Call(new C2G_Chat { ChatType = 2, Value = ChatTxt.text, UId = PlayerInfoComponent.Instance.uid });
         }
 
         public void SetChatItemInfo(Chat chat,int index)

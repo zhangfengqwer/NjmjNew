@@ -48,6 +48,8 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         private List<UI> chatUiList = new List<UI>();
         public GameObject currentItem = new GameObject();
+        private GameObject ChatL;
+        private Text ChatLTxt;
         private Text restText;
         private GameObject players;
         private CancellationTokenSource tokenSource;
@@ -76,7 +78,8 @@ namespace ETHotfix
             ShortBtn = Chat.transform.Find("ShortBtn").GetComponent<Button>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
             ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
-
+            ChatL = rc.Get<GameObject>("ChatL");
+            ChatLTxt = rc.Get<GameObject>("ChatLTxt").GetComponent<Text>();
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
 
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -162,6 +165,26 @@ namespace ETHotfix
                 }
                 uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
             }
+        }
+
+        public void ShowChatContent(string content,long UId)
+        {
+            int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
+            ChatL.gameObject.SetActive(true);
+            ChatLTxt.text = content;
+            
+            StartTimer();
+        }
+
+        private async void StartTimer()
+        {
+            int time = 30;
+            while (time >= 0)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+                --time;
+            }
+            ChatL.SetActive(false);
         }
 
         public void CloseChatUI()

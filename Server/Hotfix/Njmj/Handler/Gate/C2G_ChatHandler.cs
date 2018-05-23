@@ -12,8 +12,7 @@ namespace ETHotfix
             G2C_Chat response = new G2C_Chat();
             try
             {
-                session.Send(new Actor_Chat { ChatType = message.ChatType, Value = message.Value });
-                reply(response);
+                session.Send(new Actor_Chat { ChatType = message.ChatType, Value = message.Value, UId = message.UId });
             }
             catch (Exception e)
             {

@@ -580,6 +580,7 @@ message C2G_Chat // IRequest
 {
 	required int ChatType = 1;
 	required string Value = 2;
+	required long UId = 3;
 }
 
 message G2C_Chat // IResponse
@@ -591,6 +592,7 @@ message Actor_Chat // IActorMessage
 {
 	required int ChatType = 1;
 	required string Value = 2;
+	required long UId = 3;
 }
 
 
