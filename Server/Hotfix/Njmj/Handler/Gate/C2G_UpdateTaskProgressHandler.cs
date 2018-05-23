@@ -21,32 +21,7 @@ namespace ETHotfix
                 
                 if (taskProgressInfoList.Count > 0)
                 {
-                    for(int i = 0;i< taskProgressInfoList.Count; ++i)
-                    {
-                        progress = taskProgressInfoList[i];
-                        ++progress.CurProgress;
-                        progress.TaskId = message.TaskPrg.Id;
-                        if (message.TaskPrg.IsGet)
-                        {
-                            progress.IsGet = true;
-                        }
-                        else
-                        {
-                            if (progress.CurProgress == progress.Target)
-                            {
-                                progress.IsComplete = true;
-                            }
-                            else
-                            {
-                                progress.IsComplete = false;
-                            }
-                        }
-                        await proxyComponent.Save(progress);
-                    }
-                    taskInfo.Id = progress.TaskId;
-                    taskInfo.IsGet = progress.IsGet;
-                    taskInfo.IsComplete = progress.IsComplete;
-                    taskInfo.Progress = progress.CurProgress;
+                    taskInfo = await DBCommonUtil.UpdateTask(message.UId,message.TaskPrg.Id,message.TaskPrg.IsGet);
                     response.TaskPrg = taskInfo;
                 }
                 else

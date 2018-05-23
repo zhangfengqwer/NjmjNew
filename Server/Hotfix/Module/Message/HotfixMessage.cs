@@ -876,7 +876,10 @@ namespace ETHotfix
 		public int RpcId { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public long Uid;
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public TaskInfo TaskPrg;
 
 	}
 
@@ -892,6 +895,9 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public TaskInfo TaskPrg;
 
 	}
 
