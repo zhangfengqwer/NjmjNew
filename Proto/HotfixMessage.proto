@@ -227,7 +227,6 @@ message G2C_PlayerInfo // IResponse
 message G2C_UseItem //IResponse
 {
 	required int result = 1;//0,使用失败 1.使用成功
-	required string time = 2;
 }
 
 message C2G_UseItem //IRequest
@@ -294,6 +293,16 @@ message C2G_UpdatePlayerInfo //IRequest
 message G2C_UpdatePlayerInfo //IResponse
 {
 	required PlayerInfo playerInfo = 1;
+}
+
+message C2G_UpdateChengjiu //IRequest
+{
+	required long Uid = 1;
+}
+
+message G2C_UpdateChengjiu //IResponse
+{
+
 }
 
 message C2M_ActorGamerEnterRoom // IActorRequest

@@ -24,15 +24,15 @@ namespace ETHotfix
                     for(int i = 0;i< taskProgressInfoList.Count; ++i)
                     {
                         progress = taskProgressInfoList[i];
+                        ++progress.CurProgress;
                         progress.TaskId = message.TaskPrg.Id;
-                        progress.CurProgress = message.TaskPrg.Progress;
                         if (message.TaskPrg.IsGet)
                         {
                             progress.IsGet = true;
                         }
                         else
                         {
-                            if (message.TaskPrg.Progress == progress.Target)
+                            if (progress.CurProgress == progress.Target)
                             {
                                 progress.IsComplete = true;
                             }
@@ -46,6 +46,7 @@ namespace ETHotfix
                     taskInfo.Id = progress.TaskId;
                     taskInfo.IsGet = progress.IsGet;
                     taskInfo.IsComplete = progress.IsComplete;
+                    taskInfo.Progress = progress.CurProgress;
                     response.TaskPrg = taskInfo;
                 }
                 else
