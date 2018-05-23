@@ -15,6 +15,8 @@ namespace ETHotfix
     }
     public class UIPlayerIconComponent : Component
     {
+        private GameObject CurIconFrame;
+
         private Button returnBtn;
         private Button saveBtn;
         private GameObject grid;
@@ -31,6 +33,9 @@ namespace ETHotfix
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+
+            CurIconFrame = rc.Get<GameObject>("CurIconFrame");
+
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             saveBtn = rc.Get<GameObject>("SaveBtn").GetComponent<Button>();
             grid = rc.Get<GameObject>("Grid");
@@ -57,6 +62,11 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIIcon);
             });
+
+            if (GameUtil.isVIP())
+            {
+                CurIconFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
         }
 
         private async void UpdateIcon()
