@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using ETModel;
 
 namespace ETHotfix
@@ -44,7 +45,7 @@ namespace ETHotfix
                 {
                     PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
                     playerBaseInfo.Id = message.uid;
-                    playerBaseInfo.Name = "默认";
+                    playerBaseInfo.Name = message.uid.ToString();
                     playerBaseInfo.GoldNum = 10;
                     playerBaseInfo.WingNum = 0;
                     playerBaseInfo.Icon = "f_icon1";
