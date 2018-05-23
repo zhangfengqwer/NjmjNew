@@ -97,5 +97,12 @@ namespace ETHotfix
                                              .Append(info.Id).ToString();
             ChengIcon.sprite = CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            itemList.Clear();
+            uiList.Clear();
+        }
     }
 }
