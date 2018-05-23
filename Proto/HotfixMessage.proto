@@ -130,6 +130,7 @@ message ShopInfo //IMessage
 	required int CurrencyType = 6;//
 	required string Items = 7;
 	required string Icon = 8;
+	required int VipPrice = 9;
 }
 
 message Chat //IMessage
@@ -158,7 +159,7 @@ message Actor_UpDateData //IActorMessage
 
 message G2C_BuyItem //IResponse
 {
-	required bool Result = 1; 
+	required long Count = 1;
 }
 
 message TaskProgress //IMessage
@@ -227,6 +228,7 @@ message G2C_PlayerInfo // IResponse
 message G2C_UseItem //IResponse
 {
 	required int result = 1;//0,使用失败 1.使用成功
+	required string time = 2;
 }
 
 message C2G_UseItem //IRequest

@@ -37,27 +37,17 @@ namespace ETHotfix
             {
                 if(shopInfo.CurrencyType == 2)
                 {
-                    string tip = "";
-                    bool isCanBuy = false;
+                    
                     //用元宝购买
                     long yuan = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum;
-                    if(yuan >= shopInfo.Price)
+                    if (GameUtil.isVIP())
                     {
-                        //可以购买
-                        tip = new StringBuilder().Append("确定花费")
-                                                        .Append(shopInfo.Price)
-                                                        .Append("元宝购买")
-                                                        .Append(shopInfo.Name)
-                                                        .Append("吗").ToString();
-                        isCanBuy = true;
+                        ShowBuy(yuan, shopInfo.VipPrice);
                     }
                     else
                     {
-                        //元宝不够
-                        tip = "您还没有足够的元宝，现在去充值吧！";
-                        isCanBuy = false;
+                        ShowBuy(yuan, shopInfo.Price);
                     }
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().BuyTip(shopInfo, tip, isCanBuy);
                 }
                 else
                 {
@@ -65,6 +55,29 @@ namespace ETHotfix
                     Debug.Log("暂时还未接sdk");
                 }
             });
+        }
+
+        public void ShowBuy(long own,long price)
+        {
+            string tip = "";
+            bool isCanBuy = false;
+            if (own >= price)
+            {
+                //可以购买
+                tip = new StringBuilder().Append("确定花费")
+                                                .Append(price)
+                                                .Append("元宝购买")
+                                                .Append(shopInfo.Name)
+                                                .Append("吗").ToString();
+                isCanBuy = true;
+            }
+            else
+            {
+                //元宝不够
+                tip = "您还没有足够的元宝，现在去充值吧！";
+                isCanBuy = false;
+            }
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().BuyTip(shopInfo, tip, isCanBuy);
         }
 
         public void SetCommonItem(ShopInfo info)

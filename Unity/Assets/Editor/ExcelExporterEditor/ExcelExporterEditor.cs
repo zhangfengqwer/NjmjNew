@@ -98,7 +98,7 @@ public class ExcelExporterEditor : EditorWindow
 			{
 				continue;
 			}
-            if (Path.GetFileName(filePath) == "ShopConfig.xlsx" ||
+            if (/*Path.GetFileName(filePath) == "ShopConfig.xlsx" ||*/
                 Path.GetFileName(filePath) == "TaskConfig.xlsx" 
                 || Path.GetFileName(filePath) == "ChatConfig.xlsx")
                 continue;

@@ -46,6 +46,7 @@ namespace ETHotfix
                     info.CurrencyType = config.CurrencyType;
                     info.Items = config.Items;
                     info.Icon = config.Icon;
+                    info.VipPrice = config.VipPrice;
                     shopInfoList.Add(info);
                 }
 
