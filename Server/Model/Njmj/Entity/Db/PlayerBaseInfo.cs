@@ -14,6 +14,7 @@ namespace ETModel
         public int WinGameCount { get; set; }
         public string Phone { get; set; }
         public int PlayerSound { get; set; }
-        public string VipTime { get; set; }
+        public string VipTime = "2018-05-18 00:00:00";
+        public string EmogiTime = "2018-05-18 00:00:00";
     }
 }

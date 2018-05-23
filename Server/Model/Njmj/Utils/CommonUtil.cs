@@ -23,6 +23,11 @@ namespace ETModel
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        public static string timeAddDays(string time,int days)
+        {
+            return Convert.ToDateTime(time).AddDays(days).ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         /// <summary>
         /// 32位MD5加密
         /// </summary>
