@@ -28,7 +28,10 @@ namespace ETHotfix
         private Button realNameBtn;
         private Button bindPhoneBtn;
         private Button ChangeAccountBtn;
-
+        private Button De;
+        private Text GoldNumTxt;
+        private Text WingNumTxt;
+        private Button AddBtn;
         private GameObject PlayerFrame;
 
         public void Awake()
@@ -46,6 +49,17 @@ namespace ETHotfix
             realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
             ChangeAccountBtn = rc.Get<GameObject>("ChangeAccountBtn").GetComponent<Button>();
+
+            De = rc.Get<GameObject>("De").GetComponent<Button>();
+            GoldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
+            WingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
+            AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
+
+            AddBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
+            });
 
             PlayerFrame = rc.Get<GameObject>("PlayerFrame");
 
@@ -75,6 +89,11 @@ namespace ETHotfix
                 onClickChangeAccount();
             });
 
+            De.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIVIP);
+            });
+
             PlayerInfoComponent pc = Game.Scene.GetComponent<PlayerInfoComponent>();
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;
@@ -99,7 +118,8 @@ namespace ETHotfix
             bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
-
+            GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
+            WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
             if (GameUtil.isVIP())
             {
                 PlayerFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");

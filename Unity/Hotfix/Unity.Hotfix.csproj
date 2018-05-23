@@ -221,6 +221,8 @@
     <Compile Include="UI\UITask\Component\UITaskComponent.cs" />
     <Compile Include="UI\UITask\Component\UITaskItemComponent.cs" />
     <Compile Include="UI\UITask\Factory\UITaskFactory.cs" />
+    <Compile Include="UI\UIVIP\Component\UIVIPComponent.cs" />
+    <Compile Include="UI\UIVIP\Factory\UIVIPFactory.cs" />
     <Compile Include="Utils\AudioScript.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
     <Compile Include="Utils\GameUtil.cs" />
