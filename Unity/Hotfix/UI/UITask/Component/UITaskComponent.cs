@@ -51,7 +51,7 @@ namespace ETHotfix
         private int GetProgress()
         {
             int count = 0;
-            for(int i = 0;i< PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            for (int i = 0; i < PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
             {
                 if (PlayerInfoComponent.Instance.GetTaskInfoList()[i].IsComplete)
                     count++;

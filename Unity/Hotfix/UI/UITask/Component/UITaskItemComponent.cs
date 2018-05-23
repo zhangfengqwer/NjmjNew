@@ -74,6 +74,7 @@ namespace ETHotfix
 
         public void SetTaskItemInfo(TaskInfo info)
         {
+            //Debug.Log(JsonHelper.ToJson(info));
             taskProgress = info;
             string iconName = new StringBuilder().Append("Task_")
                                                  .Append(info.Id).ToString();

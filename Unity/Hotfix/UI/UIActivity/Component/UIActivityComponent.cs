@@ -36,29 +36,28 @@ namespace ETHotfix
             for (int i = 0; i < 6; ++i)
             {
                 obj = GameObject.Instantiate(item);
-                obj.transform.SetParent(grid.transform);
-                Debug.Log(obj.transform.localPosition);
-                //obj.transform.localPosition = new Vector3(0, 0, 0);
+                obj.transform.SetParent(grid.transform.parent.transform);
+                obj.transform.localPosition = new Vector3(0, 0, 0);
                 //obj.transform.localScale = new Vector3(2, 2, 2);
                 #region 
                 UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                 ui.AddComponent<UINoticeItemComponent>();
                 objList.Add(obj);
-                //if (i == 0)
-                //    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领");
-                //if (i == 1)
-                //    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取" +
-                //        "领取领取领取领取领取领取领取领取领领取领取领取领取领取领取领" +
-                //        "取领取领取领取领取领取领取领取领取领取领取领取领取领");
-                //else
-                //    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领");
-                //int space = ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1 * 34;
-                //float y = (float)(-158) * objList.Count -
-                //    (ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1) * 34;
-                //Debug.Log(space);
-                ////obj.transform.localPosition = new Vector3(594.0f, y, 0.0f);
-                //Debug.Log((-158) * objList.Count -
-                //    (ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1) * 34);
+                if (i == 0)
+                    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领");
+                if (i == 1)
+                    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取" +
+                        "领取领取领取领取领取领取领取领取领领取领取领取领取领取领取领" +
+                        "取领取领取领取领取领取领取领取领取领取领取领取领取领");
+                else
+                    ui.GetComponent<UINoticeItemComponent>().SetText("领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领取领");
+                int space = ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1 * 34;
+                float y = (float)(-158) * objList.Count -
+                    (ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1) * 34;
+                Debug.Log(space);
+                //obj.transform.localPosition = new Vector3(594.0f, y, 0.0f);
+                Debug.Log((-158) * objList.Count -
+                    (ui.GetComponent<UINoticeItemComponent>().GetTextRow() - 1) * 34);
                 #endregion
             }
 
@@ -66,7 +65,7 @@ namespace ETHotfix
             {
                 grid.transform.localPosition = Vector3.zero;
                 grid.transform.GetChild(i).localPosition = Vector3.zero;
-                grid.transform.GetChild(i).localPosition = new Vector3(1000,1000,1000);
+                grid.transform.GetChild(i).localPosition = new Vector3(1000,1000,0);
                 Debug.Log(grid.transform.GetChild(i).transform.localPosition);
             }
         }
