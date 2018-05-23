@@ -16,5 +16,7 @@ namespace ETModel
         public int PlayerSound { get; set; }
         public string VipTime = "2018-05-18 00:00:00";
         public string EmogiTime = "2018-05-18 00:00:00";
+        public int ZhuanPanCount = 0;
+        public int LuckyValue = 0;
     }
 }

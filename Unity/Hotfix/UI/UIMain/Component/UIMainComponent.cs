@@ -154,7 +154,7 @@ namespace ETHotfix
             // 转盘
             BtnList_Down.transform.Find("Grid/Btn_ZhuanPan").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：转盘");
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIZhuanPan);
             });
 
             // 每日必做

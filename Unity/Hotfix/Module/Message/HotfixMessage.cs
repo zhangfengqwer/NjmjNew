@@ -1801,4 +1801,67 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_UseZhuanPan)]
+	[ProtoContract]
+	public partial class C2G_UseZhuanPan: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_UseZhuanPan)]
+	[ProtoContract]
+	public partial class G2C_UseZhuanPan: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string reward;
+
+	}
+
+	[Message(HotfixOpcode.C2G_GetZhuanPanState)]
+	[ProtoContract]
+	public partial class C2G_GetZhuanPanState: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetZhuanPanState)]
+	[ProtoContract]
+	public partial class G2C_GetZhuanPanState: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int ZhuanPanCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int LuckyValue;
+
+	}
+
 }

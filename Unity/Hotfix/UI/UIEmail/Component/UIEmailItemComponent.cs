@@ -76,7 +76,7 @@ namespace ETHotfix
                 });
             ToastScript.createToast("领取成功");
             get.gameObject.SetActive(false);
-            GameUtil.changeDataWithStr(email.RewardItem, ',');
+            GameUtil.changeDataWithStr(email.RewardItem);
             flag.SetActive(false);
         }
 
