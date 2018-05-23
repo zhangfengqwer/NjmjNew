@@ -550,6 +550,36 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_Chengjiu)]
+	[ProtoContract]
+	public partial class C2G_Chengjiu: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Chengjiu)]
+	[ProtoContract]
+	public partial class G2C_Chengjiu: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<TaskInfo> ChengjiuList = new List<TaskInfo>();
+
+	}
+
 	[Message(HotfixOpcode.TaskInfo)]
 	[ProtoContract]
 	public partial class TaskInfo: IMessage

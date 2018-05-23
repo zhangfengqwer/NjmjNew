@@ -191,6 +191,16 @@ message G2C_Task //IResponse
 	repeated TaskInfo TaskProgressList = 1;
 }
 
+message C2G_Chengjiu //IRequest
+{
+	required long Uid = 1;
+}
+
+message G2C_Chengjiu //IResponse
+{
+	repeated TaskInfo ChengjiuList = 1;
+}
+
 message TaskInfo //IMessage
 {
 	required int Id = 1;//任务ID
@@ -202,6 +212,7 @@ message TaskInfo //IMessage
 	required bool IsComplete = 7;//是否已经完成
 	required bool IsGet = 8;//是否获取
 }
+
 
 message C2G_PlayerInfo // IRequest
 {

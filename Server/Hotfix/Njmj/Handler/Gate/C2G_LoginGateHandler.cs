@@ -59,6 +59,7 @@ namespace ETHotfix
                     chatConfigList.Add(info);
                 }
                 response.ChatList = chatConfigList;
+
                 #endregion
 
                 #region AddItemInfo
