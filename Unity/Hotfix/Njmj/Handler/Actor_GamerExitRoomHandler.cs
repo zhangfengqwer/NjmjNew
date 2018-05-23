@@ -29,13 +29,16 @@ namespace ETHotfix
                 {
                     CommonUtil.ShowUI(UIType.UIMain);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
                 }
                 else
                 {
                     uiRoomComponent.RemoveGamer(message.Uid);
+                    uiReadyComponent.ResetPanel(message.Uid);
                 }
 
-                uiReadyComponent.ResetPanel();
+                SoundsHelp.Instance.playSound_LiKai();
+
             }
             catch (Exception e)
             {

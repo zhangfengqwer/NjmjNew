@@ -30,6 +30,11 @@ namespace ETHotfix
                 {
                     handCardsComponent.BuHua(mahjongInfo, false);
                 }
+
+                //剩下的牌
+                uiRoomComponent.SetRestCount();
+
+                SoundComponent.Instance.PlayClip("effect_nv1_buhua");
             }
             catch (Exception e)
             {

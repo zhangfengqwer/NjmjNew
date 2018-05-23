@@ -28,6 +28,8 @@ namespace ETHotfix
                     response.PlayerInfo.Phone = playerInfo.Phone;
                     response.PlayerInfo.PlayerSound = playerInfo.PlayerSound;
                     response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
+                    response.PlayerInfo.VipTime = playerInfo.VipTime;
+                    response.PlayerInfo.EmogiTime = playerInfo.EmogiTime;
                     reply(response);
                     return;
                 }

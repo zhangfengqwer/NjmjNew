@@ -21,8 +21,10 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
-                gamer.GetComponent<GamerUIComponent>().SetReady();
+//                gamer.GetComponent<GamerUIComponent>().SetReady();
                 uiReadyComponent.SetReady(message.Uid);
+
+                SoundsHelp.Instance.playSound_ZhunBei();
             }
             catch (Exception e)
             {

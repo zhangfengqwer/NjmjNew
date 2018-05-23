@@ -33,6 +33,10 @@ namespace ETHotfix
                 {
                     handCardsComponent.PlayOtherCard(mahjongInfo,uiRoomComponent.currentItem);
                 }
+
+                int number = RandomHelper.RandomNumber(1, 3);
+                SoundsHelp.Instance.playSound_Card_Nv1(message.weight);
+                SoundsHelp.Instance.playSound_ChuPai();
             }
             catch (Exception e)
             {

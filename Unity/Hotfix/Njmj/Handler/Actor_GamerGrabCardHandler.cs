@@ -32,9 +32,14 @@ namespace ETHotfix
                     handCardsComponent.GrabOtherCard();
                 }
 
+                //剩下的牌
+                uiRoomComponent.SetRestCount();
+
                 //显示黄色bg
                 uiRoomComponent.ShowTurn(message.Uid);
                 uiRoomComponent.ClosePropmtBtn();
+
+                SoundsHelp.Instance.playSound_MoPai();
             }
             catch (Exception e)
             {

@@ -19,6 +19,7 @@ namespace ETHotfix
                 for (int i = 0; i < roomCompnent.gameRooms.Count; i++)
 			    {
 			        room = roomCompnent.gameRooms[i];
+                    Log.Info("找到房间:");
 			        gamer = room.Get(message.UserId);
 			        if (gamer != null) break;
 			    }

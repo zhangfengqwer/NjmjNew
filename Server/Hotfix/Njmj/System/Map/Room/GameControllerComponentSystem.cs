@@ -41,8 +41,48 @@ namespace ETHotfix
         public static void GameOver(this GameControllerComponent self)
         {
             Room room = self.GetParent<Room>();
+            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
             room.IsGameOver = true;
             room.State = RoomState.Ready;
+            room.tokenSource.Cancel();
+
+            foreach (var gamer in room.GetAll())
+            {
+                if (gamer == null)
+                    continue;
+                gamer.IsReady = false;
+                gamer.isGangFaWanPai = false;
+                gamer.isFaWanPaiTingPai = false;
+                gamer.isGangEndBuPai = false;
+                gamer.isGetYingHuaBuPai = false;
+                gamer.IsCanPeng = false;
+                gamer.IsCanGang = false;
+                gamer.IsCanHu = false;
+
+                if (gamer.isOffline)
+                {
+                    room.Remove(gamer.UserID);
+                    gamer.isOffline = !gamer.isOffline;
+                }
+            }
+
+            roomComponent.gameRooms.Remove(room.Id);
+            roomComponent.readyRooms.Add(room.Id, room);
+
+            //人不足4人
+            if (room.seats.Count < 4)
+            {
+                roomComponent.readyRooms.Remove(room.Id);
+                roomComponent.idleRooms.Add(room);
+            }
+
+            //房间没人就释放
+            if (room.seats.Count == 0)
+            {
+                Log.Debug($"房间释放:{room.Id}");
+                room?.Dispose();
+                roomComponent.RemoveRoom(room);
+            }
         }
     }
 }

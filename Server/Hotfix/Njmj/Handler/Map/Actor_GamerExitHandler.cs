@@ -21,7 +21,7 @@ namespace ETHotfix
 	            if (room.State == RoomState.Game)
 	            {
 	                gamer.isOffline = true;
-//	                //玩家断开添加自动出牌组件
+	                //玩家断开添加自动出牌组件
 //	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
 //	                    gamer.AddComponent<TrusteeshipComponent>();
                     

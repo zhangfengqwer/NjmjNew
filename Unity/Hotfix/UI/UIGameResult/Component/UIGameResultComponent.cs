@@ -184,16 +184,26 @@ namespace ETHotfix
 
         public void onClick_close()
         {
-            isTimerEnd = true;
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+            onClick_jixu();
         }
 
         public void onClick_jixu()
         {
+            isTimerEnd = true;
+
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             //重新开始
             ui.GetComponent<UIRoomComponent>().ContinueGamer();
+          
+            //设置准备
+            UI uiReady = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIReady);
+
+            //删除弹窗
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+
+            //重新请求数据
+            SessionWrapComponent.Instance.Session.Send(new Actor_GamerContinueGame());
+
         }
 
         public async void startTimer()

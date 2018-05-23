@@ -44,5 +44,7 @@ namespace ETHotfix
         public const string UIUseHuaFei = "UIUseHuaFei";
         public const string UISet = "UISet";
         public const string UIUseLaBa = "UIUseLaBa";
+        public const string UIChatItem = "UIChatItem";
+        public const string UIExpression = "UIExpression";
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ namespace ETHotfix
         private Text readyText;
 
         public readonly GameObject[] HeadPanel = new GameObject[4];
+        public readonly Dictionary<long, GameObject> userReady = new Dictionary<long, GameObject>();
 
         public void Awake()
         {
@@ -63,26 +65,63 @@ namespace ETHotfix
         /// <param name="panel"></param>
         /// <param name="readyPanel"></param>
         /// <param name="index"></param>
-        public void SetPanel(int index)
+        public async Task SetPanel(Gamer gamer, int index)
         {
-            GameObject gameObject = this.HeadPanel[index];
-            //绑定关联
+            try
+            {
+                GameObject gameObject = this.HeadPanel[index];
+//                if(userr)
+                userReady.Add(gamer.UserID, gameObject);
+                //绑定关联
 
-            this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
-            this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
-            this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
+                this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
+                this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
+                this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
 
-            UpdatePanel();
+                UpdatePanel(gamer.UserID);
+
+                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
+                readyName.text = gamer.UserID + "";
+                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+
+                if (gamer.IsReady)
+                {
+                    readyText.text = "已准备";
+                }
+                else
+                {
+                    readyText.text = "";
+                }
+
+                if (gamer.UserID == PlayerInfoComponent.Instance.uid)
+                {
+                    if (gamer.IsReady)
+                    {
+                        readyBtn.interactable = false;
+                    }
+                    else
+                    {
+                        readyBtn.interactable = true;
+                    }
+                }
+                  
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+
+            }
         }
 
         /// <summary>
         /// 设置头像，姓名
         /// </summary>
-        private async void UpdatePanel()
+        /// <param name="userId"></param>
+        private async void UpdatePanel(long userId)
         {
             G2C_PlayerInfo playerInfo =
-                    (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = this.GetParent<Gamer>().UserID });
-            readyName.text = this.GetParent<Gamer>().UserID + "";
+                    (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = userId});
+            readyName.text = userId + "";
             readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
         }
 
@@ -92,7 +131,9 @@ namespace ETHotfix
         /// <param name="messageUid"></param>
         public void SetReady(long uid)
         {
-            readyText.text = "已准备";
+            GameObject gameObject;
+            userReady.TryGetValue(uid, out gameObject);
+            gameObject.Get<GameObject>("Text").GetComponent<Text>().text = "已准备";
 
             if (uid == PlayerInfoComponent.Instance.uid)
             {
@@ -100,11 +141,34 @@ namespace ETHotfix
             }
         }
 
-        public void ResetPanel()
+        public void ResetPanel(long uid)
         {
+            this.SetGameObject(uid);
+            userReady.Remove(uid);
+
             readyName.text = "";
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";
+        }
+
+        private void SetGameObject(long uid)
+        {
+            GameObject gameObject;
+            this.userReady.TryGetValue(uid, out gameObject);
+            this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
+            this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
+            this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
+        }
+
+        public override void Dispose()
+        {
+            if (IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            userReady.Clear();
         }
     }
 }

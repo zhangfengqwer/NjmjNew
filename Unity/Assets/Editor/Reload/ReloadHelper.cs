@@ -1,16 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ETModel;
+using UnityEditor;
 using UnityEngine;
 
-public class ReloadHelper : MonoBehaviour {
+public class ReloadHelper : EditorWindow {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

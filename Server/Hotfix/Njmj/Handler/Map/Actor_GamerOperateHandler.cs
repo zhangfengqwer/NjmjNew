@@ -56,19 +56,14 @@ namespace ETHotfix
                     {
                         //游戏结束结算
                         gameController.GameOver();
-                        roomComponent.gameRooms.Remove(room.Id);
-                        roomComponent.readyRooms.Add(room.Id, room);
-
                     }
-                 
                 }
                 //放弃
                 else if (message.OperationType == 3)
                 {
                     if (orderController.CurrentAuthority == gamer.UserID)
                     {
-                        //                        room.tokenSource.Cancel();
-                       
+                        //room.tokenSource.Cancel();
                     }
                     else
                     {
@@ -93,7 +88,7 @@ namespace ETHotfix
                     }
 
                     //游戏结束
-//                    if (room.IsGameOver) return;
+                    if (room.IsGameOver) return;
 
                     //碰
                     if (message.OperationType == 0)
@@ -132,9 +127,9 @@ namespace ETHotfix
 
                             //杠完之后不能
                             gamer.isFaWanPaiTingPai = false;
-                            //杠完之后抓牌
                             room.isGangEndBuPai = true;
                             room.isGetYingHuaBuPai = false;
+                            //杠完之后抓牌
                             room.GrabMahjong();
                         }
                     }
@@ -162,8 +157,6 @@ namespace ETHotfix
 	        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	        HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
-
-            room.tokenSource.Cancel();
 
 	        Actor_GamerHuPai actorGamerHuPai = new Actor_GamerHuPai();
 	        actorGamerHuPai.Uid = gamer.UserID;

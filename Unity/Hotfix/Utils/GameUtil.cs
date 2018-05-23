@@ -116,5 +116,25 @@ namespace ETHotfix
 
             return 0;
         }
+
+        static public bool isVIP()
+        {
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        static public bool isCanUseEmoji()
+        {
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

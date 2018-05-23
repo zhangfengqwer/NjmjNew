@@ -117,6 +117,7 @@ message PlayerInfo // IMessage
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
 	required float HuaFeiNum  = 12;//话费数量
+	required string EmogiTime = 13;
 }
 
 message ShopInfo //IMessage
@@ -215,6 +216,7 @@ message G2C_PlayerInfo // IResponse
 message G2C_UseItem //IResponse
 {
 	required int result = 1;//0,使用失败 1.使用成功
+	required string time = 2;
 }
 
 message C2G_UseItem //IRequest
@@ -298,6 +300,11 @@ message Actor_GamerExitRoom // IActorMessage
 {
     required long Uid = 1;
     required bool IsFromClient = 2;
+}
+
+message Actor_GamerContinueGame // IActorMessage
+{
+
 }
 
 message M2G_Actor_GamerExitRoom // IActorMessage
@@ -580,5 +587,25 @@ message Actor_LaBa // IActorMessage
 {
     required string LaBaContent = 1;
 }
+
+message C2G_Chat // IRequest
+{
+	required int ChatType = 1;
+	required string Value = 2;
+	required long UId = 3;
+}
+
+message G2C_Chat // IResponse
+{
+
+}
+
+message Actor_Chat // IActorMessage
+{
+	required int ChatType = 1;
+	required string Value = 2;
+	required long UId = 3;
+}
+
 
 #endregion
