@@ -27,6 +27,14 @@ namespace ETHotfix
             await proxyComponent.Save(taskInfo);
         }
 
+        public static async void AddChengjiuInfoToDB(long uid,ChengjiuInfo info)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ChengjiuInfo chengjiuInfo = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+            chengjiuInfo = info;
+            await proxyComponent.Save(chengjiuInfo);
+        }
+
         public static async void RefreshDB()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
