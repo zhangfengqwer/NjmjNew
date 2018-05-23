@@ -254,6 +254,11 @@ namespace ETHotfix
             CreateShopInfoList(shopInfoList, bundle, shopType, parent);
         }
 
+        public void ShowVipTab()
+        {
+            ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
+        }
+
         /// <summary>
         /// 点击不同的商店类型(显隐关系)
         /// </summary>
