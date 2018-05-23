@@ -42,7 +42,13 @@
         public bool isGangEndBuPai = false;
 
         // 是否是抓到硬花补牌
-        public bool isGetYingHuaBuPai = false;
+        public bool isGetYingHuaBuPai = false; 
+        
+        // 是否是自摸
+        public bool isZimo = false;
+        
+        // 是否是自摸
+        public bool isFangPao = false;
 
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }

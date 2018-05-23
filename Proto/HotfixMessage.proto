@@ -644,5 +644,25 @@ message Actor_Chat // IActorMessage
 	required long UId = 3;
 }
 
+message C2G_UseZhuanPan // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_UseZhuanPan // IResponse
+{
+	required string	reward	 = 1;
+}
+
+message C2G_GetZhuanPanState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_GetZhuanPanState // IResponse
+{
+	required int	ZhuanPanCount	 = 1;
+	required int	LuckyValue	 = 2;
+}
 
 #endregion

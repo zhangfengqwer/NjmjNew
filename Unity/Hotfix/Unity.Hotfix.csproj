@@ -178,6 +178,8 @@
     <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
     <Compile Include="UI\UISet\Component\UISetComponent.cs" />
     <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
+    <Compile Include="UI\UIZhuanPan\Component\UIZhuanPanComponent.cs" />
+    <Compile Include="UI\UIZhuanPan\Factory\UIZhuanPanFactory.cs" />
     <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
     <Compile Include="UI\UIUseLaBa\Factory\UIUseLaBaFactory.cs" />
     <Compile Include="UI\UIChangeName\Component\UIChangeNameComponent.cs" />

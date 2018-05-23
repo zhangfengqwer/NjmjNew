@@ -48,6 +48,12 @@ namespace ETHotfix
             room.State = RoomState.Ready;
             room.tokenSource.Cancel();
 
+            //自摸
+            if (room.ziMoUid != 0)
+            {
+
+            }
+
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null)
@@ -73,7 +79,9 @@ namespace ETHotfix
             }
 
             //完成一局游戏
-//            DBCommonUtil.UpdateTask(gamer.UserID, 101);
+
+            //改变财富
+            DBCommonUtil.ChangeWealth()
 
             roomComponent.gameRooms.Remove(room.Id);
             roomComponent.readyRooms.Add(room.Id, room);

@@ -157,7 +157,7 @@ namespace ETHotfix
 	    {
 	        int huaCount = 0;
 
-	        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	        HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
 
@@ -210,6 +210,11 @@ namespace ETHotfix
 	        if (!isZimo)
 	        {
 	            actorGamerHuPai.FangPaoUid = orderController.CurrentAuthority;
+                room.Get(orderController.CurrentAuthority).isFangPao = true;
+            }
+	        else
+	        {
+                gamer.isZimo = true;
 	        }
             //硬花
 	        actorGamerHuPai.YingHuaCount = handCards.FaceCards.Count;
