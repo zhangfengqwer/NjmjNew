@@ -626,6 +626,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public int result;
 
+		[ProtoMember(2, IsRequired = true)]
+		public string time;
+
 	}
 
 	[Message(HotfixOpcode.C2G_UseItem)]
