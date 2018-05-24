@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,7 +46,7 @@ namespace ETHotfix
         /// </summary>
         public void ResetPanel()
         {
-            ResetPrompt();
+//            ResetPrompt();
         
             this.name.text = "空位";
 
@@ -69,13 +70,20 @@ namespace ETHotfix
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
 
-            this.readyHead = readyPanel.Get<GameObject>("Image").GetComponent<Image>();
-            this.readyName = readyPanel.Get<GameObject>("Name").GetComponent<Text>();
-            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
+//            this.readyHead = readyPanel.Get<GameObject>("Image").GetComponent<Image>();
+//            this.readyName = readyPanel.Get<GameObject>("Name").GetComponent<Text>();
+//            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
 
             UpdatePanel();
         }
 
+        public void ResetReadyPanel()
+        {
+            readyName.text = "";
+            readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
+            readyText.text = "";
+
+        }
 
         /// <summary>
         /// 更新面板
@@ -84,23 +92,7 @@ namespace ETHotfix
         {
             if (this.Panel != null)
             {
-                ResetPrompt();
                 SetUserInfo();
-            }
-        }
-
-        /// <summary>
-        /// 重置提示
-        /// </summary>
-        public void ResetPrompt()
-        {
-            prompt.text = "";
-            readyText.text = "";
-            if (this.GetParent<Gamer>().UserID == PlayerInfoComponent.Instance.uid)
-            {
-                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
-                uiRoomComponent.readyBtn.interactable = true;
             }
         }
 
@@ -109,7 +101,7 @@ namespace ETHotfix
         /// </summary>
         public void GameStart()
         {
-            ResetPrompt();
+//            ResetPrompt();
         }
 
         /// <summary>
@@ -118,16 +110,44 @@ namespace ETHotfix
         /// <param name="id"></param>
         private async void SetUserInfo()
         {
-            G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(
-                new C2G_PlayerInfo() { uid = this.GetParent<Gamer>().UserID });
+            PlayerInfo playerInfo = this.GetParent<Gamer>().PlayerInfo;
 
-            if (this.Panel != null)
+            if (this.Panel != null || playerInfo == null)
             {
                 name.text = this.GetParent<Gamer>().UserID + "";
-                readyName.text = this.GetParent<Gamer>().UserID + "";
-                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
-                head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
-                this.GetParent<Gamer>().Head = playerInfo.PlayerInfo.Icon;
+//                readyName.text = this.GetParent<Gamer>().UserID + "";
+//                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+                head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+            }
+        }
+
+        /// <summary>
+        /// 设置准备界面
+        /// </summary>
+        /// <param name="gameObject"></param>
+        public async Task SetHeadPanel(GameObject gameObject)
+        {
+            Gamer gamer = this.GetParent<Gamer>();
+            this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
+            this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
+            this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
+
+            G2C_PlayerInfo playerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
+            gamer.PlayerInfo = playerInfo.PlayerInfo;
+            readyName.text = playerInfo.PlayerInfo.Name + "";
+            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+
+            if (gamer.IsReady)
+            {
+                Log.Info(" gameObject.name" + gameObject.name);
+                Log.Info(@" gameObject.transform" + gameObject.transform.Find("Text").GetComponent<Text>().name);
+
+                gameObject.transform.Find("Text").GetComponent<Text>().text = "已准备";
+//                gameObject.Get<GameObject>("Text").GetComponent<Text>().text = "已准备";
+            }
+            else
+            {
+                readyText.text = "";
             }
         }
 
@@ -142,5 +162,9 @@ namespace ETHotfix
 
         }
 
+        public void SetReady()
+        {
+            readyText.text = "已准备";
+        }
     }
 }

@@ -59,6 +59,7 @@ namespace ETHotfix
 			        }
 
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
+                    GamerInfo currentInfo = null;
 			        foreach (var item in idleRoom.seats)
 			        {
 			            GamerInfo gamerInfo = new GamerInfo();
@@ -66,13 +67,41 @@ namespace ETHotfix
 			            gamerInfo.SeatIndex = item.Value;
 			            Gamer temp = idleRoom.Get(item.Key);
 			            gamerInfo.IsReady = temp.IsReady;
+
+			            if (gamerInfo.UserID == message.UserId)
+			            {
+			                currentInfo = gamerInfo;
+
+			            }
 			            Gamers.Add(gamerInfo);
 			        }
 
-			        idleRoom.Broadcast(new Actor_GamerEnterRoom()
-			        {
-			            Gamers = Gamers
-			        });
+                    foreach (var _gamer in idleRoom.GetAll())
+                    {
+                        if (_gamer == null || _gamer.isOffline)
+                            continue;
+
+                        //第一次进入
+                        if (_gamer.UserID == message.UserId)
+                        {
+                            idleRoom.GamerBroadcast(_gamer,new Actor_GamerEnterRoom()
+                            {
+                                Gamers = Gamers
+                            });
+                        }
+                        //有人加入
+                        else
+                        {
+                            idleRoom.GamerBroadcast(_gamer, new Actor_GamerJionRoom()
+                            {
+                                Gamer = currentInfo
+                            });
+                        }
+                    }
+//			        idleRoom.Broadcast(new Actor_GamerEnterRoom()
+//			        {
+//			            Gamers = Gamers
+//			        });
 			        Log.Info($"玩家{message.UserId}进入房间");
                 }
 			    response.GameId = gamer.Id;

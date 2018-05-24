@@ -287,6 +287,11 @@ message Actor_GamerEnterRoom // IActorMessage
     repeated GamerInfo Gamers = 1;
 }
 
+message Actor_GamerJionRoom // IActorMessage
+{
+    required GamerInfo Gamer = 1;
+}
+
 message G2M_PlayerExitRoom //IRequest
 {
 	required int64 UserId = 1;
@@ -329,7 +334,6 @@ message M2C_ActorGamerEnterRoom // IActorResponse
 {
 	required string Info = 1;
 }
-
 
 message Actor_GamerExitRoom // IActorMessage
 {

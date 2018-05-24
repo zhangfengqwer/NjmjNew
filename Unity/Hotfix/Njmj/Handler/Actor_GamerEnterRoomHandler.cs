@@ -19,13 +19,24 @@ namespace ETHotfix
         {
             try
             {
+                //玩家还在结算画面
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIGameResult) != null)
+                {
+                    return;
+                }
+
+
                 Log.Info($"收到玩家进入:{JsonHelper.ToJson(message)}");
                 //第一次进入创建UIRoom
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
                 {
                     CommonUtil.ShowUI(UIType.UIRoom);
-                    CommonUtil.ShowUI(UIType.UIReady);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+                }
+
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady) == null)
+                {
+                    CommonUtil.ShowUI(UIType.UIReady);
                 }
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
@@ -42,15 +53,12 @@ namespace ETHotfix
                     if (gamers[i] == null)
                         continue;
 
-                    uiReady.GetComponent<UIReadyComponent>()?.ResetPanel(gamers[i].UserID);
-
                     if (gamers[i].UserID != 0)
                     {
+                        Log.Debug("删除gamer");
                         roomComponent.RemoveGamer(gamers[i].UserID);
                     }
                 }
-
-                uiReady.GetComponent<UIReadyComponent>()?.userReady.Clear();
 
                 GamerInfo localGamer = null;
                 for (int i = 0; i < message.Gamers.Count; i++)
@@ -68,6 +76,8 @@ namespace ETHotfix
                     return;
                 }
 
+                roomComponent.localGamer = localGamer;
+
                 for (int i = 0; i < message.Gamers.Count; i++)
                 {
                     GamerInfo gamerInfo = message.Gamers[i];
@@ -81,15 +91,20 @@ namespace ETHotfix
                         gamer = GamerFactory.Create(gamerInfo.UserID, gamerInfo.IsReady);
                     }
 
+                    UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
+                    GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();
+
+                    Log.Info("gamer.IsReady" +gamer.IsReady);
                     //排序
                     int index = gamerInfo.SeatIndex - localGamer.SeatIndex;
                     if (index < 0) index += 4;
 
+                    //设置准备
+                    await gamerUiComponent.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
+                    uiReady.GetComponent<UIReadyComponent>().SetPanel(gamer, index);
+
                     //根据座位的indax添加玩家
                     roomComponent.AddGamer(gamer, index);
-
-                    //设置准备
-                    await uiReady.GetComponent<UIReadyComponent>().SetPanel(gamer, index);
                 }
 
                 SoundsHelp.Instance.playSound_JinRu();

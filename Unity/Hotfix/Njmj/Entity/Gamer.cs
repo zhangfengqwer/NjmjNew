@@ -11,9 +11,6 @@ namespace ETHotfix
         //用户ID（唯一）
         public long UserID { get; set; }
 
-        //头像
-        public string Head { get; set; }
-
         //是否准备
         public bool IsReady { get; set; }
 
@@ -22,5 +19,8 @@ namespace ETHotfix
 
         //是否是庄家
         public bool IsBanker { get; set; }
+        
+        //玩家信息
+        public PlayerInfo PlayerInfo { get; set; }
     }
 }

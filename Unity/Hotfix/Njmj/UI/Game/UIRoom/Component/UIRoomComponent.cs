@@ -59,6 +59,7 @@ namespace ETHotfix
         private int restCardCount;
         private Button settingBtn;
         private Button changeTableBtn;
+        public GamerInfo localGamer;
 
         public void Awake()
         {
@@ -259,7 +260,8 @@ namespace ETHotfix
         public void RemoveGamer(long id)
         {
             Gamer gamer = GetParent<UI>().GetComponent<GamerComponent>().Remove(id);
-            gamer?.GetComponent<GamerUIComponent>()?.Panel?.SetActive(false);
+
+//            gamer?.GetComponent<GamerUIComponent>()?.Panel?.SetActive(false);
             gamer?.Dispose();
         }
 
@@ -292,6 +294,8 @@ namespace ETHotfix
 
             foreach (var gamer in gamers)
             {
+                if (gamer == null)
+                    continue;
                 gamer.GetComponent<HandCardsComponent>().ClearAll();
                 gamer.RemoveComponent<HandCardsComponent>();
             }

@@ -33,8 +33,9 @@ namespace ETHotfix
                 }
                 else
                 {
+                    Gamer gamer = gamerComponent.Get(message.Uid);
+                    gamer?.GetComponent<GamerUIComponent>()?.ResetReadyPanel();
                     uiRoomComponent.RemoveGamer(message.Uid);
-                    uiReadyComponent.ResetPanel(message.Uid);
                 }
 
                 SoundsHelp.Instance.playSound_LiKai();

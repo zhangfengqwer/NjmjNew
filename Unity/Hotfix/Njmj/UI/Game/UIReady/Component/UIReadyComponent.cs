@@ -57,6 +57,7 @@ namespace ETHotfix
         private async void OnChangeTable()
         {
             SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable());
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
         }
 
         /// <summary>
@@ -65,34 +66,10 @@ namespace ETHotfix
         /// <param name="panel"></param>
         /// <param name="readyPanel"></param>
         /// <param name="index"></param>
-        public async Task SetPanel(Gamer gamer, int index)
+        public async void SetPanel(Gamer gamer, int index)
         {
             try
             {
-                GameObject gameObject = this.HeadPanel[index];
-//                if(userr)
-                userReady.Add(gamer.UserID, gameObject);
-                //绑定关联
-
-                this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
-                this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
-                this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
-
-                UpdatePanel(gamer.UserID);
-
-                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
-                readyName.text = gamer.UserID + "";
-                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
-
-                if (gamer.IsReady)
-                {
-                    readyText.text = "已准备";
-                }
-                else
-                {
-                    readyText.text = "";
-                }
-
                 if (gamer.UserID == PlayerInfoComponent.Instance.uid)
                 {
                     if (gamer.IsReady)
@@ -114,51 +91,17 @@ namespace ETHotfix
         }
 
         /// <summary>
-        /// 设置头像，姓名
-        /// </summary>
-        /// <param name="userId"></param>
-        private async void UpdatePanel(long userId)
-        {
-            G2C_PlayerInfo playerInfo =
-                    (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = userId});
-            readyName.text = userId + "";
-            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
-        }
-
-        /// <summary>
         /// 玩家准备
         /// </summary>
         /// <param name="messageUid"></param>
         public void SetReady(long uid)
         {
-            GameObject gameObject;
-            userReady.TryGetValue(uid, out gameObject);
-            gameObject.Get<GameObject>("Text").GetComponent<Text>().text = "已准备";
-
             if (uid == PlayerInfoComponent.Instance.uid)
             {
                 readyBtn.interactable = false;
             }
         }
-
-        public void ResetPanel(long uid)
-        {
-            this.SetGameObject(uid);
-            userReady.Remove(uid);
-
-            readyName.text = "";
-            readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
-            readyText.text = "";
-        }
-
-        private void SetGameObject(long uid)
-        {
-            GameObject gameObject;
-            this.userReady.TryGetValue(uid, out gameObject);
-            this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
-            this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
-            this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
-        }
+    
 
         public override void Dispose()
         {
@@ -167,8 +110,6 @@ namespace ETHotfix
                 return;
             }
             base.Dispose();
-
-            userReady.Clear();
         }
     }
 }
