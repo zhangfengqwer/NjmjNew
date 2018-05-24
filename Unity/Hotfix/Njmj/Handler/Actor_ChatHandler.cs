@@ -14,14 +14,13 @@ namespace ETHotfix
             {
                 if (message.ChatType == 1)
                 {
-                    Debug.Log("---");
                     GameObject item = CommonUtil.getGameObjByBundle(message.Value);
                     GameObject obj = GameObject.Instantiate(item);
                     obj.transform.SetParent(GameObject.Find("CommonWorld").transform);
                 }
                 else
                 {
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom).GetComponent<UIRoomComponent>().ShowChatContent(message.Value,message.UId);
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().ShowChatContent(message.Value,message.UId);
                 }
             }
             catch (Exception e)
