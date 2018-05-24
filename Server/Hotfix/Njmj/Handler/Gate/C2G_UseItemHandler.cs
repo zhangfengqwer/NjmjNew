@@ -150,7 +150,7 @@ namespace ETHotfix
                         float huafei = r / 100.0f;
                         string reward = ("3:" + huafei);
                         response.reward = reward;
-                        Log.Debug("话费礼包：" + reward);
+
                         await DBCommonUtil.changeWealthWithStr(playerBaseInfo.Id, reward);
                     }
                     break;
