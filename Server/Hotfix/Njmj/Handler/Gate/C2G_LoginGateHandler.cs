@@ -84,9 +84,13 @@ namespace ETHotfix
                 {
                     for (int i = 1; i < 9; ++i)
                     {
+                        if (i < 4)
+                            continue;
+                        if (i == 6)
+                            continue;
                         UserBag item = new UserBag();
                         item.BagId = 100 + i;
-                        item.Count = 10 + i;
+                        item.Count = 10;
                         item.UId = userId;
                         DBHelper.AddItemToDB(item);
                     }
