@@ -10,6 +10,7 @@ namespace ETHotfix
     {
         //用户ID（唯一）
         public long UserID { get; set; }
+
         //头像
         public string Head { get; set; }
 

@@ -22,10 +22,10 @@ namespace ETHotfix
 	            {
 	                gamer.isOffline = true;
 	                //玩家断开添加自动出牌组件
-	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
-	                    gamer.AddComponent<TrusteeshipComponent>();
-
-	                Log.Info($"玩家{message.Uid}断开，切换为自动模式");
+//	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
+//	                    gamer.AddComponent<TrusteeshipComponent>();
+                    
+	                Log.Info($"玩家{gamer.UserID}断开，切换为自动模式");
                 }
                 else
 	            {
@@ -60,7 +60,7 @@ namespace ETHotfix
 	                if (room.seats.Count == 0)
 	                {
 	                    Log.Debug($"房间释放:{room.Id}");
-	                    room.Dispose();
+	                    room?.Dispose();
 	                    roomComponent.RemoveRoom(room);
 	                }
                 }

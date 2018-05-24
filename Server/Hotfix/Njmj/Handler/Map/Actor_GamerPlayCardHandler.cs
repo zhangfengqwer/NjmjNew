@@ -65,9 +65,12 @@ namespace ETHotfix
 	                    Uid = gamer.UserID,
 	                    index = message.index
 	                });
+	                gamer.IsCanHu = false;
+	                gamer.IsCanPeng = false;
+	                gamer.IsCanGang = false;
 
                     //等待客户端有没有人碰
-	                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                    Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
 	                bool isNeedWait = false;
 
 	                foreach (var _gamer in room.GetAll())
@@ -88,6 +91,7 @@ namespace ETHotfix
 	                        room.GamerBroadcast(_gamer, canOperation);
 	                    }
 
+                        //明杠
 	                    if (Logic_NJMJ.getInstance().isCanGang(mahjongInfo, cards))
 	                    {
                             _gamer.IsCanGang = true;
@@ -95,6 +99,7 @@ namespace ETHotfix
                             canOperation.OperationType = 1;
 	                        room.GamerBroadcast(_gamer, canOperation);
                         }
+
                         if (room.CanHu(mahjongInfo, cards))
                         {
                             _gamer.IsCanHu = true;

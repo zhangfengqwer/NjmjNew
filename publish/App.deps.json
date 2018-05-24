@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "5608b0ab8926c6c71f7ce36e045cb2377eef1421"
+    "signature": "d5aa1fa1792ef279db9f189a182a071491daf44b"
   },
   "compilationOptions": {},
   "targets": {
@@ -36,6 +36,11 @@
         }
       },
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Newtonsoft.Json/11.0.2": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "NLog/4.5.0-rc04": {
         "runtime": {
           "lib/netstandard2.0/NLog.dll": {}
@@ -336,6 +341,7 @@
           "MongoDB.Driver": "1.0.0",
           "MongoDB.Driver.Core": "1.0.0",
           "NLog": "4.5.0-rc04",
+          "Newtonsoft.Json": "11.0.2",
           "SharpZipLib": "1.0.0-alpha2",
           "protobuf-net": "2.3.4"
         },
@@ -389,6 +395,13 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/11.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "path": "newtonsoft.json/11.0.2",
+      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
     "NLog/4.5.0-rc04": {
       "type": "package",

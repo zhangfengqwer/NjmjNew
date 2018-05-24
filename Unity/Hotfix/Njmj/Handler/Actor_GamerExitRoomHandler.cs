@@ -17,18 +17,28 @@ namespace ETHotfix
                 Log.Info($"收到退出:{JsonHelper.ToJson(message)}");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
 
+                if (uiRoom == null) return;
+                UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
+
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+
+                UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
 
                 if (gamerComponent.LocalGamer.UserID == message.Uid)
                 {
                     CommonUtil.ShowUI(UIType.UIMain);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
                 }
                 else
                 {
                     uiRoomComponent.RemoveGamer(message.Uid);
+                    uiReadyComponent.ResetPanel(message.Uid);
                 }
+
+                SoundsHelp.Instance.playSound_LiKai();
+
             }
             catch (Exception e)
             {

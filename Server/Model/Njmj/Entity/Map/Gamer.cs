@@ -25,6 +25,9 @@
 
         //是否准备
         public bool IsReady { get; set; }
+        
+        //是否赢
+        public bool IsWinner { get; set; }
 
         //是否离线
         public bool isOffline { get; set; }
@@ -39,7 +42,13 @@
         public bool isGangEndBuPai = false;
 
         // 是否是抓到硬花补牌
-        public bool isGetYingHuaBuPai = false;
+        public bool isGetYingHuaBuPai = false; 
+        
+        // 是否是自摸
+        public bool isZimo = false;
+        
+        // 是否是自摸
+        public bool isFangPao = false;
 
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }

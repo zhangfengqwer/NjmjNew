@@ -67,6 +67,9 @@ namespace ETModel
         // 是否是抓到硬花补牌
         public bool isGetYingHuaBuPai = false;
 
+        public long ziMoUid;
+        public long fangPaoUid;
+
         /// <summary>
         /// 添加玩家
         /// </summary>
@@ -199,10 +202,8 @@ namespace ETModel
                 }
             }
 
+//            tokenSource.Cancel();
             State = RoomState.Idle;
-            tokenSource.Cancel();
         }
-
-
     }
 }

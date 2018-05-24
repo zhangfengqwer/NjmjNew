@@ -107,9 +107,12 @@ namespace App
                         //Game.Scene.AddComponent<DBOperatorComponet>();
                         Game.Scene.AddComponent<RankDataComponent>();
                         // Game.Scene.AddComponent<HttpComponent>();
+
+
 					    //GateGlobalComponent
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
+
                         //MapGlobalCoponent
                         Game.Scene.AddComponent<RoomComponent>();
 
@@ -122,9 +125,7 @@ namespace App
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
 
-                
-
-                while (true)
+			    while (true)
 				{
 					try
 					{

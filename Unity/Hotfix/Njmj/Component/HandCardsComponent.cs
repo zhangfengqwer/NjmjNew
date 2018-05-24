@@ -142,37 +142,11 @@ namespace ETHotfix
             }
 
             base.Dispose();
-            resourcesComponent.UnloadBundle($"{PrefabName}.unity3d");
-            resourcesComponent.UnloadBundle($"{ItemName}.unity3d");
             prefabObj = null;
             itemObj = null;
             grabObj = null;
-            Reset();
-        }
-
-        /// <summary>
-        /// 重置
-        /// </summary>
-        public void Reset()
-        {
-            ClearHandCards();
-            //            ClearPlayCards();
-        }
-
-        /// <summary>
-        /// 显示玩家游戏UI
-        /// </summary>
-        public void Appear()
-        {
-            //            _poker?.SetActive(true);
-            //            _handCards?.SetActive(true);
-        }
-
-        /// <summary>
-        /// 隐藏玩家游戏UI
-        /// </summary>
-        public void Hide()
-        {
+            faceImage = null;
+            faceImageGe = null;
         }
 
         /// <summary>
@@ -500,7 +474,8 @@ namespace ETHotfix
             }
 
             Vector3 localPosition = this.CardBottom.transform.localPosition;
-            this.CardBottom.transform.localPosition = new Vector3(localPosition.x + (postionX + 10) * 2, localPosition.y + (postionY + 10) * 2, localPosition.z);
+            this.CardBottom.transform.localPosition =
+                    new Vector3(localPosition.x + (postionX) * 2.2f, localPosition.y + (postionY) * 2.2f, localPosition.z);
         }
 
         private int num = 0;
@@ -543,7 +518,7 @@ namespace ETHotfix
 
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
 
-            gameObject.transform.localPosition = new Vector3(num * (postionX + 10) * 3, num * (postionY + 10) * 3, 0);
+            gameObject.transform.localPosition = new Vector3(num * (postionX) * 3.2f, num * (postionY) * 3.2f, 0);
 
             //显示出牌
             string item1 = null;
@@ -603,7 +578,7 @@ namespace ETHotfix
         {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
-                GameObject.Destroy(gameObject.transform.GetChild(i));
+                GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
             }
         }
 
@@ -649,7 +624,6 @@ namespace ETHotfix
         /// <param name="b"></param>
         public async void BuHua(MahjongInfo mahjongInfo, bool isSelf)
         {
-            SoundComponent.Instance.PlayClip("effect_nv1_buhua");
 
             //补花数量
             faceCards.Add(mahjongInfo);
@@ -669,6 +643,22 @@ namespace ETHotfix
             {
                 grabObj.SetActive(false);
             }
+        }
+
+        public void ClearAll()
+        {
+            handCards.Clear();
+            foreach (var obj in ItemCards)
+            {
+                GameObject.Destroy(obj.gameObject);
+            }
+
+            ItemCards.Clear();
+            faceCards.Clear();
+
+            DeleteAllItem(CardBottom);
+            DeleteAllItem(cardDisplay);
+            DeleteAllItem(pengObj);
         }
     }
 }

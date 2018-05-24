@@ -15,10 +15,11 @@ namespace ETHotfix
 			{
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
 			    Gamer gamer = null;
-
+                Room room = null;
                 for (int i = 0; i < roomCompnent.gameRooms.Count; i++)
 			    {
-			        Room room = roomCompnent.gameRooms[i];
+			        room = roomCompnent.gameRooms[i];
+                    Log.Info("找到房间:");
 			        gamer = room.Get(message.UserId);
 			        if (gamer != null) break;
 			    }
@@ -29,6 +30,7 @@ namespace ETHotfix
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
 			        Log.Info($"玩家{message.UserId}断线重连");
+			        room.GamerBroadcast(gamer, new Actor_GamerReconnet());
                 }
                 else
 			    {

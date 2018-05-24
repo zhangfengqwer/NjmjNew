@@ -19,15 +19,17 @@ namespace ETHotfix
 
     public class UIRoomComponent: Component
     {
+        public bool ISGaming = false;
+
         public readonly GameObject[] GamersPanel = new GameObject[4];
         public readonly GameObject[] HeadPanel = new GameObject[4];
 
-        private Button changeTableBtn;
         private Button exitBtn;
         public Button readyBtn;
         private Image timeImage;
 
         private GameObject desk;
+
         //控制时间
         private GameObject head;
         private Button giveUpBtn;
@@ -35,8 +37,8 @@ namespace ETHotfix
         private Button gangBtn;
         private Button pengBtn;
 
-        private Button ChatBtn;//聊天按钮
-        private GameObject Chat;//聊天框
+        private Button ChatBtn; //聊天按钮
+        private GameObject Chat; //聊天框
         private Button ExpressionBtn;
         private Button ShortBtn;
         private GameObject ExpressionGrid;
@@ -53,6 +55,10 @@ namespace ETHotfix
         private Text restText;
         private GameObject players;
         private CancellationTokenSource tokenSource;
+        public Actor_GamerEnterRoom enterRoomMsg;
+        private int restCardCount;
+        private Button settingBtn;
+        private Button changeTableBtn;
 
         public void Awake()
         {
@@ -86,6 +92,7 @@ namespace ETHotfix
 
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
 
+            this.settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
             this.readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             this.exitBtn = rc.Get<GameObject>("ExitBtn").GetComponent<Button>();
@@ -102,7 +109,7 @@ namespace ETHotfix
             giveUpBtn.onClick.Add(() => OnOperate(3));
             ExpressionItem = CommonUtil.getGameObjByBundle(UIType.UIExpression);
             ChatItem = CommonUtil.getGameObjByBundle(UIType.UIChatItem);
-            this.changeTableBtn.onClick.Add(OnChangeTable);
+            this.settingBtn.onClick.Add(OnSetting);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
             ChatBtn.onClick.Add(() =>
@@ -112,15 +119,13 @@ namespace ETHotfix
                 CreatExpressions();
             });
 
-            ExpressionBtn.onClick.Add(() =>
-            {
-                CreatExpressions();
-            });
+            ExpressionBtn.onClick.Add(() => { CreatExpressions(); });
 
-            ShortBtn.onClick.Add(() =>
-            {
-                CreateChatItems();
-            });
+            ShortBtn.onClick.Add(() => { CreateChatItems(); });
+
+
+
+
         }
 
         private void CreateChatItems()
@@ -143,7 +148,8 @@ namespace ETHotfix
                     ui.AddComponent<UIChatItemComponent>();
                     chatUiList.Add(ui);
                 }
-                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i], i + 1);
+
+                //                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i], i + 1);
             }
         }
 
@@ -152,7 +158,7 @@ namespace ETHotfix
             ExpressionBtn.transform.GetChild(0).gameObject.SetActive(true);
             ShortBtn.transform.GetChild(0).gameObject.SetActive(false);
             GameObject obj = null;
-            for(int i = 0;i< 18; ++i)
+            for (int i = 0; i < 18; ++i)
             {
                 if (i < ExpressionItemList.Count)
                     obj = ExpressionItemList[i];
@@ -167,11 +173,12 @@ namespace ETHotfix
                     ui.AddComponent<UIExpressionComponent>();
                     uiList.Add(ui);
                 }
-                uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
+
+                //                uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
             }
         }
 
-        public void ShowChatContent(string content,long UId)
+        public void ShowChatContent(string content, long UId)
         {
             int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
             chatObjArr[index].SetActive(true);
@@ -187,7 +194,17 @@ namespace ETHotfix
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
                 --time;
             }
+
             chatObjArr[index].SetActive(false);
+        }
+
+        /// <summary>
+        /// 设置剩余牌
+        /// </summary>
+        public void SetRestCount()
+        {
+            restCardCount--;
+            restText.text = $"剩余牌数：{restCardCount}";
         }
 
         public void CloseChatUI()
@@ -203,11 +220,16 @@ namespace ETHotfix
         private async void OnExit()
         {
             SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+            if (ISGaming)
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+            }
         }
 
-        private async void OnChangeTable()
+        private async void OnSetting()
         {
-            SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable());
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
         }
 
         /// <summary>
@@ -217,8 +239,15 @@ namespace ETHotfix
         /// <param name="index"></param>
         public void AddGamer(Gamer gamer, int index)
         {
-            GetParent<UI>().GetComponent<GamerComponent>().Add(gamer, index);
-            gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index],this.HeadPanel[index],  index);
+            try
+            {
+                GetParent<UI>().GetComponent<GamerComponent>().Add(gamer, index);
+                gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index], this.HeadPanel[index], index);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         /// <summary>
@@ -228,12 +257,13 @@ namespace ETHotfix
         public void RemoveGamer(long id)
         {
             Gamer gamer = GetParent<UI>().GetComponent<GamerComponent>().Remove(id);
-            gamer.GetComponent<GamerUIComponent>().Panel.SetActive(false);
-            gamer.Dispose();
+            gamer?.GetComponent<GamerUIComponent>()?.Panel?.SetActive(false);
+            gamer?.Dispose();
         }
 
         public void StartGame(int messageRestCount)
         {
+            this.restCardCount = messageRestCount;
             this.changeTableBtn.gameObject.SetActive(false);
             this.readyBtn.gameObject.SetActive(false);
             this.desk.SetActive(true);
@@ -243,7 +273,27 @@ namespace ETHotfix
             restText.text = $"剩余牌数：{messageRestCount}";
         }
 
+        /// <summary>
+        /// 继续游戏
+        /// </summary>
+        public void ContinueGamer()
+        {
+            this.changeTableBtn.gameObject.SetActive(true);
+            this.readyBtn.gameObject.SetActive(true);
+            this.desk.SetActive(false);
+            this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(true);
+            players.SetActive(false);
 
+            //剩余牌数
+            restText.text = $"";
+            Gamer[] gamers = this.GetParent<UI>().GetComponent<GamerComponent>().GetAll();
+
+            foreach (var gamer in gamers)
+            {
+                gamer.GetComponent<HandCardsComponent>().ClearAll();
+                gamer.RemoveComponent<HandCardsComponent>();
+            }
+        }
 
         /// <summary>
         /// 开始倒计时
@@ -251,18 +301,26 @@ namespace ETHotfix
         /// <param name="time"></param>
         public async void StartTime(int time = 9)
         {
-            if (tokenSource != null)
+            try
             {
-                tokenSource.Cancel();
-            }
+                if (tokenSource != null)
+                {
+                    tokenSource.Cancel();
+                }
 
-            tokenSource = new CancellationTokenSource();
-            timeImage.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + time);
-            while (time > 0)
-            {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
-                time--;
+                tokenSource = new CancellationTokenSource();
                 timeImage.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + time);
+                while (time > 0)
+                {
+                    if (tokenSource.Token.IsCancellationRequested) return;
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
+                    time--;
+                    timeImage.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "time_" + time);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
             }
         }
 
@@ -328,10 +386,7 @@ namespace ETHotfix
                     break;
             }
 
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerOperation()
-            {
-                OperationType = i
-            });
+            SessionWrapComponent.Instance.Session.Send(new Actor_GamerOperation() { OperationType = i });
 
             this.ClosePropmtBtn();
         }
@@ -399,9 +454,14 @@ namespace ETHotfix
             giveUpBtn.gameObject.SetActive(true);
         }
 
-        public void AddReadyGamer(Gamer gamer, int index)
+        public override void Dispose()
         {
-
+            if (IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+            tokenSource?.Cancel();
         }
     }
 }

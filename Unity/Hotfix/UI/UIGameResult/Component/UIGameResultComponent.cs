@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 namespace ETHotfix
 {
-	[ObjectSystem]
-	public class UiGameResultComponentSystem : AwakeSystem<UIGameResultComponent>
-	{
-		public override void Awake(UIGameResultComponent self)
-		{
-			self.Awake();
-		}
-	}
-	
-	public class UIGameResultComponent : Component
-	{
+    [ObjectSystem]
+    public class UiGameResultComponentSystem: AwakeSystem<UIGameResultComponent>
+    {
+        public override void Awake(UIGameResultComponent self)
+        {
+            self.Awake();
+        }
+    }
+
+    public class UIGameResultComponent: Component
+    {
         private Button Button_close;
         private Button Button_back;
         private Button Button_jixu;
@@ -26,15 +26,15 @@ namespace ETHotfix
         private GameObject otherPlayer1;
         private GameObject otherPlayer2;
         private GameObject otherPlayer3;
-	    private List<GameObject> playerList = new List<GameObject>();
+        private List<GameObject> playerList = new List<GameObject>();
 
         bool isTimerEnd = false;
 
         private Text Text_daojishi;
-	    private Actor_GamerHuPai huPaiNeedData;
+        private Actor_GamerHuPai huPaiNeedData;
 
-	    public void Awake()
-		{
+        public void Awake()
+        {
             ToastScript.clear();
 
             initData();
@@ -61,7 +61,7 @@ namespace ETHotfix
             playerList.Add(otherPlayer3);
 
             Text_daojishi = rc.Get<GameObject>("Text_daojishi").GetComponent<Text>();
-            
+
             Button_close.onClick.Add(onClick_close);
             Button_back.onClick.Add(onClick_close);
             Button_jixu.onClick.Add(onClick_jixu);
@@ -82,6 +82,28 @@ namespace ETHotfix
                 }
             }
 
+            int huaCount = 0;
+            //设置胡牌的花数
+            List<int> dataHuPaiTypes = data.HuPaiTypes;
+            for (int j = 0; j < dataHuPaiTypes.Count; j++)
+            {
+                Consts.HuPaiType huPaiType = (Consts.HuPaiType) dataHuPaiTypes[j];
+                int count;
+                Logic_NJMJ.getInstance().HuPaiHuaCount.TryGetValue(huPaiType, out count);
+                //胡牌花
+                huaCount += count;
+            }
+
+            //硬花
+            huaCount += data.YingHuaCount;
+            //软花
+            huaCount += data.RuanHuaCount;
+            //基数
+            huaCount += 20;
+            //砸2
+            huaCount *= 2;
+
+            //设置胡牌的人
             for (int i = 0; i < gamers.Length; i++)
             {
                 Gamer gamer = gamers[i];
@@ -92,7 +114,7 @@ namespace ETHotfix
 
                 headImage.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(gamer.Head);
                 nameText.text = gamer.UserID + "";
-                int huaCount = 0;
+                //胡牌的ui
                 if (gamer.UserID == data.Uid)
                 {
                     Text huaCountText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
@@ -109,58 +131,79 @@ namespace ETHotfix
                     obj2.text = $"软花{data.RuanHuaCount}";
                     obj3.text = $"基数{20}";
 
-                    huaCount += data.YingHuaCount;
-                    huaCount += data.RuanHuaCount;
-                    huaCount += 20;
-
-                    List<int> dataHuPaiTypes = data.HuPaiTypes;
-
                     //胡牌类型
                     for (int j = 0; j < dataHuPaiTypes.Count; j++)
                     {
                         Consts.HuPaiType huPaiType = (Consts.HuPaiType) dataHuPaiTypes[j];
                         int count;
+                        string name;
                         Logic_NJMJ.getInstance().HuPaiHuaCount.TryGetValue(huPaiType, out count);
+                        Logic_NJMJ.getInstance().HuPaiHuaName.TryGetValue(huPaiType, out name);
 
                         Text obj = allhuashutype.transform.GetChild(j + 3).gameObject.GetComponent<Text>();
                         obj.gameObject.SetActive(true);
-
-                        obj.text = $"{huPaiType}{count}";
-                 
-                        huaCount += count;
+                        obj.text = $"{name}{count}";
                     }
 
                     Text obj4 = allhuashutype.transform.GetChild(dataHuPaiTypes.Count + 3).GetComponent<Text>();
                     obj4.gameObject.SetActive(true);
                     obj4.text = "砸2";
-                    huaCount *= 2;
+
                     huaCountText.text = huaCount + "";
+                    goldText.text = BeiLv * huaCount + "";
                 }
-                goldText.text = BeiLv * huaCount + "";
+                else
+                {
+                    if (data.IsZiMo)
+                    {
+                        goldText.text = "-" + BeiLv * huaCount + "";
+                    }
+                    else
+                    {
+                        if (gamer.UserID == data.FangPaoUid)
+                        {
+                            goldText.text = "-" + BeiLv * huaCount + "";
+                            nameText.color = Color.yellow;
+                        }
+                    }
+                }
             }
 
             if (huPaiNeedData.IsZiMo)
             {
-                winPlayer.transform.Find("hupaiType").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_gameresult", "gameresult_hu");
+                winPlayer.transform.Find("hupaiType").GetComponent<Image>().sprite =
+                        CommonUtil.getSpriteByBundle("image_gameresult", "gameresult_hu");
             }
 
             SetHuPaiPlayerData();
         }
 
-	    private void SetHuPaiPlayerData()
-	    {
-
-	    }
-
-	    public void onClick_close()
+        private void SetHuPaiPlayerData()
         {
-            isTimerEnd = true;
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+        }
+
+        public void onClick_close()
+        {
+            onClick_jixu();
         }
 
         public void onClick_jixu()
         {
-            ToastScript.createToast("暂未开放");
+            isTimerEnd = true;
+
+            UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            //重新开始
+            ui.GetComponent<UIRoomComponent>().ContinueGamer();
+          
+            //设置准备
+            UI uiReady = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIReady);
+
+            //删除弹窗
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+
+            //重新请求数据
+            SessionWrapComponent.Instance.Session.Send(new Actor_GamerContinueGame());
+
         }
 
         public async void startTimer()
@@ -179,7 +222,7 @@ namespace ETHotfix
                 Text_daojishi.text = ("准备倒计时 " + time.ToString());
             }
 
-//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+            //            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
         }
     }
 }

@@ -337,6 +337,11 @@ message Actor_GamerExitRoom // IActorMessage
     required bool IsFromClient = 2;
 }
 
+message Actor_GamerContinueGame // IActorMessage
+{
+
+}
+
 message M2G_Actor_GamerExitRoom // IActorMessage
 {
    
@@ -415,6 +420,11 @@ message Actor_GamerHuPai // IActorMessage
    required int RuanHuaCount = 5;
    repeated int HuPaiTypes = 6;
    optional long FangPaoUid = 7;
+}
+
+message Actor_GamerReconnet // IActorMessage
+{
+   
 }
 
 message Email //IMessage

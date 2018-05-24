@@ -34,7 +34,7 @@ namespace ETHotfix
             if ((sec == 0) && componet.IsStop)
             {
                 componet.IsStop = false;
-                DBHelper.RefreshRankFromDB();
+                //DBHelper.RefreshRankFromDB();
                 Log.Info("=====");
             }
         }
