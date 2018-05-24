@@ -28,16 +28,12 @@ namespace ETHotfix
         private List<GameObject> ChatItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
         private List<UI> chatUiList = new List<UI>();
-        private GameObject[] chatObjArr = new GameObject[4];
+        private bool isOpen;
 
         public void Awake()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            chatObjArr[0] = rc.Get<GameObject>("ChatB");
-            chatObjArr[1] = rc.Get<GameObject>("ChatL");
-            chatObjArr[2] = rc.Get<GameObject>("ChatT");
-            chatObjArr[3] = rc.Get<GameObject>("ChatR");
-
+            
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
@@ -74,8 +70,7 @@ namespace ETHotfix
                     ui.AddComponent<UIChatItemComponent>();
                     chatUiList.Add(ui);
                 }
-
-                //                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i], i + 1);
+                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i]);
             }
         }
 
@@ -99,29 +94,14 @@ namespace ETHotfix
                     ui.AddComponent<UIExpressionComponent>();
                     uiList.Add(ui);
                 }
-
-                //                uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
+                uiList[i].GetComponent<UIExpressionComponent>().SetExpression(i + 1);
             }
         }
 
-        public void ShowChatContent(string content, long UId)
+        public void CloseOrOpenChatUI(bool isOpen)
         {
-            int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
-            chatObjArr[index].SetActive(true);
-            chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
-            StartTimer(index);
-        }
-
-        private async void StartTimer(int index)
-        {
-            int time = 8;
-            while (time >= 0)
-            {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
-                --time;
-            }
-
-            chatObjArr[index].SetActive(false);
+            this.isOpen = isOpen;
+            GetParent<UI>().GameObject.SetActive(isOpen);
         }
     }
 }

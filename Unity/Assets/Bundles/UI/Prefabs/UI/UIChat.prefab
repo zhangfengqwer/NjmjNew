@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222344422877848204}
   - component: {fileID: 114891859765945052}
   - component: {fileID: 114376268318103804}
+  - component: {fileID: 114292846310319778}
   m_Layer: 5
   m_Name: UIChat
   m_TagString: Untagged
@@ -351,6 +352,18 @@ MonoBehaviour:
   m_Spacing: {x: 58.83, y: 41.77}
   m_Constraint: 1
   m_ConstraintCount: 5
+--- !u!114 &114292846310319778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043460647766348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8347f75bbf20473292de676504ad7398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanvasName: CommonCanvas
 --- !u!114 &114293596220754234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -412,14 +425,6 @@ MonoBehaviour:
     gameObject: {fileID: 1946337004062068}
   - key: ShortGrid
     gameObject: {fileID: 1765240236836724}
-  - key: ChatB
-    gameObject: {fileID: 0}
-  - key: ChatR
-    gameObject: {fileID: 0}
-  - key: ChatT
-    gameObject: {fileID: 0}
-  - key: ChatL
-    gameObject: {fileID: 0}
 --- !u!114 &114565893875162146
 MonoBehaviour:
   m_ObjectHideFlags: 1

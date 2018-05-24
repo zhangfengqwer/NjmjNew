@@ -108,7 +108,7 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (false)
+            if (true)
             {
                 phone = "";
                 token = "";

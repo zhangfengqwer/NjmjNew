@@ -93,7 +93,10 @@ namespace ETHotfix
             this.readyBtn.onClick.Add(OnReady);
             ChatBtn.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat) != null)
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(true);
+                else
+                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
             });
 
         }

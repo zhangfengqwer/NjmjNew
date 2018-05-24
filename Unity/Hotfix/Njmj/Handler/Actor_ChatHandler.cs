@@ -20,8 +20,10 @@ namespace ETHotfix
                 }
                 else
                 {
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().ShowChatContent(message.Value,message.UId);
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady).GetComponent<UIReadyComponent>().ShowChatContent(message.Value,message.UId);
                 }
+                Debug.Log(Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>());
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
             }
             catch (Exception e)
             {

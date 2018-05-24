@@ -14,11 +14,11 @@ namespace ETHotfix
                 ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
                 resourcesComponent.LoadBundle($"{type}.unity3d");
                 GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{type}.unity3d", $"{type}");
-                GameObject login = UnityEngine.Object.Instantiate(bundleGameObject);
-                login.layer = LayerMask.NameToLayer(LayerNames.UI);
-                UI ui = ComponentFactory.Create<UI, GameObject>(login);
+                GameObject chat = UnityEngine.Object.Instantiate(bundleGameObject);
+                chat.layer = LayerMask.NameToLayer(LayerNames.UI);
+                UI ui = ComponentFactory.Create<UI, GameObject>(chat);
 
-                ui.AddComponent<UIChangeNameComponent>();
+                ui.AddComponent<UIChatComponent>();
                 return ui;
             }
             catch (Exception e)
