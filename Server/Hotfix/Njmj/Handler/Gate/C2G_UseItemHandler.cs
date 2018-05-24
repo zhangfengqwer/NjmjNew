@@ -144,10 +144,14 @@ namespace ETHotfix
                     break;
 
                 // 话费礼包
-                case 11:
+                case 111:
                     {
                         int r = Common_Random.getRandom(1,100);
-                        await DBCommonUtil.ChangeWealth(playerBaseInfo.Id, 3, r / 100.0f);
+                        float huafei = r / 100.0f;
+                        string reward = ("3:" + huafei);
+                        response.reward = reward;
+                        Log.Debug("话费礼包：" + reward);
+                        await DBCommonUtil.changeWealthWithStr(playerBaseInfo.Id, reward);
                     }
                     break;
             }

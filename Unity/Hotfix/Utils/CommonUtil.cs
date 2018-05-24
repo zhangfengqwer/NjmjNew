@@ -166,6 +166,20 @@ namespace ETHotfix
         }
 
         /*
+         * 裁剪字符串：1.2.3.3.5
+         * str：源字符串
+         * c：裁剪规则
+         * 返回200
+         */
+        static public float splitStr_End_F(string str, char c)
+        {
+            List<string> list = new List<string>();
+            splitStr(str, list, c);
+
+            return float.Parse(list[1]);
+        }
+
+        /*
          * subStringEndByChar("1/2/3/4/5/6",'/')
          * 返回6
          */

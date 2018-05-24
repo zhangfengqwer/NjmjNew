@@ -12,7 +12,6 @@ namespace ETHotfix
 	{
 	    protected override async void Run(Session session, C2R_ThirdLogin message, Action<R2C_ThirdLogin> reply)
 	    {
-	        Log.Info(JsonHelper.ToJson(message));
             R2C_ThirdLogin response = new R2C_ThirdLogin();
 	        try
 	        {
@@ -22,7 +21,6 @@ namespace ETHotfix
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)
                 {
-                    Log.Debug("第三方老用户");
                     AccountInfo accountInfo = accountInfos[0];
 
                     // 随机分配一个Gate
@@ -45,7 +43,6 @@ namespace ETHotfix
                 // 用户不存在，走注册流程
                 else
                 {
-                    Log.Debug("第三方新用户");
                     AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
                     accountInfo.Third_Id = message.Third_Id;
                     accountInfo.MachineId = message.MachineId;

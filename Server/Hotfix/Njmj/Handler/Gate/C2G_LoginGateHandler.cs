@@ -82,14 +82,49 @@ namespace ETHotfix
                 List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 if (itemInfoList.Count <= 0)
                 {
-                    for (int i = 1; i < 9; ++i)
                     {
-                        if (i < 4)
-                            continue;
-                        if (i == 6)
-                            continue;
                         UserBag item = new UserBag();
-                        item.BagId = 100 + i;
+                        item.BagId = 104;
+                        item.Count = 10;
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
+                    }
+
+                    {
+                        UserBag item = new UserBag();
+                        item.BagId = 105;
+                        item.Count = 10;
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
+                    }
+
+                    {
+                        UserBag item = new UserBag();
+                        item.BagId = 107;
+                        item.Count = 10;
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
+                    }
+
+                    {
+                        UserBag item = new UserBag();
+                        item.BagId = 108;
+                        item.Count = 10;
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
+                    }
+
+                    {
+                        UserBag item = new UserBag();
+                        item.BagId = 109;
+                        item.Count = 10;
+                        item.UId = userId;
+                        DBHelper.AddItemToDB(item);
+                    }
+
+                    {
+                        UserBag item = new UserBag();
+                        item.BagId = 111;
                         item.Count = 10;
                         item.UId = userId;
                         DBHelper.AddItemToDB(item);
