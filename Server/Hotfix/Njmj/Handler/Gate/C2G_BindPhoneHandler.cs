@@ -30,7 +30,7 @@ namespace ETHotfix
                 {
                     string uid = message.Uid.ToString();
                     uid = uid.Substring(1);
-                    string str = HttpUtil.CheckSms(uid, message.Phone, message.Code);
+                    string str = HttpUtil.CheckSms("0", message.Phone, message.Code);
                     if (!CommonUtil.checkSmsCode(str))
                     {
                         response.Message = "验证码错误";

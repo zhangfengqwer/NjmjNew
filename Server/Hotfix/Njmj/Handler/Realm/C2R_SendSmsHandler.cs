@@ -16,7 +16,7 @@ namespace ETHotfix
             try
             {
                 Log.Debug("请求验证码");
-                string str = HttpUtil.SendSms("1", message.Phone);
+                string str = HttpUtil.SendSms("0", message.Phone);
                 Log.Debug(str);
                 if (!CommonUtil.checkSmsCode(str))
                 {

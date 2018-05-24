@@ -142,6 +142,14 @@ namespace ETHotfix
                         await proxyComponent.Save(playerBaseInfo);
                     }
                     break;
+
+                // 话费礼包
+                case 11:
+                    {
+                        int r = Common_Random.getRandom(1,100);
+                        await DBCommonUtil.ChangeWealth(playerBaseInfo.Id, 3, r / 100.0f);
+                    }
+                    break;
             }
         }
     }
