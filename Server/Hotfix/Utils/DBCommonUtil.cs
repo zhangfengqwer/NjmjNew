@@ -222,7 +222,7 @@ namespace ETHotfix
             playerBaseInfo.GoldNum = 10;
             playerBaseInfo.WingNum = 0;
             playerBaseInfo.Icon = "f_icon1";
-            playerBaseInfo.Phone = "";
+            playerBaseInfo.Phone = Phone;
             playerBaseInfo.IsRealName = false;
             playerBaseInfo.TotalGameCount = 0;
             playerBaseInfo.WingNum = 0;

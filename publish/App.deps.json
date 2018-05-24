@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.0": {
       "App/1.0.0": {
         "dependencies": {
+          "CommandLineParser": "2.2.1",
           "Model": "1.0.0",
           "NLog": "4.5.0-rc04"
         },

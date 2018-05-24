@@ -221,19 +221,19 @@ namespace ETHotfix
             PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(false);
+                SetUIHideOrOpen(true);
             });
 
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(false);
+                SetUIHideOrOpen(true);
             });
 
             PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(false);
+                SetUIHideOrOpen(true);
             });
 
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
