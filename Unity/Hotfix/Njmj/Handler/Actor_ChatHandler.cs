@@ -18,8 +18,9 @@ namespace ETHotfix
                     GameObject obj = GameObject.Instantiate(item);
                     obj.transform.SetParent(GameObject.Find("CommonWorld").transform);
                 }
-                else
+                else if(message.ChatType == 2)
                 {
+                    Debug.Log("33333333333");
                     Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady).GetComponent<UIReadyComponent>().ShowChatContent(message.Value,message.UId);
                 }
                 Debug.Log(Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>());

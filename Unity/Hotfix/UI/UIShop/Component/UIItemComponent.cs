@@ -84,7 +84,7 @@ namespace ETHotfix
         {
             shopInfo = info;
             nameTxt.text = info.Name;
-            icon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
+            icon.sprite = CommonUtil.getSpriteByBundle("playericon", info.Icon);
             if (info.ShopType == (int)ShopType.Wing)
                 priceTxt.text = new StringBuilder().Append(info.Price).Append("元").ToString();
             else

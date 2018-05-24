@@ -123,7 +123,7 @@ namespace ETHotfix
             if (propInfo == null)
                 Debug.LogError("道具信息错误");
             useBtn.gameObject.SetActive(propInfo.type == 1);
-            uiItemIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(propInfo.prop_id.ToString());
+            uiItemIcon.sprite = CommonUtil.getSpriteByBundle("image_shop", propInfo.prop_id.ToString());
             descTxt.text = propInfo.desc;
         }
 
