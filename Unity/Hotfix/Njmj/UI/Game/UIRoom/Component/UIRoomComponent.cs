@@ -114,6 +114,8 @@ namespace ETHotfix
             this.readyBtn.onClick.Add(OnReady);
             ChatBtn.onClick.Add(() =>
             {
+                if (Chat.gameObject.activeInHierarchy)
+                    Chat.gameObject.SetActive(false);
                 Chat.gameObject.SetActive(true);
                 //选中表情包界面
                 CreatExpressions();
