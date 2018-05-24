@@ -23,7 +23,7 @@ namespace ETModel
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public static string timeAddDays(string time,int days)
+        public static string timeAddDays(string time, int days)
         {
             return Convert.ToDateTime(time).AddDays(days).ToString("yyyy-MM-dd HH:mm:ss");
         }
@@ -38,7 +38,7 @@ namespace ETModel
             string cl = password;
             string pwd = "";
             MD5 md5 = MD5.Create(); //实例化一个md5对像
-                                    // 加密后是一个字节类型的数组，这里要注意编码UTF8/Unicode等的选择　
+            // 加密后是一个字节类型的数组，这里要注意编码UTF8/Unicode等的选择　
             byte[] s = md5.ComputeHash(Encoding.UTF8.GetBytes(cl));
             // 通过使用循环，将字节类型的数组转换为字符串，此字符串是常规字符格式化所得
             for (int i = 0; i < s.Length; i++)
@@ -46,6 +46,7 @@ namespace ETModel
                 // 将得到的字符串使用十六进制类型格式。格式后的字符是小写的字母，如果使用大写（X）则格式后的字符是大写字符 
                 pwd = pwd + s[i].ToString("X2");
             }
+
             return pwd;
         }
 
@@ -231,7 +232,7 @@ namespace ETModel
         static public int charToAsc(string character)
         {
             System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
-            int intAsciiCode = (int)asciiEncoding.GetBytes(character)[0];
+            int intAsciiCode = (int) asciiEncoding.GetBytes(character)[0];
 
             return intAsciiCode;
         }
@@ -257,8 +258,10 @@ namespace ETModel
         {
             DateTime d1 = Convert.ToDateTime(data_old);
             DateTime d2 = Convert.ToDateTime(data_new);
-            DateTime d3 = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}:{5}", d1.Year, d1.Month, d1.Day, d1.Hour, d1.Minute, d1.Second));
-            DateTime d4 = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}:{5}", d2.Year, d2.Month, d2.Day, d2.Hour, d2.Minute, d2.Second));
+            DateTime d3 = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}:{5}", d1.Year, d1.Month, d1.Day,
+                d1.Hour, d1.Minute, d1.Second));
+            DateTime d4 = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}:{5}", d2.Year, d2.Month, d2.Day,
+                d2.Hour, d2.Minute, d2.Second));
 
             int days = (d4 - d3).Days;
             int hours = (d4 - d3).Hours;
@@ -266,7 +269,7 @@ namespace ETModel
             int seconds = (d4 - d3).Seconds;
 
             TimeSpan t1 = new TimeSpan(days, hours, minutes, seconds);
-            int i = (int)t1.TotalSeconds;
+            int i = (int) t1.TotalSeconds;
 
             return i;
         }
@@ -340,15 +343,13 @@ namespace ETModel
             foreach (XmlNode node in nodeList)
             {
                 string nodeValue = node.InnerText;
-                if ("string".Equals(node.Name))
+                if ("ResultMessage".Equals(node.Name))
                 {
+                    var ResultCode = node.Attributes["ResultCode"].Value; 
+                    var ResultMessage = node.Attributes["ResultMessageDetails"].Value; 
                     
-                    JObject result = JObject.Parse(nodeValue);
-                    var ResultCode = (int)result.GetValue("ResultCode");
-                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
-
                     // 成功
-                    if (ResultCode == 1)
+                    if (ResultCode == "1")
                     {
                         return true;
                     }
@@ -372,10 +373,9 @@ namespace ETModel
                 string nodeValue = node.InnerText;
                 if ("string".Equals(node.Name))
                 {
-
                     JObject result = JObject.Parse(nodeValue);
-                    var ResultCode = (int)result.GetValue("ResultCode");
-                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
+                    var ResultCode = (int) result.GetValue("ResultCode");
+                    var ResultMessage = (string) result.GetValue("ResultMessageDetails");
 
                     return ResultMessage;
                 }
