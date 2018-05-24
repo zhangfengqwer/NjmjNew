@@ -20,7 +20,7 @@ namespace ETHotfix
                     return instance;
                 instance = new SoundsHelp();
 
-                instance.SoundMute(PlayerPrefs.GetInt("isOpenSound", 1) == 1);
+//                instance.SoundMute(PlayerPrefs.GetInt("isOpenSound", 1) == 1);
 
                 return instance;
             }

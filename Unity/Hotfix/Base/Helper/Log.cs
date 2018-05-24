@@ -1,4 +1,5 @@
 ﻿using System;
+using ETModel;
 
 namespace ETHotfix
 {
@@ -22,7 +23,13 @@ namespace ETHotfix
 		public static void Error(string msg)
 		{
 			ETModel.Log.Error(msg);
-		}
+
+		    using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+		    {
+
+//                webRequestAsync.DownloadAsync(versionUrl);
+		    }
+        }
 
 		public static void Debug(string msg)
 		{

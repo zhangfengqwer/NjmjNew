@@ -31,7 +31,6 @@ namespace ETHotfix
         public void Awake()
 		{
             ToastScript.clear();
-
             initData();
         }
 

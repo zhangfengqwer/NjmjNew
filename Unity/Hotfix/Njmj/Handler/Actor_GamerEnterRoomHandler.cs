@@ -41,6 +41,9 @@ namespace ETHotfix
                 {
                     if (gamers[i] == null)
                         continue;
+
+                    uiReady.GetComponent<UIReadyComponent>()?.ResetPanel(gamers[i].UserID);
+
                     if (gamers[i].UserID != 0)
                     {
                         roomComponent.RemoveGamer(gamers[i].UserID);
