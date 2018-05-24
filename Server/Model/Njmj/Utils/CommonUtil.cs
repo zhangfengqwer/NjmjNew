@@ -361,5 +361,27 @@ namespace ETModel
 
             return false;
         }
+
+        static public string getResultMessageDetails(string checkSms)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(checkSms);
+            XmlNodeList nodeList = xmlDoc.ChildNodes;
+            foreach (XmlNode node in nodeList)
+            {
+                string nodeValue = node.InnerText;
+                if ("string".Equals(node.Name))
+                {
+
+                    JObject result = JObject.Parse(nodeValue);
+                    var ResultCode = (int)result.GetValue("ResultCode");
+                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
+
+                    return ResultMessage;
+                }
+            }
+
+            return "";
+        }
     }
 }

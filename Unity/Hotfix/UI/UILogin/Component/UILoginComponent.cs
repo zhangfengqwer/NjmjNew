@@ -173,6 +173,15 @@ namespace ETHotfix
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
+
+                Log.Debug(JsonHelper.ToJson(r2CData));
+
+                if (r2CData.Error != ErrorCode.ERR_Success)
+                {
+                    ToastScript.createToast(r2CData.Message);
+                }
+
+
                 sessionWrap.Dispose();
             }
             catch (Exception e)
