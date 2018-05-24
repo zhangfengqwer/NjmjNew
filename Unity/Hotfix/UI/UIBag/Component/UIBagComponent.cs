@@ -132,7 +132,7 @@ namespace ETHotfix
             try
             {
                 G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
-                GameUtil.changeData(item.ItemId, -1);
+                
                 if (g2cBag.result == 1)
                 {
                     GetBagInfoList();
@@ -144,7 +144,6 @@ namespace ETHotfix
                         case 104:
                             {
                                 PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime = g2cBag.time;
-                                Log.Debug("表情包到期时间" + g2cBag.time);
                             }
                             break;
 
@@ -154,7 +153,6 @@ namespace ETHotfix
                         case 109:
                             {
                                 PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
-                                Log.Debug("VIP到期时间" + g2cBag.time);
                             }
                             break;
 
@@ -166,6 +164,8 @@ namespace ETHotfix
                             }
                             break;
                     }
+
+                    GameUtil.changeData(item.ItemId, -1);
                 }
                 else
                 {

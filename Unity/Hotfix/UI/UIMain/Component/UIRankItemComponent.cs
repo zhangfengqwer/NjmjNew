@@ -42,7 +42,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(wealth.GoldNum)
                                               .ToString();
-            Icon.sprite = CommonUtil.getSpriteByBundle("uirankicon", wealth.Icon);
+            Icon.sprite = CommonUtil.getSpriteByBundle("playericon", wealth.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                               .Append(index + 1)
                                               .ToString() ;
@@ -60,7 +60,7 @@ namespace ETHotfix
                                               .Append(gameRank.TotalCount)
                                               .ToString();
             RankTxt.text = index.ToString();
-            Icon.sprite = CommonUtil.getSpriteByBundle("uirankicon", gameRank.Icon);
+            Icon.sprite = CommonUtil.getSpriteByBundle("playericon", gameRank.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                            .Append(index + 1)
                                            .ToString();
