@@ -18,6 +18,7 @@ namespace ETHotfix
                 Log.Error("当前为null:GameControllerComponent.DealCards");
                 return;
             }
+
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
 
@@ -27,7 +28,8 @@ namespace ETHotfix
             List<MahjongInfo> mahjongInfos3 = gamers[2].GetComponent<HandCardsComponent>().library;
             List<MahjongInfo> mahjongInfos4 = gamers[3].GetComponent<HandCardsComponent>().library;
 
-            Logic_NJMJ.getInstance().FaMahjong(mahjongInfos1, mahjongInfos2, mahjongInfos3, mahjongInfos4,deskComponent.RestLibrary);
+            Logic_NJMJ.getInstance().FaMahjong(mahjongInfos1, mahjongInfos2, mahjongInfos3, mahjongInfos4,
+                deskComponent.RestLibrary);
 
             foreach (var card in deskComponent.RestLibrary)
             {
@@ -47,11 +49,30 @@ namespace ETHotfix
             room.IsGameOver = true;
             room.State = RoomState.Ready;
             room.tokenSource.Cancel();
-
+            self.Multiples = 100;
             //自摸
-            if (room.ziMoUid != 0)
-            {
 
+            //改变财富
+            foreach (var gamer in room.GetAll())
+            {
+                if (gamer.UserID == room.ziMoUid)
+                {
+                    DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
+                }
+                else
+                {
+                    if (room.fangPaoUid != 0)
+                    {
+                        if (gamer.UserID == room.fangPaoUid)
+                        {
+                            DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                        }
+                    }
+                    else
+                    {
+                        DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                    }
+                }
             }
 
             foreach (var gamer in room.GetAll())
@@ -79,9 +100,10 @@ namespace ETHotfix
             }
 
             //完成一局游戏
-
-            //改变财富
-            DBCommonUtil.ChangeWealth()
+            foreach (var gamer in room.GetAll())
+            {
+                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101);
+            }
 
             roomComponent.gameRooms.Remove(room.Id);
             roomComponent.readyRooms.Add(room.Id, room);

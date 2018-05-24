@@ -31,10 +31,39 @@ namespace ETHotfix
 
             ChengjiuItemBtn.GetComponent<Button>().onClick.Add(() =>
             {
-                //显示提示框
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
-                .GetComponent<UIChengjiuComponent>().SetDetail(info);
+                if (info.IsComplete)
+                {
+                    if (!info.IsGet)
+                    {
+                        //未领取
+                        info.IsGet = true;
+                        GetReward();
+                    }
+                    else
+                    {
+                        //显示提示框
+                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
+                        .GetComponent<UIChengjiuComponent>().SetDetail(info, true);
+                    }
+                }
+                else
+                {
+                    //显示提示框
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
+                    .GetComponent<UIChengjiuComponent>().SetDetail(info, false);
+                }
             });
+        }
+
+        private async void GetReward()
+        {
+            G2C_UpdateChengjiu g2cTask = (G2C_UpdateChengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateChengjiu { UId = PlayerInfoComponent.Instance.uid, TaskPrg = info });
+            PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += info.Reward;
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
+                .GetComponent<UIMainComponent>().refreshUI();
+            //显示提示框
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
+            .GetComponent<UIChengjiuComponent>().SetDetail(info, true);
         }
 
         public void SetInfo(TaskInfo info)
@@ -42,6 +71,11 @@ namespace ETHotfix
             this.info = info;
             string icon = new StringBuilder().Append("chengjiu1_")
                                              .Append(info.Id).ToString();
+            if(info.IsComplete)
+            {
+                icon = new StringBuilder().Append("chengjiu_")
+                                             .Append(info.Id).ToString();
+            }
             ChengjiuItemBtn.GetComponent<Image>().sprite =
                 CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
         }
