@@ -150,6 +150,9 @@ namespace ETHotfix
                 R2C_ChangeAccount r2CData = (R2C_ChangeAccount)await sessionWrap.Call(new C2R_ChangeAccount() { Uid = PlayerInfoComponent.Instance.uid });
                 sessionWrap.Dispose();
 
+                PlayerPrefs.SetString("Phone", "");
+                PlayerPrefs.SetString("Token", "");
+
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
             }
