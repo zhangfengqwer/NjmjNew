@@ -60,9 +60,12 @@ namespace ETHotfix
             self.idleRooms.Remove(room);
         }
 
-        public static void Awake(this RoomComponent self)
+        public static async void Awake(this RoomComponent self)
         {
-
+            while (true)
+            {
+                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
+            }
         }
     }
 }

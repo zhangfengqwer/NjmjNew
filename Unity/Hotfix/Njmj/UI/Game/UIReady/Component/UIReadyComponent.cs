@@ -48,9 +48,9 @@ namespace ETHotfix
             HeadPanel[3] = head.Get<GameObject>("Left");
 
             chatObjArr[0] = rc.Get<GameObject>("ChatB");
-            chatObjArr[1] = rc.Get<GameObject>("ChatL");
+            chatObjArr[1] = rc.Get<GameObject>("ChatR");
             chatObjArr[2] = rc.Get<GameObject>("ChatT");
-            chatObjArr[3] = rc.Get<GameObject>("ChatR");
+            chatObjArr[3] = rc.Get<GameObject>("ChatL");
 
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.readyBtn.onClick.Add(OnReady);
@@ -74,7 +74,10 @@ namespace ETHotfix
         /// <param name="UId"></param>
         public void ShowChatContent(string content, long UId)
         {
-            int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
+            UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
+            int index = gamerComponent.GetGamerSeat(UId);
+
             chatObjArr[index].SetActive(true);
             chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
             StartTimer(index);

@@ -42,37 +42,23 @@ namespace ETHotfix
                 {
                     PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum = 0;
                 }
-
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain) != null)
-                {
-                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>() != null)
-                    {
-                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
-                    }
-                }
             }
             else if (id == 2)
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().WingNum += (int)num;
 
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain) != null)
+                if (PlayerInfoComponent.Instance.GetPlayerInfo().WingNum < 0)
                 {
-                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>() != null)
-                    {
-                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
-                    }
+                    PlayerInfoComponent.Instance.GetPlayerInfo().WingNum = 0;
                 }
             }
             else if (id == 3)
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum += num;
 
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain) != null)
+                if (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum < 0)
                 {
-                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>() != null)
-                    {
-                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
-                    }
+                    PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum = 0;
                 }
             }
             else
@@ -101,6 +87,15 @@ namespace ETHotfix
                     bag.ItemId = id;
                     bag.Count = (int)num;
                     PlayerInfoComponent.Instance.GetBagInfoList().Add(bag);
+                }
+            }
+            
+            // 刷新主界面
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain) != null)
+            {
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>() != null)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
                 }
             }
         }
