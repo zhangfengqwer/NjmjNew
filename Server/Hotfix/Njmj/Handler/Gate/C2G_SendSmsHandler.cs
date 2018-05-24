@@ -17,7 +17,7 @@ namespace ETHotfix
             {
                 string uid = message.Uid.ToString();
                 uid = uid.Substring(1);
-                HttpUtil.SendSms(uid, message.Phone);
+                HttpUtil.SendSms("0", message.Phone);
                 reply(response);
             }
             catch (Exception e)
