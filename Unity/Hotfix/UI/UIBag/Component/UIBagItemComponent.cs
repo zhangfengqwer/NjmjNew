@@ -43,7 +43,7 @@ namespace ETHotfix
                 uiBagBgL.SetActive(true);
             else
                 uiBagBgL.SetActive(false);
-            uiBagIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(item.ItemId.ToString());
+            uiBagIcon.sprite = CommonUtil.getSpriteByBundle("image_shop", item.ItemId.ToString());
             countTxt.text = item.Count.ToString();
         }
     }
