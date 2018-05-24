@@ -143,7 +143,8 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            string Third_Id = "wx_123456790";
+            Log.Debug("onClickWechatLogin");
+            string Third_Id = CommonUtil.getCurTime();
             OnThirdLogin(Third_Id);
         }
 
