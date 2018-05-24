@@ -22,6 +22,7 @@ namespace ETHotfix
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)
                 {
+                    Log.Debug("第三方老用户");
                     AccountInfo accountInfo = accountInfos[0];
 
                     // 随机分配一个Gate
@@ -44,6 +45,7 @@ namespace ETHotfix
                 // 用户不存在，走注册流程
                 else
                 {
+                    Log.Debug("第三方新用户");
                     AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
                     accountInfo.Third_Id = message.Third_Id;
                     accountInfo.MachineId = message.MachineId;
