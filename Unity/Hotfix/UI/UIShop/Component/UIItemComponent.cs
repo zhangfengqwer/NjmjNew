@@ -52,7 +52,7 @@ namespace ETHotfix
                 else
                 {
                     //接购买SDK
-                    Debug.Log("暂时还未接sdk");
+                    ToastScript.createToast("暂时未开放人民币购买");
                 }
             });
         }

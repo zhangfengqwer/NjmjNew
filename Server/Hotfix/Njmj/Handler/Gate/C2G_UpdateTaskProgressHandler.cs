@@ -21,7 +21,7 @@ namespace ETHotfix
                 
                 if (taskProgressInfoList.Count > 0)
                 {
-                    taskInfo = await DBCommonUtil.UpdateTask(message.UId,message.TaskPrg.Id,message.TaskPrg.IsGet);
+                    DBCommonUtil.UpdateTask(message.UId,message.TaskPrg.Id,message.TaskPrg.IsGet);
                     response.TaskPrg = taskInfo;
                 }
                 else

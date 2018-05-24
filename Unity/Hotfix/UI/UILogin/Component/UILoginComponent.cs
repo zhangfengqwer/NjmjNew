@@ -142,7 +142,7 @@ namespace ETHotfix
 
         public void onClickWechatLogin()
         {
-            string Third_Id = "wx_123456";
+            string Third_Id = "wx_123456790";
             OnThirdLogin(Third_Id);
         }
 
@@ -257,6 +257,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
+                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
@@ -306,6 +307,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
+                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
@@ -319,6 +321,7 @@ namespace ETHotfix
         public void getAllData()
         {
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, C2G_PlayerInfo message, Action<G2C_PlayerInfo> reply)
         {
-//            Log.Info(JsonHelper.ToJson(message));
+            Log.Info(JsonHelper.ToJson(message));
             G2C_PlayerInfo response = new G2C_PlayerInfo();
             try
             {
@@ -34,38 +34,9 @@ namespace ETHotfix
                     reply(response);
                     return;
                 }
-                AccountInfo accountInfo = await proxyComponent.Query<AccountInfo>(message.uid);
-                if (accountInfo == null)
-                {
-                    Log.Error("Account数据库里不存在该用户");
-                    response.Message = "Account数据库里不存在该用户";
-                    response.PlayerInfo = null;
-                }
-                else
-                {
-                    PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
-                    playerBaseInfo.Id = message.uid;
-                    playerBaseInfo.Name = message.uid.ToString();
-                    playerBaseInfo.GoldNum = 10;
-                    playerBaseInfo.WingNum = 0;
-                    playerBaseInfo.Icon = "f_icon1";
-                    playerBaseInfo.Phone = "";
-                    playerBaseInfo.IsRealName = false;
-                    playerBaseInfo.TotalGameCount = 0;
-                    playerBaseInfo.WingNum = 0;
-                    playerBaseInfo.VipTime = "2018-05-18 00:00:00";
-                    playerBaseInfo.PlayerSound = Common_Random.getRandom(1,4);
-                    playerBaseInfo.RestChangeNameCount = 1;
-                    await proxyComponent.Save(playerBaseInfo);
 
-                    response.PlayerInfo.Name = playerBaseInfo.Name;
-                    response.PlayerInfo.GoldNum = playerBaseInfo.GoldNum;
-                    response.PlayerInfo.WingNum = playerBaseInfo.WingNum;
-                    response.PlayerInfo.Icon = playerBaseInfo.Icon;
-
-                    //Log.Info(JsonHelper.ToJson(response));
-                }
-                
+                response.Message = "Account数据库里不存在该用户";
+                response.PlayerInfo = null;
                 reply(response);
             }
             catch(Exception e)

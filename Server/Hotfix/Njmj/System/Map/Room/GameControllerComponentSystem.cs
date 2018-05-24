@@ -52,28 +52,32 @@ namespace ETHotfix
             self.Multiples = 100;
             //自摸
 
-            //改变财富
-            foreach (var gamer in room.GetAll())
+            if (huaCount > 0)
             {
-                if (gamer.UserID == room.ziMoUid)
+                //改变财富
+                foreach (var gamer in room.GetAll())
                 {
-                    DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
-                }
-                else
-                {
-                    if (room.fangPaoUid != 0)
+                    if (gamer.UserID == room.ziMoUid)
                     {
-                        if (gamer.UserID == room.fangPaoUid)
+                        DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
+                    }
+                    else
+                    {
+                        if (room.fangPaoUid != 0)
+                        {
+                            if (gamer.UserID == room.fangPaoUid)
+                            {
+                                DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                            }
+                        }
+                        else
                         {
                             DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
                         }
                     }
-                    else
-                    {
-                        DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
-                    }
                 }
             }
+           
 
             foreach (var gamer in room.GetAll())
             {

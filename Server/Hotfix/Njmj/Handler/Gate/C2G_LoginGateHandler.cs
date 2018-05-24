@@ -50,6 +50,8 @@ namespace ETHotfix
                     shopInfoList.Add(info);
                 }
 
+                
+
                 List<Chat> chatConfigList = new List<Chat>();
                 for (int i = 1; i < configCom.GetAll(typeof(ChatConfig)).Length + 1; ++i)
                 {
@@ -60,6 +62,19 @@ namespace ETHotfix
                     chatConfigList.Add(info);
                 }
                 response.ChatList = chatConfigList;
+
+                List<NoticeInfo> noticeConfigList = new List<NoticeInfo>();
+                for (int i = 1; i < configCom.GetAll(typeof(NoticeConfig)).Length + 1; ++i)
+                {
+                    int index = 100 + i;
+                    NoticeConfig config = (NoticeConfig)configCom.Get(typeof(NoticeConfig), index);
+                    NoticeInfo info = new NoticeInfo();
+                    info.Id = (int)config.Id;
+                    info.Content = config.Content;
+                    info.Name = config.Name;
+                    noticeConfigList.Add(info);
+                }
+                response.NoticeInfoList = noticeConfigList;
 
                 #endregion
 
