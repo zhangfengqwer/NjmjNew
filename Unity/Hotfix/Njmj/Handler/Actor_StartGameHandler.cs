@@ -18,6 +18,10 @@ namespace ETHotfix
             try
             {
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+               
+
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 uiRoomComponent.StartGame(message.restCount);
@@ -42,7 +46,7 @@ namespace ETHotfix
                         HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                         if (handCards != null)
                         {
-                            handCards.Reset();
+//                            handCards.Reset();
                         }
                         else
                         {
@@ -75,6 +79,9 @@ namespace ETHotfix
                         uiRoomComponent.ShowTurn(gamer.UserID);
                     }
                 }
+
+                uiRoom.GameObject.SetActive(true);
+                uiRoomComponent.ISGaming = true;
             }
             catch (Exception e)
             {

@@ -25,7 +25,16 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
 
                 gameResultComponent.setData(message, gamerComponent,100);
+                uiRoomComponent.ISGaming = false;
 
+                if (PlayerInfoComponent.Instance.uid == message.Uid)
+                {
+                    SoundsHelp.Instance.playSound_Win();
+                }
+                else
+                {
+                    SoundsHelp.Instance.playSound_Fail();
+                }
             }
             catch (Exception e)
             {

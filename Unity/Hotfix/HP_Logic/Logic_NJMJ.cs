@@ -81,6 +81,7 @@ namespace ETHotfix
     {
         static Logic_NJMJ s_instance = null;
         public Dictionary<HuPaiType, int> HuPaiHuaCount = new Dictionary<HuPaiType, int>();
+        public Dictionary<HuPaiType, string> HuPaiHuaName = new Dictionary<HuPaiType, string>();
 
         List<MahjongInfo> m_mahjongList = new List<MahjongInfo>();
         List<MahjongInfo> m_differenceMahjongList = new List<MahjongInfo>();
@@ -100,22 +101,40 @@ namespace ETHotfix
         private void initHuaCount()
         {
             HuPaiHuaCount.Add(HuPaiType.Normal, 1);
-            HuPaiHuaCount.Add(HuPaiType.MenQing, 1);
-            HuPaiHuaCount.Add(HuPaiType.HunYiSe, 1);
-            HuPaiHuaCount.Add(HuPaiType.QingYiSe, 1);
-            HuPaiHuaCount.Add(HuPaiType.DuiDuiHu, 1);
-            HuPaiHuaCount.Add(HuPaiType.QuanQiuDuDiao, 1);
-            HuPaiHuaCount.Add(HuPaiType.QiDui_Normal, 1);
-            HuPaiHuaCount.Add(HuPaiType.QiDui_HaoHua, 1);
-            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoHaoHua, 1);
-            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoChaoHaoHua, 1);
-            HuPaiHuaCount.Add(HuPaiType.YaJue, 1);
-            HuPaiHuaCount.Add(HuPaiType.WuHuaGuo, 1);
-            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Small, 1);
-            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Big, 1);
-            HuPaiHuaCount.Add(HuPaiType.TianHu, 1);
-            HuPaiHuaCount.Add(HuPaiType.DiHu, 1);
-            HuPaiHuaCount.Add(HuPaiType.HaiDiLaoYue, 1);
+            HuPaiHuaCount.Add(HuPaiType.MenQing, 20);
+            HuPaiHuaCount.Add(HuPaiType.HunYiSe, 40);
+            HuPaiHuaCount.Add(HuPaiType.QingYiSe, 60);
+            HuPaiHuaCount.Add(HuPaiType.DuiDuiHu, 40);
+            HuPaiHuaCount.Add(HuPaiType.QuanQiuDuDiao, 60);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_Normal, 80);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_HaoHua, 160);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoHaoHua, 240);
+            HuPaiHuaCount.Add(HuPaiType.QiDui_ChaoChaoHaoHua, 320);
+            HuPaiHuaCount.Add(HuPaiType.YaJue, 40);
+            HuPaiHuaCount.Add(HuPaiType.WuHuaGuo, 40);
+            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Small, 20);
+            HuPaiHuaCount.Add(HuPaiType.GangHouKaiHua_Big, 40);
+            HuPaiHuaCount.Add(HuPaiType.TianHu, 320);
+            HuPaiHuaCount.Add(HuPaiType.DiHu, 280);
+            HuPaiHuaCount.Add(HuPaiType.HaiDiLaoYue, 10);
+
+            HuPaiHuaName.Add(HuPaiType.Normal, "平胡");
+            HuPaiHuaName.Add(HuPaiType.MenQing, "门清");
+            HuPaiHuaName.Add(HuPaiType.HunYiSe, "混一色");
+            HuPaiHuaName.Add(HuPaiType.QingYiSe, "清一色");
+            HuPaiHuaName.Add(HuPaiType.DuiDuiHu, "对对胡");
+            HuPaiHuaName.Add(HuPaiType.QuanQiuDuDiao, "全球独钓");
+            HuPaiHuaName.Add(HuPaiType.QiDui_Normal, "七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_HaoHua, "七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoHaoHua, "七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoChaoHaoHua, "七对");
+            HuPaiHuaName.Add(HuPaiType.YaJue, "压绝");
+            HuPaiHuaName.Add(HuPaiType.WuHuaGuo, "无花果");
+            HuPaiHuaName.Add(HuPaiType.GangHouKaiHua_Small, "杠后开花");
+            HuPaiHuaName.Add(HuPaiType.GangHouKaiHua_Big, "杠后开花");
+            HuPaiHuaName.Add(HuPaiType.TianHu, "天胡");
+            HuPaiHuaName.Add(HuPaiType.DiHu, "地胡");
+            HuPaiHuaName.Add(HuPaiType.HaiDiLaoYue, "海底捞月");
         }
 
         void initMahjongList()
@@ -1025,6 +1044,20 @@ namespace ETHotfix
                 return true;
             }
 
+            return false;
+        }
+
+        public bool IsAnGang(List<MahjongInfo> list,out MahjongWeight weight)
+        {
+            List<IGrouping<MahjongWeight, MahjongInfo>> result = list.GroupBy(x => x.m_weight).Where(x => x.Count() == 4).ToList();
+
+            if (result.Count > 0)
+            {
+                MahjongWeight mahjongWeight = result[0].Key;
+                weight = mahjongWeight;
+                return true;
+            }
+            weight = 0;
             return false;
         }
 

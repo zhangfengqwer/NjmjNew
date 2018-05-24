@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             Gamer gamer = ComponentFactory.CreateWithId<Gamer, long>(id ?? IdGenerater.GenerateId(), userId);
             gamer.PlayerID = playerId;
-
+            gamer.isOffline = false;
             return gamer;
         }
     }

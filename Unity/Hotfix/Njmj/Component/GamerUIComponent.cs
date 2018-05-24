@@ -33,15 +33,11 @@ namespace ETHotfix
         private Text readyName;
         private Text readyText;
 
-        //        private Text money;
         public int Index { get; set; }
 
         public void Start()
         {
-            if (this.GetParent<Gamer>().IsReady)
-            {
-                SetReady();
-            }
+//           
         }
 
         /// <summary>
@@ -52,12 +48,9 @@ namespace ETHotfix
             ResetPrompt();
         
             this.name.text = "空位";
-//            this.money.text = "";
 
             this.Panel = null;
-//            this.prompt = null;
             this.name = null;
-//            this.money = null;
         }
 
         /// <summary>
@@ -93,68 +86,6 @@ namespace ETHotfix
             {
                 ResetPrompt();
                 SetUserInfo();
-            }
-        }
-
-        /// <summary>
-        /// 设置玩家身份
-        /// </summary>
-        /// <param name="identity"></param>
-//        public void SetIdentity(Identity identity)
-//        {
-//            if (identity == Identity.None)
-//                return;
-//
-//            string spriteName = $"Identity_{Enum.GetName(typeof(Identity), identity)}";
-//            Sprite headSprite = CardHelper.GetCardSprite(spriteName);
-//            headPhoto.sprite = headSprite;
-//            headPhoto.gameObject.SetActive(true);
-//        }
-
-        /// <summary>
-        /// 玩家准备
-        /// </summary>
-        public void SetReady()
-        {
-            prompt.text = "准备！";
-            readyText.text = "已准备";
-
-            if (this.GetParent<Gamer>().UserID == PlayerInfoComponent.Instance.uid)
-            {
-                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
-                uiRoomComponent.readyBtn.interactable = false;
-            }
-        }
-
-        /// <summary>
-        /// 出牌错误
-        /// </summary>
-        public void SetPlayCardsError()
-        {
-//            prompt.text = "您出的牌不符合规则！";
-        }
-
-        /// <summary>
-        /// 玩家不出
-        /// </summary>
-        public void SetDiscard()
-        {
-//            prompt.text = "不出";
-        }
-
-        /// <summary>
-        /// 玩家抢地主
-        /// </summary>
-        public void SetGrab(bool isGrab)
-        {
-            if (isGrab)
-            {
-//                prompt.text = "抢地主";
-            }
-            else
-            {
-//                prompt.text = "不抢";
             }
         }
 
@@ -209,8 +140,6 @@ namespace ETHotfix
 
             base.Dispose();
 
-            //重置玩家UI
-//            ResetPanel();
         }
 
     }

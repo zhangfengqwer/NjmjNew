@@ -15,7 +15,17 @@ namespace ETHotfix
 
             try
             {
-                HttpUtil.SendSms("1", message.Phone);
+                Log.Debug("请求验证码");
+                string str = HttpUtil.SendSms("1", message.Phone);
+                Log.Debug(str);
+                if (!CommonUtil.checkSmsCode(str))
+                {
+                    response.Message = CommonUtil.getResultMessageDetails(str);
+                    response.Error = ErrorCode.ERR_PhoneCodeError;
+                    reply(response);
+                    return;
+                }
+
                 reply(response);
             }
             catch (Exception e)

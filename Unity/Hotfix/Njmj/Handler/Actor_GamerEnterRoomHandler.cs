@@ -12,6 +12,11 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_GamerEnterRoom message)
         {
+            GamerEnterRoom(message);
+        }
+
+        public static async void GamerEnterRoom(Actor_GamerEnterRoom message)
+        {
             try
             {
                 Log.Info($"收到玩家进入:{JsonHelper.ToJson(message)}");
@@ -19,12 +24,15 @@ namespace ETHotfix
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
                 {
                     CommonUtil.ShowUI(UIType.UIRoom);
+                    CommonUtil.ShowUI(UIType.UIReady);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
                 }
-              
+
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                roomComponent.enterRoomMsg = message;
 
                 Gamer[] gamers = gamerComponent.GetAll();
 
@@ -33,11 +41,16 @@ namespace ETHotfix
                 {
                     if (gamers[i] == null)
                         continue;
+
+                    uiReady.GetComponent<UIReadyComponent>()?.ResetPanel(gamers[i].UserID);
+
                     if (gamers[i].UserID != 0)
                     {
                         roomComponent.RemoveGamer(gamers[i].UserID);
                     }
                 }
+
+                uiReady.GetComponent<UIReadyComponent>()?.userReady.Clear();
 
                 GamerInfo localGamer = null;
                 for (int i = 0; i < message.Gamers.Count; i++)
@@ -58,7 +71,6 @@ namespace ETHotfix
                 for (int i = 0; i < message.Gamers.Count; i++)
                 {
                     GamerInfo gamerInfo = message.Gamers[i];
-                   
                     Gamer gamer;
                     if (gamerInfo.UserID == localGamer.UserID)
                     {
@@ -75,7 +87,12 @@ namespace ETHotfix
 
                     //根据座位的indax添加玩家
                     roomComponent.AddGamer(gamer, index);
+
+                    //设置准备
+                    await uiReady.GetComponent<UIReadyComponent>().SetPanel(gamer, index);
                 }
+
+                SoundsHelp.Instance.playSound_JinRu();
             }
             catch (Exception e)
             {

@@ -35,6 +35,7 @@ namespace ETHotfix
         private Text text_yanzhengmadaojishi;
 
         bool isLoginSuccess = false;
+        private bool isLogining = false;
 
         public void Awake()
 		{
@@ -107,7 +108,7 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (false)
+            if (true)
             {
                 phone = "";
                 token = "";
@@ -172,6 +173,15 @@ namespace ETHotfix
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
+
+                Log.Debug(JsonHelper.ToJson(r2CData));
+
+                if (r2CData.Error != ErrorCode.ERR_Success)
+                {
+                    ToastScript.createToast(r2CData.Message);
+                }
+
+
                 sessionWrap.Dispose();
             }
             catch (Exception e)
@@ -206,7 +216,11 @@ namespace ETHotfix
 			SessionWrap sessionWrap = null;
 			try
 			{
-				IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+			    if (isLogining) return;
+
+			    isLogining = true;
+
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
 				Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
 				sessionWrap = new SessionWrap(session);
@@ -258,13 +272,17 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
                 PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
+
+
+			    isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
 			catch (Exception e)
 			{
 				sessionWrap?.Dispose();
-				Log.Error(e);
+			    isLogining = false;
+                Log.Error(e);
 			}
 		}
 
@@ -273,6 +291,10 @@ namespace ETHotfix
             SessionWrap sessionWrap = null;
             try
             {
+                if (isLogining) return;
+
+                isLogining = true;
+
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
@@ -308,12 +330,15 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
                 PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
+
+                isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
+                isLogining = false;
                 Log.Error(e);
             }
         }

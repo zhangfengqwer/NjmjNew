@@ -31,7 +31,6 @@ namespace ETHotfix
         public void Awake()
 		{
             ToastScript.clear();
-
             initData();
         }
 
@@ -83,10 +82,12 @@ namespace ETHotfix
                 if (Text_shengying_kai.transform.Find("Button/Image").transform.localScale.x == 1)
                 {
                     PlayerPrefs.SetInt("isOpenSound",1);
+                    SoundsHelp.Instance.SoundMute(true);
                 }
                 else
                 {
                     PlayerPrefs.SetInt("isOpenSound", 0);
+                    SoundsHelp.Instance.SoundMute(false);
                 }
             }
 

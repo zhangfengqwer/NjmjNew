@@ -393,6 +393,7 @@
     <Compile Include="Assets\Editor\Helper\MongoHelper.cs" />
     <Compile Include="Assets\Editor\Proto2CsEditor\Proto2CSEditor.cs" />
     <Compile Include="Assets\Editor\ReferenceCollectorEditor\ReferenceCollectorEditor.cs" />
+    <Compile Include="Assets\Editor\Reload\ReloadHelper.cs" />
     <Compile Include="Assets\Editor\RsyncEditor\RsyncConfig.cs" />
     <Compile Include="Assets\Editor\RsyncEditor\RsyncEditor.cs" />
     <Compile Include="Assets\Editor\ServerCommandLineEditor\ServerCommandLineEditor.cs" />

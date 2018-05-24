@@ -97,6 +97,7 @@ namespace ETHotfix
                     //庄家多发一张牌
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
+
 //	                List<MahjongInfo> infos = bankerHandCards.GetAll();
 	                bankerHandCards.library = new List<MahjongInfo>(list);
 
@@ -165,6 +166,8 @@ namespace ETHotfix
                         }
 	                    else
 	                    {
+                            //检查听牌
+	                        Log.Info("听牌:" + cards.Count);
 	                        List<MahjongInfo> checkTingPaiList = Logic_NJMJ.getInstance().checkTingPaiList(cards);
 	                        if (checkTingPaiList.Count > 0)
 	                        {

@@ -42,9 +42,9 @@ MonoBehaviour:
   - key: Rank_1
     gameObject: {fileID: 21300000, guid: 8d94bbca144bec84986e65c8d2ca8bd4, type: 3}
   - key: Rank_2
-    gameObject: {fileID: 21300000, guid: 8031efd114bc6044ebc39825ec2ec73f, type: 3}
-  - key: Rank_3
     gameObject: {fileID: 21300000, guid: 34709b4f3c8de2a4f9d111f7bc22a6d8, type: 3}
+  - key: Rank_3
+    gameObject: {fileID: 21300000, guid: ecb1e5c498333304294a011c2a8d213b, type: 3}
 --- !u!224 &224194273436062032
 RectTransform:
   m_ObjectHideFlags: 1

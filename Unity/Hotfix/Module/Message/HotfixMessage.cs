@@ -955,6 +955,18 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerContinueGame)]
+	[ProtoContract]
+	public partial class Actor_GamerContinueGame: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.M2G_Actor_GamerExitRoom)]
 	[ProtoContract]
 	public partial class M2G_Actor_GamerExitRoom: IActorMessage
@@ -1177,6 +1189,18 @@ namespace ETHotfix
 
 		[ProtoMember(7, IsRequired = false)]
 		public long FangPaoUid;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerReconnet)]
+	[ProtoContract]
+	public partial class Actor_GamerReconnet: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 	}
 

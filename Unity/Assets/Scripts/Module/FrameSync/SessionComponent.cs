@@ -29,7 +29,7 @@
 
 			base.Dispose();
 
-			this.Session.Dispose();
+			this.Session?.Dispose();
 			this.Session = null;
 			Instance = null;
 		}

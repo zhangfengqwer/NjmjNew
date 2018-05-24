@@ -64,6 +64,17 @@ namespace ETHotfix
             }
 
             self.tokenSource = new CancellationTokenSource();
+            OrderControllerComponent controllerComponent = self.GetComponent<OrderControllerComponent>();
+            Gamer gamer = self.Get(controllerComponent.CurrentAuthority);
+
+            if (gamer.isOffline)
+            {
+                self.TimeOut = 1;
+            }
+            else
+            {
+                self.TimeOut = 10;
+            }
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(self.TimeOut * 1000, self.tokenSource.Token);
 
             if (!self.tokenSource.IsCancellationRequested)
@@ -71,9 +82,7 @@ namespace ETHotfix
                 self.IsTimeOut = true;
                 Log.Debug("超时");
                 //超时自动出牌
-                OrderControllerComponent controllerComponent = self.GetComponent<OrderControllerComponent>();
 
-                Gamer gamer = self.Get(controllerComponent.CurrentAuthority);
                 if (gamer == null)
                 {
                     return;
@@ -156,8 +165,9 @@ namespace ETHotfix
                 gamer.isGangFaWanPai = false;
             }
 
-
             OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
+            GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
+
             orderController.Turn();
             var currentGamer = room.Get(orderController.CurrentAuthority);
             HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
@@ -183,6 +193,12 @@ namespace ETHotfix
                 room.isGangEndBuPai = false;
                 room.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
+                if (grabMahjong == null)
+                {
+                    //没牌
+                    gameController.GameOver(0);
+                    return;
+                }
             }
 
             room.StartTime();
@@ -201,6 +217,13 @@ namespace ETHotfix
                 var currentGamer = room.Get(orderController.CurrentAuthority);
                 HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+
+
+                if (deskComponent.RestLibrary.Count == 0)
+                {
+                    Log.Info("没牌了");
+                    return null;
+                }
 
                 int number = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
                 MahjongInfo grabMahjong = deskComponent.RestLibrary[number];
@@ -259,10 +282,10 @@ namespace ETHotfix
                         List<MahjongInfo> temp = new List<MahjongInfo>(handCardsComponent.GetAll());
                         Logic_NJMJ.getInstance().RemoveCard(temp, grabMahjong);
 
-                        //判断杠
+                        //暗杠
                         if (Logic_NJMJ.getInstance().isCanGang(grabMahjong, temp))
                         {
-                            _gamer.IsCanHu = true;
+                            _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
                             canOperation.Uid = _gamer.UserID;
                             canOperation.OperationType = 1;
