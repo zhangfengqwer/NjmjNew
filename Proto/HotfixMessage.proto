@@ -230,6 +230,7 @@ message G2C_UseItem //IResponse
 {
 	required int result = 1;//0,使用失败 1.使用成功
 	required string time = 2;
+	required string reward = 3;
 }
 
 message C2G_UseItem //IRequest

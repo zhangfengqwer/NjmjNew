@@ -665,6 +665,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public string time;
 
+		[ProtoMember(3, IsRequired = true)]
+		public string reward;
+
 	}
 
 	[Message(HotfixOpcode.C2G_UseItem)]

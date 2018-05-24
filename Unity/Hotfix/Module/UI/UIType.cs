@@ -50,6 +50,6 @@ namespace ETHotfix
         public const string UIChengjiuItem = "UIChengjiuItem";
         public const string UIVIP = "UIVIP";
         public const string UIZhuanPan = "UIZhuanPan";
-        
+        public const string UIChat = "UIChat";
     }
 }

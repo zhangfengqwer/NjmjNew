@@ -114,7 +114,6 @@ namespace ETHotfix
             }
 
             GameUtil.changeDataWithStr(g2cUseZhuanPan.reward);
-
             {
                 --ZhuanPanCount;
                 ++LuckyValue;

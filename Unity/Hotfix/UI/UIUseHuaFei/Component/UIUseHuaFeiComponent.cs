@@ -53,7 +53,9 @@ namespace ETHotfix
         {
             if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
             {
-                ToastScript.createToast("请先绑定手机号");
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseHuaFei);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
+
                 return;
             }
 

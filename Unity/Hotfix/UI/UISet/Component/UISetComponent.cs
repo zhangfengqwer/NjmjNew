@@ -128,21 +128,29 @@ namespace ETHotfix
         public void onClick_nan1()
         {
             setYinSe(1);
+
+            SoundsHelp.Instance.playSound_Nan1_BuHua();
         }
 
         public void onClick_nan2()
         {
             setYinSe(2);
+
+            SoundsHelp.Instance.playSound_Nan2_BuHua();
         }
 
         public void onClick_nv1()
         {
             setYinSe(3);
+
+            SoundsHelp.Instance.playSound_Nv1_BuHua();
         }
 
         public void onClick_nv2()
         {
             setYinSe(4);
+
+            SoundsHelp.Instance.playSound_Nv2_BuHua();
         }
 
         void setShengYin(bool isOpen)

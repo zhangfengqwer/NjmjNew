@@ -135,8 +135,6 @@ namespace ETHotfix
                 GameUtil.changeData(item.ItemId, -1);
                 if (g2cBag.result == 1)
                 {
-                    ToastScript.createToast("使用成功");
-
                     GetBagInfoList();
                     useBg.SetActive(false);
 
@@ -157,6 +155,14 @@ namespace ETHotfix
                             {
                                 PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
                                 Log.Debug("VIP到期时间" + g2cBag.time);
+                            }
+                            break;
+
+                        // 话费礼包
+                        case 111:
+                            {
+                                GameUtil.changeDataWithStr(g2cBag.reward);
+                                ToastScript.createToast("恭喜获得话费" + CommonUtil.splitStr_End_F(g2cBag.reward,':').ToString() + "元");
                             }
                             break;
                     }
