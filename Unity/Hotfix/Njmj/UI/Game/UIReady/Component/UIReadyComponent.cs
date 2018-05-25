@@ -73,7 +73,6 @@ namespace ETHotfix
         /// <param name="UId"></param>
         public void ShowChatContent(string content, long UId)
         {
-            Debug.Log("0000");
             int index = this.GetParent<UI>().GetComponent<GamerComponent>().GetGamerSeat(UId);
             chatObjArr[index].SetActive(true);
             chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
