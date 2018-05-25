@@ -15,17 +15,14 @@ namespace ETHotfix
             TaskInfo taskInfo = new TaskInfo();
             TaskProgressInfo progress = new TaskProgressInfo();
             List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid},TaskId:{taskId}}}");
-
             if (taskProgressInfoList.Count > 0)
             {
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {
                     progress = taskProgressInfoList[i];
-  					++progress.CurProgress;
-                    progress.TaskId = taskId;
-                    progress = taskProgressInfoList[i];
                     ++progress.CurProgress;
-                    progress.TaskId =taskId;                    if (isGet)
+                    progress.TaskId =taskId;
+                    if (isGet)
                     {
                         progress.IsGet = true;
                     }
@@ -269,16 +266,9 @@ namespace ETHotfix
             PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
             playerBaseInfo.Id = uid;
             playerBaseInfo.Name = uid.ToString();
-            playerBaseInfo.GoldNum = 10;
-            playerBaseInfo.WingNum = 0;
             playerBaseInfo.Icon = "f_icon1";
             playerBaseInfo.Phone = Phone;
-            playerBaseInfo.IsRealName = false;
-            playerBaseInfo.TotalGameCount = 0;
-            playerBaseInfo.WingNum = 0;
-            playerBaseInfo.VipTime = "2018-05-18 00:00:00";
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
-            playerBaseInfo.RestChangeNameCount = 1;
             await proxyComponent.Save(playerBaseInfo);
 
             Log.Debug("增加新用户完毕");

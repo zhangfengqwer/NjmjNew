@@ -81,11 +81,11 @@ namespace ETHotfix
             GetBagInfoList();
         }
 
-        private void GetBagInfoList()
+        private async void GetBagInfoList()
         {
-            //long uid = PlayerInfoComponent.Instance.uid;
-            //G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
-            CreateItemList(PlayerInfoComponent.Instance.GetBagInfoList());
+            long uid = PlayerInfoComponent.Instance.uid;
+            G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
+            CreateItemList(g2cBag.ItemList);
         }
 
         private void CreateItemList(List<Bag> itemList)
