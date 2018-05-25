@@ -86,7 +86,6 @@ message G2C_LoginGate // IResponse
 	repeated TaskInfo TaskInfoList = 4;//任务列表
 	repeated Bag BagList = 5;//背包列表
 	repeated Chat ChatList = 6;//
-	repeated NoticeInfo NoticeInfoList = 7;
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -359,13 +358,6 @@ message Actor_GamerContinueGame // IActorMessage
 message M2G_Actor_GamerExitRoom // IActorMessage
 {
    
-}
-
-message NoticeInfo //IMessage
-{
-	required int Id = 1;
-	required string Name = 2;
-	required string Content = 3;
 }
 
 message Actor_GamerReady // IActorMessage

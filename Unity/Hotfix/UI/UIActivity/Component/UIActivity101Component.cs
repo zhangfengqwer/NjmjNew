@@ -8,7 +8,16 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    class UIActivity101Component
+    public class UIActivity101System : AwakeSystem<UIActivity101Component>
     {
+        public override void Awake(UIActivity101Component self)
+        {
+            
+        }
+    }
+
+    public class UIActivity101Component : Component
+    {
+        
     }
 }

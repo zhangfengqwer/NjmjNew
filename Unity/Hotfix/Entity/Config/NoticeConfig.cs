@@ -42,7 +42,7 @@ namespace Hotfix
             }
         }
 
-        public List<NoticeInfo> getActivityInfoList()
+        public List<NoticeInfo> getDataList()
         {
             return m_dataList;
         }

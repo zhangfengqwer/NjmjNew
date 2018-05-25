@@ -34,7 +34,7 @@ namespace ETHotfix
 
             NoticeBtn.onClick.Add(() =>
             {
-                PlayerPrefs.SetInt(info.Id.ToString(), 1);
+                PlayerPrefs.SetInt(info.id.ToString(), 1);
                 Debug.Log("===");
                 Flag.SetActive(false);
             });
@@ -44,9 +44,9 @@ namespace ETHotfix
         public void SetText(NoticeInfo info)
         {
             this.info = info;
-            Debug.Log(info.Id);
-            Content.text = info.Content;
-            int state = PlayerPrefs.GetInt(info.Id.ToString());
+            Debug.Log(info.id);
+            Content.text = info.content;
+            int state = PlayerPrefs.GetInt(info.id.ToString());
             Flag.SetActive(!(state == 1));
             if (Flag.activeInHierarchy)
                 this.GetParent<UI>().GameObject.transform.SetAsFirstSibling();

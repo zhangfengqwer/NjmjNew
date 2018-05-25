@@ -30,6 +30,13 @@ namespace ETHotfix
             UIActivityTitle.onClick.Add(() =>
             {
                 //根据不同的活动ID显示不同的活动面板
+                string panelName = "UIActivity_" + info.id;
+                GameObject obj = CommonUtil.getGameObjByBundle(panelName);
+                GameObject activity101 = GameObject.Instantiate(obj);
+                Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
+                activity101.transform.SetParent(parent);
+                UI ui = ComponentFactory.Create<UI, GameObject>(activity101);
+                ui.AddComponent<UIActivity101Component>();
             });
         }
 

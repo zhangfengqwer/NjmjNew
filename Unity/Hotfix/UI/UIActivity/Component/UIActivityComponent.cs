@@ -67,6 +67,11 @@ namespace ETHotfix
             
         }
 
+        public Transform GetActivityParent()
+        {
+            return Panel.transform;
+        }
+
         private void GetActivityItemList()
         {
             NoticeBtn.transform.GetChild(0).gameObject.SetActive(false);
@@ -99,9 +104,9 @@ namespace ETHotfix
         private void CreateNoticeItems()
         {
             GameObject obj = null;
-            for (int i = 0; i < PlayerInfoComponent.Instance.GetNoticeInfoList().Count; ++i)
+            for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; ++i)
             {
-                NoticeInfo info = PlayerInfoComponent.Instance.GetNoticeInfoList()[i];
+                NoticeInfo info = NoticeConfig.getInstance().getDataList()[i];
                 obj = GameObject.Instantiate(noticeItem);
                 obj.transform.SetParent(grid.transform);
                 obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);

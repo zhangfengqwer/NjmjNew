@@ -272,9 +272,6 @@ namespace ETHotfix
 		[ProtoMember(6, TypeName = "ETHotfix.Chat")]
 		public List<Chat> ChatList = new List<Chat>();
 
-		[ProtoMember(7, TypeName = "ETHotfix.NoticeInfo")]
-		public List<NoticeInfo> NoticeInfoList = new List<NoticeInfo>();
-
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -1018,21 +1015,6 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
-
-	}
-
-	[Message(HotfixOpcode.NoticeInfo)]
-	[ProtoContract]
-	public partial class NoticeInfo: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public int Id;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Name;
-
-		[ProtoMember(3, IsRequired = true)]
-		public string Content;
 
 	}
 
