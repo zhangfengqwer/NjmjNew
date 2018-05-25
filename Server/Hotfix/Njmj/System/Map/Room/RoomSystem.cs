@@ -10,6 +10,8 @@ namespace ETHotfix
     {
         public static void Broadcast(this Room self, IActorMessage message)
         {
+            if (self == null) return;
+
             foreach (Gamer gamer in self.gamers)
             {
                 if (gamer == null || gamer.isOffline)

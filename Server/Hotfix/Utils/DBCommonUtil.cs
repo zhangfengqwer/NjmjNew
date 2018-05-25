@@ -192,6 +192,7 @@ namespace ETHotfix
         public static async Task Log_Login(long uid)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
 
             List<Log_Login> log_Logins = await proxyComponent.QueryJson<Log_Login>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
             if (log_Logins.Count == 0)
@@ -199,9 +200,36 @@ namespace ETHotfix
                 // 今天第一天登录，做一些处理
                 Log.Debug("今天第一天登录");
 
-                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                playerBaseInfos[0].ZhuanPanCount = 3;
-                await proxyComponent.Save(playerBaseInfos[0]);
+                // 重置转盘次数
+                {
+                    List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                    playerBaseInfos[0].ZhuanPanCount = 3;
+                    await proxyComponent.Save(playerBaseInfos[0]);
+                }
+
+                // 重置任务
+                {
+
+                    List<TaskProgressInfo> progressList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid}}}");
+                    for (int j = 1; j < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++j)
+                    {
+                        int id = 100 + j;
+                        if (progressList[0].TaskId == id)
+                        {
+                            TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                            progressList[0].IsGet = false;
+                            progressList[0].Name = config.Name;
+                            progressList[0].TaskId = (int)config.Id;
+                            progressList[0].IsComplete = false;
+                            progressList[0].Target = config.Target;
+                            progressList[0].Reward = config.Reward;
+                            progressList[0].Desc = config.Desc;
+                            progressList[0].CurProgress = 0;
+                            break;
+                        }
+                    }
+                    await proxyComponent.Save(progressList[0]);
+                }
             }
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
@@ -209,13 +237,19 @@ namespace ETHotfix
             await proxyComponent.Save(log_Login);
         }
 
-        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid,string Phone)
+        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone)
         {
-            Log.Debug("增加新用户：" + uid.ToString());
-
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+
+            Log.Debug("增加新用户：" + uid.ToString());
             List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-            
+            if (playerBaseInfos.Count > 0)
+            {
+                Log.Debug("异常：此用户uid已存在:" + uid);
+                return playerBaseInfos[0];
+            }
+
             PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
             playerBaseInfo.Id = uid;
             playerBaseInfo.Name = uid.ToString();
@@ -232,6 +266,31 @@ namespace ETHotfix
             await proxyComponent.Save(playerBaseInfo);
 
             Log.Debug("增加新用户完毕");
+
+            // 插入任务数据
+            {
+                Log.Debug("增加新用户任务");
+
+                for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
+                {
+                    int id = 100 + i;
+                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                    TaskProgressInfo progress = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
+                    progress.IsGet = false;
+                    progress.UId = uid;
+                    progress.Name = config.Name;
+                    progress.TaskId = (int)config.Id;
+                    progress.IsComplete = false;
+                    progress.Target = config.Target;
+                    progress.Reward = config.Reward;
+                    progress.Desc = config.Desc;
+                    progress.CurProgress = 0;
+
+                    await proxyComponent.Save(progress);
+                }
+
+                Log.Debug("增加新用户任务完毕");
+            }
 
             return playerBaseInfo;
         }

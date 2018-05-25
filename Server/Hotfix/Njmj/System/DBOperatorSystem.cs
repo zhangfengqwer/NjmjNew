@@ -27,7 +27,7 @@ namespace ETHotfix
             {
                 Log.Info("刷新数据库");
                 // 刷新任务
-                DBHelper.RefreshDB();
+               
                 // 刷新签到
             }
             

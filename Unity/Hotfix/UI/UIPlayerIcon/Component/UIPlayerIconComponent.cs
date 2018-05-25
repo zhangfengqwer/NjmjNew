@@ -44,7 +44,7 @@ namespace ETHotfix
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             iconObj = CommonUtil.getGameObjByBundle(UIType.UIIconItem);
             curIconStr = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon;
-            curIcon.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(curIconStr);
+            curIcon.sprite = CommonUtil.getSpriteByBundle("playericon", curIconStr);
             CreatePlayerIconList();
 
             returnBtn.onClick.Add(() =>
@@ -104,7 +104,7 @@ namespace ETHotfix
                     uiList[i].GetComponent<UIPlayerIconItemComponent>().SetSelect(true);
                 else
                     uiList[i].GetComponent<UIPlayerIconItemComponent>().SetSelect(false);
-                Sprite sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(iconStr[i]);
+                Sprite sprite = CommonUtil.getSpriteByBundle("playericon",iconStr[i]);
                 uiList[i].GetComponent<UIPlayerIconItemComponent>().SetIcon(sprite,i);
             }
         }

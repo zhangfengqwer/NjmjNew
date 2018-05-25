@@ -48,6 +48,7 @@ namespace ETHotfix
         private int restCardCount;
         private Button settingBtn;
         private Button changeTableBtn;
+        public GamerInfo localGamer;
 
         public void Awake()
         {
@@ -93,10 +94,23 @@ namespace ETHotfix
             this.readyBtn.onClick.Add(OnReady);
             ChatBtn.onClick.Add(() =>
             {
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat) != null)
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(true);
+                UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat);
+                if(ui != null)
+                {
+                    if (ui.GetComponent<UIChatComponent>().isOpen)
+                    {
+                        ui.GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
+                    }
+                    else
+                    {
+                        ui.GetComponent<UIChatComponent>().CloseOrOpenChatUI(true);
+                    }
+                }
                 else
+                {
                     Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
+                }
+                    
             });
 
         }
@@ -155,7 +169,8 @@ namespace ETHotfix
         public void RemoveGamer(long id)
         {
             Gamer gamer = GetParent<UI>().GetComponent<GamerComponent>().Remove(id);
-            gamer?.GetComponent<GamerUIComponent>()?.Panel?.SetActive(false);
+
+//            gamer?.GetComponent<GamerUIComponent>()?.Panel?.SetActive(false);
             gamer?.Dispose();
         }
 
@@ -188,6 +203,8 @@ namespace ETHotfix
 
             foreach (var gamer in gamers)
             {
+                if (gamer == null)
+                    continue;
                 gamer.GetComponent<HandCardsComponent>().ClearAll();
                 gamer.RemoveComponent<HandCardsComponent>();
             }

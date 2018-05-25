@@ -31,6 +31,7 @@ namespace ETHotfix
         private Button De;
         private Text GoldNumTxt;
         private Text WingNumTxt;
+        private Text HuafeiNumTxt;
         private Button AddBtn;
         private GameObject PlayerFrame;
 
@@ -42,7 +43,7 @@ namespace ETHotfix
             uIDTxt = rc.Get<GameObject>("UIDTxt").GetComponent<Text>();
             realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
             noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
-
+            HuafeiNumTxt = rc.Get<GameObject>("HuafeiNumTxt").GetComponent<Text>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
@@ -102,8 +103,7 @@ namespace ETHotfix
                 realNameTxt.text = "已实名";
             if (!string.IsNullOrEmpty(playerInfo.Phone))
                 noBindPhoneTxt.text = "已绑定";
-            playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
-                .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
 
             playerIcon.onClick.Add(() =>
             {
@@ -120,6 +120,7 @@ namespace ETHotfix
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
+            HuafeiNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum.ToString();
             if (GameUtil.isVIP())
             {
                 PlayerFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
@@ -128,8 +129,7 @@ namespace ETHotfix
 
         public void Update()
         {
-            playerIcon.GetComponent<Image>().sprite = Game.Scene.GetComponent<UIIconComponent>()
-                .GetSprite(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             Debug.Log(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
