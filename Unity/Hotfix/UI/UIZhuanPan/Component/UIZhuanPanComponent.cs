@@ -22,6 +22,7 @@ namespace ETHotfix
         private Button Button_ChouJiang;
         private Button Button_close;
 
+        private GameObject Image_bg;
         private GameObject xingyunzhi;
         private GameObject Item;
 
@@ -44,11 +45,14 @@ namespace ETHotfix
             Button_ChouJiang = rc.Get<GameObject>("Button_ChouJiang").GetComponent<Button>();
             Button_close = rc.Get<GameObject>("Button_close").GetComponent<Button>();
 
+            Image_bg = rc.Get<GameObject>("Image_bg");
             xingyunzhi = rc.Get<GameObject>("xingyunzhi");
             Item = rc.Get<GameObject>("Item");
 
             Button_ChouJiang.onClick.Add(onClick_ChouJiang);
             Button_close.onClick.Add(onClickClose);
+
+            Image_bg.transform.Find("Text_tip1/Btn_share").GetComponent<Button>().onClick.Add(onClickShare);
 
             for (int i = 0; i < ZhuanPanConfig.getInstance().getZhuanPanInfoList().Count; i++)
             {
@@ -71,6 +75,11 @@ namespace ETHotfix
         public void onClickClose()
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIZhuanPan);
+        }
+
+        public void onClickShare()
+        {
+            ToastScript.createToast("暂未开放");
         }
 
         public void onClick_ChouJiang()
@@ -117,6 +126,11 @@ namespace ETHotfix
             {
                 --ZhuanPanCount;
                 ++LuckyValue;
+
+                if (LuckyValue == 99)
+                {
+                    LuckyValue = 0;
+                }
 
                 xingyunzhi.transform.Find("Text_MyLuckyValue").GetComponent<Text>().text = LuckyValue.ToString();
                 Button_ChouJiang.transform.Find("Text_restCount").GetComponent<Text>().text = ZhuanPanCount.ToString();
