@@ -130,5 +130,14 @@ namespace ETHotfix
             //    grid.transform.GetChild(i).transform.localPosition = new Vector3(594.0f, y, 0.0f);
             //}
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            activityItemList.Clear();
+            acUiList.Clear();
+            objList.Clear();
+            uiList.Clear();
+        }
     }
 }
