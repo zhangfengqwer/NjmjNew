@@ -20,7 +20,7 @@ namespace ETHotfix
     {
         private Button UIActivityTitle;
         private Text TitleTxt;
-        private Activity info;
+        private ActivityInfo info;
 
         public void Awake()
         {
@@ -33,10 +33,10 @@ namespace ETHotfix
             });
         }
 
-        public void SetInfo(Activity info)
+        public void SetInfo(ActivityInfo info)
         {
             this.info = info;
-            TitleTxt.text = info.Title;
+            TitleTxt.text = info.title;
         }
     }
 }

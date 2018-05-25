@@ -41,12 +41,18 @@ namespace ETHotfix
             ActivityGrid = rc.Get<GameObject>("ActivityGrid");
             NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
             ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
+
             noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
+            activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
             //await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+
+            GetActivityItemList();
+
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIActivity);
             });
+
             NoticeBtn.onClick.Add(() =>
             {
                 NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
@@ -56,20 +62,19 @@ namespace ETHotfix
 
             ActivityBtn.onClick.Add(() =>
             {
-                NoticeBtn.transform.GetChild(0).gameObject.SetActive(false);
-                ActivityBtn.transform.GetChild(0).gameObject.SetActive(true);
                 GetActivityItemList();
             });
-
+            
         }
 
-        private async void GetActivityItemList()
+        private void GetActivityItemList()
         {
-            G2C_Activity g2cActivity = (G2C_Activity)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Activity { UId = PlayerInfoComponent.Instance.uid });
-            CreateActivityItems(g2cActivity.activityList);
+            NoticeBtn.transform.GetChild(0).gameObject.SetActive(false);
+            ActivityBtn.transform.GetChild(0).gameObject.SetActive(true);
+            CreateActivityItems(ActivityConfig.getInstance().getActivityInfoList());
         }
 
-        private void CreateActivityItems(List<Activity> activityList)
+        private void CreateActivityItems(List<ActivityInfo> activityList)
         {
             GameObject obj = null;
             for(int i = 0;i< activityList.Count; ++i)
