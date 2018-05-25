@@ -203,7 +203,12 @@ namespace ETHotfix
                 // 重置转盘次数
                 {
                     List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                    playerBaseInfos[0].ZhuanPanCount = 3;
+                    playerBaseInfos[0].ZhuanPanCount = 0;
+                    if (playerBaseInfos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                    {
+                        playerBaseInfos[0].ZhuanPanCount = 1;
+                    }
+
                     await proxyComponent.Save(playerBaseInfos[0]);
                 }
 
