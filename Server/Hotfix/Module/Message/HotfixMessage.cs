@@ -625,6 +625,51 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Activity)]
+	[ProtoContract]
+	public partial class Activity: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int ActivityId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Title;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Activity)]
+	[ProtoContract]
+	public partial class C2G_Activity: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Activity)]
+	[ProtoContract]
+	public partial class G2C_Activity: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<Activity> activityList = new List<Activity>();
+
+	}
+
 	[Message(HotfixOpcode.G2C_UseItem)]
 	[ProtoContract]
 	public partial class G2C_UseItem: IResponse

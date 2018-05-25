@@ -170,6 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIActivity\Component\UIActivityComponent.cs" />
+    <Compile Include="UI\UIActivity\Component\UIActivityItemComponent.cs" />
     <Compile Include="UI\UIActivity\Component\UINoticeItemComponent.cs" />
     <Compile Include="UI\UIActivity\Factory\UIActivityFactory.cs" />
     <Compile Include="UI\UIBag\Component\UIBagComponent.cs" />

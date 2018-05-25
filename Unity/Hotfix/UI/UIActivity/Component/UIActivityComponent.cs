@@ -12,7 +12,7 @@ namespace ETHotfix
     {
         public override void Start(UIActivityComponent self)
         {
-            self.Awake();
+            self.Start();
         }
     }
 
@@ -20,26 +20,84 @@ namespace ETHotfix
     {
         private Button returnBtn;
         private GameObject grid;
+        private Button NoticeBtn;
+        private Button ActivityBtn;
+        private GameObject Panel;
+        private GameObject ActivityGrid;
 
+        private GameObject noticeItem;
         private List<GameObject> objList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
 
-        public void Awake()
+        private GameObject activityItem;
+        private List<GameObject> activityItemList = new List<GameObject>();
+        private List<UI> acUiList = new List<UI>();
+
+        public void Start()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             grid = rc.Get<GameObject>("Grid");
-            GameObject obj = null;
-            GameObject item = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
+            ActivityGrid = rc.Get<GameObject>("ActivityGrid");
+            NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
+            ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
+            noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
             //await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIActivity);
             });
+            NoticeBtn.onClick.Add(() =>
+            {
+                NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
+                ActivityBtn.transform.GetChild(0).gameObject.SetActive(false);
+                CreateNoticeItems();
+            });
+
+            ActivityBtn.onClick.Add(() =>
+            {
+                NoticeBtn.transform.GetChild(0).gameObject.SetActive(false);
+                ActivityBtn.transform.GetChild(0).gameObject.SetActive(true);
+                GetActivityItemList();
+            });
+
+        }
+
+        private async void GetActivityItemList()
+        {
+            G2C_Activity g2cActivity = (G2C_Activity)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Activity { UId = PlayerInfoComponent.Instance.uid });
+            CreateActivityItems(g2cActivity.activityList);
+        }
+
+        private void CreateActivityItems(List<Activity> activityList)
+        {
+            GameObject obj = null;
+            for(int i = 0;i< activityList.Count; ++i)
+            {
+                if (i < activityItemList.Count)
+                    obj = activityItemList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(activityItem);
+                    obj.transform.SetParent(ActivityGrid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    activityItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIActivityItemComponent>();
+                    uiList.Add(ui);
+                }
+                uiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
+            }
+        }
+
+        private void CreateNoticeItems()
+        {
+            GameObject obj = null;
             for (int i = 0; i < PlayerInfoComponent.Instance.GetNoticeInfoList().Count; ++i)
             {
                 NoticeInfo info = PlayerInfoComponent.Instance.GetNoticeInfoList()[i];
-                obj = GameObject.Instantiate(item);
+                obj = GameObject.Instantiate(noticeItem);
                 obj.transform.SetParent(grid.transform);
                 obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);
                 obj.transform.localScale = Vector3.one;
