@@ -33,6 +33,7 @@ namespace ETHotfix
         private Text WingNumTxt;
         private Text HuafeiNumTxt;
         private Button AddBtn;
+        private Button DuihuanBtn;
         private GameObject PlayerFrame;
 
         public void Awake()
@@ -50,11 +51,16 @@ namespace ETHotfix
             realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
             ChangeAccountBtn = rc.Get<GameObject>("ChangeAccountBtn").GetComponent<Button>();
+            DuihuanBtn = rc.Get<GameObject>("DuihuanBtn").GetComponent<Button>();
 
             De = rc.Get<GameObject>("De").GetComponent<Button>();
             GoldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
             WingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
             AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
+            DuihuanBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
+            });
 
             AddBtn.onClick.Add(() =>
             {
