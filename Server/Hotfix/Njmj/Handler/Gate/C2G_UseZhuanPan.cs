@@ -34,6 +34,14 @@ namespace ETHotfix
 
                     await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
 
+                    // 转盘日志
+                    {
+                        Log_UseZhuanPan log_UseZhuanPan = ComponentFactory.CreateWithId<Log_UseZhuanPan>(IdGenerater.GenerateId());
+                        log_UseZhuanPan.Uid = message.Uid;
+                        log_UseZhuanPan.Reward = response.reward;
+                        await proxyComponent.Save(log_UseZhuanPan);
+                    }
+
                     // 满99后重置
                     if (playerBaseInfo.LuckyValue >= 99)
                     {
