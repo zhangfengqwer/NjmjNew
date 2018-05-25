@@ -7,12 +7,6 @@ using UnityEngine.UI;
 
 namespace ETHotfix
 {
-    public class MyRankStruct
-    {
-        public bool isRank;
-        public int numb;
-    }
-
     [ObjectSystem]
     public class UIMainComponentSystem: AwakeSystem<UIMainComponent>
     {
@@ -45,6 +39,7 @@ namespace ETHotfix
         public GameObject Btn_GoldSelect;
         public GameObject Btn_GameSelect;
         public GameObject Grid;
+       
         #region myRank
         public Text GoldTxt;
         private Text NameTxt;
@@ -283,8 +278,7 @@ namespace ETHotfix
             GameObject obj = null;
             Btn_GoldSelect.gameObject.SetActive(true);
             Btn_GameSelect.gameObject.SetActive(false);
-            Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
-            
+            //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
@@ -308,7 +302,7 @@ namespace ETHotfix
         {
             Btn_GoldSelect.gameObject.SetActive(false);
             Btn_GameSelect.gameObject.SetActive(true);
-            Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
             for (int i = 0; i < gameRankList.Count; ++i)
             {
