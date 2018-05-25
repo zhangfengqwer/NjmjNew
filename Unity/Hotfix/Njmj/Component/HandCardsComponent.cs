@@ -578,6 +578,7 @@ namespace ETHotfix
         {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
+                Log.Info("删除:" + gameObject.transform.GetChild(i).gameObject.name);
                 GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
             }
         }

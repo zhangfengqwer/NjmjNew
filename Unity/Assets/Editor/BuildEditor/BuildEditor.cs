@@ -15,8 +15,8 @@ namespace ETEditor
 
 	public enum PlatformType
 	{
-		None,
-		Android,
+	    Android,
+        None,
 		IOS,
 		PC,
 	}

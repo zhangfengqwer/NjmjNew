@@ -9,7 +9,8 @@ namespace ETHotfix
     {
         protected override void Run(Session session, Actor_Chat message)
         {
-            Debug.Log("===");
+            Debug.Log("收到表情:" + JsonHelper.ToJson(message));
+
             try
             {
                 if (message.ChatType == 1)

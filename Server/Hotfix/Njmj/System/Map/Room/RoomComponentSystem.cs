@@ -6,6 +6,15 @@ using ETModel;
 
 namespace ETHotfix
 {
+    [ObjectSystem]
+    public class RoomComponentSystemEx : AwakeSystem<RoomComponent>
+    {
+        public override void Awake(RoomComponent self)
+        {
+            self.Awake();
+        }
+    }   
+
     public static class RoomComponentSystem
     {
         /// <summary>
@@ -49,6 +58,14 @@ namespace ETHotfix
         {
             self.rooms.Remove(room.Id);
             self.idleRooms.Remove(room);
+        }
+
+        public static async void Awake(this RoomComponent self)
+        {
+            while (true)
+            {
+                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
+            }
         }
     }
 }

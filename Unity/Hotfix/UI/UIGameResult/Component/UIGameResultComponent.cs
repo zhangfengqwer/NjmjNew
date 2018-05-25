@@ -76,6 +76,8 @@ namespace ETHotfix
 
             for (int i = 0; i < gamers.Length; i++)
             {
+                if (gamers[i] == null)
+                    continue;
                 if (gamers[i].UserID == data.Uid)
                 {
                     playerList.Insert(i, winPlayer);
@@ -112,7 +114,7 @@ namespace ETHotfix
                 Text nameText = gameObject.transform.Find("name").GetComponent<Text>();
                 Text goldText = gameObject.transform.Find("Text_gold").GetComponent<Text>();
 
-                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.Head);
+                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
                 nameText.text = gamer.UserID + "";
                 //胡牌的ui
                 if (gamer.UserID == data.Uid)
@@ -190,16 +192,16 @@ namespace ETHotfix
         public void onClick_jixu()
         {
             isTimerEnd = true;
+            //删除弹窗
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
 
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+   
             //重新开始
             ui.GetComponent<UIRoomComponent>().ContinueGamer();
           
             //设置准备
-            UI uiReady = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIReady);
-
-            //删除弹窗
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+//            UI uiReady = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIReady);
 
             //重新请求数据
             SessionWrapComponent.Instance.Session.Send(new Actor_GamerContinueGame());
