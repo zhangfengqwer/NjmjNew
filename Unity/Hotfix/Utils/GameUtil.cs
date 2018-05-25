@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ETModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -142,6 +143,18 @@ namespace ETHotfix
             }
 
             return false;
+        }
+
+        public static async void StartTimer(float time, UnityEngine.GameObject obj, bool isDestroy = false)
+        {
+            while (time >= 0)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
+                --time;
+            }
+            if (isDestroy)
+                UnityEngine.GameObject.DestroyObject(obj);
+            obj.SetActive(false);
         }
     }
 }

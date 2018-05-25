@@ -77,22 +77,9 @@ namespace ETHotfix
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
             int index = gamerComponent.GetGamerSeat(UId);
-
             chatObjArr[index].SetActive(true);
             chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
-            StartTimer(index);
-        }
-
-        private async void StartTimer(int index)
-        {
-            int time = 8;
-            while (time >= 0)
-            {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
-                --time;
-            }
-
-            chatObjArr[index].SetActive(false);
+            GameUtil.StartTimer(8, chatObjArr[index]);
         }
 
         /// <summary>
