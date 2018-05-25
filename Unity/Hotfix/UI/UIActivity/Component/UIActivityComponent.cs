@@ -41,7 +41,7 @@ namespace ETHotfix
             ActivityGrid = rc.Get<GameObject>("ActivityGrid");
             NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
             ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
-
+            Panel = rc.Get<GameObject>("Panel");
             noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
             activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
             //await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);

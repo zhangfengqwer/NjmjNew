@@ -35,6 +35,8 @@ namespace ETHotfix
                 GameObject activity101 = GameObject.Instantiate(obj);
                 Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
                 activity101.transform.SetParent(parent);
+                activity101.transform.localScale = Vector3.one;
+                activity101.transform.localPosition = Vector3.zero;
                 UI ui = ComponentFactory.Create<UI, GameObject>(activity101);
                 ui.AddComponent<UIActivity101Component>();
             });
