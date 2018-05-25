@@ -15,10 +15,6 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                Log_Share log_Share = ComponentFactory.CreateWithId<Log_Share>(IdGenerater.GenerateId());
-                log_Share.Uid = message.Uid;
-                await proxyComponent.Save(log_Share);
-
                 // 分享增加转盘次数
                 {
                     List<Log_UseZhuanPan> log_UseZhuanPan = await proxyComponent.QueryJson<Log_UseZhuanPan>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{ message.Uid}}}");
@@ -31,7 +27,7 @@ namespace ETHotfix
                         if (log_UseZhuanPan.Count == 4)
                         {
                             Log.Debug("该用户是贵族，游戏增加的转盘次数已用完，通过分享增加次数");
-                            ++playerBaseInfo.ZhuanPanCount;
+                            playerBaseInfo.ZhuanPanCount = 1;
                             await proxyComponent.Save(playerBaseInfo);
                         }
                     }
@@ -40,10 +36,17 @@ namespace ETHotfix
                         if (log_UseZhuanPan.Count == 3)
                         {
                             Log.Debug("该用户是普通玩家，游戏增加的转盘次数已用完，通过分享增加次数");
-                            ++playerBaseInfo.ZhuanPanCount;
+                            playerBaseInfo.ZhuanPanCount = 1;
                             await proxyComponent.Save(playerBaseInfo);
                         }
                     }
+                }
+
+                // 分享日志
+                {
+                    Log_Share log_Share = ComponentFactory.CreateWithId<Log_Share>(IdGenerater.GenerateId());
+                    log_Share.Uid = message.Uid;
+                    await proxyComponent.Save(log_Share);
                 }
 
                 reply(response);
