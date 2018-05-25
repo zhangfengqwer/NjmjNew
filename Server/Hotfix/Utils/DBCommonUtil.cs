@@ -47,6 +47,17 @@ namespace ETHotfix
                 taskInfo.IsComplete = progress.IsComplete;
                 taskInfo.Progress = progress.CurProgress;
             }
+
+            // 增加转盘次数
+            if(taskId == 101)
+            {
+                if (taskProgressInfoList[0].CurProgress < 4)
+                {
+                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(uid);
+                    ++playerBaseInfo.ZhuanPanCount;
+                    await proxyComponent.Save(playerBaseInfo);
+                }
+            }
         }
 
         public static async Task<TaskInfo> UpdateChengjiu(long UId, int taskId, bool isGet = false)
