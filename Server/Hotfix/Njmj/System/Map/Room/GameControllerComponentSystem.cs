@@ -106,7 +106,7 @@ namespace ETHotfix
             //完成一局游戏
             foreach (var gamer in room.GetAll())
             {
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101, 1);
+                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101,1);
             }
 
             roomComponent.gameRooms.Remove(room.Id);

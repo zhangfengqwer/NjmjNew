@@ -79,7 +79,7 @@ namespace ETHotfix
 
         public void onClickShare()
         {
-            ToastScript.createToast("暂未开放");
+            RequestShare();
         }
 
         public void onClick_ChouJiang()
@@ -91,6 +91,15 @@ namespace ETHotfix
             //}
 
             RequestUseZhuanPan();
+        }
+
+        private async void RequestShare()
+        {
+            ToastScript.createToast("分享成功");
+
+            G2C_Share g2cShare = (G2C_Share)await SessionWrapComponent.Instance.Session.Call(new C2G_Share { Uid = PlayerInfoComponent.Instance.uid });
+
+            RequestGetZhuanPanState();
         }
 
         private async void RequestGetZhuanPanState()

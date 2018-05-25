@@ -672,4 +672,13 @@ message G2C_GetZhuanPanState // IResponse
 	required int	LuckyValue	 = 2;
 }
 
+message C2G_Share // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_Share // IResponse
+{
+}
+
 #endregion
