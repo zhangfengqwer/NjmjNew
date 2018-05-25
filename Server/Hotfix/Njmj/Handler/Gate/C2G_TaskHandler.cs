@@ -17,8 +17,6 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
                 taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
-                //if (taskProgressInfoList.Count <= 0)
-                //    Log.Warning("数据未写进数据库");
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {
                     TaskInfo taskInfo = new TaskInfo();
@@ -33,6 +31,7 @@ namespace ETHotfix
                     taskInfo.Target = taskProgress.Target;
                     taskInfoList.Add(taskInfo);
                 }
+                DBCommonUtil.UpdateTask(message.uid, 104, 1);
                 response.TaskProgressList = taskInfoList;
                 reply(response);
             }

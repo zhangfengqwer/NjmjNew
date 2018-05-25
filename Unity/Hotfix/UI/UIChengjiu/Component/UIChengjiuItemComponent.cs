@@ -57,13 +57,20 @@ namespace ETHotfix
 
         private async void GetReward()
         {
-            G2C_UpdateChengjiu g2cTask = (G2C_UpdateChengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateChengjiu { UId = PlayerInfoComponent.Instance.uid, TaskPrg = info });
+            G2C_GetTaskReward g2cGet = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskId = info.Id, GetType = 2});
             PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += info.Reward;
-            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
+            if(g2cGet.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2cGet.Message);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
                 .GetComponent<UIMainComponent>().refreshUI();
-            //显示提示框
-            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
-            .GetComponent<UIChengjiuComponent>().SetDetail(info, true);
+                //显示提示框
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
+                .GetComponent<UIChengjiuComponent>().SetDetail(info, true);
+            }
         }
 
         public void SetInfo(TaskInfo info)
