@@ -8,9 +8,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIActivitySystem : AwakeSystem<UIActivityComponent>
+    public class UIActivitySystem : StartSystem<UIActivityComponent>
     {
-        public override void Awake(UIActivityComponent self)
+        public override void Start(UIActivityComponent self)
         {
             self.Awake();
         }
@@ -41,7 +41,7 @@ namespace ETHotfix
                 NoticeInfo info = PlayerInfoComponent.Instance.GetNoticeInfoList()[i];
                 obj = GameObject.Instantiate(item);
                 obj.transform.SetParent(grid.transform);
-                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);
                 obj.transform.localScale = Vector3.one;
                 #region 
                 UI ui = ComponentFactory.Create<UI, GameObject>(obj);

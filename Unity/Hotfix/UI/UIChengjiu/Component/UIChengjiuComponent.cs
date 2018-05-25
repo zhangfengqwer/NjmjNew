@@ -59,15 +59,22 @@ namespace ETHotfix
             {
                 Detail.SetActive(false);
             });
-            CreateItems();
+
+            RequestChengjiuList();
         }
 
-        private void CreateItems()
+        private async void RequestChengjiuList()
+        {
+            G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
+            CreateItems(g2cChengjiu.ChengjiuList);
+        }
+
+        private void CreateItems(List<TaskInfo> taskInfoList)
         {
             GameObject obj = null;
-            for(int i = 0;i< PlayerInfoComponent.Instance.GetChengjiuList().Count; ++i)
+            for(int i = 0;i< taskInfoList.Count; ++i)
             {
-                TaskInfo info = PlayerInfoComponent.Instance.GetChengjiuList()[i];
+                TaskInfo info = taskInfoList[i];
                 if (i < itemList.Count)
                     obj = itemList[i];
                 else

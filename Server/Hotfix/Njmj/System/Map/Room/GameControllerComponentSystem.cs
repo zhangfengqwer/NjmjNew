@@ -100,7 +100,7 @@ namespace ETHotfix
 
                 //传数据
                 //完成一局游戏
-                DBCommonUtil.UpdateTask(gamer.UserID, 101);
+                //DBCommonUtil.UpdateTask(gamer.UserID, 101);
             }
 
             //完成一局游戏

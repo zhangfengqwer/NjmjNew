@@ -39,12 +39,18 @@ namespace ETHotfix
             });
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
-            progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
-                                                  .Append(GetProgress())
-                                                  .Append("/")
-                                                  .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
-                                                  .ToString();
-            CreateTaskItem();
+            //progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
+            //                                      .Append(GetProgress())
+            //                                      .Append("/")
+            //                                      .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
+            //                                      .ToString();
+            GetTaskInfoList();
+        }
+
+        private async void GetTaskInfoList()
+        {
+            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
+            CreateTaskItem(g2cTask.TaskProgressList);
         }
 
         private int GetProgress()
@@ -58,10 +64,10 @@ namespace ETHotfix
             return count;
         }
 
-        private void CreateTaskItem()
-        {
+        private void CreateTaskItem(List<TaskInfo> taskInfoList)
+        { 
             GameObject obj = null;
-            for(int i = 0;i< PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            for(int i = 0;i< taskInfoList.Count; ++i)
             {
                 if (i < taskItemList.Count)
                     obj = taskItemList[i];
@@ -76,7 +82,7 @@ namespace ETHotfix
                     taskItemList.Add(obj);
                     uiList.Add(ui);
                 }
-                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(PlayerInfoComponent.Instance.GetTaskInfoList()[i]);
+                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(taskInfoList[i]);
             }
         }
 

@@ -36,8 +36,7 @@ namespace ETHotfix
                     }
                 }
                 chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid}}}");
-                if (chengjiuInfoList.Count <= 0)
-                    Log.Warning("数据未写进数据库");
+
                 for (int i = 0; i < chengjiuInfoList.Count; ++i)
                 {
                     TaskInfo taskInfo = new TaskInfo();

@@ -36,9 +36,9 @@ namespace ETHotfix
         private GameObject ChoiceRoomType;
         private GameObject Relax;
         private GameObject RankItem;
-        public GameObject Btn_GoldSelect;
-        public GameObject Btn_GameSelect;
-        public GameObject Grid;
+        private GameObject Btn_GoldSelect;
+        private GameObject Btn_GameSelect;
+        private GameObject Grid;
        
         #region myRank
         public Text GoldTxt;
@@ -216,19 +216,19 @@ namespace ETHotfix
             PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
@@ -271,6 +271,7 @@ namespace ETHotfix
             gameItemList.Clear();
             uiList.Clear();
             gameUiList.Clear();
+            labaList.Clear();
         }
 
         private void ShowGoldRank()
@@ -330,11 +331,9 @@ namespace ETHotfix
             //设置排行榜信息
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
-            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
             ShowGoldRank();
             ownWealthRank = g2cRank.OwnWealthRank;
             ownGameRank = g2cRank.OwnGameRank;
-
             SetMyRank();
         }
 
