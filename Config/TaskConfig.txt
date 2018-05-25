@@ -1,6 +1,5 @@
 {"_id":101,"Name":"新的征程","Desc":"完成一局游戏","Reward":100,"Target":1}
-{"_id":102,"Name":"体验场","Desc":"在体验场赢得10场胜利","Reward":1000,"Target":10}
-{"_id":103,"Name":"高级场","Desc":"在高级场赢得20场胜利","Reward":10000,"Target":20}
-{"_id":104,"Name":"精英场","Desc":"在精英场赢得30场胜利","Reward":100000,"Target":30}
-{"_id":105,"Name":"游戏高手","Desc":"连赢5场","Reward":10000,"Target":5}
-{"_id":106,"Name":"赚钱高手","Desc":"当日累计赢取10000金币","Reward":10000,"Target":10000}
+{"_id":102,"Name":"新手场","Desc":"在新手场赢得10场胜利","Reward":1000,"Target":10}
+{"_id":103,"Name":"精英场","Desc":"在精英场赢得30场胜利","Reward":100000,"Target":30}
+{"_id":104,"Name":"游戏高手","Desc":"连赢5场","Reward":10000,"Target":5}
+{"_id":105,"Name":"赚钱高手","Desc":"当日累计赢取10000金币","Reward":10000,"Target":10000}

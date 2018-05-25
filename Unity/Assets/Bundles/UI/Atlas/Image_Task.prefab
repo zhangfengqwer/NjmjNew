@@ -44,13 +44,11 @@ MonoBehaviour:
   - key: Task_102
     gameObject: {fileID: 21300000, guid: 81a5aa00176ca974bba80c260690387e, type: 3}
   - key: Task_103
-    gameObject: {fileID: 21300000, guid: 97b187b49e3660d48b13343b01dcc144, type: 3}
-  - key: Task_104
     gameObject: {fileID: 21300000, guid: f37696f7e26f477458e596343790af7b, type: 3}
   - key: Task_105
-    gameObject: {fileID: 21300000, guid: 6c22df1cb70d72e4cb44fc8abfc635fe, type: 3}
-  - key: Task_106
     gameObject: {fileID: 21300000, guid: cfc066808c458a244a23655ee98fd076, type: 3}
+  - key: Task_104
+    gameObject: {fileID: 21300000, guid: 6c22df1cb70d72e4cb44fc8abfc635fe, type: 3}
 --- !u!224 &224695750923695960
 RectTransform:
   m_ObjectHideFlags: 1
