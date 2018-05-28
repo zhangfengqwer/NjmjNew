@@ -15,7 +15,7 @@ namespace ETHotfix
             GamerEnterRoom(message);
         }
 
-        public static async void GamerEnterRoom(Actor_GamerEnterRoom message)
+        public static async Task GamerEnterRoom(Actor_GamerEnterRoom message)
         {
             try
             {
@@ -24,7 +24,6 @@ namespace ETHotfix
                 {
                     return;
                 }
-
 
                 Log.Info($"收到玩家进入:{JsonHelper.ToJson(message)}");
                 //第一次进入创建UIRoom

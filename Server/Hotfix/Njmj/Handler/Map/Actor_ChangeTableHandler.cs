@@ -46,6 +46,7 @@ namespace ETHotfix
                 }
 
 	            gamer.IsReady = false;
+	            gamer.ReadyTimeOut = 0;
                 idleRoom.Add(gamer);
 	            idleRoom.BroadGamerEnter();
 

@@ -59,13 +59,17 @@ namespace ETHotfix
 	                handCardsComponent.PlayCards.Add(mahjongInfo);
                     mahjongInfos.RemoveAt(index);
 
-	                room.Broadcast(new Actor_GamerPlayCard()
+	                Actor_GamerPlayCard actorGamerPlayCard = new Actor_GamerPlayCard()
 	                {
 	                    weight = message.weight,
 	                    Uid = gamer.UserID,
 	                    index = message.index
-	                });
-	                gamer.IsCanHu = false;
+	                };
+
+	                room.Broadcast(actorGamerPlayCard);
+	                room.reconnectList.Add(actorGamerPlayCard);
+
+                    gamer.IsCanHu = false;
 	                gamer.IsCanPeng = false;
 	                gamer.IsCanGang = false;
 

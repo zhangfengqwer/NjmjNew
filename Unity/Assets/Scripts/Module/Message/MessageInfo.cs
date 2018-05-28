@@ -3,7 +3,7 @@
 	public struct MessageInfo
 	{
 		public ushort Opcode { get; }
-		public object Message { get; }
+		public object Message { get; set; }
 
 		public MessageInfo(ushort opcode, object message)
 		{

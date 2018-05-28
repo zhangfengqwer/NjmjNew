@@ -206,7 +206,6 @@ message TaskInfo //IMessage
 	required bool IsGet = 8;//是否获取
 }
 
-
 message C2G_PlayerInfo // IRequest
 {
 	required long uid = 1;//用户ID
@@ -276,8 +275,6 @@ message GamerInfo //IMessage
     required bool IsReady = 2;
     required int  SeatIndex = 3;
 }
-
-
 
 message G2M_PlayerEnterRoom //IRequest
 {
@@ -365,6 +362,11 @@ message Actor_GamerReady // IActorMessage
     required long Uid = 1;
 }
 
+message Actor_GamerReadyTimeOut // IActorMessage
+{
+    required long Uid = 1;
+}
+
 message Actor_StartGame // IActorMessage
 {
     repeated GamerData GamerDatas = 1;
@@ -377,6 +379,9 @@ message GamerData //IMessage
     required int SeatIndex = 2;
  	repeated MahjongInfo handCards = 3;
 	repeated MahjongInfo faceCards = 4;
+	repeated MahjongInfo playCards = 6;
+	repeated MahjongInfo pengCards = 7;
+	repeated MahjongInfo gangCards = 8;
 	required bool IsBanker = 5;
 }
 
@@ -430,7 +435,7 @@ message Actor_GamerHuPai // IActorMessage
 
 message Actor_GamerReconnet // IActorMessage
 {
-   
+   	repeated GamerData Gamers = 1;
 }
 
 message Email //IMessage

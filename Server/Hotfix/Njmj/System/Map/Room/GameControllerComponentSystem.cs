@@ -84,6 +84,7 @@ namespace ETHotfix
                 if (gamer == null)
                     continue;
                 gamer.IsReady = false;
+                gamer.ReadyTimeOut = 0;
                 gamer.isGangFaWanPai = false;
                 gamer.isFaWanPaiTingPai = false;
                 gamer.isGangEndBuPai = false;
@@ -94,6 +95,13 @@ namespace ETHotfix
                 gamer.IsWinner = false;
                 if (gamer.isOffline)
                 {
+                    //人满了
+                    if (room.seats.Count == 4)
+                    {
+                        roomComponent.readyRooms.Remove(room.Id);
+                        roomComponent.idleRooms.Add(room);
+                    }
+
                     room.Remove(gamer.UserID);
                     gamer.isOffline = !gamer.isOffline;
                 }

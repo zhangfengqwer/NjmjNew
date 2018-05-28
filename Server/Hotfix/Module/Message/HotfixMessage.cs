@@ -1033,6 +1033,21 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerReadyTimeOut)]
+	[ProtoContract]
+	public partial class Actor_GamerReadyTimeOut: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
 	[Message(HotfixOpcode.Actor_StartGame)]
 	[ProtoContract]
 	public partial class Actor_StartGame: IActorMessage
@@ -1066,6 +1081,15 @@ namespace ETHotfix
 
 		[ProtoMember(4)]
 		public List<MahjongInfo> faceCards = new List<MahjongInfo>();
+
+		[ProtoMember(6)]
+		public List<MahjongInfo> playCards = new List<MahjongInfo>();
+
+		[ProtoMember(7)]
+		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
+
+		[ProtoMember(8)]
+		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
 
 		[ProtoMember(5, IsRequired = true)]
 		public bool IsBanker;
@@ -1225,6 +1249,9 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
+
+		[ProtoMember(1)]
+		public List<GamerData> Gamers = new List<GamerData>();
 
 	}
 

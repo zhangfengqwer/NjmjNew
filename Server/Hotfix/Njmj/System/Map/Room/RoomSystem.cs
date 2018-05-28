@@ -35,6 +35,18 @@ namespace ETHotfix
             actorProxy.Send(message);
         }
 
+
+        public static void GamerReconnect(this Room self, Gamer gamer, IActorMessage message)
+        {
+            if (gamer == null)
+            {
+                return;
+            }
+
+            ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorProxy();
+            actorProxy.Send(message);
+        }
+
         public static void BroadGamerEnter(this Room self)
         {
             List<GamerInfo> Gamers = new List<GamerInfo>();
@@ -177,14 +189,23 @@ namespace ETHotfix
             room.isGangEndBuPai = false;
             room.isGetYingHuaBuPai = false;
             var grabMahjong = GrabMahjong(room);
-
+            if (grabMahjong == null)
+            {
+                //没牌
+                gameController.GameOver(0);
+                return;
+            }
             while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
             {
-                room.Broadcast(new Actor_GamerBuHua()
+                Actor_GamerBuHua actorGamerBuHua = new Actor_GamerBuHua()
                 {
                     Uid = currentGamer.UserID,
                     weight = grabMahjong.weight
-                });
+                };
+                room.Broadcast(actorGamerBuHua);
+
+                room.reconnectList.Add(actorGamerBuHua);
+
                 //从手牌中删除花牌
                 Log.Info("补花");
                 Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
@@ -252,6 +273,8 @@ namespace ETHotfix
                             Uid = currentGamer.UserID,
                             weight = (int) grabMahjong.m_weight
                         };
+
+                        room.reconnectList.Add(actorGamerGrabCard);
                     }
                     else
                     {
@@ -259,6 +282,8 @@ namespace ETHotfix
                         {
                             Uid = currentGamer.UserID,
                         };
+
+                        room.reconnectList.Add(actorGamerGrabCard);
                     }
 
                     actorProxy.Send(actorGamerGrabCard);

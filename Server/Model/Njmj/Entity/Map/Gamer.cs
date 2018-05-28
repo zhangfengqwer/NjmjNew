@@ -15,7 +15,7 @@
     public sealed class Gamer : Entity
     {
         //用户ID（唯一）
-        public long UserID { get; private set; }
+        public long UserID { get; set; }
 
         //玩家GateActorID
         public long PlayerID { get; set; }
@@ -50,6 +50,8 @@
         // 是否是自摸
         public bool isFangPao = false;
 
+        public int ReadyTimeOut = 0;
+
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }
         public bool IsCanHu { get; set; }
@@ -73,6 +75,7 @@
             this.RoomID = 0;
             this.IsReady = false;
             this.isOffline = false;
+            ReadyTimeOut = 0;
         }
     }
 }

@@ -13,6 +13,11 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_GamerOperation message)
         {
+            GamerOperation(message);
+        }
+
+        public static void GamerOperation(Actor_GamerOperation message)
+        {
             try
             {
                 Log.Info($"收到有人碰杠胡:{JsonHelper.ToJson(message)}");
@@ -23,7 +28,7 @@ namespace ETHotfix
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
                 uiRoomComponent.ClosePropmtBtn();
                 uiRoomComponent.ShowTurn(message.Uid);
-                MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte)message.weight, m_weight = (Consts.MahjongWeight)message.weight };
+                MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte) message.weight, m_weight = (Consts.MahjongWeight) message.weight };
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
@@ -34,10 +39,10 @@ namespace ETHotfix
                     handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
                 }
 
-//                //去除出牌中的牌
-//                Log.Info(uiRoomComponent.currentItem.name);
-//
-//                GameObject.Destroy(uiRoomComponent.currentItem);
+                //                //去除出牌中的牌
+                //                Log.Info(uiRoomComponent.currentItem.name);
+                //
+                //                GameObject.Destroy(uiRoomComponent.currentItem);
             }
             catch (Exception e)
             {

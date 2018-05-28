@@ -32,6 +32,11 @@ namespace ETHotfix
 
         public readonly GameObject[] HeadPanel = new GameObject[4];
         public readonly Dictionary<long, GameObject> userReady = new Dictionary<long, GameObject>();
+        private GameObject readyTimeout;
+        private Text timeText;
+        private CancellationTokenSource tokenSource;
+        private int timeOut = 20;
+
 
         public void Awake()
         {
@@ -41,6 +46,8 @@ namespace ETHotfix
             this.readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
 
             this.head = rc.Get<GameObject>("Head");
+            this.readyTimeout = rc.Get<GameObject>("ReadyTimeout");
+            this.timeText = this.readyTimeout.transform.Find("timeText").GetComponent<Text>();
 
             HeadPanel[0] = head.Get<GameObject>("Bottom");
             HeadPanel[1] = head.Get<GameObject>("Right");
@@ -49,6 +56,22 @@ namespace ETHotfix
 
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.readyBtn.onClick.Add(OnReady);
+
+            SetTimeOut();
+        }
+
+        /// <summary>
+        /// 设置超时界面
+        /// </summary>
+        private async void SetTimeOut()
+        {
+            tokenSource = new CancellationTokenSource();
+            while (timeOut > 0)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
+                timeOut--;
+                timeText.text = $"{timeOut}秒";
+            }
         }
 
         private async void OnReady()
@@ -101,6 +124,7 @@ namespace ETHotfix
             if (uid == PlayerInfoComponent.Instance.uid)
             {
                 readyBtn.interactable = false;
+                readyTimeout.SetActive(false);
             }
         }
     
@@ -112,6 +136,8 @@ namespace ETHotfix
                 return;
             }
             base.Dispose();
+
+            tokenSource.Cancel();
         }
     }
 }

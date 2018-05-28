@@ -98,6 +98,7 @@
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerReadyTimeOutHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerJionRoomHandler.cs" />

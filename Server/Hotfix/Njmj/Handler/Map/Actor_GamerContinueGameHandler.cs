@@ -18,6 +18,7 @@ namespace ETHotfix
 
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
+	            gamer.ReadyTimeOut = 0;
 
                 List<GamerInfo> Gamers = new List<GamerInfo>();
 	            foreach (var item in room.seats)

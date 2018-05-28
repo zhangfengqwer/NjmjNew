@@ -22,6 +22,7 @@ namespace ETModel
     {
         public readonly Dictionary<long, int> seats = new Dictionary<long, int>();
         public readonly Gamer[] gamers = new Gamer[4];
+        public readonly List<IActorMessage> reconnectList = new List<IActorMessage>();
 
         //是否超时
         public bool IsTimeOut = false;
@@ -202,8 +203,9 @@ namespace ETModel
                 }
             }
 
-//            tokenSource.Cancel();
             State = RoomState.Idle;
+            reconnectList.Clear();
         }
+
     }
 }

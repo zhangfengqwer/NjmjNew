@@ -13,14 +13,20 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_StartGame message)
         {
+            StartGame(message);
+        }
+
+        public static void StartGame(Actor_StartGame message)
+        {
             Log.Debug($"收到开始:{JsonHelper.ToJson(message)}");
 
             try
             {
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
 
+                if (uiRoom == null) uiRoom = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
+
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-               
 
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
@@ -46,7 +52,7 @@ namespace ETHotfix
                         HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                         if (handCards != null)
                         {
-//                            handCards.Reset();
+                            //                            handCards.Reset();
                         }
                         else
                         {
