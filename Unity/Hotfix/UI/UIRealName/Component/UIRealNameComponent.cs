@@ -76,7 +76,9 @@ namespace ETHotfix
 
         private async void RequestRealName()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_RealName g2cRealName = (G2C_RealName)await SessionWrapComponent.Instance.Session.Call(new C2G_RealName { Uid = PlayerInfoComponent.Instance.uid , Name = InputField_name .text, IDNumber = InputField_idNumber.text });
+            UINetLoadingComponent.closeNetLoading();
 
             if (g2cRealName.Error != ErrorCode.ERR_Success)
             {

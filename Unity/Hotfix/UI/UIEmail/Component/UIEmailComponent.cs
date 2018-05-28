@@ -53,7 +53,10 @@ namespace ETHotfix
             try
             {
                 long uid = PlayerInfoComponent.Instance.uid;
+                UINetLoadingComponent.showNetLoading();
                 G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
+                UINetLoadingComponent.closeNetLoading();
+
                 emailList = g2cEmail.EmailInfoList;
                 if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
                 {

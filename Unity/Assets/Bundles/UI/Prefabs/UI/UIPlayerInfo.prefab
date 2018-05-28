@@ -2092,7 +2092,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5DF2\u73A9\u724C\u5C40\r: 3"
+  m_Text: "\u5DF2\u73A9\u724C\u5C40\r: 0"
 --- !u!114 &114510941359653238
 MonoBehaviour:
   m_ObjectHideFlags: 1

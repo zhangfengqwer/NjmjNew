@@ -192,15 +192,17 @@ namespace ETHotfix
                 price = shopInfo.VipPrice;
             else
                 price = shopInfo.Price;
+            UINetLoadingComponent.showNetLoading();
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
                 Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price });
-                Debug.Log("购买成功");
-                ToastScript.createToast("购买成功");
-                GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
-                PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
-                    ().refreshUI();
-                buyTip.SetActive(false);
+            UINetLoadingComponent.closeNetLoading();
+
+            ToastScript.createToast("购买成功");
+            GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
+            PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
+                ().refreshUI();
+            buyTip.SetActive(false);
         }
 
         /// <summary>

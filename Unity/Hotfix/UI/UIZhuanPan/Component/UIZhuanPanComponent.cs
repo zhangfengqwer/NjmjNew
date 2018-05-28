@@ -97,14 +97,18 @@ namespace ETHotfix
         {
             ToastScript.createToast("分享成功");
 
+            UINetLoadingComponent.showNetLoading();
             G2C_Share g2cShare = (G2C_Share)await SessionWrapComponent.Instance.Session.Call(new C2G_Share { Uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
 
             RequestGetZhuanPanState();
         }
 
         private async void RequestGetZhuanPanState()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_GetZhuanPanState g2cGetZhuanPanState = (G2C_GetZhuanPanState)await SessionWrapComponent.Instance.Session.Call(new C2G_GetZhuanPanState { Uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
 
             if (g2cGetZhuanPanState.Error != ErrorCode.ERR_Success)
             {
@@ -122,7 +126,9 @@ namespace ETHotfix
 
         private async void RequestUseZhuanPan()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_UseZhuanPan g2cUseZhuanPan = (G2C_UseZhuanPan)await SessionWrapComponent.Instance.Session.Call(new C2G_UseZhuanPan { Uid = PlayerInfoComponent.Instance.uid});
+            UINetLoadingComponent.closeNetLoading();
 
             if (g2cUseZhuanPan.Error != ErrorCode.ERR_Success)
             {

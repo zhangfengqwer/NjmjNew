@@ -46,18 +46,23 @@ namespace ETHotfix
 
         private async void UpdatePlayerInfoData()
         {
-            
+
+            UINetLoadingComponent.showNetLoading();
             G2C_UpdatePlayerInfo g2c =(G2C_UpdatePlayerInfo) await SessionWrapComponent.Instance.Session
                 .Call(new C2G_UpdatePlayerInfo
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
                     playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()
                 });
+            UINetLoadingComponent.closeNetLoading();
         }
 
         private async void GetReward()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskId = taskProgress.Id, GetType = 1 });
+            UINetLoadingComponent.closeNetLoading();
+
             PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += taskProgress.Reward;
             if(g2cGetItem.Error != ErrorCode.ERR_Success)
             {

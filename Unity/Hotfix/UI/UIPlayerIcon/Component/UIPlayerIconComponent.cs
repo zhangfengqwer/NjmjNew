@@ -72,11 +72,15 @@ namespace ETHotfix
         private async void UpdateIcon()
         {
             Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon = curIcon.sprite.name.ToString();
+
+            UINetLoadingComponent.showNetLoading();
             G2C_UpdatePlayerInfo g2CPlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo()
             {
                 Uid = PlayerInfoComponent.Instance.uid,
                 playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()
             });
+            UINetLoadingComponent.closeNetLoading();
+
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
         }

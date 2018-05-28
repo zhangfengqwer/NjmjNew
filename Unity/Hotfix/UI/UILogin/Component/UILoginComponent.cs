@@ -255,7 +255,9 @@ namespace ETHotfix
 				Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
 				Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
 				ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
-				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
+
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
+                UINetLoadingComponent.closeNetLoading();
 
                 ToastScript.createToast("登录成功");
                 UINetLoadingComponent.closeNetLoading();
@@ -321,6 +323,7 @@ namespace ETHotfix
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
+
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");

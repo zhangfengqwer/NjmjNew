@@ -67,7 +67,9 @@ namespace ETHotfix
         /// </summary>
         private async void RequestChengjiuList()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
             CreateItems(g2cChengjiu.ChengjiuList);
             CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>")
                                                   .Append("已获勋章:")

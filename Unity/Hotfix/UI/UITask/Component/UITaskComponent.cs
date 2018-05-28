@@ -49,7 +49,9 @@ namespace ETHotfix
 
         private async void GetTaskInfoList()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
             CreateTaskItem(g2cTask.TaskProgressList);
         }
 

@@ -19,12 +19,11 @@ namespace ETHotfix
     public class UIActivityComponent : Component
     {
         private Button returnBtn;
-        private GameObject grid;
         private Button NoticeBtn;
         private Button ActivityBtn;
         private GameObject Panel;
         private GameObject ActivityGrid;
-        private GameObject TestGrid;
+        private GameObject Grid;
 
         private GameObject noticeItem;
         private List<GameObject> objList = new List<GameObject>();
@@ -38,14 +37,13 @@ namespace ETHotfix
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
-            grid = rc.Get<GameObject>("Grid");
             ActivityGrid = rc.Get<GameObject>("ActivityGrid");
             NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
             ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
             Panel = rc.Get<GameObject>("Panel");
             noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
             activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
-            TestGrid = rc.Get<GameObject>("TestGrid");
+            Grid = rc.Get<GameObject>("Grid");
 
             //await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
 
@@ -145,7 +143,7 @@ namespace ETHotfix
                 else
                 {
                     obj = GameObject.Instantiate(noticeItem);
-                    obj.transform.SetParent(TestGrid.transform);
+                    obj.transform.SetParent(Grid.transform);
                     obj.transform.localPosition = Vector3.zero;
                     obj.transform.localScale = Vector3.one;
 
@@ -175,9 +173,9 @@ namespace ETHotfix
             {
                 TotalTextHeight += uiList[i].GetComponent<UINoticeItemComponent>().GetTextHeight();
             }
-            float height = TestGrid.transform.childCount * objHeight + TotalTextHeight + 50;
-            TestGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-            for (int i = 0; i < TestGrid.transform.childCount; ++i)
+            float height = Grid.transform.childCount * objHeight + TotalTextHeight + 50;
+            Grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            for (int i = 0; i < Grid.transform.childCount; ++i)
             {
                 float y = 0;
                 if (i == 0)
@@ -186,10 +184,10 @@ namespace ETHotfix
                 }
                 else
                 {
-                    y = (float)TestGrid.transform.GetChild(i - 1).transform.localPosition.y - objHeight - (uiList[i - 1].GetComponent<UINoticeItemComponent>().GetTextHeight());
+                    y = (float)Grid.transform.GetChild(i - 1).transform.localPosition.y - objHeight - (uiList[i - 1].GetComponent<UINoticeItemComponent>().GetTextHeight());
                 }
 
-                TestGrid.transform.GetChild(i).transform.localPosition = new Vector3(0, y, 0.0f);
+                Grid.transform.GetChild(i).transform.localPosition = new Vector3(0, y, 0.0f);
                // Debug.Log("pos ：" + TestGrid.transform.GetChild(i).transform.localPosition);
             }
             #endregion

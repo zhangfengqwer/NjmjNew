@@ -35,7 +35,6 @@ namespace ETHotfix
             NoticeBtn.onClick.Add(() =>
             {
                 PlayerPrefs.SetInt(info.id.ToString(), 1);
-                Debug.Log("===");
                 Flag.SetActive(false);
             });
 

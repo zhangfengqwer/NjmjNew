@@ -334,8 +334,11 @@ namespace ETHotfix
         /// </summary>
 		public async void GetRankInfo()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
                 .Session.Call(new C2G_Rank { Uid = PlayerInfoComponent.Instance.uid,RankType = 0 });
+            UINetLoadingComponent.closeNetLoading();
+
             //设置排行榜信息
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
@@ -487,8 +490,10 @@ namespace ETHotfix
 
         private async void OnEnterRoom()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
                 new C2G_EnterRoom());
+            UINetLoadingComponent.closeNetLoading();
         }
 
         /// <summary>
@@ -497,7 +502,9 @@ namespace ETHotfix
         private async void SetPlayerInfo()
         {
             long uid = PlayerInfoComponent.Instance.uid;
+
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+
             if (g2CPlayerInfo == null)
             {
                 Debug.Log("用户信息错误");
