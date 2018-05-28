@@ -97,9 +97,9 @@ namespace ETHotfix
                     ui.AddComponent<UIActivityItemComponent>();
                     if (i == 0)
                         ui.GetComponent<UIActivityItemComponent>().OnClick(activityList[i].id);
-                    uiList.Add(ui);
+                    acUiList.Add(ui);
                 }
-                uiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
+                acUiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
             }
         }
 
@@ -124,6 +124,7 @@ namespace ETHotfix
                     uiList.Add(ui);
                     #endregion
                 }
+                Debug.Log(uiList.Count);
                 uiList[i].GetComponent<UINoticeItemComponent>().SetText(info);
                 uiList[i].GetComponent<UINoticeItemComponent>().SetLine();
             }
