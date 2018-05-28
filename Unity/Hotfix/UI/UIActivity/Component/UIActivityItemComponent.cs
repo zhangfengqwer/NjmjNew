@@ -38,7 +38,10 @@ namespace ETHotfix
             //根据不同的活动ID显示不同的活动面板
             string panelName = "UIActivity_" + id;
             if (id == 102 || id == 103)
+            {
                 ToastScript.createToast("活动暂未开放");
+                return;
+            }
             GameObject obj = CommonUtil.getGameObjByBundle(panelName);
             GameObject activity = GameObject.Instantiate(obj);
             Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
