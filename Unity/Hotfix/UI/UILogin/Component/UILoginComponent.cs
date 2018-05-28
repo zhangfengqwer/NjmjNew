@@ -348,6 +348,7 @@ namespace ETHotfix
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
+            HttpReqUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt", SensitiveWordUtil.InitWords);
 
             UINetLoadingComponent.closeNetLoading();
         }

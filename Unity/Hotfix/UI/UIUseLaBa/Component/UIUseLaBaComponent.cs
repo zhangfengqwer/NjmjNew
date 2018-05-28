@@ -65,6 +65,12 @@ namespace ETHotfix
                     return;
                 }
 
+                if (SensitiveWordUtil.IsSensitiveWord(InputField_content.text))
+                {
+                    ToastScript.createToast("您输入的内容包含敏感词");
+                    return;
+                }
+
                 RequestUseLaBa();
             }
             else
