@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
 using UnityEngine;
@@ -35,7 +36,6 @@ namespace ETHotfix
         private Text text_yanzhengmadaojishi;
 
         bool isLoginSuccess = false;
-        private bool isLogining = false;
 
         public void Awake()
 		{
@@ -103,7 +103,7 @@ namespace ETHotfix
             OnLoginPhone("4", "", "4");
         }
 
-        public void onClickOpenPhoneLogin()
+        public async void onClickOpenPhoneLogin()
         {
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
@@ -116,7 +116,7 @@ namespace ETHotfix
 
             if ((phone.CompareTo("") != 0) && (token.CompareTo("") != 0))
             {
-                OnLoginPhone(phone, "", token);
+                await OnLoginPhone(phone, "", token);
             }
             else
             {
@@ -124,7 +124,7 @@ namespace ETHotfix
             }
         }
 
-        public void onClickPhoneCodeLogin()
+        public async void onClickPhoneCodeLogin()
         {
             if (inputField_Phone.text.CompareTo("") == 0)
             {
@@ -138,14 +138,13 @@ namespace ETHotfix
                 return;
             }
 
-            OnLoginPhone(inputField_Phone.text, inputField_YanZhengMa.text, "");
+            await OnLoginPhone(inputField_Phone.text, inputField_YanZhengMa.text, "");
         }
 
-        public void onClickWechatLogin()
+        public async void onClickWechatLogin()
         {
-            Log.Debug("onClickWechatLogin");
             string Third_Id = CommonUtil.getCurTime();
-            OnThirdLogin(Third_Id);
+            await OnThirdLogin(Third_Id);
         }
 
         public void onClickBackStart()
@@ -214,15 +213,11 @@ namespace ETHotfix
             btn_yanzhengma.transform.localScale = new Vector3(1,1,1);
         }
 
-        public async void OnLoginPhone(string phone ,string code,string token)
+        public async Task OnLoginPhone(string phone ,string code,string token)
 		{
-			SessionWrap sessionWrap = null;
+            SessionWrap sessionWrap = null;
 			try
 			{
-			    if (isLogining) return;
-
-			    isLogining = true;
-
                 UINetLoadingComponent.showNetLoading();
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
@@ -278,27 +273,22 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
-
-			    isLogining = false;
+                
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
 			catch (Exception e)
 			{
 				sessionWrap?.Dispose();
-			    isLogining = false;
                 Log.Error(e);
 			}
 		}
 
-        public async void OnThirdLogin(string third_id)
+        public async Task OnThirdLogin(string third_id)
         {
             SessionWrap sessionWrap = null;
             try
             {
-                if (isLogining) return;
-
-                isLogining = true;
                 UINetLoadingComponent.showNetLoading();
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
@@ -335,20 +325,18 @@ namespace ETHotfix
                 isLoginSuccess = true;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-                
+
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
 
-                isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
-                isLogining = false;
-                Log.Error(e);
+                Log.Error("OnThirdLogin:" + e);
             }
         }
 
