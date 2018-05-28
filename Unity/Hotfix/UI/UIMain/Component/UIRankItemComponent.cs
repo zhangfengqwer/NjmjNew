@@ -47,7 +47,7 @@ namespace ETHotfix
                                               .Append(index + 1)
                                               .ToString() ;
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = CommonUtil.getSpriteByBundle("uirankicon", rIcon);
+                RankImg.sprite = CommonUtil.getSpriteByBundle("image_main", rIcon);
         }
 
         public void SetGameItem(GameRank gameRank,int index)
@@ -65,7 +65,7 @@ namespace ETHotfix
                                            .Append(index +1)
                                            .ToString();
             if (RankImg.gameObject.activeInHierarchy)
-                RankImg.sprite = CommonUtil.getSpriteByBundle("uirankicon", rIcon);
+                RankImg.sprite = CommonUtil.getSpriteByBundle("image_main", rIcon);
         }
     }
 }

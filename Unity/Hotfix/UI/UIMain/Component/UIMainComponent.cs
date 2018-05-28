@@ -433,7 +433,7 @@ namespace ETHotfix
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
                                                          .Append(index + 1).ToString();
-                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("uirankicon", iconName);
+                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", iconName);
                 }
                 else
                 {
@@ -471,7 +471,7 @@ namespace ETHotfix
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
                                                          .Append(index + 1).ToString();
-                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("uirankicon", iconName);
+                    RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", iconName);
                 }
                 else
                 {
