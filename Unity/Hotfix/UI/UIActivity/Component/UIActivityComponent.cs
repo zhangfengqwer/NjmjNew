@@ -62,8 +62,7 @@ namespace ETHotfix
             {
                 NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
                 ActivityBtn.transform.GetChild(0).gameObject.SetActive(false);
-                //CreateNoticeItems();
-                CreateNoticeItemsTest();
+                CreateNoticeItems();
             });
 
             //点击显示活动栏
@@ -122,10 +121,21 @@ namespace ETHotfix
         }
 
         /// <summary>
-        /// 创建通知列表(test)
+        /// 创建通知列表
         /// </summary>
-        private void CreateNoticeItemsTest()
+        private void CreateNoticeItems()
         {
+            #region test
+            //NoticeInfo info1 = new NoticeInfo();
+            //info1.id = 104;
+            //info1.content = "欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3";
+            //NoticeConfig.getInstance().getDataList().Add(info1);
+            //info1 = new NoticeInfo();
+            //info1.id = 104;
+            //info1.content = "欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3";
+            //NoticeConfig.getInstance().getDataList().Add(info1);
+            #endregion
+
             GameObject obj = null;
             for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; ++i)
             {
@@ -141,66 +151,47 @@ namespace ETHotfix
 
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UINoticeItemComponent>();
-                    objList.Add(obj);
-                    uiList.Add(ui);
+                    int state = PlayerPrefs.GetInt(info.id.ToString());
+                    if (state != 1)
+                    {
+                        obj.transform.SetAsFirstSibling();
+                        objList.Insert(0, obj);
+                        uiList.Insert(0, ui);
+                    }
+                    else
+                    {
+                        objList.Add(obj);
+                        uiList.Add(ui);
+                    }
+                    ui.GetComponent<UINoticeItemComponent>().SetText(info);
+                    ui.GetComponent<UINoticeItemComponent>().SetLine();
                 }
-                //if (i == 0)
-                //    info.content += "欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入";
-                uiList[i].GetComponent<UINoticeItemComponent>().SetText(info);
-                uiList[i].GetComponent<UINoticeItemComponent>().SetLine();
             }
 
             #region 
-            float height = TestGrid.transform.childCount * 170f;
-            TestGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 240);
+            float TotalTextHeight = 0;
+            float objHeight = noticeItem.GetComponent<RectTransform>().rect.height;
+            for (int i = 0; i< uiList.Count; ++i)
+            {
+                TotalTextHeight += uiList[i].GetComponent<UINoticeItemComponent>().GetTextHeight();
+            }
+            float height = TestGrid.transform.childCount * objHeight + TotalTextHeight + 50;
+            TestGrid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             for (int i = 0; i < TestGrid.transform.childCount; ++i)
             {
-                Debug.Log("物体高度：" + TestGrid.transform.GetChild(i).GetComponent<RectTransform>().rect.height);
-                float y = (float)(-170) * (i) -
-                    (uiList[i].GetComponent<UINoticeItemComponent>().GetTextRow()) * 34;
-                TestGrid.transform.GetChild(i).transform.localPosition = new Vector3(0, y, 0.0f);
-            }
-            #endregion
-        }
-
-        /// <summary>
-        /// 创建通知列表
-        /// </summary>
-        private void CreateNoticeItems()
-        {
-            GameObject obj = null;
-            for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; ++i)
-            {
-                NoticeInfo info = NoticeConfig.getInstance().getDataList()[i];
-                if (i < objList.Count)
-                    obj = objList[i];
+                float y = 0;
+                if (i == 0)
+                {
+                    y = (float)(-objHeight) * i;
+                }
                 else
                 {
-                    obj = GameObject.Instantiate(noticeItem);
-                    obj.transform.SetParent(grid.transform);
-                    obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);
-                    obj.transform.localScale = Vector3.one;
-                    
-                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                    ui.AddComponent<UINoticeItemComponent>();
-                    objList.Add(obj);
-                    uiList.Add(ui);
-                    
+                    y = (float)TestGrid.transform.GetChild(i - 1).transform.localPosition.y - objHeight - (uiList[i - 1].GetComponent<UINoticeItemComponent>().GetTextHeight());
                 }
-                uiList[i].GetComponent<UINoticeItemComponent>().SetText(info);
-                uiList[i].GetComponent<UINoticeItemComponent>().SetLine();
-            }
 
-            #region 
-            //float height = grid.transform.childCount * 158f;
-            //grid.GetComponent<RectTransform>().rect.Set(-631, 318.3497f, 100, 1500);
-            //grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-            //for(int i = 0;i< grid.transform.childCount; ++i)
-            //{
-            //    float y = (float)(-158) * (i)-
-            //        (uiList[i].GetComponent<UINoticeItemComponent>().GetTextRow() - 1) * 34;
-            //    grid.transform.GetChild(i).transform.localPosition = new Vector3(594.0f, y, 0.0f);
-            //}
+                TestGrid.transform.GetChild(i).transform.localPosition = new Vector3(0, y, 0.0f);
+               // Debug.Log("pos ：" + TestGrid.transform.GetChild(i).transform.localPosition);
+            }
             #endregion
         }
 

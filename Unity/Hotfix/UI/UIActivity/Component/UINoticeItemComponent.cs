@@ -22,7 +22,7 @@ namespace ETHotfix
         private GameObject Line;
         private GameObject Flag;
         private Button NoticeBtn;
-        private NoticeInfo info;
+        public NoticeInfo info;
 
         public void Awake()
         {
@@ -47,19 +47,16 @@ namespace ETHotfix
             Content.text = info.content;
             int state = PlayerPrefs.GetInt(info.id.ToString());
             Flag.SetActive(!(state == 1));
-            if (Flag.activeInHierarchy)
-                this.GetParent<UI>().GameObject.transform.SetAsFirstSibling();
-
         }
 
-        public int GetTextRow()
+        public float GetTextHeight()
         {
-            return (int)Content.preferredHeight / 34;
+            return Content.preferredHeight - 34;
         }
 
         public void SetLine()
         {
-            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -62 - 34 * (GetTextRow()), 0);
+            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -62 - (GetTextHeight()), 0);
         }
     }
 }
