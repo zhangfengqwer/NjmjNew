@@ -42,7 +42,6 @@ namespace ETHotfix
         public const string UINoticeItem = "UINoticeItem";
         public const string UIActivityItem = "UIActivityItem";
         public const string UIRankItem = "UIRankItem";
-        public const string UIRankIcon = "UIRankIcon";
         public const string UIUseHuaFei = "UIUseHuaFei";
         public const string UISet = "UISet";
         public const string UIUseLaBa = "UIUseLaBa";

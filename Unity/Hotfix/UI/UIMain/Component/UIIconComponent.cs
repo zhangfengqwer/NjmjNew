@@ -25,7 +25,6 @@ namespace ETHotfix
             GameObject playerIconBundle = CommonUtil.getGameObjByBundle(UIType.UIPlayerIcon);
             GameObject shopBundle = CommonUtil.getGameObjByBundle(UIType.UIShopIcon);
             GameObject taskBundle = CommonUtil.getGameObjByBundle(UIType.UITaskIcon);
-            GameObject rankBundle = CommonUtil.getGameObjByBundle(UIType.UIRankIcon);
             AddSprite(playerIconBundle, "f_icon1");
             AddSprite(playerIconBundle, "f_icon2");
             AddSprite(playerIconBundle, "f_icon3");
@@ -59,9 +58,6 @@ namespace ETHotfix
             AddSprite(taskBundle, "Task_104");
             AddSprite(taskBundle, "Task_105");
             AddSprite(taskBundle, "Task_106");
-            AddSprite(rankBundle, "Rank_0");
-            AddSprite(rankBundle, "Rank_1");
-            AddSprite(rankBundle, "Rank_2");
         }
 
         private void AddSprite(GameObject bundle,string iconName)
