@@ -50,6 +50,8 @@
         // 是否是自摸
         public bool isFangPao = false;
 
+        public int ReadyTimeOut = 0;
+
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }
         public bool IsCanHu { get; set; }

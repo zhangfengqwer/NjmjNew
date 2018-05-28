@@ -364,6 +364,11 @@ message Actor_GamerReady // IActorMessage
     required long Uid = 1;
 }
 
+message Actor_GamerReadyTimeOut // IActorMessage
+{
+    required long Uid = 1;
+}
+
 message Actor_StartGame // IActorMessage
 {
     repeated GamerData GamerDatas = 1;

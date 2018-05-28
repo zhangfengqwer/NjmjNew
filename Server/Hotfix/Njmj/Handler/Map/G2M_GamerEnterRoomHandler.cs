@@ -98,10 +98,7 @@ namespace ETHotfix
                             });
                         }
                     }
-//			        idleRoom.Broadcast(new Actor_GamerEnterRoom()
-//			        {
-//			            Gamers = Gamers
-//			        });
+
 			        Log.Info($"玩家{message.UserId}进入房间");
                 }
 			    response.GameId = gamer.Id;

@@ -64,7 +64,75 @@ namespace ETHotfix
         {
             while (true)
             {
-                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
+                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+
+                foreach (var room in self.idleRooms)
+                {
+                    foreach (var gamer in room.GetAll())
+                    {
+                        if (gamer == null)
+                            continue;
+
+                        if (!gamer.IsReady)
+                        {
+                            gamer.ReadyTimeOut++;
+
+                            //超时
+                            if (gamer.ReadyTimeOut > 20)
+                            {
+                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut());
+
+                                //房间移除玩家
+                                room.Remove(gamer.UserID);
+
+                                //消息广播给其他人
+                                room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+                                gamer.Dispose();
+                                //房间没人就释放
+                                if (room.seats.Count == 0)
+                                {
+                                    Log.Debug($"房间释放:{room.Id}");
+                                    room?.Dispose();
+                                    self.RemoveRoom(room);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (var room in self.readyRooms.Values)
+                {
+                    foreach (var gamer in room.GetAll())
+                    {
+                        if (gamer == null)
+                            continue;
+
+                        if (!gamer.IsReady)
+                        {
+                            gamer.ReadyTimeOut++;
+
+                            //超时
+                            if (gamer.ReadyTimeOut > 20)
+                            {
+                                //人满了
+                                if (room.seats.Count == 4)
+                                {
+                                    self.readyRooms.Remove(room.Id);
+                                    self.idleRooms.Add(room);
+                                }
+
+                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut());
+
+                                //房间移除玩家
+                                room.Remove(gamer.UserID);
+                                //消息广播给其他人
+                                room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+                                gamer.Dispose();
+                              
+                            }
+                        }
+                    }
+                }
             }
         }
     }
