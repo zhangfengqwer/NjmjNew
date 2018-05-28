@@ -255,6 +255,9 @@ namespace ETHotfix
             checkLaBa();
         }
 
+        /// <summary>
+        /// 清理内存
+        /// </summary>
         public override void Dispose()
         {
             if (this.IsDisposed)
@@ -274,6 +277,9 @@ namespace ETHotfix
             labaList.Clear();
         }
 
+        /// <summary>
+        /// 显示财富榜
+        /// </summary>
         private void ShowGoldRank()
         {
             GameObject obj = null;
@@ -299,6 +305,9 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 显示战绩榜
+        /// </summary>
         private void ShowGameRank()
         {
             Btn_GoldSelect.gameObject.SetActive(false);
@@ -324,6 +333,9 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 设置排行榜信息
+        /// </summary>
 		public async void GetRankInfo()
         {
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
@@ -337,6 +349,11 @@ namespace ETHotfix
             SetMyRank();
         }
 
+        /// <summary>
+        /// 判断是否上财富榜
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public bool IsInRank(long uid)
         {
             for (int i = 0; i < wealthRankList.Count; ++i)
@@ -351,6 +368,11 @@ namespace ETHotfix
             return false;
         }
 
+        /// <summary>
+        /// 判断是否上战绩榜
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public bool IsInGameRank(long uid)
         {
             for(int i = 0;i< gameRankList.Count; ++i)
@@ -361,6 +383,11 @@ namespace ETHotfix
             return false;
         }
 
+        /// <summary>
+        /// 获得我的名次（战绩榜）
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         private int GetGameIndext(long uid)
         {
             for (int i = 0; i < gameRankList.Count; ++i)
@@ -371,6 +398,11 @@ namespace ETHotfix
             return -1;
         }
 
+        /// <summary>
+        /// 获得我的名次（财富榜）
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         private int GetWealthIndext(long uid)
         {
             for (int i = 0; i < wealthRankList.Count; ++i)
@@ -381,6 +413,9 @@ namespace ETHotfix
             return -1;
         }
 
+        /// <summary>
+        /// 设置我的财富榜信息
+        /// </summary>
         private void SetMyRank()
         {
             string str = "";
@@ -416,6 +451,9 @@ namespace ETHotfix
             Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownWealthRank.Icon);
         }
 
+        /// <summary>
+        /// 设置我的战绩榜信息
+        /// </summary>
         private void SetMyGameRank()
         {
             string str = "";
@@ -451,19 +489,15 @@ namespace ETHotfix
             Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownGameRank.Icon);
         }
 
-        private async void RequestTaskInfo()
-        {
-            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
-            PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
-        }
-
         private async void OnEnterRoom()
         {
             G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
                 new C2G_EnterRoom());
         }
 
+        /// <summary>
+        /// 设置用户信息
+        /// </summary>
         private async void SetPlayerInfo()
         {
             long uid = PlayerInfoComponent.Instance.uid;
@@ -477,11 +511,18 @@ namespace ETHotfix
             refreshUI();
         }
 
+        /// <summary>
+        /// 预留接口(关闭或打开主界面)
+        /// </summary>
+        /// <param name="isHide"></param>
         public void SetUIHideOrOpen(bool isHide)
         {
             GetParent<UI>().GameObject.SetActive(isHide);
         }
 
+        /// <summary>
+        /// 刷新数据
+        /// </summary>
         public void refreshUI()
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();

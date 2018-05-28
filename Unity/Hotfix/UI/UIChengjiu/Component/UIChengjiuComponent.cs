@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Text;
 using ETModel;
-using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,11 +47,13 @@ namespace ETHotfix
             RewardTxt = rc.Get<GameObject>("RewardTxt").GetComponent<Text>();
             item = CommonUtil.getGameObjByBundle(UIType.UIChengjiuItem);
             AlGet = rc.Get<GameObject>("AlGet");
+            //返回
             ReturnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChengjiu);
             });
 
+            //关闭详细页面
             CloseBtn.onClick.Add(() =>
             {
                 Detail.SetActive(false);
@@ -63,12 +62,26 @@ namespace ETHotfix
             RequestChengjiuList();
         }
 
+        /// <summary>
+        /// 像服务器请求成就列表
+        /// </summary>
         private async void RequestChengjiuList()
         {
             G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
             CreateItems(g2cChengjiu.ChengjiuList);
+            CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>")
+                                                  .Append("已获勋章:")
+                                                  .Append("</color>")
+                                                  .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList))
+                                                  .Append("/")
+                                                  .Append(g2cChengjiu.ChengjiuList.Count + 1)
+                                                  .ToString();
         }
 
+        /// <summary>
+        /// 创建成就列表
+        /// </summary>
+        /// <param name="taskInfoList"></param>
         private void CreateItems(List<TaskInfo> taskInfoList)
         {
             GameObject obj = null;
@@ -91,6 +104,11 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 设置点击详细信息
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="isGet"></param>
         public void SetDetail(TaskInfo info,bool isGet)
         {
             Detail.SetActive(true);
@@ -111,6 +129,24 @@ namespace ETHotfix
                                                   .Append(info.Target).ToString();
         }
 
+        /// <summary>
+        /// 获得已完成成就
+        /// </summary>
+        /// <returns></returns>
+        private int GetCompleteChengjiu(List<TaskInfo> chengjiuList)
+        {
+            int count = 0;
+            for(int i = 0;i< chengjiuList.Count; ++i)
+            {
+                if (chengjiuList[i].IsComplete)
+                    ++count;
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// 清理内存
+        /// </summary>
         public override void Dispose()
         {
             base.Dispose();

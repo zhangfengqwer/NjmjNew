@@ -46,7 +46,6 @@ namespace ETHotfix
             string rIcon = new StringBuilder().Append("Rank_")
                                               .Append(index + 1)
                                               .ToString() ;
-            Debug.Log(rIcon);
             if (RankImg.gameObject.activeInHierarchy)
                 RankImg.sprite = CommonUtil.getSpriteByBundle("uirankicon", rIcon);
         }

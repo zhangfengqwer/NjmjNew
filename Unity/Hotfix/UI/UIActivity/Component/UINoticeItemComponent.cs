@@ -44,24 +44,22 @@ namespace ETHotfix
         public void SetText(NoticeInfo info)
         {
             this.info = info;
-            Debug.Log(info.id);
             Content.text = info.content;
             int state = PlayerPrefs.GetInt(info.id.ToString());
             Flag.SetActive(!(state == 1));
             if (Flag.activeInHierarchy)
                 this.GetParent<UI>().GameObject.transform.SetAsFirstSibling();
+
         }
 
         public int GetTextRow()
         {
-            return ((int)Content.GetComponent<RectTransform>().rect.height - 28) / 34;
+            return (int)Content.preferredHeight / 34;
         }
 
         public void SetLine()
         {
-            Debug.Log(GetTextRow());
-            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -56 - 34 * GetTextRow(), 0);
-            Debug.Log(Line.transform.localPosition);
+            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -62 - 34 * (GetTextRow()), 0);
         }
     }
 }
