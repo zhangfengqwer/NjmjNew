@@ -145,7 +145,7 @@ namespace ETHotfix
         {
             Log.Debug("onClickWechatLogin");
             string Third_Id = CommonUtil.getCurTime();
-            OnThirdLogin(Third_Id);
+            OnThirdLogin("qqqqqq");
         }
 
         public void onClickBackStart()
@@ -182,7 +182,6 @@ namespace ETHotfix
                     ToastScript.createToast(r2CData.Message);
                 }
 
-
                 sessionWrap.Dispose();
             }
             catch (Exception e)
@@ -217,9 +216,9 @@ namespace ETHotfix
 			SessionWrap sessionWrap = null;
 			try
 			{
-			    if (isLogining) return;
-
-			    isLogining = true;
+//			    if (isLogining) return;
+//
+//			    isLogining = true;
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
@@ -275,14 +274,14 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
 
 
-			    isLogining = false;
+//			    isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
 			catch (Exception e)
 			{
 				sessionWrap?.Dispose();
-			    isLogining = false;
+//			    isLogining = false;
                 Log.Error(e);
 			}
 		}
@@ -292,9 +291,9 @@ namespace ETHotfix
             SessionWrap sessionWrap = null;
             try
             {
-                if (isLogining) return;
-
-                isLogining = true;
+//                if (isLogining) return;
+//
+//                isLogining = true;
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
@@ -332,14 +331,14 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
                 PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
 
-                isLogining = false;
+//                isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
-                isLogining = false;
+//                isLogining = false;
                 Log.Error(e);
             }
         }

@@ -430,6 +430,8 @@ namespace ETHotfix
             ShowCard(mahjongInfo.weight);
         }
 
+
+
         public void ShowBg()
         {
             bg.SetActive(true);

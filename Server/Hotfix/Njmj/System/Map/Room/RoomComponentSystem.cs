@@ -66,8 +66,9 @@ namespace ETHotfix
             {
                 await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
 
-                foreach (var room in self.idleRooms)
+                for (int i = 0; i < self.idleRooms.Count; i++)
                 {
+                    Room room = self.idleRooms[i];
                     foreach (var gamer in room.GetAll())
                     {
                         if (gamer == null)
@@ -100,8 +101,11 @@ namespace ETHotfix
                     }
                 }
 
-                foreach (var room in self.readyRooms.Values)
+                var readyRooms = self.readyRooms.Values.ToList();
+
+                for (int i = 0; i < readyRooms.Count; i++)
                 {
+                    Room room = readyRooms[i];
                     foreach (var gamer in room.GetAll())
                     {
                         if (gamer == null)
@@ -128,7 +132,7 @@ namespace ETHotfix
                                 //消息广播给其他人
                                 room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
                                 gamer.Dispose();
-                              
+
                             }
                         }
                     }

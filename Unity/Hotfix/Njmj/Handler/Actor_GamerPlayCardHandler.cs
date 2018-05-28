@@ -12,6 +12,11 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_GamerPlayCard message)
         {
+            PlayCard(message);
+        }
+
+        public static void PlayCard(Actor_GamerPlayCard message)
+        {
             try
             {
                 Log.Info($"收到出牌:{JsonHelper.ToJson(message)}");
@@ -31,7 +36,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    handCardsComponent.PlayOtherCard(mahjongInfo,uiRoomComponent.currentItem);
+                    handCardsComponent.PlayOtherCard(mahjongInfo, uiRoomComponent.currentItem);
                 }
 
                 int number = RandomHelper.RandomNumber(1, 3);

@@ -127,6 +127,7 @@ namespace ETHotfix
 	                actorStartGame.restCount = deskComponent.RestLibrary.Count;
                     //发送消息
                     room.Broadcast(actorStartGame);
+	                room.reconnectList.Add(actorStartGame);
 
                     room.State = RoomState.Game;
 

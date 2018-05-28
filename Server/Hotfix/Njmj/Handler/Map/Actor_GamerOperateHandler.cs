@@ -14,7 +14,6 @@ namespace ETHotfix
 	        await Task.CompletedTask;
             try
             {
-                Log.Debug("有人碰或刚");
                 MahjongInfo mahjongInfo = new MahjongInfo() {weight = (byte) message.weight, m_weight = (Consts.MahjongWeight) message.weight};
 
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
@@ -26,6 +25,7 @@ namespace ETHotfix
                 GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
+                Log.Debug("有人碰或刚,当前出牌" + JsonHelper.ToJson(deskComponent.CurrentCard));
 
                 //胡牌
                 int huaCount = 0;
@@ -130,6 +130,8 @@ namespace ETHotfix
                             gamer.isFaWanPaiTingPai = false;
                             room.isGangEndBuPai = true;
                             room.isGetYingHuaBuPai = false;
+
+                            orderController.CurrentAuthority = gamer.UserID;
                             //杠完之后抓牌
                             room.GrabMahjong();
                         }

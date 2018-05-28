@@ -1076,6 +1076,15 @@ namespace ETHotfix
 		[ProtoMember(4, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> faceCards = new List<MahjongInfo>();
 
+		[ProtoMember(6, TypeName = "ETHotfix.MahjongInfo")]
+		public List<MahjongInfo> playCards = new List<MahjongInfo>();
+
+		[ProtoMember(7, TypeName = "ETHotfix.MahjongInfo")]
+		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
+
+		[ProtoMember(8, TypeName = "ETHotfix.MahjongInfo")]
+		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
+
 		[ProtoMember(5, IsRequired = true)]
 		public bool IsBanker;
 
@@ -1234,6 +1243,9 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
+
+		[ProtoMember(1, TypeName = "ETHotfix.GamerData")]
+		public List<GamerData> Gamers = new List<GamerData>();
 
 	}
 

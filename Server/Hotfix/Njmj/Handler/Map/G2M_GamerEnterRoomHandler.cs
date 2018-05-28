@@ -16,21 +16,54 @@ namespace ETHotfix
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
 			    Gamer gamer = null;
                 Room room = null;
-                for (int i = 0; i < roomCompnent.gameRooms.Count; i++)
+
+			    foreach (var _room in roomCompnent.gameRooms.Values)
 			    {
-			        room = roomCompnent.gameRooms[i];
-                    Log.Info("找到房间:");
+			        room = _room;
+			        Log.Info("找到房间:");
 			        gamer = room.Get(message.UserId);
 			        if (gamer != null) break;
-			    }
+                }
                 
                 //断线重连
 			    if (gamer != null)
 			    {
+			        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+
+
+                    //重新更新actor
+			        gamer.PlayerID = message.PlayerId;
+			        gamer.GetComponent<UnitGateComponent>().GateSessionId = message.SessionId;
+
+                    //短线重连
+			        Actor_GamerReconnet reconnet = new Actor_GamerReconnet();
+			        foreach (var _gamer in room.GetAll())
+			        {
+			            GamerData gamerData = new GamerData();
+
+                        HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+			            List<MahjongInfo> handCards = handCardsComponent.GetAll();
+
+			            gamerData.handCards = handCards;
+			            gamerData.faceCards = handCardsComponent.FaceCards;
+			            gamerData.playCards = handCardsComponent.PlayCards;
+			            gamerData.pengCards = handCardsComponent.PengCards;
+			            gamerData.gangCards = handCardsComponent.GangCards;
+			            gamerData.IsBanker = handCardsComponent.IsBanker;
+			            gamerData.UserID = _gamer.UserID;
+			            gamerData.SeatIndex = room.GetGamerSeat(_gamer.UserID);
+
+                        reconnet.Gamers.Add(gamerData);
+                    }
+
+                    room.GamerReconnect(gamer, reconnet);
+
+                    //等待客户端重连
+			        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
 			        Log.Info($"玩家{message.UserId}断线重连");
-			        room.GamerBroadcast(gamer, new Actor_GamerReconnet());
                 }
                 else
 			    {
@@ -84,18 +117,25 @@ namespace ETHotfix
                         //第一次进入
                         if (_gamer.UserID == message.UserId)
                         {
-                            idleRoom.GamerBroadcast(_gamer,new Actor_GamerEnterRoom()
+                            Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
                             {
                                 Gamers = Gamers
-                            });
+                            };
+                            idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
+
+                            idleRoom.reconnectList.Add(actorGamerEnterRoom);
                         }
                         //有人加入
                         else
                         {
-                            idleRoom.GamerBroadcast(_gamer, new Actor_GamerJionRoom()
+                            Actor_GamerJionRoom actorGamerJionRoom = new Actor_GamerJionRoom()
                             {
                                 Gamer = currentInfo
-                            });
+                            };
+
+                            idleRoom.GamerBroadcast(_gamer, actorGamerJionRoom);
+
+                            idleRoom.reconnectList.Add(actorGamerJionRoom);
                         }
                     }
 
