@@ -29,17 +29,25 @@ namespace ETHotfix
             TitleTxt = rc.Get<GameObject>("TitleTxt").GetComponent<Text>();
             UIActivityTitle.onClick.Add(() =>
             {
-                //根据不同的活动ID显示不同的活动面板
-                string panelName = "UIActivity_" + info.id;
-                GameObject obj = CommonUtil.getGameObjByBundle(panelName);
-                GameObject activity101 = GameObject.Instantiate(obj);
-                Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
-                activity101.transform.SetParent(parent);
-                activity101.transform.localScale = Vector3.one;
-                activity101.transform.localPosition = Vector3.zero;
-                UI ui = ComponentFactory.Create<UI, GameObject>(activity101);
-                ui.AddComponent<UIActivity101Component>();
+                OnClick(info.id);
             });
+        }
+
+        public void OnClick(int id)
+        {
+            //根据不同的活动ID显示不同的活动面板
+            string panelName = "UIActivity_" + id;
+            if (id == 102 || id == 103)
+                ToastScript.createToast("活动暂未开放");
+            GameObject obj = CommonUtil.getGameObjByBundle(panelName);
+            GameObject activity = GameObject.Instantiate(obj);
+            Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
+            activity.transform.SetParent(parent);
+            activity.transform.localScale = Vector3.one;
+            activity.transform.localPosition = Vector3.zero;
+            UI ui = ComponentFactory.Create<UI, GameObject>(activity);
+            if (id == 101)
+                ui.AddComponent<UIActivity101Component>();
         }
 
         public void SetInfo(ActivityInfo info)
