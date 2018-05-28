@@ -564,6 +564,11 @@ namespace ETHotfix
         {
             while (true)
             {
+                if (isDispose)
+                {
+                    return;
+                }
+
                 if (labaList.Count > 0)
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = labaList[0];
@@ -572,11 +577,6 @@ namespace ETHotfix
                 else
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
-                }
-
-                if (isDispose)
-                {
-                    return;
                 }
 
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
