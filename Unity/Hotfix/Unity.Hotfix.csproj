@@ -248,6 +248,7 @@
     <Compile Include="Utils\GameUtil.cs" />
     <Compile Include="Utils\HttpReqUtil.cs" />
     <Compile Include="Utils\SensitiveWordUtil.cs" />
+    <Compile Include="Utils\VerifyRuleUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Njmj\UI\Game\UIReady\Event\" />

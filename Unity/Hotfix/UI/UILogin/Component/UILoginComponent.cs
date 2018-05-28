@@ -138,6 +138,12 @@ namespace ETHotfix
                 return;
             }
 
+            if (!VerifyRuleUtil.CheckPhone(inputField_Phone.text))
+            {
+                ToastScript.createToast("请输入正确的手机号");
+                return;
+            }
+
             await OnLoginPhone(inputField_Phone.text, inputField_YanZhengMa.text, "");
         }
 
@@ -157,6 +163,12 @@ namespace ETHotfix
             if (inputField_Phone.text.CompareTo("") == 0)
             {
                 ToastScript.createToast("请输入手机号");
+                return;
+            }
+
+            if (!VerifyRuleUtil.CheckPhone(inputField_Phone.text))
+            {
+                ToastScript.createToast("请输入正确的手机号");
                 return;
             }
 
