@@ -92,7 +92,9 @@ namespace ETHotfix
             
             try
             {
+                UINetLoadingComponent.showNetLoading();
                 G2C_SendSms g2cSendSms = (G2C_SendSms)await SessionWrapComponent.Instance.Session.Call(new C2G_SendSms { Uid = PlayerInfoComponent.Instance.uid, Phone = inputField_Phone.text });
+                UINetLoadingComponent.closeNetLoading();
 
                 if (g2cSendSms.Error != ErrorCode.ERR_Success)
                 {
@@ -130,7 +132,9 @@ namespace ETHotfix
 		{
 			try
 			{
+                UINetLoadingComponent.showNetLoading();
                 G2C_BindPhone g2cBindPhone = (G2C_BindPhone)await SessionWrapComponent.Instance.Session.Call(new C2G_BindPhone { Uid = PlayerInfoComponent.Instance.uid, Phone = phone, Code = code });
+                UINetLoadingComponent.closeNetLoading();
 
                 if (g2cBindPhone.Error != ErrorCode.ERR_Success)
                 {

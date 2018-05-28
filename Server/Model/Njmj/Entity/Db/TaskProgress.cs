@@ -12,7 +12,7 @@ namespace ETModel
         public int TaskId { get; set; }
         public int CurProgress { get; set; }
         public int Target { get; set; }
-        public bool IsComplete { get; set; }
-        public bool IsGet { get; set; }
+        public bool IsComplete = false;
+        public bool IsGet = false;
     }
 }

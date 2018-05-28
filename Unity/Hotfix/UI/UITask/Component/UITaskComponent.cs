@@ -35,17 +35,24 @@ namespace ETHotfix
 
             returnBtn.onClick.Add(() =>
             {
-                //TaskTest();
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UITask);
             });
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
-            progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
-                                                  .Append(GetProgress())
-                                                  .Append("/")
-                                                  .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
-                                                  .ToString();
-            CreateTaskItem();
+            //progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
+            //                                      .Append(GetProgress())
+            //                                      .Append("/")
+            //                                      .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
+            //                                      .ToString();
+            GetTaskInfoList();
+        }
+
+        private async void GetTaskInfoList()
+        {
+            UINetLoadingComponent.showNetLoading();
+            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
+            CreateTaskItem(g2cTask.TaskProgressList);
         }
 
         private int GetProgress()
@@ -59,19 +66,10 @@ namespace ETHotfix
             return count;
         }
 
-        //private async void TaskTest()
-        //{
-        //    long uid = PlayerInfoComponent.Instance.uid;
-        //    TaskInfo taskProgress = new TaskInfo();
-        //    taskProgress.Id = 102;
-        //    taskProgress.Progress = 10;
-        //    G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = uid, TaskPrg = taskProgress });
-        //}
-
-        private void CreateTaskItem()
-        {
+        private void CreateTaskItem(List<TaskInfo> taskInfoList)
+        { 
             GameObject obj = null;
-            for(int i = 0;i< PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            for(int i = 0;i< taskInfoList.Count; ++i)
             {
                 if (i < taskItemList.Count)
                     obj = taskItemList[i];
@@ -86,7 +84,7 @@ namespace ETHotfix
                     taskItemList.Add(obj);
                     uiList.Add(ui);
                 }
-                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(PlayerInfoComponent.Instance.GetTaskInfoList()[i]);
+                uiList[i].GetComponent<UITaskItemComponent>().SetTaskItemInfo(taskInfoList[i]);
             }
         }
 

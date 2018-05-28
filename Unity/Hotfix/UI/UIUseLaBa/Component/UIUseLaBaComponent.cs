@@ -76,7 +76,9 @@ namespace ETHotfix
 
         private async void RequestUseLaBa()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_UseLaBa g2cUseLaBa = (G2C_UseLaBa)await SessionWrapComponent.Instance.Session.Call(new C2G_UseLaBa { Uid = PlayerInfoComponent.Instance.uid , Content = InputField_content.text});
+            UINetLoadingComponent.closeNetLoading();
 
             if (g2cUseLaBa.Error != ErrorCode.ERR_Success)
             {

@@ -81,11 +81,16 @@ namespace ETHotfix
             GetBagInfoList();
         }
 
-        private void GetBagInfoList()
+        private async void GetBagInfoList()
         {
-            //long uid = PlayerInfoComponent.Instance.uid;
-            //G2C_BagOperation g2cBag =(G2C_BagOperation) await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
-            CreateItemList(PlayerInfoComponent.Instance.GetBagInfoList());
+
+            UINetLoadingComponent.showNetLoading();
+            long uid = PlayerInfoComponent.Instance.uid;
+
+            G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
+
+            UINetLoadingComponent.closeNetLoading();
+            CreateItemList(g2cBag.ItemList);
         }
 
         private void CreateItemList(List<Bag> itemList)
@@ -131,8 +136,10 @@ namespace ETHotfix
         {
             try
             {
+                UINetLoadingComponent.showNetLoading();
                 G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
-                
+                UINetLoadingComponent.closeNetLoading();
+
                 if (g2cBag.result == 1)
                 {
                     GetBagInfoList();

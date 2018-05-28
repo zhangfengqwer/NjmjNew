@@ -108,13 +108,13 @@ namespace ETHotfix
 
                 //传数据
                 //完成一局游戏
-                DBCommonUtil.UpdateTask(gamer.UserID, 101);
+                //DBCommonUtil.UpdateTask(gamer.UserID, 101);
             }
 
             //完成一局游戏
             foreach (var gamer in room.GetAll())
             {
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101);
+                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101,1);
             }
 
             roomComponent.gameRooms.Remove(room.Id);

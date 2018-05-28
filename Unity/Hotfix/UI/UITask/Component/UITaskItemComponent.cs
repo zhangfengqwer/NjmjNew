@@ -40,36 +40,46 @@ namespace ETHotfix
             getBtn = rc.Get<GameObject>("GetBtn").GetComponent<Button>();
             getBtn.onClick.Add(() =>
             {
-                Debug.Log("已领取");
-                taskProgress.IsGet = true;
                 GetReward();
             });
         }
 
         private async void UpdatePlayerInfoData()
         {
-            
+
+            UINetLoadingComponent.showNetLoading();
             G2C_UpdatePlayerInfo g2c =(G2C_UpdatePlayerInfo) await SessionWrapComponent.Instance.Session
                 .Call(new C2G_UpdatePlayerInfo
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
                     playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()
                 });
+            UINetLoadingComponent.closeNetLoading();
         }
 
         private async void GetReward()
         {
-            G2C_UpdateTaskProgress g2cTask = (G2C_UpdateTaskProgress)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateTaskProgress { UId = PlayerInfoComponent.Instance.uid, TaskPrg = taskProgress });
+            UINetLoadingComponent.showNetLoading();
+            G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskId = taskProgress.Id, GetType = 1 });
+            UINetLoadingComponent.closeNetLoading();
+
             PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += taskProgress.Reward;
-            RefreshUI(g2cTask);
-            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
-                .GetComponent<UIMainComponent>().refreshUI();
+            if(g2cGetItem.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2cGetItem.Message);
+            }
+            else
+            {
+                RefreshUI(true);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
+                    .GetComponent<UIMainComponent>().refreshUI();
+            }
         }
 
-        private void RefreshUI(G2C_UpdateTaskProgress g2cTask)
+        private void RefreshUI(bool isGet)
         {
-            completeTxt.SetActive(g2cTask.TaskPrg.IsGet);
-            getBtn.gameObject.SetActive(!g2cTask.TaskPrg.IsGet);
+            completeTxt.SetActive(isGet);
+            getBtn.gameObject.SetActive(!isGet);
         }
 
         public void SetTaskItemInfo(TaskInfo info)

@@ -31,7 +31,9 @@ namespace ETHotfix
         private Button De;
         private Text GoldNumTxt;
         private Text WingNumTxt;
+        private Text HuafeiNumTxt;
         private Button AddBtn;
+        private Button DuihuanBtn;
         private GameObject PlayerFrame;
 
         public void Awake()
@@ -42,18 +44,23 @@ namespace ETHotfix
             uIDTxt = rc.Get<GameObject>("UIDTxt").GetComponent<Text>();
             realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
             noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
-
+            HuafeiNumTxt = rc.Get<GameObject>("HuafeiNumTxt").GetComponent<Text>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
             realNameBtn = rc.Get<GameObject>("RealNameBtn").GetComponent<Button>();
             bindPhoneBtn = rc.Get<GameObject>("BindPhoneBtn").GetComponent<Button>();
             ChangeAccountBtn = rc.Get<GameObject>("ChangeAccountBtn").GetComponent<Button>();
+            DuihuanBtn = rc.Get<GameObject>("DuihuanBtn").GetComponent<Button>();
 
             De = rc.Get<GameObject>("De").GetComponent<Button>();
             GoldNumTxt = rc.Get<GameObject>("GoldNumTxt").GetComponent<Text>();
             WingNumTxt = rc.Get<GameObject>("WingNumTxt").GetComponent<Text>();
             AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
+            DuihuanBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
+            });
 
             AddBtn.onClick.Add(() =>
             {
@@ -119,6 +126,7 @@ namespace ETHotfix
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
+            HuafeiNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum.ToString();
             if (GameUtil.isVIP())
             {
                 PlayerFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");

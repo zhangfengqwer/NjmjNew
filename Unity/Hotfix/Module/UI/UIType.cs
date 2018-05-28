@@ -38,7 +38,9 @@ namespace ETHotfix
         public const string UIRealName = "UIRealName";
         public const string UIChangeName = "UIChangeName";
 		public const string UIActivity = "UIActivity";
+        public const string UIActivity_101 = "UIActivity_101";
         public const string UINoticeItem = "UINoticeItem";
+        public const string UIActivityItem = "UIActivityItem";
         public const string UIRankItem = "UIRankItem";
         public const string UIRankIcon = "UIRankIcon";
         public const string UIUseHuaFei = "UIUseHuaFei";
@@ -51,5 +53,10 @@ namespace ETHotfix
         public const string UIVIP = "UIVIP";
         public const string UIZhuanPan = "UIZhuanPan";
         public const string UIChat = "UIChat";
+        public const string UIAccountBind = "UIAccountBind";
+        public const string UICommonPanel = "UICommonPanel";
+        public const string UINetLoading = "UINetLoading";
+        public const string UIChatShow = "UIChatShow";
+        
     }
 }

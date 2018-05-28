@@ -45,14 +45,19 @@ namespace ETHotfix
             GetEmail();
         }
 
+        /// <summary>
+        /// 获得邮件信息
+        /// </summary>
         public async void GetEmail()
         {
             try
             {
                 long uid = PlayerInfoComponent.Instance.uid;
+                UINetLoadingComponent.showNetLoading();
                 G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
+                UINetLoadingComponent.closeNetLoading();
+
                 emailList = g2cEmail.EmailInfoList;
-                Debug.Log(JsonHelper.ToJson(emailList));
                 if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
                 {
                     CreateEmailItemList();
@@ -65,6 +70,9 @@ namespace ETHotfix
             
         }
 
+        /// <summary>
+        /// 创建邮件列表
+        /// </summary>
         public void CreateEmailItemList()
         {
             GameObject obj = null;

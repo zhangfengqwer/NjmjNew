@@ -272,9 +272,6 @@ namespace ETHotfix
 		[ProtoMember(6)]
 		public List<Chat> ChatList = new List<Chat>();
 
-		[ProtoMember(7)]
-		public List<NoticeInfo> NoticeInfoList = new List<NoticeInfo>();
-
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -472,30 +469,9 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.TaskProgress)]
+	[Message(HotfixOpcode.C2G_GetTaskReward)]
 	[ProtoContract]
-	public partial class TaskProgress: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public int TaskId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int Progress;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int Target;
-
-		[ProtoMember(4, IsRequired = true)]
-		public bool IsComplete;
-
-		[ProtoMember(5, IsRequired = true)]
-		public bool IsGet;
-
-	}
-
-	[Message(HotfixOpcode.C2G_UpdateTaskProgress)]
-	[ProtoContract]
-	public partial class C2G_UpdateTaskProgress: IRequest
+	public partial class C2G_GetTaskReward: IRequest
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
@@ -504,13 +480,16 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public TaskInfo TaskPrg;
+		public int TaskId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int GetType;
 
 	}
 
-	[Message(HotfixOpcode.G2C_UpdateTaskProgress)]
+	[Message(HotfixOpcode.G2C_GetTaskReward)]
 	[ProtoContract]
-	public partial class G2C_UpdateTaskProgress: IResponse
+	public partial class G2C_GetTaskReward: IResponse
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
@@ -520,9 +499,6 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public TaskInfo TaskPrg;
 
 	}
 
@@ -643,6 +619,51 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public PlayerInfo PlayerInfo;
+
+	}
+
+	[Message(HotfixOpcode.Activity)]
+	[ProtoContract]
+	public partial class Activity: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int ActivityId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Title;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Activity)]
+	[ProtoContract]
+	public partial class C2G_Activity: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Activity)]
+	[ProtoContract]
+	public partial class G2C_Activity: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<Activity> activityList = new List<Activity>();
 
 	}
 
@@ -994,21 +1015,6 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
-
-	}
-
-	[Message(HotfixOpcode.NoticeInfo)]
-	[ProtoContract]
-	public partial class NoticeInfo: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public int Id;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Name;
-
-		[ProtoMember(3, IsRequired = true)]
-		public string Content;
 
 	}
 
@@ -1957,6 +1963,33 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public int LuckyValue;
+
+	}
+
+	[Message(HotfixOpcode.C2G_Share)]
+	[ProtoContract]
+	public partial class C2G_Share: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Share)]
+	[ProtoContract]
+	public partial class G2C_Share: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
 	}
 

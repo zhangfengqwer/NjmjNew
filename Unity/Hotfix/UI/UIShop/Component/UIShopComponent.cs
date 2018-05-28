@@ -93,31 +93,37 @@ namespace ETHotfix
             AddShopInfoByType();
 
             #region buttonClickEvt
+            //元宝商城
             wingBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Wing,UIType.UIWingItem,wingGrid.transform);
             });
 
+            //金币商城
             goldBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Gold, UIType.UIGoldItem, goldGrid.transform);
             });
 
+            //道具商城
             proBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
             });
 
+            //VIP商城
             vipBtn.onClick.Add(() =>
             {
                 ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
             });
 
+            //返回
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
             });
 
+            //确定购买
             sureBtn.onClick.Add(() =>
             {
                 if (isCanBuy)
@@ -133,6 +139,7 @@ namespace ETHotfix
                 }
             });
 
+            //取消购买
             cancelBtn.onClick.Add(() =>
             {
                 buyTip.SetActive(false);
@@ -142,6 +149,9 @@ namespace ETHotfix
             #endregion
         }
 
+        /// <summary>
+        /// 清理内存
+        /// </summary>
         public override void Dispose()
         {
             buttonDic.Clear();
@@ -153,6 +163,12 @@ namespace ETHotfix
             uiDic.Clear();
         }
 
+        /// <summary>
+        /// 购买详细页面
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="tip"></param>
+        /// <param name="isCanBuy"></param>
         public void BuyTip(ShopInfo info,string tip,bool isCanBuy)
         {
             buyTip.SetActive(true);
@@ -161,6 +177,9 @@ namespace ETHotfix
             this.isCanBuy = isCanBuy;
         }
 
+        /// <summary>
+        /// 购买物品
+        /// </summary>
         private async void BuyItem()
         {
             GetItemInfo info = new GetItemInfo();
@@ -173,17 +192,25 @@ namespace ETHotfix
                 price = shopInfo.VipPrice;
             else
                 price = shopInfo.Price;
+            UINetLoadingComponent.showNetLoading();
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
                 Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price });
-                Debug.Log("购买成功");
-                ToastScript.createToast("购买成功");
-                GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
-                PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
-                    ().refreshUI();
-                buyTip.SetActive(false);
+            UINetLoadingComponent.closeNetLoading();
+
+            ToastScript.createToast("购买成功");
+            GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
+            PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
+                ().refreshUI();
+            buyTip.SetActive(false);
         }
 
+        /// <summary>
+        /// 打开下拉显示内容
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="type"></param>
+        /// <param name="height"></param>
         public void SetOpenItemPos(int index,ShopType type,float height)
         {
             if (type == ShopType.Prop)
@@ -196,6 +223,12 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 点击打开详细下拉内容
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index"></param>
+        /// <param name="height"></param>
         private void SetScrollV(GameObject grid,int index,float height)
         {
             SetGridEnable(grid, false);
@@ -207,6 +240,12 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 点击关闭下拉列表
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="index"></param>
+        /// <param name="height"></param>
         private void SetScrollD(GameObject grid,int index,float height)
         {
             float dis = grid.GetComponent<RectTransform>().rect.height - height;

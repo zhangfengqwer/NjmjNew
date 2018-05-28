@@ -7,12 +7,6 @@ using UnityEngine.UI;
 
 namespace ETHotfix
 {
-    public class MyRankStruct
-    {
-        public bool isRank;
-        public int numb;
-    }
-
     [ObjectSystem]
     public class UIMainComponentSystem: AwakeSystem<UIMainComponent>
     {
@@ -42,9 +36,10 @@ namespace ETHotfix
         private GameObject ChoiceRoomType;
         private GameObject Relax;
         private GameObject RankItem;
-        public GameObject Btn_GoldSelect;
-        public GameObject Btn_GameSelect;
-        public GameObject Grid;
+        private GameObject Btn_GoldSelect;
+        private GameObject Btn_GameSelect;
+        private GameObject Grid;
+       
         #region myRank
         public Text GoldTxt;
         private Text NameTxt;
@@ -128,7 +123,6 @@ namespace ETHotfix
             BtnList_Down.transform.Find("Grid/Btn_Activity").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIActivity);
-                //ToastScript.createToast("暂未开放：活动");
             });
 
             // 任务
@@ -140,9 +134,6 @@ namespace ETHotfix
             // 成就
             BtnList_Down.transform.Find("Grid/Btn_ChengJiu").GetComponent<Button>().onClick.Add(() =>
             {
-                //ToastScript.createToast("暂未开放：成就");
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChengjiu);
                 
             });
@@ -221,19 +212,19 @@ namespace ETHotfix
             PlayerInfoBg.transform.Find("Btn_set").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             playerIcon.GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIPlayerInfo);
-                SetUIHideOrOpen(true);
+                
             });
 
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
@@ -260,6 +251,9 @@ namespace ETHotfix
             checkLaBa();
         }
 
+        /// <summary>
+        /// 清理内存
+        /// </summary>
         public override void Dispose()
         {
             if (this.IsDisposed)
@@ -276,15 +270,18 @@ namespace ETHotfix
             gameItemList.Clear();
             uiList.Clear();
             gameUiList.Clear();
+            labaList.Clear();
         }
 
+        /// <summary>
+        /// 显示财富榜
+        /// </summary>
         private void ShowGoldRank()
         {
             GameObject obj = null;
             Btn_GoldSelect.gameObject.SetActive(true);
             Btn_GameSelect.gameObject.SetActive(false);
-            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
-            
+            //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
@@ -304,11 +301,14 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 显示战绩榜
+        /// </summary>
         private void ShowGameRank()
         {
             Btn_GoldSelect.gameObject.SetActive(false);
             Btn_GameSelect.gameObject.SetActive(true);
-            //Grid.transform.parent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
+            //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
             for (int i = 0; i < gameRankList.Count; ++i)
             {
@@ -329,31 +329,49 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 设置排行榜信息
+        /// </summary>
 		public async void GetRankInfo()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
                 .Session.Call(new C2G_Rank { Uid = PlayerInfoComponent.Instance.uid,RankType = 0 });
+            UINetLoadingComponent.closeNetLoading();
+
             //设置排行榜信息
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
-            Debug.Log(JsonHelper.ToJson(g2cRank.RankList));
             ShowGoldRank();
             ownWealthRank = g2cRank.OwnWealthRank;
             ownGameRank = g2cRank.OwnGameRank;
-
             SetMyRank();
         }
 
+        /// <summary>
+        /// 判断是否上财富榜
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public bool IsInRank(long uid)
         {
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (wealthRankList[i].UId == uid)
+                {
+                    Debug.Log("上榜");
                     return true;
+                }
             }
+            Debug.Log("未上榜");
             return false;
         }
 
+        /// <summary>
+        /// 判断是否上战绩榜
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         public bool IsInGameRank(long uid)
         {
             for(int i = 0;i< gameRankList.Count; ++i)
@@ -364,6 +382,11 @@ namespace ETHotfix
             return false;
         }
 
+        /// <summary>
+        /// 获得我的名次（战绩榜）
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         private int GetGameIndext(long uid)
         {
             for (int i = 0; i < gameRankList.Count; ++i)
@@ -374,6 +397,11 @@ namespace ETHotfix
             return -1;
         }
 
+        /// <summary>
+        /// 获得我的名次（财富榜）
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         private int GetWealthIndext(long uid)
         {
             for (int i = 0; i < wealthRankList.Count; ++i)
@@ -384,6 +412,9 @@ namespace ETHotfix
             return -1;
         }
 
+        /// <summary>
+        /// 设置我的财富榜信息
+        /// </summary>
         private void SetMyRank()
         {
             string str = "";
@@ -419,6 +450,9 @@ namespace ETHotfix
             Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownWealthRank.Icon);
         }
 
+        /// <summary>
+        /// 设置我的战绩榜信息
+        /// </summary>
         private void SetMyGameRank()
         {
             string str = "";
@@ -454,32 +488,23 @@ namespace ETHotfix
             Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownGameRank.Icon);
         }
 
-        private async void RequestTaskInfo()
-        {
-            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
-            PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UITask);
-        }
-
-        //public async void UpDatePlayerInfo()
-        //{
-        //    PlayerInfoComponent playerInfoComponent = Game.Scene.GetComponent<PlayerInfoComponent>();
-        //    long uid = playerInfoComponent.uid;
-        //    playerInfoComponent.GetPlayerInfo().WingNum = 1000;
-        //    G2C_UpdatePlayerInfo g2cUpdatePlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo() { Uid = uid, playerInfo = playerInfoComponent.GetPlayerInfo() });
-        //    UpDatePlayerInfo(g2cUpdatePlayerInfo.playerInfo);
-        //}
-
         private async void OnEnterRoom()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
                 new C2G_EnterRoom());
+            UINetLoadingComponent.closeNetLoading();
         }
 
+        /// <summary>
+        /// 设置用户信息
+        /// </summary>
         private async void SetPlayerInfo()
         {
             long uid = PlayerInfoComponent.Instance.uid;
+
             G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+
             if (g2CPlayerInfo == null)
             {
                 Debug.Log("用户信息错误");
@@ -489,11 +514,18 @@ namespace ETHotfix
             refreshUI();
         }
 
+        /// <summary>
+        /// 预留接口(关闭或打开主界面)
+        /// </summary>
+        /// <param name="isHide"></param>
         public void SetUIHideOrOpen(bool isHide)
         {
             GetParent<UI>().GameObject.SetActive(isHide);
         }
 
+        /// <summary>
+        /// 刷新数据
+        /// </summary>
         public void refreshUI()
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
@@ -532,6 +564,11 @@ namespace ETHotfix
         {
             while (true)
             {
+                if (isDispose)
+                {
+                    return;
+                }
+
                 if (labaList.Count > 0)
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = labaList[0];
@@ -540,11 +577,6 @@ namespace ETHotfix
                 else
                 {
                     LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
-                }
-
-                if (isDispose)
-                {
-                    return;
                 }
 
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);

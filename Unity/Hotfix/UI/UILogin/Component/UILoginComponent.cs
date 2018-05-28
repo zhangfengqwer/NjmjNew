@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
 using UnityEngine;
@@ -35,7 +36,6 @@ namespace ETHotfix
         private Text text_yanzhengmadaojishi;
 
         bool isLoginSuccess = false;
-        private bool isLogining = false;
 
         public void Awake()
 		{
@@ -103,12 +103,12 @@ namespace ETHotfix
             OnLoginPhone("4", "", "4");
         }
 
-        public void onClickOpenPhoneLogin()
+        public async void onClickOpenPhoneLogin()
         {
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (true)
+            if (false)
             {
                 phone = "";
                 token = "";
@@ -116,7 +116,7 @@ namespace ETHotfix
 
             if ((phone.CompareTo("") != 0) && (token.CompareTo("") != 0))
             {
-                OnLoginPhone(phone, "", token);
+                await OnLoginPhone(phone, "", token);
             }
             else
             {
@@ -124,7 +124,7 @@ namespace ETHotfix
             }
         }
 
-        public void onClickPhoneCodeLogin()
+        public async void onClickPhoneCodeLogin()
         {
             if (inputField_Phone.text.CompareTo("") == 0)
             {
@@ -138,14 +138,13 @@ namespace ETHotfix
                 return;
             }
 
-            OnLoginPhone(inputField_Phone.text, inputField_YanZhengMa.text, "");
+            await OnLoginPhone(inputField_Phone.text, inputField_YanZhengMa.text, "");
         }
 
-        public void onClickWechatLogin()
+        public async void onClickWechatLogin()
         {
-            Log.Debug("onClickWechatLogin");
             string Third_Id = CommonUtil.getCurTime();
-            OnThirdLogin("qqqqqq");
+            await OnThirdLogin(Third_Id);
         }
 
         public void onClickBackStart()
@@ -164,7 +163,7 @@ namespace ETHotfix
             btn_yanzhengma.transform.localScale = Vector3.zero;
             text_yanzhengmadaojishi.transform.localScale = new Vector3(1,1,1);
 
-            startPhoneCodeTimer();            
+            UINetLoadingComponent.showNetLoading();
 
             SessionWrap sessionWrap = null;
             try
@@ -174,8 +173,9 @@ namespace ETHotfix
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
+                
 
-                Log.Debug(JsonHelper.ToJson(r2CData));
+                UINetLoadingComponent.closeNetLoading();
 
                 if (r2CData.Error != ErrorCode.ERR_Success)
                 {
@@ -183,6 +183,8 @@ namespace ETHotfix
                 }
 
                 sessionWrap.Dispose();
+
+                startPhoneCodeTimer();
             }
             catch (Exception e)
             {
@@ -211,14 +213,12 @@ namespace ETHotfix
             btn_yanzhengma.transform.localScale = new Vector3(1,1,1);
         }
 
-        public async void OnLoginPhone(string phone ,string code,string token)
+        public async Task OnLoginPhone(string phone ,string code,string token)
 		{
-			SessionWrap sessionWrap = null;
+            SessionWrap sessionWrap = null;
 			try
 			{
-//			    if (isLogining) return;
-//
-//			    isLogining = true;
+                UINetLoadingComponent.showNetLoading();
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
@@ -227,7 +227,10 @@ namespace ETHotfix
 				R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin) await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token , MachineId = PlatformHelper.GetMacId(), ChannelName  = PlatformHelper .GetChannelName(), ClientVersion = PlatformHelper .GetVersionName()});
 				sessionWrap.Dispose();
 
-			    if (r2CLogin.Error != ErrorCode.ERR_Success)
+                UINetLoadingComponent.closeNetLoading();
+
+
+                if (r2CLogin.Error != ErrorCode.ERR_Success)
 			    {
                     ToastScript.createToast(r2CLogin.Message);
 
@@ -241,14 +244,18 @@ namespace ETHotfix
                     return;
 			    }
 
+                UINetLoadingComponent.showNetLoading();
+
                 connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
 				Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
 				Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
 				ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
-				G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
+
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key});
+                UINetLoadingComponent.closeNetLoading();
 
                 ToastScript.createToast("登录成功");
-
+                UINetLoadingComponent.closeNetLoading();
                 getAllData();
 
                 isLoginSuccess = true;
@@ -262,38 +269,27 @@ namespace ETHotfix
                 }
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-                G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
-                G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = g2CLoginGate.Uid });
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
-                PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
-                Debug.Log(g2cTask.TaskProgressList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
-                PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
-                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
-
-
-//			    isLogining = false;
+                
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain); 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
 			}
 			catch (Exception e)
 			{
 				sessionWrap?.Dispose();
-//			    isLogining = false;
                 Log.Error(e);
 			}
 		}
 
-        public async void OnThirdLogin(string third_id)
+        public async Task OnThirdLogin(string third_id)
         {
             SessionWrap sessionWrap = null;
             try
             {
-//                if (isLogining) return;
-//
-//                isLogining = true;
+                UINetLoadingComponent.showNetLoading();
 
                 IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
@@ -302,6 +298,8 @@ namespace ETHotfix
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
                 sessionWrap.Dispose();
 
+                UINetLoadingComponent.closeNetLoading();
+
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {
                     ToastScript.createToast(r2CLogin.Message);
@@ -309,44 +307,49 @@ namespace ETHotfix
                     return;
                 }
 
+                UINetLoadingComponent.showNetLoading();
+
                 connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
+
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
+
+                UINetLoadingComponent.closeNetLoading();
 
                 getAllData();
 
                 isLoginSuccess = true;
 
                 Game.Scene.GetComponent<PlayerInfoComponent>().uid = g2CLoginGate.Uid;
-                G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = g2CLoginGate.Uid });
-                G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = g2CLoginGate.Uid });
+
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
-                PlayerInfoComponent.Instance.SetTaskInfoList(g2cTask.TaskProgressList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
                 PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
-                PlayerInfoComponent.Instance.SetChengjiuList(g2cChengjiu.ChengjiuList);
-                PlayerInfoComponent.Instance.SetNoticeList(g2CLoginGate.NoticeInfoList);
 
-//                isLogining = false;
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
-//                isLogining = false;
-                Log.Error(e);
+                Log.Error("OnThirdLogin:" + e);
             }
         }
 
         public void getAllData()
         {
+            UINetLoadingComponent.showNetLoading();
+
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
             HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
+            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
+
+            UINetLoadingComponent.closeNetLoading();
         }
     }
 }

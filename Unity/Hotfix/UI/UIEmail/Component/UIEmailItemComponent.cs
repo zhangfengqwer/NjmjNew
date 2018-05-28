@@ -67,6 +67,7 @@ namespace ETHotfix
                 itemInfo.Count = rewardList[i].rewardNum;
                 itemList.Add(itemInfo);
             }
+            UINetLoadingComponent.showNetLoading();
             G2C_GetItem g2cGetItem = (G2C_GetItem)await SessionWrapComponent.Instance
                 .Session.Call(new C2G_GetItem
                 {
@@ -74,6 +75,7 @@ namespace ETHotfix
                     InfoList = itemList,
                     MailId = email.EId
                 });
+            UINetLoadingComponent.closeNetLoading();
             ToastScript.createToast("领取成功");
             get.gameObject.SetActive(false);
             GameUtil.changeDataWithStr(email.RewardItem);

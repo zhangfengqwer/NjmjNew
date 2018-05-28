@@ -30,6 +30,8 @@ namespace ETHotfix
                     CommonUtil.ShowUI(UIType.UIMain);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
                 }
                 else
                 {

@@ -9,27 +9,23 @@ namespace ETHotfix
     {
         protected override void Run(Session session, Actor_Chat message)
         {
-            Debug.Log("收到表情:" + JsonHelper.ToJson(message));
-
             try
             {
+                UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChatShow);
                 if (message.ChatType == 1)
                 {
-                    GameObject item = CommonUtil.getGameObjByBundle(message.Value);
-                    GameObject obj = GameObject.Instantiate(item);
-                    obj.transform.SetParent(GameObject.Find("CommonWorld").transform);
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
+                    ui.GetComponent<UIChatShowComponent>().ShowExpressAni(message.Value);
                 }
                 else if(message.ChatType == 2)
                 {
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady).GetComponent<UIReadyComponent>().ShowChatContent(message.Value,message.UId);
+                    ui.GetComponent<UIChatShowComponent>().ShowChatContent(message.Value,message.UId);
                     
                 }
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
             }
             catch (Exception e)
             {
-
+                Debug.LogError(e);
             }
             
         }

@@ -22,7 +22,7 @@ namespace ETHotfix
         private GameObject Line;
         private GameObject Flag;
         private Button NoticeBtn;
-        private NoticeInfo info;
+        public NoticeInfo info;
 
         public void Awake()
         {
@@ -34,8 +34,7 @@ namespace ETHotfix
 
             NoticeBtn.onClick.Add(() =>
             {
-                PlayerPrefs.SetInt(info.Id.ToString(), 1);
-                Debug.Log("===");
+                PlayerPrefs.SetInt(info.id.ToString(), 1);
                 Flag.SetActive(false);
             });
 
@@ -44,24 +43,19 @@ namespace ETHotfix
         public void SetText(NoticeInfo info)
         {
             this.info = info;
-            Debug.Log(info.Id);
-            Content.text = info.Content;
-            int state = PlayerPrefs.GetInt(info.Id.ToString());
+            Content.text = info.content;
+            int state = PlayerPrefs.GetInt(info.id.ToString());
             Flag.SetActive(!(state == 1));
-            if (Flag.activeInHierarchy)
-                this.GetParent<UI>().GameObject.transform.SetAsFirstSibling();
         }
 
-        public int GetTextRow()
+        public float GetTextHeight()
         {
-            return ((int)Content.GetComponent<RectTransform>().rect.height - 28) / 34;
+            return Content.preferredHeight - 34;
         }
 
         public void SetLine()
         {
-            Debug.Log(GetTextRow());
-            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -56 - 34 * GetTextRow(), 0);
-            Debug.Log(Line.transform.localPosition);
+            Line.transform.localPosition = new Vector3(Line.transform.localPosition.x, -62 - (GetTextHeight()), 0);
         }
     }
 }

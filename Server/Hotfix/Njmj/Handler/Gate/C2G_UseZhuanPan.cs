@@ -30,12 +30,20 @@ namespace ETHotfix
                     playerBaseInfo.LuckyValue += 1;
 
                     response.itemId = getRewardItemId(playerBaseInfo.LuckyValue);
-                    response.reward = getReward(response.itemId);
+                    response.reward = getReward(response.itemId, playerBaseInfo.LuckyValue);
 
                     await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
 
-                    // 满98后重置
-                    if (playerBaseInfo.LuckyValue >= 98)
+                    // 转盘日志
+                    {
+                        Log_UseZhuanPan log_UseZhuanPan = ComponentFactory.CreateWithId<Log_UseZhuanPan>(IdGenerater.GenerateId());
+                        log_UseZhuanPan.Uid = message.Uid;
+                        log_UseZhuanPan.Reward = response.reward;
+                        await proxyComponent.Save(log_UseZhuanPan);
+                    }
+
+                    // 满99后重置
+                    if (playerBaseInfo.LuckyValue >= 99)
                     {
                         playerBaseInfo.LuckyValue = 0;
                     }
@@ -55,47 +63,48 @@ namespace ETHotfix
         {
             int itemId = 1;
 
-            if (luckyValue >= 98)
-            {
-                itemId = 10;
-            }
-            else
-            {
-                int r = Common_Random.getRandom(1, 10000);
-                int temp = 0;
+            int r = Common_Random.getRandom(1, 10000);
+            int temp = 0;
 
-                ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
-                List<ZhuanpanConfig> shopInfoList = new List<ZhuanpanConfig>();
-                for (int i = 1; i < configCom.GetAll(typeof(ZhuanpanConfig)).Length + 1; ++i)
+            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+            List<ZhuanpanConfig> shopInfoList = new List<ZhuanpanConfig>();
+            for (int i = 1; i < configCom.GetAll(typeof(ZhuanpanConfig)).Length + 1; ++i)
+            {
+                ZhuanpanConfig config = (ZhuanpanConfig)configCom.Get(typeof(ZhuanpanConfig), i);
+
+                if (r <= (config.Probability + temp))
                 {
-                    ZhuanpanConfig config = (ZhuanpanConfig)configCom.Get(typeof(ZhuanpanConfig), i);
-
-                    if (r <= (config.Probability + temp))
-                    {
-                        itemId = config.itemId;
-                        break;
-                    }
-                    else
-                    {
-                        temp += config.Probability;
-                    }
+                    itemId = config.itemId;
+                    break;
+                }
+                else
+                {
+                    temp += config.Probability;
                 }
             }
 
             return itemId;
         }
 
-        string getReward(int itemId)
+        string getReward(int itemId,int LuckyValue)
         {
             string reward = "1:1";
 
-            if (itemId == 10)
+            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+            List<ZhuanpanConfig> shopInfoList = new List<ZhuanpanConfig>();
+            for (int i = 1; i < configCom.GetAll(typeof(ZhuanpanConfig)).Length + 1; ++i)
             {
-                reward = "1:1000";
-            }
-            else
-            {
-                reward = "1:100";
+                ZhuanpanConfig config = (ZhuanpanConfig)configCom.Get(typeof(ZhuanpanConfig), i);
+
+                if (config.itemId == itemId)
+                {
+                    reward = (config.propId + ":" + config.PropNum);
+
+                    if (LuckyValue >= 99)
+                    {
+                        reward += ";111:10";
+                    }
+                }
             }
 
             return reward;

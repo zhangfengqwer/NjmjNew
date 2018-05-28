@@ -28,12 +28,11 @@ namespace ETHotfix
         private List<GameObject> ChatItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
         private List<UI> chatUiList = new List<UI>();
-        private bool isOpen;
+        public bool isOpen = true;
 
         public void Awake()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
@@ -102,6 +101,15 @@ namespace ETHotfix
         {
             this.isOpen = isOpen;
             GetParent<UI>().GameObject.SetActive(isOpen);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            ExpressionItemList.Clear();
+            ChatItemList.Clear();
+            uiList.Clear();
+            chatUiList.Clear();
         }
     }
 }
