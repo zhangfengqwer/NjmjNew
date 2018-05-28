@@ -53,5 +53,7 @@ namespace ETHotfix
         public const string UIVIP = "UIVIP";
         public const string UIZhuanPan = "UIZhuanPan";
         public const string UIChat = "UIChat";
+        public const string UIAccountBind = "UIAccountBind";
+        public const string UICommonPanel = "UICommonPanel";
     }
 }

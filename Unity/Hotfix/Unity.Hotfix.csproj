@@ -171,6 +171,8 @@
     <Compile Include="Platform\PlatformHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
+    <Compile Include="UI\UICommonPanel\Component\UICommonPanelComponent.cs" />
+    <Compile Include="UI\UICommonPanel\Factory\UICommonPanelFactory.cs" />
     <Compile Include="UI\UIActivity\Component\UIActivity101Component.cs" />
     <Compile Include="UI\UIActivity\Component\UIActivityComponent.cs" />
     <Compile Include="UI\UIActivity\Component\UIActivityItemComponent.cs" />
@@ -186,6 +188,8 @@
     <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
     <Compile Include="UI\UISet\Component\UISetComponent.cs" />
     <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
+    <Compile Include="UI\UIAccountBind\Component\UIAccountBindComponent.cs" />
+    <Compile Include="UI\UIAccountBind\Factory\UIAccountBindFactory.cs" />
     <Compile Include="UI\UIZhuanPan\Component\UIZhuanPanComponent.cs" />
     <Compile Include="UI\UIZhuanPan\Factory\UIZhuanPanFactory.cs" />
     <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
@@ -244,6 +248,7 @@
   <ItemGroup>
     <Folder Include="Njmj\UI\Game\UIReady\Event\" />
     <Folder Include="UI\UIMain\Event\" />
+    <Folder Include="UI\UIRoom\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Unity.csproj">

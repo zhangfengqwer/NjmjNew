@@ -20,7 +20,8 @@ namespace ETHotfix
 	{
         private GameObject huafei_5;
 
-        private Button Button_close;
+        private Button Button_cancel;
+        private Button Button_OK;
 
         public void Awake()
 		{
@@ -34,14 +35,12 @@ namespace ETHotfix
         public void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            
-            huafei_5 = rc.Get<GameObject>("huafei_5");
 
-            Button_close = rc.Get<GameObject>("Button_close").GetComponent<Button>();
-            
-            huafei_5.transform.Find("Button").GetComponent<Button>().onClick.Add(onClick_huafei5);
+            Button_cancel = rc.Get<GameObject>("Button_cancel").GetComponent<Button>();
+            Button_OK = rc.Get<GameObject>("Button_OK").GetComponent<Button>();
 
-            Button_close.onClick.Add(onClick_close);
+            Button_OK.onClick.Add(onClick_huafei5);
+            Button_cancel.onClick.Add(onClick_close);
         }
 
         public void onClick_close()
