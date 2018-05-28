@@ -9,6 +9,7 @@ namespace ETModel
     /// </summary>
     public enum RoomLevel : byte
     {
-        Lv100   //100底分局
+        Lv100,   //100底分局
+        Lv2000
     }
 }

@@ -116,16 +116,28 @@ namespace ETHotfix
 
         private static void UpdateTask(Room room)
         {
-            //101  新的征程	完成一局游戏	100	1
+            GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+
+
             foreach (var gamer in room.GetAll())
             {
                 //胜利
                 if (gamer.UserID == room.ziMoUid)
                 {
-
+                    if (controllerComponent.Config.Level == RoomLevel.Lv100)
+                    {
+                        //	102	新手场	在新手场赢得10场胜利	1000	10
+                        DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
+                    }
+                    else if (controllerComponent.Config.Level == RoomLevel.Lv2000)
+                    {
+                        //	103	精英场	在精英场赢得30场胜利	100000	30
+                        DBCommonUtil.UpdateTask(gamer.UserID, 103, 1);
+                    }
                 }
 
-                DBCommonUtil.UpdateTask(gamer.UserID, 100, 1);
+                //101  新的征程	完成一局游戏	100	1
+                DBCommonUtil.UpdateTask(gamer.UserID, 101, 1);
             }
 
 
