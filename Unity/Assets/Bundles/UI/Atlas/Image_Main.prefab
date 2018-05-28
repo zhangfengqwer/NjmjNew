@@ -110,19 +110,17 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 061832451001eb848a3099c981822c63, type: 3}
   - key: line
     gameObject: {fileID: 21300000, guid: 1c75ec463ac0fb94684fdb244800fdd6, type: 3}
-  - key: one
-    gameObject: {fileID: 21300000, guid: 8031efd114bc6044ebc39825ec2ec73f, type: 3}
-  - key: three
-    gameObject: {fileID: 21300000, guid: 34709b4f3c8de2a4f9d111f7bc22a6d8, type: 3}
   - key: touxiangkuang
     gameObject: {fileID: 21300000, guid: 6b2c1a589211a0f458e79e27e58b81f0, type: 3}
-  - key: two
-    gameObject: {fileID: 21300000, guid: 34709b4f3c8de2a4f9d111f7bc22a6d8, type: 3}
   - key: yingxiongbang
     gameObject: {fileID: 21300000, guid: 5eb22e826ae726e44a5098fc607e6e35, type: 3}
-  - key: Rank_1
-    gameObject: {fileID: 21300000, guid: 8d94bbca144bec84986e65c8d2ca8bd4, type: 3}
   - key: touxiangkuang_vip
     gameObject: {fileID: 21300000, guid: 8062f519abb6197499f8f8e0d53b6aab, type: 3}
   - key: usehuafei_bg
     gameObject: {fileID: 21300000, guid: 5b211827b41c6d7418e554443fc14777, type: 3}
+  - key: Rank_1
+    gameObject: {fileID: 21300000, guid: 8d94bbca144bec84986e65c8d2ca8bd4, type: 3}
+  - key: Rank_2
+    gameObject: {fileID: 21300000, guid: ecb1e5c498333304294a011c2a8d213b, type: 3}
+  - key: Rank_3
+    gameObject: {fileID: 21300000, guid: 34709b4f3c8de2a4f9d111f7bc22a6d8, type: 3}
