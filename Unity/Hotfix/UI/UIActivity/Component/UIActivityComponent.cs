@@ -95,9 +95,11 @@ namespace ETHotfix
                     activityItemList.Add(obj);
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIActivityItemComponent>();
-                    uiList.Add(ui);
+                    if (i == 0)
+                        ui.GetComponent<UIActivityItemComponent>().OnClick(activityList[i].id);
+                    acUiList.Add(ui);
                 }
-                uiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
+                acUiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
             }
         }
 
@@ -107,18 +109,24 @@ namespace ETHotfix
             for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; ++i)
             {
                 NoticeInfo info = NoticeConfig.getInstance().getDataList()[i];
-                obj = GameObject.Instantiate(noticeItem);
-                obj.transform.SetParent(grid.transform);
-                obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);
-                obj.transform.localScale = Vector3.one;
-                #region 
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UINoticeItemComponent>();
-                objList.Add(obj);
-                uiList.Add(ui);
-                ui.GetComponent<UINoticeItemComponent>().SetText(info);
-                ui.GetComponent<UINoticeItemComponent>().SetLine();
-                #endregion
+                if (i < objList.Count)
+                    obj = objList[i];
+                else
+                {
+                    obj = GameObject.Instantiate(noticeItem);
+                    obj.transform.SetParent(grid.transform);
+                    obj.transform.localPosition = new Vector3(10, 10 + 158 * i, 0);
+                    obj.transform.localScale = Vector3.one;
+                    #region 
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UINoticeItemComponent>();
+                    objList.Add(obj);
+                    uiList.Add(ui);
+                    #endregion
+                }
+                Debug.Log(uiList.Count);
+                uiList[i].GetComponent<UINoticeItemComponent>().SetText(info);
+                uiList[i].GetComponent<UINoticeItemComponent>().SetLine();
             }
             //float height = grid.transform.childCount * 158f;
             //grid.GetComponent<RectTransform>().rect.Set(-631, 318.3497f, 100, 1500);
