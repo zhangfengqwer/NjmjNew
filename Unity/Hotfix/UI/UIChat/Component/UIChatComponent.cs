@@ -102,5 +102,14 @@ namespace ETHotfix
             this.isOpen = isOpen;
             GetParent<UI>().GameObject.SetActive(isOpen);
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            ExpressionItemList.Clear();
+            ChatItemList.Clear();
+            uiList.Clear();
+            chatUiList.Clear();
+        }
     }
 }

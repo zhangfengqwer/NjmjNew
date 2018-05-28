@@ -112,7 +112,7 @@ namespace ETHotfix
                 }
                     
             });
-
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChatShow);
         }
 
         /// <summary>
@@ -136,6 +136,9 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+                Debug.Log("remove");
             }
         }
 

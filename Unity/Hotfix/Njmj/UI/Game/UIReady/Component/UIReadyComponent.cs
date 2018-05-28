@@ -28,7 +28,7 @@ namespace ETHotfix
         private Text readyName;
         private Text readyText;
 
-        private GameObject[] chatObjArr = new GameObject[4];
+       
 
         public readonly GameObject[] HeadPanel = new GameObject[4];
         public readonly Dictionary<long, GameObject> userReady = new Dictionary<long, GameObject>();
@@ -47,11 +47,6 @@ namespace ETHotfix
             HeadPanel[2] = head.Get<GameObject>("Top");
             HeadPanel[3] = head.Get<GameObject>("Left");
 
-            chatObjArr[0] = rc.Get<GameObject>("ChatB");
-            chatObjArr[1] = rc.Get<GameObject>("ChatR");
-            chatObjArr[2] = rc.Get<GameObject>("ChatT");
-            chatObjArr[3] = rc.Get<GameObject>("ChatL");
-
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.readyBtn.onClick.Add(OnReady);
         }
@@ -65,21 +60,6 @@ namespace ETHotfix
         {
             SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable());
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-        }
-
-        /// <summary>
-        /// 显示相应的聊天内容
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="UId"></param>
-        public void ShowChatContent(string content, long UId)
-        {
-            UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-            GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
-            int index = gamerComponent.GetGamerSeat(UId);
-            chatObjArr[index].SetActive(true);
-            chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
-            GameUtil.StartTimer(8, chatObjArr[index]);
         }
 
         /// <summary>

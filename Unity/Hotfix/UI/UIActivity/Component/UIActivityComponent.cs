@@ -45,8 +45,6 @@ namespace ETHotfix
             activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
             Grid = rc.Get<GameObject>("Grid");
 
-            //await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-
             GetActivityItemList();
 
             //返回
