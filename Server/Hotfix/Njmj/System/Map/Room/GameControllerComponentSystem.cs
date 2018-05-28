@@ -42,7 +42,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="self"></param>
         /// <param name="huaCount"></param>
-        public static void GameOver(this GameControllerComponent self, int huaCount)
+        public static async void GameOver(this GameControllerComponent self, int huaCount)
         {
             Room room = self.GetParent<Room>();
             RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
@@ -52,6 +52,7 @@ namespace ETHotfix
             self.Multiples = 100;
             //自摸
 
+            Log.Debug("改变财富:" + huaCount * self.Multiples);
             if (huaCount > 0)
             {
                 //改变财富
@@ -59,7 +60,7 @@ namespace ETHotfix
                 {
                     if (gamer.UserID == room.ziMoUid)
                     {
-                        DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
+                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
                     }
                     else
                     {
@@ -67,12 +68,12 @@ namespace ETHotfix
                         {
                             if (gamer.UserID == room.fangPaoUid)
                             {
-                                DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
                             }
                         }
                         else
                         {
-                            DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
                         }
                     }
                 }
@@ -108,7 +109,7 @@ namespace ETHotfix
 
                 //传数据
                 //完成一局游戏
-                //DBCommonUtil.UpdateTask(gamer.UserID, 101);
+                DBCommonUtil.UpdateTask(gamer.UserID, 101,1);
             }
 
             //完成一局游戏
