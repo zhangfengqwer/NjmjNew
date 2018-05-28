@@ -71,6 +71,18 @@ namespace ETHotfix
                 return;
             }
 
+            if (!VerifyRuleUtil.CheckRealName(InputField_name.text))
+            {
+                ToastScript.createToast("请输入正确的姓名");
+                return;
+            }
+
+            if (!VerifyRuleUtil.CheckIDCard(InputField_idNumber.text))
+            {
+                ToastScript.createToast("请输入正确的身份证号码");
+                return;
+            }
+
             RequestRealName();
         }
 
