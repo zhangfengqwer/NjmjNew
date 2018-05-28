@@ -123,7 +123,6 @@ namespace ETHotfix
             BtnList_Down.transform.Find("Grid/Btn_Activity").GetComponent<Button>().onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIActivity);
-                //ToastScript.createToast("暂未开放：活动");
             });
 
             // 任务
@@ -135,9 +134,6 @@ namespace ETHotfix
             // 成就
             BtnList_Down.transform.Find("Grid/Btn_ChengJiu").GetComponent<Button>().onClick.Add(() =>
             {
-                //ToastScript.createToast("暂未开放：成就");
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UISet);
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChengjiu);
                 
             });
