@@ -4,17 +4,18 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class ToastScript : MonoBehaviour {
+public class ToastScript : MonoBehaviour
+{
 
     public Canvas m_canvas;
     public static Text m_text;
 
     public static List<GameObject> s_toactObj = new List<GameObject>();
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
-        Invoke("onInvoke",2);
+        Invoke("onInvoke", 2);
     }
 
     void onInvoke()
@@ -22,19 +23,19 @@ public class ToastScript : MonoBehaviour {
         s_toactObj.Remove(gameObject);
         Destroy(gameObject);
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	}
 
-    public static GameObject createToast (string text)
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    public static GameObject createToast(string text)
     {
         GameObject prefab = Resources.Load("UI/Toast") as GameObject;
         GameObject obj = MonoBehaviour.Instantiate(prefab);
         m_text = obj.transform.Find("Text").GetComponent<Text>();
 
-        obj.GetComponent<ToastScript>().setData(obj,text);
+        obj.GetComponent<ToastScript>().setData(obj, text);
         obj.GetComponent<RectTransform>().sizeDelta = new Vector2(text.Length * 35, 60);
 
         return obj;
