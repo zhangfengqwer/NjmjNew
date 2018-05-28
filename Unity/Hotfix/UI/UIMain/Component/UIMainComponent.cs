@@ -116,15 +116,13 @@ namespace ETHotfix
             // 商城
             BtnList_Down.transform.Find("Grid/Btn_Shop").GetComponent<Button>().onClick.Add(() =>
             {
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
-                UINetLoadingComponent.showNetLoading();
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
             });
 
             // 活动
             BtnList_Down.transform.Find("Grid/Btn_Activity").GetComponent<Button>().onClick.Add(() =>
             {
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIActivity);
-                UINetLoadingComponent.closeNetLoading();
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIActivity);
             });
 
             // 任务
