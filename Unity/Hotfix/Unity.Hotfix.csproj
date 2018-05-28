@@ -171,6 +171,8 @@
     <Compile Include="Platform\PlatformHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Component\PlayerInfoComponent.cs" />
+    <Compile Include="UI\UINetLoading\Component\UINetLoadingComponent.cs" />
+    <Compile Include="UI\UINetLoading\Factory\UINetLoadingFactory.cs" />
     <Compile Include="UI\UICommonPanel\Component\UICommonPanelComponent.cs" />
     <Compile Include="UI\UICommonPanel\Factory\UICommonPanelFactory.cs" />
     <Compile Include="UI\UIActivity\Component\UIActivity101Component.cs" />

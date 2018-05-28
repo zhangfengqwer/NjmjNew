@@ -55,5 +55,7 @@ namespace ETHotfix
         public const string UIChat = "UIChat";
         public const string UIAccountBind = "UIAccountBind";
         public const string UICommonPanel = "UICommonPanel";
+        public const string UINetLoading = "UINetLoading";
+        
     }
 }
