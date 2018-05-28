@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using ETModel;
 
 namespace ETHotfix
@@ -53,31 +54,7 @@ namespace ETHotfix
             //自摸
 
             Log.Debug("改变财富:" + huaCount * self.Multiples);
-            if (huaCount > 0)
-            {
-                //改变财富
-                foreach (var gamer in room.GetAll())
-                {
-                    if (gamer.UserID == room.ziMoUid)
-                    {
-                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
-                    }
-                    else
-                    {
-                        if (room.fangPaoUid != 0)
-                        {
-                            if (gamer.UserID == room.fangPaoUid)
-                            {
-                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
-                            }
-                        }
-                        else
-                        {
-                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
-                        }
-                    }
-                }
-            }
+            await ChangeWeath(self, huaCount, room);
            
 
             foreach (var gamer in room.GetAll())
@@ -109,7 +86,7 @@ namespace ETHotfix
 
                 //传数据
                 //完成一局游戏
-                DBCommonUtil.UpdateTask(gamer.UserID, 101,1);
+                UpdateTask();
             }
 
             //完成一局游戏
@@ -134,6 +111,60 @@ namespace ETHotfix
                 Log.Debug($"房间释放:{room.Id}");
                 room?.Dispose();
                 roomComponent.RemoveRoom(room);
+            }
+        }
+
+        private static void UpdateTask(Room room)
+        {
+            //101  新的征程	完成一局游戏	100	1
+            foreach (var gamer in room.GetAll())
+            {
+                //胜利
+                if (gamer.UserID == room.ziMoUid)
+                {
+
+                }
+
+                DBCommonUtil.UpdateTask(gamer.UserID, 100, 1);
+            }
+
+
+        }
+
+
+        /// <summary>
+        /// 改变玩家财富
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="huaCount"></param>
+        /// <param name="room"></param>
+        /// <returns></returns>
+        private static async Task ChangeWeath(GameControllerComponent self, int huaCount, Room room)
+        {
+            if (huaCount > 0)
+            {
+                //改变财富
+                foreach (var gamer in room.GetAll())
+                {
+                    if (gamer.UserID == room.ziMoUid)
+                    {
+                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.Multiples);
+                    }
+                    else
+                    {
+                        if (room.fangPaoUid != 0)
+                        {
+                            if (gamer.UserID == room.fangPaoUid)
+                            {
+                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                            }
+                        }
+                        else
+                        {
+                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples);
+                        }
+                    }
+                }
             }
         }
     }
