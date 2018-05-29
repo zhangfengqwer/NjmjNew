@@ -89,12 +89,13 @@ namespace ETModel
         public static string PhoneFeeRecharge(string uid, string goodsName, string amount, string mobile,
             string propId, string propnum)
         {
+            return "";
+
             string url = "http://service.51v.cn/partnerws/phonefeeservice.asmx/PhoneFeeExChange";
             string getBody = string.Format("?userid={0}&gameid={1}&goodsName={2}&amount={3}&mobile={4}" +
                                        "&propid={5}&propnum={6}&clientip={7}&flatFrom={8}&key={9}",
                 uid, gameid, goodsName, amount, mobile, propId, propnum, clientip, flatFrom, phoneFeeKey);
-
-            //MySqlService.log.Info("PhoneFeeRecharge:" + url + getBody);
+            
             return GetHttp(url + getBody);
         }
 
