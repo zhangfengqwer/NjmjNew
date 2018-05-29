@@ -16,6 +16,7 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo playerInfo = await proxyComponent.Query<PlayerBaseInfo>(message.uid);
+
                 response.PlayerInfo = new PlayerInfo();
                 if (playerInfo != null)
                 {
@@ -26,7 +27,8 @@ namespace ETHotfix
                     response.PlayerInfo.HuaFeiNum = playerInfo.HuaFeiNum;
                     response.PlayerInfo.Icon = playerInfo.Icon;
                     response.PlayerInfo.IsRealName = playerInfo.IsRealName;
-                    response.PlayerInfo.Phone = playerInfo.Phone;
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(message.uid);
+                    response.PlayerInfo.Phone = accountInfo.Phone;
                     response.PlayerInfo.PlayerSound = playerInfo.PlayerSound;
                     response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
                     response.PlayerInfo.VipTime = playerInfo.VipTime;

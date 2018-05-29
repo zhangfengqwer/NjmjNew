@@ -349,7 +349,7 @@ namespace ETModel
                     var ResultCode = (int)result.GetValue("ResultCode");
                     var ResultMessage = (string)result.GetValue("ResultMessageDetails");
 
-                    if (ResultCode.CompareTo("1") == 0)
+                    if (ResultCode == 1)
                     {
                         return true;
                     }
@@ -386,6 +386,7 @@ namespace ETModel
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
+                Log.Debug(xml);
                 xmlDoc.LoadXml(xml);
                 XmlNodeList nodes = xmlDoc.LastChild.ChildNodes;
                 foreach (XmlNode xn in nodes)

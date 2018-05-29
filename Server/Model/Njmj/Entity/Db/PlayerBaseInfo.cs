@@ -12,7 +12,6 @@ namespace ETModel
         public int RestChangeNameCount = 1;
         public int TotalGameCount = 0;
         public int WinGameCount = 0;
-        public string Phone { get; set; }
         public int PlayerSound { get; set; }
         public string VipTime = "2018-05-18 00:00:00";
         public string EmogiTime = "2018-05-18 00:00:00";

@@ -98,6 +98,18 @@ namespace ETHotfix
             return null;
         }
 
+        public static async Task<AccountInfo> getAccountInfo(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{_id:{uid}}}");
+            if (accountInfos.Count > 0)
+            {
+                return accountInfos[0];
+            }
+
+            return null;
+        }
+
         public static async Task changeWealthWithStr(long uid, string reward)
         {
             List<string> list1 = new List<string>();
@@ -243,6 +255,7 @@ namespace ETHotfix
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+            AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(uid);
 
             Log.Debug("增加新用户：" + uid.ToString());
             List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
@@ -256,9 +269,10 @@ namespace ETHotfix
             playerBaseInfo.Id = uid;
             playerBaseInfo.Name = uid.ToString();
             playerBaseInfo.Icon = "f_icon1";
-            playerBaseInfo.Phone = Phone;
+            accountInfo.Phone = Phone;
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
             await proxyComponent.Save(playerBaseInfo);
+            await proxyComponent.Save(accountInfo);
 
             Log.Debug("增加新用户完毕");
 
