@@ -43,6 +43,14 @@ namespace ETHotfix
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
             int index = gamerComponent.GetGamerSeat(UId);
+            //如果多次点击发送文本，隐掉前一个显示当前的
+            if (chatObjArr[index].activeInHierarchy)
+            {
+                GameUtil.isExit = true;
+                chatObjArr[index].SetActive(false);
+            }
+
+            GameUtil.isExit = false;
             chatObjArr[index].SetActive(true);
             chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
             GameUtil.StartTimer(8, chatObjArr[index]);
@@ -54,9 +62,16 @@ namespace ETHotfix
         /// <param name="name"></param>
         public void ShowExpressAni(string name)
         {
+            //如果连续发表情 删除上一个，显示当前的表情
+            if(expressionObj != null)
+            {
+                GameUtil.isExit = true;
+                GameObject.DestroyObject(expressionObj);
+            }
             expressItem = CommonUtil.getGameObjByBundle(name);
             expressionObj = GameObject.Instantiate(expressItem);
             expressionObj.transform.SetParent(GameObject.Find("CommonWorld").transform);
+            GameUtil.isExit = false;
             GameUtil.StartTimer(7, expressionObj,true);
         }
 
