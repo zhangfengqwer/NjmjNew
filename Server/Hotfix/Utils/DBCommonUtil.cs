@@ -363,5 +363,21 @@ namespace ETHotfix
 
             await proxyComponent.Save(gamerInfo);
         }
+
+        /// <summary>
+        /// 获取在线时长
+        /// </summary>
+        /// <param name="userId"></param>
+        public static async Task<int> GetOnlineSeconds(long userId)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            if (gamerInfos.Count == 0)
+            {
+                return 0;
+            }
+            return gamerInfos[0].DailyOnlineTime;
+        }
     } 
 }

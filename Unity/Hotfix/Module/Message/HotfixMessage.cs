@@ -1305,7 +1305,7 @@ namespace ETHotfix
 		public string RewardItem;
 
 		[ProtoMember(6, IsRequired = true)]
-		public long EId;
+		public int EId;
 
 	}
 
