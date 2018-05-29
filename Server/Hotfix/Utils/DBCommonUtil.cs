@@ -289,5 +289,57 @@ namespace ETHotfix
 
             return playerBaseInfo;
         }
+
+        /// <summary>
+        /// 记录在线离线时间
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="isStart"></param>
+        /// <param name="userId"></param>
+        public static async void RecordGamerTime(DateTime startTime, bool isStart,long userId)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            GamerOnlineTime gamerOnlineTime = ComponentFactory.CreateWithId<GamerOnlineTime>(IdGenerater.GenerateId());
+            if (isStart)
+            {
+                gamerOnlineTime.Type = 0;
+            }
+            else
+            {
+                gamerOnlineTime.Type = 1;
+            }
+
+            gamerOnlineTime.CreateTime = startTime.GetCurrentTime();
+            gamerOnlineTime.UId = userId;
+            await proxyComponent.Save(gamerOnlineTime);
+        }
+
+        /// <summary>
+        /// 记录玩家数据
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="totalSeconds"></param>
+        /// <returns></returns>
+        public static async void RecordGamerInfo(long userId, int totalSeconds)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            GamerInfoDB gamerInfo;
+            if (gamerInfos.Count == 0)
+            {
+                gamerInfo = ComponentFactory.CreateWithId<GamerInfoDB>(IdGenerater.GenerateId());
+            }
+            else
+            {
+                gamerInfo = gamerInfos[0];
+            }
+
+            gamerInfo.DailyOnlineTime += totalSeconds;
+            gamerInfo.TotalOnlineTime += totalSeconds;
+
+            await proxyComponent.Save(gamerInfo);
+        }
     } 
 }

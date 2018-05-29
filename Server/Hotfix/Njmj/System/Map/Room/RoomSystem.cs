@@ -96,14 +96,13 @@ namespace ETHotfix
                 self.IsTimeOut = true;
                 Log.Debug("超时");
                 //超时自动出牌
-
                 if (gamer == null)
                 {
                     return;
                 }
 
                 gamer.GetComponent<HandCardsComponent>().PopCard();
-               
+                
             }
             else
             {

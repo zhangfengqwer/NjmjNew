@@ -52,6 +52,33 @@ namespace ETHotfix
             room.tokenSource.Cancel();
             self.Multiples = 100;
 
+
+
+
+            Log.Debug("改变财富:" + huaCount * self.Multiples);
+            await ChangeWeath(self, huaCount, room);
+            //更新任务
+            UpdateTask(room);
+            UpdateChengjiu(room);
+            //            //更新任务
+            //            UpdateTask(room);
+
+            //设置在线时长
+            foreach (var gamer in room.GetAll())
+            {
+                //在线
+                if (!gamer.isOffline)
+                {
+                    gamer.EndTime = DateTime.Now;
+                    TimeSpan span = gamer.EndTime - gamer.StartTime;
+                    int totalSeconds = (int)span.TotalSeconds;
+                    DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+                    DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+                }
+            }
+
+
+
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null)
@@ -66,6 +93,7 @@ namespace ETHotfix
                 gamer.IsCanGang = false;
                 gamer.IsCanHu = false;
                 gamer.IsWinner = false;
+                //离线踢出
                 if (gamer.isOffline)
                 {
                     //人满了
@@ -79,16 +107,6 @@ namespace ETHotfix
                     gamer.isOffline = !gamer.isOffline;
                 }
             }
-
-
-            Log.Debug("改变财富:" + huaCount * self.Multiples);
-            await ChangeWeath(self, huaCount, room);
-            //更新任务
-            UpdateTask(room);
-            UpdateChengjiu(room);
-//            //更新任务
-//            UpdateTask(room);
-
 
             roomComponent.gameRooms.Remove(room.Id);
             roomComponent.readyRooms.Add(room.Id, room);

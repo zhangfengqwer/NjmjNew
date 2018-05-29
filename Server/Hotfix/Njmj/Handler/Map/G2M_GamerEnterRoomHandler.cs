@@ -64,6 +64,8 @@ namespace ETHotfix
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
 			        Log.Info($"玩家{message.UserId}断线重连");
+
+                    gamer.StartTime = DateTime.Now;
                 }
                 else
 			    {

@@ -140,11 +140,16 @@ namespace ETHotfix
 	                roomComponent.readyRooms.Remove(room.Id);
 
                     //排序
-                    foreach (var _gamer in gamers)
+	                var startTime = DateTime.Now;
+	                foreach (var _gamer in gamers)
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 	                    handCardsComponent.Sort();
-                    }
+
+                        //设置玩家在线开始时间
+	                    _gamer.StartTime = startTime;
+	                    DBCommonUtil.RecordGamerTime(startTime, true, _gamer.UserID);
+	                }
 
 	                foreach (var _gamer in room.GetAll())
 	                {

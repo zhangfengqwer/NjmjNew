@@ -21,11 +21,17 @@ namespace ETHotfix
 	            if (room.State == RoomState.Game)
 	            {
 	                gamer.isOffline = true;
-	                //玩家断开添加自动出牌组件
-//	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
-//	                    gamer.AddComponent<TrusteeshipComponent>();
-                    
-	                Log.Info($"玩家{gamer.UserID}断开，切换为自动模式");
+                    //玩家断开添加自动出牌组件
+                    //	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
+                    //	                gamer.AddComponent<TrusteeshipComponent>();
+	                gamer.EndTime = DateTime.Now;
+	                TimeSpan span = gamer.EndTime - gamer.StartTime;
+	                int totalSeconds = (int) span.TotalSeconds;
+	                DBCommonUtil.RecordGamerTime(gamer.EndTime, false,gamer.UserID);
+	                DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+
+                    Log.Info($"玩家{gamer.UserID}断开，切换为自动模式");
+
                 }
                 else
 	            {
