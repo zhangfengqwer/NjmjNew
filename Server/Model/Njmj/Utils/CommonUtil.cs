@@ -383,5 +383,27 @@ namespace ETModel
 
             return "";
         }
+
+        static public SortedDictionary<string, string> XmlToDictionary(string xml)
+        {
+            SortedDictionary<string, string> dic = new SortedDictionary<string, string>();
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(xml);
+                XmlNodeList nodes = xmlDoc.LastChild.ChildNodes;
+                foreach (XmlNode xn in nodes)
+                {
+                    XmlElement xe = (XmlElement)xn;
+                    dic[xe.Name] = xe.InnerText;
+                }
+            }
+            catch(Exception ex)
+            {
+                Log.Error("SortedDictionary异常：" + ex);
+            }
+
+            return dic;
+        }
     }
 }
