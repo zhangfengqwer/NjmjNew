@@ -1846,39 +1846,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.C2G_Chat)]
-	[ProtoContract]
-	public partial class C2G_Chat: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public int ChatType;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Value;
-
-		[ProtoMember(3, IsRequired = true)]
-		public long UId;
-
-	}
-
-	[Message(HotfixOpcode.G2C_Chat)]
-	[ProtoContract]
-	public partial class G2C_Chat: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-	}
-
 	[Message(HotfixOpcode.Actor_Chat)]
 	[ProtoContract]
 	public partial class Actor_Chat: IActorMessage
