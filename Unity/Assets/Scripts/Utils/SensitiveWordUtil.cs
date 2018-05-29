@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using UnityEngine;
 
-namespace ETHotfix
+namespace Unity_Utils
 {
     public class SensitiveWordUtil
     {
@@ -28,7 +28,6 @@ namespace ETHotfix
             {
                 if (CommonUtil.isStrContain(str, words))
                 {
-                    Log.Debug("敏感词：" + words);
                     return true;
                 }
             }
@@ -47,8 +46,6 @@ namespace ETHotfix
             {
                 if (CommonUtil.isStrContain(final_str, words))
                 {
-                    Log.Debug("敏感词：" + words);
-
                     string temp = "";
                     for (int i = 0; i < words.Length; i++)
                     {

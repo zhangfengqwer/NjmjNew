@@ -512,7 +512,10 @@
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingBeginEvent_CreateLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingFinishEvent_RemoveLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Factory\UILoadingFactory.cs" />
+    <Compile Include="Assets\Scripts\Utils\CommonUtil.cs" />
+    <Compile Include="Assets\Scripts\Utils\SensitiveWordUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\ToastScript.cs" />
+    <Compile Include="Assets\Scripts\Utils\VerifyRuleUtil.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\CLRBindings.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_ShortcutExtensions46_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_TweenSettingsExtensions_Binding.cs" />

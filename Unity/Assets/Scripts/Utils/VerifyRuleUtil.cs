@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ETHotfix
+namespace Unity_Utils
 {
     /// <summary> 
     /// 验证身份证号码类 
