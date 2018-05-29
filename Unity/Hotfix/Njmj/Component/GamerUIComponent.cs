@@ -79,6 +79,7 @@ namespace ETHotfix
 
         public void ResetReadyPanel()
         {
+            if (readyName == null) return;
             readyName.text = "";
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";

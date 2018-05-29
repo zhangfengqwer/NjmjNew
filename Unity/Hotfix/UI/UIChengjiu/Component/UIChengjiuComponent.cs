@@ -7,14 +7,15 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIChengjiuSystem : AwakeSystem<UIChengjiuComponent>
+    public class UIChengjiuSystem: AwakeSystem<UIChengjiuComponent>
     {
         public override void Awake(UIChengjiuComponent self)
         {
             self.Awake();
         }
     }
-    public class UIChengjiuComponent : Component
+
+    public class UIChengjiuComponent: Component
     {
         private Button ReturnBtn;
         private GameObject Grid;
@@ -48,16 +49,10 @@ namespace ETHotfix
             item = CommonUtil.getGameObjByBundle(UIType.UIChengjiuItem);
             AlGet = rc.Get<GameObject>("AlGet");
             //返回
-            ReturnBtn.onClick.Add(() =>
-            {
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChengjiu);
-            });
+            ReturnBtn.onClick.Add(() => { Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChengjiu); });
 
             //关闭详细页面
-            CloseBtn.onClick.Add(() =>
-            {
-                Detail.SetActive(false);
-            });
+            CloseBtn.onClick.Add(() => { Detail.SetActive(false); });
 
             RequestChengjiuList();
         }
@@ -68,16 +63,12 @@ namespace ETHotfix
         private async void RequestChengjiuList()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_Chengjiu g2cChengjiu = (G2C_Chengjiu)await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
+            G2C_Chengjiu g2cChengjiu =
+                    (G2C_Chengjiu) await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
             CreateItems(g2cChengjiu.ChengjiuList);
-            CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>")
-                                                  .Append("已获勋章:")
-                                                  .Append("</color>")
-                                                  .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList))
-                                                  .Append("/")
-                                                  .Append(g2cChengjiu.ChengjiuList.Count + 1)
-                                                  .ToString();
+            CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>").Append("已获勋章:").Append("</color>")
+                    .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList)).Append("/").Append(g2cChengjiu.ChengjiuList.Count + 1).ToString();
         }
 
         /// <summary>
@@ -87,7 +78,7 @@ namespace ETHotfix
         private void CreateItems(List<TaskInfo> taskInfoList)
         {
             GameObject obj = null;
-            for(int i = 0;i< taskInfoList.Count; ++i)
+            for (int i = 0; i < taskInfoList.Count; ++i)
             {
                 TaskInfo info = taskInfoList[i];
                 if (i < itemList.Count)
@@ -102,6 +93,7 @@ namespace ETHotfix
                     ui.AddComponent<UIChengjiuItemComponent>();
                     uiList.Add(ui);
                 }
+
                 uiList[i].GetComponent<UIChengjiuItemComponent>().SetInfo(info);
             }
         }
@@ -111,24 +103,18 @@ namespace ETHotfix
         /// </summary>
         /// <param name="info"></param>
         /// <param name="isGet"></param>
-        public void SetDetail(TaskInfo info,bool isGet)
+        public void SetDetail(TaskInfo info, bool isGet)
         {
             Detail.SetActive(true);
-            ProgressTxt.text = new StringBuilder().Append(info.Progress)
-                                                  .Append("/")
-                                                  .Append(info.Target).ToString();
+            ProgressTxt.text = new StringBuilder().Append(info.Progress).Append("/").Append(info.Target).ToString();
             ContentTxt.text = info.Desc;
             NameTxt.text = info.TaskName;
-            RewardTxt.text = new StringBuilder().Append("金币")
-                                                .Append(info.Reward).ToString();
-            string icon = new StringBuilder().Append("chengjiu_")
-                                             .Append(info.Id).ToString();
+            RewardTxt.text = new StringBuilder().Append("金币").Append(info.Reward).ToString();
+            string icon = new StringBuilder().Append("chengjiu_").Append(info.Id).ToString();
             ChengIcon.sprite = CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
             AlGet.SetActive(isGet);
-            if(AlGet.gameObject.activeInHierarchy)
-                ProgressTxt.text = new StringBuilder().Append(info.Target)
-                                                  .Append("/")
-                                                  .Append(info.Target).ToString();
+            if (AlGet.gameObject.activeInHierarchy)
+                ProgressTxt.text = new StringBuilder().Append(info.Target).Append("/").Append(info.Target).ToString();
         }
 
         /// <summary>
@@ -138,11 +124,12 @@ namespace ETHotfix
         private int GetCompleteChengjiu(List<TaskInfo> chengjiuList)
         {
             int count = 0;
-            for(int i = 0;i< chengjiuList.Count; ++i)
+            for (int i = 0; i < chengjiuList.Count; ++i)
             {
                 if (chengjiuList[i].IsComplete)
                     ++count;
             }
+
             return count;
         }
 

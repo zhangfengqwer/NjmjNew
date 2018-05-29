@@ -77,7 +77,13 @@ namespace ETHotfix
 			        if (idleRoom == null)
 			        {
 			            idleRoom = RoomFactory.Create();
-			            Log.Debug("创建房间：" + idleRoom.Id);
+			            GameControllerComponent controllerComponent = idleRoom.GetComponent<GameControllerComponent>();
+			            controllerComponent.Multiples = 100;
+			            controllerComponent.ServiceCharge = 500;
+			            controllerComponent.MinThreshold =  1000;
+			            controllerComponent.RoomName =  RoomName.ChuJi;
+
+                        Log.Debug("创建房间：" + idleRoom.Id);
 
 			            roomComponent.Add(idleRoom);
 			        }

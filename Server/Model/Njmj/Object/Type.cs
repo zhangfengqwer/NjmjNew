@@ -5,10 +5,12 @@ using System.Text;
 namespace ETModel
 {
     /// <summary>
-    /// 房间等级
+    /// 房间
     /// </summary>
-    public enum RoomLevel : byte
+    public enum RoomName : byte
     {
-        Lv100   //100底分局
+        None,
+        ChuJi,
+        JingYing
     }
 }

@@ -202,7 +202,7 @@ namespace ETHotfix
         /// <param name="mahjong"></param>
         /// <param name="messageIndex"></param>
         /// <param name="messageWeight"></param>
-        public void PlayCard(MahjongInfo mahjong, int index)
+        public void PlayCard(MahjongInfo mahjong, int index, GameObject currentItem)
         {
             MahjongInfo info = handCards[index];
             if (info.weight == mahjong.weight)
@@ -222,6 +222,9 @@ namespace ETHotfix
 
             instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
             instantiate.layer = LayerMask.NameToLayer("UI");
+
+            currentItem = instantiate;
+
             ShowCard(mahjong.weight);
         }
 

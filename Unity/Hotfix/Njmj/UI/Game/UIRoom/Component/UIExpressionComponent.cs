@@ -37,7 +37,7 @@ namespace ETHotfix
             string aniStr = new StringBuilder().Append("Expression_")
                                              .Append(index).ToString();
            // UINetLoadingComponent.showNetLoading();
-            G2C_Chat g2cChat = (G2C_Chat)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Chat { UId = PlayerInfoComponent.Instance.uid,ChatType = 1, Value = aniStr });
+            Game.Scene.GetComponent<SessionWrapComponent>().Session.Send(new Actor_Chat { UId = PlayerInfoComponent.Instance.uid,ChatType = 1, Value = aniStr });
             //UINetLoadingComponent.closeNetLoading();
         }
 

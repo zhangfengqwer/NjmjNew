@@ -2,17 +2,16 @@
 {
     public class GameControllerComponent : Component
     {
-        //房间配置
-        public RoomConfig Config { get; set; }
-
-        //底分
-        public long BasePointPerMatch { get; set; }
-
         //全场倍率
         public int Multiples { get; set; }
 
         //最低入场门槛
         public long MinThreshold { get; set; }
+
+        //服务费
+        public long ServiceCharge { get; set; }
+
+        public RoomName RoomName { get; set; }
 
         public override void Dispose()
         {
@@ -23,9 +22,10 @@
 
             base.Dispose();
 
-            this.BasePointPerMatch = 0;
             this.Multiples = 0;
             this.MinThreshold = 0;
+            this.ServiceCharge = 0;
+            RoomName = RoomName.None;
         }
     }
 }
