@@ -93,6 +93,8 @@ namespace ETHotfix
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
 
+            #region 聊天
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChatShow);
             UI ui = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
             ui.GameObject.SetActive(false);
 
@@ -110,7 +112,8 @@ namespace ETHotfix
                     }
                 }
             });
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChatShow);
+            #endregion
+
         }
 
         /// <summary>
