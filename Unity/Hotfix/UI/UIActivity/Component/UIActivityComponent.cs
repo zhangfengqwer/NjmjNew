@@ -33,8 +33,9 @@ namespace ETHotfix
         private List<GameObject> activityItemList = new List<GameObject>();
         private List<UI> acUiList = new List<UI>();
 
-        public void Start()
+        public async void Start()
         {
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             ActivityGrid = rc.Get<GameObject>("ActivityGrid");
@@ -147,7 +148,8 @@ namespace ETHotfix
 
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UINoticeItemComponent>();
-                    int state = PlayerPrefs.GetInt(info.id.ToString());
+                    string key = $"{PlayerInfoComponent.Instance.uid}{info.id}";
+                    int state = PlayerPrefs.GetInt(key);
                     if (state != 1)
                     {
                         obj.transform.SetAsFirstSibling();

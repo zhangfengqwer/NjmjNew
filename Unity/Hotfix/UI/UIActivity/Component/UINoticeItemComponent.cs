@@ -34,7 +34,8 @@ namespace ETHotfix
 
             NoticeBtn.onClick.Add(() =>
             {
-                PlayerPrefs.SetInt(info.id.ToString(), 1);
+                string key = $"{PlayerInfoComponent.Instance.uid}{info.id}";
+                PlayerPrefs.SetInt(key, 1);
                 Flag.SetActive(false);
             });
 
@@ -44,7 +45,8 @@ namespace ETHotfix
         {
             this.info = info;
             Content.text = info.content;
-            int state = PlayerPrefs.GetInt(info.id.ToString());
+            string key = $"{PlayerInfoComponent.Instance.uid}{info.id}";
+            int state = PlayerPrefs.GetInt(key);
             Flag.SetActive(!(state == 1));
         }
 

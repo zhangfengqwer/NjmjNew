@@ -353,14 +353,13 @@ namespace ETHotfix
             }
         }
 
-        public void getAllData()
+        public async void getAllData()
         {
             UINetLoadingComponent.showNetLoading();
 
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
             //HttpReqUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt", SensitiveWordUtil.InitWords);
 
             UINetLoadingComponent.closeNetLoading();

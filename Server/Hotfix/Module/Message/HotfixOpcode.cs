@@ -117,5 +117,7 @@ namespace ETModel
 		 public const ushort G2C_GetZhuanPanState = 10113;
 		 public const ushort C2G_Share = 10114;
 		 public const ushort G2C_Share = 10115;
+		 public const ushort C2G_Recharge = 10116;
+		 public const ushort G2C_Recharge = 10117;
 	}
 }

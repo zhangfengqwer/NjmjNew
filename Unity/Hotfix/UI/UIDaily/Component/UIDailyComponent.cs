@@ -99,7 +99,9 @@ namespace ETHotfix
 
         private async void RequestDailySignState()
         {
+            UINetLoadingComponent.showNetLoading();
             G2C_DailySignState g2cDailySignState = (G2C_DailySignState)await SessionWrapComponent.Instance.Session.Call(new C2G_DailySignState { Uid = PlayerInfoComponent.Instance.uid });
+            UINetLoadingComponent.closeNetLoading();
 
             bool TodayIsSign = g2cDailySignState.TodayIsSign;
             if (TodayIsSign)
@@ -124,6 +126,7 @@ namespace ETHotfix
 
         private async void RequestDailySign()
         {
+
             G2C_DailySign g2cDailySign = (G2C_DailySign)await SessionWrapComponent.Instance.Session.Call(new C2G_DailySign { Uid = PlayerInfoComponent.Instance.uid });
 
             if (g2cDailySign.Error != ErrorCode.ERR_Success)

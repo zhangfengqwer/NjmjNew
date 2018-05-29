@@ -56,6 +56,10 @@ namespace ETHotfix
         private List<UI> gameUiList = new List<UI>();
         private GameRank ownGameRank;
         private WealthRank ownWealthRank;
+        private int ownRank = 29;
+        private int ownGame = 29;
+        private bool isOwnRank = false;
+        private bool isGameRank = false;
 
         public void Awake()
         {
@@ -297,7 +301,15 @@ namespace ETHotfix
                 UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                 ui.AddComponent<UIRankItemComponent>();
                 uiList.Add(ui);
-                uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+
+                if (i >= ownRank)
+                {   
+                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i + 1);
+                }
+                else
+                {
+                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+                }
             }
         }
 
@@ -322,10 +334,19 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     rankItemList.Add(obj);
                 }
+
                 UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                 ui.AddComponent<UIRankItemComponent>();
                 gameUiList.Add(ui);
-                gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+
+                if (i >= ownGame)
+                {
+                    gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i + 1);
+                }
+                else
+                {
+                    gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+                }
             }
         }
 
@@ -342,6 +363,14 @@ namespace ETHotfix
             //设置排行榜信息
             wealthRankList = g2cRank.RankList;
             gameRankList = g2cRank.GameRankList;
+
+            isOwnRank = IsInRank(PlayerInfoComponent.Instance.uid);
+            isGameRank = IsInGameRank(PlayerInfoComponent.Instance.uid);
+
+            ownRank = GetWealthIndext(PlayerInfoComponent.Instance.uid);
+            ownGame = GetGameIndext(PlayerInfoComponent.Instance.uid);
+            Log.Debug(ownRank.ToString());
+            Log.Debug(ownGame.ToString());
             ShowGoldRank();
             ownWealthRank = g2cRank.OwnWealthRank;
             ownGameRank = g2cRank.OwnGameRank;
@@ -392,7 +421,11 @@ namespace ETHotfix
             for (int i = 0; i < gameRankList.Count; ++i)
             {
                 if (gameRankList[i].UId == uid)
+                {
+                    gameRankList.RemoveAt(i);
                     return i;
+                }
+                   
             }
             return -1;
         }
@@ -407,7 +440,10 @@ namespace ETHotfix
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (wealthRankList[i].UId == uid)
+                {
+                    wealthRankList.RemoveAt(i);
                     return i;
+                }
             }
             return -1;
         }
@@ -418,7 +454,7 @@ namespace ETHotfix
         private void SetMyRank()
         {
             string str = "";
-            if (!IsInRank(ownWealthRank.UId))
+            if (!isOwnRank)
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
@@ -426,20 +462,19 @@ namespace ETHotfix
             }
             else
             {
-                int index = GetWealthIndext(ownWealthRank.UId);
-                if (index < 3 && index != -1)
+                if (ownRank < 3 && ownRank != -1)
                 {
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
-                                                         .Append(index + 1).ToString();
+                                                         .Append(ownRank + 1).ToString();
                     RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", iconName);
                 }
                 else
                 {
                     RankTxt.gameObject.SetActive(true);
                     RankImg.SetActive(false);
-                    str = (index + 1).ToString();
+                    str = (ownRank + 1).ToString();
                 }
             }
             RankTxt.text = str;
@@ -456,7 +491,7 @@ namespace ETHotfix
         private void SetMyGameRank()
         {
             string str = "";
-            if (!IsInGameRank(ownGameRank.UId))
+            if (!isGameRank)
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
@@ -464,20 +499,19 @@ namespace ETHotfix
             }
             else
             {
-                int index = GetGameIndext(ownGameRank.UId);
-                if (index < 3 && index != -1)
+                if (ownGame < 3 && ownGame != -1)
                 {
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
-                                                         .Append(index + 1).ToString();
+                                                         .Append(ownGame + 1).ToString();
                     RankImg.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", iconName);
                 }
                 else
                 {
                     RankTxt.gameObject.SetActive(true);
                     RankImg.SetActive(false);
-                    str = (index + 1).ToString();
+                    str = (ownGame + 1).ToString();
                 }
                 RankTxt.text = str;
             }

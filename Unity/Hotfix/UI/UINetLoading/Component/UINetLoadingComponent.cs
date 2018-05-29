@@ -40,6 +40,11 @@ namespace ETHotfix
 
         public static void showNetLoading()
         {
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UINetLoading) != null)
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UINetLoading);
+            }
+
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UINetLoading);
         }
 

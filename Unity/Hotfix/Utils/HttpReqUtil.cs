@@ -11,7 +11,7 @@ namespace ETHotfix
     {
         public delegate void CallBack(string data);
 
-        public static async void Req(string url, CallBack callback)
+        public static async Task Req(string url, CallBack callback)
         {
             using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
             {

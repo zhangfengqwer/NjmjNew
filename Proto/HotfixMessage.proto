@@ -696,4 +696,16 @@ message G2C_Share // IResponse
 {
 }
 
+message C2G_Recharge //IRequest
+{
+	required long UId = 1;
+	required long  GoodsId = 2;
+}
+
+message G2C_Recharge // IResponse
+{
+	required long GoodsId = 1;
+	required string Reward = 2;
+}
+
 #endregion

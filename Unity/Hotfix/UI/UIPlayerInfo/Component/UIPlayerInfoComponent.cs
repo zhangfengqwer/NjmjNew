@@ -84,6 +84,8 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetUIHideOrOpen(true);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP).GameObject.activeInHierarchy)
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIVIP);
             });
             
             changeNameBtn.onClick.Add(() =>
@@ -122,8 +124,12 @@ namespace ETHotfix
         private void Init()
         {
             bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            bindPhoneBtn.transform.parent.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            Log.Debug(PlayerInfoComponent.Instance.GetPlayerInfo().Phone);
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
+            changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
+            realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
             HuafeiNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum.ToString();
@@ -139,9 +145,18 @@ namespace ETHotfix
             Debug.Log(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+            {
                 realNameTxt.text = "已实名";
+                realNameBtn.gameObject.SetActive(false);
+                realNameBtn.transform.parent.gameObject.SetActive(false);
+            }
+               
             if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            {
                 noBindPhoneTxt.text = "已绑定";
+                bindPhoneBtn.gameObject.SetActive(false);
+                bindPhoneBtn.transform.parent.gameObject.SetActive(false);
+            }
         }
 
         public async void onClickChangeAccount()

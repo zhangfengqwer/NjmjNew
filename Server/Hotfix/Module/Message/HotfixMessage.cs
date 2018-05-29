@@ -1275,7 +1275,7 @@ namespace ETHotfix
 		public string RewardItem;
 
 		[ProtoMember(6, IsRequired = true)]
-		public int EId;
+		public long EId;
 
 	}
 
@@ -1993,6 +1993,42 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_Recharge)]
+	[ProtoContract]
+	public partial class C2G_Recharge: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoodsId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Recharge)]
+	[ProtoContract]
+	public partial class G2C_Recharge: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long GoodsId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Reward;
 
 	}
 

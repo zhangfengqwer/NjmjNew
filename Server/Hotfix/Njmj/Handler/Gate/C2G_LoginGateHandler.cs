@@ -31,12 +31,24 @@ namespace ETHotfix
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                #region AddShopInfo
-                List<ShopInfo> shopInfoList = new List<ShopInfo>();
-                for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+
+                if (ShopData.getInstance().getDataList().Count == 0)
                 {
-                    int id = 1000 + i;
-                    ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
+                    List<ShopConfig> shopList = new List<ShopConfig>();
+                    for (int i = 1; i < configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+                    {
+                        int id = 1000 + i;
+                        ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
+                        shopList.Add(config);
+                    }
+                    ShopData.getInstance().getDataList().AddRange(shopList);
+                }
+
+                //#region AddShopInfo
+                List<ShopInfo> shopInfoList = new List<ShopInfo>();
+                for (int i = 0; i < ShopData.getInstance().getDataList().Count; ++i)
+                {
+                    ShopConfig config = ShopData.getInstance().getDataList()[i];
                     ShopInfo info = new ShopInfo();
                     info.Id = config.Id;
                     info.Name = config.Name;
@@ -60,8 +72,6 @@ namespace ETHotfix
                     chatConfigList.Add(info);
                 }
                 response.ChatList = chatConfigList;
-
-                #endregion
 
                 #region AddItemInfo
                 List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");

@@ -70,7 +70,7 @@ namespace ETHotfix
             
         }
 
-        public void RefreshMailUI(int mailId)
+        public void RefreshMailUI(long mailId)
         {
             for(int i = 0;i< uiList.Count; ++i)
             {
