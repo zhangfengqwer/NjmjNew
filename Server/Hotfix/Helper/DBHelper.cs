@@ -19,14 +19,6 @@ namespace ETHotfix
             await proxyComponent.Save(emailInfo);
         }
 
-        public static async void AddTaskProgressInfoToDB( TaskProgressInfo info)
-        {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            TaskProgressInfo taskInfo = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
-            taskInfo = info;
-            await proxyComponent.Save(taskInfo);
-        }
-
         public static async void AddChengjiuInfoToDB(long uid,ChengjiuInfo info)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();

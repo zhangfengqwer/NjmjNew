@@ -108,14 +108,12 @@ namespace ETModel
 		 public const ushort C2G_UseLaBa = 10104;
 		 public const ushort G2C_UseLaBa = 10105;
 		 public const ushort Actor_LaBa = 10106;
-		 public const ushort C2G_Chat = 10107;
-		 public const ushort G2C_Chat = 10108;
-		 public const ushort Actor_Chat = 10109;
-		 public const ushort C2G_UseZhuanPan = 10110;
-		 public const ushort G2C_UseZhuanPan = 10111;
-		 public const ushort C2G_GetZhuanPanState = 10112;
-		 public const ushort G2C_GetZhuanPanState = 10113;
-		 public const ushort C2G_Share = 10114;
-		 public const ushort G2C_Share = 10115;
+		 public const ushort Actor_Chat = 10107;
+		 public const ushort C2G_UseZhuanPan = 10108;
+		 public const ushort G2C_UseZhuanPan = 10109;
+		 public const ushort C2G_GetZhuanPanState = 10110;
+		 public const ushort G2C_GetZhuanPanState = 10111;
+		 public const ushort C2G_Share = 10112;
+		 public const ushort G2C_Share = 10113;
 	}
 }
