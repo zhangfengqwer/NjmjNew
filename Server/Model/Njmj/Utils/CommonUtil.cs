@@ -343,19 +343,15 @@ namespace ETModel
             foreach (XmlNode node in nodeList)
             {
                 string nodeValue = node.InnerText;
-                if ("ResultMessage".Equals(node.Name))
+                if ("string".Equals(node.Name))
                 {
-                    var ResultCode = node.Attributes["ResultCode"].Value; 
-                    var ResultMessage = node.Attributes["ResultMessageDetails"].Value; 
-                    
-                    // 成功
-                    if (ResultCode == "1")
+                    JObject result = JObject.Parse(nodeValue);
+                    var ResultCode = (int)result.GetValue("ResultCode");
+                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
+
+                    if (ResultCode.CompareTo("1") == 0)
                     {
                         return true;
-                    }
-                    else
-                    {
-                        return false;
                     }
                 }
             }

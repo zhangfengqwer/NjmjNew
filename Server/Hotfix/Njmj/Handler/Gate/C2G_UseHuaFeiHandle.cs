@@ -31,11 +31,39 @@ namespace ETHotfix
                         else
                         {
                             // 充值话费
-                            UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
-                            useHuaFei.Uid = message.Uid;
-                            useHuaFei.HuaFei = message.HuaFei;
-                            useHuaFei.Phone = message.Phone;
-                            await proxyComponent.Save(useHuaFei);
+                            {
+                                string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString(), "话费", "1", message.Phone, "3", "1");
+
+                                SortedDictionary<string, string> dic = CommonUtil.XmlToDictionary(str);
+                                string Code;
+                                dic.TryGetValue("Code", out Code);
+
+                                string Message;
+                                dic.TryGetValue("Message", out Message);
+                                
+                                if (Code.CompareTo("0") != 0)
+                                {
+                                    Log.Debug("充值失败：" + Message);
+
+                                    response.Message = "充值失败";
+                                    response.Error = ErrorCode.ERR_PhoneCodeError;
+                                    reply(response);
+                                    return;
+                                }
+                                // 充值成功
+                                else
+                                {
+                                    // 充值话费
+                                    UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
+                                    useHuaFei.Uid = message.Uid;
+                                    useHuaFei.HuaFei = message.HuaFei;
+                                    useHuaFei.Phone = message.Phone;
+                                    await proxyComponent.Save(useHuaFei);
+
+                                    playerBaseInfos[0].HuaFeiNum -= 5;
+                                    await proxyComponent.Save(playerBaseInfos[0]);
+                                }
+                            }
 
                             reply(response);
                         }
