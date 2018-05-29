@@ -18,7 +18,6 @@ namespace ETHotfix
                 List<Email> emailList = new List<Email>();
                 if(emailInfos.Count > 0)
                 {
-                    Log.Debug("有邮件");
                     for(int i = 0;i< emailInfos.Count; ++i)
                     {
                         EmailInfo info = emailInfos[i];
@@ -28,7 +27,7 @@ namespace ETHotfix
                         email.State = info.State;
                         email.RewardItem = info.RewardItem;
                         email.Date = info.Date;
-                        email.EId = info.Id;
+                        email.EId = info.EmailId;
                         emailList.Add(email);
                     }
                     response.EmailInfoList = emailList;

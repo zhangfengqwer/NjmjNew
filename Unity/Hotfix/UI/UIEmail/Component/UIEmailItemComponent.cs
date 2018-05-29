@@ -26,10 +26,11 @@ namespace ETHotfix
         private Text content;
         private GameObject itemGrid;
         private Button get;
+        private Button Delete;
         private Button readBtn;
         private Text date;
         private GameObject flag;
-        private Email email;
+        public Email email;
         private int state;
         private GameObject rewardItem;
         private List<GameObject> rewardItemList = new List<GameObject>();
@@ -45,16 +46,40 @@ namespace ETHotfix
             date = rc.Get<GameObject>("Date").GetComponent<Text>();
             flag = rc.Get<GameObject>("Flag");
             get = rc.Get<GameObject>("Get").GetComponent<Button>();
+            Delete = rc.Get<GameObject>("Delete").GetComponent<Button>();
             readBtn = rc.Get<GameObject>("ReadBtn").GetComponent<Button>();
             rewardItem = CommonUtil.getGameObjByBundle(UIType.UIRewardItem);
             readBtn.onClick.Add(() =>
             {
                 //ReadEmail();
             });
+
+            //获得奖励
             get.onClick.Add(() =>
             {
                 GetItem();
             });
+
+            //删除邮件
+            Delete.onClick.Add(() =>
+            {
+                DeleteMail();
+            });
+        }
+
+        private async void DeleteMail()
+        {
+            UINetLoadingComponent.showNetLoading();
+            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+                .Session.Call(new C2G_EmailOperate
+                {
+                    Uid = PlayerInfoComponent.Instance.uid,
+                    EmailId = (int)email.EId,
+                    state = 2
+                });
+            UINetLoadingComponent.closeNetLoading();
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().RefreshMailUI(email.EId);
+            ToastScript.createToast("删除邮件成功!");
         }
 
         private async void GetItem()
@@ -68,18 +93,20 @@ namespace ETHotfix
                 itemList.Add(itemInfo);
             }
             UINetLoadingComponent.showNetLoading();
-            G2C_GetItem g2cGetItem = (G2C_GetItem)await SessionWrapComponent.Instance
-                .Session.Call(new C2G_GetItem
+            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+                .Session.Call(new C2G_EmailOperate
                 {
-                    UId = PlayerInfoComponent.Instance.uid,
+                    Uid = PlayerInfoComponent.Instance.uid,
                     InfoList = itemList,
-                    MailId = email.EId
+                    EmailId = (int)email.EId,
+                    state = 1
                 });
             UINetLoadingComponent.closeNetLoading();
             ToastScript.createToast("领取成功");
             get.gameObject.SetActive(false);
             GameUtil.changeDataWithStr(email.RewardItem);
             flag.SetActive(false);
+            Delete.gameObject.SetActive(true);
         }
 
         public void SetEmailData(Email email)
@@ -89,16 +116,19 @@ namespace ETHotfix
             content.text = email.Content;
             date.text = email.Date;
             state = email.State;
+            Log.Debug(state.ToString());
             string reward = email.RewardItem;
             flag.SetActive(state == 0);
+            if (state == 1)
+                Delete.gameObject.SetActive(true);
             if (reward != null && !reward.Equals(""))
             {
                 get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
                 {
-                    int itemId = CommonUtil.splitStr_Start(rewardArr[i], ',');
-                    int rewardNum = CommonUtil.splitStr_End(rewardArr[i], ',');
+                    int itemId = CommonUtil.splitStr_Start(rewardArr[i], ':');
+                    int rewardNum = CommonUtil.splitStr_End(rewardArr[i], ':');
                     RewardStruct rewardStruct = new RewardStruct();
                     rewardStruct.itemId = itemId;
                     rewardStruct.rewardNum = rewardNum;
