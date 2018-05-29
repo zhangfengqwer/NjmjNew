@@ -162,7 +162,19 @@ namespace ETHotfix
                 
                 reply(response);
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
-			}
+
+                // vip上线全服广播
+                {
+                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
+                    
+                    if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                    {
+                        Actor_LaBa actor_LaBa = new Actor_LaBa();
+                        actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
+                        Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
+                    }
+                }
+            }
 			catch (Exception e)
 			{
 				ReplyError(response, e, reply);
