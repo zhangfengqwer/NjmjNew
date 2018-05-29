@@ -59,6 +59,17 @@ namespace ETHotfix
 
                         // 登录日志
                         await DBCommonUtil.Log_Login(accountInfo.Id);
+
+                        {
+                            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(accountInfo.Id);
+                            // vip上线全服广播
+                            if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                            {
+                                Actor_LaBa actor_LaBa = new Actor_LaBa();
+                                actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
+                                Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
+                            }
+                        }
                     }
                     // 用户不存在，走注册流程
                     else
@@ -119,6 +130,17 @@ namespace ETHotfix
 
                             // 登录日志
                             await DBCommonUtil.Log_Login(accountInfo.Id);
+
+                            {
+                                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(accountInfo.Id);
+                                // vip上线全服广播
+                                if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                                {
+                                    Actor_LaBa actor_LaBa = new Actor_LaBa();
+                                    actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
+                                    Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
+                                }
+                            }
                         }
                         else
                         {
