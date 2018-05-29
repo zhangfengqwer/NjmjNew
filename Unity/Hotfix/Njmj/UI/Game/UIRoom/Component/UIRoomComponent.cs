@@ -39,7 +39,7 @@ namespace ETHotfix
 
         private Button ChatBtn; //聊天按钮
         
-        public GameObject currentItem = new GameObject();
+        public GameObject currentItem ;
 
         private Text restText;
         private GameObject players;
@@ -92,10 +92,13 @@ namespace ETHotfix
             this.settingBtn.onClick.Add(OnSetting);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
+
+            UI ui = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
+            ui.GameObject.SetActive(false);
+
             ChatBtn.onClick.Add(() =>
             {
-                UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat);
-                if(ui != null)
+                if (ui != null)
                 {
                     if (ui.GetComponent<UIChatComponent>().isOpen)
                     {
@@ -106,11 +109,6 @@ namespace ETHotfix
                         ui.GetComponent<UIChatComponent>().CloseOrOpenChatUI(true);
                     }
                 }
-                else
-                {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChat);
-                }
-                    
             });
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChatShow);
         }
@@ -136,6 +134,7 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
                 Debug.Log("remove");

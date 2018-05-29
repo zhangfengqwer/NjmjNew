@@ -56,6 +56,7 @@ namespace ETHotfix
             otherPlayer2 = rc.Get<GameObject>("otherPlayer2");
             otherPlayer3 = rc.Get<GameObject>("otherPlayer3");
 
+            playerList.Clear();
             playerList.Add(otherPlayer1);
             playerList.Add(otherPlayer2);
             playerList.Add(otherPlayer3);
@@ -225,6 +226,13 @@ namespace ETHotfix
             }
 
             //            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            isTimerEnd = true;
         }
     }
 }

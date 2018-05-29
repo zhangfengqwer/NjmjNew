@@ -31,7 +31,6 @@ namespace ETHotfix
                     taskInfo.Target = taskProgress.Target;
                     taskInfoList.Add(taskInfo);
                 }
-                DBCommonUtil.UpdateTask(message.uid, 104, 1);
                 response.TaskProgressList = taskInfoList;
                 reply(response);
             }

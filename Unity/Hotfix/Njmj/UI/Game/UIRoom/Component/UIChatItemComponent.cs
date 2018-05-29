@@ -33,11 +33,11 @@ namespace ETHotfix
             });
         }
 
-        private async void RequestChat()
+        private void RequestChat()
         {
             //UINetLoadingComponent.showNetLoading();
-            G2C_Chat g2cChat = (G2C_Chat)await Game.Scene.GetComponent<SessionWrapComponent>()
-                .Session.Call(new C2G_Chat { ChatType = 2, Value = ChatTxt.text, UId = PlayerInfoComponent.Instance.uid });
+            Game.Scene.GetComponent<SessionWrapComponent>()
+                .Session.Send(new Actor_Chat { ChatType = 2, Value = ChatTxt.text, UId = PlayerInfoComponent.Instance.uid });
             //UINetLoadingComponent.closeNetLoading();
         }
 

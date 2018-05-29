@@ -57,6 +57,7 @@ namespace ETHotfix
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.readyBtn.onClick.Add(OnReady);
 
+            timeOut = 20;
             SetTimeOut();
         }
 
@@ -65,6 +66,7 @@ namespace ETHotfix
         /// </summary>
         private async void SetTimeOut()
         {
+
             tokenSource = new CancellationTokenSource();
             while (timeOut > 0)
             {
@@ -138,6 +140,7 @@ namespace ETHotfix
             base.Dispose();
 
             tokenSource.Cancel();
+            timeOut = 20;
         }
     }
 }

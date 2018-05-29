@@ -11,6 +11,8 @@ namespace ETHotfix
         {
             try
             {
+                Log.Info("收到表情：" + JsonHelper.ToJson(message));
+
                 UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChatShow);
                 if (message.ChatType == 1)
                 {
@@ -25,9 +27,8 @@ namespace ETHotfix
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                Log.Error(e);
             }
-            
         }
     }
 }

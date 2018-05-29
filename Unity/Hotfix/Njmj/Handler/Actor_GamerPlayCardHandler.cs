@@ -32,7 +32,7 @@ namespace ETHotfix
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
-                    handCardsComponent.PlayCard(mahjongInfo, message.index);
+                    handCardsComponent.PlayCard(mahjongInfo, message.index, uiRoomComponent.currentItem);
                 }
                 else
                 {

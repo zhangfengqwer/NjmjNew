@@ -44,7 +44,7 @@ namespace ETHotfix
                 else
                 {
                     taskProgressInfoList[0].CurProgress += progress;
-                    if (taskProgressInfoList[0].CurProgress == taskProgressInfoList[0].Target)
+                    if (taskProgressInfoList[0].CurProgress >= taskProgressInfoList[0].Target)
                     {
                         taskProgressInfoList[0].IsComplete = true;
                     }
@@ -69,11 +69,12 @@ namespace ETHotfix
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+           // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
 
             if (chengjiuInfoList.Count > 0)
             {
                 chengjiuInfoList[0].CurProgress += progress;
-                if (chengjiuInfoList[0].CurProgress == chengjiuInfoList[0].Target)
+                if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {
                     chengjiuInfoList[0].IsComplete = true;
                 }

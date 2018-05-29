@@ -157,7 +157,10 @@ namespace ETHotfix
 	    /// <param name="b"></param>
 	    private static int HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
 	    {
-	        int huaCount = 0;
+	        room.ziMoUid = gamer.UserID;
+
+
+            int huaCount = 0;
 
             DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 	        OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
