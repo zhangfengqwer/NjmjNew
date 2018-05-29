@@ -958,6 +958,33 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.M2C_ActorGamerGetTreasure)]
+	[ProtoContract]
+	public partial class M2C_ActorGamerGetTreasure: IActorResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2M_ActorGamerGetTreasure)]
+	[ProtoContract]
+	public partial class C2M_ActorGamerGetTreasure: IActorRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.M2C_ActorGamerEnterRoom)]
 	[ProtoContract]
 	public partial class M2C_ActorGamerEnterRoom: IActorResponse
@@ -1082,17 +1109,20 @@ namespace ETHotfix
 		[ProtoMember(4)]
 		public List<MahjongInfo> faceCards = new List<MahjongInfo>();
 
-		[ProtoMember(6)]
+		[ProtoMember(5)]
 		public List<MahjongInfo> playCards = new List<MahjongInfo>();
 
-		[ProtoMember(7)]
+		[ProtoMember(6)]
 		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
 
-		[ProtoMember(8)]
+		[ProtoMember(7)]
 		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
 
-		[ProtoMember(5, IsRequired = true)]
+		[ProtoMember(8, IsRequired = true)]
 		public bool IsBanker;
+
+		[ProtoMember(9, IsRequired = true)]
+		public int OnlineSeconds;
 
 	}
 
@@ -1275,7 +1305,7 @@ namespace ETHotfix
 		public string RewardItem;
 
 		[ProtoMember(6, IsRequired = true)]
-		public int EId;
+		public long EId;
 
 	}
 

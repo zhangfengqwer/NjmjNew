@@ -52,9 +52,6 @@ namespace ETHotfix
             room.tokenSource.Cancel();
             self.Multiples = 100;
 
-
-
-
             Log.Debug("改变财富:" + huaCount * self.Multiples);
             await ChangeWeath(self, huaCount, room);
             //更新任务

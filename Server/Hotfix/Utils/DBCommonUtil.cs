@@ -338,6 +338,7 @@ namespace ETHotfix
         public static async void RecordGamerInfo(long userId, int totalSeconds)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
             List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
             GamerInfoDB gamerInfo;
@@ -349,9 +350,16 @@ namespace ETHotfix
             {
                 gamerInfo = gamerInfos[0];
             }
-
+            gamerInfo.UId = userId;
             gamerInfo.DailyOnlineTime += totalSeconds;
             gamerInfo.TotalOnlineTime += totalSeconds;
+
+            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
+
+            if (gamerInfo.DailyOnlineTime > treasureConfig?.TotalTime)
+            {
+                gamerInfo.DailyOnlineTime = treasureConfig.TotalTime;
+            }
 
             await proxyComponent.Save(gamerInfo);
         }

@@ -97,7 +97,6 @@ namespace ETHotfix
                     //庄家多发一张牌
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
-
 //	                List<MahjongInfo> infos = bankerHandCards.GetAll();
 	                bankerHandCards.library = new List<MahjongInfo>(list);
 
@@ -125,6 +124,7 @@ namespace ETHotfix
 	                    actorStartGame.GamerDatas.Add(gamerData);
                     }
 	                actorStartGame.restCount = deskComponent.RestLibrary.Count;
+
                     //发送消息
                     room.Broadcast(actorStartGame);
 	                room.reconnectList.Add(actorStartGame);

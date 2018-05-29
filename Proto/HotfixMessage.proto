@@ -336,10 +336,21 @@ message C2M_ActorGamerEnterRoom // IActorRequest
 	required string Info = 1;
 }
 
+message M2C_ActorGamerGetTreasure // IActorResponse
+{
+
+}
+
+message C2M_ActorGamerGetTreasure // IActorRequest
+{
+	
+}
+
 message M2C_ActorGamerEnterRoom // IActorResponse
 {
 	required string Info = 1;
 }
+
 
 message Actor_GamerExitRoom // IActorMessage
 {
@@ -379,10 +390,11 @@ message GamerData //IMessage
     required int SeatIndex = 2;
  	repeated MahjongInfo handCards = 3;
 	repeated MahjongInfo faceCards = 4;
-	repeated MahjongInfo playCards = 6;
-	repeated MahjongInfo pengCards = 7;
-	repeated MahjongInfo gangCards = 8;
-	required bool IsBanker = 5;
+	repeated MahjongInfo playCards = 5;
+	repeated MahjongInfo pengCards = 6;
+	repeated MahjongInfo gangCards = 7;
+	required bool IsBanker = 8;
+	required int OnlineSeconds = 9;
 }
 
 message Actor_ChangeTable // IActorMessage
