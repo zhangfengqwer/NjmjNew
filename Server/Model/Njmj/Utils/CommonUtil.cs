@@ -359,6 +359,34 @@ namespace ETModel
             return false;
         }
 
+        static public bool checkHuaFeiChongZhiResult(string data)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(data);
+            XmlNodeList nodeList = xmlDoc.ChildNodes;
+            foreach (XmlNode node in nodeList)
+            {
+                string nodeValue = node.InnerText;
+                if ("string".Equals(node.Name))
+                {
+                    JObject result = JObject.Parse(nodeValue);
+                    var Code = (int)result.GetValue("Code");
+                    var Message = (string)result.GetValue("Message");
+
+                    if (Code == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Log.Debug("充值失败:" + Message);
+                    }
+                }
+            }
+
+            return false;
+        }
+
         static public string getResultMessageDetails(string checkSms)
         {
             XmlDocument xmlDoc = new XmlDocument();
