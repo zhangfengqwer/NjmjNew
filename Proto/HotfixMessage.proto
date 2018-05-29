@@ -445,7 +445,20 @@ message Email //IMessage
 	required string Date = 3;//邮件日期
 	required int State = 4 [default = 0];//邮件状态 1 已读，2 删除
 	required string RewardItem = 5;//奖励物品
-	required long EId = 6;//邮箱ID
+	required int EId = 6;//邮箱ID
+}
+
+message C2G_EmailOperate //IRequest
+{
+	required long Uid = 1;
+	required int EmailId = 2;
+	repeated GetItemInfo InfoList = 3;
+	required int state = 4;
+}
+
+message G2C_EmailOperate //IResponse
+{
+
 }
 
 message C2G_GetItem //IRequest
