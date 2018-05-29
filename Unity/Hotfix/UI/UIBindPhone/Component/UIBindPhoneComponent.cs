@@ -20,6 +20,7 @@ namespace ETHotfix
 	
 	public class UIBindPhoneComponent : Component
 	{
+        bool isDispose = false;
         private InputField inputField_Phone;
 	    private InputField inputField_YanZhengMa;
 
@@ -36,6 +37,18 @@ namespace ETHotfix
             ToastScript.clear();
 
             initData();
+        }
+        
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            base.Dispose();
+
+            isDispose = true;
         }
 
         public void initData()
@@ -130,6 +143,11 @@ namespace ETHotfix
                 --time;
 
                 if (isSuccess)
+                {
+                    return;
+                }
+
+                if(isDispose)
                 {
                     return;
                 }

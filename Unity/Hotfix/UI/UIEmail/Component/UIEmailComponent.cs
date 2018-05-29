@@ -70,14 +70,27 @@ namespace ETHotfix
             
         }
 
+        public void RefreshMailUI(int mailId)
+        {
+            for(int i = 0;i< uiList.Count; ++i)
+            {
+                if (uiList[i].GetComponent<UIEmailItemComponent>().email.EId == mailId)
+                    GameObject.DestroyObject(uiList[i].GameObject);
+            }
+        }
+
         /// <summary>
         /// 创建邮件列表
         /// </summary>
         public void CreateEmailItemList()
         {
+            Log.Debug(JsonHelper.ToJson(emailList));
             GameObject obj = null;
             for(int i = 0;i< emailList.Count; ++i)
             {
+                //如果邮件已经被删除
+                if (emailList[i].State == 2)
+                    continue;
                 if(i < emailItemList.Count)
                 {
                     obj = emailItemList[i];

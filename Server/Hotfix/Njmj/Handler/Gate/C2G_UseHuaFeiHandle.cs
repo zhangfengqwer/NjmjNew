@@ -16,8 +16,8 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 if (message.HuaFei == 5)
                 {
-                    List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Uid:{message.Uid}}}");
-                    if (playerBaseInfos[0].HuaFeiNum >= 5)
+                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(message.Uid);
+                    if (playerBaseInfo.HuaFeiNum >= 5)
                     {
                         List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{message.HuaFei}}}");
                         if (useHuaFeis.Count > 0)
@@ -31,11 +31,39 @@ namespace ETHotfix
                         else
                         {
                             // 充值话费
-                            UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
-                            useHuaFei.Uid = message.Uid;
-                            useHuaFei.HuaFei = message.HuaFei;
-                            useHuaFei.Phone = message.Phone;
-                            await proxyComponent.Save(useHuaFei);
+                            {
+                                string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString(), "话费", "1", message.Phone, "3", "1");
+                                Log.Debug(str);
+                                SortedDictionary<string, string> dic = CommonUtil.XmlToDictionary(str);
+                                string Code;
+                                dic.TryGetValue("Code", out Code);
+
+                                string Message;
+                                dic.TryGetValue("Message", out Message);
+                                
+                                if (Code.CompareTo("0") != 0)
+                                {
+                                    Log.Debug("充值失败：" + Message);
+
+                                    response.Message = "充值失败";
+                                    response.Error = ErrorCode.ERR_PhoneCodeError;
+                                    reply(response);
+                                    return;
+                                }
+                                // 充值成功
+                                else
+                                {
+                                    // 充值话费
+                                    UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
+                                    useHuaFei.Uid = message.Uid;
+                                    useHuaFei.HuaFei = message.HuaFei;
+                                    useHuaFei.Phone = message.Phone;
+                                    await proxyComponent.Save(useHuaFei);
+
+                                    playerBaseInfo.HuaFeiNum -= 5;
+                                    await proxyComponent.Save(playerBaseInfo);
+                                }
+                            }
 
                             reply(response);
                         }

@@ -109,7 +109,7 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (false)
+            if (true)
             {
                 phone = "";
                 token = "";
@@ -151,7 +151,7 @@ namespace ETHotfix
         public async void onClickWechatLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin("hp");
+            await OnThirdLogin(Third_Id);
         }
 
         public void onClickBackStart()
