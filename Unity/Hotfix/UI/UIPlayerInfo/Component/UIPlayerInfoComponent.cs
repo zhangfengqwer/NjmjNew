@@ -84,8 +84,11 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetUIHideOrOpen(true);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP).GameObject.activeInHierarchy)
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIVIP);
+                if(Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP) != null)
+                {
+                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP).GameObject.activeInHierarchy)
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIVIP);
+                }
             });
             
             changeNameBtn.onClick.Add(() =>
