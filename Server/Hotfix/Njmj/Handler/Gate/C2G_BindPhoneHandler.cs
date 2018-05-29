@@ -28,10 +28,15 @@ namespace ETHotfix
 
                 // 校验验证码
                 {
-                    string uid = message.Uid.ToString();
-                    uid = uid.Substring(1);
                     string str = HttpUtil.CheckSms("0", message.Phone, message.Code);
-                    if (!CommonUtil.checkSmsCode(str))
+                    SortedDictionary<string, string> dic = CommonUtil.XmlToDictionary(str);
+                    string ResultCode;
+                    dic.TryGetValue("ResultCode", out ResultCode);
+
+                    string ResultMessageDetails;
+                    dic.TryGetValue("ResultMessageDetails", out ResultMessageDetails);
+
+                    if (ResultCode.CompareTo("0") == 0)
                     {
                         response.Message = "验证码错误";
                         response.Error = ErrorCode.ERR_PhoneCodeError;
