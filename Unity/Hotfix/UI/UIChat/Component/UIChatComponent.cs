@@ -23,18 +23,20 @@ namespace ETHotfix
         private GameObject ExpressionGrid;
         private GameObject ShortGrid;
         private GameObject ExpressionItem;
+        private GameObject Mask;
         private List<GameObject> ExpressionItemList = new List<GameObject>();
         private GameObject ChatItem;
         private List<GameObject> ChatItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
         private List<UI> chatUiList = new List<UI>();
-        public bool isOpen = true;
+        public bool isOpen = false;
 
         public void Awake()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
+            Mask = rc.Get<GameObject>("Mask");
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
             ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
 
@@ -44,7 +46,18 @@ namespace ETHotfix
 
             ExpressionItem = CommonUtil.getGameObjByBundle(UIType.UIExpression);
             ChatItem = CommonUtil.getGameObjByBundle(UIType.UIChatItem);
+            isOpen = false;
 
+            #region 是否可点击表情（VIP可点击）
+            if (GameUtil.isVIP())
+            {
+                Mask.SetActive(false);
+            }
+            else
+            {
+                Mask.SetActive(true);
+            }
+            #endregion
             //选中表情包界面
             CreatExpressions();
         }
