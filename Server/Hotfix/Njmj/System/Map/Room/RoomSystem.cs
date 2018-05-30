@@ -253,6 +253,8 @@ namespace ETHotfix
                 cardsComponent.AddCard(grabMahjong);
                 deskComponent.RestLibrary.RemoveAt(number);
                 room.my_lastMahjong = grabMahjong;
+                cardsComponent.GrabCard = grabMahjong;
+
                 Logic_NJMJ.getInstance().SortMahjong(cardsComponent.GetAll());
 
                 //发送抓牌消息
@@ -305,16 +307,23 @@ namespace ETHotfix
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 
-                        List<MahjongInfo> temp = new List<MahjongInfo>(handCardsComponent.GetAll());
-                        Logic_NJMJ.getInstance().RemoveCard(temp, grabMahjong);
-
                         //暗杠
-                        if (Logic_NJMJ.getInstance().isCanGang(grabMahjong, temp))
+                        if (Logic_NJMJ.getInstance().IsAnGang(handCardsComponent.GetAll(), out var weight))
                         {
                             _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
                             canOperation.Uid = _gamer.UserID;
-                            canOperation.OperationType = 1;
+                            canOperation.OperationType = 4;
+                            room.GamerBroadcast(_gamer, canOperation);
+                        }
+
+                        //碰杠
+                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll()))
+                        {
+                            _gamer.IsCanGang = true;
+                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                            canOperation.Uid = _gamer.UserID;
+                            canOperation.OperationType = 5;
                             room.GamerBroadcast(_gamer, canOperation);
                         }
                     }

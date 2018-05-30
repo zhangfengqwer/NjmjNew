@@ -7,7 +7,7 @@ namespace ETHotfix
     {
         private readonly Dictionary<long, int> seats = new Dictionary<long, int>();
         private readonly Gamer[] gamers = new Gamer[4];
-
+        public long CurrentPlayUid;
         public Gamer LocalGamer { get; set; }
 
         /// <summary>

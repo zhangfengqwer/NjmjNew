@@ -12,12 +12,15 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.4.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -364,9 +367,7 @@
     <Compile Include="Assets\Scripts\Component\GlobalConfigComponent.cs" />
     <Compile Include="Assets\Scripts\Component\SceneChangeComponent.cs" />
     <Compile Include="Assets\Scripts\Component\TimerComponent.cs" />
-    <Compile Include="Assets\Scripts\Entity\Config\ActivityConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Config\ChatConfig.cs" />
-    <Compile Include="Assets\Scripts\Entity\Config\TreasureConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Config\UnitConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Game.cs" />
     <Compile Include="Assets\Scripts\Entity\Hotfix.cs" />
@@ -517,7 +518,6 @@
     <Compile Include="Assets\Scripts\Utils\CommonUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\SensitiveWordUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\ToastScript.cs" />
-    <Compile Include="Assets\Scripts\Utils\VerifyRuleUtil.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\CLRBindings.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_ShortcutExtensions46_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_TweenSettingsExtensions_Binding.cs" />

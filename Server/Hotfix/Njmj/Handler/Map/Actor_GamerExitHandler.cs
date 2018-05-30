@@ -12,8 +12,10 @@ namespace ETHotfix
 
 	    protected override async Task Run(Gamer gamer, Actor_GamerExitRoom message)
 	    {
+	        await Task.CompletedTask;
+
             try
-	        {
+            {
 	            Log.Info($"玩家{gamer.UserID}退出房间");
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
@@ -22,8 +24,8 @@ namespace ETHotfix
 	            {
 	                gamer.isOffline = true;
                     //玩家断开添加自动出牌组件
-                    //	                if (gamer.GetComponent<TrusteeshipComponent>() == null)
-                    //	                gamer.AddComponent<TrusteeshipComponent>();
+                    //if (gamer.GetComponent<TrusteeshipComponent>() == null)
+                    //gamer.AddComponent<TrusteeshipComponent>();
 	                gamer.EndTime = DateTime.Now;
 	                TimeSpan span = gamer.EndTime - gamer.StartTime;
 	                int totalSeconds = (int) span.TotalSeconds;
@@ -66,16 +68,15 @@ namespace ETHotfix
 	                if (room.seats.Count == 0)
 	                {
 	                    Log.Debug($"房间释放:{room.Id}");
-	                    room?.Dispose();
 	                    roomComponent.RemoveRoom(room);
-	                }
+	                    room?.Dispose();
+                    }
                 }
             }
 	        catch (Exception e)
 	        {
 	            Log.Error(e);
             }
-	        await Task.CompletedTask;
 	    }
 	}
 }

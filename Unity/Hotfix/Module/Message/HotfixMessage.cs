@@ -971,6 +971,9 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public int RestSeconds;
+
 	}
 
 	[Message(HotfixOpcode.C2M_ActorGamerGetTreasure)]

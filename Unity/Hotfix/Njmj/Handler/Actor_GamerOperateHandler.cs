@@ -32,17 +32,26 @@ namespace ETHotfix
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
-                    handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
+                    if (message.OperationType == 0)
+                    {
+                        gamerComponent.CurrentPlayUid = message.Uid;
+                    }
+
+                    //碰刚
+                    if (message.OperationType == 5)
+                    {
+
+                    }
+                    else
+                    {
+                        handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
+
+                    }
                 }
                 else
                 {
                     handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
                 }
-
-                //                //去除出牌中的牌
-                //                Log.Info(uiRoomComponent.currentItem.name);
-                //
-                //                GameObject.Destroy(uiRoomComponent.currentItem);
             }
             catch (Exception e)
             {

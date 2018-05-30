@@ -32,6 +32,9 @@ namespace ETHotfix
                     handCardsComponent.GrabOtherCard();
                 }
 
+                //当前出牌玩家
+                gamerComponent.CurrentPlayUid = message.Uid;
+
                 //剩下的牌
                 uiRoomComponent.SetRestCount();
 

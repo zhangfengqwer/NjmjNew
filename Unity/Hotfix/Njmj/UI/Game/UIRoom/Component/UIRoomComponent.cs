@@ -49,6 +49,8 @@ namespace ETHotfix
         private Button settingBtn;
         private Button changeTableBtn;
         public GamerInfo localGamer;
+        private GameObject treasure;
+        private bool isTreasureFinish;
 
         public void Awake()
         {
@@ -59,6 +61,9 @@ namespace ETHotfix
             GamersPanel[2] = rc.Get<GameObject>("Top");
             GamersPanel[3] = rc.Get<GameObject>("Left");
             this.players = rc.Get<GameObject>("Players");
+
+            this.treasure = rc.Get<GameObject>("Treasure");
+            this.treasure.SetActive(false);
 
             this.desk = rc.Get<GameObject>("Desk");
             this.head = rc.Get<GameObject>("Head");
@@ -362,6 +367,8 @@ namespace ETHotfix
                     pengBtn.gameObject.SetActive(true);
                     break;
                 case 1:
+                case 4:
+                case 5:
                     gangBtn.gameObject.SetActive(true);
                     break;
                 case 2:
@@ -382,6 +389,69 @@ namespace ETHotfix
             }
             base.Dispose();
             tokenSource?.Cancel();
+            isTreasureFinish = true;
+        }
+
+        /// <summary>
+        /// 设置宝箱倒计时
+        /// </summary>
+        /// <param name="onlineSeconds"></param>
+        public async void SetTreasureTime(int onlineSeconds)
+        {
+            try
+            {
+                Log.Debug("宝箱倒计时:" + onlineSeconds);
+                this.treasure.SetActive(true);
+                Text timeText = this.treasure.transform.Find("Text").GetComponent<Text>();
+                Image image = this.treasure.GetComponent<Image>();
+                Button button = this.treasure.GetComponent<Button>();
+                image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "Treasure_Close");
+                button.interactable = false;
+                isTreasureFinish = false;
+                while (onlineSeconds > 0)
+                {
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+                    if (isTreasureFinish) return;
+                    onlineSeconds--;
+                    int second = onlineSeconds % 60;
+                    int minute = onlineSeconds / 60;
+                    if (second < 10)
+                    {
+                        timeText.text = $"{minute}:0{second}";
+
+                    }
+                    else
+                    {
+                        timeText.text = $"{minute}:{second}";
+
+                    }
+                }
+
+                timeText.text = "0:00";
+                image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "Treasure_Open");
+                button.interactable = true;
+                button.onClick.RemoveAllListeners();
+                button.onClick.Add(OnGetTreasure);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+          
+        }
+
+        private async void OnGetTreasure()
+        {
+            Log.Debug("领取宝箱");
+            M2C_ActorGamerGetTreasure gamerGetTreasure = (M2C_ActorGamerGetTreasure)await SessionWrapComponent.Instance.Session.Call(new C2M_ActorGamerGetTreasure());
+            if (gamerGetTreasure.Error == ErrorCode.ERR_Success)
+            {
+                SetTreasureTime(gamerGetTreasure.RestSeconds);
+            }
+            else
+            {
+                ToastScript.createToast(gamerGetTreasure.Message);
+            }
         }
     }
 }

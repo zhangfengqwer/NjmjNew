@@ -1047,6 +1047,12 @@ namespace ETHotfix
             return false;
         }
 
+        /// <summary>
+        /// 暗杆
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="weight"></param>
+        /// <returns></returns>
         public bool IsAnGang(List<MahjongInfo> list,out MahjongWeight weight)
         {
             List<IGrouping<MahjongWeight, MahjongInfo>> result = list.GroupBy(x => x.m_weight).Where(x => x.Count() == 4).ToList();
@@ -1058,6 +1064,28 @@ namespace ETHotfix
                 return true;
             }
             weight = 0;
+            return false;
+        }
+
+        /// <summary>
+        /// 碰刚
+        /// </summary>
+        /// <param name="pengCards"></param>
+        /// <param name="grabMahjong"></param>
+        /// <returns></returns>
+        public bool IsPengGang(List<MahjongInfo> pengCards, List<MahjongInfo> handCards)
+        {
+            foreach (var card in pengCards)
+            {
+                foreach (var handCard in handCards)
+                {
+                    if (card.m_weight == handCard.m_weight)
+                    {
+                        return true;
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -1117,5 +1145,7 @@ namespace ETHotfix
                 mahjongInfos.RemoveAt(index);
             }
         }
+
+
     }
 }

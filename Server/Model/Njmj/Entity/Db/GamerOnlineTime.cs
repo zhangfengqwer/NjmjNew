@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ETModel;
 
-namespace ETHotfix
+namespace ETModel
 { 
     public class GamerOnlineTime : ComponentWithId
     {

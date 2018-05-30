@@ -33,6 +33,8 @@ namespace ETHotfix
 	            {
 	                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, config.Reward);
 	                await proxyComponent.Save(gamerInfo);
+	                TreasureConfig treasureConfig = (TreasureConfig)configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount);
+	                response.RestSeconds = treasureConfig.TotalTime - gamerInfo.DailyOnlineTime;
 	            }
 	            else
 	            {

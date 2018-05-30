@@ -121,7 +121,7 @@ namespace ETHotfix
                             gamerData.IsBanker = true;
                         }
 	                    gamerData.SeatIndex = room.seats[itemGame.UserID];
-	                    gamerData.OnlineSeconds = await DBCommonUtil.GetOnlineSeconds(itemGame.UserID);
+	                    gamerData.OnlineSeconds = await DBCommonUtil.GetRestOnlineSeconds(itemGame.UserID);
 	                    actorStartGame.GamerDatas.Add(gamerData);
                     }
 	                actorStartGame.restCount = deskComponent.RestLibrary.Count;

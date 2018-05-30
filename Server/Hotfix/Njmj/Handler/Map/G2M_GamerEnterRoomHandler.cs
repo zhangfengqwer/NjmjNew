@@ -52,7 +52,7 @@ namespace ETHotfix
 			            gamerData.IsBanker = handCardsComponent.IsBanker;
 			            gamerData.UserID = _gamer.UserID;
 			            gamerData.SeatIndex = room.GetGamerSeat(_gamer.UserID);
-
+			            gamerData.OnlineSeconds = await DBCommonUtil.GetRestOnlineSeconds(_gamer.UserID);
                         reconnet.Gamers.Add(gamerData);
                     }
 
@@ -148,7 +148,7 @@ namespace ETHotfix
                         }
                     }
 
-			        Log.Info($"玩家{message.UserId}进入房间");
+			        Log.Info($"玩家{message.UserId}进入房间:{idleRoom.Id}");
                 }
 			    response.GameId = gamer.Id;
 			    reply(response);

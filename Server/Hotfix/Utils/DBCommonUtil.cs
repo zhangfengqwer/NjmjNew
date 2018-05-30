@@ -361,6 +361,8 @@ namespace ETHotfix
                 gamerInfo.DailyOnlineTime = treasureConfig.TotalTime;
             }
 
+            --gamerInfo.DailyTreasureCount;
+
             await proxyComponent.Save(gamerInfo);
         }
 
@@ -368,16 +370,25 @@ namespace ETHotfix
         /// 获取在线时长
         /// </summary>
         /// <param name="userId"></param>
-        public static async Task<int> GetOnlineSeconds(long userId)
+        public static async Task<int> GetRestOnlineSeconds(long userId)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
             List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
             if (gamerInfos.Count == 0)
             {
-                return 0;
+                TreasureConfig config = (TreasureConfig) configComponent.Get(typeof(TreasureConfig), 1);
+                return config.TotalTime;
             }
-            return gamerInfos[0].DailyOnlineTime;
+            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
+
+            int i = treasureConfig.TotalTime - gamerInfos[0].DailyOnlineTime;
+            Log.Debug("TotalTime" + treasureConfig.TotalTime);
+            Log.Debug("gamerInfos[0].DailyOnlineTime" + gamerInfos[0].DailyOnlineTime);
+            Log.Debug("还剩" + i);
+
+            return i;
         }
     } 
 }

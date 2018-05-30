@@ -338,8 +338,8 @@ message C2M_ActorGamerEnterRoom // IActorRequest
 
 message M2C_ActorGamerGetTreasure // IActorResponse
 {
-
-}
+	required int RestSeconds = 1;
+}	
 
 message C2M_ActorGamerGetTreasure // IActorRequest
 {

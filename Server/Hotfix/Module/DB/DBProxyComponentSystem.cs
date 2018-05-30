@@ -105,7 +105,7 @@ namespace ETHotfix
 	    public static async Task<List<T>> QueryJsonCurrentDayByUid<T>(this DBProxyComponent self,long userId,DateTime dateTime) where T : ComponentWithId
 	    {
 	        List<T> list = new List<T>();
-	        string json = $"{{CreateTime:/^{dateTime.GetCurrentDay()}/}}";
+	        string json = $"{{UId:{userId}, CreateTime:/^{dateTime.GetCurrentDay()}/}}";
 	        Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
 	        DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
 	        foreach (ComponentWithId disposer in dbQueryJsonResponse.Components)
