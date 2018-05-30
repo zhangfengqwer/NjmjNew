@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETHotfix
 {
-    class HttpReqUtil
+    public class HttpReqUtil
     {
         public delegate void CallBack(string data);
 

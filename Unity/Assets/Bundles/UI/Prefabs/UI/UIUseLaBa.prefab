@@ -250,10 +250,10 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 1
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -350,8 +350,8 @@ MonoBehaviour:
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
-    m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -441,7 +441,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8BF7\u8F93\u5165\u60A8\u8981\u53D1\u9001\u7684\u6D88\u606F\uFF0C30\u5B57\u4EE5\u5185\u3002"
+  m_Text: "\u8BF7\u8F93\u5165\u60A8\u8981\u53D1\u9001\u7684\u6D88\u606F\uFF0C20\u5B57\u4EE5\u5185\u3002"
 --- !u!114 &114620538577719880
 MonoBehaviour:
   m_ObjectHideFlags: 1
