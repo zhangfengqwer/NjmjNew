@@ -187,9 +187,19 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+
+                HeartBeat.getInstance().stopHeartBeat();
             }
             catch (Exception e)
             {
+                PlayerPrefs.SetString("Phone", "");
+                PlayerPrefs.SetString("Token", "");
+
+                Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+
+                HeartBeat.getInstance().stopHeartBeat();
+
                 sessionWrap?.Dispose();
                 Log.Error(e);
             }

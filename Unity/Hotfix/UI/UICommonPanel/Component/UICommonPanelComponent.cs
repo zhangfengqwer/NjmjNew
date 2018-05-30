@@ -9,9 +9,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
 	[ObjectSystem]
-	public class UiCommonPanelComponentSystem : AwakeSystem<UIUseLaBaComponent>
+	public class UiCommonPanelComponentSystem : AwakeSystem<UICommonPanelComponent>
 	{
-		public override void Awake(UIUseLaBaComponent self)
+		public override void Awake(UICommonPanelComponent self)
 		{
 			self.Awake();
 		}

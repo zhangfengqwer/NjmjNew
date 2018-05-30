@@ -118,5 +118,7 @@ namespace ETModel
 		 public const ushort G2C_Share = 10114;
 		 public const ushort C2G_Recharge = 10115;
 		 public const ushort G2C_Recharge = 10116;
+		 public const ushort C2G_HeartBeat = 10117;
+		 public const ushort G2C_HeartBeat = 10118;
 	}
 }

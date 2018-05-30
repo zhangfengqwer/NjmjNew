@@ -701,4 +701,12 @@ message G2C_Recharge // IResponse
 	required string Reward = 2;
 }
 
+message C2G_HeartBeat //IRequest
+{
+}
+
+message G2C_HeartBeat // IResponse
+{
+}
+
 #endregion

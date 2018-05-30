@@ -253,6 +253,8 @@ namespace ETHotfix
             CommonUtil.ShowUI(UIType.UIDaily);
 
             checkLaBa();
+
+            HeartBeat.getInstance().startHeartBeat();
         }
 
         /// <summary>
