@@ -175,6 +175,8 @@
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
     <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
+    <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
+    <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />
     <Compile Include="UI\UINetLoading\Component\UINetLoadingComponent.cs" />
     <Compile Include="UI\UINetLoading\Factory\UINetLoadingFactory.cs" />
     <Compile Include="UI\UICommonPanel\Component\UICommonPanelComponent.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="UI\UIVIP\Factory\UIVIPFactory.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
     <Compile Include="Utils\GameUtil.cs" />
+    <Compile Include="Utils\HeartBeat.cs" />
     <Compile Include="Utils\HttpReqUtil.cs" />
     <Compile Include="Utils\VerifyRuleUtil.cs" />
   </ItemGroup>
