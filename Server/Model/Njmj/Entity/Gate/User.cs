@@ -24,6 +24,8 @@ namespace ETModel
         //Gate转发ActorID
         public long ActorID { get; set; }
 
+        public Session session { get; set; }
+
         public void Awake(long id)
         {
             this.UserID = id;
