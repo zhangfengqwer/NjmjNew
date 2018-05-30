@@ -92,10 +92,13 @@ namespace ETHotfix
             List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
             if (playerBaseInfos.Count > 0)
             {
-                playerBaseInfos[0].TotalGameCount += progress;
                 if (isWin)
                 {
                     playerBaseInfos[0].WinGameCount += progress;
+                }
+                else
+                {
+                    playerBaseInfos[0].TotalGameCount += progress;
                 }
                 float winRate = MathF.Abs((playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount));
                 playerBaseInfos[0].WinRate = winRate;
