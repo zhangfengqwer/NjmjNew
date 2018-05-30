@@ -44,6 +44,9 @@ namespace ETHotfix
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
             int index = gamerComponent.GetGamerSeat(UId);
+            //设置文本框随着字数缩放
+            float width = content.Length * 30 + 90;
+            chatObjArr[index].GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
             //如果多次点击发送文本，隐掉前一个显示当前的
             if (chatObjArr[index].activeInHierarchy)
             {
