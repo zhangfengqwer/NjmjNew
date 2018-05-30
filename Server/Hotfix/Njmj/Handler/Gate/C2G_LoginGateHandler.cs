@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
+using MongoDB.Driver;
 
 namespace ETHotfix
 {
@@ -195,7 +196,24 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
                     }
                 }
-            }
+//
+//			    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+//			    FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>("{}");
+//			    SortDefinition<ComponentWithId> sort = Builders<ComponentWithId>.Sort.Ascending("State").Descending("CreateTime");
+////			    List<ComponentWithId> components = await dbComponent.GetCollection(typeof(EmailInfo).Name).FindAsync(filterDefinition).Result.ToListAsync();
+//
+//			    List<ComponentWithId> components = await dbComponent.GetCollection(typeof(EmailInfo).Name).Find(filterDefinition).Sort(sort).Limit(50).ToListAsync();
+//
+//
+//                List<EmailInfo> infos = new List<EmailInfo>();
+//			    foreach (var component in components)
+//			    {
+//			        infos.Add((EmailInfo) component);
+//                }
+//
+//			    Log.Debug($"info.count:{infos.Count}");
+
+			}
 			catch (Exception e)
 			{
 				ReplyError(response, e, reply);
