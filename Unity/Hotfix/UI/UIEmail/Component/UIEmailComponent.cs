@@ -57,11 +57,7 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
 
             emailList = g2cEmail.EmailInfoList;
-            if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
-            {
-                CreateEmailItemList();
-            }
-
+            CreateEmailItemList();
         }
 
         public void RefreshMailUI(long mailId)
@@ -75,7 +71,9 @@ namespace ETHotfix
         public void CreateEmailItemList()
         {
             GameObject obj = null;
-            for(int i = 0;i< emailList.Count; ++i)
+            if (emailList.Count <= 0)
+                SetMoreMailHide(0);
+            for (int i = 0;i< emailList.Count; ++i)
             {
                 if(i < emailItemList.Count)
                 {
@@ -90,7 +88,7 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIEmailItemComponent>();
-                    if (emailList[i].State == 1)
+                    if (emailList[i].State == 0)
                         obj.transform.SetAsFirstSibling();
                     uiList.Add(ui);
                     emailItemList.Add(obj);

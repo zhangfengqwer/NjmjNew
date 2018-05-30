@@ -138,23 +138,43 @@ namespace ETHotfix
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {
-                    #region emailTest
-                    EmailInfo emailInfo = new EmailInfo();
-                    emailInfo.EmailId = 101;
-                    emailInfo.UId = userId;
-                    //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                    emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                    emailInfo.Date = new StringBuilder()
-                                    .Append(CommonUtil.getCurYear())
-                                    .Append("-")
-                                    .Append(CommonUtil.getCurMonth())
-                                    .Append("-")
-                                    .Append(CommonUtil.getCurDay()).ToString();
-                    //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                    emailInfo.Content = "加入南京麻将，就有好礼相送";
-                    emailInfo.State = 0;
-                    emailInfo.RewardItem = "2:100;1:100";
-                    DBHelper.AddEmailInfoToDB(emailInfo);
+                    {
+                        #region emailTest
+                        EmailInfo emailInfo = new EmailInfo();
+                        emailInfo.EmailId = 101;
+                        emailInfo.UId = userId;
+                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                        emailInfo.Date = new StringBuilder()
+                                        .Append(CommonUtil.getCurYear())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurMonth())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurDay()).ToString();
+                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                        emailInfo.Content = "加入南京麻将，就有好礼相送";
+                        emailInfo.State = 0;
+                        emailInfo.RewardItem = "2:100;1:100";
+                        DBHelper.AddEmailInfoToDB(emailInfo);
+                    }
+                    {
+                        EmailInfo emailInfo = new EmailInfo();
+                        emailInfo.EmailId = 102;
+                        emailInfo.UId = userId;
+                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                        emailInfo.Date = new StringBuilder()
+                                        .Append(CommonUtil.getCurYear())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurMonth())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurDay()).ToString();
+                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                        emailInfo.Content = "加入南京麻将，就有好礼相送";
+                        emailInfo.State = 0;
+                        emailInfo.RewardItem = "2:100;1:100";
+                        DBHelper.AddEmailInfoToDB(emailInfo);
+                    }
                     #endregion
                 }
                 
