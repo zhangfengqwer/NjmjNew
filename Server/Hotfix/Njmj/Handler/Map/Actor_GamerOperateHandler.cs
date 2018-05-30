@@ -81,7 +81,6 @@ namespace ETHotfix
                     //有没有人胡牌
                     while (true)
                     {
-//                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                         if (!GetCanHu(room))
                         {
                             break;
@@ -110,11 +109,31 @@ namespace ETHotfix
                         }
                     }
                     //杠
-                    else if (message.OperationType == 1)
+                    else
                     {
+                        HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
+                        bool isSuccess = false;
+                        //明杠
                         if (Logic_NJMJ.getInstance().isCanGang(deskComponent.CurrentCard, mahjongInfos))
                         {
-                            gamerOperation.OperationType = 1;
+                            isSuccess = true;
+                        }  
+                        //暗杠
+                        else if (Logic_NJMJ.getInstance().IsAnGang(handCardsComponent.GetAll(), out var weight))
+                        {
+                            isSuccess = true;
+                            gamerOperation.weight = (int) weight;
+                        }
+                        //碰杠
+                        else if(Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll()))
+                        {
+                            isSuccess = true;
+                            gamerOperation.weight = handCardsComponent.GrabCard.weight;
+                        }
+
+                        if (isSuccess)
+                        {
+                            gamerOperation.OperationType = message.OperationType;
                             room.Broadcast(gamerOperation);
 
                             //更新手牌
@@ -130,11 +149,15 @@ namespace ETHotfix
                             gamer.isFaWanPaiTingPai = false;
                             room.isGangEndBuPai = true;
                             room.isGetYingHuaBuPai = false;
-
                             orderController.CurrentAuthority = gamer.UserID;
                             //杠完之后抓牌
                             room.GrabMahjong();
                         }
+                        else
+                        {
+                            Log.Debug("不能杠");
+                        }
+
                     }
 
                     //碰完当前玩家出牌

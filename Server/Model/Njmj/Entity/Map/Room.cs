@@ -10,9 +10,9 @@ namespace ETModel
     /// </summary>
     public enum RoomState : byte
     {
-        Idle,       
-        Ready,      
-        Game        
+        Idle,
+        Ready,
+        Game
     }
 
     /// <summary>
@@ -31,6 +31,7 @@ namespace ETModel
 
         //10秒超时
         public int TimeOut = 10;
+
         //5秒碰刚超时
         public int OperationTimeOut = 6;
 
@@ -38,11 +39,15 @@ namespace ETModel
         public bool IsOperate = false;
 
         public CancellationTokenSource tokenSource;
+
         //房间状态
         public RoomState State { get; set; } = RoomState.Idle;
 
         //房间玩家数量
-        public int Count { get { return seats.Values.Count; } }
+        public int Count
+        {
+            get { return seats.Values.Count; }
+        }
 
         // 自己最新抓的牌或是别人刚出的牌
         public MahjongInfo my_lastMahjong = null;
@@ -69,6 +74,7 @@ namespace ETModel
         public bool isGetYingHuaBuPai = false;
 
         public long ziMoUid;
+
         public long fangPaoUid;
 
         /// <summary>
@@ -182,7 +188,6 @@ namespace ETModel
 //                actorProxy.Send(message);
 //            }
 //        }
-
         public override void Dispose()
         {
             if (this.IsDisposed)
@@ -205,7 +210,19 @@ namespace ETModel
 
             State = RoomState.Idle;
             reconnectList.Clear();
-        }
 
+            IsGameOver = false;
+            isSelfZhuaPai = false;
+            // 自己是否是庄家
+            isZhuangJia = false;
+            // 是否是刚发完牌
+            isGangFaWanPai = false;
+            // 是否是刚发完牌就听牌
+            isFaWanPaiTingPai = false;
+            // 是否是杠完补牌
+            isGangEndBuPai = false;
+            // 是否是抓到硬花补牌
+            isGetYingHuaBuPai = false;
+        }
     }
 }

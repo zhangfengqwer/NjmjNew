@@ -32,6 +32,7 @@ namespace ETHotfix
 
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
+        private List<GameObject> cardDisplayObjs = new List<GameObject>();
         private List<MahjongInfo> faceCards = new List<MahjongInfo>();
         private GameObject CardBottom;
 
@@ -223,7 +224,7 @@ namespace ETHotfix
             instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
             instantiate.layer = LayerMask.NameToLayer("UI");
 
-            currentItem = instantiate;
+            //            currentItem = instantiate;
 
             ShowCard(mahjong.weight);
         }
@@ -425,15 +426,30 @@ namespace ETHotfix
 
             GameObject obj = (GameObject) this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
             GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
-            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
-            instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
-            instantiate.layer = LayerMask.NameToLayer("UI");
-            currentItem = instantiate;
+            this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
+            this.currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
+            this.currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
+            cardDisplayObjs.Add(this.currentPlayCardObj);
+            if (Index == 1)
+            {
+                this.currentPlayCardObj.transform.SetAsFirstSibling();
+                int count = this.cardDisplayObjs.Count;
+                int x = -107;
+                int y = -192;
+                int i = count / 8;
+                int i1 = count % 8;
+                if (i1 == 0)
+                {
+                    i1 = 8;
+                    i--;
+                }
 
+                this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 63), 40 * (i1 - 1) - 192, 0);
+            }
+
+            currentItem = this.currentPlayCardObj;
             ShowCard(mahjongInfo.weight);
         }
-
-
 
         public void ShowBg()
         {
@@ -458,11 +474,32 @@ namespace ETHotfix
                     this.RemoveCard(index);
                 }
             }
+            //明杠
             else if (type == 1)
             {
                 obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
                 //更新手牌
                 for (int i = 0; i < 3; i++)
+                {
+                    int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
+                    this.RemoveCard(index);
+                }
+            }
+            //暗杆
+            else if (type == 4)
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+                for (int i = 0; i < 4; i++)
+                {
+                    int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
+                    this.RemoveCard(index);
+                }
+            }
+            //碰刚
+            else if (type == 5)
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+                for (int i = 0; i < 1; i++)
                 {
                     int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
                     this.RemoveCard(index);
@@ -484,6 +521,7 @@ namespace ETHotfix
         }
 
         private int num = 0;
+        private GameObject currentPlayCardObj;
 
         /// <summary>
         /// 其他人碰刚
@@ -520,10 +558,34 @@ namespace ETHotfix
 
                 temp = 3;
             }
+            //暗杆
+//            else if (type == 4)
+            else
+            {
+                if (Index == 2)
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+                }
+                else
+                {
+                    obj = CommonUtil.getGameObjByBundle("Item_Right_Gang_Card");
+                }
 
+                temp = 4;
+            }
+
+            //设置碰杠位置
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+            if (Index == 1)
+            {
+                gameObject.transform.localPosition = new Vector3(0, (num - 1)* 150, 0);
 
-            gameObject.transform.localPosition = new Vector3(num * (postionX) * 3.2f, num * (postionY) * 3.2f, 0);
+            }
+            else
+            {
+                gameObject.transform.localPosition = new Vector3(num * (postionX) * 3.5f, num * (postionY) * 3.5f, 0);
+
+            }
 
             //显示出牌
             string item1 = null;
@@ -567,7 +629,6 @@ namespace ETHotfix
                 for (int i = 0; i < temp; i++)
                 {
                     int childCount = this.CardBottom.transform.childCount;
-                    Log.Info("childCount:" + childCount);
                     GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
                 }
 
@@ -583,7 +644,6 @@ namespace ETHotfix
         {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
-                Log.Info("删除:" + gameObject.transform.GetChild(i).gameObject.name);
                 GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
             }
         }
@@ -630,7 +690,6 @@ namespace ETHotfix
         /// <param name="b"></param>
         public async void BuHua(MahjongInfo mahjongInfo, bool isSelf)
         {
-
             //补花数量
             faceCards.Add(mahjongInfo);
             SetFaceCards(faceCards);
@@ -661,6 +720,7 @@ namespace ETHotfix
 
             ItemCards.Clear();
             faceCards.Clear();
+            cardDisplayObjs.Clear();
 
             DeleteAllItem(CardBottom);
             DeleteAllItem(cardDisplay);

@@ -20,6 +20,9 @@ namespace ETModel
         //杠牌
         public readonly List<MahjongInfo> GangCards = new List<MahjongInfo>();
 
+        //抓的牌
+        public MahjongInfo GrabCard;
+
         //身份
         public bool IsBanker { get; set; }
 

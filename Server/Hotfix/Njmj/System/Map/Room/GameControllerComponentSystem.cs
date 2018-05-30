@@ -52,6 +52,35 @@ namespace ETHotfix
             room.tokenSource.Cancel();
             self.Multiples = 100;
 
+            //游戏房间进入准备房间
+            roomComponent.gameRooms.Remove(room.Id);
+            roomComponent.readyRooms.Add(room.Id, room);
+
+            Log.Debug("改变财富:" + huaCount * self.Multiples);
+            await ChangeWeath(self, huaCount, room);
+
+            //更新任务
+            UpdateTask(room);
+            UpdateChengjiu(room);
+            UpdatePlayerInfo(room, huaCount);
+
+            //            //更新任务
+            //            UpdateTask(room);
+
+            //设置在线时长
+            foreach (var gamer in room.GetAll())
+            {
+                //在线
+                if (!gamer.isOffline)
+                {
+                    gamer.EndTime = DateTime.Now;
+                    TimeSpan span = gamer.EndTime - gamer.StartTime;
+                    int totalSeconds = (int)span.TotalSeconds;
+                    DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+                    DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+                }
+            }
+
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null)
@@ -66,34 +95,15 @@ namespace ETHotfix
                 gamer.IsCanGang = false;
                 gamer.IsCanHu = false;
                 gamer.IsWinner = false;
+                //离线踢出
                 if (gamer.isOffline)
                 {
-                    //人满了
-                    if (room.seats.Count == 4)
-                    {
-                        roomComponent.readyRooms.Remove(room.Id);
-                        roomComponent.idleRooms.Add(room);
-                    }
-
                     room.Remove(gamer.UserID);
                     gamer.isOffline = !gamer.isOffline;
                 }
             }
 
-
-            Log.Debug("改变财富:" + huaCount * self.Multiples);
-            await ChangeWeath(self, huaCount, room);
-            //更新任务
-            UpdateTask(room);
-            UpdateChengjiu(room);
-//            //更新任务
-//            UpdateTask(room);
-
-
-            roomComponent.gameRooms.Remove(room.Id);
-            roomComponent.readyRooms.Add(room.Id, room);
-
-            //人不足4人
+            //人不足4人,准备进入空闲
             if (room.seats.Count < 4)
             {
                 roomComponent.readyRooms.Remove(room.Id);
@@ -104,8 +114,24 @@ namespace ETHotfix
             if (room.seats.Count == 0)
             {
                 Log.Debug($"房间释放:{room.Id}");
-                room?.Dispose();
                 roomComponent.RemoveRoom(room);
+                room?.Dispose();
+            }
+        }
+
+        private static void UpdatePlayerInfo(Room room ,int huaCount)
+        {
+            foreach (var gamer in room.GetAll())
+            {
+                //胜利
+                if (gamer.UserID == room.ziMoUid)
+                {
+                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount, true);
+                }
+                else
+                {
+                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, 0);
+                }
             }
         }
 

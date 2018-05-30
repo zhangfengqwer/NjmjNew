@@ -61,10 +61,15 @@ namespace ETHotfix
 
                         //设置庄家
                         gamer.IsBanker = gameData.IsBanker;
-
+                        //当前出牌玩家
+                        if (gamer.IsBanker)
+                        {
+                            gamerComponent.CurrentPlayUid = gamer.UserID;
+                        }
                         if (gamer.UserID == gamerComponent.LocalGamer.UserID)
                         {
                             //本地玩家添加手牌
+                            uiRoomComponent.SetTreasureTime(gameData.OnlineSeconds);
                             handCards.AddCards(gameData.handCards);
                             handCards.ShowBg();
                         }

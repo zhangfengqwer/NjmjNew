@@ -97,7 +97,6 @@ namespace ETHotfix
                     //庄家多发一张牌
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
-
 //	                List<MahjongInfo> infos = bankerHandCards.GetAll();
 	                bankerHandCards.library = new List<MahjongInfo>(list);
 
@@ -122,9 +121,11 @@ namespace ETHotfix
                             gamerData.IsBanker = true;
                         }
 	                    gamerData.SeatIndex = room.seats[itemGame.UserID];
+	                    gamerData.OnlineSeconds = await DBCommonUtil.GetRestOnlineSeconds(itemGame.UserID);
 	                    actorStartGame.GamerDatas.Add(gamerData);
                     }
 	                actorStartGame.restCount = deskComponent.RestLibrary.Count;
+
                     //发送消息
                     room.Broadcast(actorStartGame);
 	                room.reconnectList.Add(actorStartGame);
@@ -140,11 +141,16 @@ namespace ETHotfix
 	                roomComponent.readyRooms.Remove(room.Id);
 
                     //排序
-                    foreach (var _gamer in gamers)
+	                var startTime = DateTime.Now;
+	                foreach (var _gamer in gamers)
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 	                    handCardsComponent.Sort();
-                    }
+
+                        //设置玩家在线开始时间
+	                    _gamer.StartTime = startTime;
+	                    DBCommonUtil.RecordGamerTime(startTime, true, _gamer.UserID);
+	                }
 
 	                foreach (var _gamer in room.GetAll())
 	                {

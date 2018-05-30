@@ -33,6 +33,10 @@ namespace ETHotfix
         private Image readyHead;
         private Text readyName;
         private Text readyText;
+        private Text shengLvText;
+        private Text jinbiText;
+        private Text uidText;
+        private GameObject headInfo;
 
         public int Index { get; set; }
 
@@ -70,11 +74,33 @@ namespace ETHotfix
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
 
+            if (index != 0)
+            {
+                this.headInfo = this.head.transform.GetChild(0).gameObject;
+                this.shengLvText = this.headInfo.Get<GameObject>("Shenglv").GetComponent<Text>();
+                this.jinbiText = this.headInfo.Get<GameObject>("Jinbi").GetComponent<Text>();
+                this.uidText = this.headInfo.Get<GameObject>("Uid").GetComponent<Text>();
+                this.headInfo.SetActive(false);
+                head.GetComponent<Button>().onClick.Add(OnShowHeadInfo);
+            }
+
 //            this.readyHead = readyPanel.Get<GameObject>("Image").GetComponent<Image>();
 //            this.readyName = readyPanel.Get<GameObject>("Name").GetComponent<Text>();
 //            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
 
             UpdatePanel();
+        }
+
+        private void OnShowHeadInfo()
+        {
+            if (this.headInfo.activeSelf)
+            {
+                headInfo.SetActive(false);
+            }
+            else
+            {
+                headInfo.SetActive(true);
+            }
         }
 
         public void ResetReadyPanel()
@@ -115,10 +141,26 @@ namespace ETHotfix
 
             if (this.Panel != null || playerInfo == null)
             {
-                name.text = this.GetParent<Gamer>().UserID + "";
-//                readyName.text = this.GetParent<Gamer>().UserID + "";
-//                readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+                name.text = playerInfo.Name;
                 head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+
+                if (Index != 0)
+                {
+                    uidText.text = playerInfo.Name;
+                    jinbiText.text = $"金币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+
+                    int i;
+                    if (playerInfo.TotalGameCount == 0)
+                    {
+                        i = 0;
+                    }
+                    else
+                    {
+                        i = playerInfo.WinGameCount / playerInfo.TotalGameCount;
+                    }
+                    shengLvText.text = $"胜率:<color=#FFF089FF>{i}%</color>";
+                }
+
             }
         }
 

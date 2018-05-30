@@ -88,22 +88,30 @@ namespace ETHotfix
 
         public static async void UpdatePlayerInfo(long uid, int maxHua, bool isWin = false)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-            if (playerBaseInfos.Count > 0)
+            try
             {
-                if (isWin)
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                if (playerBaseInfos.Count > 0)
                 {
-                    playerBaseInfos[0].WinGameCount += 1;
+                    if (isWin)
+                    {
+                        playerBaseInfos[0].WinGameCount += 1;
+                    }
+
+                    playerBaseInfos[0].TotalGameCount += 1;
+
+                    float winRate = (float)(playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
+
+                    playerBaseInfos[0].WinRate = winRate;
+                    if (playerBaseInfos[0].MaxHua < maxHua)
+                        playerBaseInfos[0].MaxHua = maxHua;
+                    await proxyComponent.Save(playerBaseInfos[0]);
                 }
-
-                playerBaseInfos[0].TotalGameCount += 1;
-
-                float winRate = (playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
-                playerBaseInfos[0].WinRate = winRate;
-                if (playerBaseInfos[0].MaxHua < maxHua)
-                    playerBaseInfos[0].MaxHua = maxHua;
-                await proxyComponent.Save(playerBaseInfos[0]);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
             }
         }
 
@@ -323,6 +331,98 @@ namespace ETHotfix
             }
 
             return playerBaseInfo;
+        }
+
+        /// <summary>
+        /// 记录在线离线时间
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="isStart"></param>
+        /// <param name="userId"></param>
+        public static async void RecordGamerTime(DateTime startTime, bool isStart,long userId)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            GamerOnlineTime gamerOnlineTime = ComponentFactory.CreateWithId<GamerOnlineTime>(IdGenerater.GenerateId());
+            if (isStart)
+            {
+                gamerOnlineTime.Type = 0;
+            }
+            else
+            {
+                gamerOnlineTime.Type = 1;
+            }
+
+            gamerOnlineTime.CreateTime = startTime.GetCurrentTime();
+            gamerOnlineTime.UId = userId;
+            await proxyComponent.Save(gamerOnlineTime);
+        }
+
+        /// <summary>
+        /// 记录玩家数据
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="totalSeconds"></param>
+        /// <returns></returns>
+        public static async void RecordGamerInfo(long userId, int totalSeconds)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
+
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            GamerInfoDB gamerInfo;
+            if (gamerInfos.Count == 0)
+            {
+                gamerInfo = ComponentFactory.CreateWithId<GamerInfoDB>(IdGenerater.GenerateId());
+            }
+            else
+            {
+                gamerInfo = gamerInfos[0];
+            }
+            gamerInfo.UId = userId;
+            gamerInfo.DailyOnlineTime += totalSeconds;
+            gamerInfo.TotalOnlineTime += totalSeconds;
+
+            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
+
+            if (gamerInfo.DailyOnlineTime > treasureConfig?.TotalTime)
+            {
+                gamerInfo.DailyOnlineTime = treasureConfig.TotalTime;
+            }
+
+            --gamerInfo.DailyTreasureCount;
+
+            await proxyComponent.Save(gamerInfo);
+
+            //记录玩家在线时长
+            DBCommonUtil.UpdateChengjiu(userId, 107, totalSeconds);
+            DBCommonUtil.UpdateChengjiu(userId, 108, totalSeconds);
+            DBCommonUtil.UpdateChengjiu(userId, 109, totalSeconds);
+        }
+
+        /// <summary>
+        /// 获取在线时长
+        /// </summary>
+        /// <param name="userId"></param>
+        public static async Task<int> GetRestOnlineSeconds(long userId)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
+
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            if (gamerInfos.Count == 0)
+            {
+                TreasureConfig config = (TreasureConfig) configComponent.Get(typeof(TreasureConfig), 1);
+                return config.TotalTime;
+            }
+            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
+
+            int i = treasureConfig.TotalTime - gamerInfos[0].DailyOnlineTime;
+            Log.Debug("TotalTime" + treasureConfig.TotalTime);
+            Log.Debug("gamerInfos[0].DailyOnlineTime" + gamerInfos[0].DailyOnlineTime);
+            Log.Debug("还剩" + i);
+
+            return i;
         }
     } 
 }
