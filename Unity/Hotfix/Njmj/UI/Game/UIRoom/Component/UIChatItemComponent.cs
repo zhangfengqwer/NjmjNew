@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using ETModel;
+using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,9 +42,9 @@ namespace ETHotfix
             //UINetLoadingComponent.closeNetLoading();
         }
 
-        public void SetChatItemInfo(Chat chat)
+        public void SetChatItemInfo(ChatInfo chat)
         {
-            ChatTxt.text = chat.Content;
+            ChatTxt.text = chat.content;
         }
     }
 }
