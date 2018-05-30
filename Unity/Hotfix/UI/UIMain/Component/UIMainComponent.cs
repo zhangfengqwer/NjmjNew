@@ -463,7 +463,7 @@ namespace ETHotfix
             }
             else
             {
-                if (ownRank < 3 || ownRank < 30)
+                if (ownRank < 3)
                 {
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
