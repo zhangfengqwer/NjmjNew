@@ -37,6 +37,11 @@ namespace ETHotfix
 
         public static UICommonPanelComponent showCommonPanel(string title,string content)
         {
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) != null)
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            }
+
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UICommonPanel);
 
             if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) != null)

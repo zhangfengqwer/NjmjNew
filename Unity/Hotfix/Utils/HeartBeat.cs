@@ -48,9 +48,12 @@ namespace ETHotfix
             }
             catch (Exception ex)
             {
-                stopHeartBeat();
-
+                if (!isStopHeartBeat)
                 {
+                    stopHeartBeat();
+
+                    //Game.Scene.GetComponent<UIComponent>().Create(UIType.UINetError);
+
                     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "与服务器断开连接，请重新登录。");
                     script.setOnClickOkEvent(() =>
                     {

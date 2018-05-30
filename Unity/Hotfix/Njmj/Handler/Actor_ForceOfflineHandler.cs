@@ -17,7 +17,7 @@ namespace ETHotfix
                 HeartBeat.getInstance().stopHeartBeat();
 
                 {
-                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "您的账号已在别处登录，请重新登录.");
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "您的账号已在别处登录，请重新登录。");
                     script.setOnClickOkEvent(() =>
                     {
                         Game.Scene.GetComponent<UIComponent>().RemoveAll();
