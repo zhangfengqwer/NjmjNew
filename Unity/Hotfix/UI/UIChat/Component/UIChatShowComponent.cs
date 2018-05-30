@@ -31,7 +31,6 @@ namespace ETHotfix
             chatObjArr[1] = rc.Get<GameObject>("ChatR");
             chatObjArr[2] = rc.Get<GameObject>("ChatT");
             chatObjArr[3] = rc.Get<GameObject>("ChatL");
-            GameUtil.isExit = false;
         }
 
         /// <summary>
@@ -112,8 +111,8 @@ namespace ETHotfix
         /// <summary>
         /// 表情显示计时器
         /// </summary>
-        public static bool isExcExit = false;
-        public static int exctime = 7;
+        public bool isExcExit = false;
+        public int exctime = 7;
         public async void StartExcTimer()
         {
             while (exctime >= 0)
@@ -129,7 +128,8 @@ namespace ETHotfix
         public override void Dispose()
         {
             base.Dispose();
-            GameUtil.isExit = true;
+            isExcExit = true;
+            isExit = true;
             if (expressionObj != null)
                 GameObject.DestroyObject(expressionObj);
         }

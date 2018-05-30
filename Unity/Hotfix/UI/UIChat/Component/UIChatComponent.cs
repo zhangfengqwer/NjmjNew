@@ -50,7 +50,7 @@ namespace ETHotfix
             isOpen = false;
 
             #region 是否可点击表情（VIP可点击）
-            if (GameUtil.isVIP())
+            if (GameUtil.isCanUseEmoji())
             {
                 Mask.SetActive(false);
             }

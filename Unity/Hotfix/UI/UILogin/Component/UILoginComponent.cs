@@ -152,7 +152,7 @@ namespace ETHotfix
         public async void onClickWechatLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin("hp");
+            await OnThirdLogin("zmy006");
         }
 
         public void onClickBackStart()

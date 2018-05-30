@@ -145,29 +145,14 @@ namespace ETHotfix
             return false;
         }
 
-        public static bool isExit = false;
-        public static int time = 8;
-
-        public static async void StartTimer( UnityEngine.GameObject obj, bool isDestroy = false)
+        static public bool isBindPhone()
         {
-            while (time >= 0)
+            if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
             {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
-                --time;
-                if (isExit)
-                    return;
+                return true;
             }
-            try
-            {
-                if (isDestroy && obj != null)
-                    UnityEngine.GameObject.DestroyObject(obj);
-                else
-                    obj.SetActive(false);
-            }
-            catch(Exception e)
-            {
-                Log.Debug(e.Message);
-            }
+
+            return false;
         }
     }
 }
