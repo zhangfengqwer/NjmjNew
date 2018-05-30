@@ -146,8 +146,9 @@ namespace ETHotfix
         }
 
         public static bool isExit = false;
+        public static int time = 8;
 
-        public static async void StartTimer(float time, UnityEngine.GameObject obj, bool isDestroy = false)
+        public static async void StartTimer( UnityEngine.GameObject obj, bool isDestroy = false)
         {
             while (time >= 0)
             {
@@ -156,9 +157,17 @@ namespace ETHotfix
                 if (isExit)
                     return;
             }
-            if (isDestroy)
-                UnityEngine.GameObject.DestroyObject(obj);
-            obj.SetActive(false);
+            try
+            {
+                if (isDestroy && obj != null)
+                    UnityEngine.GameObject.DestroyObject(obj);
+                else
+                    obj.SetActive(false);
+            }
+            catch(Exception e)
+            {
+                Log.Debug(e.Message);
+            }
         }
     }
 }

@@ -62,17 +62,6 @@ namespace ETHotfix
                     shopInfoList.Add(info);
                 }
 
-                List<Chat> chatConfigList = new List<Chat>();
-                for (int i = 1; i < configCom.GetAll(typeof(ChatConfig)).Length + 1; ++i)
-                {
-                    ChatConfig config = (ChatConfig)configCom.Get(typeof(ChatConfig), i);
-                    Chat info = new Chat();
-                    info.Id = (int)config.Id;
-                    info.Content = config.Content;
-                    chatConfigList.Add(info);
-                }
-                response.ChatList = chatConfigList;
-
                 #region AddItemInfo
                 List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 if (itemInfoList.Count <= 0)

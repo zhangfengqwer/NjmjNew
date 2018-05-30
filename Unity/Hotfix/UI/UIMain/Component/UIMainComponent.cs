@@ -56,8 +56,8 @@ namespace ETHotfix
         private List<UI> gameUiList = new List<UI>();
         private GameRank ownGameRank;
         private WealthRank ownWealthRank;
-        private int ownRank = 29;
-        private int ownGame = 29;
+        private int ownRank = 30;
+        private int ownGame = 30;
         private bool isOwnRank = false;
         private bool isGameRank = false;
 
@@ -320,6 +320,7 @@ namespace ETHotfix
         {
             Btn_GoldSelect.gameObject.SetActive(false);
             Btn_GameSelect.gameObject.SetActive(true);
+            Log.Debug(JsonHelper.ToJson(gameRankList));
             //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
             for (int i = 0; i < gameRankList.Count; ++i)
@@ -341,10 +342,12 @@ namespace ETHotfix
 
                 if (i >= ownGame)
                 {
+                    Log.Debug("===");
                     gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i + 1);
                 }
                 else
                 {
+                    Log.Debug("---");
                     gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
                 }
             }
@@ -388,11 +391,9 @@ namespace ETHotfix
             {
                 if (wealthRankList[i].UId == uid)
                 {
-                    Debug.Log("上榜");
                     return true;
                 }
             }
-            Debug.Log("未上榜");
             return false;
         }
 
@@ -427,7 +428,7 @@ namespace ETHotfix
                 }
                    
             }
-            return -1;
+            return 30;
         }
 
         /// <summary>
@@ -445,7 +446,7 @@ namespace ETHotfix
                     return i;
                 }
             }
-            return -1;
+            return 30;
         }
 
         /// <summary>
@@ -462,7 +463,7 @@ namespace ETHotfix
             }
             else
             {
-                if (ownRank < 3 && ownRank != -1)
+                if (ownRank < 3)
                 {
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
@@ -496,11 +497,13 @@ namespace ETHotfix
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
                 str = "未上榜";
+                Log.Debug("未上榜");
             }
             else
             {
-                if (ownGame < 3 && ownGame != -1)
+                if (ownGame < 3)
                 {
+                    Log.Debug("上榜");
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
@@ -512,9 +515,10 @@ namespace ETHotfix
                     RankTxt.gameObject.SetActive(true);
                     RankImg.SetActive(false);
                     str = (ownGame + 1).ToString();
+                    Log.Debug("数字");
                 }
-                RankTxt.text = str;
             }
+            RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
             GoldTxt.text = new StringBuilder().Append("总局数:")
                                               .Append(ownGameRank.TotalCount)
