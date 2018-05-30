@@ -144,15 +144,5 @@ namespace ETHotfix
 
             return false;
         }
-
-        static public bool isBindPhone()
-        {
-            if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

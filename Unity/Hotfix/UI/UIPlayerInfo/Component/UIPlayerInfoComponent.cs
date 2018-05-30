@@ -59,16 +59,7 @@ namespace ETHotfix
             AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
             DuihuanBtn.onClick.Add(() =>
             {
-                Log.Debug(PlayerInfoComponent.Instance.GetPlayerInfo().Phone);
-                if (GameUtil.isBindPhone())
-                {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
-                }
-                else
-                {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
-                }
-                
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
             });
 
             AddBtn.onClick.Add(() =>
@@ -153,7 +144,6 @@ namespace ETHotfix
         public void Update()
         {
             playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-            Debug.Log(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
             {

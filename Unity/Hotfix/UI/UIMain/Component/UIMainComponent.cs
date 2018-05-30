@@ -322,7 +322,6 @@ namespace ETHotfix
         {
             Btn_GoldSelect.gameObject.SetActive(false);
             Btn_GameSelect.gameObject.SetActive(true);
-            Log.Debug(JsonHelper.ToJson(gameRankList));
             //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
             for (int i = 0; i < gameRankList.Count; ++i)
