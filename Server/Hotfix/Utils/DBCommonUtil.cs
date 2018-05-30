@@ -99,7 +99,7 @@ namespace ETHotfix
 
                 playerBaseInfos[0].TotalGameCount += 1;
 
-                float winRate = MathF.Abs((playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount));
+                float winRate = (playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
                 playerBaseInfos[0].WinRate = winRate;
                 if (playerBaseInfos[0].MaxHua < maxHua)
                     playerBaseInfos[0].MaxHua = maxHua;
