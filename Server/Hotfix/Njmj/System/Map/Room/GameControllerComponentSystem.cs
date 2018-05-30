@@ -126,7 +126,7 @@ namespace ETHotfix
                 //胜利
                 if (gamer.UserID == room.ziMoUid)
                 {
-                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount);
+                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount, true);
                 }
                 else
                 {
