@@ -50,33 +50,23 @@ namespace ETHotfix
         /// </summary>
         public async void GetEmail()
         {
-            try
-            {
-                long uid = PlayerInfoComponent.Instance.uid;
-                UINetLoadingComponent.showNetLoading();
-                G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
-                UINetLoadingComponent.closeNetLoading();
 
-                emailList = g2cEmail.EmailInfoList;
-                if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
-                {
-                    CreateEmailItemList();
-                }
-            }
-            catch(Exception e)
+            long uid = PlayerInfoComponent.Instance.uid;
+            UINetLoadingComponent.showNetLoading();
+            G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
+            UINetLoadingComponent.closeNetLoading();
+
+            emailList = g2cEmail.EmailInfoList;
+            if (emailList != null && g2cEmail.EmailInfoList.Count > 0)
             {
-                Log.Error(e);
+                CreateEmailItemList();
             }
-            
+
         }
 
         public void RefreshMailUI(long mailId)
         {
-            for(int i = 0;i< uiList.Count; ++i)
-            {
-                if (uiList[i].GetComponent<UIEmailItemComponent>().email.EId == mailId)
-                    GameObject.DestroyObject(uiList[i].GameObject);
-            }
+            GetEmail();
         }
 
         /// <summary>
@@ -84,15 +74,12 @@ namespace ETHotfix
         /// </summary>
         public void CreateEmailItemList()
         {
-            Log.Debug(JsonHelper.ToJson(emailList));
             GameObject obj = null;
             for(int i = 0;i< emailList.Count; ++i)
             {
-                //如果邮件已经被删除
-                if (emailList[i].State == 2)
-                    continue;
                 if(i < emailItemList.Count)
                 {
+                    emailItemList[i].SetActive(true);
                     obj = emailItemList[i];
                 }
                 else
@@ -114,6 +101,18 @@ namespace ETHotfix
                                 .Append(emailList.Count)
                                 .Append("/")
                                 .Append(50).ToString();
+            SetMoreMailHide(emailList.Count);
+        }
+
+        /// <summary>
+        /// 设置多余的item被隐藏掉
+        /// </summary>
+        private void SetMoreMailHide(int index)
+        {
+            for(int i = index;i< emailItemList.Count;++i)
+            {
+                emailItemList[i].SetActive(false);
+            }
         }
 
         /// <summary>
