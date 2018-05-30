@@ -120,7 +120,8 @@ namespace ETHotfix
             AlPlayTxt.text = $"已玩牌局：{ playerInfo.TotalGameCount}";
             if (playerInfo.WinRate.Equals(0))
                 SuccessRateTxt.text = $"胜       率：{0}%";
-            SuccessRateTxt.text = $"胜       率：{(int)playerInfo.WinRate * 100}%";
+            else
+                SuccessRateTxt.text = $"胜       率：{(int)playerInfo.WinRate * 100}%";
             MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
 
             if (playerInfo.IsRealName)
@@ -170,6 +171,12 @@ namespace ETHotfix
                 noBindPhoneTxt.text = "已绑定";
                 bindPhoneBtn.gameObject.SetActive(false);
                 bindPhoneBtn.transform.parent.gameObject.SetActive(false);
+            }
+
+            if(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount <= 0)
+            {
+                changeNameBtn.gameObject.SetActive(false);
+                changeNameBtn.transform.parent.gameObject.SetActive(false);
             }
         }
 
