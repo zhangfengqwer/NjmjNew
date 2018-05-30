@@ -50,20 +50,20 @@ namespace ETHotfix
             {
                 stopHeartBeat();
 
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UINetError);
-
-                UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "与服务器断开连接，请重新登录。");
-                script.setOnClickOkEvent(()=>
                 {
-                    Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
-                });
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "与服务器断开连接，请重新登录。");
+                    script.setOnClickOkEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+                    });
 
-                script.setOnClickCloseEvent(() =>
-                {
-                    Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
-                });
+                    script.setOnClickCloseEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+                    });
+                }
             }
         }
     }

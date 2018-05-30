@@ -14,10 +14,22 @@ namespace ETHotfix
         {
             try
             {
-                ToastScript.createToast("您的账号已在别处登录，请重新登录");
+                HeartBeat.getInstance().stopHeartBeat();
 
-                Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                CommonUtil.ShowUI(UIType.UILogin);
+                {
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "您的账号已在别处登录，请重新登录.");
+                    script.setOnClickOkEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        CommonUtil.ShowUI(UIType.UILogin);
+                    });
+
+                    script.setOnClickCloseEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        CommonUtil.ShowUI(UIType.UILogin);
+                    });
+                }
             }
             catch (Exception e)
             {
