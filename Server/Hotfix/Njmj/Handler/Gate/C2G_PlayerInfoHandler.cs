@@ -33,6 +33,8 @@ namespace ETHotfix
                     response.PlayerInfo.RestChangeNameCount = playerInfo.RestChangeNameCount;
                     response.PlayerInfo.VipTime = playerInfo.VipTime;
                     response.PlayerInfo.EmogiTime = playerInfo.EmogiTime;
+                    response.PlayerInfo.MaxHua = playerInfo.MaxHua;
+                    response.PlayerInfo.WinRate = playerInfo.WinRate;
                     reply(response);
                     return;
                 }

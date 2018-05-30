@@ -86,6 +86,25 @@ namespace ETHotfix
             }
         }
 
+        public static async void UpdatePlayerInfo(long uid, int progress, int maxHua, bool isWin = false)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            if (playerBaseInfos.Count > 0)
+            {
+                playerBaseInfos[0].TotalGameCount += progress;
+                if (isWin)
+                {
+                    playerBaseInfos[0].WinGameCount += progress;
+                }
+                float winRate = MathF.Abs((playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount));
+                playerBaseInfos[0].WinRate = winRate;
+                if (playerBaseInfos[0].MaxHua < maxHua)
+                    playerBaseInfos[0].MaxHua = maxHua;
+                await proxyComponent.Save(playerBaseInfos[0]);
+            }
+        }
+
         public static async Task<PlayerBaseInfo> getPlayerBaseInfo(long uid)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
