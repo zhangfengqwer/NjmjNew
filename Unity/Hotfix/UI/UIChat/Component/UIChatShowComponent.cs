@@ -49,7 +49,6 @@ namespace ETHotfix
             //如果多次点击发送文本，隐掉前一个显示当前的
             if (chatObjArr[index].activeInHierarchy)
             {
-                Log.Debug("已经存在item");
                 isExit = true;
                 time = -1;
                 chatObjArr[index].SetActive(false);

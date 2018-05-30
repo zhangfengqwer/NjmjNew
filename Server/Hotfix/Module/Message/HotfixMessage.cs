@@ -356,6 +356,12 @@ namespace ETHotfix
 		[ProtoMember(13, IsRequired = true)]
 		public string EmogiTime;
 
+		[ProtoMember(14, IsRequired = true)]
+		public float WinRate;
+
+		[ProtoMember(15, IsRequired = true)]
+		public int MaxHua;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]

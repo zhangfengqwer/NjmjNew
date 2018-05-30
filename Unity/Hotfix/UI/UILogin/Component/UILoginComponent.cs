@@ -188,7 +188,6 @@ namespace ETHotfix
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
 
-
                 UINetLoadingComponent.closeNetLoading();
 
                 if (r2CData.Error != ErrorCode.ERR_Success)

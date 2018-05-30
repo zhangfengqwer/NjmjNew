@@ -21,6 +21,9 @@ namespace ETHotfix
         private Text uIDTxt;
         private Text noBindPhoneTxt;
         private Text realNameTxt;
+        private Text AlPlayTxt;
+        private Text SuccessRateTxt;
+        private Text MaxSuccessTxt;
 
         private Button returnBtn;
         private Button playerIcon;
@@ -45,6 +48,10 @@ namespace ETHotfix
             realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
             noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
             HuafeiNumTxt = rc.Get<GameObject>("HuafeiNumTxt").GetComponent<Text>();
+            AlPlayTxt = rc.Get<GameObject>("AlPlayTxt").GetComponent<Text>();
+            SuccessRateTxt = rc.Get<GameObject>("SuccessRateTxt").GetComponent<Text>();
+            MaxSuccessTxt = rc.Get<GameObject>("MaxSuccessTxt").GetComponent<Text>();
+
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
@@ -59,7 +66,7 @@ namespace ETHotfix
             AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
             DuihuanBtn.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
             });
 
             AddBtn.onClick.Add(() =>
@@ -110,6 +117,10 @@ namespace ETHotfix
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;
             uIDTxt.text = pc.uid.ToString();
+            AlPlayTxt.text = $"已玩牌局：{ playerInfo.TotalGameCount}";
+            SuccessRateTxt.text = String.Format("胜       率：{0:F}%", playerInfo.WinRate * 100);
+            MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
+
             if (playerInfo.IsRealName)
                 realNameTxt.text = "已实名";
             if (!string.IsNullOrEmpty(playerInfo.Phone))

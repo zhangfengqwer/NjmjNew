@@ -1230,7 +1230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6700\u5927\u8D62\u53D6: 0\u82B1"
+  m_Text: 
 --- !u!114 &114107276858648232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2092,7 +2092,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5DF2\u73A9\u724C\u5C40\r: 0"
+  m_Text: 
 --- !u!114 &114510941359653238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,7 +2125,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u80DC       \u7387\r: 0%"
+  m_Text: 
 --- !u!114 &114541575561358374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2828,6 +2828,12 @@ MonoBehaviour:
     gameObject: {fileID: 1848622176975846}
   - key: DuihuanBtn
     gameObject: {fileID: 1373473754020070}
+  - key: AlPlayTxt
+    gameObject: {fileID: 1801776697248474}
+  - key: SuccessRateTxt
+    gameObject: {fileID: 1267976637848492}
+  - key: MaxSuccessTxt
+    gameObject: {fileID: 1131179272477524}
 --- !u!114 &114834839839322004
 MonoBehaviour:
   m_ObjectHideFlags: 1
