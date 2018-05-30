@@ -59,7 +59,7 @@ namespace ETHotfix
             AddBtn = rc.Get<GameObject>("AddBtn").GetComponent<Button>();
             DuihuanBtn.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseHuaFei);
             });
 
             AddBtn.onClick.Add(() =>
