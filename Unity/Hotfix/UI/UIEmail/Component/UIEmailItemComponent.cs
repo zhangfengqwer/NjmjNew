@@ -116,7 +116,6 @@ namespace ETHotfix
             content.text = email.Content;
             date.text = email.Date;
             state = email.State;
-            Log.Debug(state.ToString());
             string reward = email.RewardItem;
             flag.SetActive(state == 0);
             if (state == 1)
