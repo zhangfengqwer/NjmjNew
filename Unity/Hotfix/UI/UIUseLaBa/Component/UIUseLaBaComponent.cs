@@ -60,17 +60,20 @@ namespace ETHotfix
                     return;
                 }
 
-                if (InputField_content.text.Length > 30)
+                if (InputField_content.text.Length > 20)
                 {
-                    ToastScript.createToast("您发送的内容大于30个字");
+                    ToastScript.createToast("您发送的内容大于20个字");
                     return;
                 }
 
+                UINetLoadingComponent.showNetLoading();
                 if (SensitiveWordUtil.IsSensitiveWord(InputField_content.text))
                 {
                     ToastScript.createToast("您输入的内容包含敏感词");
+                    UINetLoadingComponent.closeNetLoading();
                     return;
                 }
+                UINetLoadingComponent.closeNetLoading();
 
                 RequestUseLaBa();
             }

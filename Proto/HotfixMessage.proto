@@ -85,7 +85,6 @@ message G2C_LoginGate // IResponse
 	repeated ShopInfo ShopInfoList = 3;//商店商品
 	repeated TaskInfo TaskInfoList = 4;//任务列表
 	repeated Bag BagList = 5;//背包列表
-	repeated Chat ChatList = 6;//
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -117,7 +116,9 @@ message PlayerInfo // IMessage
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
 	required float HuaFeiNum  = 12;//话费数量
-	required string EmogiTime = 13;
+	required string EmogiTime = 13;//
+	required float WinRate = 14;//
+	required int MaxHua = 15;//
 }
 
 message ShopInfo //IMessage
@@ -131,12 +132,6 @@ message ShopInfo //IMessage
 	required string Items = 7;
 	required string Icon = 8;
 	required int VipPrice = 9;
-}
-
-message Chat //IMessage
-{
-	required int Id = 1;
-	required string Content = 2;
 }
 
 message GetItemInfo //IMessage
@@ -705,6 +700,26 @@ message C2G_Share // IRequest
 }
 
 message G2C_Share // IResponse
+{
+}
+
+message C2G_Recharge //IRequest
+{
+	required long UId = 1;
+	required long  GoodsId = 2;
+}
+
+message G2C_Recharge // IResponse
+{
+	required long GoodsId = 1;
+	required string Reward = 2;
+}
+
+message C2G_HeartBeat //IRequest
+{
+}
+
+message G2C_HeartBeat // IResponse
 {
 }
 

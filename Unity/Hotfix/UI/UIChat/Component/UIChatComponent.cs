@@ -31,8 +31,9 @@ namespace ETHotfix
         private List<UI> chatUiList = new List<UI>();
         public bool isOpen = false;
 
-        public void Awake()
+        public async void Awake()
         {
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/chat.json", ChatConfig.getInstance().init);
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
@@ -49,7 +50,7 @@ namespace ETHotfix
             isOpen = false;
 
             #region 是否可点击表情（VIP可点击）
-            if (GameUtil.isVIP())
+            if (GameUtil.isCanUseEmoji())
             {
                 Mask.SetActive(false);
             }
@@ -67,7 +68,7 @@ namespace ETHotfix
             ExpressionBtn.transform.GetChild(0).gameObject.SetActive(false);
             ShortBtn.transform.GetChild(0).gameObject.SetActive(true);
             GameObject obj = null;
-            for (int i = 0; i < PlayerInfoComponent.Instance.GetChatList().Count; ++i)
+            for (int i = 0; i < ChatConfig.getInstance().m_chatInfoList.Count; ++i)
             {
                 if (i < ChatItemList.Count)
                     obj = ChatItemList[i];
@@ -82,7 +83,7 @@ namespace ETHotfix
                     ui.AddComponent<UIChatItemComponent>();
                     chatUiList.Add(ui);
                 }
-                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(PlayerInfoComponent.Instance.GetChatList()[i]);
+                chatUiList[i].GetComponent<UIChatItemComponent>().SetChatItemInfo(ChatConfig.getInstance().m_chatInfoList[i]);
             }
         }
 

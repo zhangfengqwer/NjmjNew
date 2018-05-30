@@ -116,13 +116,13 @@ namespace ETHotfix
             content.text = email.Content;
             date.text = email.Date;
             state = email.State;
-            Log.Debug(state.ToString());
             string reward = email.RewardItem;
             flag.SetActive(state == 0);
             if (state == 1)
                 Delete.gameObject.SetActive(true);
             if (reward != null && !reward.Equals(""))
             {
+                rewardList.Clear();
                 get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)

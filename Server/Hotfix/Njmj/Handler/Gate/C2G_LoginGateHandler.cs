@@ -31,12 +31,24 @@ namespace ETHotfix
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                #region AddShopInfo
-                List<ShopInfo> shopInfoList = new List<ShopInfo>();
-                for (int i = 1; i< configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+
+                if (ShopData.getInstance().getDataList().Count == 0)
                 {
-                    int id = 1000 + i;
-                    ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
+                    List<ShopConfig> shopList = new List<ShopConfig>();
+                    for (int i = 1; i < configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+                    {
+                        int id = 1000 + i;
+                        ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
+                        shopList.Add(config);
+                    }
+                    ShopData.getInstance().getDataList().AddRange(shopList);
+                }
+
+                //#region AddShopInfo
+                List<ShopInfo> shopInfoList = new List<ShopInfo>();
+                for (int i = 0; i < ShopData.getInstance().getDataList().Count; ++i)
+                {
+                    ShopConfig config = ShopData.getInstance().getDataList()[i];
                     ShopInfo info = new ShopInfo();
                     info.Id = config.Id;
                     info.Name = config.Name;
@@ -49,19 +61,6 @@ namespace ETHotfix
                     info.VipPrice = config.VipPrice;
                     shopInfoList.Add(info);
                 }
-
-                List<Chat> chatConfigList = new List<Chat>();
-                for (int i = 1; i < configCom.GetAll(typeof(ChatConfig)).Length + 1; ++i)
-                {
-                    ChatConfig config = (ChatConfig)configCom.Get(typeof(ChatConfig), i);
-                    Chat info = new Chat();
-                    info.Id = (int)config.Id;
-                    info.Content = config.Content;
-                    chatConfigList.Add(info);
-                }
-                response.ChatList = chatConfigList;
-
-                #endregion
 
                 #region AddItemInfo
                 List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
@@ -139,23 +138,43 @@ namespace ETHotfix
                 List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
                 if (emailInfos.Count <= 0)
                 {
-                    #region emailTest
-                    EmailInfo emailInfo = new EmailInfo();
-                    emailInfo.EmailId = 101;
-                    emailInfo.UId = userId;
-                    //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                    emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                    emailInfo.Date = new StringBuilder()
-                                    .Append(CommonUtil.getCurYear())
-                                    .Append("-")
-                                    .Append(CommonUtil.getCurMonth())
-                                    .Append("-")
-                                    .Append(CommonUtil.getCurDay()).ToString();
-                    //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                    emailInfo.Content = "加入南京麻将，就有好礼相送";
-                    emailInfo.State = 0;
-                    emailInfo.RewardItem = "2:100;1:100";
-                    DBHelper.AddEmailInfoToDB(emailInfo);
+                    {
+                        #region emailTest
+                        EmailInfo emailInfo = new EmailInfo();
+                        emailInfo.EmailId = 101;
+                        emailInfo.UId = userId;
+                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                        emailInfo.Date = new StringBuilder()
+                                        .Append(CommonUtil.getCurYear())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurMonth())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurDay()).ToString();
+                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                        emailInfo.Content = "加入南京麻将，就有好礼相送";
+                        emailInfo.State = 0;
+                        emailInfo.RewardItem = "2:100;1:100";
+                        DBHelper.AddEmailInfoToDB(emailInfo);
+                    }
+                    {
+                        EmailInfo emailInfo = new EmailInfo();
+                        emailInfo.EmailId = 102;
+                        emailInfo.UId = userId;
+                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                        emailInfo.Date = new StringBuilder()
+                                        .Append(CommonUtil.getCurYear())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurMonth())
+                                        .Append("-")
+                                        .Append(CommonUtil.getCurDay()).ToString();
+                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                        emailInfo.Content = "加入南京麻将，就有好礼相送";
+                        emailInfo.State = 0;
+                        emailInfo.RewardItem = "2:100;1:100";
+                        DBHelper.AddEmailInfoToDB(emailInfo);
+                    }
                     #endregion
                 }
                 

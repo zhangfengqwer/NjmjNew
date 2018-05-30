@@ -20,6 +20,8 @@ namespace ETHotfix
                 {
                     for(int i = 0;i< emailInfos.Count; ++i)
                     {
+                        if (emailInfos[i].State == 2)
+                            continue;
                         EmailInfo info = emailInfos[i];
                         Email email = new Email();
                         email.EmailTitle = info.EmailTitle;

@@ -269,9 +269,6 @@ namespace ETHotfix
 		[ProtoMember(5)]
 		public List<Bag> BagList = new List<Bag>();
 
-		[ProtoMember(6)]
-		public List<Chat> ChatList = new List<Chat>();
-
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -359,6 +356,12 @@ namespace ETHotfix
 		[ProtoMember(13, IsRequired = true)]
 		public string EmogiTime;
 
+		[ProtoMember(14, IsRequired = true)]
+		public float WinRate;
+
+		[ProtoMember(15, IsRequired = true)]
+		public int MaxHua;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]
@@ -391,18 +394,6 @@ namespace ETHotfix
 
 		[ProtoMember(9, IsRequired = true)]
 		public int VipPrice;
-
-	}
-
-	[Message(HotfixOpcode.Chat)]
-	[ProtoContract]
-	public partial class Chat: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public int Id;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Content;
 
 	}
 
@@ -1308,7 +1299,7 @@ namespace ETHotfix
 		public string RewardItem;
 
 		[ProtoMember(6, IsRequired = true)]
-		public int EId;
+		public long EId;
 
 	}
 
@@ -2017,6 +2008,66 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_Share)]
 	[ProtoContract]
 	public partial class G2C_Share: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_Recharge)]
+	[ProtoContract]
+	public partial class C2G_Recharge: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoodsId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Recharge)]
+	[ProtoContract]
+	public partial class G2C_Recharge: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long GoodsId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Reward;
+
+	}
+
+	[Message(HotfixOpcode.C2G_HeartBeat)]
+	[ProtoContract]
+	public partial class C2G_HeartBeat: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.G2C_HeartBeat)]
+	[ProtoContract]
+	public partial class G2C_HeartBeat: IResponse
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }

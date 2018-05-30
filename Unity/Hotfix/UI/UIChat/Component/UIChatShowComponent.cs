@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using ETModel;
 using Hotfix;
@@ -20,7 +21,7 @@ namespace ETHotfix
     {
         private GameObject[] chatObjArr = new GameObject[4];
         private GameObject expressItem;//表情
-        private GameObject expressionObj;
+        private GameObject expressionObj = null;
 
         public void Awake()
         {
@@ -30,7 +31,6 @@ namespace ETHotfix
             chatObjArr[1] = rc.Get<GameObject>("ChatR");
             chatObjArr[2] = rc.Get<GameObject>("ChatT");
             chatObjArr[3] = rc.Get<GameObject>("ChatL");
-            GameUtil.isExit = false;
         }
 
         /// <summary>
@@ -43,17 +43,21 @@ namespace ETHotfix
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
             int index = gamerComponent.GetGamerSeat(UId);
+            //设置文本框随着字数缩放
+            float width = content.Length * 30 + 90;
+            chatObjArr[index].GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
             //如果多次点击发送文本，隐掉前一个显示当前的
             if (chatObjArr[index].activeInHierarchy)
             {
-                GameUtil.isExit = true;
+                isExit = true;
+                time = -1;
                 chatObjArr[index].SetActive(false);
             }
-
-            GameUtil.isExit = false;
+            isExit = false;
             chatObjArr[index].SetActive(true);
             chatObjArr[index].transform.GetChild(0).GetComponent<Text>().text = content;
-            GameUtil.StartTimer(8, chatObjArr[index]);
+            time = 8;
+            StartTimer(chatObjArr[index]);
         }
 
         /// <summary>
@@ -62,23 +66,69 @@ namespace ETHotfix
         /// <param name="name"></param>
         public void ShowExpressAni(string name)
         {
-            //如果连续发表情 删除上一个，显示当前的表情
-            if(expressionObj != null)
+            try
             {
-                GameUtil.isExit = true;
-                GameObject.DestroyObject(expressionObj);
+                //如果连续发表情 删除上一个，显示当前的表情
+                if (expressionObj != null)
+                {
+                    isExcExit = true;
+                    exctime = -1;
+                    GameObject.DestroyObject(expressionObj);
+                }
+
+                expressItem = CommonUtil.getGameObjByBundle(name);
+                expressionObj = GameObject.Instantiate(expressItem);
+                expressionObj.transform.SetParent(GameObject.Find("CommonWorld").transform);
+                isExcExit = false;
+                exctime = 7;
+                StartExcTimer();
             }
-            expressItem = CommonUtil.getGameObjByBundle(name);
-            expressionObj = GameObject.Instantiate(expressItem);
-            expressionObj.transform.SetParent(GameObject.Find("CommonWorld").transform);
-            GameUtil.isExit = false;
-            GameUtil.StartTimer(7, expressionObj,true);
+            catch (Exception e)
+            {
+                Log.Debug(e.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// 文本聊天显示定时器
+        /// </summary>
+        public bool isExit = false;
+        public int time = 8;
+        public async void StartTimer(GameObject obj)
+        {
+            while (time >= 0)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
+                --time;
+            }
+            if (isExit)
+                return;
+            obj.SetActive(false);
+        }
+
+        /// <summary>
+        /// 表情显示计时器
+        /// </summary>
+        public bool isExcExit = false;
+        public int exctime = 7;
+        public async void StartExcTimer()
+        {
+            while (exctime >= 0)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
+                --exctime;
+            }
+            if (isExcExit)
+                return;
+            GameObject.DestroyObject(expressionObj);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            GameUtil.isExit = true;
+            isExcExit = true;
+            isExit = true;
             if (expressionObj != null)
                 GameObject.DestroyObject(expressionObj);
         }

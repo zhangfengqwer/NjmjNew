@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
@@ -151,7 +152,7 @@ namespace ETHotfix
         public async void onClickWechatLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin("hp");
+            await OnThirdLogin("zmy006");
         }
 
         public void onClickBackStart()
@@ -186,7 +187,6 @@ namespace ETHotfix
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
-
 
                 UINetLoadingComponent.closeNetLoading();
 
@@ -285,7 +285,6 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
-                PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
@@ -341,7 +340,6 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
-                PlayerInfoComponent.Instance.SetChatList(g2CLoginGate.ChatList);
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
@@ -353,15 +351,14 @@ namespace ETHotfix
             }
         }
 
-        public void getAllData()
+        public async void getAllData()
         {
             UINetLoadingComponent.showNetLoading();
 
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
-            HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
-            //HttpReqUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt", SensitiveWordUtil.InitWords);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
+            await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
 
             UINetLoadingComponent.closeNetLoading();
         }

@@ -941,7 +941,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1230,7 +1230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6700\u5927\u8D62\u53D6: 0\u82B1"
+  m_Text: 
 --- !u!114 &114107276858648232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1257,7 +1257,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1993,7 +1993,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2092,7 +2092,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5DF2\u73A9\u724C\u5C40\r: 0"
+  m_Text: 
 --- !u!114 &114510941359653238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,7 +2125,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u80DC       \u7387\r: 0%"
+  m_Text: 
 --- !u!114 &114541575561358374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2828,6 +2828,12 @@ MonoBehaviour:
     gameObject: {fileID: 1848622176975846}
   - key: DuihuanBtn
     gameObject: {fileID: 1373473754020070}
+  - key: AlPlayTxt
+    gameObject: {fileID: 1801776697248474}
+  - key: SuccessRateTxt
+    gameObject: {fileID: 1267976637848492}
+  - key: MaxSuccessTxt
+    gameObject: {fileID: 1131179272477524}
 --- !u!114 &114834839839322004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3538,9 +3544,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 482, y: 0.0000009536743}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224177894751961210
 RectTransform:
   m_ObjectHideFlags: 1
@@ -3629,9 +3635,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 477, y: 11}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224349527860994996
 RectTransform:
   m_ObjectHideFlags: 1
@@ -3647,9 +3653,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 469, y: 0.0000009536743}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224373272068910868
 RectTransform:
   m_ObjectHideFlags: 1
@@ -4019,7 +4025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 507.99997, y: 12}
+  m_AnchoredPosition: {x: 507.99997, y: 3}
   m_SizeDelta: {x: 39, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224715446003155828
@@ -4249,7 +4255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 507.99997, y: 12}
+  m_AnchoredPosition: {x: 507.99997, y: -0}
   m_SizeDelta: {x: 39, y: 44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224892480679822682
@@ -4324,6 +4330,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228.7, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 464, y: 0.0000009536743}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}

@@ -144,21 +144,5 @@ namespace ETHotfix
 
             return false;
         }
-
-        public static bool isExit = false;
-
-        public static async void StartTimer(float time, UnityEngine.GameObject obj, bool isDestroy = false)
-        {
-            while (time >= 0)
-            {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
-                --time;
-                if (isExit)
-                    return;
-            }
-            if (isDestroy)
-                UnityEngine.GameObject.DestroyObject(obj);
-            obj.SetActive(false);
-        }
     }
 }

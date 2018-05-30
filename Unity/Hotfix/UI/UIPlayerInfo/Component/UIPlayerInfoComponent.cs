@@ -21,6 +21,9 @@ namespace ETHotfix
         private Text uIDTxt;
         private Text noBindPhoneTxt;
         private Text realNameTxt;
+        private Text AlPlayTxt;
+        private Text SuccessRateTxt;
+        private Text MaxSuccessTxt;
 
         private Button returnBtn;
         private Button playerIcon;
@@ -45,6 +48,10 @@ namespace ETHotfix
             realNameTxt = rc.Get<GameObject>("RealNameTxt").GetComponent<Text>();
             noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
             HuafeiNumTxt = rc.Get<GameObject>("HuafeiNumTxt").GetComponent<Text>();
+            AlPlayTxt = rc.Get<GameObject>("AlPlayTxt").GetComponent<Text>();
+            SuccessRateTxt = rc.Get<GameObject>("SuccessRateTxt").GetComponent<Text>();
+            MaxSuccessTxt = rc.Get<GameObject>("MaxSuccessTxt").GetComponent<Text>();
+
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
             changeNameBtn = rc.Get<GameObject>("ChangeNameBtn").GetComponent<Button>();
@@ -84,6 +91,11 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetUIHideOrOpen(true);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIPlayerInfo);
+                if(Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP) != null)
+                {
+                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIVIP).GameObject.activeInHierarchy)
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIVIP);
+                }
             });
             
             changeNameBtn.onClick.Add(() =>
@@ -105,6 +117,10 @@ namespace ETHotfix
             PlayerInfo playerInfo = pc.GetPlayerInfo();
             nameTxt.text = playerInfo.Name;
             uIDTxt.text = pc.uid.ToString();
+            AlPlayTxt.text = $"已玩牌局：{ playerInfo.TotalGameCount}"; 
+            SuccessRateTxt.text = $"胜       率：{ playerInfo.WinRate}%";
+            MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
+
             if (playerInfo.IsRealName)
                 realNameTxt.text = "已实名";
             if (!string.IsNullOrEmpty(playerInfo.Phone))
@@ -122,8 +138,11 @@ namespace ETHotfix
         private void Init()
         {
             bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            bindPhoneBtn.transform.parent.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
+            changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
+            realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
             HuafeiNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum.ToString();
@@ -136,12 +155,20 @@ namespace ETHotfix
         public void Update()
         {
             playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-            Debug.Log(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+            {
                 realNameTxt.text = "已实名";
+                realNameBtn.gameObject.SetActive(false);
+                realNameBtn.transform.parent.gameObject.SetActive(false);
+            }
+               
             if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            {
                 noBindPhoneTxt.text = "已绑定";
+                bindPhoneBtn.gameObject.SetActive(false);
+                bindPhoneBtn.transform.parent.gameObject.SetActive(false);
+            }
         }
 
         public async void onClickChangeAccount()
@@ -161,9 +188,19 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+
+                HeartBeat.getInstance().stopHeartBeat();
             }
             catch (Exception e)
             {
+                PlayerPrefs.SetString("Phone", "");
+                PlayerPrefs.SetString("Token", "");
+
+                Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+
+                HeartBeat.getInstance().stopHeartBeat();
+
                 sessionWrap?.Dispose();
                 Log.Error(e);
             }
