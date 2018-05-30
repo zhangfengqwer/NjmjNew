@@ -58,9 +58,12 @@ namespace ETHotfix
 
             Log.Debug("改变财富:" + huaCount * self.Multiples);
             await ChangeWeath(self, huaCount, room);
+
             //更新任务
             UpdateTask(room);
             UpdateChengjiu(room);
+            UpdatePlayerInfo(room, huaCount);
+
             //            //更新任务
             //            UpdateTask(room);
 
@@ -113,6 +116,22 @@ namespace ETHotfix
                 Log.Debug($"房间释放:{room.Id}");
                 roomComponent.RemoveRoom(room);
                 room?.Dispose();
+            }
+        }
+
+        private static void UpdatePlayerInfo(Room room ,int huaCount)
+        {
+            foreach (var gamer in room.GetAll())
+            {
+                //胜利
+                if (gamer.UserID == room.ziMoUid)
+                {
+                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount);
+                }
+                else
+                {
+                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, 0);
+                }
             }
         }
 
