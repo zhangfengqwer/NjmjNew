@@ -19,6 +19,12 @@ namespace ETHotfix
 	
 	public class UICommonPanelComponent : Component
 	{
+        public delegate void OnClickOkEvent();
+        public OnClickOkEvent onCallBack_ok = null;
+
+        public delegate void OnClickCloseEvent();
+        public OnClickCloseEvent onCallBack_close = null;
+
         private Button Button_OK;
         private Button Button_close;
 
@@ -29,18 +35,36 @@ namespace ETHotfix
 		{
         }
 
-        public static void showCommonPanel(string title,string content)
+        public static UICommonPanelComponent showCommonPanel(string title,string content)
         {
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) != null)
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            }
+
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UICommonPanel);
 
-            // 刷新主界面
             if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) != null)
             {
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel).GetComponent<UICommonPanelComponent>() != null)
                 {
                     Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel).GetComponent<UICommonPanelComponent>().initData(title, content);
+
+                    return Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel).GetComponent<UICommonPanelComponent>();
                 }
             }
+
+            return null;
+        }
+
+        public void setOnClickOkEvent(OnClickOkEvent onClickOkEvent)
+        {
+            onCallBack_ok = onClickOkEvent;
+        }
+
+        public void setOnClickCloseEvent(OnClickCloseEvent onClickCloseEvent)
+        {
+            onCallBack_close = onClickCloseEvent;
         }
 
         public void initData(string title, string content)
@@ -62,12 +86,26 @@ namespace ETHotfix
 
         public void onClickClose()
         {
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            if (onCallBack_close == null)
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            }
+            else
+            {
+                onCallBack_close();
+            }
         }
 
         public void onClickOK()
         {
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            if (onCallBack_ok == null)
+            { 
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            }
+            else
+            {
+                onCallBack_ok();
+            }
         }
     }
 }
