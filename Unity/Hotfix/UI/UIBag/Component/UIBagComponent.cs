@@ -9,9 +9,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIBagSystem : AwakeSystem<UIBagComponent>
+    public class UIBagSystem : StartSystem<UIBagComponent>
     {
-        public override void Awake(UIBagComponent self)
+        public override void Start(UIBagComponent self)
         {
             self.Awake();
         }
@@ -36,6 +36,7 @@ namespace ETHotfix
         private GameObject bgItem = null;
         private List<GameObject> bgItemList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
+        private List<Bag> bagList;
         private Bag item;
         private PropInfo propInfo;
         //private int row = 3;//初始三行
@@ -98,10 +99,11 @@ namespace ETHotfix
             GameObject obj = null;
             for (int i = 0; i < itemList.Count; ++i)
             {
-                if (itemList[i].Count == 0)
-                    continue;
                 if (i < bagItemList.Count)
+                {
+                    bagItemList[i].SetActive(true);
                     obj = bagItemList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(bagItem);
@@ -119,6 +121,13 @@ namespace ETHotfix
                     SetItemInfo(itemList[0]);
                 uiList[i].GetComponent<UIBagItemComponent>().SetItemInfo(itemList[i], i + 1);
             }
+            SetMoreHide(itemList.Count);
+        }
+
+        private void SetMoreHide(int index)
+        {
+            for (int i = index; i < bagItemList.Count; ++i)
+                bagItemList[i].SetActive(false);
         }
 
         public void SetItemInfo(Bag item)
