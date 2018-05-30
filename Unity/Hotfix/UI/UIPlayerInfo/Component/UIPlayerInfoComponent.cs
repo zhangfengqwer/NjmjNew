@@ -118,7 +118,9 @@ namespace ETHotfix
             nameTxt.text = playerInfo.Name;
             uIDTxt.text = pc.uid.ToString();
             AlPlayTxt.text = $"已玩牌局：{ playerInfo.TotalGameCount}";
-            SuccessRateTxt.text = String.Format("胜       率：{0:F}%", playerInfo.WinRate * 100);
+            if (playerInfo.WinRate.Equals(0))
+                SuccessRateTxt.text = $"胜       率：{0}%";
+            SuccessRateTxt.text = $"胜       率：{(int)playerInfo.WinRate * 100}%";
             MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
 
             if (playerInfo.IsRealName)

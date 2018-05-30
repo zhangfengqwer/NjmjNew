@@ -60,7 +60,7 @@ namespace ETHotfix
             CreateEmailItemList();
         }
 
-        public void RefreshMailUI(long mailId)
+        public void RefreshMailUI()
         {
             GetEmail();
         }
@@ -88,11 +88,11 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIEmailItemComponent>();
-                    if (emailList[i].State == 0)
-                        obj.transform.SetAsFirstSibling();
                     uiList.Add(ui);
                     emailItemList.Add(obj);
                 }
+                if (emailList[i].State == 0)
+                    obj.transform.SetAsFirstSibling();
                 uiList[i].GetComponent<UIEmailItemComponent>().SetEmailData(emailList[i]);
             }
             emailCountTxt.text = new StringBuilder()

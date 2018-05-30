@@ -36,5 +36,10 @@ namespace ETModel
         {
             return this.database.GetCollection<PlayerBaseInfo>(name);
         }
+
+        public IMongoCollection<EmailInfo> GetEmailInfoCollection(string name)
+        {
+            return this.database.GetCollection<EmailInfo>(name);
+        }
     }
 }
