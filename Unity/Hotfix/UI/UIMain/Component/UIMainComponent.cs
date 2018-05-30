@@ -344,12 +344,10 @@ namespace ETHotfix
 
                 if (i >= ownGame)
                 {
-                    Log.Debug("===");
                     gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i + 1);
                 }
                 else
                 {
-                    Log.Debug("---");
                     gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
                 }
             }
@@ -374,8 +372,6 @@ namespace ETHotfix
 
             ownRank = GetWealthIndext(PlayerInfoComponent.Instance.uid);
             ownGame = GetGameIndext(PlayerInfoComponent.Instance.uid);
-            Log.Debug(ownRank.ToString());
-            Log.Debug(ownGame.ToString());
             ShowGoldRank();
             ownWealthRank = g2cRank.OwnWealthRank;
             ownGameRank = g2cRank.OwnGameRank;
@@ -499,13 +495,11 @@ namespace ETHotfix
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
                 str = "未上榜";
-                Log.Debug("未上榜");
             }
             else
             {
                 if (ownGame < 3)
                 {
-                    Log.Debug("上榜");
                     RankTxt.gameObject.SetActive(false);
                     RankImg.SetActive(true);
                     string iconName = new StringBuilder().Append("Rank_")
@@ -517,7 +511,6 @@ namespace ETHotfix
                     RankTxt.gameObject.SetActive(true);
                     RankImg.SetActive(false);
                     str = (ownGame + 1).ToString();
-                    Log.Debug("数字");
                 }
             }
             RankTxt.text = str;

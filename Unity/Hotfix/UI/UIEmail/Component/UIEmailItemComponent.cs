@@ -123,6 +123,7 @@ namespace ETHotfix
                 Delete.gameObject.SetActive(true);
             if (reward != null && !reward.Equals(""))
             {
+                rewardList.Clear();
                 get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
