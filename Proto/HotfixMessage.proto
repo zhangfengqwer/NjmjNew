@@ -665,6 +665,10 @@ message Actor_LaBa // IActorMessage
     required string LaBaContent = 1;
 }
 
+message Actor_OldUser // IActorMessage
+{
+}
+
 message Actor_Chat // IActorMessage
 {
 	required int ChatType = 1;

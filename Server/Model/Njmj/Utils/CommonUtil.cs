@@ -404,8 +404,8 @@ namespace ETModel
                 if ("string".Equals(node.Name))
                 {
                     JObject result = JObject.Parse(nodeValue);
-                    var ResultCode = (int) result.GetValue("ResultCode");
-                    var ResultMessage = (string) result.GetValue("ResultMessageDetails");
+                    var ResultCode = (int)result.GetValue("ResultCode");
+                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
 
                     return ResultMessage;
                 }

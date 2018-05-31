@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
+using Newtonsoft.Json.Linq;
 
 namespace ETHotfix
 {
@@ -33,7 +34,6 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-
 
                 if (ShopData.getInstance().getDataList().Count == 0)
                 {
@@ -184,15 +184,58 @@ namespace ETHotfix
                 reply(response);
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 
+                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
+
                 // vip上线全服广播
                 {
-                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
-                    
                     if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
                     {
                         Actor_LaBa actor_LaBa = new Actor_LaBa();
                         actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
                         Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
+                    }
+                }
+
+                // 老用户检测
+                {
+                    try
+                    {
+                        AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(userId);
+                        if (accountInfo.OldAccountState == 1)
+                        {
+                            string str = HttpUtil.GetHttp("http://fksq.javgame.com:10086/?machine_id=" + accountInfo.MachineId + "& game_id=217");
+                            Log.Debug("判断是否是老用户：" + str);
+
+                            JObject result = JObject.Parse(str);
+                            string old_uid = (string)result.GetValue("old_uid");
+
+                            // 不是老用户
+                            if (string.IsNullOrEmpty(old_uid))
+                            {
+                                accountInfo.OldAccountState = 3;
+                                await proxyComponent.Save(accountInfo);
+                            }
+                            // 是老用户
+                            else
+                            {
+                                accountInfo.OldAccountState = 2;
+                                await proxyComponent.Save(accountInfo);
+
+                                {
+                                    playerBaseInfo.GoldNum = 1000;
+                                    playerBaseInfo.WingNum = 100;
+                                    await proxyComponent.Save(playerBaseInfo);
+                                }
+
+                                // 发送老用户广播
+                                Actor_OldUser actor_OldUser = new Actor_OldUser();
+                                Game.Scene.GetComponent<UserComponent>().BroadCast(actor_OldUser);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("检测是否是老用户出错:" + ex);
                     }
                 }
             }
