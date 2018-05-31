@@ -203,7 +203,9 @@ namespace ETHotfix
                         AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(userId);
                         if (accountInfo.OldAccountState == 1)
                         {
-                            string str = HttpUtil.GetHttp("http://fksq.javgame.com:10086/?machine_id=" + accountInfo.MachineId + "& game_id=217");
+                            string url = "http://fksq.javgame.com:10086/?machine_id=" + accountInfo.MachineId + "&game_id=217";
+                            string str = HttpUtil.GetHttp(url);
+                            Log.Debug("web地址：" + url);
                             Log.Debug("判断是否是老用户：" + str);
 
                             JObject result = JObject.Parse(str);
