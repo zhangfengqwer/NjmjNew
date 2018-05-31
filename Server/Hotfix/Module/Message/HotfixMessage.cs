@@ -74,6 +74,12 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string ClientVersion;
 
+		[ProtoMember(5, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(6, IsRequired = true)]
+		public string Head;
+
 	}
 
 	[Message(HotfixOpcode.R2C_ThirdLogin)]

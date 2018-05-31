@@ -21,6 +21,8 @@ message C2R_ThirdLogin // IRequest
 	required string	MachineId = 2;
 	required string	ChannelName = 3;
 	required string	ClientVersion = 4;
+	required string	Name = 5;
+	required string	Head = 6;
 }
 
 message R2C_ThirdLogin // IResponse

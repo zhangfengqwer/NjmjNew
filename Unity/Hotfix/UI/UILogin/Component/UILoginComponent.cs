@@ -20,6 +20,16 @@ namespace ETHotfix
         }
     }
 
+    public class ThirdLoginData
+    {
+        public string channel_name = "";
+        public string third_id = "";
+        public string otherStr1 = "";
+        public string otherStr2 = "";
+        public int otherInt1 = 0;
+        public int otherInt2 = 0;
+    }
+
     public class UILoginComponent : Component
     {
         private GameObject panel_start;
@@ -83,7 +93,6 @@ namespace ETHotfix
                 DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
             }
         }
-
 
         public void onClickDebugAccount1()
         {
@@ -153,6 +162,11 @@ namespace ETHotfix
         {
             string Third_Id = CommonUtil.getCurTime();
             await OnThirdLogin("zmy009");
+        }
+
+        public void onThirdLoginCallback(ThirdLoginData thirdLoginData)
+        {
+
         }
 
         public void onClickBackStart()
