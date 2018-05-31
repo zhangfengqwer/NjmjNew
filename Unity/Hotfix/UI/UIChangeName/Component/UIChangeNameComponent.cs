@@ -86,6 +86,7 @@ namespace ETHotfix
             ToastScript.createToast("修改成功");
             //更改内存信息
             PlayerInfoComponent.Instance.GetPlayerInfo().Name = InputField_name.text;
+            PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount -= 1;
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChangeName);

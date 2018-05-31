@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
-using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
 
 namespace ETHotfix
 {
@@ -34,7 +34,6 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-
 
                 if (ShopData.getInstance().getDataList().Count == 0)
                 {
@@ -144,51 +143,97 @@ namespace ETHotfix
                 {
                     {
                         #region emailTest
-                        EmailInfo emailInfo = new EmailInfo();
-                        emailInfo.EmailId = 101;
-                        emailInfo.UId = userId;
-                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                        emailInfo.Date = new StringBuilder()
-                                        .Append(CommonUtil.getCurYear())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurMonth())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurDay()).ToString();
-                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                        emailInfo.Content = "加入南京麻将，就有好礼相送";
-                        emailInfo.State = 0;
-                        emailInfo.RewardItem = "2:100;1:100";
-                        DBHelper.AddEmailInfoToDB(emailInfo);
-                    }
-                    {
-                        EmailInfo emailInfo = new EmailInfo();
-                        emailInfo.EmailId = 102;
-                        emailInfo.UId = userId;
-                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                        emailInfo.Date = new StringBuilder()
-                                        .Append(CommonUtil.getCurYear())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurMonth())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurDay()).ToString();
-                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                        emailInfo.Content = "加入南京麻将，就有好礼相送";
-                        emailInfo.State = 0;
-                        emailInfo.RewardItem = "2:100;1:100";
-                        DBHelper.AddEmailInfoToDB(emailInfo);
+                        {
+                            for (int i = 1; i <= 30; ++i)
+                            {
+                                int id = 100 + i;
+                                EmailInfo emailInfo = new EmailInfo();
+                                emailInfo.EmailId = id;
+                                emailInfo.UId = userId;
+                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                                emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                emailInfo.State = 0;
+                                emailInfo.RewardItem = "2:100;1:100";
+                                DBHelper.AddEmailInfoToDB(emailInfo);
+                            }
+                        }
+
+                        {
+                            for (int i = 1; i <= 30; ++i)
+                            {
+                                int id = 100 + i + 30;
+                                EmailInfo emailInfo = new EmailInfo();
+                                emailInfo.EmailId = id;
+                                emailInfo.UId = userId;
+                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                                emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                emailInfo.State = 1;
+                                emailInfo.RewardItem = "2:100;1:100";
+                                DBHelper.AddEmailInfoToDB(emailInfo);
+                            }
+                        }
+
                     }
                     #endregion
                 }
-                
+
+                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
+
+                // 老用户检测
+                {
+                    try
+                    {
+                        AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(userId);
+                        if (accountInfo.OldAccountState == 1)
+                        {
+                            string url = "http://fksq.javgame.com:10086/?machine_id=" + accountInfo.MachineId + "&game_id=217";
+                            string str = HttpUtil.GetHttp(url);
+                            Log.Debug("web地址：" + url);
+                            Log.Debug("判断是否是老用户：" + str);
+
+                            JObject result = JObject.Parse(str);
+                            string old_uid = (string)result.GetValue("old_uid");
+
+                            // 不是老用户
+                            if (string.IsNullOrEmpty(old_uid))
+                            {
+                                accountInfo.OldAccountState = 3;
+                                await proxyComponent.Save(accountInfo);
+                            }
+                            // 是老用户
+                            else
+                            {
+                                accountInfo.OldAccountState = 2;
+                                await proxyComponent.Save(accountInfo);
+
+                                {
+                                    playerBaseInfo.GoldNum = 1000;
+                                    playerBaseInfo.WingNum = 100;
+                                    await proxyComponent.Save(playerBaseInfo);
+                                }
+
+                                // 发送老用户广播
+                                Actor_OldUser actor_OldUser = new Actor_OldUser();
+                                actor_OldUser.OldAccount = old_uid;
+                                Game.Scene.GetComponent<UserComponent>().BroadCast(actor_OldUser);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("检测是否是老用户出错:" + ex);
+                    }
+                }
+
                 reply(response);
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 
                 // vip上线全服广播
                 {
-                    PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
-                    
                     if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
                     {
                         Actor_LaBa actor_LaBa = new Actor_LaBa();
@@ -196,24 +241,7 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
                     }
                 }
-//
-//			    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-//			    FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>("{}");
-//			    SortDefinition<ComponentWithId> sort = Builders<ComponentWithId>.Sort.Ascending("State").Descending("CreateTime");
-////			    List<ComponentWithId> components = await dbComponent.GetCollection(typeof(EmailInfo).Name).FindAsync(filterDefinition).Result.ToListAsync();
-//
-//			    List<ComponentWithId> components = await dbComponent.GetCollection(typeof(EmailInfo).Name).Find(filterDefinition).Sort(sort).Limit(50).ToListAsync();
-//
-//
-//                List<EmailInfo> infos = new List<EmailInfo>();
-//			    foreach (var component in components)
-//			    {
-//			        infos.Add((EmailInfo) component);
-//                }
-//
-//			    Log.Debug($"info.count:{infos.Count}");
-
-			}
+            }
 			catch (Exception e)
 			{
 				ReplyError(response, e, reply);

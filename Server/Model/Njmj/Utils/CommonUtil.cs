@@ -23,6 +23,12 @@ namespace ETModel
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        // 格式2017-07-12
+        public static string getCurDataNormalFormat()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd");
+        }
+
         public static string timeAddDays(string time, int days)
         {
             return Convert.ToDateTime(time).AddDays(days).ToString("yyyy-MM-dd HH:mm:ss");
@@ -398,8 +404,8 @@ namespace ETModel
                 if ("string".Equals(node.Name))
                 {
                     JObject result = JObject.Parse(nodeValue);
-                    var ResultCode = (int) result.GetValue("ResultCode");
-                    var ResultMessage = (string) result.GetValue("ResultMessageDetails");
+                    var ResultCode = (int)result.GetValue("ResultCode");
+                    var ResultMessage = (string)result.GetValue("ResultMessageDetails");
 
                     return ResultMessage;
                 }

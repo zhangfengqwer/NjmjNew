@@ -21,6 +21,8 @@ message C2R_ThirdLogin // IRequest
 	required string	MachineId = 2;
 	required string	ChannelName = 3;
 	required string	ClientVersion = 4;
+	required string	Name = 5;
+	required string	Head = 6;
 }
 
 message R2C_ThirdLogin // IResponse
@@ -663,6 +665,11 @@ message G2C_UseLaBa // IResponse
 message Actor_LaBa // IActorMessage
 {
     required string LaBaContent = 1;
+}
+
+message Actor_OldUser // IActorMessage
+{
+	required string OldAccount = 1;
 }
 
 message Actor_Chat // IActorMessage

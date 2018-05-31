@@ -34,6 +34,8 @@ namespace ETHotfix
                     response.PlayerInfo.VipTime = playerInfo.VipTime;
                     response.PlayerInfo.EmogiTime = playerInfo.EmogiTime;
                     response.PlayerInfo.MaxHua = playerInfo.MaxHua;
+                    response.PlayerInfo.TotalGameCount = playerInfo.TotalGameCount;
+                    response.PlayerInfo.WinGameCount = playerInfo.WinGameCount;
                     response.PlayerInfo.WinRate = playerInfo.WinRate;
                     reply(response);
                     return;

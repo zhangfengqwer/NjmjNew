@@ -118,7 +118,10 @@ namespace ETHotfix
             nameTxt.text = playerInfo.Name;
             uIDTxt.text = pc.uid.ToString();
             AlPlayTxt.text = $"已玩牌局：{ playerInfo.TotalGameCount}";
-            SuccessRateTxt.text = String.Format("胜       率：{0:F}%", playerInfo.WinRate * 100);
+            if (playerInfo.WinRate.Equals(0))
+                SuccessRateTxt.text = $"胜       率：{0}%";
+            else
+                SuccessRateTxt.text = $"胜       率：{(int)playerInfo.WinRate * 100}%";
             MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
 
             if (playerInfo.IsRealName)
@@ -168,6 +171,11 @@ namespace ETHotfix
                 noBindPhoneTxt.text = "已绑定";
                 bindPhoneBtn.gameObject.SetActive(false);
                 bindPhoneBtn.transform.parent.gameObject.SetActive(false);
+            }
+            if(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount <= 0)
+            {
+                changeNameBtn.gameObject.SetActive(false);
+                changeNameBtn.transform.parent.gameObject.SetActive(false);
             }
         }
 

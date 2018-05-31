@@ -20,6 +20,17 @@ namespace ETHotfix
         }
     }
 
+    public class ThirdLoginData
+    {
+        public string channel_name = "";
+        public string response = "";
+        public string third_id = "";
+        public string otherStr1 = "";
+        public string otherStr2 = "";
+        public int otherInt1 = 0;
+        public int otherInt2 = 0;
+    }
+
     public class UILoginComponent : Component
     {
         private GameObject panel_start;
@@ -154,6 +165,11 @@ namespace ETHotfix
 //            string Third_Id = CommonUtil.getCurTime();
 //            await OnThirdLogin("zmy006");
             PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
+        }
+
+        public void onThirdLoginCallback(ThirdLoginData thirdLoginData)
+        {
+
         }
 
         public void onClickBackStart()

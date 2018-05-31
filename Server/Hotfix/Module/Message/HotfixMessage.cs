@@ -74,6 +74,12 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string ClientVersion;
 
+		[ProtoMember(5, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(6, IsRequired = true)]
+		public string Head;
+
 	}
 
 	[Message(HotfixOpcode.R2C_ThirdLogin)]
@@ -1903,6 +1909,21 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public string LaBaContent;
+
+	}
+
+	[Message(HotfixOpcode.Actor_OldUser)]
+	[ProtoContract]
+	public partial class Actor_OldUser: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string OldAccount;
 
 	}
 

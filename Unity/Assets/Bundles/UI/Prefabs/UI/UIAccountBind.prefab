@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8347f75bbf20473292de676504ad7398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasName: MainCanvas
+  CanvasName: CommonCanvas
 --- !u!114 &114267616210593158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,7 +347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u68C0\u6D4B\u5230\u60A8\u5DF2\u6709\u5357\u4EAC\u9EBB\u5C06\u8D26\u53F7\uFF0C\n\n\u6B63\u5728\u540C\u6B65\u6B64\u8D26\u53F7\u6570\u636E..."
+  m_Text: "\u68C0\u6D4B\u5230\u60A8\u5DF2\u6709\u5357\u4EAC\u9EBB\u5C06\u8D26\u53F7\uFF0C\n\n\u5DF2\u4E3A\u60A8\u540C\u6B65\u6B64\u8D26\u53F7\u6570\u636E\u3002"
 --- !u!114 &114529085064816262
 MonoBehaviour:
   m_ObjectHideFlags: 1

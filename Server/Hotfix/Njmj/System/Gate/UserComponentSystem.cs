@@ -19,6 +19,19 @@ namespace ETHotfix
             }
         }
 
+        public static void BroadCastToSingle(this UserComponent self, IActorMessage message,long uid)
+        {
+            User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
+            foreach (var _user in users)
+            {
+                if (uid == _user.UserID)
+                {
+                    ActorProxy actorProxy = _user.GetComponent<UnitGateComponent>().GetActorProxy();
+                    actorProxy.Send(message);
+                }
+            }
+        }
+
         public static void CheckIsExistTheUser(long uid)
         {
             User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();

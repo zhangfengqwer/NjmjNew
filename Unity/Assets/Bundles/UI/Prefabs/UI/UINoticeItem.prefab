@@ -206,6 +206,8 @@ MonoBehaviour:
     gameObject: {fileID: 1379671130576084}
   - key: NoticeBtn
     gameObject: {fileID: 1366283963246520}
+  - key: Date
+    gameObject: {fileID: 1578002842700492}
 --- !u!114 &114124574191513094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,7 +240,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886"
+  m_Text: "\u516C\u544A\u5185\u5BB9\r"
 --- !u!114 &114241362354016556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,7 +286,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2017-01-01
+  m_Text: "\r\u516C\u544A\u65F6\u95F4"
 --- !u!114 &114576138406123438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,7 +386,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6"
+  m_Text: "\u516C\u544A\u6807\u9898"
 --- !u!114 &114845181156807316
 MonoBehaviour:
   m_ObjectHideFlags: 1

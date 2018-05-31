@@ -252,26 +252,31 @@ namespace ETHotfix
 
                 // 重置任务
                 {
-
                     List<TaskProgressInfo> progressList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid}}}");
-                    for (int j = 1; j < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++j)
+                    if (progressList.Count > 0)
                     {
-                        int id = 100 + j;
-                        if (progressList[0].TaskId == id)
+                        for (int i = 0; i < progressList.Count; ++i)
                         {
-                            TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
-                            progressList[0].IsGet = false;
-                            progressList[0].Name = config.Name;
-                            progressList[0].TaskId = (int)config.Id;
-                            progressList[0].IsComplete = false;
-                            progressList[0].Target = config.Target;
-                            progressList[0].Reward = config.Reward;
-                            progressList[0].Desc = config.Desc;
-                            progressList[0].CurProgress = 0;
-                            break;
+                            int id = 100 + i + 1;
+                            for (int j = 0; j < configCom.GetAll(typeof(TaskConfig)).Length; ++j)
+                            {
+                                if (progressList[i].TaskId == id)
+                                {
+                                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                                    progressList[i].IsGet = false;
+                                    progressList[i].Name = config.Name;
+                                    progressList[i].TaskId = (int)config.Id;
+                                    progressList[i].IsComplete = false;
+                                    progressList[i].Target = config.Target;
+                                    progressList[i].Reward = config.Reward;
+                                    progressList[i].Desc = config.Desc;
+                                    progressList[i].CurProgress = 0;
+                                    break;
+                                }
+                            }
+                            await proxyComponent.Save(progressList[i]);
                         }
                     }
-                    await proxyComponent.Save(progressList[0]);
                 }
             }
 

@@ -37,7 +37,7 @@ namespace Hotfix
                 temp.id = (int)jd[i]["id"];
                 temp.title = (string)jd[i]["title"];
                 temp.content = (string)jd[i]["content"];
-
+                temp.time = (string)jd[i]["time"];
                 m_dataList.Add(temp);
             }
         }
@@ -69,5 +69,6 @@ namespace Hotfix
         public int id = 0;
         public string title = "";
         public string content = "";
+        public string time = "";
     }
 }

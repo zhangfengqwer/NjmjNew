@@ -10,7 +10,6 @@ namespace ETModel
         public int EmailId { get; set; }
         public string EmailTitle { get; set; }
         public string Content { get; set; }
-        public string Date { get; set; }
         public int State = 0;
         public string RewardItem { get; set; }
     }

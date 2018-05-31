@@ -1077,7 +1077,7 @@ public class PlatformHelper
 
     public static string GetMacId()
     {
-        return "1";
+        return "86694702188745550a72bd17700";
     }
 }
 #endif
