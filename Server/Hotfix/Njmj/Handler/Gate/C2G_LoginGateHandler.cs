@@ -180,21 +180,8 @@ namespace ETHotfix
                     }
                     #endregion
                 }
-                
-                reply(response);
-				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 
                 PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
-
-                // vip上线全服广播
-                {
-                    if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
-                    {
-                        Actor_LaBa actor_LaBa = new Actor_LaBa();
-                        actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
-                        Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
-                    }
-                }
 
                 // 老用户检测
                 {
@@ -231,6 +218,7 @@ namespace ETHotfix
 
                                 // 发送老用户广播
                                 Actor_OldUser actor_OldUser = new Actor_OldUser();
+                                actor_OldUser.OldAccount = old_uid;
                                 Game.Scene.GetComponent<UserComponent>().BroadCast(actor_OldUser);
                             }
                         }
@@ -238,6 +226,19 @@ namespace ETHotfix
                     catch (Exception ex)
                     {
                         Log.Error("检测是否是老用户出错:" + ex);
+                    }
+                }
+
+                reply(response);
+				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
+
+                // vip上线全服广播
+                {
+                    if (playerBaseInfo.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                    {
+                        Actor_LaBa actor_LaBa = new Actor_LaBa();
+                        actor_LaBa.LaBaContent = "贵族玩家" + playerBaseInfo.Name + "上线啦！";
+                        Game.Scene.GetComponent<UserComponent>().BroadCast(actor_LaBa);
                     }
                 }
             }

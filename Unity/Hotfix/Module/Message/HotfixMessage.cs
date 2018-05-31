@@ -1916,6 +1916,9 @@ namespace ETHotfix
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public string OldAccount;
+
 	}
 
 	[Message(HotfixOpcode.Actor_Chat)]

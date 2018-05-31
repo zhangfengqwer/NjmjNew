@@ -9,9 +9,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
 	[ObjectSystem]
-	public class UiAccountBindComponentSystem : AwakeSystem<UIUseLaBaComponent>
+	public class UiAccountBindComponentSystem : AwakeSystem<UIAccountBindComponent>
 	{
-		public override void Awake(UIUseLaBaComponent self)
+		public override void Awake(UIAccountBindComponent self)
 		{
 			self.Awake();
 		}
@@ -27,12 +27,9 @@ namespace ETHotfix
 
         public void Awake()
 		{
-            ToastScript.clear();
-
-            initData();
         }
 
-        public void initData()
+        public void initData(string uid)
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -40,6 +37,7 @@ namespace ETHotfix
             Button_close = rc.Get<GameObject>("Button_close").GetComponent<Button>();
 
             Text_uid = rc.Get<GameObject>("Text_uid").GetComponent<Text>();
+            Text_uid.text = uid;
 
             Button_OK.onClick.Add(onClickOK);
             Button_close.onClick.Add(onClickClose);
@@ -53,24 +51,6 @@ namespace ETHotfix
         public void onClickOK()
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIAccountBind);
-        }
-
-        private async void RequestUseLaBa()
-        {
-            //G2C_UseLaBa g2cUseLaBa = (G2C_UseLaBa)await SessionWrapComponent.Instance.Session.Call(new C2G_UseLaBa { Uid = PlayerInfoComponent.Instance.uid , Content = InputField_content.text});
-
-            //if (g2cUseLaBa.Error != ErrorCode.ERR_Success)
-            //{
-            //    ToastScript.createToast(g2cUseLaBa.Message);
-
-            //    return;
-            //}
-
-            //ToastScript.createToast("发送成功");
-
-            //GameUtil.changeData(105,-1);
-
-            //Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseLaBa);
         }
     }
 }

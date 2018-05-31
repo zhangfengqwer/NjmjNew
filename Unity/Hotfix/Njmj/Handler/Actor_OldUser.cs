@@ -15,8 +15,17 @@ namespace ETHotfix
         {
             try
             {
-                Log.Debug($"我是老用户");
+                Log.Debug($"我是老用户:" + message.OldAccount);
+
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIAccountBind);
+
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIAccountBind) != null)
+                {
+                    if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIAccountBind).GetComponent<UIAccountBindComponent>() != null)
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIAccountBind).GetComponent<UIAccountBindComponent>().initData(message.OldAccount);
+                    }
+                }
             }
             catch (Exception e)
             {
