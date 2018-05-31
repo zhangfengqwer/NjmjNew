@@ -319,14 +319,14 @@ namespace ETHotfix
                 playerBaseInfo.Name = name;
             }
 
-            //if (string.IsNullOrEmpty(head))
+            if (string.IsNullOrEmpty(head))
             {
                 playerBaseInfo.Icon = "f_icon1";
             }
-            //else
-            //{
-            //    playerBaseInfo.Icon = head;
-            //}
+            else
+            {
+                playerBaseInfo.Icon = head;
+            }
 
             accountInfo.Phone = Phone;
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);

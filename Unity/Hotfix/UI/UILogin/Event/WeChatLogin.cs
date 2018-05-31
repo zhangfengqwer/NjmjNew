@@ -7,13 +7,12 @@ namespace ETHotfix
     {
         public override void Run(string thirdId, string channelName, string response)
         {
-
-            //await UILoginComponent.Instance.onThirdLoginCallback(new ThirdLoginData()
-            //{
-            //    third_id = thirdId,
-            //    channel_name = channelName,
-            //    response = response
-            //});
+            UILoginComponent.Instance.onThirdLoginCallback(new ThirdLoginData()
+            {
+                    third_id = thirdId,
+                    channel_name = channelName,
+                    response = response
+            });
         }
     }
 }

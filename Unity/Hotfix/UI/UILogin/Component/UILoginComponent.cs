@@ -163,9 +163,15 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-//            string Third_Id = CommonUtil.getCurTime();
-//            await OnThirdLogin("zmy006");
-            PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
+            if (false)
+            {
+                string Third_Id = CommonUtil.getCurTime();
+                await OnThirdLogin("zmy006","","");
+            }
+            else
+            {
+                PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
+            }
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
