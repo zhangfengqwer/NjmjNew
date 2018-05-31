@@ -172,7 +172,6 @@ namespace ETHotfix
                 bindPhoneBtn.gameObject.SetActive(false);
                 bindPhoneBtn.transform.parent.gameObject.SetActive(false);
             }
-
             if(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount <= 0)
             {
                 changeNameBtn.gameObject.SetActive(false);
