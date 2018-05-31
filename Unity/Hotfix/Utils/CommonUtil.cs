@@ -362,5 +362,16 @@ namespace ETHotfix
         {
             return Game.Scene.GetComponent<UIComponent>().Create(type);
         }
+
+        static public Sprite GetByte(string url)
+        {
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(url);
+            int width = 200;
+            int height = 300;
+            Texture2D texture = new Texture2D(width, height);
+            texture.LoadRawTextureData(bytes);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            return sprite;
+        }
     }
 }
