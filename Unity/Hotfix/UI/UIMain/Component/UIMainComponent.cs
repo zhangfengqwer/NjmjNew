@@ -2,7 +2,9 @@
 using ETModel;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace ETHotfix
@@ -61,7 +63,7 @@ namespace ETHotfix
         private bool isOwnRank = false;
         private bool isGameRank = false;
 
-        public void Start()
+        public async void Start()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             playerNameTxt = rc.Get<GameObject>("PlayerNameTxt").GetComponent<Text>();
@@ -247,7 +249,7 @@ namespace ETHotfix
             });
 
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
-            SetPlayerInfo();
+            await SetPlayerInfo();
             GetRankInfo();
 
             CommonUtil.ShowUI(UIType.UIDaily);
@@ -255,6 +257,19 @@ namespace ETHotfix
             checkLaBa();
 
             HeartBeat.getInstance().startHeartBeat();
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().Icon.Length < 10)
+            {
+                playerIcon.sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            }
+            else
+            {
+                GetPlayerIcon();
+            }
+        }
+
+        private async void GetPlayerIcon()
+        {
+            playerIcon.sprite = await CommonUtil.GetTextureFromUrl("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoS8QwnzzdzmF9bsvXq5w1QSHicSjgt81u9NNv5GUHN7AjWib8x9fiasw1KxiaUDICnlL4dYQ70EFj3jA/132");
         }
 
         /// <summary>
@@ -531,7 +546,7 @@ namespace ETHotfix
         /// <summary>
         /// 设置用户信息
         /// </summary>
-        private async void SetPlayerInfo()
+        private async Task SetPlayerInfo()
         {
             long uid = PlayerInfoComponent.Instance.uid;
 
@@ -561,6 +576,7 @@ namespace ETHotfix
         public void refreshUI()
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
+
             Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
             if (icon != null)
             {

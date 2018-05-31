@@ -308,7 +308,7 @@ namespace ETHotfix
             }
             else
             {
-                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:{name}}}");
+                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{name}'}}");
 
                 //// 昵称已经有人用了
                 //if (playerBaseInfos_temp.Count > 0)

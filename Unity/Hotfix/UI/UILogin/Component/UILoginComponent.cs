@@ -122,7 +122,7 @@ namespace ETHotfix
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (true)
+            if (false)
             {
                 phone = "";
                 token = "";

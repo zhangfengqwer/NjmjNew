@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace ETHotfix
@@ -328,12 +330,12 @@ namespace ETHotfix
             return i;
         }
 
-        static public Sprite getSpriteByBundle(string bundleName,string fileName)
+        static public Sprite getSpriteByBundle(string bundleName, string fileName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
-            
+
             Sprite sprite = bundleGameObject.Get<Sprite>($"{fileName}");
 
             return sprite;
@@ -363,15 +365,29 @@ namespace ETHotfix
             return Game.Scene.GetComponent<UIComponent>().Create(type);
         }
 
-        static public Sprite GetByte(string url)
+        //static public Sprite GetByte(string url)
+        //{
+        //    byte[] bytes = System.Text.Encoding.ASCII.GetBytes(url);
+        //    int width = 100;
+        //    int height = 100;
+        //    Texture2D texture = new Texture2D(width, height);
+        //    texture.LoadRawTextureData(bytes);
+        //    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        //    return sprite;
+        //}
+
+        static async public Task<Sprite> GetTextureFromUrl(string url)
         {
-            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(url);
-            int width = 200;
-            int height = 300;
-            Texture2D texture = new Texture2D(width, height);
-            texture.LoadRawTextureData(bytes);
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            return sprite;
+            TaskCompletionSource<Sprite> tcs = new TaskCompletionSource<Sprite>();
+            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            {
+                await webRequestAsync.DownloadImageAsync(url);
+                DownloadHandlerTexture downloadHandlerTexture = (DownloadHandlerTexture)webRequestAsync.Request.downloadHandler;
+                Texture2D texture2D = downloadHandlerTexture.texture;
+                Sprite sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), Vector2.zero);
+                tcs.SetResult(sprite);
+            }
+            return await tcs.Task;
         }
     }
 }

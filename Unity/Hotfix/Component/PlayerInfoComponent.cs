@@ -76,7 +76,6 @@ namespace ETHotfix
             return chengjiuList;
         }
 
-
         public void Awake()
         {
             Instance = this;

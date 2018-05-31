@@ -152,10 +152,18 @@ namespace ETHotfix
                                 emailInfo.UId = userId;
                                 //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
                                 emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                                emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                if (i == 3 || i == 10 || i == 15 || i == 24)
+                                {
+                                    emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                                    emailInfo.RewardItem = "";
+                                }
+                                else
+                                {
+                                    emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                    emailInfo.RewardItem = "2:100;1:100";
+                                }
                                 emailInfo.State = 0;
-                                emailInfo.RewardItem = "2:100;1:100";
+                                
                                 DBHelper.AddEmailInfoToDB(emailInfo);
                             }
                         }

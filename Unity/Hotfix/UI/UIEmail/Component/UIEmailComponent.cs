@@ -8,9 +8,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIEmailSystem: AwakeSystem<UIEmailComponent>
+    public class UIEmailSystem: StartSystem<UIEmailComponent>
     {
-        public override void Awake(UIEmailComponent self)
+        public override void Start(UIEmailComponent self)
         {
             self.Awake();
         }
@@ -63,6 +63,7 @@ namespace ETHotfix
         public void RefreshMailUI()
         {
             GetEmail();
+            //删除之后remove相应的ui组件
         }
 
         /// <summary>
@@ -85,6 +86,7 @@ namespace ETHotfix
                     obj = GameObject.Instantiate(emailItem);
                     obj.transform.SetParent(grid.transform);
                     obj.transform.localScale = Vector3.one;
+                    obj.transform.name = emailList[i].EId.ToString();
                     obj.transform.localPosition = Vector3.zero;
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIEmailItemComponent>();
@@ -93,13 +95,29 @@ namespace ETHotfix
                 }
                 if (emailList[i].State == 0)
                     obj.transform.SetAsFirstSibling();
-                uiList[i].GetComponent<UIEmailItemComponent>().SetEmailData(emailList[i]);
+                try
+                {
+                    uiList[i].GetComponent<UIEmailItemComponent>().SetEmailData(emailList[i]);
+                }catch(Exception e)
+                {
+                    Log.Error(e);
+                }
             }
             emailCountTxt.text = new StringBuilder()
                                 .Append(emailList.Count)
                                 .Append("/")
                                 .Append(50).ToString();
             SetMoreMailHide(emailList.Count);
+        }
+
+        private UIEmailItemComponent GetEmailItemComponent(Email email)
+        {
+            for(int i = 0;i< uiList.Count; ++i)
+            {
+                if (uiList[i].GetComponent<UIEmailItemComponent>().email == email)
+                    return uiList[i].GetComponent<UIEmailItemComponent>();
+            }
+            return null;
         }
 
         /// <summary>
@@ -129,9 +147,20 @@ namespace ETHotfix
         public override async void Dispose()
         {
             base.Dispose();
-            for(int i = 0;i< grid.transform.childCount; ++i)
+            for (int i = 0; i < emailList.Count; ++i)
             {
                 //设置当前未读文本邮件为已读
+                if (string.IsNullOrEmpty(emailList[i].RewardItem))
+                {
+                    G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+                .Session.Call(new C2G_EmailOperate
+                {
+                    Uid = PlayerInfoComponent.Instance.uid,
+                    InfoList = new List<GetItemInfo>(),
+                    EmailId = emailList[i].EId,
+                    state = 1
+                });
+                }
             }
             emailItemList.Clear();
             uiList.Clear();
