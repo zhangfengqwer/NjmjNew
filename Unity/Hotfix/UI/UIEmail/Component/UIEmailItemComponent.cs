@@ -78,7 +78,7 @@ namespace ETHotfix
                     state = 2
                 });
             UINetLoadingComponent.closeNetLoading();
-            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().RefreshMailUI(email.EId);
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().RefreshMailUI();
             ToastScript.createToast("删除邮件成功!");
         }
 
@@ -114,7 +114,7 @@ namespace ETHotfix
             this.email = email;
             title.text = email.EmailTitle;
             content.text = email.Content;
-            date.text = email.Date;
+            date.text = email.Date.Substring(0, 10);
             state = email.State;
             string reward = email.RewardItem;
             flag.SetActive(state == 0);

@@ -12,8 +12,11 @@ namespace ETHotfix
             {
                 UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = ui.GetComponent<GamerComponent>();
-                Log.Debug("玩家出牌：" + weight + "index:" + index);
-                SessionWrapComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
+                if (gamerComponent.CurrentPlayUid == PlayerInfoComponent.Instance.uid)
+                {
+                    Log.Debug("玩家出牌：" + weight + "index:" + index);
+                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
+                }
             }
             catch (Exception e)
             {

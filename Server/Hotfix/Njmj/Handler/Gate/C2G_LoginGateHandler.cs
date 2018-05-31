@@ -143,40 +143,40 @@ namespace ETHotfix
                 {
                     {
                         #region emailTest
-                        EmailInfo emailInfo = new EmailInfo();
-                        emailInfo.EmailId = 101;
-                        emailInfo.UId = userId;
-                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                        emailInfo.Date = new StringBuilder()
-                                        .Append(CommonUtil.getCurYear())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurMonth())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurDay()).ToString();
-                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                        emailInfo.Content = "加入南京麻将，就有好礼相送";
-                        emailInfo.State = 0;
-                        emailInfo.RewardItem = "2:100;1:100";
-                        DBHelper.AddEmailInfoToDB(emailInfo);
-                    }
-                    {
-                        EmailInfo emailInfo = new EmailInfo();
-                        emailInfo.EmailId = 102;
-                        emailInfo.UId = userId;
-                        //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                        emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                        emailInfo.Date = new StringBuilder()
-                                        .Append(CommonUtil.getCurYear())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurMonth())
-                                        .Append("-")
-                                        .Append(CommonUtil.getCurDay()).ToString();
-                        //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                        emailInfo.Content = "加入南京麻将，就有好礼相送";
-                        emailInfo.State = 0;
-                        emailInfo.RewardItem = "2:100;1:100";
-                        DBHelper.AddEmailInfoToDB(emailInfo);
+                        {
+                            for (int i = 1; i <= 30; ++i)
+                            {
+                                int id = 100 + i;
+                                EmailInfo emailInfo = new EmailInfo();
+                                emailInfo.EmailId = id;
+                                emailInfo.UId = userId;
+                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                                emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                emailInfo.State = 0;
+                                emailInfo.RewardItem = "2:100;1:100";
+                                DBHelper.AddEmailInfoToDB(emailInfo);
+                            }
+                        }
+
+                        {
+                            for (int i = 1; i <= 30; ++i)
+                            {
+                                int id = 100 + i + 30;
+                                EmailInfo emailInfo = new EmailInfo();
+                                emailInfo.EmailId = id;
+                                emailInfo.UId = userId;
+                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
+                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
+                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
+                                emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                emailInfo.State = 1;
+                                emailInfo.RewardItem = "2:100;1:100";
+                                DBHelper.AddEmailInfoToDB(emailInfo);
+                            }
+                        }
+
                     }
                     #endregion
                 }

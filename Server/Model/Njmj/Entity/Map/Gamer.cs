@@ -1,4 +1,6 @@
-﻿namespace ETModel
+﻿using System;
+
+namespace ETModel
 {
     [ObjectSystem]
     public class GamerAwakeSystem : AwakeSystem<Gamer,long>
@@ -55,6 +57,10 @@
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }
         public bool IsCanHu { get; set; }
+        //玩家在线开始的时间
+        public DateTime StartTime { get; set; }
+        //游戏离线结束的时间
+        public DateTime EndTime { get; set; }
 
         public void Awake(long id)
         {
@@ -75,7 +81,7 @@
             this.RoomID = 0;
             this.IsReady = false;
             this.isOffline = false;
-            ReadyTimeOut = 0;
+            this.ReadyTimeOut = 0;
         }
     }
 }

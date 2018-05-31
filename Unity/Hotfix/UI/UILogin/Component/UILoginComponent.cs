@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
-using Unity_Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity_Utils;
 
 namespace ETHotfix
 {
@@ -152,7 +152,7 @@ namespace ETHotfix
         public async void onClickWechatLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin("zmy006");
+            await OnThirdLogin("zmy007");
         }
 
         public void onClickBackStart()

@@ -56,8 +56,12 @@ namespace ETHotfix
 
         public static void RemoveRoom(this RoomComponent self,Room room)
         {
+            Log.Debug("self.rooms:" + self.rooms.Count);
             self.rooms.Remove(room.Id);
+            Log.Debug("self.rooms:" + self.rooms.Count);
+            Log.Debug("idleRooms:" + self.idleRooms.Count);
             self.idleRooms.Remove(room);
+            Log.Debug("idleRooms:" + self.idleRooms.Count);
         }
 
         public static async void Awake(this RoomComponent self)
@@ -85,7 +89,6 @@ namespace ETHotfix
 
                                 //房间移除玩家
                                 room.Remove(gamer.UserID);
-
                                 //消息广播给其他人
                                 room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
                                 gamer.Dispose();
@@ -93,8 +96,8 @@ namespace ETHotfix
                                 if (room.seats.Count == 0)
                                 {
                                     Log.Debug($"房间释放:{room.Id}");
-                                    room?.Dispose();
                                     self.RemoveRoom(room);
+                                    room?.Dispose();
                                 }
                             }
                         }

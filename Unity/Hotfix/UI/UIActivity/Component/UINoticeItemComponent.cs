@@ -23,6 +23,7 @@ namespace ETHotfix
         private GameObject Line;
         private GameObject Flag;
         private Button NoticeBtn;
+        private Text Date;
         public NoticeInfo info;
 
         public void Awake()
@@ -33,6 +34,8 @@ namespace ETHotfix
             Flag = rc.Get<GameObject>("Flag");
             NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
             Title = rc.Get<GameObject>("Title").GetComponent<Text>();
+            Date = rc.Get<GameObject>("Date").GetComponent<Text>();
+
             NoticeBtn.onClick.Add(() =>
             {
                 string key = $"{PlayerInfoComponent.Instance.uid}{info.id}";
@@ -47,6 +50,7 @@ namespace ETHotfix
             this.info = info;
             Title.text = info.title;
             Content.text = info.content;
+            Date.text = info.time;
             string key = $"{PlayerInfoComponent.Instance.uid}{info.id}";
             int state = PlayerPrefs.GetInt(key);
             Flag.SetActive(!(state == 1));

@@ -206,6 +206,8 @@ MonoBehaviour:
     gameObject: {fileID: 1379671130576084}
   - key: NoticeBtn
     gameObject: {fileID: 1366283963246520}
+  - key: Date
+    gameObject: {fileID: 1578002842700492}
 --- !u!114 &114124574191513094
 MonoBehaviour:
   m_ObjectHideFlags: 1
