@@ -68,7 +68,7 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
             CreateItems(g2cChengjiu.ChengjiuList);
             CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>").Append("已获勋章:").Append("</color>")
-                    .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList)).Append("/").Append(g2cChengjiu.ChengjiuList.Count + 1).ToString();
+                    .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList)).Append("/").Append(g2cChengjiu.ChengjiuList.Count).ToString();
         }
 
         /// <summary>
