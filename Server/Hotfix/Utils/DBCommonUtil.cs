@@ -285,7 +285,7 @@ namespace ETHotfix
             await proxyComponent.Save(log_Login);
         }
 
-        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone)
+        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone,string name,string head)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
@@ -301,8 +301,33 @@ namespace ETHotfix
 
             PlayerBaseInfo playerBaseInfo = ComponentFactory.CreateWithId<PlayerBaseInfo>(IdGenerater.GenerateId());
             playerBaseInfo.Id = uid;
-            playerBaseInfo.Name = uid.ToString();
-            playerBaseInfo.Icon = "f_icon1";
+
+            if (string.IsNullOrEmpty(name))
+            {
+                playerBaseInfo.Name = uid.ToString();
+            }
+            else
+            {
+                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:{name}}}");
+
+                //// 昵称已经有人用了
+                //if (playerBaseInfos_temp.Count > 0)
+                //{
+                //    playerBaseInfo.Name = (name + uid.ToString().Substring());
+                //}
+
+                playerBaseInfo.Name = name;
+            }
+
+            //if (string.IsNullOrEmpty(head))
+            {
+                playerBaseInfo.Icon = "f_icon1";
+            }
+            //else
+            //{
+            //    playerBaseInfo.Icon = head;
+            //}
+
             accountInfo.Phone = Phone;
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
             await proxyComponent.Save(playerBaseInfo);

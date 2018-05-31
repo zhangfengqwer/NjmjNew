@@ -73,7 +73,7 @@ namespace ETHotfix
                         await proxyComponent.Save(accountInfo);
 
                         // 添加用户信息
-                        PlayerBaseInfo playerBaseInfo = await DBCommonUtil.addPlayerBaseInfo(accountInfo.Id, accountInfo.Phone);
+                        PlayerBaseInfo playerBaseInfo = await DBCommonUtil.addPlayerBaseInfo(accountInfo.Id, accountInfo.Phone,"","");
 
                         // 随机分配一个Gate
                         StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();

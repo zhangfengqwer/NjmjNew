@@ -8,6 +8,7 @@ using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity_Utils;
+using LitJson;
 
 namespace ETHotfix
 {
@@ -167,9 +168,29 @@ namespace ETHotfix
             PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
         }
 
-        public void onThirdLoginCallback(ThirdLoginData thirdLoginData)
+        public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
         {
+            // 官方包
+            if (!ChannelHelper.IsThirdChannel())
+            {
+                JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
+                string name = (string)jd["nick"];
+                string head = (string)jd["url"];
 
+                await OnThirdLogin(thirdLoginData.third_id, name, head);
+            }
+            else
+            {
+                switch (thirdLoginData.channel_name)
+                {
+                    // 官方包
+                    case "":
+                        {
+
+                        }
+                        break;
+                }
+            }
         }
 
         public void onClickBackStart()
@@ -313,7 +334,7 @@ namespace ETHotfix
             }
         }
 
-        public async Task OnThirdLogin(string third_id)
+        public async Task OnThirdLogin(string third_id,string name,string head)
         {
             SessionWrap sessionWrap = null;
             try
@@ -324,7 +345,7 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
+                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
