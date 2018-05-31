@@ -8,11 +8,11 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIMainComponentSystem: AwakeSystem<UIMainComponent>
+    public class UIMainComponentSystem: StartSystem<UIMainComponent>
     {
-        public override void Awake(UIMainComponent self)
+        public override void Start(UIMainComponent self)
         {
-            self.Awake();
+            self.Start();
         }
     }
 
@@ -61,7 +61,7 @@ namespace ETHotfix
         private bool isOwnRank = false;
         private bool isGameRank = false;
 
-        public void Awake()
+        public void Start()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             playerNameTxt = rc.Get<GameObject>("PlayerNameTxt").GetComponent<Text>();
