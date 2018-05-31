@@ -31,7 +31,6 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 uiRoomComponent.StartGame(message.restCount);
-
                 foreach (var gameData in message.GamerDatas)
                 {
                     foreach (var mahjong in gameData.handCards)

@@ -38,11 +38,12 @@ namespace ETHotfix
         private Text text_yanzhengmadaojishi;
 
         bool isLoginSuccess = false;
+        public static UILoginComponent Instance { get; set; }
 
         public void Awake()
         {
             ToastScript.clear();
-
+            Instance = this;
             initData();
         }
 
@@ -84,7 +85,6 @@ namespace ETHotfix
             }
         }
 
-
         public void onClickDebugAccount1()
         {
             OnLoginPhone("1", "", "1");
@@ -94,12 +94,12 @@ namespace ETHotfix
         {
             OnLoginPhone("2", "", "2");
         }
-
+        
         public void onClickDebugAccount3()
         {
             OnLoginPhone("3", "", "3");
         }
-
+        
         public void onClickDebugAccount4()
         {
             OnLoginPhone("4", "", "4");
@@ -151,8 +151,9 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-            string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin("zmy006");
+//            string Third_Id = CommonUtil.getCurTime();
+//            await OnThirdLogin("zmy006");
+            PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
         }
 
         public void onClickBackStart()

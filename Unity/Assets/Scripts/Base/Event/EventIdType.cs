@@ -24,5 +24,6 @@
 		public const string MaxModelEvent = "MaxModelEvent";
 
 	    public const string GamerPlayCard = "GamerPlayCard";
-    }
+	    public const string WeChatLogin = "WeChatLogin";
+	}
 }

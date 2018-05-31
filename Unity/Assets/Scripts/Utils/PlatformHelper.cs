@@ -68,6 +68,7 @@ public class PlatformHelper
 
     public static void Login(string obj, string func, string data)
     {
+//        Debug.Log("1");
     }
 
     public static void WXShareFriends(string obj, string func, string data)
@@ -80,7 +81,6 @@ public class PlatformHelper
 
     public static void iOSLog(string str)
     {
-        LogUtil.Log(str);
     }
 
     public static void setProductName(string str)
@@ -374,6 +374,7 @@ public class PlatformHelper
     /// <param name="data"></param>
     public static void Login(string obj, string func, string data)
     {
+        //Log.Info("222222");
         GetJC().CallStatic("login", obj, func, data);
     }
 
@@ -408,7 +409,6 @@ public class PlatformHelper
 //    }
 
     public static void iOSLog(string str){
-        LogUtil.Log(str);
     }
 
     public static void setProductName(string str){}
@@ -847,6 +847,7 @@ public class PlatformHelper
 
     public static void Login(string obj, string func, string data)
     {
+        Log.Debug("login");
     }
 
     public static void WXShareFriends(string obj, string func, string data)

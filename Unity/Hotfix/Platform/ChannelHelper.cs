@@ -22,7 +22,7 @@ public class ChannelHelper
         {"anzhi", "安智"},
     };
 
-    public static bool Is3RdLogin()
+    public static bool IsThirdChannel()
     {
         string channelName = PlatformHelper.GetChannelName();
         foreach (var channel in ChannelDic.Keys)
@@ -43,7 +43,6 @@ public class ChannelHelper
         {
             return channelAllName;
         }
-
         return "";
     }
 }
