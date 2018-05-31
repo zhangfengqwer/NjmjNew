@@ -39,11 +39,6 @@ namespace ETHotfix
             });
 
             taskItem = CommonUtil.getGameObjByBundle(UIType.UITaskItem);
-            //progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
-            //                                      .Append(GetProgress())
-            //                                      .Append("/")
-            //                                      .Append(PlayerInfoComponent.Instance.GetTaskInfoList().Count)
-            //                                      .ToString();
             GetTaskInfoList();
         }
 
@@ -52,15 +47,21 @@ namespace ETHotfix
             UINetLoadingComponent.showNetLoading();
             G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
+            taskProgressList = g2cTask.TaskProgressList;
+            progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")
+                                                  .Append(GetProgress())
+                                                  .Append("/")
+                                                  .Append(taskProgressList.Count)
+                                                  .ToString();
             CreateTaskItem(g2cTask.TaskProgressList);
         }
 
         private int GetProgress()
         {
             int count = 0;
-            for (int i = 0; i < PlayerInfoComponent.Instance.GetTaskInfoList().Count; ++i)
+            for (int i = 0; i < taskProgressList.Count; ++i)
             {
-                if (PlayerInfoComponent.Instance.GetTaskInfoList()[i].IsComplete)
+                if (taskProgressList[i].IsComplete)
                     count++;
             }
             return count;
