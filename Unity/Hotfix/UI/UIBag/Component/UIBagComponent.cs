@@ -89,9 +89,24 @@ namespace ETHotfix
             long uid = PlayerInfoComponent.Instance.uid;
 
             G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
-
             UINetLoadingComponent.closeNetLoading();
+            bagList = g2cBag.ItemList;
             CreateItemList(g2cBag.ItemList);
+        }
+
+        private bool IsCurPropUseUp()
+        {
+            if(item != null)
+            {
+                for(int i = 0;i< bagList.Count; ++i)
+                {
+                    if (item.ItemId == bagList[i].ItemId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void CreateItemList(List<Bag> itemList)
@@ -115,7 +130,7 @@ namespace ETHotfix
                     ui.AddComponent<UIBagItemComponent>();
                     uiList.Add(ui);
                 }
-                if (item != null)
+                if (item != null && IsCurPropUseUp())
                     SetItemInfo(item);
                 else
                     SetItemInfo(itemList[0]);

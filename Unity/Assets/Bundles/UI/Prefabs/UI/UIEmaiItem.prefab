@@ -334,7 +334,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2017-01-01
+  m_Text: "\u90AE\u4EF6\u65F6\u95F4"
 --- !u!114 &114277382985428474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6"
+  m_Text: "\u90AE\u4EF6\u5185\u5BB9\r"
 --- !u!114 &114747680999771410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,7 +700,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6\u9886\u53D6"
+  m_Text: "\u90AE\u4EF6\u6807\u9898\r"
 --- !u!114 &114840692485777838
 MonoBehaviour:
   m_ObjectHideFlags: 1

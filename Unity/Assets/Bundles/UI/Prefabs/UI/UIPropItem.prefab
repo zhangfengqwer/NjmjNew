@@ -556,7 +556,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "60\u5143\u5B9D"
+  m_Text: "\u5546\u57CE\u7269\u54C1\u540D\u79F0"
 --- !u!114 &114566672309554586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -657,7 +657,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "6\u5143"
+  m_Text: "\u5355\u4EF7"
 --- !u!114 &114669401383898468
 MonoBehaviour:
   m_ObjectHideFlags: 1
