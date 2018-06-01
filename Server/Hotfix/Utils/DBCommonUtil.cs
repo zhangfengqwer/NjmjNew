@@ -310,23 +310,21 @@ namespace ETHotfix
             {
                 List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{name}'}}");
 
-                //// 昵称已经有人用了
-                //if (playerBaseInfos_temp.Count > 0)
-                //{
-                //    playerBaseInfo.Name = (name + uid.ToString().Substring());
-                //}
+                // 昵称已经有人用了
+                if (playerBaseInfos_temp.Count > 0)
+                {
+                    playerBaseInfo.Name = (name + uid.ToString().Substring(6));
+                }
 
                 playerBaseInfo.Name = name;
             }
 
             if (string.IsNullOrEmpty(head))
             {
-                Log.Debug("111:" + head);
                 playerBaseInfo.Icon = "f_icon1";
             }
             else
             {
-                Log.Debug("2222:" + head);
                 playerBaseInfo.Icon = head;
             }
 
