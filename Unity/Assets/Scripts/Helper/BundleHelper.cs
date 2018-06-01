@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,11 +10,13 @@ namespace ETModel
 		public static async Task DownloadBundle()
 		{
 			Game.EventSystem.Run(EventIdType.LoadingBegin);
-			await StartDownLoadResources();
-			Game.EventSystem.Run(EventIdType.LoadingFinish);
+            
+            await StartDownLoadResources();
+
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UILoadRes);
 		}
-		
-		public static async Task StartDownLoadResources()
+
+        public static async Task StartDownLoadResources()
 		{
 			if (Define.IsAsync)
 			{
@@ -33,5 +36,5 @@ namespace ETModel
 
 			}
 		}
-	}
+    }
 }

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ETModel
@@ -25,7 +28,7 @@ namespace ETModel
 
 				if (self.IsDisposed)
 				{
-					return;
+                    return;
 				}
 
 				BundleDownloaderComponent bundleDownloaderComponent = Game.Scene.GetComponent<BundleDownloaderComponent>();
@@ -33,10 +36,11 @@ namespace ETModel
 				{
 					continue;
 				}
-				self.text.text = $"{bundleDownloaderComponent.Progress}%";
+
+				self.text.text = "正在更新资源 " + $"{bundleDownloaderComponent.Progress}%";
 			}
-		}
-	}
+        }
+    }
 
 	public class UILoadingComponent : Component
 	{
