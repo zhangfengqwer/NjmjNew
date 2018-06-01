@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace ETHotfix
@@ -361,6 +363,20 @@ namespace ETHotfix
         static public UI ShowUI(string type)
         {
             return Game.Scene.GetComponent<UIComponent>().Create(type);
+        }
+
+        public static async Task<Sprite> Test(string url)
+        {
+            TaskCompletionSource<Sprite> tcs = new TaskCompletionSource<Sprite>();
+            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            {
+                await webRequestAsync.DownloadImageAsync(url);
+                DownloadHandlerTexture downloadHandlerTexture = (DownloadHandlerTexture)webRequestAsync.Request.downloadHandler;
+                Texture2D texture2D = downloadHandlerTexture.texture;
+                Sprite sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), Vector2.zero);
+                tcs.SetResult(sprite);
+            }
+            return await tcs.Task;
         }
     }
 }
