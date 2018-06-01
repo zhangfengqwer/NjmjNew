@@ -714,6 +714,7 @@ message C2G_Recharge //IRequest
 {
 	required long UId = 1;
 	required long  GoodsId = 2;
+	required int payType = 3;
 }
 
 message G2C_Recharge // IResponse

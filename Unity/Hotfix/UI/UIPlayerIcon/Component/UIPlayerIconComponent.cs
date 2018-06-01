@@ -47,7 +47,7 @@ namespace ETHotfix
 
             // 设置头像
             {
-                await HeadManager.setHeadSprite(curIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+                HeadManager.setHeadSprite(curIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
 
             CreatePlayerIconList();

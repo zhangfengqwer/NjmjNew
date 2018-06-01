@@ -40,6 +40,10 @@ namespace ETHotfix
         private Button sureBtn;
         private Button cancelBtn;
         private Text buyTxt;
+        private GameObject PaySelectTip;
+        private Button WeipayBtn;
+        private Button AlipayBtn;
+        private Button maskClick;
         #endregion
 
         #region field
@@ -78,7 +82,12 @@ namespace ETHotfix
             buyTip = rc.Get<GameObject>("BuyTip");
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
+            maskClick = rc.Get<GameObject>("maskClick").GetComponent<Button>();
             buyTxt = rc.Get<GameObject>("BuyTxt").GetComponent<Text>();
+
+            WeipayBtn = rc.Get<GameObject>("WeipayBtn").GetComponent<Button>();
+            AlipayBtn = rc.Get<GameObject>("AlipayBtn").GetComponent<Button>();
+            PaySelectTip = rc.Get<GameObject>("PaySelectTip");
 
             shopInfoList = playerInfoCom.GetShopInfoList();
             #endregion
@@ -96,7 +105,7 @@ namespace ETHotfix
             //元宝商城
             wingBtn.onClick.Add(() =>
             {
-                ButtonClick(ShopType.Wing,UIType.UIWingItem,wingGrid.transform);
+                ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             });
 
             //金币商城
@@ -145,8 +154,35 @@ namespace ETHotfix
                 buyTip.SetActive(false);
             });
 
+            //支付宝支付
+            AlipayBtn.onClick.Add(() =>
+            {
+                Recharge(1);
+            });
+
+            //微信支付
+            WeipayBtn.onClick.Add(() =>
+            {
+                Recharge(2);
+            });
+
+            //关闭支付界面
+            maskClick.onClick.Add(() =>
+            {
+                PaySelectTip.SetActive(false);
+            });
+
             ButtonClick(ShopType.Wing, UIType.UIWingItem, wingGrid.transform);
             #endregion
+        }
+
+        //支付充值 payType 支付类型：1支付宝，2微信
+        private async void Recharge(int payType)
+        {
+            G2C_Recharge recharge = (G2C_Recharge)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Recharge { UId = PlayerInfoComponent.Instance.uid, GoodsId = shopInfo.Id, payType = payType});
+            GameUtil.changeDataWithStr(recharge.Reward);
+            ToastScript.createToast("充值成功");
+            PaySelectTip.SetActive(false);
         }
 
         /// <summary>
@@ -203,6 +239,12 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
                 ().refreshUI();
             buyTip.SetActive(false);
+        }
+
+        public void Pay(ShopInfo info)
+        {
+            shopInfo = info;
+            PaySelectTip.SetActive(true);
         }
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(wealth.GoldNum)
                                               .ToString();
-            await HeadManager.setHeadSprite(Icon, wealth.Icon);
+            HeadManager.setHeadSprite(Icon, wealth.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                               .Append(index + 1)
                                               .ToString() ;
@@ -60,7 +60,7 @@ namespace ETHotfix
                                               .ToString();
             if (RankTxt.gameObject.activeInHierarchy)
                 RankTxt.text = (index + 1).ToString();
-            await HeadManager.setHeadSprite(Icon, gameRank.Icon);
+            HeadManager.setHeadSprite(Icon, gameRank.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                            .Append(index +1)
                                            .ToString();
