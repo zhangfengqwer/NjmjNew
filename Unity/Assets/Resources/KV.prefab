@@ -57,3 +57,6 @@ MonoBehaviour:
       type: 2}
   - key: GlobalProto
     gameObject: {fileID: 4900000, guid: 78f3a209a7b81ec46a196b52eea7e541, type: 3}
+  - key: UILoadRes
+    gameObject: {fileID: 1130972106000716, guid: 04e88afccd5ac1948980cb1675b36303,
+      type: 2}

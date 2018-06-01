@@ -273,7 +273,7 @@ namespace Unity_Utils
         static public AudioClip getAudioClipByAssetBundle(string assetbundleName, string audioName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{assetbundleName}.unity3d");
+            //resourcesComponent.LoadBundle($"{assetbundleName}.unity3d");
             AudioClip abAudioClip = (AudioClip)resourcesComponent.GetAsset($"{assetbundleName}.unity3d", $"{audioName}");
             if (abAudioClip != null)
             {
@@ -331,7 +331,7 @@ namespace Unity_Utils
         static public Sprite getSpriteByBundle(string bundleName,string fileName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            //resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
             
             Sprite sprite = bundleGameObject.Get<Sprite>($"{fileName}");
@@ -342,7 +342,7 @@ namespace Unity_Utils
         static public GameObject getGameObjByBundle(string bundleName, string fileName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            //resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
 
             GameObject go = bundleGameObject.Get<GameObject>($"{fileName}");
@@ -353,7 +353,7 @@ namespace Unity_Utils
         static public GameObject getGameObjByBundle(string bundleName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            //resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
             return bundleGameObject;
         }
