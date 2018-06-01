@@ -54,7 +54,14 @@ namespace ETHotfix
                     //接购买SDK
                     //ToastScript.createToast("暂时未开放人民币购买");
                     //可以购买
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().Pay(shopInfo);
+                    if (ChannelHelper.IsThirdChannel())
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().Pay(shopInfo);
+                    }
+                    else
+                    {
+                        PlatformHelper.pay(PlatformHelper.GetChannelName(), "AndroidCallBack", "GetPayResult", JsonHelper.ToJson(shopInfo));
+                    }
                 }
             });
         }

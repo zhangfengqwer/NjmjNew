@@ -179,9 +179,14 @@ namespace ETHotfix
         //支付充值 payType 支付类型：1支付宝，2微信
         private async void Recharge(int payType)
         {
-            G2C_Recharge recharge = (G2C_Recharge)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Recharge { UId = PlayerInfoComponent.Instance.uid, GoodsId = shopInfo.Id, payType = payType});
-            GameUtil.changeDataWithStr(recharge.Reward);
-            ToastScript.createToast("充值成功");
+            if (payType == 1)
+            {
+                PlatformHelper.pay(Constants.PAY_TYPE_ALIPAY, "AndroidCallBack", "GetPayResult", JsonHelper.ToJson(shopInfo));
+            }
+            else
+            {
+                PlatformHelper.pay(Constants.PAY_TYPE_WX, "AndroidCallBack", "GetPayResult", JsonHelper.ToJson(shopInfo));
+            }
             PaySelectTip.SetActive(false);
         }
 

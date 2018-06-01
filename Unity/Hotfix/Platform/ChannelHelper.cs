@@ -13,6 +13,7 @@ public class ChannelHelper
         {"aiyouxi", "爱游戏"},
         {"xiaomi", "小米"},
         {"aligame", "阿里游戏"},
+        {"wandoujia", "豌豆荚"},
         {"meizu", "魅族"},
         {"zhuoyi", "卓易"},
         {"appchina", "应用汇"},
@@ -20,6 +21,8 @@ public class ChannelHelper
         {"ydmm", "移动mm"},
         {"mumayi", "木蚂蚁"},
         {"anzhi", "安智"},
+        {"nduo", "n多网"},
+        {"ios", "ios"},
     };
 
     public static bool IsThirdChannel()

@@ -27,12 +27,4 @@
     <Folder Include="Module\Http\" />
     <Folder Include="Njmj\Entity\DB\" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="LitJson">
-      <HintPath>..\Model\Libs\LitJson.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Model\Libs\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

@@ -178,13 +178,13 @@ namespace ETHotfix
             G2C_PlayerInfo playerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
             gamer.PlayerInfo = playerInfo.PlayerInfo;
             readyName.text = playerInfo.PlayerInfo.Name + "";
-            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+
+            HeadManager.setHeadSprite(readyHead, playerInfo.PlayerInfo.Icon);
+//            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
 
             if (gamer.IsReady)
             {
-                Log.Info(" gameObject.name" + gameObject.name);
-                Log.Info(@" gameObject.transform" + gameObject.transform.Find("Text").GetComponent<Text>().name);
-
+            
                 gameObject.transform.Find("Text").GetComponent<Text>().text = "已准备";
 //                gameObject.Get<GameObject>("Text").GetComponent<Text>().text = "已准备";
             }
