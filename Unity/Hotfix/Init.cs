@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ETModel;
+using UnityEngine;
 using static ETHotfix.Consts;
 
 namespace ETHotfix
@@ -37,7 +38,9 @@ namespace ETHotfix
 				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
 				Game.EventSystem.Run(EventIdType.InitSceneStart);
-			}
+
+			    Application.targetFrameRate = 45;
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);
