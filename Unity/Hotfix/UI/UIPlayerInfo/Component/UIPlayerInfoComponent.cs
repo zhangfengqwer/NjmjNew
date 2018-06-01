@@ -131,7 +131,7 @@ namespace ETHotfix
 
             // 设置头像
             {
-                await HeadManager.setHeadSprite(playerIcon.GetComponent<Image>(), PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+                HeadManager.setHeadSprite(playerIcon.GetComponent<Image>(), PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
 
             playerIcon.onClick.Add(() =>

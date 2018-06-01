@@ -13,7 +13,7 @@ namespace ETHotfix
         static List<NetHeadData> m_netHeadList = new List<NetHeadData>();
         static List<WaitSetData> m_waitSetDataList = new List<WaitSetData>();
         
-        public static async Task setHeadSprite(Image img,string head)
+        public static void setHeadSprite(Image img,string head)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace ETHotfix
 
                 if (m_waitSetDataList.Count == 1)
                 {
-                    await setImage(m_waitSetDataList[0]);
+                    setImage(m_waitSetDataList[0]);
                 }
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace ETHotfix
             }
         }
 
-        public static async Task setImage(WaitSetData waitSetData)
+        static async Task setImage(WaitSetData waitSetData)
         {
             try
             {

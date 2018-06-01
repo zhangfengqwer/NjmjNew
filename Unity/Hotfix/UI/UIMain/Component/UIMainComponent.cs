@@ -482,7 +482,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(ownWealthRank.GoldNum)
                                               .ToString();
-            await HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
         }
 
         /// <summary>
@@ -519,7 +519,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("总局数:")
                                               .Append(ownGameRank.TotalCount)
                                               .ToString();
-            await HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
         }
 
         private async void OnEnterRoom()
@@ -549,7 +549,7 @@ namespace ETHotfix
             
             // 设置头像
             {
-                await HeadManager.setHeadSprite(playerIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+                HeadManager.setHeadSprite(playerIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
         }
 
@@ -569,8 +569,8 @@ namespace ETHotfix
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
 
-            await HeadManager.setHeadSprite(playerIcon, info.Icon);
-            await HeadManager.setHeadSprite(Icon, info.Icon);
+            HeadManager.setHeadSprite(playerIcon, info.Icon);
+            HeadManager.setHeadSprite(Icon, info.Icon);
 
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
