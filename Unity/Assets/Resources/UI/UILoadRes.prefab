@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8347f75bbf20473292de676504ad7398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasName: LoginCanvas
+  CanvasName: CommonCanvas
 --- !u!222 &222729901929156222
 CanvasRenderer:
   m_ObjectHideFlags: 1

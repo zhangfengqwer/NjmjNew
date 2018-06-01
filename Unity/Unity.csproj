@@ -505,6 +505,7 @@
     <Compile Include="Assets\Scripts\Other\MotionType.cs" />
     <Compile Include="Assets\Scripts\Other\ReferenceCollector.cs" />
     <Compile Include="Assets\Scripts\UI\UILoadRes\Component\UILoadResComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\UILoadRes\Event\LoadResEvent_CreateLoadResUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoadRes\Factory\UILoadResFactory.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Component\UILoadingComponent.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingBeginEvent_CreateLoadingUI.cs" />
