@@ -54,16 +54,9 @@ namespace ETHotfix
                     //接购买SDK
                     //ToastScript.createToast("暂时未开放人民币购买");
                     //可以购买
-                    Recharge();
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().Pay(shopInfo);
                 }
             });
-        }
-
-        private async void Recharge()
-        {
-            G2C_Recharge recharge = (G2C_Recharge) await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Recharge { UId = PlayerInfoComponent.Instance.uid, GoodsId = shopInfo.Id });
-            GameUtil.changeDataWithStr(recharge.Reward);
-            ToastScript.createToast("充值成功");
         }
 
         public void ShowBuy(long own,long price)

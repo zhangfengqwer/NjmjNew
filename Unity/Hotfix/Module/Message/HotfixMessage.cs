@@ -2054,6 +2054,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public long GoodsId;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int payType;
+
 	}
 
 	[Message(HotfixOpcode.G2C_Recharge)]
