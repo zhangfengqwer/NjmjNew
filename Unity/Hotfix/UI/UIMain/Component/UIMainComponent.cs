@@ -594,7 +594,7 @@ namespace ETHotfix
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public async void refreshUI()
+        public void refreshUI()
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
 
