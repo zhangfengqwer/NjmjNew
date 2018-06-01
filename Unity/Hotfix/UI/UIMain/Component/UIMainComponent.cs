@@ -451,14 +451,18 @@ namespace ETHotfix
         /// <summary>
         /// 设置我的财富榜信息
         /// </summary>
-        private async void SetMyRank()
+        private void SetMyRank()
         {
             string str = "";
+
             if (!isOwnRank)
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                str = "未上榜";
+                if (IsDelayWealthRank())
+                    str = (wealthRankList.Count+ 1).ToString();
+                else
+                    str = "未上榜";
             }
             else
             {
@@ -482,20 +486,45 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(ownWealthRank.GoldNum)
                                               .ToString();
-            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+        }
+
+        /// <summary>
+        /// 判断是否因为新建号排行榜数据还没有刷新
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDelayWealthRank()
+        {
+            if (wealthRankList.Count < 30)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// 判断是否因为新建号排行榜数据还没有刷新
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDelayGameRank()
+        {
+            if (gameRankList.Count < 30)
+                return true;
+            return false;
         }
 
         /// <summary>
         /// 设置我的战绩榜信息
         /// </summary>
-        private async void SetMyGameRank()
+        private void SetMyGameRank()
         {
             string str = "";
             if (!isGameRank)
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                str = "未上榜";
+                if (IsDelayWealthRank())
+                    str = (gameRankList.Count+ 1).ToString();
+                else
+                    str = "未上榜";
             }
             else
             {
@@ -519,7 +548,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("总局数:")
                                               .Append(ownGameRank.TotalCount)
                                               .ToString();
-            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 
         private async void OnEnterRoom()
