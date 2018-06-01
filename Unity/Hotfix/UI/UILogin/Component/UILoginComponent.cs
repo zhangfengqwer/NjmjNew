@@ -166,7 +166,7 @@ namespace ETHotfix
             if (true)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin(Third_Id, "","");
+                await OnThirdLogin("8527806259", "","");
             }
             else
             {

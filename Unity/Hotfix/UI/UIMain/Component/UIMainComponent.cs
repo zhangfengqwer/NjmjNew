@@ -451,7 +451,7 @@ namespace ETHotfix
         /// <summary>
         /// 设置我的财富榜信息
         /// </summary>
-        private void SetMyRank()
+        private async void SetMyRank()
         {
             string str = "";
             if (!isOwnRank)
@@ -482,13 +482,13 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(ownWealthRank.GoldNum)
                                               .ToString();
-            Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownWealthRank.Icon);
+            await HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
         }
 
         /// <summary>
         /// 设置我的战绩榜信息
         /// </summary>
-        private void SetMyGameRank()
+        private async void SetMyGameRank()
         {
             string str = "";
             if (!isGameRank)
@@ -519,7 +519,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("总局数:")
                                               .Append(ownGameRank.TotalCount)
                                               .ToString();
-            Icon.sprite = CommonUtil.getSpriteByBundle("PlayerIcon", ownGameRank.Icon);
+            await HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
         }
 
         private async void OnEnterRoom()
@@ -549,7 +549,7 @@ namespace ETHotfix
             
             // 设置头像
             {
-                HeadManager.setHeadSprite(playerIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+                await HeadManager.setHeadSprite(playerIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
         }
 
@@ -565,19 +565,12 @@ namespace ETHotfix
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public void refreshUI()
+        public async void refreshUI()
         {
             PlayerInfo info = PlayerInfoComponent.Instance.GetPlayerInfo();
 
-            Sprite icon = Game.Scene.GetComponent<UIIconComponent>().GetSprite(info.Icon);
-            if (icon != null)
-            {
-                playerIcon.sprite = icon;
-            }
-            else
-            {
-                Log.Warning("icon数据为空，请重新注册");
-            }
+            await HeadManager.setHeadSprite(playerIcon, info.Icon);
+            await HeadManager.setHeadSprite(Icon, info.Icon);
 
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
