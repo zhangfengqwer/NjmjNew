@@ -138,62 +138,6 @@ namespace ETHotfix
                 }
                 response.BagList = bagList;
 
-                List<EmailInfo> emailInfos = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{userId}}}");
-                if (emailInfos.Count <= 0)
-                {
-                    {
-                        #region emailTest
-                        {
-                            for (int i = 1; i <= 30; ++i)
-                            {
-                                int id = 100 + i;
-                                EmailInfo emailInfo = new EmailInfo();
-                                emailInfo.EmailId = id;
-                                emailInfo.UId = userId;
-                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                                if (i == 3 || i == 10 || i == 15 || i == 24)
-                                {
-                                    emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                                    emailInfo.RewardItem = "";
-                                }
-                                else if (i == 6 || i == 18 || i == 22)
-                                {
-                                    emailInfo.Content = "加入南京麻将，就有好礼相送";
-                                    emailInfo.RewardItem = "2:100";
-                                }
-                                else
-                                {
-                                    emailInfo.Content = "加入南京麻将，就有好礼相送";
-                                    emailInfo.RewardItem = "2:100;1:100";
-                                }
-                                emailInfo.State = 0;
-                                
-                                DBHelper.AddEmailInfoToDB(emailInfo);
-                            }
-                        }
-
-                        {
-                            for (int i = 1; i <= 30; ++i)
-                            {
-                                int id = 100 + i + 30;
-                                EmailInfo emailInfo = new EmailInfo();
-                                emailInfo.EmailId = id;
-                                emailInfo.UId = userId;
-                                //emailInfo.EmailTitle = "南京麻将官方QQ群:697413923";
-                                emailInfo.EmailTitle = "南京麻将假期送好礼！";
-                                //emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
-                                emailInfo.Content = "加入南京麻将，就有好礼相送";
-                                emailInfo.State = 1;
-                                emailInfo.RewardItem = "2:100;1:100";
-                                DBHelper.AddEmailInfoToDB(emailInfo);
-                            }
-                        }
-
-                    }
-                    #endregion
-                }
-
                 PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
 
                 // 老用户检测
@@ -203,7 +147,7 @@ namespace ETHotfix
                         AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(userId);
                         if (accountInfo.OldAccountState == 1)
                         {
-                            string url = "http://fksq.javgame.com:10086/?machine_id=" + accountInfo.MachineId + "&game_id=217";
+                            string url = "http://fksq.hy51v.com:10086/?machine_id=" + accountInfo.MachineId + "&game_id=217";
                             string str = HttpUtil.GetHttp(url);
                             Log.Debug("web地址：" + url);
                             Log.Debug("判断是否是老用户：" + str);

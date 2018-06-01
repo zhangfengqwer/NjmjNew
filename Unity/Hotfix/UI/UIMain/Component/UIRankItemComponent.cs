@@ -32,7 +32,7 @@ namespace ETHotfix
             RankTxt = rc.Get<GameObject>("RankTxt").GetComponent<Text>();
         }
 
-        public async void SetGoldItem(WealthRank wealth, int index)
+        public void SetGoldItem(WealthRank wealth, int index)
         {
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
@@ -50,7 +50,7 @@ namespace ETHotfix
                 RankImg.sprite = CommonUtil.getSpriteByBundle("image_main", rIcon);
         }
 
-        public async void SetGameItem(GameRank gameRank,int index)
+        public void SetGameItem(GameRank gameRank,int index)
         {
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
