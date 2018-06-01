@@ -7,5 +7,6 @@ namespace ETModel
     {
 	    public const string Root = "Root";
 	    public const string UILoading = "UILoading";
-	}
+        public const string UILoadRes = "UILoadRes";
+    }
 }

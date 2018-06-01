@@ -133,9 +133,6 @@
     <Folder Include="Njmj\NHibernate\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="LitJson">
-      <HintPath>Libs\LitJson.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
