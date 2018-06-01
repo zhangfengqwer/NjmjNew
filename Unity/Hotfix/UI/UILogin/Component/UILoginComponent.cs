@@ -163,10 +163,10 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-            if (false)
+            if (true)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin("zmy006","","");
+                await OnThirdLogin("8527806259", "","");
             }
             else
             {

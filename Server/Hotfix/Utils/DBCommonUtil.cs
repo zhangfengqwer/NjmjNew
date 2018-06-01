@@ -321,10 +321,12 @@ namespace ETHotfix
 
             if (string.IsNullOrEmpty(head))
             {
+                Log.Debug("111:" + head);
                 playerBaseInfo.Icon = "f_icon1";
             }
             else
             {
+                Log.Debug("2222:" + head);
                 playerBaseInfo.Icon = head;
             }
 

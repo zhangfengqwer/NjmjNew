@@ -378,6 +378,7 @@ namespace ETHotfix
 
         static async public Task<Sprite> GetTextureFromUrl(string url)
         {
+            Log.Debug("url" + url);
             TaskCompletionSource<Sprite> tcs = new TaskCompletionSource<Sprite>();
             using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
             {

@@ -257,19 +257,11 @@ namespace ETHotfix
             checkLaBa();
 
             HeartBeat.getInstance().startHeartBeat();
-            if (PlayerInfoComponent.Instance.GetPlayerInfo().Icon.Length < 10)
-            {
-                playerIcon.sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-            }
-            else
-            {
-                GetPlayerIcon();
-            }
         }
 
         private async void GetPlayerIcon()
         {
-            playerIcon.sprite = await CommonUtil.GetTextureFromUrl("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoS8QwnzzdzmF9bsvXq5w1QSHicSjgt81u9NNv5GUHN7AjWib8x9fiasw1KxiaUDICnlL4dYQ70EFj3jA/132");
+            playerIcon.sprite = await CommonUtil.GetTextureFromUrl(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 
         /// <summary>
@@ -559,6 +551,18 @@ namespace ETHotfix
             }
             PlayerInfoComponent.Instance.SetPlayerInfo(g2CPlayerInfo.PlayerInfo);
             refreshUI();
+
+            ToastScript.createToast(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            {
+                if (PlayerInfoComponent.Instance.GetPlayerInfo().Icon.Length < 10)
+                {
+                    playerIcon.sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+                }
+                else
+                {
+                    GetPlayerIcon();
+                }
+            }
         }
 
         /// <summary>
