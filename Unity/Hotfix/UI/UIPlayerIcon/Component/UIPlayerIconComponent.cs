@@ -30,7 +30,7 @@ namespace ETHotfix
         private List<UI> uiList = new List<UI>();
         private string[] iconStr = new string[] { "f_icon1", "f_icon2", "f_icon3" , "f_icon4" , "f_icon5","m_icon1", "m_icon2", "m_icon3", "m_icon4", "m_icon5" };
 
-        public void Awake()
+        public async void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -44,7 +44,12 @@ namespace ETHotfix
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             iconObj = CommonUtil.getGameObjByBundle(UIType.UIIconItem);
             curIconStr = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon;
-            curIcon.sprite = CommonUtil.getSpriteByBundle("playericon", curIconStr);
+
+            // 设置头像
+            {
+                await HeadManager.setHeadSprite(curIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            }
+
             CreatePlayerIconList();
 
             returnBtn.onClick.Add(() =>

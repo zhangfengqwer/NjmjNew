@@ -168,7 +168,6 @@ namespace ETHotfix
                     ui.AddComponent<UIRewardItemComponent>();
                     uiList.Add(ui);
                 }
-                uiList[i].RemoveComponent<UIRewardItemComponent>();
                 uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].itemId.ToString(), rewardList[i].rewardNum);
             }
             SetMoreItemHide(rewardList.Count);

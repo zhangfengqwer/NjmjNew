@@ -39,7 +39,7 @@ namespace ETHotfix
         private Button DuihuanBtn;
         private GameObject PlayerFrame;
 
-        public void Awake()
+        public async void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             
@@ -128,7 +128,11 @@ namespace ETHotfix
                 realNameTxt.text = "已实名";
             if (!string.IsNullOrEmpty(playerInfo.Phone))
                 noBindPhoneTxt.text = "已绑定";
-            playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+
+            // 设置头像
+            {
+                await HeadManager.setHeadSprite(playerIcon.GetComponent<Image>(), PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            }
 
             playerIcon.onClick.Add(() =>
             {
