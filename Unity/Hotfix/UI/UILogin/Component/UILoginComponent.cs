@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,12 +10,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity_Utils;
 using LitJson;
-using UnityEngine.Networking;
 
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UiLoginComponentSystem: AwakeSystem<UILoginComponent>
+    public class UiLoginComponentSystem : AwakeSystem<UILoginComponent>
     {
         public override void Awake(UILoginComponent self)
         {
@@ -33,7 +33,7 @@ namespace ETHotfix
         public int otherInt2 = 0;
     }
 
-    public class UILoginComponent: Component
+    public class UILoginComponent : Component
     {
         private GameObject panel_start;
         private GameObject panel_phoneLogin;
@@ -107,12 +107,12 @@ namespace ETHotfix
         {
             OnLoginPhone("2", "", "2");
         }
-
+        
         public void onClickDebugAccount3()
         {
             OnLoginPhone("3", "", "3");
         }
-
+        
         public void onClickDebugAccount4()
         {
             OnLoginPhone("4", "", "4");
@@ -120,24 +120,10 @@ namespace ETHotfix
 
         public async void onClickOpenPhoneLogin()
         {
-//            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
-//            {
-//                await
-//                        webRequestAsync
-//                                .DownloadImageAsync("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoS8QwnzzdzmF9bsvXq5w1QSHicSjgt81u9NNv5GUHN7AjWib8x9fiasw1KxiaUDICnlL4dYQ70EFj3jA/132");
-//                DownloadHandlerTexture downloadHandlerTexture = (DownloadHandlerTexture) webRequestAsync.Request.downloadHandler;
-//                Texture2D texture2D = downloadHandlerTexture.texture;
-//                btn_phone.GetComponent<Image>().sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), Vector2.zero);
-//            }
-            //            btn_phone.GetComponent<Image>().sprite = sprite;
-            Sprite sprite = await CommonUtil.Test("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoS8QwnzzdzmF9bsvXq5w1QSHicSjgt81u9NNv5GUHN7AjWib8x9fiasw1KxiaUDICnlL4dYQ70EFj3jA/132");
-            btn_phone.GetComponent<Image>().sprite = sprite;
-            return;
-
             string phone = PlayerPrefs.GetString("Phone", "");
             string token = PlayerPrefs.GetString("Token", "");
 
-            if (true)
+            if (false)
             {
                 phone = "";
                 token = "";
@@ -178,9 +164,15 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-            //            string Third_Id = CommonUtil.getCurTime();
-            //            await OnThirdLogin("zmy006");
-            PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
+            if (true)
+            {
+                string Third_Id = CommonUtil.getCurTime();
+                await OnThirdLogin("8527806259", "","");
+            }
+            else
+            {
+                PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
+            }
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
@@ -189,8 +181,8 @@ namespace ETHotfix
             if (!ChannelHelper.IsThirdChannel())
             {
                 JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
-                string name = (string) jd["nick"];
-                string head = (string) jd["url"];
+                string name = (string)jd["nick"];
+                string head = (string)jd["url"];
 
                 await OnThirdLogin(thirdLoginData.third_id, name, head);
             }
@@ -200,8 +192,9 @@ namespace ETHotfix
                 {
                     // 官方包
                     case "":
-                    {
-                    }
+                        {
+
+                        }
                         break;
                 }
             }
@@ -238,7 +231,7 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                R2C_SendSms r2CData = (R2C_SendSms) await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
+                R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
 
                 UINetLoadingComponent.closeNetLoading();
 
@@ -289,18 +282,11 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin) await sessionWrap.Call(new C2R_PhoneLogin()
-                {
-                        Phone = phone,
-                        Code = code,
-                        Token = token,
-                        MachineId = PlatformHelper.GetMacId(),
-                        ChannelName = PlatformHelper.GetChannelName(),
-                        ClientVersion = PlatformHelper.GetVersionName()
-                });
+                R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
+
 
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {
@@ -313,7 +299,6 @@ namespace ETHotfix
 
                         panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
                     }
-
                     return;
                 }
 
@@ -324,8 +309,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
 
-                G2C_LoginGate g2CLoginGate =
-                        (G2C_LoginGate) await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
                 UINetLoadingComponent.closeNetLoading();
 
                 ToastScript.createToast("登录成功");
@@ -347,6 +331,11 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
 
+
+                ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+                await resourcesComponent.LoadBundleAsync($"UIMain.unity3d");
+                await resourcesComponent.LoadBundleAsync($"Image_Main.unity3d");
+
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
             }
@@ -357,7 +346,7 @@ namespace ETHotfix
             }
         }
 
-        public async Task OnThirdLogin(string third_id, string name, string head)
+        public async Task OnThirdLogin(string third_id,string name,string head)
         {
             SessionWrap sessionWrap = null;
             try
@@ -368,15 +357,7 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin) await sessionWrap.Call(new C2R_ThirdLogin()
-                {
-                        Third_Id = third_id,
-                        MachineId = PlatformHelper.GetMacId(),
-                        ChannelName = PlatformHelper.GetChannelName(),
-                        ClientVersion = PlatformHelper.GetVersionName(),
-                        Name = name,
-                        Head = head
-                });
+                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
@@ -395,8 +376,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
 
-                G2C_LoginGate g2CLoginGate =
-                        (G2C_LoginGate) await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
 

@@ -308,7 +308,7 @@ namespace ETHotfix
             }
             else
             {
-                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:{name}}}");
+                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{name}'}}");
 
                 //// 昵称已经有人用了
                 //if (playerBaseInfos_temp.Count > 0)
@@ -319,14 +319,16 @@ namespace ETHotfix
                 playerBaseInfo.Name = name;
             }
 
-            //if (string.IsNullOrEmpty(head))
+            if (string.IsNullOrEmpty(head))
             {
+                Log.Debug("111:" + head);
                 playerBaseInfo.Icon = "f_icon1";
             }
-            //else
-            //{
-            //    playerBaseInfo.Icon = head;
-            //}
+            else
+            {
+                Log.Debug("2222:" + head);
+                playerBaseInfo.Icon = head;
+            }
 
             accountInfo.Phone = Phone;
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);

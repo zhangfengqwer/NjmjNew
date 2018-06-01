@@ -118,11 +118,12 @@ namespace ETHotfix
             state = email.State;
             string reward = email.RewardItem;
             flag.SetActive(state == 0);
-            if (state == 1)
-                Delete.gameObject.SetActive(true);
+            if (state == 0)
+                Delete.gameObject.SetActive(false);
+            Delete.gameObject.SetActive(state == 1);
+            rewardList.Clear();
             if (reward != null && !reward.Equals(""))
             {
-                rewardList.Clear();
                 get.gameObject.SetActive(state == 0);
                 string[] rewardArr = reward.Split(';');
                 for(int i = 0;i< rewardArr.Length; ++i)
@@ -136,6 +137,14 @@ namespace ETHotfix
                 }
                 SetRewardItemInfo();
             }
+            else
+            {
+                if(rewardItemList.Count > 0)
+                {
+                    SetMoreItemHide(0);
+                    get.gameObject.SetActive(false);
+                }
+            }
         }
 
         private void SetRewardItemInfo()
@@ -144,19 +153,32 @@ namespace ETHotfix
             for (int i = 0;i< rewardList.Count; ++i)
             {
                 if (i < rewardItemList.Count)
+                {
+                    rewardItemList[i].SetActive(true);
                     obj = rewardItemList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(rewardItem);
                     obj.transform.SetParent(itemGrid.transform);
                     obj.transform.localScale = new Vector3(0.5f, 0.5f, 1);
                     obj.transform.localPosition = Vector3.zero;
+                    rewardItemList.Add(obj);
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIRewardItemComponent>();
-                    rewardItemList.Add(obj);
                     uiList.Add(ui);
                 }
+                uiList[i].RemoveComponent<UIRewardItemComponent>();
                 uiList[i].GetComponent<UIRewardItemComponent>().SetRewardInfo(rewardList[i].itemId.ToString(), rewardList[i].rewardNum);
+            }
+            SetMoreItemHide(rewardList.Count);
+        }
+
+        private void SetMoreItemHide(int index)
+        {
+            for(int i = index;i< rewardItemList.Count; ++i)
+            {
+                rewardItemList[i].SetActive(false);
             }
         }
 

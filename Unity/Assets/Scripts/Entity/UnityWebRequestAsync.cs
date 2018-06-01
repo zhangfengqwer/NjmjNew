@@ -93,16 +93,16 @@ namespace ETModel
 			return this.tcs.Task;
 		}
 
-	    public Task DownloadImageAsync(string url)
-	    {
-	        this.tcs = new TaskCompletionSource<bool>();
+        public Task<bool> DownloadImageAsync(string url)
+        {
+            this.tcs = new TaskCompletionSource<bool>();
 
-	        url = url.Replace(" ", "%20");
-	        this.Request = UnityWebRequest.Get(url);
-	        this.Request.downloadHandler = new DownloadHandlerTexture(true);
+            url = url.Replace(" ", "%20");
+            this.Request = UnityWebRequest.Get(url);
+            Request.downloadHandler = new UnityEngine.Networking.DownloadHandlerTexture(true);
             this.Request.Send();
 
-	        return this.tcs.Task;
+            return this.tcs.Task;
         }
-	}
+    }
 }
