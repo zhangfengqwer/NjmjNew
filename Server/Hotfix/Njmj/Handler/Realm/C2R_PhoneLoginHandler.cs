@@ -32,7 +32,6 @@ namespace ETHotfix
                             return;
                         }
                     }
-
                     // 用户已存在，走登录流程
                     if (accountInfos.Count > 0)
                     {
@@ -56,7 +55,6 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
-
                         // 登录日志
                         await DBCommonUtil.Log_Login(accountInfo.Id);
                     }
@@ -89,7 +87,6 @@ namespace ETHotfix
                         response.Key = g2RGetLoginKey.Key;
                         response.Token = accountInfo.Token;
                         reply(response);
-
                         // 登录日志
                         await DBCommonUtil.Log_Login(accountInfo.Id);
                     }

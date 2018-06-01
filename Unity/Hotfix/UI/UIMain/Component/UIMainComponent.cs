@@ -451,7 +451,7 @@ namespace ETHotfix
         /// <summary>
         /// 设置我的财富榜信息
         /// </summary>
-        private async void SetMyRank()
+        private void SetMyRank()
         {
             string str = "";
             if (!isOwnRank)
@@ -482,13 +482,13 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(ownWealthRank.GoldNum)
                                               .ToString();
-            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 
         /// <summary>
         /// 设置我的战绩榜信息
         /// </summary>
-        private async void SetMyGameRank()
+        private void SetMyGameRank()
         {
             string str = "";
             if (!isGameRank)
@@ -519,7 +519,7 @@ namespace ETHotfix
             GoldTxt.text = new StringBuilder().Append("总局数:")
                                               .Append(ownGameRank.TotalCount)
                                               .ToString();
-            HeadManager.setHeadSprite(Icon, ownGameRank.Icon);
+            HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 
         private async void OnEnterRoom()
