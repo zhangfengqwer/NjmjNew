@@ -259,11 +259,6 @@ namespace ETHotfix
             HeartBeat.getInstance().startHeartBeat();
         }
 
-        private async void GetPlayerIcon()
-        {
-            playerIcon.sprite = await CommonUtil.GetTextureFromUrl(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-        }
-
         /// <summary>
         /// 清理内存
         /// </summary>
@@ -551,17 +546,10 @@ namespace ETHotfix
             }
             PlayerInfoComponent.Instance.SetPlayerInfo(g2CPlayerInfo.PlayerInfo);
             refreshUI();
-
-            ToastScript.createToast(PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            
+            // 设置头像
             {
-                if (PlayerInfoComponent.Instance.GetPlayerInfo().Icon.Length < 10)
-                {
-                    playerIcon.sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-                }
-                else
-                {
-                    GetPlayerIcon();
-                }
+                HeadManager.setHeadSprite(playerIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
         }
 

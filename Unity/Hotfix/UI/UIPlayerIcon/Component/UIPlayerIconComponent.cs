@@ -44,7 +44,12 @@ namespace ETHotfix
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             iconObj = CommonUtil.getGameObjByBundle(UIType.UIIconItem);
             curIconStr = Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon;
-            curIcon.sprite = CommonUtil.getSpriteByBundle("playericon", curIconStr);
+
+            // 设置头像
+            {
+                HeadManager.setHeadSprite(curIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            }
+
             CreatePlayerIconList();
 
             returnBtn.onClick.Add(() =>
