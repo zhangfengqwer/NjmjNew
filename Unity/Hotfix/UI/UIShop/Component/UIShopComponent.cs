@@ -181,11 +181,11 @@ namespace ETHotfix
         {
             if (payType == 1)
             {
-                PlatformHelper.pay(Constants.PAY_TYPE_ALIPAY, "AndroidCallBack", "GetPayResult", JsonHelper.ToJson(shopInfo));
+                PlatformHelper.pay(Constants.PAY_TYPE_ALIPAY, "AndroidCallBack", "GetPayResult", UIItemComponent.SetRequest(shopInfo).ToJson());
             }
             else
             {
-                PlatformHelper.pay(Constants.PAY_TYPE_WX, "AndroidCallBack", "GetPayResult", JsonHelper.ToJson(shopInfo));
+                PlatformHelper.pay(Constants.PAY_TYPE_WX, "AndroidCallBack", "GetPayResult", UIItemComponent.SetRequest(shopInfo).ToJson());
             }
             PaySelectTip.SetActive(false);
         }
