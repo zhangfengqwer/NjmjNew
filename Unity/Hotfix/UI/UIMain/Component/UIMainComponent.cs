@@ -454,11 +454,15 @@ namespace ETHotfix
         private void SetMyRank()
         {
             string str = "";
+
             if (!isOwnRank)
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                str = "未上榜";
+                if (IsDelayWealthRank())
+                    str = (wealthRankList.Count+ 1).ToString();
+                else
+                    str = "未上榜";
             }
             else
             {
@@ -486,6 +490,28 @@ namespace ETHotfix
         }
 
         /// <summary>
+        /// 判断是否因为新建号排行榜数据还没有刷新
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDelayWealthRank()
+        {
+            if (wealthRankList.Count < 30)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// 判断是否因为新建号排行榜数据还没有刷新
+        /// </summary>
+        /// <returns></returns>
+        private bool IsDelayGameRank()
+        {
+            if (gameRankList.Count < 30)
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// 设置我的战绩榜信息
         /// </summary>
         private void SetMyGameRank()
@@ -495,7 +521,10 @@ namespace ETHotfix
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                str = "未上榜";
+                if (IsDelayWealthRank())
+                    str = (gameRankList.Count+ 1).ToString();
+                else
+                    str = "未上榜";
             }
             else
             {
