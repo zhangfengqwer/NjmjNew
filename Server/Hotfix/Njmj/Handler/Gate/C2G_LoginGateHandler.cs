@@ -157,6 +157,11 @@ namespace ETHotfix
                                     emailInfo.Content = "加入南京麻将官方QQ群:697413923，官方客服妹子为您解答各种问题，了解更多游戏首发资讯，南麻资深玩家聚集地，期待您的加入。";
                                     emailInfo.RewardItem = "";
                                 }
+                                else if (i == 6 || i == 18 || i == 22)
+                                {
+                                    emailInfo.Content = "加入南京麻将，就有好礼相送";
+                                    emailInfo.RewardItem = "2:100";
+                                }
                                 else
                                 {
                                     emailInfo.Content = "加入南京麻将，就有好礼相送";
