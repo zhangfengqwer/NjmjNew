@@ -80,7 +80,7 @@
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +101,7 @@
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
+    <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyTimeOutHandler.cs" />

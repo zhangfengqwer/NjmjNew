@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using Hotfix;
 using System.Text;
+using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,9 +55,27 @@ namespace ETHotfix
                     //接购买SDK
                     //ToastScript.createToast("暂时未开放人民币购买");
                     //可以购买
-                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().Pay(shopInfo);
+                    if (!ChannelHelper.IsThirdChannel())
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().Pay(shopInfo);
+                    }
+                    else
+                    {
+                        PlatformHelper.pay(PlatformHelper.GetChannelName(), "AndroidCallBack", "GetPayResult", SetRequest(shopInfo).ToJson());
+                    }
                 }
             });
+        }
+
+        public static JsonData SetRequest(ShopInfo shopInfo)
+        {
+            JsonData data = new JsonData();
+            data["uid"] = PlayerInfoComponent.Instance.uid;
+            data["goods_id"] = shopInfo.Id;
+            data["goods_num"] = 1;
+            data["goods_name"] = shopInfo.Name;
+            data["price"] = shopInfo.Price;
+            return data;
         }
 
         public void ShowBuy(long own,long price)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -330,6 +331,11 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
+
+
+                ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+                await resourcesComponent.LoadBundleAsync($"UIMain.unity3d");
+                await resourcesComponent.LoadBundleAsync($"Image_Main.unity3d");
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
