@@ -92,7 +92,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6B63\u5728\u66F4\u65B0\u8D44\u6E90"
+  m_Text: "\u6B63\u5728\u68C0\u6D4B\u8D44\u6E90\u66F4\u65B0"
 --- !u!114 &114699130285514482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8347f75bbf20473292de676504ad7398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasName: LoginCanvas
+  CanvasName: CommonCanvas
 --- !u!114 &114768094896805158
 MonoBehaviour:
   m_ObjectHideFlags: 1
