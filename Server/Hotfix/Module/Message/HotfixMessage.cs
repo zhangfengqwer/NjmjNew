@@ -368,6 +368,9 @@ namespace ETHotfix
 		[ProtoMember(15, IsRequired = true)]
 		public int MaxHua;
 
+		[ProtoMember(16, IsRequired = true)]
+		public bool IsSign;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]

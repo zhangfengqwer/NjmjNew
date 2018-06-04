@@ -53,6 +53,8 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 27e3fc05ce868b04988144b4cd35c605, type: 3}
   - key: item_xuanzhong
     gameObject: {fileID: 21300000, guid: 816e3633b8a82794bac66bafcd6d7b56, type: 3}
+  - key: wenhao
+    gameObject: {fileID: 21300000, guid: 4342111f9584a4941b9743978d424904, type: 3}
 --- !u!224 &224710408087413350
 RectTransform:
   m_ObjectHideFlags: 1
