@@ -281,6 +281,12 @@ namespace ETHotfix
                         }
                     }
                 }
+                //重置每天在线时长和宝箱次数
+                {
+                    List<GamerInfoDB> gamerInfo = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{uid}}}");
+                    gamerInfo[0].DailyOnlineTime = 0;
+                    gamerInfo[0].DailyTreasureCount = 0;
+                }
             }
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
