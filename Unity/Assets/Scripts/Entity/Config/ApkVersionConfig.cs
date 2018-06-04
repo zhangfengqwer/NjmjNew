@@ -35,6 +35,7 @@ namespace ETModel
                 
                 temp.channel_name = (string)jd[i]["channel_name"];
                 temp.version = (string)jd[i]["version"];
+                temp.url = (string)jd[i]["url"];
 
                 m_dataList.Add(temp);
             }
@@ -66,5 +67,6 @@ namespace ETModel
     {
         public string channel_name = "";
         public string version = "";
+        public string url = "";
     }
 }

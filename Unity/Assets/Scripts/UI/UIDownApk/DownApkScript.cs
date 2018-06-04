@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ETModel;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,10 @@ public class DownApkScript : MonoBehaviour {
 
     public void onClickOK()
     {
-        PlatformHelper.DownApk();
+        VersionInfo versionInfo = ApkVersionConfig.getInstance().getDataById(PlatformHelper.GetChannelName());
+        if (versionInfo != null)
+        {
+            PlatformHelper.DownApk(versionInfo.url);
+        }
     }
 }

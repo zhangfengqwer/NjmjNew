@@ -286,7 +286,7 @@ public class PlatformHelper
         return 1;
     }
 
-    public static void DownApk()
+    public static void DownApk(string url)
     {
     }
 
@@ -378,7 +378,7 @@ public class PlatformHelper
         GetJC().CallStatic("login", obj, func, data);
     }
 
-    public static void DownApk()
+    public static void DownApk(string url)
     {
         GetJC().CallStatic("downLoadApk");
     }
