@@ -167,7 +167,7 @@ namespace ETHotfix
             if (false)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin("1111", "","");
+                await OnThirdLogin("1111", "", "");
             }
             else
             {
@@ -282,8 +282,8 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                //R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
-                R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = "1234", ChannelName = "jav", ClientVersion = "1.1.0" });
+                R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
+                //R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = "1234", ChannelName = "jav", ClientVersion = "1.1.0" });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();

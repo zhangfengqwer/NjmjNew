@@ -13,8 +13,8 @@ namespace ETModel
             
             await StartDownLoadResources();
 
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UILoadRes);
-		}
+            Game.EventSystem.Run(EventIdType.LoadRes);
+        }
 
         public static async Task StartDownLoadResources()
 		{

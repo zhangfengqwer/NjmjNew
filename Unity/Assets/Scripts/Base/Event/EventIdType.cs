@@ -20,7 +20,8 @@
 		public const string FrameUpdate = "FrameUpdate";
 		public const string LoadingBegin = "LoadingBegin";
 		public const string LoadingFinish = "LoadingFinish";
-		public const string TestHotfixSubscribMonoEvent = "TestHotfixSubscribMonoEvent";
+        public const string LoadRes = "LoadRes";
+        public const string TestHotfixSubscribMonoEvent = "TestHotfixSubscribMonoEvent";
 		public const string MaxModelEvent = "MaxModelEvent";
 
 	    public const string GamerPlayCard = "GamerPlayCard";
