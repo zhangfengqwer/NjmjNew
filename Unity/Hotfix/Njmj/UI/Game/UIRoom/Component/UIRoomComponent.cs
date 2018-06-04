@@ -120,6 +120,7 @@ namespace ETHotfix
                 SessionWrapComponent.Instance.Session.Call(new Actor_GamerCheat() { Info = this.cheatInput.text });
                 sendButton.gameObject.SetActive(false);
                 cheatInput.gameObject.SetActive(false);
+                this.cheatInput.text = "";
             });
 
             #endregion
@@ -418,6 +419,7 @@ namespace ETHotfix
             base.Dispose();
             tokenSource?.Cancel();
             isTreasureFinish = true;
+            ISGaming = false;
         }
 
         /// <summary>

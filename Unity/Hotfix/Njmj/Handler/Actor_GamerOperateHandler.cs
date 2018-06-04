@@ -45,7 +45,6 @@ namespace ETHotfix
                     else
                     {
                         handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
-
                     }
                 }
                 else

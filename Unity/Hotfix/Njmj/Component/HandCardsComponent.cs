@@ -34,7 +34,10 @@ namespace ETHotfix
         private List<GameObject> ItemCards = new List<GameObject>();
         private List<GameObject> cardDisplayObjs = new List<GameObject>();
         private List<MahjongInfo> faceCards = new List<MahjongInfo>();
-        private GameObject CardBottom;
+
+        //碰对应的obj
+        private Dictionary<int, GameObject> pengDic = new Dictionary<int, GameObject>();
+        public GameObject CardBottom;
 
         private int width = 66;
         private ResourcesComponent resourcesComponent;
@@ -515,9 +518,43 @@ namespace ETHotfix
                         CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
             }
 
+            if (type == 0)
+            {
+                pengDic.Add(mahjong.weight, gameObject);
+            }
+
             Vector3 localPosition = this.CardBottom.transform.localPosition;
             this.CardBottom.transform.localPosition =
                     new Vector3(localPosition.x + (postionX) * 2.2f, localPosition.y + (postionY) * 2.2f, localPosition.z);
+        }
+
+        /// <summary>
+        /// 碰刚
+        /// </summary>
+        /// <param name="messageOperationType"></param>
+        /// <param name="mahjongInfo"></param>
+        public void SetPengGang(int messageOperationType, MahjongInfo mahjong)
+        {
+            GameObject obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+            int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
+            this.RemoveCard(index);
+            UpdateCards();
+
+            //显示碰
+            GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject.transform.GetChild(i).GetComponent<Image>().sprite =
+                        CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+            }
+
+            GameObject pengObj = null;
+            if (pengDic.TryGetValue(mahjong.weight, out obj))
+            {
+                gameObject.transform.SetSiblingIndex(pengObj.transform.GetSiblingIndex());
+                GameObject.Destroy(pengObj);
+                pengDic.Remove(mahjong.weight);
+            }
         }
 
         private int num = 0;
@@ -640,7 +677,7 @@ namespace ETHotfix
             }
         }
 
-        private void DeleteAllItem(GameObject gameObject)
+        public void DeleteAllItem(GameObject gameObject)
         {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
@@ -726,5 +763,6 @@ namespace ETHotfix
             DeleteAllItem(cardDisplay);
             DeleteAllItem(pengObj);
         }
+
     }
 }

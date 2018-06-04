@@ -103,6 +103,7 @@
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_CheatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyTimeOutHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />

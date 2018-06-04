@@ -1037,6 +1037,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public string Info;
 
+		[ProtoMember(3, TypeName = "ETHotfix.MahjongInfo")]
+		public List<MahjongInfo> handCards = new List<MahjongInfo>();
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerContinueGame)]

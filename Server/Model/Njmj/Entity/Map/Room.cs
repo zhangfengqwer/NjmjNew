@@ -49,6 +49,8 @@ namespace ETModel
             get { return seats.Values.Count; }
         }
 
+        public MahjongInfo NextGrabCard { get; set; }
+
         // 自己最新抓的牌或是别人刚出的牌
         public MahjongInfo my_lastMahjong = null;
 
@@ -223,6 +225,7 @@ namespace ETModel
             isGangEndBuPai = false;
             // 是否是抓到硬花补牌
             isGetYingHuaBuPai = false;
+            NextGrabCard = null;
         }
     }
 }
