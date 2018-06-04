@@ -40,7 +40,7 @@ namespace ETHotfix
                     //碰刚
                     if (message.OperationType == 5)
                     {
-
+                        handCardsComponent.SetPengGang(message.OperationType, mahjongInfo);
                     }
                     else
                     {

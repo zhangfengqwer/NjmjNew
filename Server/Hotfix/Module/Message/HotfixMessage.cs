@@ -1045,6 +1045,18 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GameFlow)]
+	[ProtoContract]
+	public partial class Actor_GameFlow: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 	[Message(HotfixOpcode.Actor_GamerContinueGame)]
 	[ProtoContract]
 	public partial class Actor_GamerContinueGame: IActorMessage

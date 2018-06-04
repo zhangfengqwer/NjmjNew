@@ -235,5 +235,36 @@ namespace ETHotfix
 
             isTimerEnd = true;
         }
+
+        public void SetFlowGame(Actor_GameFlow message, GamerComponent gamerComponent)
+        {
+            Gamer[] gamers = gamerComponent.GetAll();
+
+            for (int i = 0; i < gamers.Length; i++)
+            {
+                if (gamers[i] == null)
+                    continue;
+                if (gamers[i].UserID == PlayerInfoComponent.Instance.uid)
+                {
+                    playerList.Insert(i, winPlayer);
+                }
+            }
+
+            for (int i = 0; i < gamers.Length; i++)
+            {
+                Gamer gamer = gamers[i];
+                GameObject gameObject = this.playerList[i];
+                Image headImage = gameObject.transform.Find("head").GetComponent<Image>();
+                Text nameText = gameObject.transform.Find("name").GetComponent<Text>();
+                Text goldText = gameObject.transform.Find("Text_gold").GetComponent<Text>();
+
+                HeadManager.setHeadSprite(headImage, gamer.PlayerInfo.Icon);
+                nameText.text = gamer.UserID + "";
+                goldText.text = 0 + "";
+            }
+
+            winPlayer.transform.Find("hupaiType").GetComponent<Image>().sprite =
+                    CommonUtil.getSpriteByBundle("image_gameresult", "gameresult_liuju");
+        }
     }
 }

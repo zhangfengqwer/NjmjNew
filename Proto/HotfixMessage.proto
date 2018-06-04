@@ -363,6 +363,10 @@ message Actor_GamerCheat // IActorMessage
     repeated MahjongInfo handCards = 3;
 }
 
+message Actor_GameFlow // IActorMessage
+{
+}
+
 message Actor_GamerContinueGame // IActorMessage
 {
 
