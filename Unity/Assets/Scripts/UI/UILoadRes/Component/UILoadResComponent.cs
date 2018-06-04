@@ -85,27 +85,29 @@ namespace ETModel
 		public override async void Start(UILoadResComponent self)
 		{
             // 检测apk更新
-            if(false)
+            if(true)
             {
                 using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
                 {
                     await webRequestAsync.DownloadAsync("http://fwdown.hy51v.com/njmj/online/files/versionconfig.json");
                     string data = webRequestAsync.Request.downloadHandler.text;
                     ApkVersionConfig.getInstance().init(data);
-
+                    Log.Debug("channel_name = " + PlatformHelper.GetChannelName());
+                    Log.Debug("VersionName = " + PlatformHelper.GetVersionName());
                     VersionInfo versionInfo = ApkVersionConfig.getInstance().getDataById(PlatformHelper.GetChannelName());
                     if (versionInfo != null)
                     {
                         // apk更新
                         if (versionInfo.version.CompareTo(PlatformHelper.GetVersionName()) > 0)
                         {
-                            PlatformHelper.DownApk();
+                            DownApkScript.create();
+                            
                             return;
                         }
                     }
                 }
             }
-
+            
             await LoadRes();
 
             ToastScript.createToast("加载完毕");

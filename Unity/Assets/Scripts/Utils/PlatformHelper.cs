@@ -43,7 +43,7 @@ public class PlatformHelper
 
     public static string GetVersionName()
     {
-        return "1.5?";
+        return "1.1.0";
     }
 
     /// <summary>
@@ -477,7 +477,7 @@ public class PlatformHelper
     public static string GetVersionName () {
         //LogUtil.LogError(string.Format("GetVersionName(), platform={0}", Application.platform));
         if (Application.platform != RuntimePlatform.Android) {
-            return "1.5";
+            return "1.1.0";
         }
         return GetJC().CallStatic<string>("getVersionName");
     }
@@ -822,7 +822,7 @@ public class PlatformHelper
 
     public static string GetVersionName()
     {
-        return "1.5?";
+        return "1.1.0";
     }
 
     /// <summary>
