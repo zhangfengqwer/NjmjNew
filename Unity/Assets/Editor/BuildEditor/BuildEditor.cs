@@ -68,7 +68,7 @@ namespace ETEditor
 
 		private void SetPackingTagAndAssetBundle()
 		{
-			//ClearPackingTagAndAssetBundle();
+			ClearPackingTagAndAssetBundle();
 
 			SetIndependentBundleAndAtlas("Assets/Bundles/Independent");
 
