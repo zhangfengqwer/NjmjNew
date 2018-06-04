@@ -84,9 +84,7 @@ namespace ETModel
 
 		public override async void Start(UILoadResComponent self)
 		{
-            // 永不息屏
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
+          
             // 检测apk更新
             if (true)
             {
