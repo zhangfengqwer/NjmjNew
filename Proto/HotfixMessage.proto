@@ -121,6 +121,7 @@ message PlayerInfo // IMessage
 	required string EmogiTime = 13;//
 	required float WinRate = 14;//
 	required int MaxHua = 15;//
+	required bool IsSign = 16;//
 }
 
 message ShopInfo //IMessage

@@ -37,6 +37,20 @@ namespace ETHotfix
                     response.PlayerInfo.TotalGameCount = playerInfo.TotalGameCount;
                     response.PlayerInfo.WinGameCount = playerInfo.WinGameCount;
                     response.PlayerInfo.WinRate = playerInfo.WinRate;
+                    
+                    // 今天是否签到过
+                    {
+                        List<DailySign> dailySigns = await proxyComponent.QueryJson<DailySign>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.uid}}}");
+                        if (dailySigns.Count == 0)
+                        {
+                            response.PlayerInfo.IsSign = false;
+                        }
+                        else
+                        {
+                            response.PlayerInfo.IsSign = true;
+                        }
+                    }
+
                     reply(response);
                     return;
                 }
