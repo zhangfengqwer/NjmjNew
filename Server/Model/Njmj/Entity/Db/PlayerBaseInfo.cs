@@ -18,6 +18,6 @@ namespace ETModel
         public int ZhuanPanCount = 0;
         public int LuckyValue = 0;
         public float WinRate = 0;
-        public int MaxHua = 1;
+        public int MaxHua = 0;
     }
 }
