@@ -263,6 +263,9 @@ namespace ETHotfix
         public async void startPhoneCodeTimer()
         {
             int time = 60;
+
+            text_yanzhengmadaojishi.text = time.ToString();
+
             while (time >= 0)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);

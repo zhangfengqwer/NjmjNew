@@ -160,47 +160,61 @@ namespace ETHotfix
         {
             try
             {
-                UINetLoadingComponent.showNetLoading();
-                G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
-                UINetLoadingComponent.closeNetLoading();
-
-                if (g2cBag.result == 1)
+                switch (item.ItemId)
                 {
-                    GetBagInfoList();
-                    useBg.SetActive(false);
-
-                    switch (item.ItemId)
+                    // 喇叭
+                    case 105:
                     {
-                        // 表情包
-                        case 104:
-                            {
-                                PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime = g2cBag.time;
-                            }
-                            break;
-
-                        // VIP体验卡
-                        case 107:
-                        case 108:
-                        case 109:
-                            {
-                                PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
-                            }
-                            break;
-
-                        // 话费礼包
-                        case 111:
-                            {
-                                GameUtil.changeDataWithStr(g2cBag.reward);
-                                ToastScript.createToast("恭喜获得话费" + CommonUtil.splitStr_End_F(g2cBag.reward,':').ToString() + "元");
-                            }
-                            break;
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa);
                     }
+                    break;
 
-                    GameUtil.changeData(item.ItemId, -1);
-                }
-                else
-                {
-                    ToastScript.createToast(g2cBag.Message);
+                    default:
+                    {
+                            UINetLoadingComponent.showNetLoading();
+                            G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+                            UINetLoadingComponent.closeNetLoading();
+
+                            if (g2cBag.result == 1)
+                            {
+                                GetBagInfoList();
+                                useBg.SetActive(false);
+
+                                switch (item.ItemId)
+                                {
+                                    // 表情包
+                                    case 104:
+                                        {
+                                            PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime = g2cBag.time;
+                                        }
+                                        break;
+
+                                    // VIP体验卡
+                                    case 107:
+                                    case 108:
+                                    case 109:
+                                        {
+                                            PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
+                                        }
+                                        break;
+
+                                    // 话费礼包
+                                    case 111:
+                                        {
+                                            GameUtil.changeDataWithStr(g2cBag.reward);
+                                            ToastScript.createToast("恭喜获得话费" + CommonUtil.splitStr_End_F(g2cBag.reward, ':').ToString() + "元");
+                                        }
+                                        break;
+                                }
+
+                                GameUtil.changeData(item.ItemId, -1);
+                            }
+                            else
+                            {
+                                ToastScript.createToast(g2cBag.Message);
+                            }
+                        }
+                    break;
                 }
             }
             catch (Exception ex)

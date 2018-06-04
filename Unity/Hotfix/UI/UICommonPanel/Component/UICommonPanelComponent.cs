@@ -25,11 +25,11 @@ namespace ETHotfix
         public delegate void OnClickCloseEvent();
         public OnClickCloseEvent onCallBack_close = null;
 
-        private Button Button_OK;
-        private Button Button_close;
+        public Button Button_OK;
+        public Button Button_close;
 
-        private Text Text_title;
-        private Text Text_content;
+        public Text Text_title;
+        public Text Text_content;
 
         public void Awake()
 		{
