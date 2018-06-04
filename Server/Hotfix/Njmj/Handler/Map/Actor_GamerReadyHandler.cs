@@ -98,7 +98,7 @@ namespace ETHotfix
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
 //	                List<MahjongInfo> infos = bankerHandCards.GetAll();
-	                bankerHandCards.library = new List<MahjongInfo>(list);
+//	                bankerHandCards.library = new List<MahjongInfo>(list);
 
                     //给客户端传送数据
                     Actor_StartGame actorStartGame = new Actor_StartGame();

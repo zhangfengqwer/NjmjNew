@@ -8,6 +8,7 @@ namespace ETHotfix
 {
     public static class GameControllerComponentSystem
     {
+        private static List<List<MahjongInfo>> temp =  new List<List<MahjongInfo>>();
         /// <summary>
         /// 发牌
         /// </summary>
@@ -20,17 +21,28 @@ namespace ETHotfix
                 return;
             }
 
+            temp.Clear();
+
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
 
             DeskComponent deskComponent = room.GetComponent<DeskComponent>();
-            List<MahjongInfo> mahjongInfos1 = gamers[0].GetComponent<HandCardsComponent>().library;
-            List<MahjongInfo> mahjongInfos2 = gamers[1].GetComponent<HandCardsComponent>().library;
-            List<MahjongInfo> mahjongInfos3 = gamers[2].GetComponent<HandCardsComponent>().library;
-            List<MahjongInfo> mahjongInfos4 = gamers[3].GetComponent<HandCardsComponent>().library;
+            foreach (var gamer in gamers)
+            {
+                HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
 
-            Logic_NJMJ.getInstance().FaMahjong(mahjongInfos1, mahjongInfos2, mahjongInfos3, mahjongInfos4,
-                deskComponent.RestLibrary);
+                //发牌前有拍了
+                if (handCardsComponent.GetAll().Count > 0)
+                {
+                    temp.Add(null);
+                }
+                else
+                {
+                    temp.Add(handCardsComponent.GetAll());
+                }
+            }
+
+            Logic_NJMJ.getInstance().FaMahjong(temp, deskComponent.RestLibrary);
 
             foreach (var card in deskComponent.RestLibrary)
             {

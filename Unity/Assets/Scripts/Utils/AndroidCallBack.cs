@@ -136,7 +136,7 @@ public class AndroidCallBack : MonoBehaviour {
     // 分享成功
     public void OnShareSuccess(string data)
     {
-       
+        Game.EventSystem.Run(EventIdType.WeChatShare);
     }
 
     // 登录结果回调

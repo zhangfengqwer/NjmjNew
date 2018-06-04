@@ -115,7 +115,8 @@ namespace ETHotfix
                 Text nameText = gameObject.transform.Find("name").GetComponent<Text>();
                 Text goldText = gameObject.transform.Find("Text_gold").GetComponent<Text>();
 
-                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
+                //                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
+                HeadManager.setHeadSprite(headImage, gamer.PlayerInfo.Icon);
                 nameText.text = gamer.UserID + "";
                 //胡牌的ui
                 if (gamer.UserID == data.Uid)

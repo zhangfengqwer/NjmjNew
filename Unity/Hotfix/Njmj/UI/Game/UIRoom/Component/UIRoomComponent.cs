@@ -51,6 +51,8 @@ namespace ETHotfix
         public GamerInfo localGamer;
         private GameObject treasure;
         private bool isTreasureFinish;
+        private GameObject cheat;
+        private InputField cheatInput;
 
         public void Awake()
         {
@@ -97,6 +99,31 @@ namespace ETHotfix
             this.settingBtn.onClick.Add(OnSetting);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
+
+            #region 作弊
+            this.cheat = rc.Get<GameObject>("Cheat");
+            Button cheatButton = this.cheat.Get<GameObject>("CheatButton").GetComponent<Button>();
+            Button sendButton = this.cheat.Get<GameObject>("SendButton").GetComponent<Button>();
+            this.cheatInput = this.cheat.Get<GameObject>("InputField").GetComponent<InputField>();
+
+            sendButton.gameObject.SetActive(false);
+            cheatInput.gameObject.SetActive(false);
+
+            cheatButton.onClick.Add(() =>
+            {
+                sendButton.gameObject.SetActive(true);
+                cheatInput.gameObject.SetActive(true);
+            });
+
+            sendButton.onClick.Add(() =>
+            {
+                SessionWrapComponent.Instance.Session.Call(new Actor_GamerCheat() { Info = this.cheatInput.text });
+                sendButton.gameObject.SetActive(false);
+                cheatInput.gameObject.SetActive(false);
+            });
+
+            #endregion
+
 
             #region 聊天
             Game.Scene.GetComponent<UIComponent>().Create(UIType.UIChatShow);

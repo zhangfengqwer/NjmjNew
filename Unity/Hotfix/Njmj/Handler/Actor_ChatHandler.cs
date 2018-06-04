@@ -13,6 +13,8 @@ namespace ETHotfix
             {
                 Log.Info("收到表情：" + JsonHelper.ToJson(message));
 
+                ToastScript.createToast(message.Value);
+
                 UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChatShow);
                 if (message.ChatType == 1)
                 {

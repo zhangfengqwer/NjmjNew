@@ -355,6 +355,12 @@ message Actor_GamerExitRoom // IActorMessage
     required bool IsFromClient = 2;
 }
 
+message Actor_GamerCheat // IActorMessage
+{
+    required long Uid = 1;
+    required string Info = 2;
+}
+
 message Actor_GamerContinueGame // IActorMessage
 {
 

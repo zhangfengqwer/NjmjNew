@@ -160,7 +160,6 @@ namespace ETHotfix
                     }
                     shengLvText.text = $"胜率:<color=#FFF089FF>{i}%</color>";
                 }
-
             }
         }
 

@@ -18,13 +18,10 @@
   <ItemGroup>
     <Compile Remove="Njmj\Component\Map\Room - 复制\**" />
     <Compile Remove="Njmj\Config\**" />
-    <Compile Remove="Njmj\NHibernate\**" />
     <EmbeddedResource Remove="Njmj\Component\Map\Room - 复制\**" />
     <EmbeddedResource Remove="Njmj\Config\**" />
-    <EmbeddedResource Remove="Njmj\NHibernate\**" />
     <None Remove="Njmj\Component\Map\Room - 复制\**" />
     <None Remove="Njmj\Config\**" />
-    <None Remove="Njmj\NHibernate\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Unity\Assets\Scripts\Base\DoubleMap.cs" Link="Base\DoubleMap.cs" />
@@ -133,10 +130,5 @@
     <Folder Include="Module\Message\Network\KCP\" />
     <Folder Include="Module\Message\Network\TCP\" />
     <Folder Include="Module\Numeric\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="hibernate_sqlserver_goldPoint.cfg.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
