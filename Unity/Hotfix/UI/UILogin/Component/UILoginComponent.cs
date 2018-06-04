@@ -44,6 +44,7 @@ namespace ETHotfix
 
         private Button btn_phone;
         private Button btn_wechat;
+        private Button btn_guest;
         private Button btn_login;
         private Button btn_yanzhengma;
         private Button btn_backToStart;
@@ -69,6 +70,7 @@ namespace ETHotfix
 
             btn_phone = rc.Get<GameObject>("Button_phone").GetComponent<Button>();
             btn_wechat = rc.Get<GameObject>("Button_wechat").GetComponent<Button>();
+            btn_guest = rc.Get<GameObject>("Button_guest").GetComponent<Button>();
             btn_login = rc.Get<GameObject>("Button_Login").GetComponent<Button>();
             btn_yanzhengma = rc.Get<GameObject>("Button_YanZhengMa").GetComponent<Button>();
             btn_backToStart = rc.Get<GameObject>("Button_back").GetComponent<Button>();
@@ -80,6 +82,7 @@ namespace ETHotfix
 
             btn_phone.onClick.Add(onClickOpenPhoneLogin);
             btn_wechat.onClick.Add(onClickWechatLogin);
+            btn_guest.onClick.Add(onClickGuestLogin);
             btn_login.onClick.Add(onClickPhoneCodeLogin);
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
@@ -173,6 +176,12 @@ namespace ETHotfix
             {
                 PlatformHelper.Login("AndroidCallBack", "GetLoginResult", "weixin");
             }
+        }
+
+        public async void onClickGuestLogin()
+        {
+            string Third_Id = CommonUtil.getCurTime();
+            await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)

@@ -137,7 +137,8 @@ namespace ETHotfix
             }
 
             string reward = g2cDailySign.Reward;
-            ToastScript.createToast("签到奖励：" + reward);
+            GameUtil.changeDataWithStr(reward);
+            ToastScript.createToast("领取成功");
 
             {
                 Button btn = Item2.transform.Find("Button").GetComponent<Button>();
