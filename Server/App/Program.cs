@@ -106,12 +106,12 @@ namespace App
 						Game.Scene.AddComponent<ActorManagerComponent>();
                         //Game.Scene.AddComponent<DBOperatorComponet>();
                         Game.Scene.AddComponent<RankDataComponent>();
-                        Game.Scene.AddComponent<HttpComponent>();
+                        //Game.Scene.AddComponent<HttpComponent>();
 
 
 					    //GateGlobalComponent
 					    Game.Scene.AddComponent<UserComponent>();
-					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
+					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
 
                         //MapGlobalCoponent
                         Game.Scene.AddComponent<RoomComponent>();

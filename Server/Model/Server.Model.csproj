@@ -24,9 +24,6 @@
     <None Remove="Njmj\Config\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Njmj\NHibernate\Mapping\GIngot.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\Unity\Assets\Scripts\Base\DoubleMap.cs" Link="Base\DoubleMap.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Base\Event\Env.cs" Link="Base\Event\Env.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Base\Event\EnvKey.cs" Link="Base\Event\EnvKey.cs" />
@@ -115,9 +112,6 @@
     <Compile Include="..\..\Unity\Hotfix\HP_Logic\Logic_NJMJ.cs" Link="Njmj\Object\Logic_NJMJ.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Njmj\NHibernate\Mapping\GIngot.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NHibernate" Version="5.1.2" />
@@ -136,10 +130,5 @@
     <Folder Include="Module\Message\Network\KCP\" />
     <Folder Include="Module\Message\Network\TCP\" />
     <Folder Include="Module\Numeric\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="hibernate_sqlserver_goldPoint.cfg.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
