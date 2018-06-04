@@ -507,6 +507,7 @@
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingFinishEvent_RemoveLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Factory\UILoadingFactory.cs" />
     <Compile Include="Assets\Scripts\UI\UILoadRes\Component\UILoadResComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\UILoadRes\Event\LoadResEvent_CreateLoadResUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoadRes\Factory\UILoadResFactory.cs" />
     <Compile Include="Assets\Scripts\Utils\AndroidCallBack.cs" />
     <Compile Include="Assets\Scripts\Utils\CommonUtil.cs" />
