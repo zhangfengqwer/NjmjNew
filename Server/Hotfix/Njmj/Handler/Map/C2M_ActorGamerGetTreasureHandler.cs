@@ -17,7 +17,14 @@ namespace ETHotfix
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 	            ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
-	            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(gamer.UserID, DateTime.Now);
+                //记录数据
+	            gamer.EndTime = DateTime.Now;
+	            TimeSpan span = gamer.EndTime - gamer.StartTime;
+	            int totalSeconds = (int)span.TotalSeconds;
+	            DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+	            DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+
+                List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(gamer.UserID, DateTime.Now);
 
 	            if (gamerInfos.Count == 0)
 	            {
@@ -43,7 +50,10 @@ namespace ETHotfix
                 }
 
 	            reply(response);
-	        }
+
+	            gamer.StartTime = DateTime.Now;
+	            DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+            }
 	        catch (Exception e)
 	        {
 	            ReplyError(response, e, reply);

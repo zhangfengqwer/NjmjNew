@@ -359,6 +359,7 @@ message Actor_GamerCheat // IActorMessage
 {
     required long Uid = 1;
     required string Info = 2;
+    repeated MahjongInfo handCards = 3;
 }
 
 message Actor_GamerContinueGame // IActorMessage

@@ -247,11 +247,26 @@ namespace ETHotfix
                     return null;
                 }
 
-                int number = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
-                MahjongInfo grabMahjong = deskComponent.RestLibrary[number];
+                MahjongInfo grabMahjong;
+                if (room.NextGrabCard != null)
+                {
+                    grabMahjong = new MahjongInfo()
+                    {
+                        m_weight = room.NextGrabCard.m_weight,
+                        weight = room.NextGrabCard.weight
+                    };
+
+                    room.NextGrabCard = null;
+                }
+                else
+                {
+                    int number = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
+                    grabMahjong = deskComponent.RestLibrary[number];
+                    deskComponent.RestLibrary.RemoveAt(number);
+                }
+
                 //发牌
                 cardsComponent.AddCard(grabMahjong);
-                deskComponent.RestLibrary.RemoveAt(number);
                 room.my_lastMahjong = grabMahjong;
                 cardsComponent.GrabCard = grabMahjong;
 
