@@ -32,24 +32,26 @@ namespace ETHotfix
                     response.itemId = getRewardItemId(playerBaseInfo.LuckyValue);
                     response.reward = getReward(response.itemId, playerBaseInfo.LuckyValue);
 
-                    await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
-
-                    // 转盘日志
-                    {
-                        Log_UseZhuanPan log_UseZhuanPan = ComponentFactory.CreateWithId<Log_UseZhuanPan>(IdGenerater.GenerateId());
-                        log_UseZhuanPan.Uid = message.Uid;
-                        log_UseZhuanPan.Reward = response.reward;
-                        await proxyComponent.Save(log_UseZhuanPan);
-                    }
-
                     // 满99后重置
                     if (playerBaseInfo.LuckyValue >= 99)
                     {
                         playerBaseInfo.LuckyValue = 0;
                     }
-                    
+
                     await proxyComponent.Save(playerBaseInfo);
                     reply(response);
+
+                    {
+                        await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
+
+                        // 转盘日志
+                        {
+                            Log_UseZhuanPan log_UseZhuanPan = ComponentFactory.CreateWithId<Log_UseZhuanPan>(IdGenerater.GenerateId());
+                            log_UseZhuanPan.Uid = message.Uid;
+                            log_UseZhuanPan.Reward = response.reward;
+                            await proxyComponent.Save(log_UseZhuanPan);
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -98,7 +100,14 @@ namespace ETHotfix
 
                 if (config.itemId == itemId)
                 {
-                    reward = (config.propId + ":" + config.PropNum);
+                    if (config.propId != 3)
+                    {
+                        reward = (config.propId + ":" + config.PropNum);
+                    }
+                    else
+                    {
+                        reward = (config.propId + ":" + ((float)config.PropNum / 100.0f));
+                    }
 
                     if (LuckyValue >= 99)
                     {

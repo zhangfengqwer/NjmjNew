@@ -364,6 +364,7 @@
     <Compile Include="Assets\Scripts\Component\GlobalConfigComponent.cs" />
     <Compile Include="Assets\Scripts\Component\SceneChangeComponent.cs" />
     <Compile Include="Assets\Scripts\Component\TimerComponent.cs" />
+    <Compile Include="Assets\Scripts\Entity\Config\ApkVersionConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Config\UnitConfig.cs" />
     <Compile Include="Assets\Scripts\Entity\Game.cs" />
     <Compile Include="Assets\Scripts\Entity\Hotfix.cs" />
@@ -507,6 +508,7 @@
     <Compile Include="Assets\Scripts\Other\MonoMethod.cs" />
     <Compile Include="Assets\Scripts\Other\MotionType.cs" />
     <Compile Include="Assets\Scripts\Other\ReferenceCollector.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDownApk\DownApkScript.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Component\UILoadingComponent.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingBeginEvent_CreateLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingFinishEvent_RemoveLoadingUI.cs" />
