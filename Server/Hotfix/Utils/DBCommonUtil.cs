@@ -141,6 +141,8 @@ namespace ETHotfix
 
         public static async Task changeWealthWithStr(long uid, string reward)
         {
+            Log.Debug("changeWealthWithStr: uid = " + uid + "  reward = " + reward);
+
             List<string> list1 = new List<string>();
             CommonUtil.splitStr(reward, list1, ';');
 
@@ -154,11 +156,12 @@ namespace ETHotfix
 
                 await ChangeWealth(uid,id, num);
             }
-
         }
 
         public static async Task ChangeWealth(long uid, int propId, float propNum)
         {
+            Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
+
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             switch (propId)
             {
