@@ -164,28 +164,47 @@ namespace ETHotfix
                             // 是老用户
                             else
                             {
-                                accountInfo.OldAccountState = 2;
-                                await proxyComponent.Save(accountInfo);
-
+                                List<Log_OldUserBind> log_OldUserBinds = await proxyComponent.QueryJson<Log_OldUserBind>($"{{macId:{accountInfo.MachineId}}}");
+                                if (log_OldUserBinds.Count > 0)
                                 {
-                                    url = ("http://fksq.javgame.com:8081/GetOldNjmjData?UserId=" + old_uid);
-                                    str = HttpUtil.GetHttp(url);
-
-                                    result = JObject.Parse(str);
-                                    int moneyAmount = (int)result.GetValue("moneyAmount");
-                                    int gIngotAmount = (int)result.GetValue("gIngotAmount");
-
-                                    Log.Debug("老用户金币=" + moneyAmount + "   元宝=" + gIngotAmount);
-
-                                    playerBaseInfo.GoldNum = moneyAmount;
-                                    playerBaseInfo.WingNum = gIngotAmount;
-                                    await proxyComponent.Save(playerBaseInfo);
+                                    accountInfo.OldAccountState = 3;
+                                    await proxyComponent.Save(accountInfo);
                                 }
+                                else
+                                {
+                                    accountInfo.OldAccountState = 2;
+                                    await proxyComponent.Save(accountInfo);
 
-                                // 发送老用户广播
-                                Actor_OldUser actor_OldUser = new Actor_OldUser();
-                                actor_OldUser.OldAccount = old_uid;
-                                Game.Scene.GetComponent<UserComponent>().BroadCast(actor_OldUser);
+                                    // 记录绑定日志
+                                    {
+                                        Log_OldUserBind log_OldUserBind = ComponentFactory.CreateWithId<Log_OldUserBind>(IdGenerater.GenerateId());
+                                        log_OldUserBind.Uid = userId;
+                                        log_OldUserBind.OldUid = old_uid;
+                                        log_OldUserBind.macId = accountInfo.MachineId;
+
+                                        await proxyComponent.Save(log_OldUserBind);
+                                    }
+
+                                    {
+                                        url = ("http://fksq.javgame.com:8081/GetOldNjmjData?UserId=" + old_uid);
+                                        str = HttpUtil.GetHttp(url);
+
+                                        result = JObject.Parse(str);
+                                        int moneyAmount = (int)result.GetValue("moneyAmount");
+                                        int gIngotAmount = (int)result.GetValue("gIngotAmount");
+
+                                        Log.Debug("老用户金币=" + moneyAmount + "   元宝=" + gIngotAmount);
+
+                                        playerBaseInfo.GoldNum = moneyAmount;
+                                        playerBaseInfo.WingNum = gIngotAmount;
+                                        await proxyComponent.Save(playerBaseInfo);
+                                    }
+
+                                    // 发送老用户广播
+                                    Actor_OldUser actor_OldUser = new Actor_OldUser();
+                                    actor_OldUser.OldAccount = old_uid;
+                                    Game.Scene.GetComponent<UserComponent>().BroadCastToSingle(actor_OldUser, userId);
+                                }
                             }
                         }
                     }

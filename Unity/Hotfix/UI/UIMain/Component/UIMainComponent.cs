@@ -93,9 +93,9 @@ namespace ETHotfix
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
             {
                 // 向左
-                if (BtnList_Down.transform.localPosition.x > 500)
+                if (BtnList_Down.transform.localPosition.x > 400)
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(248, -286.4f), 0.5f, false).OnComplete(() =>
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-392.0f, 73.6f), 0.5f, false).OnComplete(() =>
                     {
                         PlayerInfoBg.transform.Find("GoldBg").transform.localScale = Vector3.zero;
                     });
@@ -104,7 +104,7 @@ namespace ETHotfix
                 // 向右
                 else
                 {
-                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(523, -286.4f), 0.5f, false).OnComplete(() =>
+                    BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-127.4f, 73.6f), 0.5f, false).OnComplete(() =>
                     {
                         PlayerInfoBg.transform.Find("GoldBg").transform.localScale = new Vector3(1, 1, 1);
                     });
