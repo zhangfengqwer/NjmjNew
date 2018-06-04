@@ -161,7 +161,7 @@ namespace ETHotfix
 
         public void Update()
         {
-            playerIcon.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("playericon", PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
+            HeadManager.setHeadSprite(playerIcon.GetComponent<Image>(), PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
             {
