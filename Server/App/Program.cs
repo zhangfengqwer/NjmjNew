@@ -106,7 +106,7 @@ namespace App
 						Game.Scene.AddComponent<ActorManagerComponent>();
                         //Game.Scene.AddComponent<DBOperatorComponet>();
                         Game.Scene.AddComponent<RankDataComponent>();
-                         Game.Scene.AddComponent<HttpComponent>();
+                        Game.Scene.AddComponent<HttpComponent>();
 
 
 					    //GateGlobalComponent
@@ -124,11 +124,6 @@ namespace App
 					default:
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
-
-			    GIngot gIngot = NHiMsServerteHelper.GetById<GIngot>(44451113);
-
-
-			    Log.Debug(JsonHelper.ToJson(gIngot));
 
 			    while (true)
 				{
