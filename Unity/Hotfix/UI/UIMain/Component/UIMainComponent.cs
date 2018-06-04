@@ -252,7 +252,10 @@ namespace ETHotfix
             await SetPlayerInfo();
             GetRankInfo();
 
-            CommonUtil.ShowUI(UIType.UIDaily);
+            if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsSign)
+            {
+                CommonUtil.ShowUI(UIType.UIDaily);
+            }
 
             checkLaBa();
 

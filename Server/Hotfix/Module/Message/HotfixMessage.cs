@@ -368,6 +368,9 @@ namespace ETHotfix
 		[ProtoMember(15, IsRequired = true)]
 		public int MaxHua;
 
+		[ProtoMember(16, IsRequired = true)]
+		public bool IsSign;
+
 	}
 
 	[Message(HotfixOpcode.ShopInfo)]
@@ -1039,6 +1042,18 @@ namespace ETHotfix
 
 		[ProtoMember(3)]
 		public List<MahjongInfo> handCards = new List<MahjongInfo>();
+
+	}
+
+	[Message(HotfixOpcode.Actor_GameFlow)]
+	[ProtoContract]
+	public partial class Actor_GameFlow: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 	}
 

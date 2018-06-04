@@ -16,11 +16,12 @@ namespace ETHotfix
 			self.Awake();
 		}
 	}
-	
-	public class UIZhuanPanComponent : Component
-	{
+
+    public class UIZhuanPanComponent : Component
+    {
         private Button Button_ChouJiang;
         private Button Button_close;
+        private Button Button_wenhao;
 
         private GameObject Image_bg;
         private GameObject xingyunzhi;
@@ -31,7 +32,7 @@ namespace ETHotfix
         int LuckyValue = 0;
 
         public void Awake()
-		{
+        {
             Instance = this;
             ToastScript.clear();
 
@@ -46,6 +47,7 @@ namespace ETHotfix
 
             Button_ChouJiang = rc.Get<GameObject>("Button_ChouJiang").GetComponent<Button>();
             Button_close = rc.Get<GameObject>("Button_close").GetComponent<Button>();
+            Button_wenhao = rc.Get<GameObject>("Button_wenhao").GetComponent<Button>();
 
             Image_bg = rc.Get<GameObject>("Image_bg");
             xingyunzhi = rc.Get<GameObject>("xingyunzhi");
@@ -53,6 +55,7 @@ namespace ETHotfix
 
             Button_ChouJiang.onClick.Add(onClick_ChouJiang);
             Button_close.onClick.Add(onClickClose);
+            Button_wenhao.onClick.Add(showGuiZe);
 
             Image_bg.transform.Find("Text_tip1/Btn_share").GetComponent<Button>().onClick.Add(onClickShare);
 
@@ -73,7 +76,7 @@ namespace ETHotfix
                 }
             }
         }
-        
+
         public void onClickClose()
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIZhuanPan);
@@ -83,7 +86,7 @@ namespace ETHotfix
         {
 
             PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
-//            RequestShare();
+            //            RequestShare();
         }
 
         public void onClick_ChouJiang()
@@ -95,6 +98,22 @@ namespace ETHotfix
             //}
 
             RequestUseZhuanPan();
+        }
+
+        public void showGuiZe()
+        {
+            UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("规则", "1、每进行一次游戏可获得一次转盘机会，每日最高3次\r\n\r\n2、贵族用户每日额外赠送一次机会\r\n\r\n3、以上转盘次数用完后分享游戏可额外获得一次机会");
+            script.setOnClickOkEvent(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            });
+
+            script.setOnClickCloseEvent(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            });
+
+            script.Text_content.alignment = TextAnchor.MiddleLeft;
         }
 
         public async void RequestShare()

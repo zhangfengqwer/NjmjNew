@@ -70,6 +70,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Unity-2017\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
@@ -105,6 +109,7 @@
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_CheatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GameFlowHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReadyTimeOutHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />

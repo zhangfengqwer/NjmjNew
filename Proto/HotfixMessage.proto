@@ -121,6 +121,7 @@ message PlayerInfo // IMessage
 	required string EmogiTime = 13;//
 	required float WinRate = 14;//
 	required int MaxHua = 15;//
+	required bool IsSign = 16;//
 }
 
 message ShopInfo //IMessage
@@ -360,6 +361,10 @@ message Actor_GamerCheat // IActorMessage
     required long Uid = 1;
     required string Info = 2;
     repeated MahjongInfo handCards = 3;
+}
+
+message Actor_GameFlow // IActorMessage
+{
 }
 
 message Actor_GamerContinueGame // IActorMessage

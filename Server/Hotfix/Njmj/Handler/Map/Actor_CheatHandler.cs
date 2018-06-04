@@ -13,6 +13,7 @@ namespace ETHotfix
             try
             {
                 Log.Info("收到作弊：" + JsonHelper.ToJson(message));
+                if (string.IsNullOrEmpty(message.Info)) return;
                 string[] split = message.Info.Split(' ');
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
@@ -50,7 +51,6 @@ namespace ETHotfix
                         weight = (byte) num
                     };
                 }
-               
             }
             catch (Exception e)
             {

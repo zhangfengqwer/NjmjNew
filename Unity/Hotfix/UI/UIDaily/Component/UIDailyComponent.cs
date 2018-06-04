@@ -140,6 +140,8 @@ namespace ETHotfix
             GameUtil.changeDataWithStr(reward);
             ToastScript.createToast("领取成功");
 
+            PlayerInfoComponent.Instance.GetPlayerInfo().IsSign = true;
+
             {
                 Button btn = Item2.transform.Find("Button").GetComponent<Button>();
                 btn.interactable = false;

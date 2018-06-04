@@ -97,6 +97,7 @@ namespace ETHotfix
             {
                 if (gamer == null)
                     continue;
+                gamer.RemoveComponent<HandCardsComponent>();
                 gamer.IsReady = false;
                 gamer.ReadyTimeOut = 0;
                 gamer.isGangFaWanPai = false;
