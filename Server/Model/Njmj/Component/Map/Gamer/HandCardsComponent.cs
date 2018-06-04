@@ -48,8 +48,10 @@ namespace ETModel
             PlayCards.Clear();
             FaceCards.Clear();
             PengCards.Clear();
+            GangCards.Clear();
             IsTrusteeship = false;
             IsBanker = false;
+            GrabCard = null;
         }
     }
 }

@@ -191,6 +191,7 @@ namespace ETHotfix
             if (grabMahjong == null)
             {
                 //没牌
+                room.Broadcast(new Actor_GameFlow());
                 gameController.GameOver(0);
                 return;
             }
