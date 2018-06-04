@@ -51,7 +51,7 @@ namespace ETHotfix
                         HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                         if (handCards != null)
                         {
-                            //                            handCards.Reset();
+                            handCards.Reset();
                         }
                         else
                         {

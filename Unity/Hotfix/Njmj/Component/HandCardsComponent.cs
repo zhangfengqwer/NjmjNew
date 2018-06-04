@@ -63,6 +63,7 @@ namespace ETHotfix
             this.Panel = panel;
             this.Index = index;
             this.CardBottom = panel.Get<GameObject>("CardBottom");
+            this.cardBottonPosition = this.CardBottom.transform.localPosition;
             this.showCard = panel.Get<GameObject>("ShowCard");
             this.cardDisplay = panel.Get<GameObject>("CardDisplay");
             this.directionObj = panel.Get<GameObject>("Direction");
@@ -151,6 +152,8 @@ namespace ETHotfix
             grabObj = null;
             faceImage = null;
             faceImageGe = null;
+            pengDic.Clear();
+            cardDisplayObjs.Clear();
         }
 
         /// <summary>
@@ -437,10 +440,12 @@ namespace ETHotfix
             {
                 this.currentPlayCardObj.transform.SetAsFirstSibling();
                 int count = this.cardDisplayObjs.Count;
+                Log.Debug("cardDisplayObjs:" + count);
                 int x = -107;
                 int y = -192;
                 int i = count / 8;
                 int i1 = count % 8;
+
                 if (i1 == 0)
                 {
                     i1 = 8;
@@ -525,7 +530,7 @@ namespace ETHotfix
 
             Vector3 localPosition = this.CardBottom.transform.localPosition;
             this.CardBottom.transform.localPosition =
-                    new Vector3(localPosition.x + (postionX) * 2.2f, localPosition.y + (postionY) * 2.2f, localPosition.z);
+                    new Vector3(localPosition.x + (postionX) * 2.5f, localPosition.y + (postionY) * 2.5f, localPosition.z);
         }
 
         /// <summary>
@@ -559,6 +564,7 @@ namespace ETHotfix
 
         private int num = 0;
         private GameObject currentPlayCardObj;
+        private Vector3 cardBottonPosition;
 
         /// <summary>
         /// 其他人碰刚
@@ -762,6 +768,13 @@ namespace ETHotfix
             DeleteAllItem(CardBottom);
             DeleteAllItem(cardDisplay);
             DeleteAllItem(pengObj);
+            pengDic.Clear();
+        }
+
+        public void Reset()
+        {
+            Log.Debug("重设bottom");
+            CardBottom.transform.localPosition = cardBottonPosition;
         }
 
     }

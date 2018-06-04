@@ -16,6 +16,7 @@ namespace ETHotfix
             try
             {
                 Log.Info($"断线重连:" + JsonHelper.ToJson(message));
+                SoundsHelp.Instance.SoundMute(true);
 
                 //进入
                 List<GamerInfo> Gamers = new List<GamerInfo>();
@@ -54,7 +55,7 @@ namespace ETHotfix
                 //开始游戏
                 var actorStartGame = new Actor_StartGame();
                 actorStartGame.GamerDatas = message.Gamers;
-                actorStartGame.restCount = 90;
+                actorStartGame.restCount = message.RestCount;
                 Actor_StartGameHandler.StartGame(actorStartGame);
 
                 //碰刚
@@ -92,10 +93,13 @@ namespace ETHotfix
                         playCard.Uid = item.UserID;
                         playCard.weight = card.weight;
                         playCard.index = index;
+//                        await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
                         Actor_GamerPlayCardHandler.PlayCard(playCard);
 //                        item.handCards.RemoveAt(index);
                     }
                 }
+
+                SoundsHelp.Instance.SoundMute(false);
             }
             catch (Exception e)
             {

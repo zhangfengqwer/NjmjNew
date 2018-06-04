@@ -151,7 +151,12 @@ namespace ETHotfix
                             room.isGetYingHuaBuPai = false;
                             orderController.CurrentAuthority = gamer.UserID;
                             //杠完之后抓牌
-                            room.GrabMahjong();
+                            MahjongInfo grabMahjong = room.GrabMahjong();
+                            if (grabMahjong == null)
+                            {
+                                gameController.GameOver(0);
+                                return;
+                            }
                         }
                         else
                         {

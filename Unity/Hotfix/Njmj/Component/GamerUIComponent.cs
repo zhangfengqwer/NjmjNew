@@ -128,6 +128,7 @@ namespace ETHotfix
         /// </summary>
         public void GameStart()
         {
+
 //            ResetPrompt();
         }
 

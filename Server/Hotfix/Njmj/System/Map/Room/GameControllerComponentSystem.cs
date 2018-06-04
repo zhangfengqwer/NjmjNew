@@ -34,6 +34,7 @@ namespace ETHotfix
                 //发牌前有拍了
                 if (handCardsComponent.GetAll().Count > 0)
                 {
+                    Log.Debug("发牌前有牌了：" + handCardsComponent.GetAll().Count);
                     temp.Add(null);
                 }
                 else
@@ -59,6 +60,13 @@ namespace ETHotfix
         {
             Room room = self.GetParent<Room>();
             RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+
+            if (huaCount == 0)
+            {
+                //没牌
+                room.Broadcast(new Actor_GameFlow());
+            }
+
             room.IsGameOver = true;
             room.State = RoomState.Ready;
             room.tokenSource.Cancel();

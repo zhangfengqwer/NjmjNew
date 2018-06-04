@@ -56,6 +56,8 @@ namespace ETHotfix
                         reconnet.Gamers.Add(gamerData);
                     }
 
+			        reconnet.RestCount = deskComponent.RestLibrary.Count;
+
                     room.GamerReconnect(gamer, reconnet);
 
                     //等待客户端重连

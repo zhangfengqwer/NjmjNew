@@ -131,8 +131,9 @@ namespace ETHotfix
 	                room.reconnectList.Add(actorStartGame);
 
                     room.State = RoomState.Game;
+	                room.IsGameOver = false;
 
-	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
+                    if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
 	                {
 	                    roomComponent.gameRooms.Remove(room.Id);
 	                }
