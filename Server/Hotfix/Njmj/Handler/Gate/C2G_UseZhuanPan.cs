@@ -98,7 +98,14 @@ namespace ETHotfix
 
                 if (config.itemId == itemId)
                 {
-                    reward = (config.propId + ":" + config.PropNum);
+                    if (config.propId != 3)
+                    {
+                        reward = (config.propId + ":" + config.PropNum);
+                    }
+                    else
+                    {
+                        reward = (config.propId + ":" + ((float)config.PropNum / 100.0f));
+                    }
 
                     if (LuckyValue >= 99)
                     {
