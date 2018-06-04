@@ -26,5 +26,6 @@
 
 	    public const string GamerPlayCard = "GamerPlayCard";
 	    public const string WeChatLogin = "WeChatLogin";
+	    public const string WeChatShare = "WeChatShare";
 	}
 }

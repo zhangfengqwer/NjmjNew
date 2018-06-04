@@ -1021,6 +1021,24 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerCheat)]
+	[ProtoContract]
+	public partial class Actor_GamerCheat: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Info;
+
+	}
+
 	[Message(HotfixOpcode.Actor_GamerContinueGame)]
 	[ProtoContract]
 	public partial class Actor_GamerContinueGame: IActorMessage

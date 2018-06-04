@@ -298,6 +298,34 @@ namespace ETHotfix
             }
         }
 
+
+        public void FaMahjong(List<List<MahjongInfo>> temp, List<MahjongInfo> rest)
+        {
+            List<MahjongInfo> mahjongList = new List<MahjongInfo>();
+            for (int i = 0; i < m_mahjongList.Count; i++)
+            {
+                mahjongList.Add(m_mahjongList[i]);
+            }
+
+            foreach (var item in temp)
+            {
+                if (item == null) continue;
+                for (int i = 0; i < 13; i++)
+                {
+                    int r = Common_Random.getRandom(0, mahjongList.Count - 1);
+                    item.Add(mahjongList[r]);
+
+                    mahjongList.RemoveAt(r);
+                }
+            }
+
+            for (int i = 0; i < mahjongList.Count; i++)
+            {
+                rest.Add(mahjongList[i]);
+            }
+            mahjongList.Clear();
+        }
+
         // 供外部调用：发牌
         public void FaMahjong(List<MahjongInfo> zhuangjia, List<MahjongInfo> other1, List<MahjongInfo> other2, List<MahjongInfo> other3, List<MahjongInfo> rest)
         {
@@ -1145,7 +1173,6 @@ namespace ETHotfix
                 mahjongInfos.RemoveAt(index);
             }
         }
-
 
     }
 }

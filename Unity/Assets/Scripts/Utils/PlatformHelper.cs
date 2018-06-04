@@ -847,7 +847,6 @@ public class PlatformHelper
 
     public static void Login(string obj, string func, string data)
     {
-        Log.Debug("login");
     }
 
     public static void WXShareFriends(string obj, string func, string data)

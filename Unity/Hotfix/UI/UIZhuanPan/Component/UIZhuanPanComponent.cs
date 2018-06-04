@@ -25,12 +25,14 @@ namespace ETHotfix
         private GameObject Image_bg;
         private GameObject xingyunzhi;
         private GameObject Item;
+        public static UIZhuanPanComponent Instance;
 
         int ZhuanPanCount = 0;
         int LuckyValue = 0;
 
         public void Awake()
 		{
+            Instance = this;
             ToastScript.clear();
 
             initData();
@@ -79,7 +81,9 @@ namespace ETHotfix
 
         public void onClickShare()
         {
-            RequestShare();
+
+            PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
+//            RequestShare();
         }
 
         public void onClick_ChouJiang()
@@ -93,7 +97,7 @@ namespace ETHotfix
             RequestUseZhuanPan();
         }
 
-        private async void RequestShare()
+        public async void RequestShare()
         {
             ToastScript.createToast("分享成功");
 

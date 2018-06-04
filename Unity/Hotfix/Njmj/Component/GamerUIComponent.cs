@@ -26,7 +26,7 @@ namespace ETHotfix
         //玩家昵称
         public string NickName { get { return name.text; } }
 
-        private Image head;
+        public Image head;
         private Text prompt;
         private Text name;
 
