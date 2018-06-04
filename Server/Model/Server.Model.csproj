@@ -18,13 +18,13 @@
   <ItemGroup>
     <Compile Remove="Njmj\Component\Map\Room - 复制\**" />
     <Compile Remove="Njmj\Config\**" />
+    <Compile Remove="Njmj\NHibernate\**" />
     <EmbeddedResource Remove="Njmj\Component\Map\Room - 复制\**" />
     <EmbeddedResource Remove="Njmj\Config\**" />
+    <EmbeddedResource Remove="Njmj\NHibernate\**" />
     <None Remove="Njmj\Component\Map\Room - 复制\**" />
     <None Remove="Njmj\Config\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Njmj\NHibernate\Mapping\GIngot.hbm.xml" />
+    <None Remove="Njmj\NHibernate\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Unity\Assets\Scripts\Base\DoubleMap.cs" Link="Base\DoubleMap.cs" />
@@ -113,9 +113,6 @@
     <Compile Include="..\..\Unity\Hotfix\HP_Logic\Common_Random.cs" Link="Njmj\Object\Common_Random.cs" />
     <Compile Include="..\..\Unity\Hotfix\HP_Logic\Consts.cs" Link="Njmj\Object\Consts.cs" />
     <Compile Include="..\..\Unity\Hotfix\HP_Logic\Logic_NJMJ.cs" Link="Njmj\Object\Logic_NJMJ.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Njmj\NHibernate\Mapping\GIngot.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />

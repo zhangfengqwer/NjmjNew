@@ -168,8 +168,17 @@ namespace ETHotfix
                                 await proxyComponent.Save(accountInfo);
 
                                 {
-                                    playerBaseInfo.GoldNum = 1000;
-                                    playerBaseInfo.WingNum = 100;
+                                    url = ("http://fksq.javgame.com:8081/GetOldNjmjData?UserId=" + old_uid);
+                                    str = HttpUtil.GetHttp(url);
+
+                                    result = JObject.Parse(str);
+                                    int moneyAmount = (int)result.GetValue("moneyAmount");
+                                    int gIngotAmount = (int)result.GetValue("gIngotAmount");
+
+                                    Log.Debug("老用户金币=" + moneyAmount + "   元宝=" + gIngotAmount);
+
+                                    playerBaseInfo.GoldNum = moneyAmount;
+                                    playerBaseInfo.WingNum = gIngotAmount;
                                     await proxyComponent.Save(playerBaseInfo);
                                 }
 

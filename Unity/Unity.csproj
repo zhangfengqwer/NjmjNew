@@ -12,16 +12,13 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.4.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -283,6 +280,7 @@
     <Compile Include="Assets\Njmj\Audio\SoundComponent.cs" />
     <Compile Include="Assets\Njmj\Audio\SoundData.cs" />
     <Compile Include="Assets\Njmj\MonoScript\ItemCardScipt.cs" />
+    <Compile Include="Assets\Njmj\MonoScript\UnityGameInfo.cs" />
     <Compile Include="Assets\Scripts\Base\DoubleMap.cs" />
     <Compile Include="Assets\Scripts\Base\Event\Env.cs" />
     <Compile Include="Assets\Scripts\Base\Event\EnvKey.cs" />
@@ -504,13 +502,13 @@
     <Compile Include="Assets\Scripts\Other\MonoMethod.cs" />
     <Compile Include="Assets\Scripts\Other\MotionType.cs" />
     <Compile Include="Assets\Scripts\Other\ReferenceCollector.cs" />
-    <Compile Include="Assets\Scripts\UI\UILoadRes\Component\UILoadResComponent.cs" />
-    <Compile Include="Assets\Scripts\UI\UILoadRes\Event\LoadResEvent_CreateLoadResUI.cs" />
-    <Compile Include="Assets\Scripts\UI\UILoadRes\Factory\UILoadResFactory.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Component\UILoadingComponent.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingBeginEvent_CreateLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Event\LoadingFinishEvent_RemoveLoadingUI.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\Factory\UILoadingFactory.cs" />
+    <Compile Include="Assets\Scripts\UI\UILoadRes\Component\UILoadResComponent.cs" />
+    <Compile Include="Assets\Scripts\UI\UILoadRes\Event\LoadResEvent_CreateLoadResUI.cs" />
+    <Compile Include="Assets\Scripts\UI\UILoadRes\Factory\UILoadResFactory.cs" />
     <Compile Include="Assets\Scripts\Utils\AndroidCallBack.cs" />
     <Compile Include="Assets\Scripts\Utils\CommonUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\PlatformHelper.cs" />
@@ -1028,7 +1026,6 @@
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\link.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>
