@@ -530,7 +530,7 @@ namespace ETHotfix
 
             Vector3 localPosition = this.CardBottom.transform.localPosition;
             this.CardBottom.transform.localPosition =
-                    new Vector3(localPosition.x + (postionX) * 2.5f, localPosition.y + (postionY) * 2.5f, localPosition.z);
+                    new Vector3(localPosition.x + (postionX) * 2.2f, localPosition.y + (postionY) * 2.2f, localPosition.z);
         }
 
         /// <summary>
@@ -602,7 +602,7 @@ namespace ETHotfix
                 temp = 3;
             }
             //暗杆
-//            else if (type == 4)
+            //            else if (type == 4)
             else
             {
                 if (Index == 2)
@@ -619,15 +619,18 @@ namespace ETHotfix
 
             //设置碰杠位置
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+            int count = this.pengObj.transform.childCount;
             if (Index == 1)
             {
-                gameObject.transform.localPosition = new Vector3(0, (num - 1)* 150, 0);
-
+                gameObject.transform.localPosition = new Vector3(0, (count - 1) * 150, 0);
+            }
+            else if (Index == 2)
+            {
+                gameObject.transform.localPosition = new Vector3((count - 1) * (-160.93f), 0, 0);
             }
             else
             {
-                gameObject.transform.localPosition = new Vector3(num * (postionX) * 3.5f, num * (postionY) * 3.5f, 0);
-
+                gameObject.transform.localPosition = new Vector3(count * (postionX) * 3.5f, count * (postionY) * 3.5f, 0);
             }
 
             //显示出牌
@@ -776,6 +779,5 @@ namespace ETHotfix
             Log.Debug("重设bottom");
             CardBottom.transform.localPosition = cardBottonPosition;
         }
-
     }
 }
