@@ -459,7 +459,7 @@ namespace ETHotfix
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                if (IsDelayWealthRank() && (wealthRankList.Count + 1) < 30)
+                if (IsDelayWealthRank() && (wealthRankList.Count + 1) <= 30)
                     str = (wealthRankList.Count+ 1).ToString();
                 else
                     str = "未上榜";
@@ -521,7 +521,7 @@ namespace ETHotfix
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                if (IsDelayWealthRank() && (gameRankList.Count + 1) < 30)
+                if (IsDelayWealthRank() && (gameRankList.Count + 1) <= 30)
                     str = (gameRankList.Count+ 1).ToString();
                 else
                     str = "未上榜";
