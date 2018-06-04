@@ -165,6 +165,7 @@ namespace ETHotfix
             {
                 GetParent<UI>().GetComponent<GamerComponent>().Add(gamer, index);
                 gamer.GetComponent<GamerUIComponent>().SetPanel(this.GamersPanel[index], this.HeadPanel[index], index);
+                HeadManager.setHeadSprite(gamer.GetComponent<GamerUIComponent>().head, gamer.PlayerInfo.Icon);
             }
             catch (Exception e)
             {
