@@ -55,7 +55,7 @@ namespace ETHotfix
             btn_guanyu.onClick.Add(onClick_guanyu);
             btn_jiazhangjianhu.onClick.Add(onClick_jiazhangjianhu);
 
-            panel_guanyu.transform.Find("Text_banben").GetComponent<Text>().text = "版本：1.1.0";
+            panel_guanyu.transform.Find("Text_banben").GetComponent<Text>().text = "版本：" + PlatformHelper.GetVersionName();
 
         }
 
