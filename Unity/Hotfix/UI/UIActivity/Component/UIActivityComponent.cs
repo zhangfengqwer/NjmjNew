@@ -22,6 +22,8 @@ namespace ETHotfix
         private Button returnBtn;
         private Button NoticeBtn;
         private Button ActivityBtn;
+        private GameObject Activity;
+        private GameObject Notice;
         private GameObject Panel;
         private GameObject ActivityGrid;
         private GameObject Grid;
@@ -43,6 +45,8 @@ namespace ETHotfix
             NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
             ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
             Panel = rc.Get<GameObject>("Panel");
+            Activity = rc.Get<GameObject>("Activity");
+            Notice = rc.Get<GameObject>("Notice");
             noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
             activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
             Grid = rc.Get<GameObject>("Grid");
@@ -60,6 +64,8 @@ namespace ETHotfix
             {
                 NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
                 ActivityBtn.transform.GetChild(0).gameObject.SetActive(false);
+                Notice.SetActive(true);
+                Activity.SetActive(false);
                 CreateNoticeItems();
             });
 
@@ -86,6 +92,8 @@ namespace ETHotfix
         private void GetActivityItemList()
         {
             NoticeBtn.transform.GetChild(0).gameObject.SetActive(false);
+            Notice.SetActive(false);
+            Activity.SetActive(true);
             ActivityBtn.transform.GetChild(0).gameObject.SetActive(true);
             CreateActivityItems(ActivityConfig.getInstance().getActivityInfoList());
         }

@@ -24,7 +24,7 @@ namespace ETHotfix
         public const string UIIcon = "UIPlayerIcon";//用户更换头像界面
         public const string UIIconItem = "UIIcon";//用户头像item
         public const string UIEmail = "UIEmail";//邮箱界面
-        public const string UIEmailItem = "UIEmaiItem";//邮箱Item
+        public const string UIEmailItem = "UIEmailItem";//邮箱Item
         public const string UIRewardItem = "UIRewardItem";//奖励物品
         public const string UITask = "UITask";//任务
         public const string UITaskItem = "UITaskItem";//任务Item
