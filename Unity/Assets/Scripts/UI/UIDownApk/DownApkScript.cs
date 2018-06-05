@@ -39,7 +39,9 @@ public class DownApkScript : MonoBehaviour {
         VersionInfo versionInfo = ApkVersionConfig.getInstance().getDataById(PlatformHelper.GetChannelName());
         if (versionInfo != null)
         {
+#if UNITY_ANDROID
             PlatformHelper.DownApk(versionInfo.url);
+#endif
         }
     }
 }

@@ -53,7 +53,6 @@ namespace ETModel
             "uineterror.unity3d",
             "uinoticeitem.unity3d",
             "uipropitem.unity3d",
-            "uirank.unity3d",
             "uirankitem.unity3d",
             "uirealname.unity3d",
             "uirewarditem.unity3d",

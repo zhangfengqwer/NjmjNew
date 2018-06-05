@@ -62,6 +62,11 @@ namespace ETHotfix
                 //放弃
                 else if (message.OperationType == 3)
                 {
+                    Log.Debug("放弃:" + gamer.UserID);
+                    gamer.IsCanHu = false;
+                    gamer.IsCanPeng = false;
+                    gamer.IsCanGang = false;
+
                     if (orderController.CurrentAuthority == gamer.UserID)
                     {
                         //room.tokenSource.Cancel();
@@ -79,13 +84,13 @@ namespace ETHotfix
                     gamerOperation.weight = deskComponent.CurrentCard.weight;
 
                     //有没有人胡牌
-                    while (true)
-                    {
-                        if (!GetCanHu(room))
-                        {
-                            break;
-                        }
-                    }
+//                    while (true)
+//                    {
+//                        if (!GetCanHu(room))
+//                        {
+//                            break;
+//                        }
+//                    }
 
                     //游戏结束
                     if (room.IsGameOver) return;
