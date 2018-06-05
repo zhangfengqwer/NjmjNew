@@ -56,6 +56,7 @@ namespace ETHotfix
                 var actorStartGame = new Actor_StartGame();
                 actorStartGame.GamerDatas = message.Gamers;
                 actorStartGame.restCount = message.RestCount;
+                actorStartGame.RoomType = message.RoomType;
                 Actor_StartGameHandler.StartGame(actorStartGame);
 
                 //碰刚

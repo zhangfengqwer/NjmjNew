@@ -400,6 +400,7 @@ message Actor_StartGame // IActorMessage
 {
     repeated GamerData GamerDatas = 1;
     required int restCount = 2;
+    required int RoomType = 3;
 }
 
 message GamerData //IMessage
@@ -468,6 +469,7 @@ message Actor_GamerReconnet // IActorMessage
 {
    	repeated GamerData Gamers = 1;
 	required int RestCount = 2;
+	required int RoomType = 3;
 }
 
 message Email //IMessage

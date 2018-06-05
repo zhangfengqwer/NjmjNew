@@ -24,7 +24,9 @@ namespace ETHotfix
                 UIGameResultComponent gameResultComponent =
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
 
-                gameResultComponent.setData(message, gamerComponent,100);
+                RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
+
+                gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
