@@ -457,6 +457,7 @@ message Actor_GamerHuPai // IActorMessage
 message Actor_GamerReconnet // IActorMessage
 {
    	repeated GamerData Gamers = 1;
+	required int RestCount = 2;
 }
 
 message Email //IMessage

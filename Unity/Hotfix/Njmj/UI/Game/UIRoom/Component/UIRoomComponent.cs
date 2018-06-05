@@ -247,6 +247,7 @@ namespace ETHotfix
                 gamer.GetComponent<HandCardsComponent>().ClearAll();
                 gamer.RemoveComponent<HandCardsComponent>();
             }
+
         }
 
         /// <summary>

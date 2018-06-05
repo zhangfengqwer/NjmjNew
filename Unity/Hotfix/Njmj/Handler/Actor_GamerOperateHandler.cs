@@ -49,7 +49,15 @@ namespace ETHotfix
                 }
                 else
                 {
-                    handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
+                    //碰刚
+                    if (message.OperationType == 5)
+                    {
+                        handCardsComponent.SetOtherPengGang(message.OperationType, mahjongInfo);
+                    }
+                    else
+                    {
+                        handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
+                    }
                 }
             }
             catch (Exception e)
