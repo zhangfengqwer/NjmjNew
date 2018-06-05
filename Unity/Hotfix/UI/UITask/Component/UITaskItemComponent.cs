@@ -60,7 +60,7 @@ namespace ETHotfix
         private async void GetReward()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskId = taskProgress.Id, GetType = 1 });
+            G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskInfo = taskProgress, GetType = 1 });
             UINetLoadingComponent.closeNetLoading();
 
             PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += taskProgress.Reward;

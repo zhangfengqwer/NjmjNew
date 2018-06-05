@@ -23,7 +23,7 @@ namespace ETHotfix
         private GameObject ExpressionGrid;
         private GameObject ShortGrid;
         private GameObject ExpressionItem;
-        private GameObject Mask;
+        private Text ExceptionTxt;
         private List<GameObject> ExpressionItemList = new List<GameObject>();
         private GameObject ChatItem;
         private List<GameObject> ChatItemList = new List<GameObject>();
@@ -37,7 +37,7 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
-            Mask = rc.Get<GameObject>("Mask");
+            ExceptionTxt = rc.Get<GameObject>("ExceptionTxt").GetComponent<Text>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
             ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
 
@@ -49,16 +49,6 @@ namespace ETHotfix
             ChatItem = CommonUtil.getGameObjByBundle(UIType.UIChatItem);
             isOpen = false;
 
-            #region 是否可点击表情（VIP可点击）
-            if (GameUtil.isCanUseEmoji())
-            {
-                Mask.SetActive(false);
-            }
-            else
-            {
-                Mask.SetActive(true);
-            }
-            #endregion
             //选中表情包界面
             CreatExpressions();
         }
@@ -89,6 +79,15 @@ namespace ETHotfix
 
         private void CreatExpressions()
         {
+            if (GameUtil.isCanUseEmoji())
+            {
+                ExceptionTxt.text = "表情包到期时间:" + CommonUtil.splitStr_Start_str(PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime, ' ');
+            }
+            else
+            {
+                ExceptionTxt.text = "";
+            }
+
             ExpressionBtn.transform.GetChild(0).gameObject.SetActive(true);
             ShortBtn.transform.GetChild(0).gameObject.SetActive(false);
             GameObject obj = null;

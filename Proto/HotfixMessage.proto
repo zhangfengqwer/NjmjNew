@@ -163,7 +163,7 @@ message G2C_BuyItem //IResponse
 message C2G_GetTaskReward //IRequest
 {
 	required long UId = 1;
-	required int TaskId = 2;
+	required TaskInfo TaskInfo = 2;
 	required int GetType = 3;//获取奖励类型 1，任务 2，成就
 }
 
