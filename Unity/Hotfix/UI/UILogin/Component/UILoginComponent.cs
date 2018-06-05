@@ -300,7 +300,6 @@ namespace ETHotfix
 
                 UINetLoadingComponent.closeNetLoading();
 
-
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {
                     ToastScript.createToast(r2CLogin.Message);
