@@ -954,7 +954,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\u7528\u4E8E\u5408\u6210\u8BDD\u8D39"
+  m_Text: 
 --- !u!114 &114586962844291904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1647,7 +1647,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4, y: -2}
-  m_SizeDelta: {x: 240, y: 45.333332}
+  m_SizeDelta: {x: 0, y: 45.333332}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224412605372626392
 RectTransform:
@@ -1740,7 +1740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 98, y: -107}
+  m_AnchoredPosition: {x: 98, y: -109.4}
   m_SizeDelta: {x: 150, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224592656969726592

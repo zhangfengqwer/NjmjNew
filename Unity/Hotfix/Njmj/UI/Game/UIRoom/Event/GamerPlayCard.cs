@@ -15,6 +15,11 @@ namespace ETHotfix
                 if (gamerComponent.CurrentPlayUid == PlayerInfoComponent.Instance.uid)
                 {
                     Log.Debug("玩家出牌：" + weight + "index:" + index);
+                    if (gamerComponent.IsPlayed)
+                    {
+                        return;
+                    }
+                    gamerComponent.IsPlayed = true;
                     SessionWrapComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
                 }
             }

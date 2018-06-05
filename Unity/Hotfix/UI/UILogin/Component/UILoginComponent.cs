@@ -167,7 +167,7 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-            if (true)
+            if (false)
             {
                 string Third_Id = CommonUtil.getCurTime();
                 await OnThirdLogin("8527882092", "", "");
@@ -299,7 +299,6 @@ namespace ETHotfix
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
-
 
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {

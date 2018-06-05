@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ETModel;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
@@ -13,13 +14,41 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [HideInInspector]
     public int index;
 
+    public int clickedCount = 2;
+    public float clickedInterval = 0.5f;
+
+    private float lastClickedTime = 0;
+    private float count = 0;
+
     private Vector3 beginPosition;
 
     // Use this for initialization
     void Start()
     {
         _rectTransform = gameObject.GetComponent<RectTransform>();
+        _rectTransform.GetComponent<Button>().onClick.Add(this.OnClicked);
     }
+
+   
+    public void OnClicked()
+    {
+        float interval = Time.realtimeSinceStartup - lastClickedTime;
+        if (interval <= clickedInterval)
+        {
+            count++;
+            if (count == clickedCount - 1)
+            {
+                //TODO：
+                Game.EventSystem.Run(EventIdType.GamerPlayCard, weight, index);
+            }
+        }
+        else
+        {
+            count = 0;
+        }
+        lastClickedTime = Time.realtimeSinceStartup;
+    }
+
 
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -56,7 +85,7 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         if (eventData.clickCount == 2)
         {
-            Game.EventSystem.Run(EventIdType.GamerPlayCard, weight, index);
+            //Game.EventSystem.Run(EventIdType.GamerPlayCard, weight, index);
         }
     }
 
