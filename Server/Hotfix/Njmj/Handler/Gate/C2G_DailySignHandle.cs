@@ -61,14 +61,7 @@ namespace ETHotfix
                     string reward = getReward(curLianXuSignDays);
 
                     // 更新用户数据
-                    {
-                        List<PlayerBaseInfo> playerBaseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
-                        if (playerBaseInfo.Count > 0)
-                        {
-                            playerBaseInfo[0].GoldNum += getRewardNum(curLianXuSignDays);
-                            await proxyComponent.Save(playerBaseInfo[0]);
-                        }
-                    }
+                    await DBCommonUtil.changeWealthWithStr(message.Uid, reward,"每日签到");
 
                     response.Reward = reward;
                     response.TomorrowReward = getReward(curLianXuSignDays + 1);

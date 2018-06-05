@@ -24,14 +24,14 @@ namespace ETHotfix
                         if (!taskProgressInfoList[0].IsComplete)
                         {
                             response.Error = ErrorCode.TaskNotComplete;
-                            response.Message = "任务奖励还未完成，不能领取奖励";
+                            response.Message = "任务还未完成，不能领取奖励";
                             taskProgressInfoList[0].IsGet = false;
                             await proxyComponent.Save(taskProgressInfoList[0]);
                         }
                         else
                         {
                             taskProgressInfoList[0].IsGet = true;
-                            await DBCommonUtil.ChangeWealth(message.UId,1,message.TaskInfo.Reward);
+                            await DBCommonUtil.ChangeWealth(message.UId,1,message.TaskInfo.Reward,"任务奖励");
                             await proxyComponent.Save(taskProgressInfoList[0]);
                         }
                     }
@@ -45,14 +45,14 @@ namespace ETHotfix
                         if (!chengjiuInfoList[0].IsComplete)
                         {
                             response.Error = ErrorCode.TaskNotComplete;
-                            response.Message = "任务奖励还未完成，不能领取奖励";
+                            response.Message = "成就任务还未完成，不能领取奖励";
                             chengjiuInfoList[0].IsGet = false;
                             await proxyComponent.Save(chengjiuInfoList[0]);
                         }
                         else
                         {
                             chengjiuInfoList[0].IsGet = true;
-                            await DBCommonUtil.ChangeWealth(message.UId, 1, message.TaskInfo.Reward);
+                            await DBCommonUtil.ChangeWealth(message.UId, 1, message.TaskInfo.Reward, "成就奖励");
                             await proxyComponent.Save(chengjiuInfoList[0]);
                         }
                     }

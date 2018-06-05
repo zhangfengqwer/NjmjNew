@@ -42,7 +42,7 @@ namespace ETHotfix
                     reply(response);
 
                     {
-                        await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward);
+                        await DBCommonUtil.changeWealthWithStr(message.Uid, response.reward,"转盘奖励");
 
                         // 转盘日志
                         {
