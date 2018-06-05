@@ -551,7 +551,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
+                        // Log.Debug("找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                     }
                 }
@@ -569,8 +569,8 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
+                        // Log.Debug("找到对子：" + list[i].m_weight);
+                        // Log.Debug"找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                         list_double.Add(list[i]);
                     }
@@ -610,7 +610,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到刻子：" + list[i].m_weight);
+                        // Log.Debug("找到刻子：" + list[i].m_weight);
                         list_three.Add(list[i]);
                     }
                 }
@@ -629,7 +629,6 @@ namespace ETHotfix
                 str += (list[i].m_weight + "、");
             }
             //Log.Debug(str);
-            //Console.WriteLine(str);
 
             if (list.Count % 3 != 0)
             {
@@ -669,7 +668,7 @@ namespace ETHotfix
                 {
                     chengpaiList.Add(new List<MahjongInfo>() { first, second , third });
 
-                    // Console.WriteLine("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+                    // Log.Debug("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                     list.Remove(first);
                     list.Remove(second);
                     list.Remove(third);
@@ -704,7 +703,7 @@ namespace ETHotfix
                     {
                         chengpaiList.Add(new List<MahjongInfo>() { first, second, third });
 
-                        // Console.WriteLine("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+                        // Log.Debug("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                         list.Remove(first);
                         list.Remove(second);
                         list.Remove(third);
