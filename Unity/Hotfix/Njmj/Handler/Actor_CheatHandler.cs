@@ -19,7 +19,7 @@ namespace ETHotfix
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
 
-                Gamer gamer = gamerComponent.Get(message.Uid);
+                Gamer gamer = gamerComponent.Get(PlayerInfoComponent.Instance.uid);
 
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
                 if (handCardsComponent == null) return;
