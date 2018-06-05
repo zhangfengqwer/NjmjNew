@@ -54,6 +54,26 @@ namespace ETHotfix
             }
         }
 
+        public static Room GetIdleRoomById(this RoomComponent self, int roomType)
+        {
+            if (self.IdleRoomCount > 0)
+            {
+                foreach (var room in self.idleRooms)
+                {
+                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+                    if (controllerComponent.RoomConfig.Id == roomType)
+                    {
+                        return room;
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static void RemoveRoom(this RoomComponent self,Room room)
         {
             Log.Debug("self.rooms:" + self.rooms.Count);

@@ -257,7 +257,7 @@ message G2C_ChangeWealth //IResponse
 
 message C2G_EnterRoom //IRequest
 {
-	
+	required int RoomType = 1;
 }
 
 message G2C_EnterRoom //IResponse
@@ -279,6 +279,7 @@ message G2M_PlayerEnterRoom //IRequest
 	required int64 UserId = 1;
 	required int64 SessionId = 2;
 	required int64 PlayerId = 3;
+	required int RoomType = 4;
 }
 
 message M2G_PlayerEnterRoom //IResponse
@@ -289,6 +290,7 @@ message M2G_PlayerEnterRoom //IResponse
 message Actor_GamerEnterRoom // IActorMessage
 {
     repeated GamerInfo Gamers = 1;
+    required int RoomType = 2;
 }
 
 message Actor_GamerJionRoom // IActorMessage
@@ -337,6 +339,7 @@ message C2M_ActorGamerEnterRoom // IActorRequest
 message M2C_ActorGamerGetTreasure // IActorResponse
 {
 	required int RestSeconds = 1;
+	required int Reward = 2;
 }	
 
 message C2M_ActorGamerGetTreasure // IActorRequest
@@ -354,6 +357,12 @@ message Actor_GamerExitRoom // IActorMessage
 {
     required long Uid = 1;
     required bool IsFromClient = 2;
+}
+
+message Actor_GamerChangeGold // IActorMessage
+{
+    required long Uid = 1;
+    required int GoldAmount = 2;
 }
 
 message Actor_GamerCheat // IActorMessage
@@ -409,6 +418,7 @@ message GamerData //IMessage
 message Actor_ChangeTable // IActorMessage
 {
     optional long Uid = 1;
+    required int RoomType = 2;
 }
 
 message Actor_GamerPlayCard // IActorMessage

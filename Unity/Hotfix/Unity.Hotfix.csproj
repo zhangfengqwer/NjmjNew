@@ -88,6 +88,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Server\Hotfix\Njmj\Help\ConfigHelp.cs">
+      <Link>Njmj\Helper\ConfigHelp.cs</Link>
+    </Compile>
     <Compile Include="Base\Event\EventIdType.cs" />
     <Compile Include="Base\Event\IEvent.cs" />
     <Compile Include="Base\Helper\ArrayHelper.cs" />
@@ -102,6 +105,7 @@
     <Compile Include="Entity\Config\ChatConfig.cs" />
     <Compile Include="Entity\Config\ActivityConfig.cs" />
     <Compile Include="Entity\Config\NoticeConfig.cs" />
+    <Compile Include="Entity\Config\RoomConfig.cs" />
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="Njmj\Component\GamerUIComponent.cs" />
     <Compile Include="Njmj\Entity\Gamer.cs" />
     <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Njmj\Helper\GameHelp.cs" />
     <Compile Include="Njmj\Helper\SoundsHelp.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Component\UIReadyComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Factory\UIRoomFactory.cs" />
