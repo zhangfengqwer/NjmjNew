@@ -136,6 +136,8 @@ namespace ETHotfix
 
         public async void startPhoneCodeTimer()
         {
+            isDispose = false;
+
             int time = 60;
 
             text_yanzhengmadaojishi.text = time.ToString();
