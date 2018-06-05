@@ -824,7 +824,7 @@ namespace ETHotfix
             //补花数量
             faceCards.Add(mahjongInfo);
             SetFaceCards(faceCards);
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
+//            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
 
             //删除花牌
             if (isSelf)
