@@ -1101,7 +1101,7 @@ namespace ETHotfix
         /// <param name="pengCards"></param>
         /// <param name="grabMahjong"></param>
         /// <returns></returns>
-        public bool IsPengGang(List<MahjongInfo> pengCards, List<MahjongInfo> handCards)
+        public bool IsPengGang(List<MahjongInfo> pengCards, List<MahjongInfo> handCards,out int weight)
         {
             foreach (var card in pengCards)
             {
@@ -1109,11 +1109,13 @@ namespace ETHotfix
                 {
                     if (card.m_weight == handCard.m_weight)
                     {
+                        weight = (int) card.m_weight;
                         return true;
                     }
                 }
             }
 
+            weight = 0;
             return false;
         }
 

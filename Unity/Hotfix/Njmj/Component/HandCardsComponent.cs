@@ -147,6 +147,8 @@ namespace ETHotfix
             }
 
             base.Dispose();
+            Reset();
+
             prefabObj = null;
             itemObj = null;
             grabObj = null;
@@ -530,16 +532,17 @@ namespace ETHotfix
 
             Vector3 localPosition = this.CardBottom.transform.localPosition;
             this.CardBottom.transform.localPosition =
-                    new Vector3(localPosition.x + (postionX) * 2.2f, localPosition.y + (postionY) * 2.2f, localPosition.z);
+                    new Vector3(localPosition.x + (postionX) * 2f, localPosition.y + (postionY) * 2f, localPosition.z);
         }
 
         /// <summary>
         /// 碰刚
         /// </summary>
         /// <param name="messageOperationType"></param>
-        /// <param name="mahjongInfo"></param>
+        /// <param name="mahjong"></param>
         public void SetPengGang(int messageOperationType, MahjongInfo mahjong)
         {
+            Log.Debug("显示碰后杠");
             GameObject obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
             int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
             this.RemoveCard(index);
@@ -553,12 +556,88 @@ namespace ETHotfix
                         CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
             }
 
-            GameObject pengObj = null;
-            if (pengDic.TryGetValue(mahjong.weight, out obj))
+            GameObject lastPengObj = null;
+            if (pengDic.TryGetValue(mahjong.weight, out lastPengObj))
             {
-                gameObject.transform.SetSiblingIndex(pengObj.transform.GetSiblingIndex());
-                GameObject.Destroy(pengObj);
+                gameObject.transform.SetSiblingIndex(lastPengObj.transform.GetSiblingIndex());
+                gameObject.transform.localPosition = lastPengObj.transform.localPosition;
+                GameObject.Destroy(lastPengObj);
                 pengDic.Remove(mahjong.weight);
+            }
+        }
+
+        public void SetOtherPengGang(int messageOperationType, MahjongInfo mahjong)
+        {
+            GameObject obj = null;
+            if (Index == 2)
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
+            }
+            else
+            {
+                obj = CommonUtil.getGameObjByBundle("Item_Right_Gang_Card");
+            }
+
+
+            //显示碰
+            GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
+            GameObject lastPengObj = null;
+            if (pengDic.TryGetValue(mahjong.weight, out lastPengObj))
+            {
+                gameObject.transform.SetSiblingIndex(lastPengObj.transform.GetSiblingIndex());
+                gameObject.transform.localPosition = lastPengObj.transform.localPosition;
+                GameObject.Destroy(lastPengObj);
+                pengDic.Remove(mahjong.weight);
+            }
+
+            //显示出牌
+            string item1 = null;
+            string item2 = null;
+            string item3 = null;
+            if (Index == 1)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Right_Card";
+                item3 = "right_" + mahjong.weight;
+            }
+            else if (Index == 2)
+            {
+                item1 = "Item_Vertical_Card";
+                item2 = "Image_Top_Card";
+                item3 = "card_" + mahjong.weight;
+            }
+            else if (Index == 3)
+            {
+                item1 = "Item_Horizontal_Card";
+                item2 = "Image_Left_Card";
+                item3 = "left_" + mahjong.weight;
+            }
+
+            for (int i = 1; i < 3; i++)
+            {
+                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle(item2, item3);
+            }
+
+            if (Index == 3)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    GameObject.Destroy(CardBottom.transform.GetChild(i).gameObject);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    int childCount = this.CardBottom.transform.childCount;
+                    GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
+                }
+//
+//                Vector3 localPosition = this.CardBottom.transform.localPosition;
+//                float x = localPosition.x - postionX * 1f;
+//                float y = localPosition.y - postionY * 1f;
+//
+//                this.CardBottom.transform.localPosition = new Vector3(x, y, localPosition.z);
             }
         }
 
@@ -573,6 +652,7 @@ namespace ETHotfix
         /// <param name="mahjongInfo"></param>
         public void SetOtherPeng(int type, MahjongInfo mahjongInfo)
         {
+          
             GameObject obj = null;
             int temp = 0;
             if (type == 0)
@@ -631,6 +711,11 @@ namespace ETHotfix
             else
             {
                 gameObject.transform.localPosition = new Vector3(count * (postionX) * 3.5f, count * (postionY) * 3.5f, 0);
+            }
+
+            if (type == 0)
+            {
+                pengDic.Add(mahjongInfo.weight, gameObject);
             }
 
             //显示出牌
@@ -779,5 +864,6 @@ namespace ETHotfix
             Log.Debug("重设bottom");
             CardBottom.transform.localPosition = cardBottonPosition;
         }
+
     }
 }

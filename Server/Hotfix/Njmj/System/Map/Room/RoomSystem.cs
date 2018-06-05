@@ -331,7 +331,7 @@ namespace ETHotfix
                         }
 
                         //碰杠
-                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll()))
+                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(),out var weight2))
                         {
                             _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();

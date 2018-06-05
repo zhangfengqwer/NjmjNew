@@ -39,6 +39,7 @@ namespace ETHotfix
                 }
                 else
                 {
+                    Log.Debug("发牌前没有拍");
                     temp.Add(handCardsComponent.GetAll());
                 }
             }
@@ -60,7 +61,8 @@ namespace ETHotfix
         {
             Room room = self.GetParent<Room>();
             RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-
+            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+            deskComponent.RestLibrary.Clear();
             if (huaCount == 0)
             {
                 //没牌

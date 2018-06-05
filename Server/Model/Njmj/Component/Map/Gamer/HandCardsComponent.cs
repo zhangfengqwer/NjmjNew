@@ -45,6 +45,7 @@ namespace ETModel
             base.Dispose();
 
             this.library.Clear();
+            Log.Debug("手牌清空");
             PlayCards.Clear();
             FaceCards.Clear();
             PengCards.Clear();

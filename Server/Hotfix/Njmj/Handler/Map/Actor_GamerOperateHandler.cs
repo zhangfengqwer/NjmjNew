@@ -112,29 +112,13 @@ namespace ETHotfix
                     else
                     {
                         HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
+                        gamerOperation.OperationType = message.OperationType;
+
                         bool isSuccess = false;
                         //明杠
                         if (Logic_NJMJ.getInstance().isCanGang(deskComponent.CurrentCard, mahjongInfos))
                         {
                             isSuccess = true;
-                        }  
-                        //暗杠
-                        else if (Logic_NJMJ.getInstance().IsAnGang(handCardsComponent.GetAll(), out var weight))
-                        {
-                            isSuccess = true;
-                            gamerOperation.weight = (int) weight;
-                        }
-                        //碰杠
-                        else if(Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll()))
-                        {
-                            isSuccess = true;
-                            gamerOperation.weight = handCardsComponent.GrabCard.weight;
-                        }
-
-                        if (isSuccess)
-                        {
-                            gamerOperation.OperationType = message.OperationType;
-                            room.Broadcast(gamerOperation);
 
                             //更新手牌
                             for (int i = 0; i < 3; i++)
@@ -142,8 +126,45 @@ namespace ETHotfix
                                 int index = Logic_NJMJ.getInstance().GetIndex(mahjongInfos, deskComponent.CurrentCard);
                                 mahjongInfos.RemoveAt(index);
                             }
-
                             handCards.GangCards.Add(deskComponent.CurrentCard);
+                        }
+                        //暗杠
+                        else if (Logic_NJMJ.getInstance().IsAnGang(handCardsComponent.GetAll(), out var weight))
+                        {
+                            isSuccess = true;
+                            gamerOperation.weight = (int) weight;
+                            gamerOperation.OperationType = 4;
+
+                            MahjongInfo info = new MahjongInfo() { weight = (byte)weight, m_weight = (Consts.MahjongWeight)weight };
+                            //更新手牌
+                            for (int i = 0; i < 4; i++)
+                            {
+                                int index = Logic_NJMJ.getInstance().GetIndex(mahjongInfos, info);
+                                mahjongInfos.RemoveAt(index);
+                            }
+                            handCards.GangCards.Add(info);
+                        }
+                        //碰杠
+                        else if(Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(),out var weight1))
+                        {
+                            isSuccess = true;
+                            gamerOperation.weight = weight1;
+                            gamerOperation.OperationType = 5;
+
+                            MahjongInfo info = new MahjongInfo() {weight = (byte) weight1, m_weight = (Consts.MahjongWeight) weight1};
+                            //更新手牌
+                            for (int i = 0; i < 1; i++)
+                            {
+                                int index = Logic_NJMJ.getInstance().GetIndex(mahjongInfos, info);
+                                mahjongInfos.RemoveAt(index);
+                            }
+                            handCardsComponent.PengCards.Remove(info);
+                            handCards.GangCards.Add(info);
+                        }
+
+                        if (isSuccess)
+                        {
+                            room.Broadcast(gamerOperation);
 
                             //杠完之后不能
                             gamer.isFaWanPaiTingPai = false;
