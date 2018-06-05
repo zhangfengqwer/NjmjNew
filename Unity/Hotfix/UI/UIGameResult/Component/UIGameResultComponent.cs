@@ -212,7 +212,7 @@ namespace ETHotfix
 
         public async void startTimer()
         {
-            int time = 15;
+            int time = 20;
             while (time >= 0)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);

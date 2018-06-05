@@ -31,6 +31,7 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 uiRoomComponent.StartGame(message.restCount);
+                uiRoomComponent.SetRoomType(message.RoomType);
                 foreach (var gameData in message.GamerDatas)
                 {
                     foreach (var mahjong in gameData.handCards)
@@ -76,6 +77,8 @@ namespace ETHotfix
                         {
                             handCards.AddOtherCards(gamer.IsBanker);
                         }
+
+                        gamerUi.SetZhuang();
 
                         handCards.SetFaceCards(gameData.faceCards);
                     }

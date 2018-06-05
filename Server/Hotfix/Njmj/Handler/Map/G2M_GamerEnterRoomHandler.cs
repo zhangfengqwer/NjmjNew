@@ -57,7 +57,7 @@ namespace ETHotfix
                     }
 
 			        reconnet.RestCount = deskComponent.RestLibrary.Count;
-
+			        reconnet.RoomType = (int)room.GetComponent<GameControllerComponent>().RoomConfig.Id;
                     room.GamerReconnect(gamer, reconnet);
 
                     //等待客户端重连
