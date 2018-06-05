@@ -380,7 +380,7 @@ public class PlatformHelper
 
     public static void DownApk(string url)
     {
-        GetJC().CallStatic("downLoadApk");
+        GetJC().CallStatic("downLoadApk", url);
     }
 
     public static bool IsThirdLogin()
@@ -1065,7 +1065,7 @@ public class PlatformHelper
         return 1;
     }
 
-    public static void DownApk()
+    public static void DownApk(string url)
     {
     }
 

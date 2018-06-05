@@ -31,6 +31,10 @@ namespace ETHotfix
         private Button goldBtn;
         private Button proBtn;
         private Button vipBtn;
+        private GameObject Wing;
+        private GameObject Gold;
+        private GameObject Prop;
+        private GameObject Vip;
         private Button returnBtn;
         private GameObject wingGrid;
         private GameObject goldGrid;
@@ -74,6 +78,12 @@ namespace ETHotfix
             goldBtn = rc.Get<GameObject>("GoldToggle").GetComponent<Button>();
             proBtn = rc.Get<GameObject>("ProToggle").GetComponent<Button>();
             vipBtn = rc.Get<GameObject>("VipToggle").GetComponent<Button>();
+
+            Wing = rc.Get<GameObject>("Wing");
+            Gold = rc.Get<GameObject>("Gold");
+            Prop = rc.Get<GameObject>("Prop");
+            Vip = rc.Get<GameObject>("Vip");
+
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             wingGrid = rc.Get<GameObject>("WingGrid");
             goldGrid = rc.Get<GameObject>("GoldGrid");
@@ -93,10 +103,10 @@ namespace ETHotfix
             #endregion
 
             #region AddButton
-            buttonDic.Add(ShopType.Wing, wingBtn.gameObject);
-            buttonDic.Add(ShopType.Gold, goldBtn.gameObject);
-            buttonDic.Add(ShopType.Vip, vipBtn.gameObject);
-            buttonDic.Add(ShopType.Prop, proBtn.gameObject);
+            buttonDic.Add(ShopType.Wing, Wing);
+            buttonDic.Add(ShopType.Gold, Gold);
+            buttonDic.Add(ShopType.Vip, Vip);
+            buttonDic.Add(ShopType.Prop, Prop);
             #endregion
 
             AddShopInfoByType();
@@ -354,10 +364,12 @@ namespace ETHotfix
                 if(item.Key == type)
                 {
                     item.Value.transform.Find("Select").gameObject.SetActive(true);
+                    item.Value.transform.Find("ScrollRect").gameObject.SetActive(true);
                 }
                 else
                 {
                     item.Value.transform.Find("Select").gameObject.SetActive(false);
+                    item.Value.transform.Find("ScrollRect").gameObject.SetActive(false);
                 }
             }   
         }

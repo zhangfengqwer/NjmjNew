@@ -61,7 +61,14 @@ namespace ETHotfix
 	            gamer.ReadyTimeOut = 0;
                 idleRoom.Add(gamer);
 	            idleRoom.BroadGamerEnter();
-	            Log.Debug("收到玩家换桌后：" + gamer.RoomID);
+
+	            if (idleRoom.seats.Count == 4)
+	            {
+	                roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
+	                roomComponent.idleRooms.Remove(idleRoom);
+	            }
+
+                Log.Debug("收到玩家换桌后：" + gamer.RoomID);
             }
 	        catch (Exception e)
 	        {
