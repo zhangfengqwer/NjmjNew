@@ -183,7 +183,6 @@ GameObject:
   - component: {fileID: 222812196050358042}
   - component: {fileID: 114235788570095382}
   - component: {fileID: 114046373320992074}
-  - component: {fileID: 114505253354043418}
   m_Layer: 5
   m_Name: SureTxt
   m_TagString: Untagged
@@ -291,7 +290,6 @@ GameObject:
   - component: {fileID: 222130232815880948}
   - component: {fileID: 114849399479074566}
   - component: {fileID: 114600986923580842}
-  - component: {fileID: 114025168558908756}
   m_Layer: 5
   m_Name: CancelTxt
   m_TagString: Untagged
@@ -384,28 +382,6 @@ MonoBehaviour:
   data:
   - key: UIBagItem
     gameObject: {fileID: 1935072727756146}
---- !u!114 &114025168558908756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1821612908758988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
 --- !u!114 &114042945067465462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
 --- !u!114 &114050697240969302
 MonoBehaviour:
@@ -859,28 +835,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 73.62}
   m_Constraint: 1
   m_ConstraintCount: 1
---- !u!114 &114505253354043418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1463400999921536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
 --- !u!114 &114512180424500408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -993,7 +947,7 @@ MonoBehaviour:
   m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
 --- !u!114 &114616409836799856
 MonoBehaviour:
@@ -1592,7 +1546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 264.2}
+  m_AnchoredPosition: {x: 0, y: 264.19995}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224287455587273140
@@ -1856,7 +1810,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -37, y: -0.19}
-  m_SizeDelta: {x: 210, y: 39.333332}
+  m_SizeDelta: {x: 69.333336, y: 39.333332}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224788492672456332
 RectTransform:
@@ -1874,5 +1828,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -37, y: 4}
-  m_SizeDelta: {x: 210, y: 39.333332}
+  m_SizeDelta: {x: 78.666664, y: 39.333332}
   m_Pivot: {x: 0, y: 0.5}
