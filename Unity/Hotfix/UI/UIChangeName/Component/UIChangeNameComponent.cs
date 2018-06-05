@@ -68,6 +68,12 @@ namespace ETHotfix
                 return;
             }
 
+            if (InputField_name.text.Length > 10)
+            {
+                ToastScript.createToast("昵称不可超过10个字符");
+                return;
+            }
+
             RequestChangeName();
         }
 

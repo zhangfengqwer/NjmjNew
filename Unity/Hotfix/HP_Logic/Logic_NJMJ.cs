@@ -420,8 +420,9 @@ namespace ETHotfix
                 }
 
                 List<MahjongInfo> list_copy = new List<MahjongInfo>();
-                List<MahjongInfo> list_double = new List<MahjongInfo>();
                 List<MahjongInfo> list_single = new List<MahjongInfo>();
+                List<MahjongInfo> list_double = new List<MahjongInfo>();
+                List<MahjongInfo> list_three = new List<MahjongInfo>();
 
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -433,6 +434,9 @@ namespace ETHotfix
                 // 筛选对子
                 list_double = selectDouble(list_copy);
 
+                // 筛选刻子
+                list_three = selectThree(list_copy);
+
                 // 7个对子
                 if (list_double.Count == 7)
                 {
@@ -440,35 +444,67 @@ namespace ETHotfix
                 }
                 else
                 {
-                    // 尝试移除一个对子
-                    // 对剩下的牌进行检测，删掉顺子和刻子
-                    // 如果最后剩余牌数为0，则胡牌
-
-                    for (int i = 0; i < list_double.Count; i++)
                     {
-                        List<MahjongInfo> list_temp = new List<MahjongInfo>();
-                        for (int j = 0; j < list_copy.Count; j++)
+                        // 尝试移除一个对子
+                        // 对剩下的牌进行检测，删掉顺子和刻子
+                        // 如果最后剩余牌数为0，则胡牌
+                        for (int i = 0; i < list_double.Count; i++)
                         {
-                            list_temp.Add(list_copy[j]);
-                        }
-
-                        int findCount = 0;
-                        for (int k = list_temp.Count - 1; k >= 0; k--)
-                        {
-                            if (list_temp[k].m_weight == list_double[i].m_weight)
+                            List<MahjongInfo> list_temp = new List<MahjongInfo>();
+                            for (int j = 0; j < list_copy.Count; j++)
                             {
-                                ++findCount;
-                                list_temp.RemoveAt(k);
+                                list_temp.Add(list_copy[j]);
+                            }
+
+                            int findCount = 0;
+                            for (int k = list_temp.Count - 1; k >= 0; k--)
+                            {
+                                if (list_temp[k].m_weight == list_double[i].m_weight)
+                                {
+                                    ++findCount;
+                                    list_temp.RemoveAt(k);
+                                }
+                            }
+
+                            if (findCount == 2)
+                            {
+                                if (list_temp.Count == 0)
+                                {
+                                    return true;
+                                }
+                                else if (isAllShunZiOrKeZi(list_double[i] , list_temp))
+                                {
+                                    return true;
+                                }
                             }
                         }
+                    }
 
-                        if (findCount == 2)
+                    // 如果以上还不行，就从刻子中拆对子，再检测
+                    {
+                        for (int i = 0; i < list_three.Count; i++)
                         {
-                            if (list_temp.Count == 0)
+                            List<MahjongInfo> list_temp = new List<MahjongInfo>();
+                            for (int j = 0; j < list_copy.Count; j++)
                             {
-                                return true;
+                                list_temp.Add(list_copy[j]);
                             }
-                            else if (isAllShunZiOrKeZi(list_temp))
+
+                            int findCount = 0;
+                            for (int k = list_temp.Count - 1; k >= 0; k--)
+                            {
+                                if (list_temp[k].m_weight == list_three[i].m_weight)
+                                {
+                                    list_temp.RemoveAt(k);
+
+                                    if ((++findCount) == 2)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if (isAllShunZiOrKeZi(list_three[i] , list_temp))
                             {
                                 return true;
                             }
@@ -515,7 +551,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
+                        // Log.Debug("找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                     }
                 }
@@ -533,8 +569,8 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
-//                        Console.WriteLine("找到对子：" + list[i].m_weight);
+                        // Log.Debug("找到对子：" + list[i].m_weight);
+                        // Log.Debug"找到对子：" + list[i].m_weight);
                         list_double.Add(list[i]);
                         list_double.Add(list[i]);
                     }
@@ -574,7 +610,7 @@ namespace ETHotfix
 
                     if (!hasAdd)
                     {
-//                        Console.WriteLine("找到刻子：" + list[i].m_weight);
+                        // Log.Debug("找到刻子：" + list[i].m_weight);
                         list_three.Add(list[i]);
                     }
                 }
@@ -583,14 +619,16 @@ namespace ETHotfix
             return list_three;
         }
 
-        bool isAllShunZiOrKeZi(List<MahjongInfo> list)
+        bool isAllShunZiOrKeZi(MahjongInfo doubleMahjongInfo , List<MahjongInfo> list)
         {
+            List<List<MahjongInfo>> chengpaiList = new List<List<MahjongInfo>>() { new List<MahjongInfo>() { doubleMahjongInfo , doubleMahjongInfo } };
+
             string str = "传过来的牌:";
             for (int i = 0; i < list.Count; i++)
             {
                 str += (list[i].m_weight + "、");
             }
-//            Console.WriteLine(str);
+            //Log.Debug(str);
 
             if (list.Count % 3 != 0)
             {
@@ -619,12 +657,18 @@ namespace ETHotfix
                             third = list[i];
                         }
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 // 顺子找到了
                 if ((second != null) && (third != null))
                 {
-//                    Console.WriteLine("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+                    chengpaiList.Add(new List<MahjongInfo>() { first, second , third });
+
+                    // Log.Debug("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                     list.Remove(first);
                     list.Remove(second);
                     list.Remove(third);
@@ -648,12 +692,18 @@ namespace ETHotfix
                                 third = list[i];
                             }
                         }
+                        else
+                        {
+                            break;
+                        }
                     }
 
                     // 刻子找到了
                     if ((second != null) && (third != null))
                     {
-//                        Console.WriteLine("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+                        chengpaiList.Add(new List<MahjongInfo>() { first, second, third });
+
+                        // Log.Debug("找到刻子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
                         list.Remove(first);
                         list.Remove(second);
                         list.Remove(third);
@@ -663,6 +713,30 @@ namespace ETHotfix
                         return false;
                     }
                 }
+            }
+
+            // 打印成牌排列
+            if(true)
+            {
+                string strTemp = "";
+                for (int i = 0; i < chengpaiList.Count; i++)
+                {
+                    for (int j = 0; j < chengpaiList[i].Count; j++)
+                    {
+                        strTemp += chengpaiList[i][j].m_weight.ToString();
+
+                        if (j != (chengpaiList[i].Count - 1))
+                        {
+                            strTemp += "、";
+                        }
+                    }
+
+                    if (i != (chengpaiList.Count - 1))
+                    {
+                        strTemp += "----";
+                    }
+                }
+                Log.Debug("成牌排列：" + strTemp);
             }
 
             return true;

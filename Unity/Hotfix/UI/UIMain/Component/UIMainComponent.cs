@@ -390,6 +390,7 @@ namespace ETHotfix
         /// <returns></returns>
         public bool IsInRank(long uid)
         {
+            if (wealthRankList.Count <= 0) return true;
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (wealthRankList[i].UId == uid)
@@ -407,6 +408,7 @@ namespace ETHotfix
         /// <returns></returns>
         public bool IsInGameRank(long uid)
         {
+            if (gameRankList.Count <= 0) return true;
             for(int i = 0;i< gameRankList.Count; ++i)
             {
                 if (gameRankList[i].UId == uid)
