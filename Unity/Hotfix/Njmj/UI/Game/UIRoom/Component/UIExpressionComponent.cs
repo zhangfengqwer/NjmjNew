@@ -30,11 +30,11 @@ namespace ETHotfix
             {
                 if (GameUtil.isCanUseEmoji())
                 {
-                    ToastScript.createToast("不能发送动态表情,请去商店购买表情包");
+                    RequestChat();
                 }
                 else
                 {
-                    RequestChat();
+                    ToastScript.createToast("不能发送动态表情,请去商店购买表情包");
                 }
             });
         }
