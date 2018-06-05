@@ -38,6 +38,8 @@ namespace ETHotfix
         private Text uidText;
         private GameObject headInfo;
         private GameObject changeMoney;
+        private GameObject vip;
+        private GameObject zhuang;
 
         public int Index { get; set; }
 
@@ -75,6 +77,7 @@ namespace ETHotfix
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
             this.changeMoney = this.Panel.Get<GameObject>("ChangeMoney");
+            this.zhuang = this.Panel.Get<GameObject>("Zhuang");
 
 
             if (index != 0)
@@ -168,7 +171,31 @@ namespace ETHotfix
                         i = playerInfo.WinGameCount / playerInfo.TotalGameCount;
                     }
                     shengLvText.text = $"胜率:<color=#FFF089FF>{i}%</color>";
+
+                    if (GameUtil.isVIP(playerInfo))
+                    {
+                        head.transform.Find("vip").transform.localScale = Vector3.one;
+                    }
+                    else
+                    {
+                        head.transform.Find("vip").transform.localScale = Vector3.zero;
+                    }
+
                 }
+
+            }
+        }
+
+        public void SetZhuang()
+        {
+            Gamer gamer = this.GetParent<Gamer>();
+            if (gamer.IsBanker)
+            {
+                zhuang.SetActive(true);
+            }
+            else
+            {
+                zhuang.SetActive(false);
             }
         }
 
@@ -182,6 +209,7 @@ namespace ETHotfix
             this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
             this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
             this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
+            this.vip = gameObject.Get<GameObject>("vip");
 
             G2C_PlayerInfo playerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
             gamer.PlayerInfo = playerInfo.PlayerInfo;
@@ -200,6 +228,15 @@ namespace ETHotfix
             {
                 readyText.text = "";
             }
+
+            if (GameUtil.isVIP(playerInfo.PlayerInfo))
+            {
+                vip.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                vip.transform.localScale = Vector3.zero;
+            }
         }
 
         public override void Dispose()
@@ -217,5 +254,7 @@ namespace ETHotfix
         {
             readyText.text = "已准备";
         }
+
+
     }
 }

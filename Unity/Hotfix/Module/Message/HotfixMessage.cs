@@ -1157,6 +1157,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int restCount;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int RoomType;
+
 	}
 
 	[Message(HotfixOpcode.GamerData)]
@@ -1354,6 +1357,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public int RestCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int RoomType;
 
 	}
 

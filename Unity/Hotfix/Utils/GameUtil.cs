@@ -135,6 +135,16 @@ namespace ETHotfix
             return false;
         }
 
+        public static bool isVIP(PlayerInfo info)
+        {
+            if (info.VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         static public bool isCanUseEmoji()
         {
             if (PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
