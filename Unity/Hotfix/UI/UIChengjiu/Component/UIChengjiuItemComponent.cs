@@ -18,12 +18,14 @@ namespace ETHotfix
     {
         private GameObject ChengjiuItemBtn;
         private TaskInfo info;
-        
+        private GameObject Complete;
+
         public void Awake()
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             ChengjiuItemBtn = rc.Get<GameObject>("ChengjiuItemBtn");
+            Complete = rc.Get<GameObject>("Complete");
 
             ChengjiuItemBtn.GetComponent<Button>().onClick.Add(() =>
             {
@@ -67,9 +69,14 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
                 .GetComponent<UIMainComponent>().refreshUI();
                 ToastScript.createToast($"领取成功，金币x{info.Reward}");
+                string icon = new StringBuilder().Append("chengjiu_")
+                                                 .Append(info.Id).ToString();
+                Complete.SetActive(false);
+                ChengjiuItemBtn.GetComponent<Image>().sprite =
+                CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
                 //显示提示框
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
-                .GetComponent<UIChengjiuComponent>().SetDetail(info, true);
+                //Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
+                //.GetComponent<UIChengjiuComponent>().SetDetail(info, true);
             }
         }
 
@@ -80,8 +87,17 @@ namespace ETHotfix
                                              .Append(info.Id).ToString();
             if(info.IsComplete)
             {
-                icon = new StringBuilder().Append("chengjiu_")
-                                             .Append(info.Id).ToString();
+                //未领取
+                if (!info.IsGet)
+                {
+                    Complete.SetActive(true);
+                }
+                else
+                {
+                    icon = new StringBuilder().Append("chengjiu_")
+                                                 .Append(info.Id).ToString();
+                    Complete.SetActive(false);
+                }
             }
             ChengjiuItemBtn.GetComponent<Image>().sprite =
                 CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
