@@ -139,7 +139,7 @@ namespace ETHotfix
             return null;
         }
 
-        public static async Task changeWealthWithStr(long uid, string reward)
+        public static async Task changeWealthWithStr(long uid, string reward,string reason)
         {
             Log.Debug("changeWealthWithStr: uid = " + uid + "  reward = " + reward);
 
@@ -154,16 +154,11 @@ namespace ETHotfix
                 int id = int.Parse(list2[0]);
                 float num = float.Parse(list2[1]);
 
-                await ChangeWealth(uid,id, num);
+                await ChangeWealth(uid,id, num, reason);
             }
         }
 
-        public static async Task ChangeGold(long uid, float propNum)
-        {
-            await ChangeWealth(uid, 1, propNum);
-        }
-
-        public static async Task ChangeWealth(long uid, int propId, float propNum)
+        public static async Task ChangeWealth(long uid, int propId, float propNum,string reason)
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
 
@@ -234,6 +229,8 @@ namespace ETHotfix
                     }
                     break;
             }
+
+            await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 
         public static async Task Log_Login(long uid)
@@ -301,6 +298,17 @@ namespace ETHotfix
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
             log_Login.Uid = uid;
             await proxyComponent.Save(log_Login);
+        }
+
+        public static async Task Log_ChangeWealth(long uid,int propId,float propNum,string reason)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());
+            log.Uid = uid;
+            log.PropId = propId;
+            log.PropNum = propNum;
+            log.Reason = reason;
+            await proxyComponent.Save(log);
         }
 
         public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone,string name,string head)

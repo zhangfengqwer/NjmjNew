@@ -15,10 +15,11 @@ namespace ETHotfix
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
             long cost = controllerComponent.ServiceCharge;
-
+            
             foreach (var gamer in room.GetAll())
             {
-                await DBCommonUtil.ChangeGold(gamer.UserID, -cost);
+                string reason = controllerComponent.RoomConfig.Name + "报名费";
+                await DBCommonUtil.ChangeWealth(gamer.UserID,1, -cost, reason);
             }
 
 //            room.Broadcast(new Actor_GamerChangeGold())

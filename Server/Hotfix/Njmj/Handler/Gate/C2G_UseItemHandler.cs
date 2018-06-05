@@ -151,7 +151,7 @@ namespace ETHotfix
                         string reward = ("3:" + huafei);
                         response.reward = reward;
 
-                        await DBCommonUtil.changeWealthWithStr(playerBaseInfo.Id, reward);
+                        await DBCommonUtil.changeWealthWithStr(playerBaseInfo.Id, reward,"道具使用：拆话费礼包获得的话费");
                     }
                     break;
             }

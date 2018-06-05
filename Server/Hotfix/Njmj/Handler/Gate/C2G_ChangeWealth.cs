@@ -13,7 +13,7 @@ namespace ETHotfix
             G2C_ChangeWealth response = new G2C_ChangeWealth();
             try
             {
-                DBCommonUtil.ChangeWealth(message.UId, message.propId, message.propNum);
+                await DBCommonUtil.ChangeWealth(message.UId, message.propId, message.propNum, "C2G_ChangeWealthHandler调用");
 
                 reply(response);
             }
