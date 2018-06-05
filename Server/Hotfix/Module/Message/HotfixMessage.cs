@@ -480,7 +480,7 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public int TaskId;
+		public TaskInfo TaskInfo;
 
 		[ProtoMember(3, IsRequired = true)]
 		public int GetType;

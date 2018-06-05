@@ -17,7 +17,7 @@ namespace ETHotfix
                 //1,任务；2,成就
                 if (message.GetType == 1)
                 {
-                    List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId},TaskId:{message.TaskId}}}");
+                    List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId},TaskId:{message.TaskInfo.Id}}}");
 
                     if (taskProgressInfoList.Count > 0)
                     {
@@ -31,13 +31,14 @@ namespace ETHotfix
                         else
                         {
                             taskProgressInfoList[0].IsGet = true;
+                            await DBCommonUtil.ChangeWealth(message.UId,1,message.TaskInfo.Reward);
                             await proxyComponent.Save(taskProgressInfoList[0]);
                         }
                     }
                 }
                 else if(message.GetType == 2)
                 {
-                    List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.UId},TaskId:{message.TaskId}}}");
+                    List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.UId},TaskId:{message.TaskInfo.Id}}}");
 
                     if (chengjiuInfoList.Count > 0)
                     {
@@ -51,6 +52,7 @@ namespace ETHotfix
                         else
                         {
                             chengjiuInfoList[0].IsGet = true;
+                            await DBCommonUtil.ChangeWealth(message.UId, 1, message.TaskInfo.Reward);
                             await proxyComponent.Save(chengjiuInfoList[0]);
                         }
                     }

@@ -196,6 +196,7 @@ namespace ETHotfix
                     {
                         List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].HuaFeiNum += propNum;
+                        playerBaseInfos[0].HuaFeiNum = float.Parse(playerBaseInfos[0].HuaFeiNum.ToString("#0.00"));
                         if (playerBaseInfos[0].HuaFeiNum < 0)
                         {
                             playerBaseInfos[0].HuaFeiNum = 0;

@@ -208,6 +208,7 @@ namespace ETHotfix
                                 }
 
                                 GameUtil.changeData(item.ItemId, -1);
+                                ToastScript.createToast("使用成功");
                             }
                             else
                             {
