@@ -764,8 +764,8 @@ namespace ETHotfix
                 }
 
                 Vector3 localPosition = this.CardBottom.transform.localPosition;
-                float x = localPosition.x - postionX * 0.6f;
-                float y = localPosition.y - postionY * 0.6f;
+                float x = localPosition.x - postionX * 0.3f;
+                float y = localPosition.y - postionY * 0.3f;
 
                 this.CardBottom.transform.localPosition = new Vector3(x, y, localPosition.z);
             }

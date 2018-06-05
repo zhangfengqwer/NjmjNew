@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using ETModel;
 using System.Collections.Generic;
 using System.Text;
@@ -201,13 +202,13 @@ namespace ETHotfix
             // 休闲场-新手场
             ChoiceRoomType.transform.Find("Relax/Btn_xinshou").GetComponent<Button>().onClick.Add(() =>
             {
-                OnEnterRoom();
+                OnEnterRoom(1);
             });
 
             // 休闲场-精英场
             ChoiceRoomType.transform.Find("Relax/Btn_jingying").GetComponent<Button>().onClick.Add(() =>
             {
-                OnEnterRoom();
+                OnEnterRoom(2);
             });
 
             PlayerInfoBg.transform.Find("HuaFeiBg/Btn_DuiHuan").GetComponent<Button>().onClick.Add(() =>
@@ -556,12 +557,28 @@ namespace ETHotfix
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 
-        private async void OnEnterRoom()
+        private async void OnEnterRoom(int i)
         {
-            UINetLoadingComponent.showNetLoading();
-            G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
-                new C2G_EnterRoom());
-            UINetLoadingComponent.closeNetLoading();
+            try
+            {
+                UINetLoadingComponent.showNetLoading();
+
+                RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(i);
+                if (PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum < roomConfig.MinThreshold)
+                {
+                    ToastScript.createToast("金币不足：" + roomConfig.MinThreshold);
+                    UINetLoadingComponent.closeNetLoading();
+                    return;
+                }
+                G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
+                                                                                                                            new C2G_EnterRoom() { RoomType = i });
+                UINetLoadingComponent.closeNetLoading();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }   
+            
         }
 
         /// <summary>

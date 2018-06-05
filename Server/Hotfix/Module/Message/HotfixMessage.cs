@@ -746,6 +746,9 @@ namespace ETHotfix
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public int RoomType;
+
 	}
 
 	[Message(HotfixOpcode.G2C_EnterRoom)]
@@ -794,6 +797,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public long PlayerId;
 
+		[ProtoMember(4, IsRequired = true)]
+		public int RoomType;
+
 	}
 
 	[Message(HotfixOpcode.M2G_PlayerEnterRoom)]
@@ -826,6 +832,9 @@ namespace ETHotfix
 
 		[ProtoMember(1)]
 		public List<GamerInfo> Gamers = new List<GamerInfo>();
+
+		[ProtoMember(2, IsRequired = true)]
+		public int RoomType;
 
 	}
 
@@ -974,6 +983,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public int RestSeconds;
 
+		[ProtoMember(2, IsRequired = true)]
+		public int Reward;
+
 	}
 
 	[Message(HotfixOpcode.C2M_ActorGamerGetTreasure)]
@@ -1021,6 +1033,24 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public bool IsFromClient;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerChangeGold)]
+	[ProtoContract]
+	public partial class Actor_GamerChangeGold: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int GoldAmount;
 
 	}
 
@@ -1174,6 +1204,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = false)]
 		public long Uid;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int RoomType;
 
 	}
 

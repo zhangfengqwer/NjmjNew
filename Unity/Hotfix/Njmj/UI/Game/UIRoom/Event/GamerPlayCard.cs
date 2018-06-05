@@ -17,6 +17,7 @@ namespace ETHotfix
                     Log.Debug("玩家出牌：" + weight + "index:" + index);
                     if (gamerComponent.IsPlayed)
                     {
+                        ToastScript.createToast("拦截多次出牌");
                         return;
                     }
                     gamerComponent.IsPlayed = true;

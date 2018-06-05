@@ -15,7 +15,7 @@ namespace ETHotfix
 	    {
             try
 	        {
-	            Log.Debug("收到换桌");
+	            Log.Debug("收到换桌:" + JsonHelper.ToJson(message));
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room gamerRoom = roomComponent.Get(gamer.RoomID);
 
@@ -25,16 +25,19 @@ namespace ETHotfix
 	            {
 	                if (room.Id != gamerRoom.Id)
 	                {
-	                    idleRoom = room;
-	                    break;
-	                }
+	                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+	                    if (controllerComponent.RoomConfig.Id == message.RoomType)
+	                    {
+	                        idleRoom = room;
+	                        break;
+                        }
+                    }
 	            }
 
 	            if (idleRoom == null)
 	            {
-                    idleRoom = RoomFactory.Create();
+                    idleRoom = RoomFactory.Create(message.RoomType);
                     roomComponent.Add(idleRoom);
-	                Log.Debug("创建房间：" + idleRoom.Id);
                 }
 
                 Log.Debug("收到玩家换桌前：" + gamer.RoomID);
@@ -61,7 +64,7 @@ namespace ETHotfix
                 gamer.IsReady = false;
 	            gamer.ReadyTimeOut = 0;
                 idleRoom.Add(gamer);
-	            idleRoom.BroadGamerEnter();
+	            idleRoom.BroadGamerEnter(message.RoomType);
 
 	            if (idleRoom.seats.Count == 4)
 	            {

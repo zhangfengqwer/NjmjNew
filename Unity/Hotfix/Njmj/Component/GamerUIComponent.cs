@@ -37,6 +37,7 @@ namespace ETHotfix
         private Text jinbiText;
         private Text uidText;
         private GameObject headInfo;
+        private GameObject changeMoney;
 
         public int Index { get; set; }
 
@@ -73,6 +74,8 @@ namespace ETHotfix
             this.head = this.Panel.Get<GameObject>("Head").GetComponent<Image>();
             this.name = this.Panel.Get<GameObject>("Name").GetComponent<Text>();
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
+            this.changeMoney = this.Panel.Get<GameObject>("ChangeMoney");
+
 
             if (index != 0)
             {
@@ -89,6 +92,11 @@ namespace ETHotfix
 //            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
 
             UpdatePanel();
+        }
+
+        public void SetGoldChange(int num)
+        {
+            GameHelp.ShowPlusGoldChange(changeMoney, num);
         }
 
         private void OnShowHeadInfo()
