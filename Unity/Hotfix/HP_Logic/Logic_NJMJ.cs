@@ -756,14 +756,6 @@ namespace ETHotfix
 
             List<HuPaiType> type_list = new List<HuPaiType>();
             
-            // 门清
-            {
-                if (huPaiNeedData.my_pengList.Count == 0)
-                {
-                    type_list.Add(HuPaiType.MenQing);
-                }
-            }
-
             // 混一色
             {
                 List<MahjongType> tempList = new List<MahjongType>();
@@ -985,6 +977,28 @@ namespace ETHotfix
                     else
                     {
                         type_list.Add(HuPaiType.QiDui_Normal);
+                    }
+                }
+            }
+
+            // 门清
+            {
+                bool isQiDui = false;
+                for (int i = 0; i < type_list.Count; i++)
+                {
+                    if ((type_list[i] >= HuPaiType.QiDui_Normal) &&
+                       (type_list[i] <= HuPaiType.QiDui_ChaoChaoHaoHua))
+                    {
+                        isQiDui = true;
+                        break;
+                    }
+                }
+
+                if (!isQiDui)
+                {
+                    if (huPaiNeedData.my_pengList.Count == 0)
+                    {
+                        type_list.Add(HuPaiType.MenQing);
                     }
                 }
             }
