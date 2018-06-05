@@ -335,9 +335,8 @@ namespace ETHotfix
                             canOperation.OperationType = 4;
                             room.GamerBroadcast(_gamer, canOperation);
                         }
-
                         //碰杠
-                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(),out var weight2))
+                        else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(),out var weight2))
                         {
                             _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();

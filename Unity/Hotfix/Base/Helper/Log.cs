@@ -18,17 +18,12 @@ namespace ETHotfix
 		public static void Error(Exception e)
 		{
 			ETModel.Log.Error(e.ToStr());
+		    HttpReqUtil.Req($"http://10.224.4.158:8080/GetClientError?data=" + e.ToStr());
 		}
 
-		public static void Error(string msg)
+	    public static void Error(string msg)
 		{
-			ETModel.Log.Error(msg);
-
-		    using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
-		    {
-
-//                webRequestAsync.DownloadAsync(versionUrl);
-		    }
+		    ETModel.Log.Error(msg);
         }
 
 		public static void Debug(string msg)

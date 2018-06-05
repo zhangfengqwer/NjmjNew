@@ -822,22 +822,29 @@ namespace ETHotfix
         public async void BuHua(MahjongInfo mahjongInfo, bool isSelf)
         {
             //补花数量
-            faceCards.Add(mahjongInfo);
-            SetFaceCards(faceCards);
-//            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
+            try
+            {
+                faceCards.Add(mahjongInfo);
+                SetFaceCards(faceCards);
+                //            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
 
-            //删除花牌
-            if (isSelf)
-            {
-                GameObject gameObject = this.GetSprite(grabIndex);
-                GameObject.Destroy(gameObject);
-                handCards.RemoveAt(grabIndex);
-                ItemCards.RemoveAt(grabIndex);
-                UpdateCards();
+                //删除花牌
+                if (isSelf)
+                {
+                    GameObject gameObject = this.GetSprite(grabIndex);
+                    GameObject.Destroy(gameObject);
+                    handCards.RemoveAt(grabIndex);
+                    ItemCards.RemoveAt(grabIndex);
+                    UpdateCards();
+                }
+                else
+                {
+                    grabObj.SetActive(false);
+                }
             }
-            else
+            catch (Exception e)
             {
-                grabObj.SetActive(false);
+                Log.Error(e);
             }
         }
 
