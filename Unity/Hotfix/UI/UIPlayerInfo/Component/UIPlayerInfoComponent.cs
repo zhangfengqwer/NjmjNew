@@ -38,6 +38,7 @@ namespace ETHotfix
         private Button AddBtn;
         private Button DuihuanBtn;
         private GameObject PlayerFrame;
+        private Text VipTimeTxt;
 
         public async void Awake()
         {
@@ -51,6 +52,7 @@ namespace ETHotfix
             AlPlayTxt = rc.Get<GameObject>("AlPlayTxt").GetComponent<Text>();
             SuccessRateTxt = rc.Get<GameObject>("SuccessRateTxt").GetComponent<Text>();
             MaxSuccessTxt = rc.Get<GameObject>("MaxSuccessTxt").GetComponent<Text>();
+            VipTimeTxt = rc.Get<GameObject>("VipTimeTxt").GetComponent<Text>();
 
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             playerIcon = rc.Get<GameObject>("PlayerIcon").GetComponent<Button>();
@@ -144,6 +146,14 @@ namespace ETHotfix
 
         private void Init()
         {
+            if (GameUtil.isVIP())
+            {
+                VipTimeTxt.text = $"过期时间:{CommonUtil.splitStr_Start_str(PlayerInfoComponent.Instance.GetPlayerInfo().VipTime, ' ')}";
+            }
+            else
+            {
+                VipTimeTxt.text = "";
+            }
             bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
             bindPhoneBtn.transform.parent.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
@@ -180,6 +190,15 @@ namespace ETHotfix
             {
                 changeNameBtn.gameObject.SetActive(false);
                 changeNameBtn.transform.parent.gameObject.SetActive(false);
+            }
+
+            if (GameUtil.isVIP())
+            {
+                VipTimeTxt.text = $"过期时间:{CommonUtil.splitStr_Start_str(PlayerInfoComponent.Instance.GetPlayerInfo().VipTime, ' ')}";
+            }
+            else
+            {
+                VipTimeTxt.text = "";
             }
         }
 

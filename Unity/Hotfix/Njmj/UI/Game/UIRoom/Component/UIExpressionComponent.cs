@@ -28,7 +28,14 @@ namespace ETHotfix
             UIExpression = rc.Get<GameObject>("UIExpression");
             UIExpression.GetComponent<Button>().onClick.Add(() =>
             {
-                RequestChat();
+                if (GameUtil.isCanUseEmoji())
+                {
+                    ToastScript.createToast("不能发送动态表情,请去商店购买表情包");
+                }
+                else
+                {
+                    RequestChat();
+                }
             });
         }
 

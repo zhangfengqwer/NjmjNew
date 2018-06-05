@@ -84,7 +84,7 @@ namespace ETHotfix
 
                 return;
             }
-
+            GameUtil.changeData(3, -5);
             ToastScript.createToast(huafei.ToString() + "元话费兑换成功");
         }
     }
