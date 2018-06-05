@@ -99,6 +99,26 @@ namespace ETHotfix
                 DebugAccount.transform.Find("Button_player3").GetComponent<Button>().onClick.Add(onClickDebugAccount3);
                 DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
             }
+
+            if(false)
+            {
+                List < MahjongInfo > list = new List<MahjongInfo>();
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_1));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_1));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_1));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_5));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_7));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_8));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
+                list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
+                Log.Debug(Logic_NJMJ.getInstance().isHuPai(list).ToString());
+            }
         }
 
         public void onClickDebugAccount1()
@@ -167,10 +187,10 @@ namespace ETHotfix
 
         public async void onClickWechatLogin()
         {
-            if (false)
+            if (true)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin("8527882092", "", "");
+                await OnThirdLogin("9d9b70bb985ed3edac50da4d74f0c198", "", "");
             }
             else
             {
