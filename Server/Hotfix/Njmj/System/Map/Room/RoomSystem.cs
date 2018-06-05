@@ -47,7 +47,7 @@ namespace ETHotfix
             actorProxy.Send(message);
         }
 
-        public static void BroadGamerEnter(this Room self)
+        public static void BroadGamerEnter(this Room self,int roomType)
         {
             List<GamerInfo> Gamers = new List<GamerInfo>();
             foreach (var item in self.seats)
@@ -60,8 +60,10 @@ namespace ETHotfix
                 Gamers.Add(gamerInfo);
             }
 
+
             self.Broadcast(new Actor_GamerEnterRoom()
             {
+                RoomType = roomType,
                 Gamers = Gamers
             });
         }

@@ -11,6 +11,8 @@
         //服务费
         public long ServiceCharge { get; set; }
 
+        public RoomConfig RoomConfig { get; set; }
+
         public RoomName RoomName { get; set; }
 
         public override void Dispose()

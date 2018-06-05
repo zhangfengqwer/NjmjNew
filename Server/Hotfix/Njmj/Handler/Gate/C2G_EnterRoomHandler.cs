@@ -23,6 +23,7 @@ namespace ETHotfix
                 //玩家进入房间
 			    M2G_PlayerEnterRoom m2GPlayerEnterRoom = (M2G_PlayerEnterRoom)await mapSession.Call(new G2M_PlayerEnterRoom()
 			    {
+                    RoomType = message.RoomType,
 			        UserId = user.UserID,
 			        SessionId = session.Id,
 			        PlayerId = user.Id,

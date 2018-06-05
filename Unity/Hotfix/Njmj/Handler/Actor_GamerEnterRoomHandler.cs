@@ -43,7 +43,7 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 roomComponent.enterRoomMsg = message;
-
+                roomComponent.SetRoomType(message.RoomType);
                 Gamer[] gamers = gamerComponent.GetAll();
 
                 //清空座位

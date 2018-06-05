@@ -42,6 +42,7 @@ namespace ETHotfix
 	                await proxyComponent.Save(gamerInfo);
 	                TreasureConfig treasureConfig = (TreasureConfig)configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount);
 	                response.RestSeconds = treasureConfig.TotalTime - gamerInfo.DailyOnlineTime;
+	                response.Reward = config.Reward;
 	            }
 	            else
 	            {

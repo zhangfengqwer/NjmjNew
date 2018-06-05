@@ -78,18 +78,10 @@ namespace ETHotfix
 
 			        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 			        //获得空闲的房间
-			        Room idleRoom = roomComponent.GetIdleRoom();
+			        Room idleRoom = roomComponent.GetIdleRoomById(message.RoomType);
 			        if (idleRoom == null)
 			        {
-			            idleRoom = RoomFactory.Create();
-			            GameControllerComponent controllerComponent = idleRoom.GetComponent<GameControllerComponent>();
-			            controllerComponent.Multiples = 100;
-			            controllerComponent.ServiceCharge = 500;
-			            controllerComponent.MinThreshold =  1000;
-			            controllerComponent.RoomName =  RoomName.ChuJi;
-
-                        Log.Debug("创建房间：" + idleRoom.Id);
-
+			            idleRoom = RoomFactory.Create(message.RoomType);
 			            roomComponent.Add(idleRoom);
 			        }
 
@@ -130,6 +122,7 @@ namespace ETHotfix
                         {
                             Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
                             {
+                                RoomType = message.RoomType,
                                 Gamers = Gamers
                             };
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);

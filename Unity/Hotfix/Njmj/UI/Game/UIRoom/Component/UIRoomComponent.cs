@@ -53,6 +53,8 @@ namespace ETHotfix
         private bool isTreasureFinish;
         private GameObject cheat;
         private InputField cheatInput;
+        private Text roomConfigText;
+        public int RoomType { get; set; }
 
         public void Awake()
         {
@@ -79,6 +81,7 @@ namespace ETHotfix
             
 
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
+            this.roomConfigText = rc.Get<GameObject>("RoomConfigText").GetComponent<Text>();
 
             this.settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -478,10 +481,28 @@ namespace ETHotfix
             if (gamerGetTreasure.Error == ErrorCode.ERR_Success)
             {
                 SetTreasureTime(gamerGetTreasure.RestSeconds);
+                ToastScript.createToast($"恭喜你领取{gamerGetTreasure.Reward}金币");
             }
             else
             {
                 ToastScript.createToast(gamerGetTreasure.Message);
+            }
+        }
+        /// <summary>
+        /// 设置房间类型
+        /// </summary>
+        /// <param name="roomType"></param>
+        public void SetRoomType(int roomType)
+        {
+            this.RoomType = roomType;
+
+            if (roomType == 1)
+            {
+                roomConfigText.text = "100/花";
+            }
+            else
+            {
+                roomConfigText.text = "500/花";
             }
         }
     }
