@@ -250,7 +250,7 @@ namespace ETHotfix
 
             ToastScript.createToast("购买成功");
             GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
-            PlayerInfoComponent.Instance.GetPlayerInfo().WingNum -= shopInfo.Price;
+            GameUtil.changeData(2, -shopInfo.Price);
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>
                 ().refreshUI();
             buyTip.SetActive(false);

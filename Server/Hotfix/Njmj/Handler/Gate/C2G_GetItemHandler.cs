@@ -15,37 +15,13 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.UId);
                 PlayerInfo playerInfo = new PlayerInfo();
+
                 for (int i = 0;i< message.InfoList.Count; ++i)
                 {
                     GetItemInfo getItem = message.InfoList[i];
-                    if(getItem.ItemID == 1 || getItem.ItemID == 2)
-                    {
-                        //如果奖励是元宝和金币
-                        if (getItem.ItemID == 1)
-                            baseInfo.WingNum += getItem.Count;
-                        if (getItem.ItemID == 2)
-                            baseInfo.GoldNum += getItem.Count;
-                        await proxyComponent.Save(baseInfo);
-                    }
-                    else
-                    {
-                        //物品道具
-                        List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{getItem.ItemID}}}");
-                        if (itemInfos.Count > 0)
-                        {
-                            itemInfos[0].Count += getItem.Count;
-                            await proxyComponent.Save(itemInfos[0]);
-                        }
-                        else
-                        {
-                            UserBag itemInfo = new UserBag();
-                            itemInfo.BagId = getItem.ItemID;
-                            itemInfo.UId = message.UId;
-                            itemInfo.Count = getItem.Count;
-                            DBHelper.AddItemToDB(itemInfo);
-                        }
-                    }
+                    await DBCommonUtil.ChangeWealth(message.UId, getItem.ItemID, getItem.Count, "邮件领取奖励");
                 }
+
                 List<EmailInfo> emailInfoList = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.UId},_id:{message.MailId}}}");
                 if(emailInfoList.Count > 0)
                 {
