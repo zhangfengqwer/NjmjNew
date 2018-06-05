@@ -38,9 +38,12 @@ namespace ETHotfix
                     }
 
                     handCardsComponent.library = mahjongInfos;
-
                     Logic_NJMJ.getInstance().SortMahjong(handCardsComponent.library);
 
+                    Actor_GamerCheat actorCheat = new Actor_GamerCheat();
+                    actorCheat.handCards = mahjongInfos;
+
+                    room.GamerBroadcast(gamer, actorCheat);
                 }
                 else if (split.Length == 1)
                 {

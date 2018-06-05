@@ -12,6 +12,8 @@ namespace ETHotfix
         {
             try
             {
+                Log.Debug("收到作弊");
+
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
 
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
@@ -27,7 +29,7 @@ namespace ETHotfix
                 {
                     card.m_weight = (Consts.MahjongWeight) card.weight;
                 }
-
+            
                 handCardsComponent.AddCards(message.handCards);
             }
             catch (Exception e)
