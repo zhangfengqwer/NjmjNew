@@ -1319,6 +1319,9 @@ namespace ETHotfix
 		[ProtoMember(1)]
 		public List<GamerData> Gamers = new List<GamerData>();
 
+		[ProtoMember(2, IsRequired = true)]
+		public int RestCount;
+
 	}
 
 	[Message(HotfixOpcode.Email)]

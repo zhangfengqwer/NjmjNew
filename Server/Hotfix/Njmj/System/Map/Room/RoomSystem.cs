@@ -190,8 +190,6 @@ namespace ETHotfix
             var grabMahjong = GrabMahjong(room);
             if (grabMahjong == null)
             {
-                //没牌
-                room.Broadcast(new Actor_GameFlow());
                 gameController.GameOver(0);
                 return;
             }
@@ -218,7 +216,6 @@ namespace ETHotfix
                 grabMahjong = GrabMahjong(room);
                 if (grabMahjong == null)
                 {
-                    //没牌
                     gameController.GameOver(0);
                     return;
                 }
@@ -334,7 +331,7 @@ namespace ETHotfix
                         }
 
                         //碰杠
-                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll()))
+                        if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(),out var weight2))
                         {
                             _gamer.IsCanGang = true;
                             Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();

@@ -43,8 +43,19 @@ namespace ETHotfix
                 //房间内有4名玩家且全部准备则开始游戏
 	            if (room.Count == 4 && gamers.Where(g => g.IsReady).Count() == 4)
 	            {
-	                //初始玩家开始状态
-	                foreach (var _gamer in gamers)
+	                room.State = RoomState.Game;
+	                room.IsGameOver = false;
+
+	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
+	                {
+	                    roomComponent.gameRooms.Remove(room.Id);
+	                }
+
+	                roomComponent.gameRooms.Add(room.Id, room);
+	                roomComponent.readyRooms.Remove(room.Id);
+
+                    //初始玩家开始状态
+                    foreach (var _gamer in gamers)
 	                {
 	                    if (_gamer.GetComponent<HandCardsComponent>() == null)
 	                    {
@@ -98,7 +109,7 @@ namespace ETHotfix
 	                GetCardNotFace(deskComponent, bankerHandCards);
 
 //	                List<MahjongInfo> infos = bankerHandCards.GetAll();
-//	                bankerHandCards.library = new List<MahjongInfo>(list);
+	                bankerHandCards.library = new List<MahjongInfo>(list);
 
                     //给客户端传送数据
                     Actor_StartGame actorStartGame = new Actor_StartGame();
@@ -129,16 +140,6 @@ namespace ETHotfix
                     //发送消息
                     room.Broadcast(actorStartGame);
 	                room.reconnectList.Add(actorStartGame);
-
-                    room.State = RoomState.Game;
-
-	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
-	                {
-	                    roomComponent.gameRooms.Remove(room.Id);
-	                }
-
-                    roomComponent.gameRooms.Add(room.Id, room);
-	                roomComponent.readyRooms.Remove(room.Id);
 
                     //排序
 	                var startTime = DateTime.Now;
