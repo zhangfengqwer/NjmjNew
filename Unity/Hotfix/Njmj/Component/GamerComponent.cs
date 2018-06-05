@@ -8,6 +8,7 @@ namespace ETHotfix
         private readonly Dictionary<long, int> seats = new Dictionary<long, int>();
         private readonly Gamer[] gamers = new Gamer[4];
         public long CurrentPlayUid;
+        public bool IsPlayed = false;
         public Gamer LocalGamer { get; set; }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace ETHotfix
             this.LocalGamer = null;
 
             this.seats.Clear();
-
+            IsPlayed = false;
             for (int i = 0; i < this.gamers.Length; i++)
             {
                 if (gamers[i] != null)

@@ -173,6 +173,7 @@ namespace ETHotfix
         /// <param name="room"></param>
         public static async void GamerGrabCard(this Room room)
         {
+           
             foreach (var gamer in room.GetAll())
             {
                 gamer.isGangFaWanPai = false;
@@ -185,6 +186,7 @@ namespace ETHotfix
             var currentGamer = room.Get(orderController.CurrentAuthority);
             HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
 
+            Log.Debug("当前:"+ orderController.CurrentAuthority);
             room.isGangEndBuPai = false;
             room.isGetYingHuaBuPai = false;
             var grabMahjong = GrabMahjong(room);
@@ -210,7 +212,7 @@ namespace ETHotfix
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
+//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
                 room.isGangEndBuPai = false;
                 room.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
@@ -238,7 +240,6 @@ namespace ETHotfix
                 HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
-
                 if (deskComponent.RestLibrary.Count == 0)
                 {
                     Log.Info("没牌了");
@@ -255,12 +256,15 @@ namespace ETHotfix
                     };
 
                     room.NextGrabCard = null;
+                    Log.Debug("发作弊牌：" + grabMahjong.m_weight);
                 }
                 else
                 {
                     int number = RandomHelper.RandomNumber(0, deskComponent.RestLibrary.Count);
                     grabMahjong = deskComponent.RestLibrary[number];
                     deskComponent.RestLibrary.RemoveAt(number);
+
+                    Log.Debug("发牌："+ grabMahjong.m_weight);
                 }
 
                 //发牌

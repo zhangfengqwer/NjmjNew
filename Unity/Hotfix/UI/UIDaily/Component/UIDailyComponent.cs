@@ -127,7 +127,9 @@ namespace ETHotfix
         private async void RequestDailySign()
         {
             UINetLoadingComponent.showNetLoading();
+
             G2C_DailySign g2cDailySign = (G2C_DailySign)await SessionWrapComponent.Instance.Session.Call(new C2G_DailySign { Uid = PlayerInfoComponent.Instance.uid });
+
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cDailySign.Error != ErrorCode.ERR_Success)

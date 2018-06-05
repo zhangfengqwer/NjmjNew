@@ -18,6 +18,7 @@ namespace ETHotfix
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte)message.weight, m_weight = (Consts.MahjongWeight)message.weight };
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+                gamerComponent.IsPlayed = false;
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
