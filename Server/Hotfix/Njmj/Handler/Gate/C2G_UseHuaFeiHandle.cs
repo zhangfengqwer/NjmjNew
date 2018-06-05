@@ -52,9 +52,7 @@ namespace ETHotfix
                                     useHuaFei.Phone = message.Phone;
                                     await proxyComponent.Save(useHuaFei);
 
-                                    playerBaseInfo.HuaFeiNum -= 5;
-                                    playerBaseInfo.HuaFeiNum = float.Parse(playerBaseInfo.HuaFeiNum.ToString("#0.00"));
-                                    await proxyComponent.Save(playerBaseInfo);
+                                    await DBCommonUtil.ChangeWealth(message.Uid, 3, -5, "话费充值");
                                 }
                             }
 
