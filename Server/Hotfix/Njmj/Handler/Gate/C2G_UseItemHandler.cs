@@ -140,7 +140,7 @@ namespace ETHotfix
                 // 话费礼包
                 case 111:
                     {
-                        int huafei = Common_Random.getRandom(1,100);
+                        int huafei = Common_Random.getRandom(5,20);
                         string reward = ("3:" + huafei);
                         response.reward = reward;
 
