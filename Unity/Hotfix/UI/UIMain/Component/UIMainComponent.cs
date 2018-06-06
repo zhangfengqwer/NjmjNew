@@ -626,7 +626,7 @@ namespace ETHotfix
             playerNameTxt.text = info.Name;
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
-            HuaFeiNumTxt.text = info.HuaFeiNum.ToString();
+            HuaFeiNumTxt.text = (info.HuaFeiNum / 100.0f).ToString();
 
             if (GameUtil.isVIP())
             {

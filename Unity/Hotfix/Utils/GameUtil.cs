@@ -23,7 +23,7 @@ namespace ETHotfix
                 CommonUtil.splitStr(list1[i], list2, ':');
 
                 int id = int.Parse(list2[0]);
-                float num = float.Parse(list2[1]);
+                int num = int.Parse(list2[1]);
 
                 changeData(id, num);
             }
@@ -33,7 +33,7 @@ namespace ETHotfix
          * 用于玩家 <金币、元宝、道具> 的获得和消耗
          * 如果当前在主界面，会刷新主界面的金币和元宝数值
          */
-        static public void changeData(int id, float num)
+        static public void changeData(int id, int num)
         {
             if (id == 1)
             {

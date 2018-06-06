@@ -106,7 +106,7 @@ namespace ETHotfix
                     }
                     else
                     {
-                        reward = (config.propId + ":" + ((float)config.PropNum / 100.0f));
+                        reward = (config.propId + ":" + config.PropNum);
                     }
 
                     if (LuckyValue >= 99)

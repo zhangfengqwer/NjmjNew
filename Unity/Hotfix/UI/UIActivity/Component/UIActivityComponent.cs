@@ -131,23 +131,14 @@ namespace ETHotfix
         /// </summary>
         private void CreateNoticeItems()
         {
-            #region test
-            //NoticeInfo info1 = new NoticeInfo();
-            //info1.id = 104;
-            //info1.content = "欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3";
-            //NoticeConfig.getInstance().getDataList().Add(info1);
-            //info1 = new NoticeInfo();
-            //info1.id = 104;
-            //info1.content = "欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入南京麻将3欢迎加入欢迎加入南京麻将3欢迎加入南京麻将3";
-            //NoticeConfig.getInstance().getDataList().Add(info1);
-            #endregion
-
             GameObject obj = null;
             for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; ++i)
             {
                 NoticeInfo info = NoticeConfig.getInstance().getDataList()[i];
                 if (i < objList.Count)
+                {
                     obj = objList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(noticeItem);

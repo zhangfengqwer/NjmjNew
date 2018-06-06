@@ -357,7 +357,7 @@ namespace ETHotfix
 		public string VipTime;
 
 		[ProtoMember(12, IsRequired = true)]
-		public float HuaFeiNum;
+		public int HuaFeiNum;
 
 		[ProtoMember(13, IsRequired = true)]
 		public string EmogiTime;
@@ -720,7 +720,7 @@ namespace ETHotfix
 		public int propId;
 
 		[ProtoMember(3, IsRequired = true)]
-		public float propNum;
+		public int propNum;
 
 	}
 

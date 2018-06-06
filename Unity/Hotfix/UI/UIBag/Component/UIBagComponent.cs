@@ -139,6 +139,14 @@ namespace ETHotfix
             SetMoreHide(itemList.Count);
         }
 
+        /// <summary>
+        /// 刷新界面
+        /// </summary>
+        public void RefreshUI()
+        {
+            GetBagInfoList();
+        }
+
         private void SetMoreHide(int index)
         {
             for (int i = index; i < bagItemList.Count; ++i)
@@ -186,6 +194,7 @@ namespace ETHotfix
                                     case 104:
                                         {
                                             PlayerInfoComponent.Instance.GetPlayerInfo().EmogiTime = g2cBag.time;
+                                            ToastScript.createToast("使用成功");
                                         }
                                         break;
 
@@ -195,6 +204,7 @@ namespace ETHotfix
                                     case 109:
                                         {
                                             PlayerInfoComponent.Instance.GetPlayerInfo().VipTime = g2cBag.time;
+                                            ToastScript.createToast("使用成功");
                                         }
                                         break;
 
@@ -202,13 +212,13 @@ namespace ETHotfix
                                     case 111:
                                         {
                                             GameUtil.changeDataWithStr(g2cBag.reward);
-                                            ToastScript.createToast("恭喜获得话费" + CommonUtil.splitStr_End_F(g2cBag.reward, ':').ToString() + "元");
+                                            float huafei = CommonUtil.splitStr_End(g2cBag.reward, ':') / 100.0f;
+                                            ToastScript.createToast("恭喜获得" + huafei + "元话费");
                                         }
                                         break;
                                 }
 
                                 GameUtil.changeData(item.ItemId, -1);
-                                ToastScript.createToast("使用成功");
                             }
                             else
                             {

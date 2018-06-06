@@ -58,7 +58,14 @@ namespace ETHotfix
                 return;
             }
 
-            RequestUseHuaFei(5);
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum < 500)
+            {
+                ToastScript.createToast("您的话费余额不足");
+
+                return;
+            }
+
+            RequestUseHuaFei(5 * 100);
         }
         
         private async void RequestUseHuaFeiState()
@@ -84,8 +91,8 @@ namespace ETHotfix
 
                 return;
             }
-            GameUtil.changeData(3, -5);
-            ToastScript.createToast(huafei.ToString() + "元话费兑换成功");
+            GameUtil.changeData(3, -5 * 100);
+            ToastScript.createToast((huafei / 100.0f).ToString() + "元话费兑换成功");
         }
     }
 }

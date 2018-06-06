@@ -319,6 +319,12 @@ namespace ETHotfix
             grid.GetComponent<ContentSizeFitter>().enabled = isEnable;
         }
 
+        /// <summary>
+        /// 根据类型关闭不同的item点击事件
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="type"></param>
+        /// <param name="height"></param>
         public void SetCloseItemPos(int index,ShopType type,float height)
         {
             switch (type)
@@ -348,6 +354,9 @@ namespace ETHotfix
             CreateShopInfoList(shopInfoList, bundle, shopType, parent);
         }
 
+        /// <summary>
+        /// 显示vip商城
+        /// </summary>
         public void ShowVipTab()
         {
             ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
@@ -399,9 +408,13 @@ namespace ETHotfix
             uiList = GetUiListByType(type);
             itemList = GetItemListBytype(type);
             if (itemList == null)
+            {
                 itemList = new List<GameObject>();
+            }
             if (uiList == null)
+            {
                 uiList = new List<UI>();
+            }
             for (int i = 0; i < shopInfoList.Count; ++i)
             {
                 if (i < itemList.Count)
@@ -418,14 +431,18 @@ namespace ETHotfix
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIItemComponent>();
                     if (itemDic.ContainsKey(type))
+                    {
                         itemDic[type].Add(obj);
+                    }
                     else
                     {
                         itemList.Add(obj);
                         itemDic.Add(type, itemList);
                     }
                     if (uiDic.ContainsKey(type))
+                    {
                         uiDic[type].Add(ui);
+                    }
                     else
                     {
                         uiList.Add(ui);

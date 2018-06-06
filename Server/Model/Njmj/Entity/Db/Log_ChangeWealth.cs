@@ -8,7 +8,7 @@ namespace ETModel
 	{
         public long Uid { set; get; }
         public int PropId { get; set; }
-        public float PropNum { get; set; }
+        public int PropNum { get; set; }
         public string Reason { get; set; }
     }
 }

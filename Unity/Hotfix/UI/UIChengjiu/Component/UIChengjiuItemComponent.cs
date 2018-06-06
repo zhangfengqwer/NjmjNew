@@ -59,13 +59,13 @@ namespace ETHotfix
             G2C_GetTaskReward g2cGet = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskInfo = info, GetType = 2});
             UINetLoadingComponent.closeNetLoading();
 
-            PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum += info.Reward;
             if(g2cGet.Error != ErrorCode.ERR_Success)
             {
                 ToastScript.createToast(g2cGet.Message);
             }
             else
             {
+                GameUtil.changeData(1, info.Reward);
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
                 .GetComponent<UIMainComponent>().refreshUI();
                 ToastScript.createToast($"领取成功，金币x{info.Reward}");
@@ -74,9 +74,6 @@ namespace ETHotfix
                 Complete.SetActive(false);
                 ChengjiuItemBtn.GetComponent<Image>().sprite =
                 CommonUtil.getSpriteByBundle("uichengjiuicon", icon);
-                //显示提示框
-                //Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu)
-                //.GetComponent<UIChengjiuComponent>().SetDetail(info, true);
             }
         }
 

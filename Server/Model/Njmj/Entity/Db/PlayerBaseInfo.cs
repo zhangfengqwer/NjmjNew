@@ -6,7 +6,7 @@ namespace ETModel
         public string Name { get; set; }
         public long GoldNum = 100;
         public long WingNum = 0;
-        public float HuaFeiNum = 0;
+        public int HuaFeiNum = 0;
         public string Icon { get; set; }
         public bool IsRealName = false;
         public int RestChangeNameCount = 1;

@@ -19,7 +19,7 @@ namespace ETHotfix
             foreach (var gamer in room.GetAll())
             {
                 string reason = controllerComponent.RoomConfig.Name + "报名费";
-                await DBCommonUtil.ChangeWealth(gamer.UserID,1, -cost, reason);
+                await DBCommonUtil.ChangeWealth(gamer.UserID,1, -(int)cost, reason);
             }
 
 //            room.Broadcast(new Actor_GamerChangeGold())

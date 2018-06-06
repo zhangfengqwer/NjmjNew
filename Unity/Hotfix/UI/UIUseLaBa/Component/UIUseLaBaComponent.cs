@@ -102,6 +102,14 @@ namespace ETHotfix
             GameUtil.changeData(105,-1);
 
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseLaBa);
+
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIBag) != null)
+            {
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIBag).GetComponent<UIBagComponent>() != null)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIBag).GetComponent<UIBagComponent>().RefreshUI();
+                }
+            }
         }
     }
 }

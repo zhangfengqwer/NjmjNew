@@ -152,13 +152,13 @@ namespace ETHotfix
                 CommonUtil.splitStr(list1[i], list2, ':');
 
                 int id = int.Parse(list2[0]);
-                float num = float.Parse(list2[1]);
+                int num = int.Parse(list2[1]);
 
                 await ChangeWealth(uid,id, num, reason);
             }
         }
 
-        public static async Task ChangeWealth(long uid, int propId, float propNum,string reason)
+        public static async Task ChangeWealth(long uid, int propId, int propNum,string reason)
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
             
@@ -169,7 +169,7 @@ namespace ETHotfix
                 case 1:
                     {
                         List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                        playerBaseInfos[0].GoldNum += (int)propNum;
+                        playerBaseInfos[0].GoldNum += propNum;
                         if (playerBaseInfos[0].GoldNum < 0)
                         {
                             playerBaseInfos[0].GoldNum = 0;
@@ -182,7 +182,7 @@ namespace ETHotfix
                 case 2:
                     {
                         List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                        playerBaseInfos[0].WingNum += (int)propNum;
+                        playerBaseInfos[0].WingNum += propNum;
                         if (playerBaseInfos[0].WingNum < 0)
                         {
                             playerBaseInfos[0].WingNum = 0;
@@ -196,7 +196,6 @@ namespace ETHotfix
                     {
                         List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                         playerBaseInfos[0].HuaFeiNum += propNum;
-                        playerBaseInfos[0].HuaFeiNum = float.Parse(playerBaseInfos[0].HuaFeiNum.ToString("#0.00"));
                         if (playerBaseInfos[0].HuaFeiNum < 0)
                         {
                             playerBaseInfos[0].HuaFeiNum = 0;
@@ -214,12 +213,12 @@ namespace ETHotfix
                             UserBag itemInfo = new UserBag();
                             itemInfo.BagId = propId;
                             itemInfo.UId = uid;
-                            itemInfo.Count = (int)propNum;
+                            itemInfo.Count = propNum;
                             DBHelper.AddItemToDB(itemInfo);
                         }
                         else
                         {
-                            userBags[0].Count += (int)propNum;
+                            userBags[0].Count += propNum;
                             if (userBags[0].Count < 0)
                             {
                                 userBags[0].Count = 0;
@@ -229,8 +228,7 @@ namespace ETHotfix
                     }
                     break;
             }
-
-            propNum = float.Parse(propNum.ToString("#0.00"));
+            
             await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 
@@ -301,7 +299,7 @@ namespace ETHotfix
             await proxyComponent.Save(log_Login);
         }
 
-        public static async Task Log_ChangeWealth(long uid,int propId,float propNum,string reason)
+        public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());
