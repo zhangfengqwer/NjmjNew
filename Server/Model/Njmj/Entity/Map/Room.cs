@@ -50,30 +50,19 @@ namespace ETModel
         }
 
         public MahjongInfo NextGrabCard { get; set; }
+        public bool IsLianZhuang { get; set; }
+        public Gamer BankerGamer { get; set; }
+
+        /// <summary>
+        /// 连庄次数
+        /// </summary>
+        public int LiangZhuangCount { get; set; }
 
         // 自己最新抓的牌或是别人刚出的牌
         public MahjongInfo my_lastMahjong = null;
 
         // 剩余麻将数
         public int restMahjongCount = 100;
-
-        // 最后这张牌是否是自己抓的
-        public bool isSelfZhuaPai = false;
-
-        // 自己是否是庄家
-        public bool isZhuangJia = false;
-
-        // 是否是刚发完牌
-        public bool isGangFaWanPai = false;
-
-        // 是否是刚发完牌就听牌
-        public bool isFaWanPaiTingPai = false;
-
-        // 是否是杠完补牌
-        public bool isGangEndBuPai = false;
-
-        // 是否是抓到硬花补牌
-        public bool isGetYingHuaBuPai = false;
 
         public long ziMoUid;
 
@@ -151,6 +140,8 @@ namespace ETModel
                 seats.Remove(userId);
 
                 gamer.RoomID = 0;
+                this.IsLianZhuang = false;
+                this.LiangZhuangCount = 0;
                 return gamer;
             }
 
@@ -214,18 +205,9 @@ namespace ETModel
             reconnectList.Clear();
 
             IsGameOver = false;
-            isSelfZhuaPai = false;
-            // 自己是否是庄家
-            isZhuangJia = false;
-            // 是否是刚发完牌
-            isGangFaWanPai = false;
-            // 是否是刚发完牌就听牌
-            isFaWanPaiTingPai = false;
-            // 是否是杠完补牌
-            isGangEndBuPai = false;
-            // 是否是抓到硬花补牌
-            isGetYingHuaBuPai = false;
             NextGrabCard = null;
+            IsLianZhuang = false;
+            BankerGamer = null;
         }
     }
 }

@@ -1340,6 +1340,9 @@ namespace ETHotfix
 		[ProtoMember(7, IsRequired = false)]
 		public long FangPaoUid;
 
+		[ProtoMember(8, IsRequired = true)]
+		public int BixiaHuCount;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerReconnet)]

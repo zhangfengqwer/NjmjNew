@@ -86,6 +86,3 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: cdbf9dbef8ad5f542b1c995dc05c3d78, type: 3}
   - key: Treasure_Open
     gameObject: {fileID: 21300000, guid: 70193e2b86ff89f4bacd324bd594eedf, type: 3}
-  - key: RoomMask
-    gameObject: {fileID: 1374606894052620, guid: 414f94d57ec8cbf43ad7f4d5f595fa9c,
-      type: 2}

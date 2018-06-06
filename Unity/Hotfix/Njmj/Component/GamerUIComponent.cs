@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
 using UnityEngine;
@@ -160,7 +161,7 @@ namespace ETHotfix
                 if (Index != 0)
                 {
                     uidText.text = playerInfo.Name;
-                    jinbiText.text = $"金币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+                    jinbiText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
 
                     int i;
                     if (playerInfo.TotalGameCount == 0)
@@ -171,7 +172,7 @@ namespace ETHotfix
                     {
                         i = playerInfo.WinGameCount / playerInfo.TotalGameCount;
                     }
-                    shengLvText.text = $"胜率:<color=#FFF089FF>{i}%</color>";
+                    shengLvText.text = $"胜 率:<color=#FFF089FF>{i}%</color>";
 
                     if (GameUtil.isVIP(playerInfo))
                     {
@@ -200,33 +201,46 @@ namespace ETHotfix
             }
         }
 
-        private bool isStart = false;
+        private CancellationTokenSource tokenSource;
+
+        public async Task GetPlayerInfo()
+        {
+            tokenSource = new CancellationTokenSource();
+            try
+            {
+                Gamer gamer = this.GetParent<Gamer>();
+                Log.Debug("请求gamer信息:" + gamer.UserID);
+                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID }, tokenSource.Token);
+                gamer.PlayerInfo = playerInfo.PlayerInfo;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                tokenSource.Cancel();
+            }
+        }
+
         /// <summary>
         /// 设置准备界面
         /// </summary>
         /// <param name="gameObject"></param>
-        public async Task SetHeadPanel(GameObject gameObject)
+        public void SetHeadPanel(GameObject gameObject)
         {
             try
             {
-//                if (isStart) return;
-//                isStart = true;
                 Gamer gamer = this.GetParent<Gamer>();
                 this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
                 this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
                 this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
                 this.vip = gameObject.Get<GameObject>("vip");
+                PlayerInfo playerInfo = gamer.PlayerInfo;
 
-                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
-                gamer.PlayerInfo = playerInfo.PlayerInfo;
                 if (readyName == null) return;
-                readyName.text = playerInfo.PlayerInfo.Name + "";
-                //isStart = false;
-                HeadManager.setHeadSprite(readyHead, playerInfo.PlayerInfo.Icon);
+                readyName.text = playerInfo.Name + "";
+                HeadManager.setHeadSprite(readyHead, playerInfo.Icon);
 
                 if (gamer.IsReady)
                 {
-
                     gameObject.transform.Find("Text").GetComponent<Text>().text = "已准备";
                 }
                 else
@@ -234,7 +248,7 @@ namespace ETHotfix
                     readyText.text = "";
                 }
 
-                if (GameUtil.isVIP(playerInfo.PlayerInfo))
+                if (GameUtil.isVIP(playerInfo))
                 {
                     vip.transform.localScale = Vector3.one;
                 }

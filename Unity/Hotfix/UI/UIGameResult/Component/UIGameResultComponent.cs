@@ -102,6 +102,8 @@ namespace ETHotfix
             huaCount += data.YingHuaCount;
             //软花
             huaCount += data.RuanHuaCount;
+
+            huaCount += data.BixiaHuCount;
             //基数
             huaCount += 20;
             //砸2
@@ -150,9 +152,23 @@ namespace ETHotfix
                         obj.text = $"{name}{count}";
                     }
 
-                    Text obj4 = allhuashutype.transform.GetChild(dataHuPaiTypes.Count + 3).GetComponent<Text>();
-                    obj4.gameObject.SetActive(true);
-                    obj4.text = "砸2";
+                    if (data.BixiaHuCount > 0)
+                    {
+                        Text obj4 = allhuashutype.transform.GetChild(dataHuPaiTypes.Count + 3).GetComponent<Text>();
+                        obj4.gameObject.SetActive(true);
+                        obj4.text = $"比下胡{data.BixiaHuCount}";
+
+                        Text obj5 = allhuashutype.transform.GetChild(dataHuPaiTypes.Count + 4).GetComponent<Text>();
+                        obj5.gameObject.SetActive(true);
+                        obj5.text = "砸2";
+                    }
+                    else
+                    {
+                        Text obj4 = allhuashutype.transform.GetChild(dataHuPaiTypes.Count + 3).GetComponent<Text>();
+                        obj4.gameObject.SetActive(true);
+                        obj4.text = "砸2";
+                    }
+                    
 
                     huaCountText.text = huaCount + "";
                     goldText.text = BeiLv * huaCount + "";
@@ -229,7 +245,7 @@ namespace ETHotfix
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                 --time;
-
+                if (time < 0) time = 0;
                 if (isTimerEnd)
                 {
                     return;

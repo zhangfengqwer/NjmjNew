@@ -221,7 +221,7 @@ namespace ETModel
             {
                 await resourcesComponent.LoadBundleAsync($"Sounds{soundName}.unity3d");
                 abSounds.Add(soundName, GameObject.Instantiate((GameObject)resourcesComponent.GetAsset($"Sounds{soundName}.unity3d", $"Sounds{soundName}")).GetComponent<SoundData>());
-                resourcesComponent.UnloadBundle($"Sounds{soundName}.unity3d");
+//                resourcesComponent.UnloadBundle($"Sounds{soundName}.unity3d");
             }
             return abSounds[soundName];
         }
