@@ -87,6 +87,7 @@ namespace ETHotfix
                 this.jinbiText = this.headInfo.Get<GameObject>("Jinbi").GetComponent<Text>();
                 this.uidText = this.headInfo.Get<GameObject>("Uid").GetComponent<Text>();
                 this.headInfo.SetActive(false);
+                head.GetComponent<Button>().onClick.RemoveAllListeners();
                 head.GetComponent<Button>().onClick.Add(OnShowHeadInfo);
             }
 
@@ -120,7 +121,7 @@ namespace ETHotfix
             readyName.text = "";
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";
-
+            vip.transform.localScale = Vector3.zero;
         }
 
         /// <summary>

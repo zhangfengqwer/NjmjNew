@@ -66,7 +66,9 @@ namespace ETHotfix
 	                    index = message.index
 	                };
 
-	                room.Broadcast(actorGamerPlayCard);
+                    //停止倒计时
+	                room.tokenSource.Cancel();
+                    room.Broadcast(actorGamerPlayCard);
 	                room.reconnectList.Add(actorGamerPlayCard);
 
                     gamer.IsCanHu = false;
