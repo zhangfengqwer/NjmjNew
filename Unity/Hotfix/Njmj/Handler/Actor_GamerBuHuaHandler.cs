@@ -26,16 +26,17 @@ namespace ETHotfix
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     handCardsComponent.BuHua(mahjongInfo,true);
+                    SoundsHelp.Instance.PlayBuHua(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
                 }
                 else
                 {
                     handCardsComponent.BuHua(mahjongInfo, false);
+                    SoundsHelp.Instance.PlayBuHua(gamer.PlayerInfo.PlayerSound);
                 }
 
                 //剩下的牌
-//                uiRoomComponent.SetRestCount();
+                //                uiRoomComponent.SetRestCount();
 
-                SoundComponent.Instance.PlayClip("effect_nv1_buhua");
             }
             catch (Exception e)
             {

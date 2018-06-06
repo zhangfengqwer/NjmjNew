@@ -176,9 +176,19 @@ namespace ETHotfix
             playSound("talk_nv_zimo_" + UnityEngine.Random.Range(1, 4 + 1));
         }
 
-        public void playSound(string name)
+        private void playSound(string name)
         {
-            ETModel.Game.Scene.GetComponent<SoundComponent>().PlayClip(name);
+            if (!isReturn)
+            {
+                ETModel.Game.Scene.GetComponent<SoundComponent>().PlayClip(name);
+            }
+        }
+
+        private bool isReturn = false;
+
+        public void SetReturn(bool isReturn)
+        {
+            this.isReturn = isReturn;
         }
 
         public void SoundMute(bool isMute)
@@ -190,6 +200,59 @@ namespace ETHotfix
             else
             {
                 ETModel.Game.Scene.GetComponent<SoundComponent>().SoundVolume = 1;
+            }
+        }
+
+        public void PlayCardSound(int playerSoundType, int weight)
+        {
+            switch (playerSoundType)
+            {
+                case 1:
+                    playSound_Card_Nan1(weight);
+                    break;
+                case 2:
+                    playSound_Card_Nan2(weight);
+                    break;
+                case 3:
+                    playSound_Card_Nv1(weight);
+                    break;
+                case 4:
+                    playSound_Card_Nv2(weight);
+                    break;
+            }
+        }
+
+        public void PlayBuHua(int playerSoundType)
+        {
+            switch (playerSoundType)
+            {
+                case 1:
+                    playSound_Nan1_BuHua();
+                    break;
+                case 2:
+                    playSound_Nan2_BuHua();
+                    break;
+                case 3:
+                    playSound_Nv1_BuHua();
+                    break;
+                case 4:
+                    playSound_Nv2_BuHua();
+                    break;
+            }
+        }
+
+        public void PlayHuSound(int playerInfoPlayerSound)
+        {
+            switch (playerInfoPlayerSound)
+            {
+                case 1:
+                case 2:
+                    playSound_Nan_Hu();
+                    break;
+                case 3:
+                case 4:
+                    playSound_Nv_Hu();
+                    break;
             }
         }
     }

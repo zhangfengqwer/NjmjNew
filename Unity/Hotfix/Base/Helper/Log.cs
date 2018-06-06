@@ -18,7 +18,7 @@ namespace ETHotfix
 		public static void Error(Exception e)
 		{
 			ETModel.Log.Error(e.ToStr());
-		    HttpReqUtil.Req($"http://10.224.4.158:8080/GetClientError?data=" + e.ToStr());
+		    //HttpReqUtil.Req($"http://10.224.4.158:8080/GetClientError?data=" + e.ToStr());
 		}
 
 	    public static void Error(string msg)

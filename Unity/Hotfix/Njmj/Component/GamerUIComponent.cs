@@ -118,7 +118,10 @@ namespace ETHotfix
 
         public void ResetReadyPanel()
         {
-            if (readyName == null) return;
+            if (readyName == null)
+            {
+                return;
+            }
             readyName.text = "";
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";
@@ -163,14 +166,14 @@ namespace ETHotfix
                     uidText.text = playerInfo.Name;
                     jinbiText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
 
-                    int i;
+                    float i;
                     if (playerInfo.TotalGameCount == 0)
                     {
                         i = 0;
                     }
                     else
                     {
-                        i = playerInfo.WinGameCount / playerInfo.TotalGameCount;
+                        i = GameUtil.GetWinRate(playerInfo.TotalGameCount, playerInfo.WinGameCount);
                     }
                     shengLvText.text = $"胜 率:<color=#FFF089FF>{i}%</color>";
 
@@ -228,6 +231,10 @@ namespace ETHotfix
         {
             try
             {
+                if (gameObject == null)
+                {
+                    return;
+                }
                 Gamer gamer = this.GetParent<Gamer>();
                 this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
                 this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();

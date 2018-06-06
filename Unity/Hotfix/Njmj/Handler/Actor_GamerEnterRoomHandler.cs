@@ -101,12 +101,12 @@ namespace ETHotfix
                     if (uiReadyComponent != null)
                     {
                         await gamerUiComponent.GetPlayerInfo();
-                        if (gamer.PlayerInfo != null)
+                        if (gamer?.PlayerInfo != null)
                         {
-                            gamerUiComponent.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
-                            uiReady.GetComponent<UIReadyComponent>().SetPanel(gamer, index);
+                            gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
+                            uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
                             //根据座位的indax添加玩家
-                            roomComponent.AddGamer(gamer, index);
+                            roomComponent?.AddGamer(gamer, index);
                         }
                     }
                 }
