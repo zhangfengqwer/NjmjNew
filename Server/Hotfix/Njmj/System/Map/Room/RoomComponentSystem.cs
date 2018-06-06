@@ -61,6 +61,11 @@ namespace ETHotfix
                 foreach (var room in self.idleRooms)
                 {
                     GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+                    if (controllerComponent == null)
+                    {
+                        Log.Warning("room的GameControllerComponent为null");
+                        continue;
+                    }
                     if (controllerComponent.RoomConfig.Id == roomType)
                     {
                         return room;

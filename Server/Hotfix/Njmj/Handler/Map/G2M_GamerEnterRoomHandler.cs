@@ -20,7 +20,7 @@ namespace ETHotfix
 			    foreach (var _room in roomCompnent.gameRooms.Values)
 			    {
 			        room = _room;
-			        Log.Info("找到房间:");
+			        Log.Info("找到房间:"+ _room.Id);
 			        gamer = room.Get(message.UserId);
 			        if (gamer != null) break;
                 }

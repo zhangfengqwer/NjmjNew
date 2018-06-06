@@ -105,6 +105,7 @@ namespace ETHotfix
                 {
                     completeTxt.SetActive(false);
                     getBtn.gameObject.SetActive(true);
+                    GetParent<UI>().GameObject.transform.SetAsFirstSibling();
                 }
             }
             else

@@ -162,7 +162,7 @@ namespace ETHotfix
             realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
-            HuafeiNumTxt.text = (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum / 100/0f).ToString();
+            HuafeiNumTxt.text = (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum / 100.0f).ToString();
             if (GameUtil.isVIP())
             {
                 PlayerFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
