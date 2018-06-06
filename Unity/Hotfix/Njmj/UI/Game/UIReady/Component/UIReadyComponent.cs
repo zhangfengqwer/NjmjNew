@@ -89,7 +89,7 @@ namespace ETHotfix
             UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
             Log.Debug("换桌:" + roomComponent.RoomType);
-            SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable(){RoomType = roomComponent.RoomType});
+            SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable(){RoomType = PlayerInfoComponent.Instance.RoomType});
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
         }
 

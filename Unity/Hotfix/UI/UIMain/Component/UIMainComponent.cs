@@ -573,6 +573,8 @@ namespace ETHotfix
                 G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
                                                                                                                             new C2G_EnterRoom() { RoomType = i });
                 UINetLoadingComponent.closeNetLoading();
+
+                PlayerInfoComponent.Instance.RoomType = i;
             }
             catch (Exception e)
             {

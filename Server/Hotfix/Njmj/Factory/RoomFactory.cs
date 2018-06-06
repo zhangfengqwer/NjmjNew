@@ -1,4 +1,5 @@
-﻿using ETModel;
+﻿using System;
+using ETModel;
 
 namespace ETHotfix
 {
@@ -11,17 +12,25 @@ namespace ETHotfix
         /// <returns></returns>
         public static Room Create(int roomType)
         {
-            Room idleRoom = ComponentFactory.Create<Room>();
-            idleRoom.AddComponent<DeskComponent>();
-//            idleRoom.AddComponent<DeskCardsCacheComponent>();
-            GameControllerComponent controllerComponent = idleRoom.AddComponent<GameControllerComponent>();
-            controllerComponent.RoomConfig = ConfigHelp.Get<RoomConfig>(roomType);
-            controllerComponent.RoomName = (RoomName) roomType;
+            try
+            {
+                Room idleRoom = ComponentFactory.Create<Room>();
+                idleRoom.AddComponent<DeskComponent>();
+                //            idleRoom.AddComponent<DeskCardsCacheComponent>();
+                GameControllerComponent controllerComponent = idleRoom.AddComponent<GameControllerComponent>();
+                controllerComponent.RoomConfig = ConfigHelp.Get<RoomConfig>(roomType);
+                controllerComponent.RoomName = (RoomName)roomType;
 
-            Log.Debug("创建房间：" + JsonHelper.ToJson(controllerComponent.RoomConfig));
+                Log.Debug("创建房间：" + JsonHelper.ToJson(controllerComponent.RoomConfig));
 
-            idleRoom.AddComponent<OrderControllerComponent>();
-            return idleRoom;
+                idleRoom.AddComponent<OrderControllerComponent>();
+                return idleRoom;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+            return null;
         }
     }
 }
