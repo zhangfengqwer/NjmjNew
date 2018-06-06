@@ -38,7 +38,6 @@ namespace ETHotfix
                     CommonUtil.ShowUI(UIType.UIReady);
                 }
 
-                Log.Debug("111");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
@@ -47,7 +46,6 @@ namespace ETHotfix
                 roomComponent.SetRoomType(message.RoomType);
                 Gamer[] gamers = gamerComponent.GetAll();
 
-                Log.Debug("222");
                 //清空座位
                 for (int i = 0; i < gamers.Length; i++)
                 {
@@ -72,7 +70,6 @@ namespace ETHotfix
                     }
                 }
 
-                Log.Debug("333");
                 if (localGamer == null)
                 {
                     return;
@@ -96,20 +93,21 @@ namespace ETHotfix
                     UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
                     GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();
 
-                    Log.Info("gamer.IsReady" +gamer.IsReady);
                     //排序
                     int index = gamerInfo.SeatIndex - localGamer.SeatIndex;
                     if (index < 0) index += 4;
 
                     //设置准备
-                    await gamerUiComponent.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
-                    uiReady.GetComponent<UIReadyComponent>().SetPanel(gamer, index);
+                    if (uiReadyComponent != null)
+                    {
+                        await gamerUiComponent?.SetHeadPanel(uiReadyComponent?.HeadPanel[index]);
+                        uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
+                    }
 
                     //根据座位的indax添加玩家
                     roomComponent.AddGamer(gamer, index);
                 }
 
-                Log.Debug("444");
                 SoundsHelp.Instance.playSound_JinRu();
             }
             catch (Exception e)

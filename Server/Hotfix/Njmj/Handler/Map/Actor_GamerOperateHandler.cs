@@ -247,18 +247,14 @@ namespace ETHotfix
             huPaiNeedData.isSelfZhuaPai = orderController.CurrentAuthority == gamer.UserID;
             huPaiNeedData.isZhuangJia = handCards.IsBanker;
             huPaiNeedData.isGetYingHuaBuPai = gamer.isGetYingHuaBuPai;
-
             huPaiNeedData.isGangEndBuPai = gamer.isGangEndBuPai;
-
             huPaiNeedData.isGangFaWanPai = gamer.isGangFaWanPai;
-
             huPaiNeedData.isFaWanPaiTingPai = gamer.isFaWanPaiTingPai;
             huPaiNeedData.my_yingHuaList = handCards.FaceCards;
-
             huPaiNeedData.my_gangList = handCards.GangCards;
             huPaiNeedData.my_pengList = handCards.PengCards;
 
-            List<List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
+           List <List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
 
             foreach (var _gamer in room.GetAll())
             {
@@ -280,7 +276,11 @@ namespace ETHotfix
             huPaiNeedData.other2_pengList = temp[1];
             huPaiNeedData.other3_pengList = temp[2];
 
+
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
+
+            Log.Debug("huPaiNeedData" + JsonHelper.ToJson(huPaiNeedData));
+            Log.Debug("huPaiTypes" + JsonHelper.ToJson(huPaiTypes));
 
             //自摸
             actorGamerHuPai.IsZiMo = isZimo;

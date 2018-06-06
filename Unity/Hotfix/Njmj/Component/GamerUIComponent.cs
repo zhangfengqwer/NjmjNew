@@ -207,39 +207,45 @@ namespace ETHotfix
         /// <param name="gameObject"></param>
         public async Task SetHeadPanel(GameObject gameObject)
         {
-            if (isStart) return;
-            isStart = true;
-            Gamer gamer = this.GetParent<Gamer>();
-            this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
-            this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
-            this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
-            this.vip = gameObject.Get<GameObject>("vip");
+            try
+            {
+//                if (isStart) return;
+//                isStart = true;
+                Gamer gamer = this.GetParent<Gamer>();
+                this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
+                this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
+                this.readyText = gameObject.Get<GameObject>("Text").GetComponent<Text>();
+                this.vip = gameObject.Get<GameObject>("vip");
 
-            G2C_PlayerInfo playerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
-            gamer.PlayerInfo = playerInfo.PlayerInfo;
-            readyName.text = playerInfo.PlayerInfo.Name + "";
-            isStart = false;
-            HeadManager.setHeadSprite(readyHead, playerInfo.PlayerInfo.Icon);
-//            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
+                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
+                gamer.PlayerInfo = playerInfo.PlayerInfo;
+                if (readyName == null) return;
+                readyName.text = playerInfo.PlayerInfo.Name + "";
+                //isStart = false;
+                HeadManager.setHeadSprite(readyHead, playerInfo.PlayerInfo.Icon);
 
-            if (gamer.IsReady)
-            {
-            
-                gameObject.transform.Find("Text").GetComponent<Text>().text = "已准备";
-//                gameObject.Get<GameObject>("Text").GetComponent<Text>().text = "已准备";
-            }
-            else
-            {
-                readyText.text = "";
-            }
+                if (gamer.IsReady)
+                {
 
-            if (GameUtil.isVIP(playerInfo.PlayerInfo))
-            {
-                vip.transform.localScale = Vector3.one;
+                    gameObject.transform.Find("Text").GetComponent<Text>().text = "已准备";
+                }
+                else
+                {
+                    readyText.text = "";
+                }
+
+                if (GameUtil.isVIP(playerInfo.PlayerInfo))
+                {
+                    vip.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    vip.transform.localScale = Vector3.zero;
+                }
             }
-            else
+            catch (Exception e)
             {
-                vip.transform.localScale = Vector3.zero;
+                Log.Error(e);
             }
         }
 

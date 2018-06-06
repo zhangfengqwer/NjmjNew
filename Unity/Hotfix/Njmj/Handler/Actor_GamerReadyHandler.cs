@@ -21,6 +21,11 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
+                if (gamer == null)
+                {
+                    Log.Warning($"{message.Uid}玩家为空");
+                    return;
+                }
                 GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();
                 gamerUiComponent.SetReady();
                 uiReadyComponent?.SetReady(message.Uid);
