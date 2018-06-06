@@ -46,7 +46,7 @@ namespace ETHotfix
                     AccountInfo accountInfo = ComponentFactory.CreateWithId<AccountInfo>(UidUtil.createUID());
                     accountInfo.Third_Id = message.Third_Id;
                     accountInfo.MachineId = message.MachineId;
-                    accountInfo.ChannelName = message.MachineId;
+                    accountInfo.ChannelName = message.ChannelName;
                     accountInfo.ClientVersion = message.ClientVersion;
 
                     await proxyComponent.Save(accountInfo);
