@@ -119,9 +119,13 @@ message PlayerInfo // IMessage
 	required string VipTime = 11; //
 	required int HuaFeiNum  = 12;//话费数量
 	required string EmogiTime = 13;//
-	required float WinRate = 14;//
-	required int MaxHua = 15;//
-	required bool IsSign = 16;//
+	required int MaxHua = 14;//
+	required bool IsSign = 15;//
+}
+
+message PlayerIcon //IMessage
+{
+	required string Icon = 1;
 }
 
 message ShopInfo //IMessage
@@ -752,6 +756,56 @@ message C2G_HeartBeat //IRequest
 
 message G2C_HeartBeat // IResponse
 {
+}
+
+//端午活动
+message TreasureInfo // IMessage
+{
+	required int TreasureId = 1;
+	required string Reward = 2;
+}
+
+message C2G_DuanwuTreasure // IRequest
+{
+
+}
+
+message G2C_DuanwuTreasure // IResponse
+{
+	repeated TreasureInfo TreasureInfoList = 1;
+}
+
+message DuanwuActivity //IMessage
+{
+	required string Desc = 1;
+	required int Reward = 2;
+	required int TaskId = 3;
+	required int CurProgress = 4;
+	required int Target = 5;
+	required bool IsComplete = 6;
+	required bool IsGet = 7;
+}
+
+message C2G_DuanwuActivity // IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_DuanwuActivity // IResponse
+{
+	repeated DuanwuActivity DuanwuActivityList = 1;
+}
+
+message C2G_BuyDuanwuTreasure // IRequest
+{
+	required int UId = 1;
+	required string Reward = 2;
+	required int Price = 3;
+}
+
+message G2C_BuyDuanwuTreasure // IResponse
+{
+
 }
 
 #endregion

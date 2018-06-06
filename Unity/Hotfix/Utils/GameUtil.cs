@@ -154,5 +154,10 @@ namespace ETHotfix
 
             return false;
         }
+
+        static public float GetWinRate(int totalGame,int winGame)
+        {
+            return float.Parse(((float)winGame / totalGame).ToString("F2")) * 100;
+        }
     }
 }

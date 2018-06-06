@@ -363,13 +363,19 @@ namespace ETHotfix
 		public string EmogiTime;
 
 		[ProtoMember(14, IsRequired = true)]
-		public float WinRate;
-
-		[ProtoMember(15, IsRequired = true)]
 		public int MaxHua;
 
-		[ProtoMember(16, IsRequired = true)]
+		[ProtoMember(15, IsRequired = true)]
 		public bool IsSign;
+
+	}
+
+	[Message(HotfixOpcode.PlayerIcon)]
+	[ProtoContract]
+	public partial class PlayerIcon: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string Icon;
 
 	}
 
@@ -2164,6 +2170,136 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_HeartBeat)]
 	[ProtoContract]
 	public partial class G2C_HeartBeat: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+//端午活动
+	[Message(HotfixOpcode.TreasureInfo)]
+	[ProtoContract]
+	public partial class TreasureInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int TreasureId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Reward;
+
+	}
+
+	[Message(HotfixOpcode.C2G_DuanwuTreasure)]
+	[ProtoContract]
+	public partial class C2G_DuanwuTreasure: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.G2C_DuanwuTreasure)]
+	[ProtoContract]
+	public partial class G2C_DuanwuTreasure: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<TreasureInfo> TreasureInfoList = new List<TreasureInfo>();
+
+	}
+
+	[Message(HotfixOpcode.DuanwuActivity)]
+	[ProtoContract]
+	public partial class DuanwuActivity: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public string Desc;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int Reward;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int TaskId;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int CurProgress;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int Target;
+
+		[ProtoMember(6, IsRequired = true)]
+		public bool IsComplete;
+
+		[ProtoMember(7, IsRequired = true)]
+		public bool IsGet;
+
+	}
+
+	[Message(HotfixOpcode.C2G_DuanwuActivity)]
+	[ProtoContract]
+	public partial class C2G_DuanwuActivity: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_DuanwuActivity)]
+	[ProtoContract]
+	public partial class G2C_DuanwuActivity: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<DuanwuActivity> DuanwuActivityList = new List<DuanwuActivity>();
+
+	}
+
+	[Message(HotfixOpcode.C2G_BuyDuanwuTreasure)]
+	[ProtoContract]
+	public partial class C2G_BuyDuanwuTreasure: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string Reward;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Price;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BuyDuanwuTreasure)]
+	[ProtoContract]
+	public partial class G2C_BuyDuanwuTreasure: IResponse
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }

@@ -103,7 +103,6 @@ namespace ETHotfix
 
                     float winRate = (float)(playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
 
-                    playerBaseInfos[0].WinRate = winRate;
                     if (playerBaseInfos[0].MaxHua < maxHua)
                         playerBaseInfos[0].MaxHua = maxHua;
                     await proxyComponent.Save(playerBaseInfos[0]);
@@ -290,6 +289,33 @@ namespace ETHotfix
                     {
                         gamerInfo[0].DailyOnlineTime = 0;
                         gamerInfo[0].DailyTreasureCount = 0;
+                    }
+                }
+                //重置端午节活动
+                {
+                    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
+                    if (duanwuActivityList.Count > 0)
+                    {
+                        for (int i = 0; i < duanwuActivityList.Count; ++i)
+                        {
+                            int id = 100 + i + 1;
+                            for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
+                            {
+                                if (duanwuActivityList[i].TaskId == id)
+                                {
+                                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                                    duanwuActivityList[i].IsGet = false;
+                                    duanwuActivityList[i].TaskId = (int)config.Id;
+                                    duanwuActivityList[i].IsComplete = false;
+                                    duanwuActivityList[i].Target = config.Target;
+                                    duanwuActivityList[i].Reward = config.Reward;
+                                    duanwuActivityList[i].Desc = config.Desc;
+                                    duanwuActivityList[i].CurProgress = 0;
+                                    break;
+                                }
+                            }
+                            await proxyComponent.Save(duanwuActivityList[i]);
+                        }
                     }
                 }
             }

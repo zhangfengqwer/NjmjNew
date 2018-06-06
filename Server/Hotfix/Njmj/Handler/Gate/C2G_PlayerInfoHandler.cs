@@ -36,7 +36,6 @@ namespace ETHotfix
                     response.PlayerInfo.MaxHua = playerInfo.MaxHua;
                     response.PlayerInfo.TotalGameCount = playerInfo.TotalGameCount;
                     response.PlayerInfo.WinGameCount = playerInfo.WinGameCount;
-                    response.PlayerInfo.WinRate = playerInfo.WinRate;
                     
                     // 今天是否签到过
                     {

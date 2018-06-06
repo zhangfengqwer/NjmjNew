@@ -78,7 +78,6 @@ namespace ETModel
             "uiroom.unity3d",
             "uiready.unity3d",
             "uichatshow.unity3d",
-            "ui.unity3d",
         };
 
 		public override async void Start(UILoadResComponent self)
