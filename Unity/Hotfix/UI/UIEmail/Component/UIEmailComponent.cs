@@ -24,6 +24,7 @@ namespace ETHotfix
         private List<Email> emailList = new List<Email>();
         private GameObject emailItem = null;
         private List<GameObject> emailItemList = new List<GameObject>();
+
         private List<UI> uiList = new List<UI>();
         public static UIEmailComponent Instance { get; private set; }
 
@@ -60,6 +61,7 @@ namespace ETHotfix
             CreateEmailItemList();
         }
 
+        //删除邮件后刷新界面显示
         public void RefreshMailUI()
         {
             GetEmail();
@@ -71,9 +73,12 @@ namespace ETHotfix
         /// </summary>
         public void CreateEmailItemList()
         {
-            GameObject obj = null;
             if (emailList.Count <= 0)
+            {
                 SetMoreMailHide(0);
+            }
+
+            GameObject obj = null;
             for (int i = 0;i< emailList.Count; ++i)
             {
                 if(i < emailItemList.Count)
@@ -94,30 +99,24 @@ namespace ETHotfix
                     emailItemList.Add(obj);
                 }
                 if (emailList[i].State == 0)
+                {
                     obj.transform.SetAsFirstSibling();
+                }
                 try
                 {
                     uiList[i].GetComponent<UIEmailItemComponent>().SetEmailData(emailList[i]);
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Log.Error(e);
                 }
             }
+
             emailCountTxt.text = new StringBuilder()
                                 .Append(emailList.Count)
                                 .Append("/")
                                 .Append(50).ToString();
             SetMoreMailHide(emailList.Count);
-        }
-
-        private UIEmailItemComponent GetEmailItemComponent(Email email)
-        {
-            for(int i = 0;i< uiList.Count; ++i)
-            {
-                if (uiList[i].GetComponent<UIEmailItemComponent>().email == email)
-                    return uiList[i].GetComponent<UIEmailItemComponent>();
-            }
-            return null;
         }
 
         /// <summary>
