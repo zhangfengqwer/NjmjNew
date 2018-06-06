@@ -7,7 +7,7 @@ namespace ETModel
     public class PlayerBaseInfo : EntityDB
     {
         public string Name { get; set; }
-        public long GoldNum = 100;
+        public long GoldNum = 30000;
         public long WingNum = 0;
         public int HuaFeiNum = 0;
         public string Icon { get; set; }
