@@ -279,9 +279,6 @@ namespace ETHotfix
 
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
 
-            Log.Debug("huPaiNeedData" + JsonHelper.ToJson(huPaiNeedData));
-            Log.Debug("huPaiTypes" + JsonHelper.ToJson(huPaiTypes));
-
             //自摸
             actorGamerHuPai.IsZiMo = isZimo;
             if (!isZimo)
@@ -321,7 +318,6 @@ namespace ETHotfix
             gamer.IsCanHu = false;
             gamer.IsWinner = true;
 
-            Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
             foreach (var item in huPaiTypes)
             {
                 Log.Info("有人胡牌:" + item.ToString());

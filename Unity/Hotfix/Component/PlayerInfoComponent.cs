@@ -26,7 +26,8 @@ namespace ETHotfix
         private List<TaskInfo> taskInfoList;//任务信息
         private List<Bag> bagInfoList;//背包信息
         private List<TaskInfo> chengjiuList;
-      
+        public int RoomType { get; set; }
+
         public void SetPlayerInfo(PlayerInfo playerInfo)
         {
             this.playerInfo = playerInfo;

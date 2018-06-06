@@ -65,6 +65,7 @@ namespace ETHotfix
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
 
             deskComponent.RestLibrary.Clear();
+
             if (huaCount == 0)
             {
                 //没牌
@@ -74,7 +75,7 @@ namespace ETHotfix
             room.IsGameOver = true;
             room.State = RoomState.Ready;
             room.tokenSource.Cancel();
-            self.Multiples = 100;
+//            self.Multiples = 100;
 
             //游戏房间进入准备房间
             roomComponent.gameRooms.Remove(room.Id);
