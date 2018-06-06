@@ -292,40 +292,40 @@ namespace ETHotfix
                     }
                 }
                 //重置端午节活动
-                {
-                    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
-                    if (duanwuActivityList.Count > 0)
-                    {
-                        for (int i = 0; i < duanwuActivityList.Count; ++i)
-                        {
-                            int id = 100 + i + 1;
-                            for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
-                            {
-                                if (duanwuActivityList[i].TaskId == id)
-                                {
-                                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
-                                    duanwuActivityList[i].IsGet = false;
-                                    duanwuActivityList[i].TaskId = (int)config.Id;
-                                    duanwuActivityList[i].IsComplete = false;
-                                    duanwuActivityList[i].Target = config.Target;
-                                    duanwuActivityList[i].Reward = config.Reward;
-                                    duanwuActivityList[i].Desc = config.Desc;
-                                    duanwuActivityList[i].CurProgress = 0;
-                                    break;
-                                }
-                            }
-                            await proxyComponent.Save(duanwuActivityList[i]);
-                        }
-                    }
-                }
+                //{
+                //    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
+                //    if (duanwuActivityList.Count > 0)
+                //    {
+                //        for (int i = 0; i < duanwuActivityList.Count; ++i)
+                //        {
+                //            int id = 100 + i + 1;
+                //            for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
+                //            {
+                //                if (duanwuActivityList[i].TaskId == id)
+                //                {
+                //                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                //                    duanwuActivityList[i].IsGet = false;
+                //                    duanwuActivityList[i].TaskId = (int)config.Id;
+                //                    duanwuActivityList[i].IsComplete = false;
+                //                    duanwuActivityList[i].Target = config.Target;
+                //                    duanwuActivityList[i].Reward = config.Reward;
+                //                    duanwuActivityList[i].Desc = config.Desc;
+                //                    duanwuActivityList[i].CurProgress = 0;
+                //                    break;
+                //                }
+                //            }
+                //            await proxyComponent.Save(duanwuActivityList[i]);
+                //        }
+                //    }
+                //}
             }
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
-            log_Login.Uid = uid;
-            await proxyComponent.Save(log_Login);
-        }
+                log_Login.Uid = uid;
+                await proxyComponent.Save(log_Login);
+            }
 
-        public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
+            public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());

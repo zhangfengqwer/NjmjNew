@@ -24,6 +24,7 @@ namespace ETHotfix
         private GameObject ShortGrid;
         private GameObject ExpressionItem;
         private Text ExceptionTxt;
+        private Button Mask;
         private List<GameObject> ExpressionItemList = new List<GameObject>();
         private GameObject ChatItem;
         private List<GameObject> ChatItemList = new List<GameObject>();
@@ -37,11 +38,17 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();
+            Mask = rc.Get<GameObject>("Mask").GetComponent<Button>();
             ExceptionTxt = rc.Get<GameObject>("ExceptionTxt").GetComponent<Text>();
             ExpressionGrid = ExpressionBtn.transform.Find("Select_Btn/Scroll/ExpressionGrid").gameObject;
             ShortGrid = ShortBtn.transform.Find("Select_Btn/Scroll/ShortGrid").gameObject;
 
             ExpressionBtn.onClick.Add(() => { CreatExpressions(); });
+
+            Mask.onClick.Add(() =>
+            {
+                CloseOrOpenChatUI(false);
+            });
 
             ShortBtn.onClick.Add(() => { CreateChatItems(); });
 
