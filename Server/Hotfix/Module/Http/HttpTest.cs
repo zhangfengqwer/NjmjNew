@@ -22,7 +22,14 @@ namespace ETHotfix
 			return 1;
 		}
 
-		[Post] // url-> /Test1
+	    [Get] // url-> /t
+	    public string GetClientError(string data)
+	    {
+	        Log.Error("客户端日志:" + data);
+            return "ok";
+        }
+
+        [Post] // url-> /Test1
 		public int Test1(HttpListenerRequest req)
 		{
 			return 1;

@@ -19,5 +19,13 @@ namespace ETHotfix
                 callback(webRequestAsync.Request.downloadHandler.text);
             }
         }
+
+        public static async void Req(string url)
+        {
+            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            {
+                await webRequestAsync.DownloadAsync(url);
+            }
+        }
     }
 }

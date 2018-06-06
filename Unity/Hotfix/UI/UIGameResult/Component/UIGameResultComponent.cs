@@ -64,9 +64,10 @@ namespace ETHotfix
             Text_daojishi = rc.Get<GameObject>("Text_daojishi").GetComponent<Text>();
 
             Button_close.onClick.Add(onClick_close);
-            Button_back.onClick.Add(onClick_close);
+            Button_back.onClick.Add(onClick_Back);
             Button_jixu.onClick.Add(onClick_jixu);
         }
+
 
         public void setData(Actor_GamerHuPai data, GamerComponent gamerComponent, int BeiLv)
         {
@@ -189,6 +190,16 @@ namespace ETHotfix
         public void onClick_close()
         {
             onClick_jixu();
+        }
+
+        private void onClick_Back()
+        {
+            CommonUtil.ShowUI(UIType.UIMain);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
         }
 
         public void onClick_jixu()

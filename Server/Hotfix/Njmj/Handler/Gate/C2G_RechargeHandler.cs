@@ -25,7 +25,7 @@
 //                reward += config.Items;
 //
 //                PlayerBaseInfo baseInfo = await DBCommonUtil.getPlayerBaseInfo(message.UId);
-//                await DBCommonUtil.changeWealthWithStr(message.UId, reward);
+//               await DBCommonUtil.changeWealthWithStr(message.UId, reward,"首充奖励");
 //
 //                // 记录日志
 //                {
