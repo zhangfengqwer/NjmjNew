@@ -21,9 +21,14 @@ namespace ETModel
                 SynchronizationContext.SetSynchronizationContext(this.contex);
 
 				DontDestroyOnLoad(gameObject);
-				Game.EventSystem.Add(DLLType.Model, typeof(Init).Assembly);
 
-				Game.Scene.AddComponent<GlobalConfigComponent>();
+			    Application.targetFrameRate = 45;
+			    // 永不息屏
+                Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+                Game.EventSystem.Add(DLLType.Model, typeof(Init).Assembly);
+
+                Game.Scene.AddComponent<GlobalConfigComponent>();
 				Game.Scene.AddComponent<NetOuterComponent>();
 				Game.Scene.AddComponent<ResourcesComponent>();
 				Game.Scene.AddComponent<BehaviorTreeComponent>();
@@ -51,6 +56,8 @@ namespace ETModel
 				Game.Hotfix.GotoHotfix();
 
                 Game.EventSystem.Run(EventIdType.TestHotfixSubscribMonoEvent, "TestHotfixSubscribMonoEvent");
+
+
             }
 			catch (Exception e)
 			{

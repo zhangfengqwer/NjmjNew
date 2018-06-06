@@ -385,7 +385,11 @@ namespace ETHotfix
         {
             this.grabObj = this.CreateCardSprite($"{this.Direction}_back1", this.grabPostionX, this.grabPostionY);
 
-            if (!isBanker) grabObj.SetActive(false);
+            if (!isBanker)
+            {
+                //grabObj.SetActive(false);
+                grabObj.transform.localScale = Vector3.zero;
+            }
 
             for (int i = 0; i < 13; i++)
             {
@@ -401,13 +405,13 @@ namespace ETHotfix
         //其他人抓牌
         public void GrabOtherCard()
         {
-            grabObj.SetActive(true);
+            grabObj.transform.localScale = Vector3.one;
         }
 
         public void PlayOtherCard(MahjongInfo mahjongInfo, GameObject currentItem)
         {
-            grabObj.SetActive(false);
-
+            //grabObj.SetActive(false);
+            grabObj.transform.localScale = Vector3.zero;
             //显示出牌
             //显示出牌
             string item1 = null;
@@ -620,18 +624,18 @@ namespace ETHotfix
 
             if (Index == 3)
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    GameObject.Destroy(CardBottom.transform.GetChild(i).gameObject);
-                }
+//                for (int i = 0; i < 1; i++)
+//                {
+//                    GameObject.Destroy(CardBottom.transform.GetChild(i).gameObject);
+//                }
             }
             else
             {
-                for (int i = 0; i < 1; i++)
-                {
-                    int childCount = this.CardBottom.transform.childCount;
-                    GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
-                }
+//                for (int i = 0; i < 1; i++)
+//                {
+//                    int childCount = this.CardBottom.transform.childCount;
+//                    GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
+//                }
 //
 //                Vector3 localPosition = this.CardBottom.transform.localPosition;
 //                float x = localPosition.x - postionX * 1f;
@@ -666,7 +670,7 @@ namespace ETHotfix
                     obj = CommonUtil.getGameObjByBundle("Item_Right_Peng_Card");
                 }
 
-                temp = 2;
+                temp = 3;
             }
             else if (type == 1)
             {
@@ -757,15 +761,17 @@ namespace ETHotfix
             }
             else
             {
+              
                 for (int i = 0; i < temp; i++)
                 {
                     int childCount = this.CardBottom.transform.childCount;
-                    GameObject.Destroy(CardBottom.transform.GetChild(childCount - 1 - i).gameObject);
+                    Log.Debug("销毁childCount：" + (childCount));
+                    GameObject.DestroyImmediate(CardBottom.transform.GetChild(childCount - 1).gameObject);
                 }
 
                 Vector3 localPosition = this.CardBottom.transform.localPosition;
-                float x = localPosition.x - postionX * 0.3f;
-                float y = localPosition.y - postionY * 0.3f;
+                float x = localPosition.x - postionX * 0.2f;
+                float y = localPosition.y - postionY * 0.2f;
 
                 this.CardBottom.transform.localPosition = new Vector3(x, y, localPosition.z);
             }
@@ -839,7 +845,8 @@ namespace ETHotfix
                 }
                 else
                 {
-                    grabObj.SetActive(false);
+//                    grabObj.SetActive(false);
+                    grabObj.transform.localScale = Vector3.zero;
                 }
             }
             catch (Exception e)

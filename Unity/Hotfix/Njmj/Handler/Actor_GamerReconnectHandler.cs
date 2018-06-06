@@ -104,6 +104,7 @@ namespace ETHotfix
 
                 SoundsHelp.Instance.SoundMute(false);
 
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                 GameObject.Destroy(mask);
             }
             catch (Exception e)

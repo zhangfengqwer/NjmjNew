@@ -35,6 +35,7 @@ namespace ETHotfix
                     if (message.OperationType == 0)
                     {
                         gamerComponent.CurrentPlayUid = message.Uid;
+                        gamerComponent.IsPlayed = false;
                     }
 
                     //碰刚

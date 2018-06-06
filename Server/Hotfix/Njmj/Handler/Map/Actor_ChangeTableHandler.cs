@@ -44,7 +44,7 @@ namespace ETHotfix
                 //房间移除玩家
                 gamerRoom.Remove(gamer.UserID);
 	            //消息广播给其他人
-	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
+	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(300);
 	            gamerRoom.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 
 	            if (gamerRoom.seats.Count == 3)

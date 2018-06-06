@@ -54,6 +54,7 @@ namespace ETHotfix
         private GameObject cheat;
         private InputField cheatInput;
         private Text roomConfigText;
+        private GameObject trustship;
         public int RoomType { get; set; }
 
         public void Awake()
@@ -102,6 +103,18 @@ namespace ETHotfix
             this.settingBtn.onClick.Add(OnSetting);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
+
+            #region 托管
+
+            this.trustship = rc.Get<GameObject>("Trustship");
+            trustship.SetActive(false);
+            trustship.GetComponent<Button>().onClick.Add(() =>
+            {
+                SessionWrapComponent.Instance.Session.Send(new Actor_GamerCancelTrusteeship());
+                trustship.SetActive(false);
+            });
+            #endregion
+
 
             #region 作弊
             this.cheat = rc.Get<GameObject>("Cheat");
@@ -236,6 +249,7 @@ namespace ETHotfix
             this.changeTableBtn.gameObject.SetActive(true);
             this.readyBtn.gameObject.SetActive(true);
             this.desk.SetActive(false);
+            this.trustship.SetActive(false);
             this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(true);
             players.SetActive(false);
 
@@ -421,8 +435,8 @@ namespace ETHotfix
                 return;
             }
             base.Dispose();
-            tokenSource?.Cancel();
             isTreasureFinish = true;
+            tokenSource?.Cancel();
             ISGaming = false;
         }
 
@@ -504,6 +518,11 @@ namespace ETHotfix
             {
                 roomConfigText.text = "500/花";
             }
+        }
+
+        public void ShowTrustship()
+        {
+            trustship.SetActive(true);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
 
-                ToastScript.createToast("超时为准备，被踢出");
+                ToastScript.createToast("超时未准备，被踢出");
             }
             catch (Exception e)
             {

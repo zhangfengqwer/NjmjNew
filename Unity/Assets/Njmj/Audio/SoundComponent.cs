@@ -156,21 +156,29 @@ namespace ETModel
         /// </summary>
         public async void PlayClip(string clipName, float volume = 1)
         {
-            SoundData sd = await LoadSound(clipName);
-            if (sd != null)
+            try
             {
-                sd.volume = Mathf.Clamp(volume, 0, 1);
-                sd.Mute = SoundMute;
-                if (!IsContainClip(clipName))
+                SoundData sd = await LoadSound(clipName);
+                if (sd != null)
                 {
-                    AddClip(clipName, sd, SoundType.Sound);
+                    sd.volume = Mathf.Clamp(volume, 0, 1);
+                    sd.Mute = SoundMute;
+                    if (!IsContainClip(clipName))
+                    {
+                        AddClip(clipName, sd, SoundType.Sound);
+                    }
+                    PlayMusic(clipName, sd);
                 }
-                PlayMusic(clipName, sd);
+                else
+                {
+                    Log.Error($"没有此音效 ={ clipName}");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Log.Error($"没有此音效 ={ clipName}");
+                Log.Error(e);
             }
+            
         }
 
         /// <summary>

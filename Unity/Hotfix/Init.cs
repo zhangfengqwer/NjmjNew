@@ -42,6 +42,7 @@ namespace ETHotfix
 			    Application.targetFrameRate = 45;
 			    // 永不息屏
 			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
             }
             catch (Exception e)
 			{

@@ -87,6 +87,7 @@ namespace ETHotfix
                 this.jinbiText = this.headInfo.Get<GameObject>("Jinbi").GetComponent<Text>();
                 this.uidText = this.headInfo.Get<GameObject>("Uid").GetComponent<Text>();
                 this.headInfo.SetActive(false);
+                head.GetComponent<Button>().onClick.RemoveAllListeners();
                 head.GetComponent<Button>().onClick.Add(OnShowHeadInfo);
             }
 
@@ -120,7 +121,7 @@ namespace ETHotfix
             readyName.text = "";
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";
-
+            vip.transform.localScale = Vector3.zero;
         }
 
         /// <summary>
@@ -199,12 +200,15 @@ namespace ETHotfix
             }
         }
 
+        private bool isStart = false;
         /// <summary>
         /// 设置准备界面
         /// </summary>
         /// <param name="gameObject"></param>
         public async Task SetHeadPanel(GameObject gameObject)
         {
+            if (isStart) return;
+            isStart = true;
             Gamer gamer = this.GetParent<Gamer>();
             this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
             this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
@@ -214,7 +218,7 @@ namespace ETHotfix
             G2C_PlayerInfo playerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID });
             gamer.PlayerInfo = playerInfo.PlayerInfo;
             readyName.text = playerInfo.PlayerInfo.Name + "";
-
+            isStart = false;
             HeadManager.setHeadSprite(readyHead, playerInfo.PlayerInfo.Icon);
 //            readyHead.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.PlayerInfo.Icon);
 
