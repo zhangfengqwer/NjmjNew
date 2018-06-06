@@ -147,7 +147,14 @@ namespace ETModel
                         continue;
                     }
 
-                    await resourcesComponent.LoadBundleAsync(fileName);
+                    try
+                    {
+                        await resourcesComponent.LoadBundleAsync(fileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug("LoadRes异常：" + ex + "----" + fileName);
+                    }
                 }
             }
             catch (Exception ex)
