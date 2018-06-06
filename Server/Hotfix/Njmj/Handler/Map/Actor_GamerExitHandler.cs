@@ -19,6 +19,7 @@ namespace ETHotfix
 	            Log.Info($"玩家{gamer.UserID}退出房间");
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
+                if (room == null) return;
 
 	            if (room.State == RoomState.Game)
 	            {

@@ -27,9 +27,6 @@ namespace ETHotfix
         private Image readyHead;
         private Text readyName;
         private Text readyText;
-
-       
-
         public readonly GameObject[] HeadPanel = new GameObject[4];
         public readonly Dictionary<long, GameObject> userReady = new Dictionary<long, GameObject>();
         private GameObject readyTimeout;
@@ -66,13 +63,19 @@ namespace ETHotfix
         /// </summary>
         private async void SetTimeOut()
         {
-
-            tokenSource = new CancellationTokenSource();
-            while (timeOut > 0)
+            try
             {
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
-                timeOut--;
-                timeText.text = $"{timeOut}秒";
+                tokenSource = new CancellationTokenSource();
+                while (timeOut > 0)
+                {
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
+                    timeOut--;
+                    timeText.text = $"{timeOut}秒";
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
             }
         }
 
@@ -141,7 +144,6 @@ namespace ETHotfix
                 return;
             }
             base.Dispose();
-
             tokenSource.Cancel();
             timeOut = 20;
         }

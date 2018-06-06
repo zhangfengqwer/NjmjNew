@@ -136,7 +136,6 @@ namespace ETHotfix
                 SessionWrapComponent.Instance.Session.Call(new Actor_GamerCheat() { Info = this.cheatInput.text });
                 sendButton.gameObject.SetActive(false);
                 cheatInput.gameObject.SetActive(false);
-                this.cheatInput.text = "";
             });
 
             #endregion
@@ -252,6 +251,8 @@ namespace ETHotfix
             this.trustship.SetActive(false);
             this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(true);
             players.SetActive(false);
+            isTreasureFinish = true;
+            treasure.SetActive(false);
 
             //剩余牌数
             restText.text = $"";
