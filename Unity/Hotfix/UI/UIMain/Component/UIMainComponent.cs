@@ -22,7 +22,6 @@ namespace ETHotfix
     public class UIMainComponent: Component
     {
         private bool isDispose = false;
-        private List<string> labaList = new List<string>();
 
         private Text playerNameTxt;
         private Text goldNumTxt;
@@ -258,8 +257,6 @@ namespace ETHotfix
                 CommonUtil.ShowUI(UIType.UIDaily);
             }
 
-            checkLaBa();
-
             HeartBeat.getInstance().startHeartBeat();
         }
 
@@ -282,7 +279,6 @@ namespace ETHotfix
             gameItemList.Clear();
             uiList.Clear();
             gameUiList.Clear();
-            labaList.Clear();
         }
 
         /// <summary>
@@ -636,37 +632,13 @@ namespace ETHotfix
             }
         }
 
-        public void addLaBaContent(string content)
+        public async void addLaBaContent(string content)
         {
-            labaList.Add(content);
+            LaBa.transform.Find("Text_content").GetComponent<Text>().text = content;
 
-            if (LaBa.transform.Find("Text_content").GetComponent<Text>().text.CompareTo("") == 0)
-            {
-                LaBa.transform.Find("Text_content").GetComponent<Text>().text = content;
-            }
-        }
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
 
-        public async void checkLaBa()
-        {
-            while (true)
-            {
-                if (isDispose)
-                {
-                    return;
-                }
-
-                if (labaList.Count > 0)
-                {
-                    LaBa.transform.Find("Text_content").GetComponent<Text>().text = labaList[0];
-                    labaList.RemoveAt(0);
-                }
-                else
-                {
-                    LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
-                }
-
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
-            }
+            LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
         }
     }
 }

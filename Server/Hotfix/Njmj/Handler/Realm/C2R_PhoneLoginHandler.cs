@@ -65,7 +65,7 @@ namespace ETHotfix
                         accountInfo.Phone = message.Phone;
                         accountInfo.Token = CommonUtil.getToken(message.Phone);
                         accountInfo.MachineId = message.MachineId;
-                        accountInfo.ChannelName = message.MachineId;
+                        accountInfo.ChannelName = message.ChannelName;
                         accountInfo.ClientVersion = message.ClientVersion;
 
                         await proxyComponent.Save(accountInfo);
