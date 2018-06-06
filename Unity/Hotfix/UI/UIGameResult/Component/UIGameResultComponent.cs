@@ -194,12 +194,13 @@ namespace ETHotfix
 
         private void onClick_Back()
         {
-            CommonUtil.ShowUI(UIType.UIMain);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
-            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+            SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+//            CommonUtil.ShowUI(UIType.UIMain);
+//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+//            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
         }
 
         public void onClick_jixu()

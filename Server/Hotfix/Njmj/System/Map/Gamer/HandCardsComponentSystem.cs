@@ -38,18 +38,21 @@ namespace ETHotfix
         /// 出牌
         /// </summary>
         /// <param name="self"></param>
-        public static void PopCard(this HandCardsComponent self)
+        public static MahjongInfo PopCard(this HandCardsComponent self)
         {
             Gamer gamer = self.GetParent<Gamer>();
             List<MahjongInfo> mahjongInfos = self.GetAll();
             int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
 
+            MahjongInfo mahjongInfo = mahjongInfos[randomNumber];
             Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
             {
                 Uid = gamer.UserID,
-                weight = (int)mahjongInfos[randomNumber].m_weight,
+                weight = (int)mahjongInfo.m_weight,
                 index = randomNumber
             });
+
+            return mahjongInfo;
         }
 
     }

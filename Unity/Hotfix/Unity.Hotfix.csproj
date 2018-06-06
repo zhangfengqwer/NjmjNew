@@ -119,6 +119,7 @@
     <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerJionRoomHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerGrabCardHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerTrusteeshipHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerReconnectHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerHuPaiHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerOperateHandler.cs" />

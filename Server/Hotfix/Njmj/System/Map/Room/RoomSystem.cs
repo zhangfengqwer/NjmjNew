@@ -91,20 +91,31 @@ namespace ETHotfix
             {
                 self.TimeOut = 10;
             }
+
+            if (gamer.IsTrusteeship)
+            {
+                self.TimeOut = 2;
+            }
+            else
+            {
+                self.TimeOut = 10;
+            }
+
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(self.TimeOut * 1000, self.tokenSource.Token);
 
             if (!self.tokenSource.IsCancellationRequested)
             {
                 self.IsTimeOut = true;
-                Log.Debug("超时");
                 //超时自动出牌
                 if (gamer == null)
                 {
                     return;
                 }
 
-                gamer.GetComponent<HandCardsComponent>().PopCard();
-                
+                MahjongInfo mahjongInfo = gamer.GetComponent<HandCardsComponent>().PopCard();
+                Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
+                gamer.IsTrusteeship = true;
+                self.GamerBroadcast(gamer, new Actor_GamerTrusteeship());
             }
             else
             {

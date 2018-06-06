@@ -52,7 +52,10 @@ namespace ETHotfix
 
 	            if (index >= 0)
 	            {
-	                Log.Debug("玩家出牌:" + message.weight);
+	                //停止倒计时
+                    room.tokenSource.Cancel();
+	                gamer.IsTrusteeship = false;
+                    Log.Debug($"玩家自己{gamer.UserID}出牌:" + message.weight);
                     //当前出的牌
 	                deskComponent.CurrentCard = mahjongInfo;
 	                deskComponent.CurrentAuthority = gamer.UserID;
@@ -65,9 +68,6 @@ namespace ETHotfix
 	                    Uid = gamer.UserID,
 	                    index = message.index
 	                };
-
-                    //停止倒计时
-	                room.tokenSource.Cancel();
                     room.Broadcast(actorGamerPlayCard);
 	                room.reconnectList.Add(actorGamerPlayCard);
 

@@ -1363,6 +1363,36 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerTrusteeship)]
+	[ProtoContract]
+	public partial class Actor_GamerTrusteeship: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerCancelTrusteeship)]
+	[ProtoContract]
+	public partial class Actor_GamerCancelTrusteeship: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long Uid;
+
+	}
+
 	[Message(HotfixOpcode.Email)]
 	[ProtoContract]
 	public partial class Email: IMessage

@@ -61,6 +61,7 @@ namespace ETModel
         public DateTime StartTime { get; set; }
         //游戏离线结束的时间
         public DateTime EndTime { get; set; }
+        public bool IsTrusteeship { get; set; }
 
         public void Awake(long id)
         {
@@ -82,6 +83,7 @@ namespace ETModel
             this.IsReady = false;
             this.isOffline = false;
             this.ReadyTimeOut = 0;
+            IsTrusteeship = false;
         }
     }
 }

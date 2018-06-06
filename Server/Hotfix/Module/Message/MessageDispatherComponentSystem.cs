@@ -80,7 +80,7 @@ namespace ETModel
 			List<IMHandler> actions;
 			if (!self.Handlers.TryGetValue(messageInfo.Opcode, out actions))
 			{
-				Log.Error($"消息没有处理: {messageInfo.Opcode} {JsonHelper.ToJson(messageInfo.Message)}");
+				Log.Error($"消息没有处理: {messageInfo.Opcode} {JsonHelper.ToJson(messageInfo.Message)} {session.RemoteAddress}");
 				return;
 			}
 			

@@ -472,6 +472,16 @@ message Actor_GamerReconnet // IActorMessage
 	required int RoomType = 3;
 }
 
+message Actor_GamerTrusteeship // IActorMessage
+{
+   required long Uid = 1;
+}
+
+message Actor_GamerCancelTrusteeship // IActorMessage
+{
+   required long Uid = 1;
+}
+
 message Email //IMessage
 {
 	required string EmailTitle = 1;//邮件标题
