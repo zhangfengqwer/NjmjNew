@@ -1,0 +1,12 @@
+{"_id":101,"Desc":"累计完成5局游戏","Reward":18,"Target":5}
+{"_id":102,"Desc":"累计完成15局游戏","Reward":22,"Target":15}
+{"_id":103,"Desc":"累计完成25局游戏","Reward":26,"Target":25}
+{"_id":104,"Desc":"累计完成30局游戏","Reward":35,"Target":30}
+{"_id":105,"Desc":"获得3局胜利","Reward":12,"Target":3}
+{"_id":106,"Desc":"获得8局胜利","Reward":18,"Target":8}
+{"_id":107,"Desc":"获得16局胜利","Reward":25,"Target":16}
+{"_id":108,"Desc":"获得22局胜利","Reward":32,"Target":22}
+{"_id":109,"Desc":"单局赢得5000金币","Reward":12,"Target":5000}
+{"_id":110,"Desc":"单局赢得8000金币","Reward":20,"Target":8000}
+{"_id":111,"Desc":"累积赢得20000金币","Reward":30,"Target":20000}
+{"_id":112,"Desc":"累积赢得35000金币","Reward":36,"Target":35000}
