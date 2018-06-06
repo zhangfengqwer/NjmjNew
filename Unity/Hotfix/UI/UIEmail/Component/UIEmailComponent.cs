@@ -23,7 +23,9 @@ namespace ETHotfix
         private Text emailCountTxt;
         private List<Email> emailList = new List<Email>();
         private GameObject emailItem = null;
+        private Text NoEmailTip;
         private List<GameObject> emailItemList = new List<GameObject>();
+
 
         private List<UI> uiList = new List<UI>();
         public static UIEmailComponent Instance { get; private set; }
@@ -35,6 +37,7 @@ namespace ETHotfix
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             grid = rc.Get<GameObject>("Grid");
             emailCountTxt = rc.Get<GameObject>("EmailCountTxt").GetComponent<Text>();
+            NoEmailTip = rc.Get<GameObject>("NoEmailTip").GetComponent<Text>();
 
             returnBtn.onClick.Add(() =>
             {
@@ -58,6 +61,15 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
 
             emailList = g2cEmail.EmailInfoList;
+            if(emailList.Count <= 0)
+            {
+                NoEmailTip.gameObject.SetActive(true);
+                NoEmailTip.text = "暂无邮件!";
+            }
+            else
+            {
+                NoEmailTip.gameObject.SetActive(false);   
+            }
             CreateEmailItemList();
         }
 
@@ -161,6 +173,7 @@ namespace ETHotfix
                 });
                 }
             }
+
             emailItemList.Clear();
             uiList.Clear();
             emailList.Clear();

@@ -84,13 +84,17 @@ namespace ETHotfix
 
         private async void GetBagInfoList()
         {
-
-            UINetLoadingComponent.showNetLoading();
             long uid = PlayerInfoComponent.Instance.uid;
-
+            UINetLoadingComponent.showNetLoading();
             G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
             UINetLoadingComponent.closeNetLoading();
+
             bagList = g2cBag.ItemList;
+            PlayerInfoComponent.Instance.SetBagInfoList(bagList);
+            if (item != null && item.ItemId == 105 && !IsCurPropUseUp())
+            {
+                useBg.SetActive(false);
+            }
             CreateItemList(g2cBag.ItemList);
         }
 
@@ -233,30 +237,6 @@ namespace ETHotfix
                 Log.Debug("------------------" + ex.ToString());
             }
         }
-
-        //private void SetBagItemL(int count)
-        //{
-        //    if(count > (row * itemCount))
-        //    {
-        //        int bgCount = (count - row * itemCount) / itemCount;
-        //        if ((count - row * itemCount) % itemCount != 0)
-        //            bgCount += 1;
-        //        GameObject obj = null;
-        //        for(int i = 0;i< bgCount; ++i)
-        //        {
-        //            if (i < bgItemList.Count)
-        //                obj = bgItemList[i];
-        //            else
-        //            {
-        //                obj = GameObject.Instantiate(bgItem);
-        //                obj.transform.SetParent(bgGrid.transform);
-        //                obj.transform.localScale = Vector3.one;
-        //                obj.transform.localPosition = Vector3.zero;
-        //                bgItemList.Add(obj);
-        //            }
-        //        }
-        //    }
-        //}
 
         public override void Dispose()
         {
