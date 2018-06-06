@@ -164,7 +164,7 @@ namespace ETHotfix
                             // 是老用户
                             else
                             {
-                                List<Log_OldUserBind> log_OldUserBinds = await proxyComponent.QueryJson<Log_OldUserBind>($"{{macId:{accountInfo.MachineId}}}");
+                                List<Log_OldUserBind> log_OldUserBinds = await proxyComponent.QueryJson<Log_OldUserBind>($"{{macId:'{accountInfo.MachineId}'}}");
                                 if (log_OldUserBinds.Count > 0)
                                 {
                                     accountInfo.OldAccountState = 3;

@@ -117,7 +117,7 @@ message PlayerInfo // IMessage
 	required int WinGameCount = 9;//胜局数
 	required int PlayerSound = 10;//
 	required string VipTime = 11; //
-	required float HuaFeiNum  = 12;//话费数量
+	required int HuaFeiNum  = 12;//话费数量
 	required string EmogiTime = 13;//
 	required float WinRate = 14;//
 	required int MaxHua = 15;//
@@ -248,7 +248,7 @@ message C2G_ChangeWealth //IRequest
 {
 	required long UId = 1;
 	required int propId = 2;
-	required float propNum = 3;
+	required int propNum = 3;
 }
 
 message G2C_ChangeWealth //IResponse
