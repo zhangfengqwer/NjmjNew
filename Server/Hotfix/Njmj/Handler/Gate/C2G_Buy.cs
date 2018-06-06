@@ -13,32 +13,18 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.UId);
-                baseInfo.WingNum -= message.Cost;
-                //购买元宝
+                await DBCommonUtil.ChangeWealth(message.UId, 2, -message.Cost, $"花费元宝购买商品{message.Info.ItemID}");
+                //购买金币
                 if (message.Info.ItemID == 1)
                 {
-                    baseInfo.GoldNum += message.Info.Count;
-                    await proxyComponent.Save(baseInfo);
+                    await DBCommonUtil.ChangeWealth(message.UId, 1, message.Info.Count, "商城购买金币");
                     response.Count = message.Info.Count;
                     reply(response);
                 }
                 else
                 {
                     List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{message.Info.ItemID}}}");
-                    if (itemInfos.Count > 0)
-                    {
-                        itemInfos[0].Count += message.Info.Count;
-                        await proxyComponent.Save(itemInfos[0]);
-                    }
-                    else
-                    {
-                        UserBag itemInfo = new UserBag();
-                        itemInfo.BagId = message.Info.ItemID;
-                        itemInfo.UId = message.UId;
-                        itemInfo.Count = message.Info.Count;
-                        DBHelper.AddItemToDB(itemInfo);
-                    }
+                    await DBCommonUtil.ChangeWealth(message.UId, message.Info.ItemID, message.Info.Count, $"商城购买道具{message.Info.ItemID}");
                     response.Count = message.Info.Count;
                     reply(response);
                 }

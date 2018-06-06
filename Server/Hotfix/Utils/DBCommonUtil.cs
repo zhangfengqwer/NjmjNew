@@ -161,7 +161,7 @@ namespace ETHotfix
         public static async Task ChangeWealth(long uid, int propId, float propNum,string reason)
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
-
+            
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             switch (propId)
             {
@@ -230,6 +230,7 @@ namespace ETHotfix
                     break;
             }
 
+            propNum = float.Parse(propNum.ToString("#0.00"));
             await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 

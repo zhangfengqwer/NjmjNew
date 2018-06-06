@@ -23,22 +23,16 @@ namespace ETHotfix
                 }
                 else
                 {
-                    for(int i = 0;i< itemInfos.Count; ++i)
+                    if(itemInfos[0].Count > 0)
                     {
-                        if (itemInfos[i].Count > 0)
-                        {
-                            --itemInfos[i].Count;
-                            await proxyComponent.Save(itemInfos[i]);
-                            
-                            response.result = 1;
-
-                            await useProp(response,message.UId, message.ItemId);
-                        }
-                        else
-                        {
-                            response.Message = "您的道具数量不足";
-                            response.result = 0;
-                        }
+                        await DBCommonUtil.ChangeWealth(message.UId, itemInfos[0].BagId, -1, "使用背包道具");
+                        response.result = 1;
+                        await useProp(response, message.UId, message.ItemId);
+                    }
+                    else
+                    {
+                        response.Message = "您的道具数量不足";
+                        response.result = 0;
                     }
                 }
 
