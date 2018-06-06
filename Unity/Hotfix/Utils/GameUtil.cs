@@ -157,6 +157,8 @@ namespace ETHotfix
 
         static public float GetWinRate(int totalGame,int winGame)
         {
+            if (totalGame == 0)
+                return 0;
             return float.Parse(((float)winGame / totalGame).ToString("F2")) * 100;
         }
     }
