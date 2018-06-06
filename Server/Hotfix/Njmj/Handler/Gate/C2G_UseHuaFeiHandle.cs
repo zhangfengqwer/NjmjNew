@@ -14,10 +14,10 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                if (message.HuaFei == 5)
+                if (message.HuaFei == 5 * 100)
                 {
                     PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(message.Uid);
-                    if (playerBaseInfo.HuaFeiNum >= 5)
+                    if (playerBaseInfo.HuaFeiNum >= 5 * 100)
                     {
                         List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{message.HuaFei}}}");
                         if (useHuaFeis.Count > 0)
@@ -34,7 +34,7 @@ namespace ETHotfix
                             {
                                 //string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString().Substring(1), "话费", "5", message.Phone, "3", "1");
                                 //Log.Debug("=======" + str);
-                                
+
                                 //if (!CommonUtil.checkHuaFeiChongZhiResult(str))
                                 //{
                                 //    response.Message = "充值失败";
@@ -52,7 +52,7 @@ namespace ETHotfix
                                     useHuaFei.Phone = message.Phone;
                                     await proxyComponent.Save(useHuaFei);
 
-                                    await DBCommonUtil.ChangeWealth(message.Uid, 3, -5, "话费充值");
+                                    await DBCommonUtil.ChangeWealth(message.Uid, 3, -5 * 100, "话费充值");
                                 }
                             }
 
