@@ -180,16 +180,24 @@ namespace ETHotfix
 
         private async void OnExit()
         {
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
-            if (ISGaming)
+            try
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
-                Debug.Log("remove");
+                SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                if (ISGaming)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+                    Debug.Log("remove");
+                }
             }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+         
         }
 
         private async void OnSetting()

@@ -371,6 +371,7 @@ namespace ETHotfix
 
         static public GameObject getGameObjByBundle(string bundleName, string fileName)
         {
+            bundleName = bundleName.ToLower();
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");

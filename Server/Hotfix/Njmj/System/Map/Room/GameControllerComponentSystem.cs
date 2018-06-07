@@ -69,13 +69,17 @@ namespace ETHotfix
             if (huaCount == 0)
             {
                 //没牌
+                room.ziMoUid = 0;
+                room.fangPaoUid = 0;
+                room.LiangZhuangCount = 0;
                 room.Broadcast(new Actor_GameFlow());
             }
 
             room.IsGameOver = true;
             room.State = RoomState.Ready;
             room.tokenSource.Cancel();
-//            self.Multiples = 100;
+            room.IsLianZhuang = true;
+         
 
             //游戏房间进入准备房间
             roomComponent.gameRooms.Remove(room.Id);

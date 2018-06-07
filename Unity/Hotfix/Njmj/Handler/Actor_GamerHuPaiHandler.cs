@@ -31,6 +31,10 @@ namespace ETHotfix
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;
 
+                Gamer gamer1 = gamerComponent.Get(message.Uid);
+
+                SoundsHelp.Instance.PlayHuSound(gamer1.PlayerInfo.PlayerSound);
+
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     SoundsHelp.Instance.playSound_Win();

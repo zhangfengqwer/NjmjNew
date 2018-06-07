@@ -193,8 +193,8 @@ namespace ETHotfix
 
                             //杠完之后不能
                             gamer.isFaWanPaiTingPai = false;
-                            room.isGangEndBuPai = true;
-                            room.isGetYingHuaBuPai = false;
+                            gamer.isGangEndBuPai = true;
+                            gamer.isGetYingHuaBuPai = false;
                             orderController.CurrentAuthority = gamer.UserID;
                             //杠完之后抓牌
                             MahjongInfo grabMahjong = room.GrabMahjong();
@@ -276,7 +276,16 @@ namespace ETHotfix
             huPaiNeedData.other2_pengList = temp[1];
             huPaiNeedData.other3_pengList = temp[2];
 
-
+            //比下胡
+            if (room.IsLianZhuang)
+            {
+                if (room.BankerGamer.UserID == room.ziMoUid)
+                {
+                    room.LiangZhuangCount++;
+                    actorGamerHuPai.BixiaHuCount = room.LiangZhuangCount * 10;
+                }
+            }
+           
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
 
             //自摸
@@ -322,6 +331,9 @@ namespace ETHotfix
             {
                 Log.Info("有人胡牌:" + item.ToString());
             }
+
+            Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
+
 
             //设置胡牌的花数
             for (int j = 0; j < huPaiTypes.Count; j++)

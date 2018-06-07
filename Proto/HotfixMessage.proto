@@ -467,6 +467,7 @@ message Actor_GamerHuPai // IActorMessage
    required int RuanHuaCount = 5;
    repeated int HuPaiTypes = 6;
    optional long FangPaoUid = 7;
+   required int BixiaHuCount = 8;
 }
 
 message Actor_GamerReconnet // IActorMessage

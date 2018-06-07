@@ -125,40 +125,41 @@ namespace ETModel
 
                 VersionConfig localVersionConfig = JsonHelper.FromJson<VersionConfig>(File.ReadAllText(versionPath));
 
-                //foreach (var data in localVersionConfig.FileInfoDict)
-                //{
-                //    fileName = data.Value.File;
-                //    if ((fileName.Equals("Version.txt")) ||
-                //        (fileName.Equals("StreamingAssets")))
-                //    {
-                //        continue;
-                //    }
-
-                //    await resourcesComponent.LoadBundleAsync(fileName);
-                //}
-
-                foreach (var str in fileList)
+                foreach (var data in localVersionConfig.FileInfoDict)
                 {
-                    fileName = str;
+                    fileName = data.Value.File;
                     if ((fileName.Equals("Version.txt")) ||
                         (fileName.Equals("StreamingAssets")))
                     {
                         continue;
                     }
 
-                    try
-                    {
-                        await resourcesComponent.LoadBundleAsync(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Debug("LoadRes异常：" + ex + "----" + fileName);
-                    }
+                    await resourcesComponent.LoadBundleAsync(fileName);
                 }
+
+                //foreach (var str in fileList)
+                //{
+                //    fileName = str;
+                //    if ((fileName.Equals("Version.txt")) ||
+                //        (fileName.Equals("StreamingAssets")))
+                //    {
+                //        continue;
+                //    }
+
+                //    try
+                //    {
+                //        await resourcesComponent.LoadBundleAsync(fileName);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Log.Debug("LoadRes异常：" + ex + "----" + fileName);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
                 Log.Debug("LoadRes异常：" + ex + "----" + fileName);
+                ToastScript.createToast("加载音频出错：" + fileName);
             }
         }
     }

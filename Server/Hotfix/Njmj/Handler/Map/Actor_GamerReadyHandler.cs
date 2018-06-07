@@ -68,14 +68,48 @@ namespace ETHotfix
 	                OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	                DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
-                    //随机庄家
-                    int number = RandomHelper.RandomNumber(0, 12);
-	                int i = number % 4;
-	                Gamer bankerGamer = room.gamers[i];
-	                HandCardsComponent bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
-	                bankerHandCards.IsBanker = true;
+	                Gamer bankerGamer = null;
+                    HandCardsComponent bankerHandCards = null;
+                    if (room.IsLianZhuang)
+                    {
+                        if(room.ziMoUid != 0 && room.ziMoUid == room.BankerGamer?.UserID)
+                        {
+                            bankerGamer = room.Get(room.ziMoUid);
+                            bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
+                            bankerHandCards.IsBanker = true;
+                            room.BankerGamer = bankerGamer;
+                        }
+                        else
+                        {
+                            int gamerSeat = room.GetGamerSeat(room.BankerGamer.UserID);
+                            int currentSeat;
+                            if (gamerSeat == 3)
+                            {
+                                currentSeat = 0;
+                            }
+                            else
+                            {
+                                currentSeat = ++gamerSeat;
+                            }
 
-	                //发牌
+                            bankerGamer = room.gamers[currentSeat];
+                            bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
+                            bankerHandCards.IsBanker = true;
+                            room.BankerGamer = bankerGamer;
+                        }
+                    }
+	                else
+	                {
+	                    //随机庄家
+	                    int number = RandomHelper.RandomNumber(0, 12);
+	                    int i = number % 4;
+	                    bankerGamer = room.gamers[i];
+	                    bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
+	                    bankerHandCards.IsBanker = true;
+	                    room.BankerGamer = bankerGamer;
+	                }
+
+                    //发牌
                     gameController.DealCards();
 	                orderController.Start(bankerGamer.UserID);
 
@@ -175,11 +209,11 @@ namespace ETHotfix
 	                    else
 	                    {
                             //检查听牌
-	                        Log.Info("听牌:" + cards.Count);
 	                        List<MahjongInfo> checkTingPaiList = Logic_NJMJ.getInstance().checkTingPaiList(cards);
 	                        if (checkTingPaiList.Count > 0)
 	                        {
-	                            _gamer.isFaWanPaiTingPai = true;
+	                            Log.Info($"{_gamer.UserID}听牌:");
+                                _gamer.isFaWanPaiTingPai = true;
                             }
 	                    }
                     }

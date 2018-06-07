@@ -100,12 +100,15 @@ namespace ETHotfix
                     //设置准备
                     if (uiReadyComponent != null)
                     {
-                        await gamerUiComponent?.SetHeadPanel(uiReadyComponent?.HeadPanel[index]);
-                        uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
+                        await gamerUiComponent.GetPlayerInfo();
+                        if (gamer?.PlayerInfo != null)
+                        {
+                            gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
+                            uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
+                            //根据座位的indax添加玩家
+                            roomComponent?.AddGamer(gamer, index);
+                        }
                     }
-
-                    //根据座位的indax添加玩家
-                    roomComponent.AddGamer(gamer, index);
                 }
 
                 SoundsHelp.Instance.playSound_JinRu();
