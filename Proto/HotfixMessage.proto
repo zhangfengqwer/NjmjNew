@@ -766,6 +766,7 @@ message TreasureInfo // IMessage
 {
 	required int TreasureId = 1;
 	required string Reward = 2;
+	required int Price = 3;
 }
 
 message C2G_DuanwuTreasure // IRequest
@@ -799,16 +800,39 @@ message G2C_DuanwuActivity // IResponse
 	repeated DuanwuActivity DuanwuActivityList = 1;
 }
 
-// message C2G_BuyDuanwuTreasure // IRequest
-// {
-// 	required int UId = 1;
-// 	required string Reward = 2;
-// 	required int Price = 3;
-// }
+message C2G_BuyDuanwuTreasure // IRequest
+{
+	required long UId = 1;
+	required int TreasureId = 2;
+	required string Reward = 3;
+	required int Price = 4;
+}
 
-// message G2C_BuyDuanwuTreasure // IResponse
-// {
+message G2C_BuyDuanwuTreasure // IResponse
+{
 
-// }
+}
+
+message DuanwuData // IMessage
+{
+	required int ZongziCount = 1;
+	required string ActivityType = 2;
+	required int RefreshCount = 3;
+	required int CompleteCount = 4;
+}
+
+message C2G_DuanwuDataBase // IRequest
+{
+	required long UId = 1;
+	required string ActivityType = 2;
+	required int ZongZiCount = 3;
+	required long GoldCost = 4;
+	required int Type = 5;//更新还是请求数据
+}
+
+message G2C_DuanwuDataBase // IResponse
+{
+	required DuanwuData DuanwuData = 1;
+}
 
 #endregion

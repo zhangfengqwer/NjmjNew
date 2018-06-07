@@ -344,6 +344,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\Editor\JetBrains\Unity3DRider.cs" />
+    <Compile Include="Assets\Plugins\Unity-Logs-Viewer\Reporter\Editor\ReporterEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DOTween\DOTween.XML" />
@@ -358,6 +359,7 @@
     <None Include="Assets\Res\Config\RoomConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\StreamingAssets\Version.txt" />
+    <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\link.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -22,7 +22,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    playerInfo.Id = message.Uid;
+                    Log.Debug("更新玩家数据:" + JsonHelper.ToJson(playerInfo));
                     playerInfo.Name = message.playerInfo.Name;
                     playerInfo.GoldNum = message.playerInfo.GoldNum;
                     playerInfo.WingNum = message.playerInfo.WingNum;

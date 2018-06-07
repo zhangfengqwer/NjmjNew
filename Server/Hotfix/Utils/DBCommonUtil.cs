@@ -69,13 +69,13 @@ namespace ETHotfix
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
-           // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
-
+            // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
+            Log.Debug("查询数据库数据:" + taskId + chengjiuInfoList.Count);
             if (chengjiuInfoList.Count > 0)
             {
-                Log.Debug("更新数据库");
+                Log.Debug("更新数据库，玩家ID：" + UId);
                 chengjiuInfoList[0].CurProgress += progress;
-                Log.Debug("当前成就：" + taskId + chengjiuInfoList[0].CurProgress);
+                Log.Debug("当前成就：" + taskId +"当前进度:" + chengjiuInfoList[0].CurProgress);
                 if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {
                     chengjiuInfoList[0].IsComplete = true;
@@ -94,20 +94,22 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                Log.Debug("更新数据库playerBaseInfo" + playerBaseInfos.Count);
                 if (playerBaseInfos.Count > 0)
                 {
                     if (isWin)
                     {
+                        Log.Debug("游戏胜利+1");
                         playerBaseInfos[0].WinGameCount += 1;
+                        Log.Debug("玩家：" + playerBaseInfos[0].Id + "胜利次数为" + playerBaseInfos[0].WinGameCount);
                     }
-
+                    Log.Debug("游戏总局数+1");
                     playerBaseInfos[0].TotalGameCount += 1;
-
-                    float winRate = (float)(playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
+                    Log.Debug("玩家：" + playerBaseInfos[0].Id + "总局数为" + playerBaseInfos[0].TotalGameCount);
 
                     if (playerBaseInfos[0].MaxHua < maxHua)
                         playerBaseInfos[0].MaxHua = maxHua;
-                    await proxyComponent.Save(playerBaseInfos[0]);
+                    proxyComponent.Save(playerBaseInfos[0]);
                 }
             }
             catch (Exception e)
@@ -409,8 +411,29 @@ namespace ETHotfix
 
                     await proxyComponent.Save(progress);
                 }
-
                 Log.Debug("增加新用户任务完毕");
+            }
+            //插入新用户成就
+            {
+                Log.Debug("增加新用户成就");
+                for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
+                {
+                    int id = 100 + i;
+                    ChengjiuConfig config = (ChengjiuConfig)configCom.Get(typeof(ChengjiuConfig), id);
+                    ChengjiuInfo chengjiu = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+                    chengjiu.IsGet = false;
+                    chengjiu.UId = uid;
+                    chengjiu.Name = config.Name;
+                    chengjiu.TaskId = (int)config.Id;
+                    chengjiu.IsComplete = false;
+                    chengjiu.Target = config.Target;
+                    chengjiu.Reward = config.Reward;
+                    chengjiu.Desc = config.Desc;
+                    chengjiu.CurProgress = 0;
+
+                    await proxyComponent.Save(chengjiu);
+                }
+                Log.Debug("增加新用户成就完毕");
             }
 
             return playerBaseInfo;

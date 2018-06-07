@@ -2202,6 +2202,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public string Reward;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int Price;
+
 	}
 
 	[Message(HotfixOpcode.C2G_DuanwuTreasure)]
@@ -2288,13 +2291,100 @@ namespace ETHotfix
 
 	}
 
-// message C2G_BuyDuanwuTreasure // IRequest
-// {
-// 	required int UId = 1;
-// 	required string Reward = 2;
-// 	required int Price = 3;
-// }
-// message G2C_BuyDuanwuTreasure // IResponse
-// {
-// }
+	[Message(HotfixOpcode.C2G_BuyDuanwuTreasure)]
+	[ProtoContract]
+	public partial class C2G_BuyDuanwuTreasure: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int TreasureId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string Reward;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int Price;
+
+	}
+
+	[Message(HotfixOpcode.G2C_BuyDuanwuTreasure)]
+	[ProtoContract]
+	public partial class G2C_BuyDuanwuTreasure: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.DuanwuData)]
+	[ProtoContract]
+	public partial class DuanwuData: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int ZongziCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string ActivityType;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int RefreshCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int CompleteCount;
+
+	}
+
+	[Message(HotfixOpcode.C2G_DuanwuDataBase)]
+	[ProtoContract]
+	public partial class C2G_DuanwuDataBase: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string ActivityType;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int ZongZiCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public long GoldCost;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int Type;
+
+	}
+
+	[Message(HotfixOpcode.G2C_DuanwuDataBase)]
+	[ProtoContract]
+	public partial class G2C_DuanwuDataBase: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public DuanwuData DuanwuData;
+
+	}
+
 }

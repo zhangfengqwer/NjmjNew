@@ -13,7 +13,7 @@ namespace ETHotfix
             try
             {
                 #region duanwuData
-                if (DuanwuData.getInstance().getDataList().Count == 0)
+                if (DuanwuRewardData.getInstance().getDataList().Count == 0)
                 {
                     List<DuanwuRewardInfo> duanwuList = new List<DuanwuRewardInfo>();
                     DuanwuRewardInfo duanwuInfo = new DuanwuRewardInfo();
@@ -85,16 +85,17 @@ namespace ETHotfix
                         duanwuInfo.Price = 666;
                         duanwuList.Add(duanwuInfo);
                     }
-                    DuanwuData.getInstance().getDataList().AddRange(duanwuList);
+                    DuanwuRewardData.getInstance().getDataList().AddRange(duanwuList);
                 }
 
                 List<TreasureInfo> treasureInfoList = new List<TreasureInfo>();
-                for (int i = 0; i < DuanwuData.getInstance().getDataList().Count; ++i)
+                for (int i = 0; i < DuanwuRewardData.getInstance().getDataList().Count; ++i)
                 {
-                    DuanwuRewardInfo config = DuanwuData.getInstance().getDataList()[i];
+                    DuanwuRewardInfo config = DuanwuRewardData.getInstance().getDataList()[i];
                     TreasureInfo info = new TreasureInfo();
                     info.TreasureId = config.TreasureId;
                     info.Reward = config.Reward;
+                    info.Price = config.Price;
                     treasureInfoList.Add(info);
                 }
                 response.TreasureInfoList = treasureInfoList;

@@ -90,8 +90,9 @@ namespace ETHotfix
 			        //人满了
 			        if (idleRoom.seats.Count == 4)
 			        {
-			            roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
-			            roomComponent.idleRooms.Remove(idleRoom);
+                        roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
+                        roomComponent.idleRooms.Remove(idleRoom);
+                        //有key重复添加的问题
 			        }
 
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
