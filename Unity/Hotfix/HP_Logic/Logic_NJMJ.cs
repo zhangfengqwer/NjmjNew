@@ -125,9 +125,9 @@ namespace ETHotfix
             HuPaiHuaName.Add(HuPaiType.DuiDuiHu, "对对胡");
             HuPaiHuaName.Add(HuPaiType.QuanQiuDuDiao, "全球独钓");
             HuPaiHuaName.Add(HuPaiType.QiDui_Normal, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_HaoHua, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoHaoHua, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoChaoHaoHua, "七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_HaoHua, "豪华七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoHaoHua, "超豪华七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoChaoHaoHua, "超超豪华七对");
             HuPaiHuaName.Add(HuPaiType.YaJue, "压绝");
             HuPaiHuaName.Add(HuPaiType.WuHuaGuo, "无花果");
             HuPaiHuaName.Add(HuPaiType.GangHouKaiHua_Small, "杠后开花");

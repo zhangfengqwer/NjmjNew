@@ -177,13 +177,28 @@ namespace ETHotfix
                 {
                     if (data.IsZiMo)
                     {
-                        goldText.text = "-" + BeiLv * huaCount + "";
+                        if (BeiLv * huaCount == 0)
+                        {
+                            goldText.text = "0";
+                        }
+                        else
+                        {
+                            goldText.text = "-" + BeiLv * huaCount + "";
+                        }
                     }
                     else
                     {
                         if (gamer.UserID == data.FangPaoUid)
                         {
-                            goldText.text = "-" + BeiLv * huaCount + "";
+                            if (BeiLv * huaCount == 0)
+                            {
+                                goldText.text = "0";
+                            }
+                            else
+                            {
+                                goldText.text = "-" + BeiLv * huaCount + "";
+                            }
+                            
                             nameText.color = Color.yellow;
                         }
                     }
