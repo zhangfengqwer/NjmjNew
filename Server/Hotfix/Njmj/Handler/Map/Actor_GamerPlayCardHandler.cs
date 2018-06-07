@@ -27,6 +27,13 @@ namespace ETHotfix
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 
+	            if (room.IsPlayingCard)
+	            {
+	                Log.Warning("当前正在出牌，不能再出牌了");
+	                return;
+	            }
+                room.IsPlayingCard = true;
+
 	            OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
@@ -131,7 +138,9 @@ namespace ETHotfix
 	            {
 	                Log.Warning("玩家出牌不存在:" + message.weight);
 	            }
-	        }
+
+	            room.IsPlayingCard = false;
+            }
 	        catch (Exception e)
 	        {
 	            Log.Error(e);

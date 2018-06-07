@@ -125,9 +125,9 @@ namespace ETHotfix
             HuPaiHuaName.Add(HuPaiType.DuiDuiHu, "对对胡");
             HuPaiHuaName.Add(HuPaiType.QuanQiuDuDiao, "全球独钓");
             HuPaiHuaName.Add(HuPaiType.QiDui_Normal, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_HaoHua, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoHaoHua, "七对");
-            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoChaoHaoHua, "七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_HaoHua, "豪华七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoHaoHua, "超豪华七对");
+            HuPaiHuaName.Add(HuPaiType.QiDui_ChaoChaoHaoHua, "超超豪华七对");
             HuPaiHuaName.Add(HuPaiType.YaJue, "压绝");
             HuPaiHuaName.Add(HuPaiType.WuHuaGuo, "无花果");
             HuPaiHuaName.Add(HuPaiType.GangHouKaiHua_Small, "杠后开花");
@@ -621,64 +621,29 @@ namespace ETHotfix
 
         bool isAllShunZiOrKeZi(MahjongInfo doubleMahjongInfo , List<MahjongInfo> list)
         {
-            List<List<MahjongInfo>> chengpaiList = new List<List<MahjongInfo>>() { new List<MahjongInfo>() { doubleMahjongInfo , doubleMahjongInfo } };
-
-            string str = "传过来的牌:";
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                str += (list[i].m_weight + "、");
-            }
-            //Log.Debug(str);
+                List<List<MahjongInfo>> chengpaiList = new List<List<MahjongInfo>>() { new List<MahjongInfo>() { doubleMahjongInfo, doubleMahjongInfo } };
 
-            if (list.Count % 3 != 0)
-            {
-                return false;
-            }
-
-            while (list.Count != 0)
-            {
-                MahjongInfo first = list[0];
-                MahjongInfo second = null;
-                MahjongInfo third = null;
-
-                for (int i = 1; i < list.Count; i++)
+                string str = "传过来的牌:";
+                for (int i = 0; i < list.Count; i++)
                 {
-                    if (list[i].m_weight == (first.m_weight + 1))
-                    {
-                        if (second == null)
-                        {
-                            second = list[i];
-                        }
-                    }
-                    else if (list[i].m_weight == (first.m_weight + 2))
-                    {
-                        if (third == null)
-                        {
-                            third = list[i];
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    str += (list[i].m_weight + "、");
+                }
+                Log.Debug(str);
+
+                if (list.Count % 3 != 0)
+                {
+                    return false;
                 }
 
-                // 顺子找到了
-                if ((second != null) && (third != null))
+                while (list.Count != 0)
                 {
-                    chengpaiList.Add(new List<MahjongInfo>() { first, second , third });
+                    MahjongInfo first = list[0];
+                    MahjongInfo second = null;
+                    MahjongInfo third = null;
 
-                    // Log.Debug("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
-                    list.Remove(first);
-                    list.Remove(second);
-                    list.Remove(third);
-                }
-                // 找不到顺子尝试去找刻子
-                else
-                {
-                    second = null;
-                    third = null;
-
+                    // 先找刻子
                     for (int i = 1; i < list.Count; i++)
                     {
                         if (list[i].m_weight == first.m_weight)
@@ -692,10 +657,6 @@ namespace ETHotfix
                                 third = list[i];
                             }
                         }
-                        else
-                        {
-                            break;
-                        }
                     }
 
                     // 刻子找到了
@@ -708,38 +669,84 @@ namespace ETHotfix
                         list.Remove(second);
                         list.Remove(third);
                     }
+                    // 找不到刻子尝试去找顺子
                     else
                     {
-                        return false;
-                    }
-                }
-            }
+                        second = null;
+                        third = null;
 
-            // 打印成牌排列
-            if(true)
-            {
-                string strTemp = "";
-                for (int i = 0; i < chengpaiList.Count; i++)
-                {
-                    for (int j = 0; j < chengpaiList[i].Count; j++)
-                    {
-                        strTemp += chengpaiList[i][j].m_weight.ToString();
-
-                        if (j != (chengpaiList[i].Count - 1))
+                        for (int i = 1; i < list.Count; i++)
                         {
-                            strTemp += "、";
+                            if (list[i].m_weight == (first.m_weight + 1))
+                            {
+                                if (second == null)
+                                {
+                                    second = list[i];
+                                }
+                            }
+                            else if (list[i].m_weight == (first.m_weight + 2))
+                            {
+                                if (third == null)
+                                {
+                                    third = list[i];
+                                }
+                            }
+                            else
+                            {
+                                // break;
+                            }
+                        }
+
+                        // 顺子找到了
+                        if ((second != null) && (third != null))
+                        {
+                            chengpaiList.Add(new List<MahjongInfo>() { first, second, third });
+
+                            //Log.Debug("找到顺子：" + first.m_weight + "  " + second.m_weight + "  " + third.m_weight);
+                            list.Remove(first);
+                            list.Remove(second);
+                            list.Remove(third);
+                        }
+                        // 找不到顺子尝试去找刻子
+                        else
+                        {
+                            //Log.Debug("刻子和顺子都找不到");
+                            return false;
                         }
                     }
-
-                    if (i != (chengpaiList.Count - 1))
-                    {
-                        strTemp += "----";
-                    }
                 }
-                Log.Debug("成牌排列：" + strTemp);
-            }
 
-            return true;
+                // 打印成牌排列
+                if (true)
+                {
+                    string strTemp = "";
+                    for (int i = 0; i < chengpaiList.Count; i++)
+                    {
+                        for (int j = 0; j < chengpaiList[i].Count; j++)
+                        {
+                            strTemp += chengpaiList[i][j].m_weight.ToString();
+
+                            if (j != (chengpaiList[i].Count - 1))
+                            {
+                                strTemp += "、";
+                            }
+                        }
+
+                        if (i != (chengpaiList.Count - 1))
+                        {
+                            strTemp += "----";
+                        }
+                    }
+                    Log.Debug("成牌排列：" + strTemp);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("isAllShunZiOrKeZi异常：" + ex);
+                return false;
+            }
         }
 
         // 供外部调用：获取胡牌类型
