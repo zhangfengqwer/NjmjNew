@@ -18,6 +18,14 @@ namespace ETHotfix
                 List<DuanwuTreasureInfo> treasureInfoList = await proxyComponent.QueryJson<DuanwuTreasureInfo>($"{{UId:{message.UId},EmailId:{message.TreasureId}}}");
                 await changeDuanwuDataWithStr(message.UId, message.Reward);
 
+                if(treasureInfoList.Count > 0)
+                {
+                    treasureInfoList[0].BuyCount += 1;
+                }
+                else
+                {
+
+                }
                 reply(response);
             }
             catch (Exception e)

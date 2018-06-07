@@ -43,11 +43,8 @@ namespace ETHotfix
                 return;
             }
             GameObject obj = CommonUtil.getGameObjByBundle(panelName);
-            GameObject activity = GameObject.Instantiate(obj);
-            Transform parent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent();
-            activity.transform.SetParent(parent);
-            activity.transform.localScale = Vector3.one;
-            activity.transform.localPosition = Vector3.zero;
+            GameObject activity = GameObject.Instantiate(obj, Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent());
+            //activity.transform.GetComponent<RectTransform>().setan
             UI ui = ComponentFactory.Create<UI, GameObject>(activity);
             if (id == 101)
                 ui.AddComponent<UIActivity101Component>();
