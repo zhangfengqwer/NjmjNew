@@ -192,8 +192,6 @@
     <Compile Include="Component\PlayerInfoComponent.cs" />
     <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
     <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
-    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
-    <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
     <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
     <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />
@@ -278,6 +276,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Njmj\UI\Game\UIReady\Event\" />
+    <Folder Include="UI\UIDuanwuActivity\Component\" />
+    <Folder Include="UI\UIDuanwuActivity\Factory\" />
     <Folder Include="UI\UIMain\Event\" />
     <Folder Include="UI\UIRoom\" />
   </ItemGroup>
