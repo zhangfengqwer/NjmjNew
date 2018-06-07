@@ -20,6 +20,12 @@ namespace ETHotfix
 //                        ToastScript.createToast("拦截多次出牌");
                         return;
                     }
+
+                    if (weight >= 41)
+                    {
+                        Log.Warning("不能出花牌");
+                        return;
+                    }
                     gamerComponent.IsPlayed = true;
                     SessionWrapComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
                 }
