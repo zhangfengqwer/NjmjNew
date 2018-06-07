@@ -73,7 +73,9 @@ namespace ETHotfix
 
             if (chengjiuInfoList.Count > 0)
             {
+                Log.Debug("更新数据库");
                 chengjiuInfoList[0].CurProgress += progress;
+                Log.Debug("当前成就：" + taskId + chengjiuInfoList[0].CurProgress);
                 if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {
                     chengjiuInfoList[0].IsComplete = true;

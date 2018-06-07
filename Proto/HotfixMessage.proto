@@ -151,7 +151,8 @@ message C2G_BuyItem //IRequest
 {
 	required long UId = 1;	
 	required GetItemInfo Info = 2;
-	required int Cost = 3;
+	required int CurrencyType = 3;
+	required int Cost = 4;
 }
 
 message Actor_UpDateData //IActorMessage
@@ -162,6 +163,8 @@ message Actor_UpDateData //IActorMessage
 message G2C_BuyItem //IResponse
 {
 	required long Count = 1;
+	required long Wealth = 2;
+	required int CurrencyType = 3;
 }
 
 message C2G_GetTaskReward //IRequest
@@ -795,16 +798,16 @@ message G2C_DuanwuActivity // IResponse
 	repeated DuanwuActivity DuanwuActivityList = 1;
 }
 
-message C2G_BuyDuanwuTreasure // IRequest
-{
-	required int UId = 1;
-	required string Reward = 2;
-	required int Price = 3;
-}
+// message C2G_BuyDuanwuTreasure // IRequest
+// {
+// 	required int UId = 1;
+// 	required string Reward = 2;
+// 	required int Price = 3;
+// }
 
-message G2C_BuyDuanwuTreasure // IResponse
-{
+// message G2C_BuyDuanwuTreasure // IResponse
+// {
 
-}
+// }
 
 #endregion

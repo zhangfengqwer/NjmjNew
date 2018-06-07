@@ -133,7 +133,5 @@ namespace ETModel
 		 public const ushort DuanwuActivity = 10129;
 		 public const ushort C2G_DuanwuActivity = 10130;
 		 public const ushort G2C_DuanwuActivity = 10131;
-		 public const ushort C2G_BuyDuanwuTreasure = 10132;
-		 public const ushort G2C_BuyDuanwuTreasure = 10133;
 	}
 }
