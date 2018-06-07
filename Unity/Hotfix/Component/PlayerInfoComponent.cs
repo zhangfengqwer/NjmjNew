@@ -26,7 +26,6 @@ namespace ETHotfix
         private List<TaskInfo> taskInfoList;//任务信息
         private List<Bag> bagInfoList;//背包信息
         private List<TaskInfo> chengjiuList;
-        private List<DuanwuActivity> duanwuActivityList;
         public int RoomType { get; set; }
 
         public void SetPlayerInfo(PlayerInfo playerInfo)
@@ -76,16 +75,6 @@ namespace ETHotfix
         public List<TaskInfo> GetChengjiuList()
         {
             return chengjiuList;
-        }
-
-        public void SetDuanwuList(List<DuanwuActivity> duanwuList)
-        {
-            this.duanwuActivityList = duanwuList;
-        }
-
-        public List<DuanwuActivity> GetDuanwuList()
-        {
-            return duanwuActivityList;
         }
 
         public void Awake()

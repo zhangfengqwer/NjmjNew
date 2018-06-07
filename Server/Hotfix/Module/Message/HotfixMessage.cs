@@ -438,6 +438,9 @@ namespace ETHotfix
 		public GetItemInfo Info;
 
 		[ProtoMember(3, IsRequired = true)]
+		public int CurrencyType;
+
+		[ProtoMember(4, IsRequired = true)]
 		public int Cost;
 
 	}
@@ -472,6 +475,12 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long Count;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long Wealth;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int CurrencyType;
 
 	}
 
@@ -2279,37 +2288,13 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.C2G_BuyDuanwuTreasure)]
-	[ProtoContract]
-	public partial class C2G_BuyDuanwuTreasure: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public int UId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Reward;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int Price;
-
-	}
-
-	[Message(HotfixOpcode.G2C_BuyDuanwuTreasure)]
-	[ProtoContract]
-	public partial class G2C_BuyDuanwuTreasure: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-	}
-
+// message C2G_BuyDuanwuTreasure // IRequest
+// {
+// 	required int UId = 1;
+// 	required string Reward = 2;
+// 	required int Price = 3;
+// }
+// message G2C_BuyDuanwuTreasure // IResponse
+// {
+// }
 }

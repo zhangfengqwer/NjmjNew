@@ -13,7 +13,21 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                await DBCommonUtil.ChangeWealth(message.UId, 2, -message.Cost, $"花费元宝购买商品{message.Info.ItemID}");
+                await DBCommonUtil.ChangeWealth(message.UId, message.CurrencyType, -message.Cost, $"花费元宝购买商品{message.Info.ItemID}");
+                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
+                switch (message.CurrencyType)
+                {
+                    //金币
+                    case 1:
+                        response.Wealth = playerBaseInfos[0].GoldNum;
+                        response.CurrencyType = 1;
+                        break;
+                    //元宝
+                    case 2:
+                        response.Wealth = playerBaseInfos[0].WingNum;
+                        response.CurrencyType = 2;
+                        break;
+                }
                 //购买金币
                 if (message.Info.ItemID == 1)
                 {
