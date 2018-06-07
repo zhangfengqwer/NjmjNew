@@ -23,7 +23,7 @@ namespace ETHotfix
 	            //获得空闲的房间
 	            foreach (var room in roomComponent.idleRooms)
 	            {
-	                if (room.Id != gamerRoom.Id)
+	                if (room.Id != gamerRoom?.Id)
 	                {
 	                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
 	                    if (controllerComponent.RoomConfig.Id == message.RoomType)
@@ -42,9 +42,9 @@ namespace ETHotfix
 
                 Log.Debug("收到玩家换桌前：" + gamer.RoomID);
                 //房间移除玩家
-                gamerRoom.Remove(gamer.UserID);
+                gamerRoom?.Remove(gamer.UserID);
 	            //消息广播给其他人
-	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
 	            gamerRoom.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 
 	            if (gamerRoom.seats.Count == 3)

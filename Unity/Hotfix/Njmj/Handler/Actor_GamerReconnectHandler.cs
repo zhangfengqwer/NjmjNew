@@ -101,10 +101,9 @@ namespace ETHotfix
 //                        item.handCards.RemoveAt(index);
                     }
                 }
-
-                SoundsHelp.Instance.SoundMute(false);
-
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+                bool b = PlayerPrefs.GetInt("isOpenSound", 0) == 0;
+                SoundsHelp.Instance.SoundMute(b);
                 GameObject.Destroy(mask);
             }
             catch (Exception e)

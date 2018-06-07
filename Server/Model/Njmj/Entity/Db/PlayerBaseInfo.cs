@@ -15,11 +15,13 @@ namespace ETModel
         public int RestChangeNameCount = 1;
         public int TotalGameCount = 0;
         public int WinGameCount = 0;
-        public int PlayerSound { get; set; }
+        public int PlayerSound = RandomHelper.RandomNumber(1, 5);
         public string VipTime = "2018-05-18 00:00:00";
         public string EmogiTime = "2018-05-18 00:00:00";
         public int ZhuanPanCount = 0;
         public int LuckyValue = 0;
         public int MaxHua = 0;
+
+
     }
 }

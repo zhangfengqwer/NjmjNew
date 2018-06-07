@@ -200,8 +200,8 @@ namespace ETHotfix
             HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
 
             Log.Debug("当前:"+ orderController.CurrentAuthority);
-            room.isGangEndBuPai = false;
-            room.isGetYingHuaBuPai = false;
+            currentGamer.isGangEndBuPai = false;
+            currentGamer.isGetYingHuaBuPai = false;
             var grabMahjong = GrabMahjong(room);
             if (grabMahjong == null)
             {
@@ -225,9 +225,9 @@ namespace ETHotfix
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
-                room.isGangEndBuPai = false;
-                room.isGetYingHuaBuPai = true;
+                //                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
+                currentGamer.isGangEndBuPai = false;
+                currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
                 if (grabMahjong == null)
                 {

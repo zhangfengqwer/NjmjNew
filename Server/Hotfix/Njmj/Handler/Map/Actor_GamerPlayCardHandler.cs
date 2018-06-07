@@ -61,8 +61,8 @@ namespace ETHotfix
 	                deskComponent.CurrentAuthority = gamer.UserID;
 	                handCardsComponent.PlayCards.Add(mahjongInfo);
                     mahjongInfos.RemoveAt(index);
-
-	                Actor_GamerPlayCard actorGamerPlayCard = new Actor_GamerPlayCard()
+	                room.my_lastMahjong = mahjongInfo;
+                    Actor_GamerPlayCard actorGamerPlayCard = new Actor_GamerPlayCard()
 	                {
 	                    weight = message.weight,
 	                    Uid = gamer.UserID,

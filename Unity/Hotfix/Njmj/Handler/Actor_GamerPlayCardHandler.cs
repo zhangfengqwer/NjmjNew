@@ -33,14 +33,16 @@ namespace ETHotfix
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     handCardsComponent.PlayCard(mahjongInfo, message.index, uiRoomComponent.currentItem);
+                    SoundsHelp.Instance.PlayCardSound(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound,message.weight);
                 }
                 else
                 {
                     handCardsComponent.PlayOtherCard(mahjongInfo, uiRoomComponent.currentItem);
+                    SoundsHelp.Instance.PlayCardSound(gamer.PlayerInfo.PlayerSound, message.weight);
                 }
 
                 int number = RandomHelper.RandomNumber(1, 3);
-                SoundsHelp.Instance.playSound_Card_Nv1(message.weight);
+//                SoundsHelp.Instance.playSound_Card_Nv1(message.weight);
                 SoundsHelp.Instance.playSound_ChuPai();
             }
             catch (Exception e)
