@@ -61,7 +61,7 @@ namespace ETHotfix
             initData();
         }
 
-        public void initData()
+        public async void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -87,6 +87,15 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
+            panel_start.transform.Find("Image_bg/Btn_test").GetComponent<Button>().onClick.AddListener(()=>
+            {
+                if (++NetConfig.getInstance().clickCount == 5)
+                {
+                    NetConfig.getInstance().isFormal = false;
+                    ToastScript.createToast("test");
+                }
+            });
+
             {
                 // 隐藏手机登录界面
                 panel_phoneLogin.transform.localScale = Vector3.zero;
@@ -100,7 +109,13 @@ namespace ETHotfix
                 DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
             }
 
-            if(false)
+            {
+                UINetLoadingComponent.showNetLoading();
+                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/netconfig.json", NetConfig.getInstance().init);
+                UINetLoadingComponent.closeNetLoading();
+            }
+
+            if (false)
             {
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
@@ -439,10 +454,17 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
 
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
-            await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            try
+            {
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
+                await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
 
             UINetLoadingComponent.closeNetLoading();
         }
