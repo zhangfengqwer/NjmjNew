@@ -286,6 +286,7 @@ namespace ETHotfix
                         }
                     }
                 }
+
                 //重置每天在线时长和宝箱次数
                 {
                     List<GamerInfoDB> gamerInfo = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{uid}}}");
@@ -295,6 +296,7 @@ namespace ETHotfix
                         gamerInfo[0].DailyTreasureCount = 0;
                     }
                 }
+
                 //重置端午节活动
                 //{
                 //    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
@@ -325,11 +327,24 @@ namespace ETHotfix
             }
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
-                log_Login.Uid = uid;
-                await proxyComponent.Save(log_Login);
-            }
+            log_Login.Uid = uid;
+            await proxyComponent.Save(log_Login);
+        }
 
-            public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
+        // 游戏日志
+        public static async Task Log_Game(string RoomName,long Player1_uid, long Player2_uid, long Player3_uid, long Player4_uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            Log_Game log = ComponentFactory.CreateWithId<Log_Game>(IdGenerater.GenerateId());
+            log.RoomName = RoomName;
+            log.Player1_uid = Player1_uid;
+            log.Player2_uid = Player2_uid;
+            log.Player3_uid = Player3_uid;
+            log.Player4_uid = Player4_uid;
+            await proxyComponent.Save(log);
+        }
+
+        public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());
