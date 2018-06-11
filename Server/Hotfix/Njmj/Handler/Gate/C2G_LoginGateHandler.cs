@@ -23,6 +23,7 @@ namespace ETHotfix
 			        return;
 			    }
 
+			    Log.Warning("热更dll");
                 // 检测是否已存在
                 UserComponentSystem.CheckIsExistTheUser(userId);
 

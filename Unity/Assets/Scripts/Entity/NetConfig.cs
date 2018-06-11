@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -97,5 +98,29 @@ namespace ETModel
                 return test_web;
             }
         }
+
+        public IPEndPoint ToIPEndPointWithYuMing()
+        {
+            string serverUrl = NetConfig.getInstance().getServerUrl();
+            int serverPort = NetConfig.getInstance().getServerPort();
+
+            Log.Debug("serverUrl:" + serverUrl);
+            Log.Debug("serverPort:" + serverPort);
+            IPAddress ip;
+            IPHostEntry IPinfo = Dns.GetHostEntry(serverUrl);
+            if (IPinfo.AddressList.Length <= 0)
+            {
+                ToastScript.createToast("域名解析出错");
+                return null;
+            }
+            ip = IPinfo.AddressList[0];
+            return ToIPEndPoint(ip, serverPort);
+        }
+
+        public IPEndPoint ToIPEndPoint(IPAddress host, int port)
+        {
+            return new IPEndPoint(host, port);
+        }
+
     }
 }

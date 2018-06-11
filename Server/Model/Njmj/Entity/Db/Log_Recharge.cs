@@ -9,5 +9,6 @@ namespace ETModel
         public long Uid { set; get; }
         public long GoodsId { get; set; }
         public int Price { get; set; }
+        public int OrderId { get; set; }
     }
 }

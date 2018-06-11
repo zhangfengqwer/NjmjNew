@@ -103,7 +103,7 @@ namespace ETHotfix
                     //游戏结束
                     if (room.IsGameOver) return;
 
-                    //碰
+                    // 碰
                     if (message.OperationType == 0)
                     {
                         if (Logic_NJMJ.getInstance().isCanPeng(deskComponent.CurrentCard, mahjongInfos))
@@ -121,7 +121,7 @@ namespace ETHotfix
                             handCards.PengCards.Add(deskComponent.CurrentCard);
                         }
                     }
-                    //杠
+                    // 杠
                     else
                     {
                         HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
@@ -184,7 +184,9 @@ namespace ETHotfix
                             }
 
                             handCardsComponent.PengCards.Remove(info);
+
                             handCards.GangCards.Add(info);
+                            handCards.PengGangCards.Add(info);
                         }
 
                         if (isSuccess)
@@ -333,7 +335,6 @@ namespace ETHotfix
             }
 
             Log.Info("huPaiNeedData:" + JsonHelper.ToJson(huPaiNeedData));
-
 
             //设置胡牌的花数
             for (int j = 0; j < huPaiTypes.Count; j++)

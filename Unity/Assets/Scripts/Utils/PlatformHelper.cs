@@ -43,7 +43,7 @@ public class PlatformHelper
 
     public static string GetVersionName()
     {
-        return "1.1.0";
+        return "2.1.0";
     }
 
     /// <summary>

@@ -43,6 +43,7 @@ namespace ETModel
             this.UserID = 0;
             this.IsMatching = false;
             this.ActorID = 0;
+            this.session = null;
         }
     }
 }

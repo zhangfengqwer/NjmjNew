@@ -86,6 +86,7 @@ namespace ETHotfix
             roomComponent.readyRooms.Add(room.Id, room);
 
             Log.Debug("改变财富:" + huaCount * controllerComponent.RoomConfig.Multiples);
+
             await ChangeWeath(self, huaCount, room);
 
             //更新任务
@@ -253,8 +254,7 @@ namespace ETHotfix
                 {
                     if (gamer.UserID == room.ziMoUid)
                     {
-                       
-                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.RoomConfig.Multiples, self.RoomConfig.Name + "结算");
+                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.RoomConfig.Multiples * 3, self.RoomConfig.Name + "结算");
                         //	105	赚钱高手	当日累计赢取10000金币	10000	10000
                         DBCommonUtil.UpdateTask(gamer.UserID, 105, huaCount * self.RoomConfig.Multiples);
                         // 110 小试身手 单局赢取10000金币满 100局

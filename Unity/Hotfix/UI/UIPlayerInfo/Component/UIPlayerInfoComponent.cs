@@ -210,7 +210,7 @@ namespace ETHotfix
             {
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_ChangeAccount r2CData = (R2C_ChangeAccount)await sessionWrap.Call(new C2R_ChangeAccount() { Uid = PlayerInfoComponent.Instance.uid });

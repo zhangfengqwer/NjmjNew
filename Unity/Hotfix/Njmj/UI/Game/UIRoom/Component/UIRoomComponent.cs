@@ -138,6 +138,14 @@ namespace ETHotfix
                 cheatInput.gameObject.SetActive(false);
             });
 
+            if (NetConfig.getInstance().isFormal)
+            {
+                this.cheat.SetActive(false);
+            }
+            else
+            {
+                this.cheat.SetActive(true);
+            }
             #endregion
 
 

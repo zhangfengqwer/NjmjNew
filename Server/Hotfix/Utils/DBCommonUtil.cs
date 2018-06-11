@@ -549,11 +549,12 @@ namespace ETHotfix
         /// <summary>
         /// 发货接口
         /// </summary>
+        /// <param name="orderId"></param>
         /// <param name="userId"></param>
         /// <param name="goodsId"></param>
         /// <param name="goodsNum"></param>
         /// <param name="price"></param>
-        public static async Task UserRecharge(long userId, int goodsId, int goodsNum, float price)
+        public static async Task UserRecharge(int orderId, long userId, int goodsId, int goodsNum, float price)
         {
             try
             {
@@ -562,15 +563,23 @@ namespace ETHotfix
                 ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
 
                 List<Log_Recharge> log_Recharge = await proxyComponent.QueryJson<Log_Recharge>($"{{Uid:{userId}}}");
+
                 if (log_Recharge.Count == 0)
                 {
-                    reward = "1:120000;105:20;104:1;107:1;";
+                    reward = "1:120000;105:20;104:1;107:1";
+                    await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
                 }
+                reward = config.Items;
 
-                reward += config.Items;
+                await DBCommonUtil.changeWealthWithStr(userId, reward, "购买元宝");
 
-                PlayerBaseInfo baseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
-                await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
+                UserComponent userComponent = Game.Scene.GetComponent<UserComponent>();
+                User user = userComponent.Get(userId);
+                //给玩家发送消息
+                user?.session?.Send(new Actor_GamerBuyYuanBao()
+                {
+                    goodsId = goodsId
+                });
 
                 // 记录日志
                 {
@@ -578,6 +587,7 @@ namespace ETHotfix
                     log_recharge.Uid = userId;
                     log_recharge.GoodsId = config.Id;
                     log_recharge.Price = config.Price;
+                    log_recharge.OrderId = orderId;
                     await proxyComponent.Save(log_recharge);
                 }
             }
