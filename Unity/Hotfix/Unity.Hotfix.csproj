@@ -106,6 +106,7 @@
     <Compile Include="Entity\Config\ActivityConfig.cs" />
     <Compile Include="Entity\Config\NoticeConfig.cs" />
     <Compile Include="Entity\Config\NetConfig.cs" />
+    <Compile Include="Entity\Config\OtherData.cs" />
     <Compile Include="Entity\Config\RoomConfig.cs" />
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
