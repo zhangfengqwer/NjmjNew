@@ -61,7 +61,7 @@ namespace ETHotfix
             initData();
         }
 
-        public void initData()
+        public async void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -87,6 +87,15 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
+//            panel_start.transform.Find("Image_bg/Btn_test").GetComponent<Button>().onClick.AddListener(()=>
+//            {
+//                if (++NetConfig.getInstance().clickCount == 5)
+//                {
+//                    NetConfig.getInstance().isFormal = false;
+//                    ToastScript.createToast("test");
+//                }
+//            });
+
             {
                 // 隐藏手机登录界面
                 panel_phoneLogin.transform.localScale = Vector3.zero;
@@ -100,7 +109,7 @@ namespace ETHotfix
                 DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
             }
 
-            if(false)
+            if (false)
             {
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
@@ -258,8 +267,8 @@ namespace ETHotfix
             SessionWrap sessionWrap = null;
             try
             {
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-
+//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
@@ -312,8 +321,9 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
@@ -338,7 +348,8 @@ namespace ETHotfix
 
                 UINetLoadingComponent.showNetLoading();
 
-                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -387,7 +398,8 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
@@ -405,7 +417,8 @@ namespace ETHotfix
 
                 UINetLoadingComponent.showNetLoading();
 
-                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -439,10 +452,17 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
 
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
-            await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            try
+            {
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
+                await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
 
             UINetLoadingComponent.closeNetLoading();
         }

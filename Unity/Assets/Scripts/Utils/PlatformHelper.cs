@@ -299,6 +299,10 @@ public class PlatformHelper
     {
         return "2";
     }
+
+    public static void SetIsFormal(bool isFormal)
+    {
+    }
 }
 #elif UNITY_ANDROID /// <summary>
 /// 控制所有对本地化的调用 （除了MallAndroidHelper ，因为MallAndroidHelper 对本地调用比较多而且复杂 。所有Android 调用会调 UnityHelper 类 。
@@ -338,7 +342,12 @@ public class PlatformHelper
     
     public static string GetMacId()
     {
-        return GetJC().CallStatic<string>("getUniqueId");;
+        return GetJC().CallStatic<string>("getUniqueId");
+    }
+
+     public static void SetIsFormal(bool isFormal)
+    {
+        GetJC().CallStatic("setIsFormal",isFormal);
     }
 
     /// <summary>
@@ -757,6 +766,9 @@ public class PlatformHelper
 
     [DllImport("__Internal")]
     public static extern string getIsTest();
+
+    [DllImport("__Internal")]
+    public static extern void SetIsFormal(bool isFormal);
     
     public static string GetChannelName()
     {

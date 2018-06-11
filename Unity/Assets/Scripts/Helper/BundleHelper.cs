@@ -10,9 +10,9 @@ namespace ETModel
 		public static async Task DownloadBundle()
 		{
 			Game.EventSystem.Run(EventIdType.LoadingBegin);
-            
+		    await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+//		    Log.Debug("GlobalConfigComponent.Instance.GlobalProto.GetUrl()" + GlobalConfigComponent.Instance.GlobalProto.GetUrl());
             await StartDownLoadResources();
-
             Game.EventSystem.Run(EventIdType.LoadRes);
         }
 

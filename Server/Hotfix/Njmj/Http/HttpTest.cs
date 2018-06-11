@@ -62,7 +62,7 @@ namespace ETHotfix
 		}
 
 	    [Get] // url-> /Login?name=11&age=1111
-	    public async Task<HttpResult> BuyYuanBao(long userId, int goodsId, int goodsNum, int price, string account, string password)
+	    public async Task<HttpResult> BuyYuanBao(int orderId, long userId, int goodsId, int goodsNum, int price, string account, string password)
 	    {
 	        Log.Debug("web请求发元宝");
 
@@ -72,6 +72,11 @@ namespace ETHotfix
 	        }
 
 	        ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+
+	        if (config == null)
+	        {
+	            return Error("goodsId错误");
+            }
 
 	        if (price != config.Price)
 	        {
