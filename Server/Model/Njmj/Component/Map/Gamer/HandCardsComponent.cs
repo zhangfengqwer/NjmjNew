@@ -11,7 +11,7 @@ namespace ETModel
         //出的牌
         public readonly List<MahjongInfo> PlayCards = new List<MahjongInfo>();
 
-        //花牌
+        //硬花牌
         public readonly List<MahjongInfo> FaceCards = new List<MahjongInfo>();
 
         //碰
@@ -19,6 +19,9 @@ namespace ETModel
 
         //杠牌
         public readonly List<MahjongInfo> GangCards = new List<MahjongInfo>();
+
+        //碰后杠
+        public readonly List<MahjongInfo> PengGangCards = new List<MahjongInfo>();
 
         //抓的牌
         public MahjongInfo GrabCard;
@@ -50,6 +53,7 @@ namespace ETModel
             FaceCards.Clear();
             PengCards.Clear();
             GangCards.Clear();
+            PengGangCards.Clear();
             IsTrusteeship = false;
             IsBanker = false;
             GrabCard = null;

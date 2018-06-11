@@ -344,14 +344,31 @@ namespace ETHotfix
                     {
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 
-                        //判断胡
-                        if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
+                        //判断小胡,4个花以上才能胡
+                        if (handCardsComponent.PengGangCards.Count > 0 || handCardsComponent.PengCards.Count > 0)
                         {
-                            _gamer.IsCanHu = true;
-                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
-                            canOperation.Uid = _gamer.UserID;
-                            canOperation.OperationType = 2;
-                            room.GamerBroadcast(_gamer, canOperation);
+                            if (handCardsComponent.FaceCards.Count >= 4)
+                            {
+                                if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
+                                {
+                                    _gamer.IsCanHu = true;
+                                    Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                                    canOperation.Uid = _gamer.UserID;
+                                    canOperation.OperationType = 2;
+                                    room.GamerBroadcast(_gamer, canOperation);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
+                            {
+                                _gamer.IsCanHu = true;
+                                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                                canOperation.Uid = _gamer.UserID;
+                                canOperation.OperationType = 2;
+                                room.GamerBroadcast(_gamer, canOperation);
+                            }
                         }
 
                         //暗杠

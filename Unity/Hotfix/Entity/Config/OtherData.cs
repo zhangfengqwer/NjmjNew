@@ -10,7 +10,7 @@ namespace Hotfix
 {
     class OtherData
     {
-        static bool isShiedShare = true;
+        static bool isShiedShare = false;
 
         public static bool getIsShiedShare()
         {

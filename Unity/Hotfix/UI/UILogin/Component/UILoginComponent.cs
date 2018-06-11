@@ -266,7 +266,7 @@ namespace ETHotfix
             {
 
 //                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
@@ -322,7 +322,7 @@ namespace ETHotfix
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
@@ -349,7 +349,7 @@ namespace ETHotfix
 
 
 //                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
-                connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -400,7 +400,7 @@ namespace ETHotfix
 
 
 //                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
@@ -419,7 +419,7 @@ namespace ETHotfix
                 UINetLoadingComponent.showNetLoading();
 
 //                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
-                connetEndPoint = NetworkHelper.ToIPEndPointWithYuMing();
+                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
