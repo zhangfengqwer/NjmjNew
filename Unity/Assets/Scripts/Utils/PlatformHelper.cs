@@ -300,7 +300,7 @@ public class PlatformHelper
         return "2";
     }
 
-    public static void SetIsFormal(bool isFormal)
+    public static void SetIsFormal(string isFormal)
     {
     }
 }
@@ -345,7 +345,7 @@ public class PlatformHelper
         return GetJC().CallStatic<string>("getUniqueId");
     }
 
-     public static void SetIsFormal(bool isFormal)
+     public static void SetIsFormal(string isFormal)
     {
         GetJC().CallStatic("setIsFormal",isFormal);
     }
@@ -768,7 +768,7 @@ public class PlatformHelper
     public static extern string getIsTest();
 
     [DllImport("__Internal")]
-    public static extern void SetIsFormal(bool isFormal);
+    public static extern void SetIsFormal(string isFormal);
     
     public static string GetChannelName()
     {
