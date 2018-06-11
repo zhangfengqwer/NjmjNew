@@ -22,7 +22,7 @@ namespace ETHotfix
 
                 UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
 
-                Gamer gamer = GamerFactory.Create(message.Gamer.UserID, message.Gamer.IsReady);
+                Gamer gamer = GamerFactory.Create(message.Gamer.UserID, message.Gamer.IsReady,message.Gamer.playerInfo);
 
                 GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();
 
@@ -33,7 +33,7 @@ namespace ETHotfix
                 //设置准备
                 if (uiReadyComponent != null)
                 {
-                    await gamerUiComponent.GetPlayerInfo();
+//                    await gamerUiComponent.GetPlayerInfo();
                     if (gamer?.PlayerInfo != null)
                     {
                         gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);

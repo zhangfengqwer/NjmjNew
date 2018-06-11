@@ -1,14 +1,13 @@
-﻿using ETHotfix;
-using LitJson;
+﻿using LitJson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotfix
+namespace ETModel
 {
-    class NetConfig
+    public class NetConfig
     {
         public int clickCount = 0;
 
@@ -33,7 +32,16 @@ namespace Hotfix
 
             return s_instance;
         }
-        
+
+        public async Task Req(string url)
+        {
+            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            {
+                await webRequestAsync.DownloadAsync(url);
+                init(webRequestAsync.Request.downloadHandler.text);
+            }
+        }
+
         public void init(string jsonData)
         {
             try
@@ -41,11 +49,11 @@ namespace Hotfix
                 JsonData jd = JsonMapper.ToObject(jsonData);
 
                 formal_url = jd["formal"]["url"].ToString();
-                formal_port = (int)jd["formal"]["port"];
+                formal_port = (int) jd["formal"]["port"];
                 formal_web = jd["formal"]["weburl"].ToString();
 
                 test_url = jd["test"]["url"].ToString();
-                test_port = (int)jd["test"]["port"];
+                test_port = (int) jd["test"]["port"];
                 test_web = jd["test"]["weburl"].ToString();
             }
             catch (Exception ex)

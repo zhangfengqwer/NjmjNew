@@ -65,7 +65,7 @@ namespace ETHotfix
                     if (message.Gamers[i].UserID == PlayerInfoComponent.Instance.uid)
                     {
                         localGamer = message.Gamers[i];
-                        gamerComponent.LocalGamer = GamerFactory.Create(localGamer.UserID, localGamer.IsReady);
+                        gamerComponent.LocalGamer = GamerFactory.Create(localGamer.UserID, localGamer.IsReady,localGamer.playerInfo);
                         break;
                     }
                 }
@@ -87,7 +87,7 @@ namespace ETHotfix
                     }
                     else
                     {
-                        gamer = GamerFactory.Create(gamerInfo.UserID, gamerInfo.IsReady);
+                        gamer = GamerFactory.Create(gamerInfo.UserID, gamerInfo.IsReady, gamerInfo.playerInfo);
                     }
 
                     UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
@@ -100,7 +100,7 @@ namespace ETHotfix
                     //设置准备
                     if (uiReadyComponent != null)
                     {
-                        await gamerUiComponent.GetPlayerInfo();
+//                        await gamerUiComponent.GetPlayerInfo();
                         if (gamer?.PlayerInfo != null)
                         {
                             gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);

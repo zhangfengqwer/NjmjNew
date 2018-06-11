@@ -545,5 +545,46 @@ namespace ETHotfix
 
             return i;
         }
+
+        /// <summary>
+        /// 发货接口
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="goodsId"></param>
+        /// <param name="goodsNum"></param>
+        /// <param name="price"></param>
+        public static async Task UserRecharge(long userId, int goodsId, int goodsNum, float price)
+        {
+            try
+            {
+                string reward = "";
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+
+                List<Log_Recharge> log_Recharge = await proxyComponent.QueryJson<Log_Recharge>($"{{Uid:{userId}}}");
+                if (log_Recharge.Count == 0)
+                {
+                    reward = "1:120000;105:20;104:1;107:1;";
+                }
+
+                reward += config.Items;
+
+                PlayerBaseInfo baseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
+                await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
+
+                // 记录日志
+                {
+                    Log_Recharge log_recharge = ComponentFactory.CreateWithId<Log_Recharge>(IdGenerater.GenerateId());
+                    log_recharge.Uid = userId;
+                    log_recharge.GoodsId = config.Id;
+                    log_recharge.Price = config.Price;
+                    await proxyComponent.Save(log_recharge);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+        }
     } 
 }

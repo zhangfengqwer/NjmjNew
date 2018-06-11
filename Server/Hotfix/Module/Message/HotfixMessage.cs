@@ -794,6 +794,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int SeatIndex;
 
+		[ProtoMember(4, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
 	}
 
 	[Message(HotfixOpcode.G2M_PlayerEnterRoom)]
@@ -1207,6 +1210,9 @@ namespace ETHotfix
 
 		[ProtoMember(9, IsRequired = true)]
 		public int OnlineSeconds;
+
+		[ProtoMember(10, IsRequired = true)]
+		public PlayerInfo playerInfo;
 
 	}
 

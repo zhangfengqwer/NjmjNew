@@ -279,6 +279,7 @@ message GamerInfo //IMessage
  	required int64 UserID = 1;
     required bool IsReady = 2;
     required int  SeatIndex = 3;
+    required PlayerInfo playerInfo = 4;
 }
 
 message G2M_PlayerEnterRoom //IRequest
@@ -421,6 +422,7 @@ message GamerData //IMessage
 	repeated MahjongInfo gangCards = 7;
 	required bool IsBanker = 8;
 	required int OnlineSeconds = 9;
+	required PlayerInfo playerInfo = 10;
 }
 
 message Actor_ChangeTable // IActorMessage

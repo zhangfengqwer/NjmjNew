@@ -206,22 +206,22 @@ namespace ETHotfix
 
         private CancellationTokenSource tokenSource;
 
-        public async Task GetPlayerInfo()
-        {
-            tokenSource = new CancellationTokenSource();
-            try
-            {
-                Gamer gamer = this.GetParent<Gamer>();
-                Log.Debug("请求gamer信息:" + gamer.UserID);
-                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID }, tokenSource.Token);
-                gamer.PlayerInfo = playerInfo.PlayerInfo;
-            }
-            catch (Exception e)
-            {
-                Log.Error(e);
-                tokenSource.Cancel();
-            }
-        }
+//        public async Task GetPlayerInfo()
+//        {
+//            tokenSource = new CancellationTokenSource();
+//            try
+//            {
+//                Gamer gamer = this.GetParent<Gamer>();
+//                Log.Debug("请求gamer信息:" + gamer.UserID);
+//                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID }, tokenSource.Token);
+//                gamer.PlayerInfo = playerInfo.PlayerInfo;
+//            }
+//            catch (Exception e)
+//            {
+//                Log.Error(e);
+//                tokenSource.Cancel();
+//            }
+//        }
 
         /// <summary>
         /// 设置准备界面

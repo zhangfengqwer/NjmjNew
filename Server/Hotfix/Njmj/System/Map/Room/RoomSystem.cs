@@ -47,7 +47,7 @@ namespace ETHotfix
             actorProxy.Send(message);
         }
 
-        public static void BroadGamerEnter(this Room self,int roomType)
+        public static async void BroadGamerEnter(this Room self,int roomType)
         {
             List<GamerInfo> Gamers = new List<GamerInfo>();
             foreach (var item in self.seats)
@@ -57,6 +57,23 @@ namespace ETHotfix
                 gamerInfo.SeatIndex = item.Value;
                 Gamer temp = self.Get(item.Key);
                 gamerInfo.IsReady = temp.IsReady;
+
+                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+
+                PlayerInfo playerInfo = new PlayerInfo();
+                playerInfo.Icon = playerBaseInfo.Icon;
+                playerInfo.Name = playerBaseInfo.Name;
+                playerInfo.GoldNum = playerBaseInfo.GoldNum;
+                playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
+                playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
+                playerInfo.VipTime = playerBaseInfo.VipTime;
+                playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
+                playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
+                playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
+                playerInfo.MaxHua = playerBaseInfo.MaxHua;
+
+                gamerInfo.playerInfo = playerInfo;
+
                 Gamers.Add(gamerInfo);
             }
 

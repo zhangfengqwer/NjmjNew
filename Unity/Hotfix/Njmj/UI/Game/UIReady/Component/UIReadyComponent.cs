@@ -10,9 +10,9 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIReadyComponentSystem: StartSystem<UIReadyComponent>
+    public class UIReadyComponentSystem: AwakeSystem<UIReadyComponent>
     {
-        public override void Start(UIReadyComponent self)
+        public override void Awake(UIReadyComponent self)
         {
             self.Awake();
         }

@@ -28,7 +28,7 @@ namespace ETHotfix
                     gamerInfo.UserID = item.UserID;
                     gamerInfo.SeatIndex = item.SeatIndex;
                     gamerInfo.IsReady = true;
-
+                    gamerInfo.playerInfo = item.playerInfo;
                     Gamers.Add(gamerInfo);
 
                     //将出的牌加入到手牌中

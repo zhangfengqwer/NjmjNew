@@ -53,6 +53,24 @@ namespace ETHotfix
 			            gamerData.UserID = _gamer.UserID;
 			            gamerData.SeatIndex = room.GetGamerSeat(_gamer.UserID);
 			            gamerData.OnlineSeconds = await DBCommonUtil.GetRestOnlineSeconds(_gamer.UserID);
+
+			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(_gamer.UserID);
+
+			            PlayerInfo playerInfo = new PlayerInfo();
+			            playerInfo.Icon = playerBaseInfo.Icon;
+			            playerInfo.Name = playerBaseInfo.Name;
+			            playerInfo.GoldNum = playerBaseInfo.GoldNum;
+			            playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
+			            playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
+			            playerInfo.VipTime = playerBaseInfo.VipTime;
+			            playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
+			            playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
+			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
+			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
+
+			            gamerData.playerInfo = playerInfo;
+
+
                         reconnet.Gamers.Add(gamerData);
                     }
 
@@ -105,11 +123,28 @@ namespace ETHotfix
 			            Gamer temp = idleRoom.Get(item.Key);
 			            gamerInfo.IsReady = temp.IsReady;
 
-			            if (gamerInfo.UserID == message.UserId)
+			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+
+			            PlayerInfo playerInfo = new PlayerInfo();
+			            playerInfo.Icon = playerBaseInfo.Icon;
+			            playerInfo.Name = playerBaseInfo.Name;
+			            playerInfo.GoldNum = playerBaseInfo.GoldNum;
+			            playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
+			            playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
+			            playerInfo.VipTime = playerBaseInfo.VipTime;
+			            playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
+			            playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
+			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
+			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
+
+                        gamerInfo.playerInfo = playerInfo;
+
+                        if (gamerInfo.UserID == message.UserId)
 			            {
 			                currentInfo = gamerInfo;
 
 			            }
+
 			            Gamers.Add(gamerInfo);
 			        }
 

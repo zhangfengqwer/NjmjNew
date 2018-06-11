@@ -9,13 +9,15 @@ namespace ETHotfix
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="isReady"></param>
+        /// <param name="playerInfo"></param>
         /// <returns></returns>
-        public static Gamer Create(long userId, bool isReady)
+        public static Gamer Create(long userId, bool isReady, PlayerInfo playerInfo)
         {
             Gamer gamer = ComponentFactory.Create<Gamer>();
             gamer.UserID = userId;
             gamer.IsReady = isReady;
             gamer.AddComponent<GamerUIComponent>();
+            gamer.PlayerInfo = playerInfo;
             return gamer;
         }
     }
