@@ -138,5 +138,7 @@ namespace ETModel
 		 public const ushort DuanwuData = 10134;
 		 public const ushort C2G_DuanwuDataBase = 10135;
 		 public const ushort G2C_DuanwuDataBase = 10136;
+		 public const ushort C2G_UpdateServer = 10137;
+		 public const ushort G2C_UpdateServer = 10138;
 	}
 }

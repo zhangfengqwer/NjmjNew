@@ -2387,4 +2387,28 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_UpdateServer)]
+	[ProtoContract]
+	public partial class C2G_UpdateServer: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.G2C_UpdateServer)]
+	[ProtoContract]
+	public partial class G2C_UpdateServer: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 }

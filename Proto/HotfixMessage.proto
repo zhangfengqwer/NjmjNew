@@ -835,4 +835,12 @@ message G2C_DuanwuDataBase // IResponse
 	required DuanwuData DuanwuData = 1;
 }
 
+message C2G_UpdateServer // IRequest
+{
+}
+
+message G2C_UpdateServer // IResponse
+{
+}
+
 #endregion
