@@ -21,7 +21,5 @@ namespace ETModel
         public int ZhuanPanCount = 0;
         public int LuckyValue = 0;
         public int MaxHua = 0;
-
-
     }
 }

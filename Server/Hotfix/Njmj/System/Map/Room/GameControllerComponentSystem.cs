@@ -90,6 +90,7 @@ namespace ETHotfix
 
             //更新任务
             UpdateTask(room);
+            Log.Info("更新成就：roomId为:" + room.Id);
             UpdateChengjiu(room);
             UpdatePlayerInfo(room, huaCount);
 
@@ -156,10 +157,12 @@ namespace ETHotfix
                 //胜利
                 if (gamer.UserID == room.ziMoUid)
                 {
+                    Log.Debug("玩家:" + gamer.UserID + "胜利");
                     DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount, true);
                 }
                 else
                 {
+                    Log.Debug("玩家:" + gamer.UserID + "失败");
                     DBCommonUtil.UpdatePlayerInfo(gamer.UserID, 0);
                 }
             }
@@ -206,6 +209,7 @@ namespace ETHotfix
 
         private static void UpdateChengjiu(Room room)
         {
+            Log.Debug("更新成就:房间ID为:" + room.Id);
             foreach (var gamer in room.GetAll())
             {
                 //胜利
@@ -219,13 +223,15 @@ namespace ETHotfix
                     //赢得1000局游戏
                     DBCommonUtil.UpdateChengjiu(gamer.UserID, 106, 1);
                 }
-
                 //新手上路 完后10局游戏
                 DBCommonUtil.UpdateChengjiu(gamer.UserID, 101, 1);
+                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 101);
                 //已有小成 完成100局游戏
                 DBCommonUtil.UpdateChengjiu(gamer.UserID, 102, 1);
+                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 102);
                 //完成1000局游戏
                 DBCommonUtil.UpdateChengjiu(gamer.UserID, 103, 1);
+                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 103);
             }
 
         }

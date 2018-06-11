@@ -60,5 +60,26 @@ namespace ETHotfix
 				return Error("ID不存在！");
 			}
 		}
-	}
+
+	    [Get] // url-> /Login?name=11&age=1111
+	    public async Task<HttpResult> BuyYuanBao(long userId, int goodsId, int goodsNum, int price, string account, string password)
+	    {
+	        Log.Debug("web请求发元宝");
+
+	        if (!"admin".Equals(account) || !"jinyou123".Equals(password))
+	        {
+	            return Error("账号错误");
+	        }
+
+	        ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+
+	        if (price != config.Price)
+	        {
+	            return Error("支付的价格不正确");
+	        }
+
+	        await DBCommonUtil.UserRecharge(userId, goodsId, goodsNum, price);
+	        return Ok();
+	    }
+    }
 }

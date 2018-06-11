@@ -26,7 +26,7 @@ namespace ETHotfix
 	                if (room.Id != gamerRoom?.Id)
 	                {
 	                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
-	                    if (controllerComponent.RoomConfig.Id == message.RoomType)
+	                    if (controllerComponent?.RoomConfig.Id == message.RoomType)
 	                    {
 	                        idleRoom = room;
 	                        break;
@@ -44,17 +44,17 @@ namespace ETHotfix
                 //房间移除玩家
                 gamerRoom?.Remove(gamer.UserID);
 	            //消息广播给其他人
-	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-	            gamerRoom.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+	            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
+	            gamerRoom?.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 
-	            if (gamerRoom.seats.Count == 3)
+	            if (gamerRoom?.seats.Count == 3)
 	            {
 	                roomComponent.idleRooms.Add(gamerRoom);
 	                roomComponent.readyRooms.Remove(gamerRoom.Id);
                 }
 
 	            //房间没人就释放
-	            if (gamerRoom.seats.Count == 0)
+	            if (gamerRoom?.seats.Count == 0)
 	            {
 	                Log.Debug($"房间释放:{gamerRoom.Id}");
 	                roomComponent.RemoveRoom(gamerRoom);

@@ -28,7 +28,24 @@ namespace ETHotfix
 	                gamerInfo.SeatIndex = item.Value;
 	                Gamer temp = room.Get(item.Key);
 	                gamerInfo.IsReady = temp.IsReady;
-	                Gamers.Add(gamerInfo);
+
+	                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+
+	                PlayerInfo playerInfo = new PlayerInfo();
+	                playerInfo.Icon = playerBaseInfo.Icon;
+	                playerInfo.Name = playerBaseInfo.Name;
+	                playerInfo.GoldNum = playerBaseInfo.GoldNum;
+	                playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
+	                playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
+	                playerInfo.VipTime = playerBaseInfo.VipTime;
+	                playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
+	                playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
+	                playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
+	                playerInfo.MaxHua = playerBaseInfo.MaxHua;
+
+	                gamerInfo.playerInfo = playerInfo;
+
+                    Gamers.Add(gamerInfo);
 	            }
 
 	            room.Broadcast(new Actor_GamerEnterRoom()

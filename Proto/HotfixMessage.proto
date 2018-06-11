@@ -151,7 +151,8 @@ message C2G_BuyItem //IRequest
 {
 	required long UId = 1;	
 	required GetItemInfo Info = 2;
-	required int Cost = 3;
+	required int CurrencyType = 3;
+	required int Cost = 4;
 }
 
 message Actor_UpDateData //IActorMessage
@@ -162,6 +163,8 @@ message Actor_UpDateData //IActorMessage
 message G2C_BuyItem //IResponse
 {
 	required long Count = 1;
+	required long Wealth = 2;
+	required int CurrencyType = 3;
 }
 
 message C2G_GetTaskReward //IRequest
@@ -276,6 +279,7 @@ message GamerInfo //IMessage
  	required int64 UserID = 1;
     required bool IsReady = 2;
     required int  SeatIndex = 3;
+    required PlayerInfo playerInfo = 4;
 }
 
 message G2M_PlayerEnterRoom //IRequest
@@ -418,6 +422,7 @@ message GamerData //IMessage
 	repeated MahjongInfo gangCards = 7;
 	required bool IsBanker = 8;
 	required int OnlineSeconds = 9;
+	required PlayerInfo playerInfo = 10;
 }
 
 message Actor_ChangeTable // IActorMessage
@@ -763,6 +768,7 @@ message TreasureInfo // IMessage
 {
 	required int TreasureId = 1;
 	required string Reward = 2;
+	required int Price = 3;
 }
 
 message C2G_DuanwuTreasure // IRequest
@@ -798,14 +804,37 @@ message G2C_DuanwuActivity // IResponse
 
 message C2G_BuyDuanwuTreasure // IRequest
 {
-	required int UId = 1;
-	required string Reward = 2;
-	required int Price = 3;
+	required long UId = 1;
+	required int TreasureId = 2;
+	required string Reward = 3;
+	required int Price = 4;
 }
 
 message G2C_BuyDuanwuTreasure // IResponse
 {
 
+}
+
+message DuanwuData // IMessage
+{
+	required int ZongziCount = 1;
+	required string ActivityType = 2;
+	required int RefreshCount = 3;
+	required int CompleteCount = 4;
+}
+
+message C2G_DuanwuDataBase // IRequest
+{
+	required long UId = 1;
+	required string ActivityType = 2;
+	required int ZongZiCount = 3;
+	required long GoldCost = 4;
+	required int Type = 5;//更新还是请求数据
+}
+
+message G2C_DuanwuDataBase // IResponse
+{
+	required DuanwuData DuanwuData = 1;
 }
 
 #endregion

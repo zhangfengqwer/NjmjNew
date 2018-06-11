@@ -58,6 +58,11 @@ namespace ETModel
         /// </summary>
         public int LiangZhuangCount { get; set; }
 
+        /// <summary>
+        /// 房间内是否在进行打牌逻辑
+        /// </summary>
+        public bool IsPlayingCard { get; set; }
+
         // 自己最新抓的牌或是别人刚出的牌
         public MahjongInfo my_lastMahjong = null;
 
@@ -208,6 +213,7 @@ namespace ETModel
             NextGrabCard = null;
             IsLianZhuang = false;
             BankerGamer = null;
+            IsPlayingCard = false;
         }
     }
 }

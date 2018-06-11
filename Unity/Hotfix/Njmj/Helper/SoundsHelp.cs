@@ -241,6 +241,44 @@ namespace ETHotfix
             }
         }
 
+        public void PlayPeng(int playerSoundType)
+        {
+            switch (playerSoundType)
+            {
+                case 1:
+                case 2:
+                {
+                    playSound_Nan_Peng();
+                    break;
+                }
+                case 3:
+                case 4:
+                {
+                    playSound_Nv_Peng();
+                    break;
+                }
+            }
+        }
+
+        public void PlayGang(int playerSoundType)
+        {
+            switch (playerSoundType)
+            {
+                case 1:
+                case 2:
+                    {
+                        playSound_Nan_Gang();
+                        break;
+                    }
+                case 3:
+                case 4:
+                    {
+                        playSound_Nv_Gang();
+                        break;
+                    }
+            }
+        }
+
         public void PlayHuSound(int playerInfoPlayerSound)
         {
             switch (playerInfoPlayerSound)

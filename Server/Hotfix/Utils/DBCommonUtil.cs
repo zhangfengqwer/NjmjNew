@@ -69,11 +69,13 @@ namespace ETHotfix
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
-           // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
-
+            // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
+            Log.Debug("查询数据库数据:" + taskId + chengjiuInfoList.Count);
             if (chengjiuInfoList.Count > 0)
             {
+                Log.Debug("更新数据库，玩家ID：" + UId);
                 chengjiuInfoList[0].CurProgress += progress;
+                Log.Debug("当前成就：" + taskId +"当前进度:" + chengjiuInfoList[0].CurProgress);
                 if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {
                     chengjiuInfoList[0].IsComplete = true;
@@ -92,20 +94,22 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                Log.Debug("更新数据库playerBaseInfo" + playerBaseInfos.Count);
                 if (playerBaseInfos.Count > 0)
                 {
                     if (isWin)
                     {
+                        Log.Debug("游戏胜利+1");
                         playerBaseInfos[0].WinGameCount += 1;
+                        Log.Debug("玩家：" + playerBaseInfos[0].Id + "胜利次数为" + playerBaseInfos[0].WinGameCount);
                     }
-
+                    Log.Debug("游戏总局数+1");
                     playerBaseInfos[0].TotalGameCount += 1;
-
-                    float winRate = (float)(playerBaseInfos[0].WinGameCount) / (playerBaseInfos[0].TotalGameCount);
+                    Log.Debug("玩家：" + playerBaseInfos[0].Id + "总局数为" + playerBaseInfos[0].TotalGameCount);
 
                     if (playerBaseInfos[0].MaxHua < maxHua)
                         playerBaseInfos[0].MaxHua = maxHua;
-                    await proxyComponent.Save(playerBaseInfos[0]);
+                    proxyComponent.Save(playerBaseInfos[0]);
                 }
             }
             catch (Exception e)
@@ -407,8 +411,29 @@ namespace ETHotfix
 
                     await proxyComponent.Save(progress);
                 }
-
                 Log.Debug("增加新用户任务完毕");
+            }
+            //插入新用户成就
+            {
+                Log.Debug("增加新用户成就");
+                for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
+                {
+                    int id = 100 + i;
+                    ChengjiuConfig config = (ChengjiuConfig)configCom.Get(typeof(ChengjiuConfig), id);
+                    ChengjiuInfo chengjiu = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+                    chengjiu.IsGet = false;
+                    chengjiu.UId = uid;
+                    chengjiu.Name = config.Name;
+                    chengjiu.TaskId = (int)config.Id;
+                    chengjiu.IsComplete = false;
+                    chengjiu.Target = config.Target;
+                    chengjiu.Reward = config.Reward;
+                    chengjiu.Desc = config.Desc;
+                    chengjiu.CurProgress = 0;
+
+                    await proxyComponent.Save(chengjiu);
+                }
+                Log.Debug("增加新用户成就完毕");
             }
 
             return playerBaseInfo;
@@ -504,6 +529,47 @@ namespace ETHotfix
             Log.Debug("还剩" + i);
 
             return i;
+        }
+
+        /// <summary>
+        /// 发货接口
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="goodsId"></param>
+        /// <param name="goodsNum"></param>
+        /// <param name="price"></param>
+        public static async Task UserRecharge(long userId, int goodsId, int goodsNum, float price)
+        {
+            try
+            {
+                string reward = "";
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+
+                List<Log_Recharge> log_Recharge = await proxyComponent.QueryJson<Log_Recharge>($"{{Uid:{userId}}}");
+                if (log_Recharge.Count == 0)
+                {
+                    reward = "1:120000;105:20;104:1;107:1;";
+                }
+
+                reward += config.Items;
+
+                PlayerBaseInfo baseInfo = await DBCommonUtil.getPlayerBaseInfo(userId);
+                await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
+
+                // 记录日志
+                {
+                    Log_Recharge log_recharge = ComponentFactory.CreateWithId<Log_Recharge>(IdGenerater.GenerateId());
+                    log_recharge.Uid = userId;
+                    log_recharge.GoodsId = config.Id;
+                    log_recharge.Price = config.Price;
+                    await proxyComponent.Save(log_recharge);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
     } 
 }

@@ -285,7 +285,6 @@
     <Compile Include="Assets\Njmj\Audio\SoundComponent.cs" />
     <Compile Include="Assets\Njmj\Audio\SoundData.cs" />
     <Compile Include="Assets\Njmj\MonoScript\ItemCardScipt.cs" />
-    <Compile Include="Assets\Njmj\MonoScript\UnityGameInfo.cs" />
     <Compile Include="Assets\Scripts\Base\DoubleMap.cs" />
     <Compile Include="Assets\Scripts\Base\Event\Env.cs" />
     <Compile Include="Assets\Scripts\Base\Event\EnvKey.cs" />

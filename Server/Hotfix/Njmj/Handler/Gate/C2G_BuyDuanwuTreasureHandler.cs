@@ -14,10 +14,18 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
-                //playerBaseInfos[0]
+                DuanwuTreasureInfo treasure = await proxyComponent.Query<DuanwuTreasureInfo>(message.UId);
+                List<DuanwuTreasureInfo> treasureInfoList = await proxyComponent.QueryJson<DuanwuTreasureInfo>($"{{UId:{message.UId},EmailId:{message.TreasureId}}}");
                 await changeDuanwuDataWithStr(message.UId, message.Reward);
 
+                if(treasureInfoList.Count > 0)
+                {
+                    treasureInfoList[0].BuyCount += 1;
+                }
+                else
+                {
+
+                }
                 reply(response);
             }
             catch (Exception e)
@@ -43,13 +51,9 @@ namespace ETHotfix
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="uid"></param>
         /// <param name="propId"></param>
         /// <param name="propNum"></param>
-        /// <returns></returns>
         public static async Task ChangeDuanwuRewardData(long uid, int propId, int propNum)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();

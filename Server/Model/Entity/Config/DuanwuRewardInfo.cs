@@ -4,17 +4,17 @@ using System.Text;
 
 namespace ETModel
 {
-    public class DuanwuData
+    public class DuanwuRewardData
     {
-        static DuanwuData s_instance = null;
+        static DuanwuRewardData s_instance = null;
 
         List<DuanwuRewardInfo> listData = new List<DuanwuRewardInfo>();
 
-        public static DuanwuData getInstance()
+        public static DuanwuRewardData getInstance()
         {
             if (s_instance == null)
             {
-                s_instance = new DuanwuData();
+                s_instance = new DuanwuRewardData();
             }
 
             return s_instance;
