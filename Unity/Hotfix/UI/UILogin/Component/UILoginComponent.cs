@@ -37,7 +37,6 @@ namespace ETHotfix
     {
         private GameObject panel_start;
         private GameObject panel_phoneLogin;
-        private GameObject DebugAccount;
 
         private InputField inputField_Phone;
         private InputField inputField_YanZhengMa;
@@ -96,23 +95,15 @@ namespace ETHotfix
                 }
             });
 
+            // 测试服开启游客登录按钮
+            if (!NetConfig.getInstance().isFormal)
             {
-                // 隐藏手机登录界面
+                btn_guest.transform.localScale = new Vector3(1,1,1);
+            }
+
+            // 隐藏手机登录界面
+            {
                 panel_phoneLogin.transform.localScale = Vector3.zero;
-            }
-
-            {
-                DebugAccount = rc.Get<GameObject>("DebugAccount");
-                DebugAccount.transform.Find("Button_player1").GetComponent<Button>().onClick.Add(onClickDebugAccount1);
-                DebugAccount.transform.Find("Button_player2").GetComponent<Button>().onClick.Add(onClickDebugAccount2);
-                DebugAccount.transform.Find("Button_player3").GetComponent<Button>().onClick.Add(onClickDebugAccount3);
-                DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
-            }
-
-            {
-                UINetLoadingComponent.showNetLoading();
-                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/netconfig.json", NetConfig.getInstance().init);
-                UINetLoadingComponent.closeNetLoading();
             }
 
             if (false)
