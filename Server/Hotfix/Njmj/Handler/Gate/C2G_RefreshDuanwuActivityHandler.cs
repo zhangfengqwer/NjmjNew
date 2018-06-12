@@ -18,8 +18,8 @@ namespace ETHotfix
                 List<DuanwuActivityInfo> duanwuList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{message.UId}}}");
                 List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.UId}}}");
                 string curTime = CommonUtil.getCurTimeNormalFormat();
-                //if (string.CompareOrdinal(curTime, duanwuDataBases[0].StartTime) >= 0
-                //    && string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) <= 0)
+                if (string.CompareOrdinal(curTime, duanwuDataBases[0].StartTime) >= 0
+                    && string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) <= 0)
                 {
                     //活动期间
                     //刷新任务
@@ -68,12 +68,12 @@ namespace ETHotfix
                     PlayerBaseInfo info = await DBCommonUtil.getPlayerBaseInfo(message.UId);
                     response.GoldNum = info.GoldNum;
                 }
-                //else
-                //{
-                //    response.Message = "活动还未开始";
-                //    response.Error = ErrorCode.ERR_NotFoundActor;
-                //}
-                
+                else
+                {
+                    response.Message = "活动还未开始";
+                    response.Error = ErrorCode.ERR_NotFoundActor;
+                }
+
                 reply(response);
             }
             catch (Exception e)

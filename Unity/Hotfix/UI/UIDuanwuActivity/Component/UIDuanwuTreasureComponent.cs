@@ -78,7 +78,8 @@ namespace ETHotfix
 
             DuiBtn.onClick.Add(() =>
             {
-                //ToastScript.createToast("未到活动时间");
+                ToastScript.createToast("未到活动时间");
+                return;
                 try
                 {
                     DuanwuTreasureLogInfo treasureLogInfo = GetTreasureLogById(curTreasureInfo.TreasureId);

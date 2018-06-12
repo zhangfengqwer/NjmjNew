@@ -70,8 +70,8 @@ namespace ETHotfix
                 try
                 {
                     string curTime = CommonUtil.getCurTimeNormalFormat();
-//                     if (string.CompareOrdinal(curTime, duanwuData.StartTime) >= 0
-//                         && string.CompareOrdinal(curTime, duanwuData.EndTime) < 0)
+                    if (string.CompareOrdinal(curTime, duanwuData.StartTime) >= 0
+                        && string.CompareOrdinal(curTime, duanwuData.EndTime) < 0)
                     {
                         if (duanwuData != null && duanwuData.RefreshCount > 0)
                         {
@@ -83,10 +83,10 @@ namespace ETHotfix
                             ToastScript.createToast("今日刷新次数已用完");
                         }
                     }
-                    //else
-                    //{
-                    //    ToastScript.createToast("未到活动时间");
-                    //}
+                    else
+                    {
+                        ToastScript.createToast("未到活动时间");
+                    }
                 }
                 catch(Exception e)
                 {
