@@ -342,6 +342,12 @@ namespace ETHotfix
 
                         panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
                     }
+
+                    if (r2CLogin.Message.CompareTo("用户不存在") == 0)
+                    {
+                        panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
+                    }
+
                     return;
                 }
 
