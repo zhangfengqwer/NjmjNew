@@ -23,7 +23,6 @@ namespace ETHotfix
 			        return;
 			    }
 
-			    Log.Warning("bu热更dll");
                 // 检测是否已存在
                 UserComponentSystem.CheckIsExistTheUser(userId);
 
@@ -187,7 +186,7 @@ namespace ETHotfix
                                     }
 
                                     {
-                                        url = ("http://fksq.javgame.com:8081/GetOldNjmjData?UserId=" + old_uid);
+                                        url = ("http://njmj.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
                                         str = HttpUtil.GetHttp(url);
 
                                         result = JObject.Parse(str);
