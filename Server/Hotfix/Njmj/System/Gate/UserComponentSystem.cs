@@ -52,7 +52,7 @@ namespace ETHotfix
                     }
                     catch (Exception ex)
                     {
-
+                        Log.Error(ex);
                     }
 
                     break;

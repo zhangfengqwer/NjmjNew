@@ -186,7 +186,7 @@ namespace ETHotfix
                                     }
 
                                     {
-                                        url = ("http://njmj.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
+                                        url = ("http://fksq.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
                                         str = HttpUtil.GetHttp(url);
 
                                         result = JObject.Parse(str);
