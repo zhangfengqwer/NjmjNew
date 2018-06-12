@@ -63,7 +63,7 @@ namespace ETHotfix
         }
 
         [Get] // url-> /Login?name=11&age=1111
-        public async Task<HttpResult> BuyYuanBao(int orderId, long userId, int goodsId, int goodsNum, int price, string account, string password)
+        public async Task<HttpResult> BuyYuanBao(int orderId, long userId, int goodsId, int goodsNum, float price, string account, string password)
         {
             Log.Info($"web请求发元宝,orderId:{orderId},userId:{userId},goodsId:{goodsId},price:{price}");
             try
@@ -79,11 +79,11 @@ namespace ETHotfix
                 {
                     return Error("goodsId错误");
                 }
-//
-//                if (price != config.Price)
-//                {
-//                    return Error("支付的价格不正确");
-//                }
+
+                if (price != config.Price)
+                {
+                    return Error("支付的价格不正确");
+                }
 
                 await DBCommonUtil.UserRecharge(orderId, userId, goodsId, goodsNum, price);
 

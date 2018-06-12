@@ -27,9 +27,7 @@ namespace ETModel
 					using (BundleDownloaderComponent bundleDownloaderComponent = Game.Scene.AddComponent<BundleDownloaderComponent>())
 					{
 					  
-					    Log.Debug("开始下载");
                         await bundleDownloaderComponent.StartAsync();
-					    Log.Debug("结束下载");
                     }
 					Game.Scene.GetComponent<ResourcesComponent>().LoadOneBundle("StreamingAssets");
 					ResourcesComponent.AssetBundleManifestObject = (AssetBundleManifest)Game.Scene.GetComponent<ResourcesComponent>().GetAsset("StreamingAssets", "AssetBundleManifest");

@@ -187,7 +187,7 @@ namespace ETHotfix
         }
 
         //支付充值 payType 支付类型：1支付宝，2微信
-        private async void Recharge(int payType)
+        private void Recharge(int payType)
         {
             if (payType == 1)
             {
@@ -205,6 +205,8 @@ namespace ETHotfix
         /// </summary>
         public override void Dispose()
         {
+            base.Dispose();
+
             buttonDic.Clear();
             itemDic.Clear();
             shopInfoDic.Clear();
