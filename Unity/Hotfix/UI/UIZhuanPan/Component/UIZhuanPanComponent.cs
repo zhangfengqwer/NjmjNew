@@ -19,6 +19,8 @@ namespace ETHotfix
 
     public class UIZhuanPanComponent : Component
     {
+        bool isDispose = false;
+
         private Button Button_ChouJiang;
         private Button Button_close;
         private Button Button_wenhao;
@@ -39,6 +41,18 @@ namespace ETHotfix
             initData();
 
             RequestGetZhuanPanState();
+        }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            base.Dispose();
+
+            isDispose = true;
         }
 
         public void initData()
@@ -188,10 +202,17 @@ namespace ETHotfix
 
         public async void startXuanZhuan(int itemId)
         {
+            isDispose = false;
+
             for (int m = 1; m <= 5; m++)
             {
                 for (int i = 0; i < ZhuanPanConfig.getInstance().getZhuanPanInfoList().Count; i++)
                 {
+                    if (isDispose)
+                    {
+                        return;
+                    }
+
                     ZhuanPanInfo zhuanpanInfo = ZhuanPanConfig.getInstance().getZhuanPanInfoList()[i];
                     GameObject item = Item.transform.Find("Item_" + zhuanpanInfo.itemId).gameObject;
                     xuanzhongItem(zhuanpanInfo.itemId);
