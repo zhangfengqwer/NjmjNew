@@ -65,60 +65,6 @@ namespace ETHotfix
                     shopInfoList.Add(info);
                 }
 
-                #region AddItemInfo
-                List<UserBag> itemInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
-                if (itemInfoList.Count <= 0)
-                {
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 104;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 105;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 107;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 108;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 109;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-
-                    {
-                        UserBag item = new UserBag();
-                        item.BagId = 111;
-                        item.Count = 10;
-                        item.UId = userId;
-                        DBHelper.AddItemToDB(item);
-                    }
-                }
-                #endregion
-
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
@@ -186,7 +132,7 @@ namespace ETHotfix
                                     }
 
                                     {
-                                        url = ("http://njmj.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
+                                        url = ("http://fksq.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
                                         str = HttpUtil.GetHttp(url);
 
                                         result = JObject.Parse(str);

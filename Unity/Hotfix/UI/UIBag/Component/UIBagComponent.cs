@@ -73,6 +73,8 @@ namespace ETHotfix
             });
             sureBtn.onClick.Add(() =>
             {
+                if (item == null)
+                    return;
                 UseItem(item);
             });
             cancelBtn.onClick.Add(() =>
