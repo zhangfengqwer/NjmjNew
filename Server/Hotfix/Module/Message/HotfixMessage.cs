@@ -794,6 +794,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int SeatIndex;
 
+		[ProtoMember(4, IsRequired = true)]
+		public PlayerInfo playerInfo;
+
 	}
 
 	[Message(HotfixOpcode.G2M_PlayerEnterRoom)]
@@ -865,6 +868,21 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public GamerInfo Gamer;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerBuyYuanBao)]
+	[ProtoContract]
+	public partial class Actor_GamerBuyYuanBao: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int goodsId;
 
 	}
 
@@ -1207,6 +1225,9 @@ namespace ETHotfix
 
 		[ProtoMember(9, IsRequired = true)]
 		public int OnlineSeconds;
+
+		[ProtoMember(10, IsRequired = true)]
+		public PlayerInfo playerInfo;
 
 	}
 
@@ -2205,12 +2226,6 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int Price;
 
-		[ProtoMember(4, IsRequired = true)]
-		public int LimitCount;
-
-		[ProtoMember(5, IsRequired = true)]
-		public string Name;
-
 	}
 
 	[Message(HotfixOpcode.C2G_DuanwuTreasure)]
@@ -2219,9 +2234,6 @@ namespace ETHotfix
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
 
 	}
 
@@ -2300,51 +2312,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.C2G_RefreshDuanwuActivity)]
-	[ProtoContract]
-	public partial class C2G_RefreshDuanwuActivity: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public long GoldCost;
-
-		[ProtoMember(3, IsRequired = true)]
-		public string ActivityType;
-
-	}
-
-	[Message(HotfixOpcode.G2C_RefreshDuanwuActivity)]
-	[ProtoContract]
-	public partial class G2C_RefreshDuanwuActivity: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1)]
-		public List<DuanwuActivity> DuanwuActivityList = new List<DuanwuActivity>();
-
-		[ProtoMember(2, IsRequired = true)]
-		public DuanwuData DuanwuData;
-
-		[ProtoMember(3, IsRequired = true)]
-		public long GoldNum;
-
-		[ProtoMember(4, IsRequired = true)]
-		public bool isOpen;
-
-	}
-
 	[Message(HotfixOpcode.C2G_BuyDuanwuTreasure)]
 	[ProtoContract]
 	public partial class C2G_BuyDuanwuTreasure: IRequest
@@ -2379,9 +2346,6 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1, IsRequired = true)]
-		public DuanwuTreasureLogInfo Info;
-
 	}
 
 	[Message(HotfixOpcode.DuanwuData)]
@@ -2398,10 +2362,7 @@ namespace ETHotfix
 		public int RefreshCount;
 
 		[ProtoMember(4, IsRequired = true)]
-		public string StartTime;
-
-		[ProtoMember(5, IsRequired = true)]
-		public string EndTime;
+		public int CompleteCount;
 
 	}
 
@@ -2422,6 +2383,9 @@ namespace ETHotfix
 		public int ZongZiCount;
 
 		[ProtoMember(4, IsRequired = true)]
+		public long GoldCost;
+
+		[ProtoMember(5, IsRequired = true)]
 		public int Type;
 
 	}
@@ -2444,27 +2408,18 @@ namespace ETHotfix
 
 	}
 
-	[Message(HotfixOpcode.C2G_GetDuanwuReward)]
+	[Message(HotfixOpcode.C2G_UpdateServer)]
 	[ProtoContract]
-	public partial class C2G_GetDuanwuReward: IRequest
+	public partial class C2G_UpdateServer: IRequest
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int TaskId;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int Reward;
-
 	}
 
-	[Message(HotfixOpcode.G2C_GetDuanwuReward)]
+	[Message(HotfixOpcode.G2C_UpdateServer)]
 	[ProtoContract]
-	public partial class G2C_GetDuanwuReward: IResponse
+	public partial class G2C_UpdateServer: IResponse
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
@@ -2474,51 +2429,6 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public int ZongziCount;
-
-	}
-
-	[Message(HotfixOpcode.DuanwuTreasureLogInfo)]
-	[ProtoContract]
-	public partial class DuanwuTreasureLogInfo: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public int TreasureId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int buyCount;
-
-	}
-
-	[Message(HotfixOpcode.C2G_GetDuanwuTreasureInfo)]
-	[ProtoContract]
-	public partial class C2G_GetDuanwuTreasureInfo: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
-
-	}
-
-	[Message(HotfixOpcode.G2C_GetDuanwuTreasureInfo)]
-	[ProtoContract]
-	public partial class G2C_GetDuanwuTreasureInfo: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1)]
-		public List<DuanwuTreasureLogInfo> Treasures = new List<DuanwuTreasureLogInfo>();
 
 	}
 

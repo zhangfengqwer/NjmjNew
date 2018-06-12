@@ -75,6 +75,11 @@ namespace ETHotfix
                     item.transform.Find("Text_reward").GetComponent<Text>().text = ("话费" + zhuanpanInfo.prop_num + "元");
                 }
             }
+
+            if (OtherData.getIsShiedShare())
+            {
+                Image_bg.transform.Find("Text_tip1").localScale = Vector3.zero;
+            }
         }
 
         public void onClickClose()
@@ -84,25 +89,29 @@ namespace ETHotfix
 
         public void onClickShare()
         {
-
             PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
-            //            RequestShare();
         }
 
         public void onClick_ChouJiang()
         {
-            //if(ZhuanPanCount <= 0)
-            //{
-            //    ToastScript.createToast("您的抽奖次数不足");
-            //    return;
-            //}
+            if (ZhuanPanCount <= 0)
+            {
+                ToastScript.createToast("您的抽奖次数不足");
+                return;
+            }
 
             RequestUseZhuanPan();
         }
 
         public void showGuiZe()
         {
-            UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("规则", "1、每进行一次游戏可获得一次转盘机会，每日最高3次\r\n\r\n2、贵族用户每日额外赠送一次机会\r\n\r\n3、以上转盘次数用完后分享游戏可额外获得一次机会");
+            string content = "1、每进行一次游戏可获得一次转盘机会，每日最高3次\r\n\r\n2、贵族用户每日额外赠送一次机会\r\n\r\n";
+            if (!OtherData.getIsShiedShare())
+            {
+                content += "3、以上转盘次数用完后分享游戏可额外获得一次机会";
+            }
+
+            UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("规则", content);
             script.setOnClickOkEvent(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);

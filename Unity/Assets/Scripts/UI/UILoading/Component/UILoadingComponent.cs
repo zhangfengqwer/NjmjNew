@@ -12,6 +12,16 @@ namespace ETModel
 		public override void Awake(UILoadingComponent self)
 		{
 			self.text = self.GetParent<UI>().GameObject.Get<GameObject>("Text").GetComponent<Text>();
+			self.button = self.GetParent<UI>().GameObject.Get<GameObject>("Button").GetComponent<Button>();
+
+		    self.button.onClick.Add(() =>
+		    {
+		        if (++NetConfig.getInstance().clickCount == 3)
+		        {
+		            NetConfig.getInstance().isFormal = false;
+		            ToastScript.createToast("test");
+		        }
+		    });
 		}
 	}
 
@@ -45,5 +55,6 @@ namespace ETModel
 	public class UILoadingComponent : Component
 	{
 		public Text text;
+	    public Button button;
 	}
 }

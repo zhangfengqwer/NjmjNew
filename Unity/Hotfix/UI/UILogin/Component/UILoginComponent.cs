@@ -37,7 +37,6 @@ namespace ETHotfix
     {
         private GameObject panel_start;
         private GameObject panel_phoneLogin;
-        private GameObject DebugAccount;
 
         private InputField inputField_Phone;
         private InputField inputField_YanZhengMa;
@@ -61,7 +60,7 @@ namespace ETHotfix
             initData();
         }
 
-        public void initData()
+        public async void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -87,20 +86,27 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
+//            panel_start.transform.Find("Image_bg/Btn_test").GetComponent<Button>().onClick.AddListener(()=>
+//            {
+//                if (++NetConfig.getInstance().clickCount == 5)
+//                {
+//                    NetConfig.getInstance().isFormal = false;
+//                    ToastScript.createToast("test");
+//                }
+//            });
+
+            // 测试服开启游客登录按钮
+            if (!NetConfig.getInstance().isFormal)
             {
-                // 隐藏手机登录界面
+                btn_guest.transform.localScale = new Vector3(1,1,1);
+            }
+
+            // 隐藏手机登录界面
+            {
                 panel_phoneLogin.transform.localScale = Vector3.zero;
             }
 
-            {
-                DebugAccount = rc.Get<GameObject>("DebugAccount");
-                DebugAccount.transform.Find("Button_player1").GetComponent<Button>().onClick.Add(onClickDebugAccount1);
-                DebugAccount.transform.Find("Button_player2").GetComponent<Button>().onClick.Add(onClickDebugAccount2);
-                DebugAccount.transform.Find("Button_player3").GetComponent<Button>().onClick.Add(onClickDebugAccount3);
-                DebugAccount.transform.Find("Button_player4").GetComponent<Button>().onClick.Add(onClickDebugAccount4);
-            }
-
-            if(false)
+            if (false)
             {
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
@@ -258,8 +264,9 @@ namespace ETHotfix
             SessionWrap sessionWrap = null;
             try
             {
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
+//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
@@ -312,8 +319,10 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
+                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
@@ -333,12 +342,20 @@ namespace ETHotfix
 
                         panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
                     }
+
+                    if (r2CLogin.Message.CompareTo("用户不存在") == 0)
+                    {
+                        panel_phoneLogin.transform.localScale = new Vector3(1, 1, 1);
+                    }
+
                     return;
                 }
 
                 UINetLoadingComponent.showNetLoading();
 
-                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+
+//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -387,7 +404,9 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+
+//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
@@ -405,7 +424,8 @@ namespace ETHotfix
 
                 UINetLoadingComponent.showNetLoading();
 
-                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -439,10 +459,17 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
 
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/prop.json", PropConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/notice.json", NoticeConfig.getInstance().init);
-            await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            try
+            {
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
+                await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
 
             UINetLoadingComponent.closeNetLoading();
         }

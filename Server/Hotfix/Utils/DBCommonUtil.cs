@@ -387,6 +387,7 @@ namespace ETHotfix
                         }
                     }
                 }
+
                 //重置每天在线时长和宝箱次数
                 {
                     List<GamerInfoDB> gamerInfo = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{uid}}}");
@@ -396,6 +397,7 @@ namespace ETHotfix
                         gamerInfo[0].DailyTreasureCount = 0;
                     }
                 }
+
                 //重置端午节活动
                 //{
                 //    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
@@ -426,11 +428,24 @@ namespace ETHotfix
             }
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
-                log_Login.Uid = uid;
-                await proxyComponent.Save(log_Login);
-            }
+            log_Login.Uid = uid;
+            await proxyComponent.Save(log_Login);
+        }
 
-            public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
+        // 游戏日志
+        public static async Task Log_Game(string RoomName,long Player1_uid, long Player2_uid, long Player3_uid, long Player4_uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            Log_Game log = ComponentFactory.CreateWithId<Log_Game>(IdGenerater.GenerateId());
+            log.RoomName = RoomName;
+            log.Player1_uid = Player1_uid;
+            log.Player2_uid = Player2_uid;
+            log.Player3_uid = Player3_uid;
+            log.Player4_uid = Player4_uid;
+            await proxyComponent.Save(log);
+        }
+
+        public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());
@@ -628,6 +643,57 @@ namespace ETHotfix
             Log.Debug("还剩" + i);
 
             return i;
+        }
+
+        /// <summary>
+        /// 发货接口
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="goodsId"></param>
+        /// <param name="goodsNum"></param>
+        /// <param name="price"></param>
+        public static async Task UserRecharge(int orderId, long userId, int goodsId, int goodsNum, float price)
+        {
+            try
+            {
+                string reward = "";
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+
+                List<Log_Recharge> log_Recharge = await proxyComponent.QueryJson<Log_Recharge>($"{{Uid:{userId}}}");
+
+                if (log_Recharge.Count == 0)
+                {
+                    reward = "1:120000;105:20;104:1;107:1";
+                    await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
+                }
+                reward = config.Items;
+
+                await DBCommonUtil.changeWealthWithStr(userId, reward, "购买元宝");
+
+                UserComponent userComponent = Game.Scene.GetComponent<UserComponent>();
+                User user = userComponent.Get(userId);
+                //给玩家发送消息
+                user?.session?.Send(new Actor_GamerBuyYuanBao()
+                {
+                    goodsId = goodsId
+                });
+
+                // 记录日志
+                {
+                    Log_Recharge log_recharge = ComponentFactory.CreateWithId<Log_Recharge>(IdGenerater.GenerateId());
+                    log_recharge.Uid = userId;
+                    log_recharge.GoodsId = config.Id;
+                    log_recharge.Price = config.Price;
+                    log_recharge.OrderId = orderId;
+                    await proxyComponent.Save(log_recharge);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
     } 
 }

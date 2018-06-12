@@ -56,6 +56,16 @@ namespace ETModel
                 });
             }
 
+            {
+                appDomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
+                {
+                    return new UnityEngine.Events.UnityAction(() =>
+                    {
+                        ((Action)act)();
+                    });
+                });
+            }
+
             // 初始化ILRuntime的protobuf
             InitializeILRuntimeProtobuf(appDomain);
 			LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appDomain);

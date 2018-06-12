@@ -34,7 +34,7 @@ namespace ETHotfix
 
         public async void Awake()
         {
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/chat.json", ChatConfig.getInstance().init);
+            await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/chat.json", ChatConfig.getInstance().init);
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             ExpressionBtn = rc.Get<GameObject>("ExpressionBtn").GetComponent<Button>();
             ShortBtn = rc.Get<GameObject>("ShortBtn").GetComponent<Button>();

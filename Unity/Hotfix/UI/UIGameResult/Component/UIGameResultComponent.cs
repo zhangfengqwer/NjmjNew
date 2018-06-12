@@ -168,10 +168,15 @@ namespace ETHotfix
                         obj4.gameObject.SetActive(true);
                         obj4.text = "砸2";
                     }
-                    
-
                     huaCountText.text = huaCount + "";
-                    goldText.text = BeiLv * huaCount + "";
+                    if (data.IsZiMo)
+                    {
+                        goldText.text = BeiLv * huaCount * 3 + "";
+                    }
+                    else
+                    {
+                        goldText.text = BeiLv * huaCount + "";
+                    }
                 }
                 else
                 {

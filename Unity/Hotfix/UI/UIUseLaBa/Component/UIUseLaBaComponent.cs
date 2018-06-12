@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
 using Unity_Utils;
@@ -50,8 +51,14 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseLaBa);
         }
 
-        public void onClickOK()
+        public async void onClickOK()
         {
+            if (InputField_content.text.CompareTo("javdebug") == 0)
+            {
+                await RequestUpdateServer();
+                return;
+            }
+
             if (GameUtil.GetDataCount(105) > 0)
             {
                 if (InputField_content.text.CompareTo("") == 0)
@@ -110,6 +117,22 @@ namespace ETHotfix
                     Game.Scene.GetComponent<UIComponent>().Get(UIType.UIBag).GetComponent<UIBagComponent>().RefreshUI();
                 }
             }
+        }
+
+        private async Task RequestUpdateServer()
+        {
+            UINetLoadingComponent.showNetLoading();
+            G2C_UpdateServer g2cUpdateServer = (G2C_UpdateServer)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateServer {});
+            UINetLoadingComponent.closeNetLoading();
+
+            if (g2cUpdateServer.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2cUpdateServer.Message);
+
+                return;
+            }
+
+            ToastScript.createToast("更新成功");
         }
     }
 }

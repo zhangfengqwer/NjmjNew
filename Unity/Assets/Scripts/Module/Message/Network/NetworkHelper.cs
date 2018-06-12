@@ -9,6 +9,11 @@ namespace ETModel
 			return new IPEndPoint(IPAddress.Parse(host), port);
 		}
 
+	    public static IPEndPoint ToIPEndPoint(IPAddress host, int port)
+		{
+			return new IPEndPoint(host, port);
+		}
+
 		public static IPEndPoint ToIPEndPoint(string address)
 		{
 			int index = address.LastIndexOf(':');
@@ -17,5 +22,5 @@ namespace ETModel
 			int port = int.Parse(p);
 			return ToIPEndPoint(host, port);
 		}
-	}
+    }
 }
