@@ -74,8 +74,8 @@ namespace ETHotfix
             data["goods_id"] = shopInfo.Id;
             data["goods_num"] = 1;
             data["goods_name"] = shopInfo.Name;
-//            data["price"] = shopInfo.Price;
-            data["price"] = "0.01";
+            data["price"] = shopInfo.Price;
+//            data["price"] = "0.01";
             return data;
         }
 

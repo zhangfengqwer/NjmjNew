@@ -13,8 +13,18 @@ namespace ETHotfix
             G2C_UpdateServer response = new G2C_UpdateServer();
             try
             {
-                Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
-                reply(response);
+                StartConfigComponent startConfigComponent = Game.Scene.GetComponent<StartConfigComponent>();
+                NetInnerComponent netInnerComponent = Game.Scene.GetComponent<NetInnerComponent>();
+                foreach (StartConfig startConfig in startConfigComponent.GetAll())
+                {
+//                    if (!message.AppType.Is(startConfig.AppType))
+//                    {
+//                        continue;
+//                    }
+                    InnerConfig innerConfig = startConfig.GetComponent<InnerConfig>();
+                    Session serverSession = netInnerComponent.Get(innerConfig.IPEndPoint);
+                    await serverSession.Call(new M2A_Reload());
+                }
             }
             catch (Exception e)
             {
