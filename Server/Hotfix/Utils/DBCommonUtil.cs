@@ -9,6 +9,12 @@ namespace ETHotfix
 {
     public class DBCommonUtil
     {
+        /// <summary>
+        /// 更新任务
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="taskId"></param>
+        /// <param name="progress"></param>
         public static async void UpdateTask(long uid,int taskId,int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
@@ -65,17 +71,19 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 更新成就
+        /// </summary>
+        /// <param name="UId"></param>
+        /// <param name="taskId"></param>
+        /// <param name="progress"></param>
         public static async void UpdateChengjiu(long UId, int taskId, int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
-            // Log.Debug("成就：" + JsonHelper.ToJson(chengjiuInfoList));
-            Log.Debug("查询数据库数据:" + taskId + chengjiuInfoList.Count);
             if (chengjiuInfoList.Count > 0)
             {
-                Log.Debug("更新数据库，玩家ID：" + UId);
                 chengjiuInfoList[0].CurProgress += progress;
-                Log.Debug("当前成就：" + taskId +"当前进度:" + chengjiuInfoList[0].CurProgress);
                 if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {
                     chengjiuInfoList[0].IsComplete = true;
@@ -88,27 +96,29 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="maxHua"></param>
+        /// <param name="isWin"></param>
         public static async void UpdatePlayerInfo(long uid, int maxHua, bool isWin = false)
         {
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                Log.Debug("更新数据库playerBaseInfo" + playerBaseInfos.Count);
                 if (playerBaseInfos.Count > 0)
                 {
                     if (isWin)
                     {
-                        Log.Debug("游戏胜利+1");
                         playerBaseInfos[0].WinGameCount += 1;
-                        Log.Debug("玩家：" + playerBaseInfos[0].Id + "胜利次数为" + playerBaseInfos[0].WinGameCount);
                     }
-                    Log.Debug("游戏总局数+1");
                     playerBaseInfos[0].TotalGameCount += 1;
-                    Log.Debug("玩家：" + playerBaseInfos[0].Id + "总局数为" + playerBaseInfos[0].TotalGameCount);
-
                     if (playerBaseInfos[0].MaxHua < maxHua)
+                    {
                         playerBaseInfos[0].MaxHua = maxHua;
+                    }
                     proxyComponent.Save(playerBaseInfos[0]);
                 }
             }
@@ -116,6 +126,97 @@ namespace ETHotfix
             {
                 Log.Error(e);
             }
+        }
+
+        /// <summary>
+        /// 更新端午活动
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="taskId"></param>
+        /// <param name="progress"></param>
+        public static async void UpdateDuanwuActivity(long uid,int taskId,int progress)
+        {
+            if (await IsCompleteEnough(uid))
+                return;
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+            List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+            //
+            if (infos.Count <= 0)
+            {
+                for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
+                {
+                    int id = 100 + j + 1;
+                    if(id == taskId)
+                    {
+                        DuanwuActivityConfig config = (DuanwuActivityConfig)configCom.Get(typeof(DuanwuActivityConfig), id);
+                        DuanwuActivityInfo info = ComponentFactory.CreateWithId<DuanwuActivityInfo>(IdGenerater.GenerateId());
+                        info.UId = uid;
+                        info.TaskId = (int)config.Id;
+                        info.Target = config.Target;
+                        info.Reward = config.Reward;
+                        info.Desc = config.Desc;
+                        await proxyComponent.Save(info);
+                    }
+                }
+            }
+            infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+            if(infos.Count > 0)
+            {
+                infos[0].CurProgress += progress;
+                if(infos[0].CurProgress >= infos[0].Target)
+                {
+                    infos[0].IsComplete = true;
+                }
+                else
+                {
+                    infos[0].IsComplete = false;
+                }
+                await proxyComponent.Save(infos[0]);
+            }
+        }
+
+        /// <summary>
+        /// 判断端午活动每日任务是否已达上限（6）
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        private static async Task<bool> IsCompleteEnough(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
+            if(infos.Count > 0)
+            {
+                int count = 0;
+                for(int i = 0;i< infos.Count; ++i)
+                {
+                    if (infos[i].IsComplete)
+                    {
+                        count++;
+                    }
+                }
+                if(count == 6)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 获得用户端午节活动的基本信息
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        public static async Task<DuanwuDataBase> GetDuanwuDataBase(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<DuanwuDataBase> BaseInfos = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
+            if (BaseInfos.Count > 0)
+            {
+                return BaseInfos[0];
+            }
+            return null;
         }
 
         public static async Task<PlayerBaseInfo> getPlayerBaseInfo(long uid)
@@ -361,11 +462,9 @@ namespace ETHotfix
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
             AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(uid);
 
-            Log.Debug("增加新用户：" + uid.ToString());
             List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
             if (playerBaseInfos.Count > 0)
             {
-                Log.Debug("异常：此用户uid已存在:" + uid);
                 return playerBaseInfos[0];
             }
 

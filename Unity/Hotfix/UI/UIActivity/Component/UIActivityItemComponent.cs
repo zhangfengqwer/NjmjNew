@@ -37,17 +37,21 @@ namespace ETHotfix
         {
             //根据不同的活动ID显示不同的活动面板
             string panelName = "UIActivity_" + id;
-            if (id == 102 || id == 103)
-            {
-                ToastScript.createToast("活动暂未开放");
-                return;
-            }
             GameObject obj = CommonUtil.getGameObjByBundle(panelName);
             GameObject activity = GameObject.Instantiate(obj, Game.Scene.GetComponent<UIComponent>().Get(UIType.UIActivity).GetComponent<UIActivityComponent>().GetActivityParent());
             //activity.transform.GetComponent<RectTransform>().setan
             UI ui = ComponentFactory.Create<UI, GameObject>(activity);
             if (id == 101)
+            {
                 ui.AddComponent<UIActivity101Component>();
+            }
+            if (id == 102)
+            {
+                ui.AddComponent<UIDuanwuActivityComponent>();
+                if (Game.Scene.GetComponent<UIComponent>() == null)
+                    Game.Scene.GetComponent<UIComponent>().Add(UIType.UIDuanwu, ui);
+            }
+                
         }
 
         public void SetInfo(ActivityInfo info)

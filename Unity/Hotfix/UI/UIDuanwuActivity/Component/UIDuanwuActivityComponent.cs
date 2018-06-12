@@ -19,18 +19,22 @@ namespace ETHotfix
 
     public class UIDuanwuActivityComponent : Component
     {
+        public static UIDuanwuActivityComponent Instance;
         private Text Des;
         private Text Reward;
         private Text Progress;
         private Text ActivityFinishTime;
         private Text OwnZongziCount;
         private GameObject TaskGrid;
-        private GameObject TreasureGrid;
+       
         private Button RefreshTaskBtn;
         private Button TreasureBtn;
-        private Button CloseDuanwuBtn;//点击关闭端午活动界面
-        private GameObject Treasure;
-        private Button CloseTreasureBtn;//点击关闭宝箱界面
+        private Text RefreshLeftCount;//
+        private GameObject Tip;
+        private Text TipTxt;
+        private Button CancelBtn;
+        private Button SureBtn;
+
 
         #region duanwu
         private GameObject taskItem = null;
@@ -41,63 +45,69 @@ namespace ETHotfix
         public DuanwuData duanwuData;
         #endregion
 
-        #region treasure
-        private GameObject treasureItem = null;
-        private List<GameObject> treasureItemList = new List<GameObject>();
-        private List<UI> treasurUiList = new List<UI>();
-        private List<TreasureInfo> treasureInfoList = new List<TreasureInfo>();
-        #endregion
-
         public void Start()
         {
+            Instance = this;
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             Des = rc.Get<GameObject>("Des").GetComponent<Text>();
             Reward = rc.Get<GameObject>("Reward").GetComponent<Text>();
             Progress = rc.Get<GameObject>("Progress").GetComponent<Text>();
             ActivityFinishTime = rc.Get<GameObject>("ActivityFinishTime").GetComponent<Text>();
             OwnZongziCount = rc.Get<GameObject>("OwnZongziCount").GetComponent<Text>();
+            RefreshTaskBtn = rc.Get<GameObject>("RefreshTaskBtn").GetComponent<Button>();
+            TreasureBtn = rc.Get<GameObject>("TreasureBtn").GetComponent<Button>();
+            TaskGrid = rc.Get<GameObject>("TaskGrid");
+            RefreshLeftCount = rc.Get<GameObject>("RefreshLeftCount").GetComponent<Text>();
+            taskItem = CommonUtil.getGameObjByBundle(UIType.UIDuanwuItem);
+
+            Tip = rc.Get<GameObject>("Tip");
+            TipTxt = rc.Get<GameObject>("TipTxt").GetComponent<Text>();
+            SureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
+            CancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
 
             RefreshTaskBtn.onClick.Add(() =>
             {
-                if (duanwuData != null && duanwuData.RefreshCount > 0)
+                try
                 {
-                    int goldCost = 0;
-                    switch (duanwuData.RefreshCount)
+                    string curTime = CommonUtil.getCurTimeNormalFormat();
+                    if (string.CompareOrdinal(curTime, duanwuData.StartTime) >= 0
+                        && string.CompareOrdinal(curTime, duanwuData.EndTime) < 0)
                     {
-                        case 0:
+                        if (duanwuData != null && duanwuData.RefreshCount > 0)
+                        {
+                            Tip.SetActive(true);
+                            TipTxt.text = "点击刷新后,之前所做的所有任务都清零,确定要继续刷新吗？";
+                        }
+                        else
+                        {
                             ToastScript.createToast("今日刷新次数已用完");
-                            break;
-                        case 1:
-                            goldCost = 50000;
-                            break;
-                        case 2:
-                            goldCost = 30000;
-                            break;
-                        case 3:
-                            goldCost = 10000;
-                            break;
-                        default:
-                            Log.Debug("刷新次数超出,检查代码逻辑");
-                            break;
+                        }
                     }
-                    RefreshActivityType(goldCost);
+                    else
+                    {
+                        ToastScript.createToast("未到活动时间");
+                    }
+                }
+                catch(Exception e)
+                {
+                    Log.Error(e);
                 }
             });
 
             TreasureBtn.onClick.Add(() =>
             {
                 //显示宝箱界面
-                Treasure.SetActive(true);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIDuanwuTreasure);
             });
 
-            CloseDuanwuBtn.onClick.Add(() =>
+            SureBtn.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Remove("duanwu");
+                RefreshActivityType();
             });
 
-            CloseTreasureBtn.onClick.Add(() =>
+            CancelBtn.onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Remove("baoxiang");
+                Tip.SetActive(false);
             });
 
             GetActivityTypeRequest();
@@ -112,27 +122,88 @@ namespace ETHotfix
             //type = 1 则为单纯请求数据
             G2C_DuanwuDataBase g2cDuanwu = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 1 });
             UINetLoadingComponent.closeNetLoading();
-            duanwuData = g2cDuanwu.DuanwuData;
+            try
+            {
+                duanwuData = g2cDuanwu.DuanwuData;
 
-            //如果玩家随机活动类型为空，则添加随机六个活动
-            if (string.IsNullOrEmpty(g2cDuanwu.DuanwuData.ActivityType))
-            {
-                activityType = GetRandomIndex();
-                //type = 2 更改活动类型
-                G2C_DuanwuDataBase g2cDuanwu1 = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 2, ActivityType = activityType });
+                //如果玩家随机活动类型为空，则随机添加六个活动
+                if (string.IsNullOrEmpty(g2cDuanwu.DuanwuData.ActivityType))
+                {
+                    activityType = GetRandomIndex();
+                    //type = 2 更改活动类型
+                    G2C_DuanwuDataBase g2cDuanwu1 = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 2, ActivityType = activityType });
+                }
+                else
+                {
+                    activityType = g2cDuanwu.DuanwuData.ActivityType;
+                }
+                GetDuanwuTaskInfoList();
             }
-            else
+            catch(Exception e)
             {
-                activityType = g2cDuanwu.DuanwuData.ActivityType;
+                Log.Error(e);
             }
-            GetDuanwuTaskInfoList();
         }
 
-        private async void RefreshActivityType(int goldCost)
+        private async void RefreshActivityType()
         {
-            activityType = GetRandomIndex();
-            //type = 3 刷新活动
-            G2C_DuanwuDataBase g2cDuanwu = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 4, ActivityType = activityType, GoldCost = goldCost });
+            try
+            {
+                int goldCost = 0;
+                switch (duanwuData.RefreshCount)
+                {
+                    case 0:
+                        ToastScript.createToast("今日刷新次数已用完");
+                        break;
+                    case 1:
+                        goldCost = 50000;
+                        break;
+                    case 2:
+                        goldCost = 30000;
+                        break;
+                    case 3:
+                        goldCost = 10000;
+                        break;
+                    default:
+                        Log.Debug("刷新次数超出,检查代码逻辑");
+                        break;
+                }
+
+                if (PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum >= goldCost)
+                {
+                    activityType = GetRandomIndex();
+                    //type = 3 刷新活动
+                    G2C_RefreshDuanwuActivity g2cDuanwu = (G2C_RefreshDuanwuActivity)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_RefreshDuanwuActivity { UId = PlayerInfoComponent.Instance.uid, ActivityType = activityType, GoldCost = goldCost });
+
+                    if(g2cDuanwu.Error != ErrorCode.ERR_Success)
+                    {
+                        ToastScript.createToast(g2cDuanwu.Message);
+                        return;
+                    }
+
+                    duanwuData = g2cDuanwu.DuanwuData;
+                    duanwuActInfoList = g2cDuanwu.DuanwuActivityList;
+                    Init();
+                    CreateDuanwuList();
+                    PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum = g2cDuanwu.GoldNum;
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().refreshUI();
+                }
+                else
+                {
+                    ToastScript.createToast("金币不足");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
+        public void RefreshUI(int zongzi)
+        {
+            duanwuData.ZongziCount = zongzi;
+            OwnZongziCount.text = duanwuData.ZongziCount.ToString();
         }
 
         /// <summary>
@@ -142,9 +213,14 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
             G2C_DuanwuActivity g2cduanwu = (G2C_DuanwuActivity)await SessionWrapComponent.Instance.Session.Call(new C2G_DuanwuActivity() { UId = PlayerInfoComponent.Instance.uid });
-            duanwuActInfoList = g2cduanwu.DuanwuActivityList;
             UINetLoadingComponent.closeNetLoading();
 
+            if (g2cduanwu.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast("活动还未开始");
+                return;
+            }
+            duanwuActInfoList = g2cduanwu.DuanwuActivityList;
             Init();
             CreateDuanwuList();
         }
@@ -154,9 +230,19 @@ namespace ETHotfix
         /// </summary>
         private void Init()
         {
-            //活动结束时间
-            ActivityFinishTime.text = "";
-            OwnZongziCount.text = "粽子个数:" + duanwuData.ZongziCount;
+            try
+            {
+                Log.Debug(duanwuData + "======");
+                //活动结束时间
+                ActivityFinishTime.text = CommonUtil.splitStr_Start_str(duanwuData.StartTime, ' ') + "~" +
+                    CommonUtil.splitStr_Start_str(duanwuData.EndTime, ' ');
+                OwnZongziCount.text = duanwuData.ZongziCount.ToString();
+                RefreshLeftCount.text = duanwuData.RefreshCount.ToString();
+            }
+            catch(Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         /// <summary>
@@ -165,26 +251,51 @@ namespace ETHotfix
         private void CreateDuanwuList()
         {
             GameObject obj = null;
-            for(int i = 0;i< activityType.Length; ++i)
+            try
             {
-                DuanwuActivity activity = duanwuActInfoList[activityType[i]];
-                if (i < taskItemList.Count)
+                for (int i = 0; i < GetActivityType().Count; ++i)
                 {
-                    obj = taskItemList[i];
+                    int index = GetActivityType()[i];
+                    DuanwuActivity activity = duanwuActInfoList[index];
+                    if (i < taskItemList.Count)
+                    {
+                        obj = taskItemList[i];
+                    }
+                    else
+                    {
+                        obj = GameObject.Instantiate(taskItem);
+                        obj.transform.SetParent(TaskGrid.transform);
+                        obj.transform.localScale = Vector3.one;
+                        obj.transform.localPosition = Vector3.zero;
+                        UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                        ui.AddComponent<UIDuanwuActivityItemComponent>();
+                        uilist.Add(ui);
+                        taskItemList.Add(obj);
+                    }
+                    if(i == 0)
+                    {
+                        SetCurActivityInfo(activity);
+                        uilist[i].GetComponent<UIDuanwuActivityItemComponent>().SetSelectState(true);
+                    }
+                    uilist[i].GetComponent<UIDuanwuActivityItemComponent>().SetItemInfo(activity);
                 }
-                else
-                {
-                    obj = GameObject.Instantiate(taskItem);
-                    obj.transform.SetParent(TaskGrid.transform);
-                    obj.transform.localScale = Vector3.one;
-                    obj.transform.localPosition = Vector3.zero;
-                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                    ui.AddComponent<UIDuanwuActivityItemComponent>();
-                    uilist.Add(ui);
-                    taskItemList.Add(obj);
-                }
-                uilist[i].GetComponent<UIDuanwuActivityItemComponent>().SetItemInfo(activity);
             }
+            catch(Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
+        private List<int> GetActivityType()
+        {
+            List<int> activityList = new List<int>();
+            string[] strArray = activityType.Split(';');
+            for (int i = 0; i < strArray.Length; ++i)
+            {
+                int index = int.Parse(strArray[i]);
+                activityList.Add(index);
+            }
+            return activityList;
         }
 
         /// <summary>
@@ -202,41 +313,24 @@ namespace ETHotfix
         /// <param name="activity"></param>
         public void SetCurActivityInfo(DuanwuActivity activity)
         {
-            Des.text = activity.Desc;
-            Reward.text = activity.Reward.ToString();
-            Progress.text = activity.CurProgress + "/" + activity.Target;
-        }
-
-        #region 宝箱
-        private async void GetTreasureData()
-        {
-            UINetLoadingComponent.showNetLoading();
-            G2C_DuanwuTreasure g2ctreasure = (G2C_DuanwuTreasure)await SessionWrapComponent.Instance.Session.Call(new C2G_DuanwuTreasure { });
-            UINetLoadingComponent.closeNetLoading();
-            treasureInfoList = g2ctreasure.TreasureInfoList;
-        }
-
-        private void CreateTreasureList()
-        {
-            GameObject obj = null;
-            for(int i = 0;i< treasurUiList.Count; ++i)
+            try
             {
-                if(i < treasureItemList.Count)
+                for (int i = 0; i < uilist.Count; ++i)
                 {
-                    obj = treasureItemList[i];
+                    if (uilist[i].GetComponent<UIDuanwuActivityItemComponent>().info != activity)
+                    {
+                        uilist[i].GetComponent<UIDuanwuActivityItemComponent>().SetSelectState(false);
+                    }
                 }
-                else
-                {
-                    obj = GameObject.Instantiate(treasureItem);
-                    obj.transform.SetParent(TreasureGrid.transform);
-                    obj.transform.localPosition = Vector3.zero;
-                    obj.transform.localScale = Vector3.one;
-                    treasureItemList.Add(obj);
-                }
+                Des.text = activity.Desc;
+                Reward.text = activity.Reward.ToString();
+                Progress.text = activity.CurProgress + "/" + activity.Target;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
             }
         }
-
-        #endregion
 
         /// <summary>
         /// 从12个活动里面随机获取六个活动
@@ -253,8 +347,15 @@ namespace ETHotfix
                 if (!randomIndexList.Contains(index))
                 {
                     randomIndexList.Add(index);
-                    result.Append(index);
-                    i--;
+                    if(randomIndexList.Count == 1)
+                    {
+                        result.Append(index);
+                    }
+                    else
+                    {
+                        result.Append(";").Append(index);
+                    }
+                    --i;
                 }
             }
             return result.ToString();

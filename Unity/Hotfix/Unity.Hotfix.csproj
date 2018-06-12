@@ -195,8 +195,11 @@
     <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
     <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuTreasureComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuRewardItemComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuTreasureItemComponent.cs" />
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityItemComponent.cs" />
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuTreasureFactory.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
     <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />

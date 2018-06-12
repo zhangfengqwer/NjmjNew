@@ -2226,6 +2226,12 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int Price;
 
+		[ProtoMember(4, IsRequired = true)]
+		public int LimitCount;
+
+		[ProtoMember(5, IsRequired = true)]
+		public string Name;
+
 	}
 
 	[Message(HotfixOpcode.C2G_DuanwuTreasure)]
@@ -2234,6 +2240,9 @@ namespace ETHotfix
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
 
 	}
 
@@ -2312,6 +2321,51 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.C2G_RefreshDuanwuActivity)]
+	[ProtoContract]
+	public partial class C2G_RefreshDuanwuActivity: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long GoldCost;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string ActivityType;
+
+	}
+
+	[Message(HotfixOpcode.G2C_RefreshDuanwuActivity)]
+	[ProtoContract]
+	public partial class G2C_RefreshDuanwuActivity: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<DuanwuActivity> DuanwuActivityList = new List<DuanwuActivity>();
+
+		[ProtoMember(2, IsRequired = true)]
+		public DuanwuData DuanwuData;
+
+		[ProtoMember(3, IsRequired = true)]
+		public long GoldNum;
+
+		[ProtoMember(4, IsRequired = true)]
+		public bool isOpen;
+
+	}
+
 	[Message(HotfixOpcode.C2G_BuyDuanwuTreasure)]
 	[ProtoContract]
 	public partial class C2G_BuyDuanwuTreasure: IRequest
@@ -2346,6 +2400,9 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public DuanwuTreasureLogInfo Info;
+
 	}
 
 	[Message(HotfixOpcode.DuanwuData)]
@@ -2362,7 +2419,10 @@ namespace ETHotfix
 		public int RefreshCount;
 
 		[ProtoMember(4, IsRequired = true)]
-		public int CompleteCount;
+		public string StartTime;
+
+		[ProtoMember(5, IsRequired = true)]
+		public string EndTime;
 
 	}
 
@@ -2383,9 +2443,6 @@ namespace ETHotfix
 		public int ZongZiCount;
 
 		[ProtoMember(4, IsRequired = true)]
-		public long GoldCost;
-
-		[ProtoMember(5, IsRequired = true)]
 		public int Type;
 
 	}
@@ -2429,6 +2486,84 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.C2G_GetDuanwuReward)]
+	[ProtoContract]
+	public partial class C2G_GetDuanwuReward: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int TaskId;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Reward;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetDuanwuReward)]
+	[ProtoContract]
+	public partial class G2C_GetDuanwuReward: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int ZongziCount;
+
+	}
+
+	[Message(HotfixOpcode.DuanwuTreasureLogInfo)]
+	[ProtoContract]
+	public partial class DuanwuTreasureLogInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int TreasureId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int buyCount;
+
+	}
+
+	[Message(HotfixOpcode.C2G_GetDuanwuTreasureInfo)]
+	[ProtoContract]
+	public partial class C2G_GetDuanwuTreasureInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetDuanwuTreasureInfo)]
+	[ProtoContract]
+	public partial class G2C_GetDuanwuTreasureInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1)]
+		public List<DuanwuTreasureLogInfo> Treasures = new List<DuanwuTreasureLogInfo>();
 
 	}
 

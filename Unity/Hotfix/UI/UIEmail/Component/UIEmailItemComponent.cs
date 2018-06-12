@@ -8,6 +8,7 @@ namespace ETHotfix
     public class RewardStruct
     {
         public int itemId;
+        public string iconName;
         public int rewardNum;
     }
 

@@ -55,7 +55,7 @@ namespace ETHotfix
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
             NameTxt.text = gameRank.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("总局数:")
+            GoldTxt.text = new StringBuilder().Append("获胜局数:")
                                               .Append(gameRank.TotalCount)
                                               .ToString();
             if (RankTxt.gameObject.activeInHierarchy)

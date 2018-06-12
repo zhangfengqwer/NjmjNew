@@ -27,9 +27,9 @@ namespace Hotfix
         public void init(string jsonData)
         {
             m_activityInfoList.Clear();
-            
-            JsonData jd = JsonMapper.ToObject(jsonData);
 
+            JsonData jd = JsonMapper.ToObject(jsonData);
+            
             for (int i = 0; i < jd.Count; i++)
             {
                 ActivityInfo temp = new ActivityInfo();
