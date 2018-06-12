@@ -16,16 +16,15 @@ namespace ETHotfix
 
 	    public static async void PlayCard(Gamer gamer, Actor_GamerPlayCard message)
 	    {
-	        try
+	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+	        Room room = roomComponent.Get(gamer.RoomID);
+            try
 	        {
 	            MahjongInfo mahjongInfo = new MahjongInfo()
 	            {
 	                weight = (byte) message.weight,
 	                m_weight = (Consts.MahjongWeight) message.weight
 	            };
-
-	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-	            Room room = roomComponent.Get(gamer.RoomID);
 
 	            if (room.IsPlayingCard)
 	            {
@@ -144,7 +143,8 @@ namespace ETHotfix
 	        catch (Exception e)
 	        {
 	            Log.Error(e);
-	        }
+	            room.IsPlayingCard = false;
+            }
 	    }
 	}
 }

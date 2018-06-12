@@ -173,6 +173,8 @@ namespace ETHotfix
 	                actorStartGame.RoomType = (int) room.GetComponent<GameControllerComponent>().RoomConfig.Id;
                     //发送消息
                     room.Broadcast(actorStartGame);
+	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
+
 	                room.reconnectList.Add(actorStartGame);
 
                     //排序

@@ -93,7 +93,7 @@ namespace ETHotfix
                         AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(userId);
                         if (accountInfo.OldAccountState == 1)
                         {
-                            string url = "http://fksq.hy51v.com:10086/?machine_id=" + accountInfo.MachineId + "&game_id=217";
+                            string url = "http://fksq.hy51v.com:10086/CheckIsOldUser?machine_id=" + accountInfo.MachineId + "&game_id=217";
                             string str = HttpUtil.GetHttp(url);
                             Log.Debug("web地址：" + url);
                             Log.Debug("判断是否是老用户：" + str);
@@ -132,7 +132,7 @@ namespace ETHotfix
                                     }
 
                                     {
-                                        url = ("http://fksq.hy51v.com:8080/GetOldNjmjData?UserId=" + old_uid);
+                                        url = ("http://fksq.hy51v.com:10086/GetOldNjmjData?UserId=" + old_uid);
                                         str = HttpUtil.GetHttp(url);
 
                                         result = JObject.Parse(str);

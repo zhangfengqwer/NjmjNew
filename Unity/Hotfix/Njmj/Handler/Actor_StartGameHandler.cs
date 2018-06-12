@@ -18,7 +18,7 @@ namespace ETHotfix
 
         public static void StartGame(Actor_StartGame message)
         {
-            Log.Debug($"收到开始:{JsonHelper.ToJson(message)}");
+            Log.Debug($"收到开始");
 
             try
             {
