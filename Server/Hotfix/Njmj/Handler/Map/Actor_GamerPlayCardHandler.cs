@@ -88,6 +88,8 @@ namespace ETHotfix
 
 	                foreach (var _gamer in room.GetAll())
 	                {
+	                    if (_gamer == null)
+	                        continue;
 	                    if (_gamer.UserID == gamer.UserID)
 	                        continue;
 
