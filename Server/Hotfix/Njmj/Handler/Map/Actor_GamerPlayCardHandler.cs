@@ -43,7 +43,8 @@ namespace ETHotfix
 	            {
 	                Log.Warning("没有轮到当前玩家出牌:" + gamer.UserID);
 	                Log.Warning("当前出牌玩家:" + orderController.CurrentAuthority);
-	                return;
+	                room.IsPlayingCard = false;
+                    return;
 	            }
 
 	            int index = -1;

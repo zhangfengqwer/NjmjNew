@@ -37,8 +37,12 @@ namespace ETHotfix
 	           
                 gamer.IsReady = true;
 	            //消息广播给其他人
-	            room.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
-	          
+	            room?.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
+	            if (room == null)
+	            {
+	                Log.Warning("room = null");
+	                return;
+	            }
                 Gamer[] gamers = room.GetAll();
                 //房间内有4名玩家且全部准备则开始游戏
 	            if (room.Count == 4 && gamers.Where(g => g.IsReady).Count() == 4)

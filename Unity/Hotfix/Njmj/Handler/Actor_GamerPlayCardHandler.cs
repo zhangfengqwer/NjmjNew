@@ -19,7 +19,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到出牌:{JsonHelper.ToJson(message)}");
+                Log.Info($"收到出牌");
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte) message.weight, m_weight = (Consts.MahjongWeight) message.weight };
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);

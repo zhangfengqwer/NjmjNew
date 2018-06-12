@@ -25,7 +25,7 @@ namespace ETHotfix
                     return;
                 }
 
-                Log.Info($"收到玩家进入:{JsonHelper.ToJson(message)}");
+                Log.Info($"收到玩家进入");
                 //第一次进入创建UIRoom
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom) == null)
                 {

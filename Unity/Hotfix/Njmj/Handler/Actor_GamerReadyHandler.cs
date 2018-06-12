@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到准备:{JsonHelper.ToJson(message)}");
+                Log.Info($"收到准备");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UIReadyComponent uiReadyComponent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady)?.GetComponent<UIReadyComponent>();
 

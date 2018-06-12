@@ -11,7 +11,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info("收到表情：" + JsonHelper.ToJson(message));
+                Log.Info("收到表情：" );
 
 //                ToastScript.createToast(message.Value);
 

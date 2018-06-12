@@ -247,7 +247,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 2
-  androidSplashScreen: {fileID: 2800000, guid: 5fb23be1cc0da0347ac4b29750ce9424, type: 3}
+  androidSplashScreen: {fileID: 2800000, guid: 862ee2d3a8cc017448be3c7c0d6da087, type: 3}
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidTVCompatibility: 1

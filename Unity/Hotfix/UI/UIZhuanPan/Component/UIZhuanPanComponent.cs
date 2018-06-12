@@ -119,7 +119,7 @@ namespace ETHotfix
 
         public void showGuiZe()
         {
-            string content = "1、每进行一次游戏可获得一次转盘机会，每日最高3次\r\n\r\n2、贵族用户每日额外赠送一次机会\r\n\r\n";
+            string content = "1、每完成一次对局可获得一次转盘机会，每日最高3次\r\n\r\n2、贵族用户每日额外赠送一次机会\r\n\r\n";
             if (!OtherData.getIsShiedShare())
             {
                 content += "3、以上转盘次数用完后分享游戏可额外获得一次机会";
