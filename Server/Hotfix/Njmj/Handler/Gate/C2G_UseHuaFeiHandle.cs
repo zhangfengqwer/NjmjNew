@@ -32,7 +32,7 @@ namespace ETHotfix
                         {
                             // 充值话费
                             {
-                                string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString().Substring(1), "话费", "1", message.Phone, "3", "1");
+                                string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString().Substring(1), "话费", "5", message.Phone, "3", "1");
                                 Log.Debug("=======" + str);
 
                                 if (!CommonUtil.checkHuaFeiChongZhiResult(str))
