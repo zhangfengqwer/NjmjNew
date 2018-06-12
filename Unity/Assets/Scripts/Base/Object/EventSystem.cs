@@ -49,6 +49,7 @@ namespace ETModel
 		{
 			this.assemblies[dllType] = assembly;
 
+
 			this.awakeSystems.Clear();
 			this.lateUpdateSystems.Clear();
 			this.updateSystems.Clear();
@@ -56,7 +57,7 @@ namespace ETModel
 			this.loadSystems.Clear();
 			this.changeSystems.Clear();
 
-			Type[] types = DllHelper.GetMonoTypes();
+            Type[] types = DllHelper.GetMonoTypes();
 			foreach (Type type in types)
 			{
 				object[] attrs = type.GetCustomAttributes(typeof(ObjectSystemAttribute), false);
@@ -71,6 +72,7 @@ namespace ETModel
 				IAwakeSystem objectSystem = obj as IAwakeSystem;
 				if (objectSystem != null)
 				{
+
 					this.awakeSystems.Add(objectSystem.Type(), objectSystem);
 				}
 
