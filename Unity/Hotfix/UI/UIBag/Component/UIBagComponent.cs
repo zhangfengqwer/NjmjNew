@@ -65,6 +65,11 @@ namespace ETHotfix
 
             useBtn.onClick.Add(() =>
             {
+                if (item == null)
+                {
+                    ToastScript.createToast("暂无道具");
+                    return;
+                }
                 useBg.SetActive(true);
                 useTxt.text = new StringBuilder().Append("是否使用道具")
                                                  .Append("\"")
@@ -73,8 +78,6 @@ namespace ETHotfix
             });
             sureBtn.onClick.Add(() =>
             {
-                if (item == null)
-                    return;
                 UseItem(item);
             });
             cancelBtn.onClick.Add(() =>

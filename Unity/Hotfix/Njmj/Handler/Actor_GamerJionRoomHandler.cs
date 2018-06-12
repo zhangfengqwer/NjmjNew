@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Debug("有人加入:" + JsonHelper.ToJson(message));
+                Log.Debug("有人加入:");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();

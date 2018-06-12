@@ -15,7 +15,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Debug($"收到喇叭:" + JsonHelper.ToJson(message));
+                Log.Debug($"收到喇叭:");
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain) != null)
                 {
                     if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>() != null)

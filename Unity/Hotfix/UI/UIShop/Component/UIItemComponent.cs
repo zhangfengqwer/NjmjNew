@@ -52,6 +52,14 @@ namespace ETHotfix
                 }
                 else
                 {
+                    if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+                    {
+                        ToastScript.createToast("请先完成实名认证！");
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
+                        return;
+                    }
+
                     //接购买SDK
                     //ToastScript.createToast("暂时未开放人民币购买");
                     //可以购买

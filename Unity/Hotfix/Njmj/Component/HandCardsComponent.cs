@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -156,6 +157,7 @@ namespace ETHotfix
             faceImageGe = null;
             pengDic.Clear();
             cardDisplayObjs.Clear();
+            tokenSource.Cancel();
         }
 
         /// <summary>
@@ -237,14 +239,21 @@ namespace ETHotfix
             ShowCard(mahjong.weight);
         }
 
+        private CancellationTokenSource tokenSource = new CancellationTokenSource();
         public async void ShowCard(byte mahjongWeight)
         {
+            if (tokenSource != null)
+            {
+                tokenSource.Cancel();
+            }
+
+            tokenSource = new CancellationTokenSource();
             this.resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
             showCard.GetComponent<Image>().sprite = obj.Get<Sprite>("card_" + mahjongWeight);
 
             showCard.SetActive(true);
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000, tokenSource.Token);
             showCard.SetActive(false);
         }
 

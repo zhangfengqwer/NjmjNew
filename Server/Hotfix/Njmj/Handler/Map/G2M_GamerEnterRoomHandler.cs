@@ -108,6 +108,11 @@ namespace ETHotfix
 			        //人满了
 			        if (idleRoom.seats.Count == 4)
 			        {
+			            if (roomComponent.readyRooms.TryGetValue(idleRoom.Id, out var _room))
+			            {
+			                roomComponent.readyRooms.Remove(idleRoom.Id);
+                        }
+
                         roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
                         roomComponent.idleRooms.Remove(idleRoom);
                         //有key重复添加的问题
@@ -115,13 +120,14 @@ namespace ETHotfix
 
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
                     GamerInfo currentInfo = null;
-			        foreach (var item in idleRoom.seats)
+			        for (int i = 0; i < idleRoom.GetAll().Length; i++)
 			        {
+			            Gamer _gamer = idleRoom.GetAll()[i];
+			            if (_gamer == null) continue;
 			            GamerInfo gamerInfo = new GamerInfo();
-			            gamerInfo.UserID = item.Key;
-			            gamerInfo.SeatIndex = item.Value;
-			            Gamer temp = idleRoom.Get(item.Key);
-			            gamerInfo.IsReady = temp.IsReady;
+			            gamerInfo.UserID = _gamer.UserID;
+			            gamerInfo.SeatIndex = idleRoom.GetGamerSeat(_gamer.UserID);
+			            gamerInfo.IsReady = _gamer.IsReady;
 
 			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
 
@@ -137,16 +143,49 @@ namespace ETHotfix
 			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
 			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
 
-                        gamerInfo.playerInfo = playerInfo;
+			            gamerInfo.playerInfo = playerInfo;
 
-                        if (gamerInfo.UserID == message.UserId)
+			            if (gamerInfo.UserID == message.UserId)
 			            {
 			                currentInfo = gamerInfo;
 
 			            }
 
 			            Gamers.Add(gamerInfo);
-			        }
+
+                    }
+//			        foreach (var item in idleRoom.seats)
+//			        {
+//			            GamerInfo gamerInfo = new GamerInfo();
+//			            gamerInfo.UserID = item.Key;
+//			            gamerInfo.SeatIndex = item.Value;
+//			            Gamer temp = idleRoom.Get(item.Key);
+//			            gamerInfo.IsReady = temp.IsReady;
+//
+//			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+//
+//			            PlayerInfo playerInfo = new PlayerInfo();
+//			            playerInfo.Icon = playerBaseInfo.Icon;
+//			            playerInfo.Name = playerBaseInfo.Name;
+//			            playerInfo.GoldNum = playerBaseInfo.GoldNum;
+//			            playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
+//			            playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
+//			            playerInfo.VipTime = playerBaseInfo.VipTime;
+//			            playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
+//			            playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
+//			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
+//			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
+//
+//                        gamerInfo.playerInfo = playerInfo;
+//
+//                        if (gamerInfo.UserID == message.UserId)
+//			            {
+//			                currentInfo = gamerInfo;
+//
+//			            }
+//
+//			            Gamers.Add(gamerInfo);
+//			        }
 
                     foreach (var _gamer in idleRoom.GetAll())
                     {

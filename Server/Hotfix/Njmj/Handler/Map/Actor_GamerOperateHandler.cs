@@ -27,6 +27,7 @@ namespace ETHotfix
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
                 GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
+
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
                 Log.Debug("有人碰或刚,当前出牌" + JsonHelper.ToJson(deskComponent.CurrentCard));

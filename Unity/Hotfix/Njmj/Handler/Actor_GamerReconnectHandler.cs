@@ -15,7 +15,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"断线重连:" + JsonHelper.ToJson(message));
+                Log.Info($"断线重连:");
                 SoundsHelp.Instance.SoundMute(true);
 
                 GameObject mask = GameObject.Instantiate(CommonUtil.getGameObjByBundle("Image_Desk_Card", "RoomMask"),GameObject.Find("Global/UI/CommonCanvas").transform);

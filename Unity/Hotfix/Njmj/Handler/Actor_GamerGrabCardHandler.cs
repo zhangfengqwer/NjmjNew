@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到抓拍:{JsonHelper.ToJson(message)}");
+                Log.Info($"收到抓拍");
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte)message.weight, m_weight = (Consts.MahjongWeight)message.weight };
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 if (uiRoom == null) return;

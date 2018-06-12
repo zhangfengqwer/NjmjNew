@@ -37,8 +37,12 @@ namespace ETHotfix
 	           
                 gamer.IsReady = true;
 	            //消息广播给其他人
-	            room.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
-	          
+	            room?.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
+	            if (room == null)
+	            {
+	                Log.Warning("room = null");
+	                return;
+	            }
                 Gamer[] gamers = room.GetAll();
                 //房间内有4名玩家且全部准备则开始游戏
 	            if (room.Count == 4 && gamers.Where(g => g.IsReady).Count() == 4)
@@ -173,6 +177,8 @@ namespace ETHotfix
 	                actorStartGame.RoomType = (int) room.GetComponent<GameControllerComponent>().RoomConfig.Id;
                     //发送消息
                     room.Broadcast(actorStartGame);
+	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
+
 	                room.reconnectList.Add(actorStartGame);
 
                     //排序

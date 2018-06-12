@@ -15,7 +15,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"玩家托管:" + JsonHelper.ToJson(message));
+                Log.Info($"玩家托管:");
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();

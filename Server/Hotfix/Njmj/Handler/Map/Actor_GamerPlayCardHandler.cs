@@ -16,16 +16,15 @@ namespace ETHotfix
 
 	    public static async void PlayCard(Gamer gamer, Actor_GamerPlayCard message)
 	    {
-	        try
+	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+	        Room room = roomComponent.Get(gamer.RoomID);
+            try
 	        {
 	            MahjongInfo mahjongInfo = new MahjongInfo()
 	            {
 	                weight = (byte) message.weight,
 	                m_weight = (Consts.MahjongWeight) message.weight
 	            };
-
-	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-	            Room room = roomComponent.Get(gamer.RoomID);
 
 	            if (room.IsPlayingCard)
 	            {
@@ -44,7 +43,8 @@ namespace ETHotfix
 	            {
 	                Log.Warning("没有轮到当前玩家出牌:" + gamer.UserID);
 	                Log.Warning("当前出牌玩家:" + orderController.CurrentAuthority);
-	                return;
+	                room.IsPlayingCard = false;
+                    return;
 	            }
 
 	            int index = -1;
@@ -88,6 +88,8 @@ namespace ETHotfix
 
 	                foreach (var _gamer in room.GetAll())
 	                {
+	                    if (_gamer == null)
+	                        continue;
 	                    if (_gamer.UserID == gamer.UserID)
 	                        continue;
 
@@ -144,7 +146,8 @@ namespace ETHotfix
 	        catch (Exception e)
 	        {
 	            Log.Error(e);
-	        }
+	            room.IsPlayingCard = false;
+            }
 	    }
 	}
 }

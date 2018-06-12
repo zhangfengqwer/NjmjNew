@@ -125,7 +125,6 @@ namespace ETModel
 
                 VersionConfig localVersionConfig = JsonHelper.FromJson<VersionConfig>(File.ReadAllText(versionPath));
 
-                var tasks = new List<Task>();
                 foreach (var data in localVersionConfig.FileInfoDict)
                 {
                     fileName = data.Value.File;
@@ -135,11 +134,8 @@ namespace ETModel
                         continue;
                     }
 
-                    Task task = resourcesComponent.LoadBundleAsync(fileName);
-                    tasks.Add(task);
+                    await resourcesComponent.LoadBundleAsync(fileName);
                 }
-
-                 tasks.ForEach(async _ => await _);
 
                 //foreach (var str in fileList)
                 //{
