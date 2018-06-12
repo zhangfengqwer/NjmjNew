@@ -94,9 +94,9 @@ namespace ETHotfix
             Log.Info("更新成就：roomId为:" + room.Id);
             UpdateChengjiu(room);
             UpdatePlayerInfo(room, huaCount);
-
-            //            //更新任务
-            //            UpdateTask(room);
+            //记录对局
+            await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID, room.GetAll()[1].UserID,
+                room.GetAll()[2].UserID, room.GetAll()[3].UserID);
 
             //设置在线时长
             foreach (var gamer in room.GetAll())
