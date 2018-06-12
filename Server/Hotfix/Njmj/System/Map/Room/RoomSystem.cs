@@ -130,7 +130,7 @@ namespace ETHotfix
                 }
 
                 MahjongInfo mahjongInfo = gamer.GetComponent<HandCardsComponent>().PopCard();
-                Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
+//                Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
                 gamer.IsTrusteeship = true;
                 self.GamerBroadcast(gamer, new Actor_GamerTrusteeship());
             }

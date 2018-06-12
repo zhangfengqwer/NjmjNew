@@ -40,6 +40,7 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static MahjongInfo PopCard(this HandCardsComponent self)
         {
+            if (self == null) return null;
             Gamer gamer = self.GetParent<Gamer>();
             List<MahjongInfo> mahjongInfos = self.GetAll();
             int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
