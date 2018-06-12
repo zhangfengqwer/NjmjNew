@@ -547,7 +547,7 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("总局数:")
+            GoldTxt.text = new StringBuilder().Append("获胜局数:")
                                               .Append(ownGameRank.TotalCount)
                                               .ToString();
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);

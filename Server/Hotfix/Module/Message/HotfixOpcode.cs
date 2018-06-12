@@ -134,12 +134,19 @@ namespace ETModel
 		 public const ushort DuanwuActivity = 10130;
 		 public const ushort C2G_DuanwuActivity = 10131;
 		 public const ushort G2C_DuanwuActivity = 10132;
-		 public const ushort C2G_BuyDuanwuTreasure = 10133;
-		 public const ushort G2C_BuyDuanwuTreasure = 10134;
-		 public const ushort DuanwuData = 10135;
-		 public const ushort C2G_DuanwuDataBase = 10136;
-		 public const ushort G2C_DuanwuDataBase = 10137;
-		 public const ushort C2G_UpdateServer = 10138;
-		 public const ushort G2C_UpdateServer = 10139;
+		 public const ushort C2G_RefreshDuanwuActivity = 10133;
+		 public const ushort G2C_RefreshDuanwuActivity = 10134;
+		 public const ushort C2G_BuyDuanwuTreasure = 10135;
+		 public const ushort G2C_BuyDuanwuTreasure = 10136;
+		 public const ushort DuanwuData = 10137;
+		 public const ushort C2G_DuanwuDataBase = 10138;
+		 public const ushort G2C_DuanwuDataBase = 10139;
+		 public const ushort C2G_UpdateServer = 10140;
+		 public const ushort G2C_UpdateServer = 10141;
+		 public const ushort C2G_GetDuanwuReward = 10142;
+		 public const ushort G2C_GetDuanwuReward = 10143;
+		 public const ushort DuanwuTreasureLogInfo = 10144;
+		 public const ushort C2G_GetDuanwuTreasureInfo = 10145;
+		 public const ushort G2C_GetDuanwuTreasureInfo = 10146;
 	}
 }
