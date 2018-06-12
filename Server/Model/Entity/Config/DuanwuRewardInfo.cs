@@ -42,5 +42,6 @@ namespace ETModel
         public int BuyCountLimit { get; set; }
         public string Reward { get; set; }
         public int Price { get; set; }
+        public string Name { get; set; }
     }
 }

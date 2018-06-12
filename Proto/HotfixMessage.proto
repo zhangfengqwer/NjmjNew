@@ -767,11 +767,13 @@ message TreasureInfo // IMessage
 	required int TreasureId = 1;
 	required string Reward = 2;
 	required int Price = 3;
+	required int LimitCount = 4;
+	required string Name = 5;
 }
 
 message C2G_DuanwuTreasure // IRequest
 {
-
+	required long UId = 1;
 }
 
 message G2C_DuanwuTreasure // IResponse
@@ -800,6 +802,21 @@ message G2C_DuanwuActivity // IResponse
 	repeated DuanwuActivity DuanwuActivityList = 1;
 }
 
+message C2G_RefreshDuanwuActivity //IRequest
+{
+	required long UId = 1;
+	required long GoldCost = 2;
+	required string ActivityType = 3;
+}
+
+message G2C_RefreshDuanwuActivity //IResponse
+{
+	repeated DuanwuActivity DuanwuActivityList = 1;
+	required DuanwuData DuanwuData = 2;
+	required long GoldNum = 3;
+	required bool isOpen = 4;
+}
+
 message C2G_BuyDuanwuTreasure // IRequest
 {
 	required long UId = 1;
@@ -810,7 +827,7 @@ message C2G_BuyDuanwuTreasure // IRequest
 
 message G2C_BuyDuanwuTreasure // IResponse
 {
-
+	required DuanwuTreasureLogInfo Info = 1;
 }
 
 message DuanwuData // IMessage
@@ -818,7 +835,8 @@ message DuanwuData // IMessage
 	required int ZongziCount = 1;
 	required string ActivityType = 2;
 	required int RefreshCount = 3;
-	required int CompleteCount = 4;
+	required string StartTime = 4;
+	required string EndTime = 5;
 }
 
 message C2G_DuanwuDataBase // IRequest
@@ -826,13 +844,40 @@ message C2G_DuanwuDataBase // IRequest
 	required long UId = 1;
 	required string ActivityType = 2;
 	required int ZongZiCount = 3;
-	required long GoldCost = 4;
-	required int Type = 5;//更新还是请求数据
+	required int Type = 4;//更新还是请求数据
 }
 
 message G2C_DuanwuDataBase // IResponse
 {
 	required DuanwuData DuanwuData = 1;
+}
+
+message C2G_GetDuanwuReward //IRequest
+{
+	required long UId = 1;
+	required int TaskId = 2;
+	required int Reward = 3;
+}
+
+message G2C_GetDuanwuReward //IResponse
+{
+	required int ZongziCount = 1;
+}
+
+message DuanwuTreasureLogInfo //IMessage
+{
+	required int TreasureId = 1;
+	required int buyCount = 2;
+}
+
+message C2G_GetDuanwuTreasureInfo //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_GetDuanwuTreasureInfo //IResponse
+{
+	repeated DuanwuTreasureLogInfo Treasures = 1;
 }
 
 #endregion

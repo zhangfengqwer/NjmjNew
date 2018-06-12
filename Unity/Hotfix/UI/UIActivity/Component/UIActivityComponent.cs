@@ -1,5 +1,6 @@
 ﻿using ETModel;
 using Hotfix;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Unity_Utils;
@@ -38,43 +39,53 @@ namespace ETHotfix
 
         public async void Start()
         {
-            await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
-            ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-            returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
-            ActivityGrid = rc.Get<GameObject>("ActivityGrid");
-            NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
-            ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
-            Panel = rc.Get<GameObject>("Panel");
-            Activity = rc.Get<GameObject>("Activity");
-            Notice = rc.Get<GameObject>("Notice");
-            noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
-            activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
-            Grid = rc.Get<GameObject>("Grid");
-
-            GetActivityItemList();
-
-            //返回
-            returnBtn.onClick.Add(() =>
+            try
             {
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIActivity);
-            });
+                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
 
-            //点击显示通知栏
-            NoticeBtn.onClick.Add(() =>
-            {
-                NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
-                ActivityBtn.transform.GetChild(0).gameObject.SetActive(false);
-                Notice.SetActive(true);
-                Activity.SetActive(false);
-                CreateNoticeItems();
-            });
+                ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+                returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
+                ActivityGrid = rc.Get<GameObject>("ActivityGrid");
+                NoticeBtn = rc.Get<GameObject>("NoticeBtn").GetComponent<Button>();
+                ActivityBtn = rc.Get<GameObject>("ActivityBtn").GetComponent<Button>();
+                Panel = rc.Get<GameObject>("Panel");
+                Activity = rc.Get<GameObject>("Activity");
+                Notice = rc.Get<GameObject>("Notice");
+                noticeItem = CommonUtil.getGameObjByBundle(UIType.UINoticeItem);
+                activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
+                Grid = rc.Get<GameObject>("Grid");
 
-            //点击显示活动栏
-            ActivityBtn.onClick.Add(() =>
-            {
                 GetActivityItemList();
-            });
-            
+
+                //返回
+                returnBtn.onClick.Add(() =>
+                {
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIActivity);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIDuanwu);
+                });
+
+                //点击显示通知栏
+                NoticeBtn.onClick.Add(() =>
+                {
+                    NoticeBtn.transform.GetChild(0).gameObject.SetActive(true);
+                    ActivityBtn.transform.GetChild(0).gameObject.SetActive(false);
+                    Notice.SetActive(true);
+                    Activity.SetActive(false);
+                    CreateNoticeItems();
+                });
+
+                //点击显示活动栏
+                ActivityBtn.onClick.Add(() =>
+                {
+                    GetActivityItemList();
+                });
+            }
+            catch(Exception e)
+            {
+                Log.Error(e);
+            }
+
+
         }
 
         /// <summary>
@@ -173,7 +184,7 @@ namespace ETHotfix
             {
                 TotalTextHeight += uiList[i].GetComponent<UINoticeItemComponent>().GetTextHeight();
             }
-            float height = Grid.transform.childCount * objHeight + TotalTextHeight + 50;
+            float height = Grid.transform.childCount * objHeight + TotalTextHeight + 70;
             Grid.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             for (int i = 0; i < Grid.transform.childCount; ++i)
             {

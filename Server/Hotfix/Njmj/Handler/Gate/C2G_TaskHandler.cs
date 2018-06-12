@@ -17,6 +17,9 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
+
+                DBCommonUtil.UpdateDuanwuActivity(message.uid,109,1000);
+
                 if (taskProgressInfoList.Count <= 0)
                 {
                     for (int j = 0; j < configCom.GetAll(typeof(TaskConfig)).Length; ++j)

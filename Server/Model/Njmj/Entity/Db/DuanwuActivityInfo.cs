@@ -5,6 +5,6 @@ namespace ETModel
     {
         public long UId { get; set; }
         public int TreasureId { get; set; }
-        public int BuyCount { get; set; }
+        public int BuyCount = 0;
     }
 }

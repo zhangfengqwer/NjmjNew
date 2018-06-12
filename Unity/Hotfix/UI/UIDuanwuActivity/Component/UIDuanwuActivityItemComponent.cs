@@ -21,24 +21,59 @@ namespace ETHotfix
     {
         private Image Icon;
         private Button ActBtn;
+        private Text Reward;
         private GameObject IsComplete;
-        private DuanwuActivity info;
+        public DuanwuActivity info;
 
         public void Awake()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             Icon = rc.Get<GameObject>("Icon").GetComponent<Image>();
             ActBtn = rc.Get<GameObject>("ActBtn").GetComponent<Button>();
+            Reward = rc.Get<GameObject>("Reward").GetComponent<Text>();
+            IsComplete = rc.Get<GameObject>("IsComplete");
+
             ActBtn.onClick.Add(() =>
             {
-                //设置当前选中的活动类型
-                Game.Scene.GetComponent<UIComponent>().Get("").GetComponent<UIDuanwuActivityComponent>().SetCurActivityInfo(info);
-                if (!info.IsGet)
+                SetSelectState(true);
+                try
                 {
-                    //领取奖励
-                    GetReward();
+                    //设置当前选中的活动类型
+                    UIDuanwuActivityComponent.Instance.SetCurActivityInfo(info);
+                    if (info.IsComplete)
+                    {
+                        if (!info.IsGet)
+                        {
+                            //领取奖励
+                            GetReward();
+                        }
+                        else
+                        {
+                            //已经领取
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    Log.Error(e);
                 }
             });
+        }
+
+        /// <summary>
+        /// 设置选中状态
+        /// </summary>
+        /// <param name="isSelect"></param>
+        public void SetSelectState(bool isSelect)
+        {
+            if (isSelect)
+            {
+                ActBtn.GetComponent<Image>().color = new Color(1, 1, 1);
+            }
+            else
+            {
+                ActBtn.GetComponent<Image>().color = new Color(0, 0, 0);
+            }
         }
 
         /// <summary>
@@ -47,13 +82,14 @@ namespace ETHotfix
         private async void GetReward()
         {
             UINetLoadingComponent.showNetLoading();
-            ////type = 3 领取粽子
-            //G2C_DuanwuDataBase g2cDuanwu = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 3, ZongZiCount = info.Reward });
-            //更新任务
+            G2C_GetDuanwuReward g2cDuanwu = (G2C_GetDuanwuReward)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GetDuanwuReward { UId = PlayerInfoComponent.Instance.uid, Reward = info.Reward, TaskId = info.TaskId });
             UINetLoadingComponent.closeNetLoading();
 
+            IsComplete.SetActive(false);
+            UIDuanwuActivityComponent.Instance.RefreshUI(g2cDuanwu.ZongziCount);
+
             //端午活动一级界面粽子个数旁显示 +XXX粽子
-            Game.Scene.GetComponent<UIComponent>().Get("").GetComponent<UIDuanwuActivityComponent>().ShowAddZongziCount(info.Reward);
+            UIDuanwuActivityComponent.Instance.ShowAddZongziCount(info.Reward);
         }
 
         /// <summary>
@@ -63,6 +99,7 @@ namespace ETHotfix
         public void SetItemInfo(DuanwuActivity info)
         {
             this.info = info;
+            Reward.text = info.Reward.ToString();
             if (info.IsComplete)
             {
                 if (info.IsGet)
@@ -74,8 +111,18 @@ namespace ETHotfix
                     IsComplete.SetActive(true);
                 }
             }
-            string iconName = $"Duanwu_{info.TaskId}";
-            Icon.sprite = CommonUtil.getSpriteByBundle("Duanwu", iconName);
+            if(info.TaskId <= 104)
+            {
+                Icon.sprite = CommonUtil.getSpriteByBundle("Image_Duanwu", "104");
+            }
+            else if(info.TaskId <= 108)
+            {
+                Icon.sprite = CommonUtil.getSpriteByBundle("Image_Duanwu", "108");
+            }
+            else
+            {
+                Icon.sprite = CommonUtil.getSpriteByBundle("Image_Duanwu", "112");
+            }
         }
     }
 }
