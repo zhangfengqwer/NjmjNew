@@ -122,7 +122,7 @@ namespace ETHotfix
         private async Task RequestUpdateServer()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_UpdateServer g2cUpdateServer = (G2C_UpdateServer)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdateServer {});
+            M2C_Reload g2cUpdateServer = (M2C_Reload)await SessionComponent.Instance.Session.Call(new C2M_Reload() {AppType = AppType.AllServer});
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cUpdateServer.Error != ErrorCode.ERR_Success)
