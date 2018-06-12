@@ -8,11 +8,14 @@ namespace ETHotfix
 	{
 		protected override async void Run(Session session, C2M_Reload message, Action<M2C_Reload> reply)
 		{
-			M2C_Reload response = new M2C_Reload();
+		    Log.Debug("收到C2M_Reload：" + JsonHelper.ToJson(message));
+
+            M2C_Reload response = new M2C_Reload();
 			try
 			{
 				StartConfigComponent startConfigComponent = Game.Scene.GetComponent<StartConfigComponent>();
-				NetInnerComponent netInnerComponent = Game.Scene.GetComponent<NetInnerComponent>();
+			    Log.Debug("startConfigComponent：" + JsonHelper.ToJson(startConfigComponent));
+                NetInnerComponent netInnerComponent = Game.Scene.GetComponent<NetInnerComponent>();
 				foreach (StartConfig startConfig in startConfigComponent.GetAll())
 				{
 					if (!message.AppType.Is(startConfig.AppType))
@@ -21,7 +24,8 @@ namespace ETHotfix
 					}
 					InnerConfig innerConfig = startConfig.GetComponent<InnerConfig>();
 					Session serverSession = netInnerComponent.Get(innerConfig.IPEndPoint);
-					await serverSession.Call(new M2A_Reload());
+				    Log.Debug("发送M2A_Reload");
+                    await serverSession.Call(new M2A_Reload());
 				}
 				reply(response);
 			}
