@@ -87,6 +87,7 @@ message G2C_LoginGate // IResponse
 	repeated ShopInfo ShopInfoList = 3;//商店商品
 	repeated TaskInfo TaskInfoList = 4;//任务列表
 	repeated Bag BagList = 5;//背包列表
+	required string ownIcon = 6;//玩家头像
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -219,6 +220,7 @@ message C2G_PlayerInfo // IRequest
 message G2C_PlayerInfo // IResponse
 {
 	required PlayerInfo PlayerInfo = 1;
+	required string OwnIcon = 2;
 }
 
 message Activity //IMessage
@@ -830,11 +832,13 @@ message C2G_BuyDuanwuTreasure // IRequest
 	required int TreasureId = 2;
 	required string Reward = 3;
 	required int Price = 4;
+	required int LimitCount = 5;
 }
 
 message G2C_BuyDuanwuTreasure // IResponse
 {
 	required DuanwuTreasureLogInfo Info = 1;
+	required int ZongZiCount = 2;
 }
 
 message DuanwuData // IMessage
@@ -844,6 +848,7 @@ message DuanwuData // IMessage
 	required int RefreshCount = 3;
 	required string StartTime = 4;
 	required string EndTime = 5;
+	required int CompleteCount = 6;
 }
 
 message C2G_DuanwuDataBase // IRequest
@@ -877,6 +882,7 @@ message C2G_GetDuanwuReward //IRequest
 message G2C_GetDuanwuReward //IResponse
 {
 	required int ZongziCount = 1;
+	required bool IsGet = 2;
 }
 
 message DuanwuTreasureLogInfo //IMessage

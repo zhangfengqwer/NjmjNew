@@ -160,6 +160,14 @@ namespace ETHotfix
                     }
                 }
 
+                #region 用户活动所获得的头像数据
+                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{userId}}}");
+                if(otherDatas.Count > 0)
+                {
+                    response.ownIcon = otherDatas[0].OwnIcon;
+                }
+                #endregion
+
                 reply(response);
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
 
