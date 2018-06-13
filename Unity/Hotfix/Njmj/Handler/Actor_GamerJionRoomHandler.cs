@@ -17,11 +17,11 @@ namespace ETHotfix
                 Log.Debug("有人加入:");
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
+                if (uiReady == null) return;
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 UIReadyComponent uiReadyComponent = uiReady.GetComponent<UIReadyComponent>();
-
                 Gamer gamer = GamerFactory.Create(message.Gamer.UserID, message.Gamer.IsReady,message.Gamer.playerInfo);
 
                 GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();

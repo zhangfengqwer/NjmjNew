@@ -33,7 +33,7 @@ namespace ETHotfix
         public static void Add(this RoomComponent self, Room room)
         {
             self.rooms.Add(room.Id, room);
-            self.idleRooms.Add(room);
+            self.idleRooms.Add(room.Id,room);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace ETHotfix
         {
             if (self.IdleRoomCount > 0)
             {
-                foreach (var room in self.idleRooms)
+                foreach (var room in self.idleRooms.Values)
                 {
                     GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
                     if (controllerComponent == null)
@@ -66,7 +66,7 @@ namespace ETHotfix
                         Log.Warning("room的GameControllerComponent为null");
                         continue;
                     }
-                    if (controllerComponent.RoomConfig.Id == roomType)
+                    if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
                     {
                         return room;
                     }
@@ -81,12 +81,12 @@ namespace ETHotfix
 
         public static void RemoveRoom(this RoomComponent self,Room room)
         {
-            Log.Debug("self.rooms:" + self.rooms.Count);
+            Log.Info("self.rooms:" + self.rooms.Count);
             self.rooms.Remove(room.Id);
-            Log.Debug("self.rooms:" + self.rooms.Count);
-            Log.Debug("idleRooms:" + self.idleRooms.Count);
-            self.idleRooms.Remove(room);
-            Log.Debug("idleRooms:" + self.idleRooms.Count);
+            Log.Info("self.rooms:" + self.rooms.Count);
+            Log.Info("idleRooms:" + self.idleRooms.Count);
+            self.idleRooms.Remove(room.Id);
+            Log.Info("idleRooms:" + self.idleRooms.Count);
         }
 
         public static async void Awake(this RoomComponent self)
@@ -95,9 +95,11 @@ namespace ETHotfix
             {
                 await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
 
-                for (int i = 0; i < self.idleRooms.Count; i++)
+                var idleRooms = self.idleRooms.Values.ToList();
+
+                for (int i = 0; i < idleRooms.Count; i++)
                 {
-                    Room room = self.idleRooms[i];
+                    Room room = idleRooms[i];
                     foreach (var gamer in room.GetAll())
                     {
                         if (gamer == null)
@@ -129,42 +131,42 @@ namespace ETHotfix
                     }
                 }
 
-                var readyRooms = self.readyRooms.Values.ToList();
-
-                for (int i = 0; i < readyRooms.Count; i++)
-                {
-                    Room room = readyRooms[i];
-                    foreach (var gamer in room.GetAll())
-                    {
-                        if (gamer == null)
-                            continue;
-
-                        if (!gamer.IsReady)
-                        {
-                            gamer.ReadyTimeOut++;
-
-                            //超时
-                            if (gamer.ReadyTimeOut > 20)
-                            {
-                                //人满了
-                                if (room.seats.Count == 4)
-                                {
-                                    self.readyRooms.Remove(room.Id);
-                                    self.idleRooms.Add(room);
-                                }
-
-                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut());
-
-                                //房间移除玩家
-                                room.Remove(gamer.UserID);
-                                //消息广播给其他人
-                                room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
-                                gamer.Dispose();
-
-                            }
-                        }
-                    }
-                }
+//                var readyRooms = self.readyRooms.Values.ToList();
+//
+//                for (int i = 0; i < readyRooms.Count; i++)
+//                {
+//                    Room room = readyRooms[i];
+//                    foreach (var gamer in room.GetAll())
+//                    {
+//                        if (gamer == null)
+//                            continue;
+//
+//                        if (!gamer.IsReady)
+//                        {
+//                            gamer.ReadyTimeOut++;
+//
+//                            //超时
+//                            if (gamer.ReadyTimeOut > 20)
+//                            {
+//                                //人满了
+//                                if (room.seats.Count == 4)
+//                                {
+//                                    self.readyRooms.Remove(room.Id);
+//                                    self.idleRooms.Add(room.Id,room);
+//                                }
+//
+//                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut());
+//
+//                                //房间移除玩家
+//                                room.Remove(gamer.UserID);
+//                                //消息广播给其他人
+//                                room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
+//                                gamer.Dispose();
+//
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }

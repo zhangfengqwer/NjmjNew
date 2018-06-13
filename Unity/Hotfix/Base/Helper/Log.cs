@@ -28,7 +28,7 @@ namespace ETHotfix
 
 		public static void Debug(string msg)
 		{
-			ETModel.Log.Debug(msg);
+			//ETModel.Log.Debug(msg);
 		}
 	}
 }

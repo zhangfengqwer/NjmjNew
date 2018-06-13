@@ -44,7 +44,10 @@ namespace ETHotfix
             }
             catch (Exception e)
             {
-                ReplyError(response, e, reply);
+                //ReplyError(response, e, reply);
+                response.Message = "获取验证码失败，请重新获取";
+                response.Error = ErrorCode.ERR_PhoneCodeError;
+                reply(response);
             }
         }
 	}

@@ -83,9 +83,9 @@ namespace ETHotfix
 
             //游戏房间进入准备房间
             roomComponent.gameRooms.Remove(room.Id);
-            roomComponent.readyRooms.Add(room.Id, room);
+            roomComponent.idleRooms.Add(room.Id, room);
 
-            Log.Debug("改变财富:" + huaCount * controllerComponent.RoomConfig.Multiples);
+            Log.Info("改变财富:" + huaCount * controllerComponent.RoomConfig.Multiples);
 
             await ChangeWeath(self, huaCount, room);
 
@@ -127,6 +127,7 @@ namespace ETHotfix
                 gamer.IsCanGang = false;
                 gamer.IsCanHu = false;
                 gamer.IsWinner = false;
+                gamer.IsTrusteeship = false;
                 //离线踢出
                 if (gamer.isOffline)
                 {
@@ -135,17 +136,17 @@ namespace ETHotfix
                 }
             }
 
-            //人不足4人,准备进入空闲
-            if (room.seats.Count < 4)
-            {
-                roomComponent.readyRooms.Remove(room.Id);
-                roomComponent.idleRooms.Add(room);
-            }
+//            //人不足4人,准备进入空闲
+//            if (room.seats.Count < 4)
+//            {
+//                roomComponent.readyRooms.Remove(room.Id);
+//                roomComponent.idleRooms.Add(room.Id,room);
+//            }
 
             //房间没人就释放
             if (room.seats.Count == 0)
             {
-                Log.Debug($"房间释放:{room.Id}");
+                Log.Info($"房间释放:{room.Id}");
                 roomComponent.RemoveRoom(room);
                 room?.Dispose();
             }

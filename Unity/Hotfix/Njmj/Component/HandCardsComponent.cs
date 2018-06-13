@@ -149,15 +149,27 @@ namespace ETHotfix
 
             base.Dispose();
             Reset();
+            foreach (var obj in ItemCards)
+            {
+                GameObject.Destroy(obj.gameObject);
+            }
 
+            ItemCards.Clear();
+            faceCards.Clear();
+            cardDisplayObjs.Clear();
+
+            DeleteAllItem(CardBottom);
+            DeleteAllItem(cardDisplay);
+            DeleteAllItem(pengObj);
+            pengDic.Clear();
             prefabObj = null;
             itemObj = null;
             grabObj = null;
             faceImage = null;
             faceImageGe = null;
-            pengDic.Clear();
-            cardDisplayObjs.Clear();
             tokenSource.Cancel();
+            handCards.Clear();
+           
         }
 
         /// <summary>
@@ -846,11 +858,11 @@ namespace ETHotfix
                 //删除花牌
                 if (isSelf)
                 {
-                    GameObject gameObject = this.GetSprite(grabIndex);
-                    GameObject.Destroy(gameObject);
-                    handCards.RemoveAt(grabIndex);
-                    ItemCards.RemoveAt(grabIndex);
-                    UpdateCards();
+//                    GameObject gameObject = this.GetSprite(grabIndex);
+//                    GameObject.Destroy(gameObject);
+//                    handCards.RemoveAt(grabIndex);
+//                    ItemCards.RemoveAt(grabIndex);
+//                    UpdateCards();
                 }
                 else
                 {

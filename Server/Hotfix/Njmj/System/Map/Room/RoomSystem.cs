@@ -19,8 +19,8 @@ namespace ETHotfix
                     continue;
                 }
 
-                ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorProxy();
-                actorProxy.Send(message);
+                ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>()?.GetActorProxy();
+                actorProxy?.Send(message);
             }
         }
 
@@ -50,13 +50,15 @@ namespace ETHotfix
         public static async void BroadGamerEnter(this Room self,int roomType)
         {
             List<GamerInfo> Gamers = new List<GamerInfo>();
-            foreach (var item in self.seats)
+
+            for (int i = 0; i < self.GetAll().Length; i++)
             {
+                Gamer _gamer = self.GetAll()[i];
+                if (_gamer == null) continue;
                 GamerInfo gamerInfo = new GamerInfo();
-                gamerInfo.UserID = item.Key;
-                gamerInfo.SeatIndex = item.Value;
-                Gamer temp = self.Get(item.Key);
-                gamerInfo.IsReady = temp.IsReady;
+                gamerInfo.UserID = _gamer.UserID;
+                gamerInfo.SeatIndex = self.GetGamerSeat(_gamer.UserID);
+                gamerInfo.IsReady = _gamer.IsReady;
 
                 PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
 
@@ -76,8 +78,6 @@ namespace ETHotfix
 
                 Gamers.Add(gamerInfo);
             }
-
-
             self.Broadcast(new Actor_GamerEnterRoom()
             {
                 RoomType = roomType,
@@ -129,7 +129,7 @@ namespace ETHotfix
                     return;
                 }
 
-                MahjongInfo mahjongInfo = gamer.GetComponent<HandCardsComponent>().PopCard();
+                MahjongInfo mahjongInfo = gamer.GetComponent<HandCardsComponent>()?.PopCard();
 //                Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
                 gamer.IsTrusteeship = true;
                 self.GamerBroadcast(gamer, new Actor_GamerTrusteeship());
@@ -203,9 +203,13 @@ namespace ETHotfix
         /// <param name="room"></param>
         public static async void GamerGrabCard(this Room room)
         {
-           
             foreach (var gamer in room.GetAll())
             {
+                if (gamer == null)
+                {
+                    Log.Warning("发牌的时候gamer为null");
+                    continue;
+                }
                 gamer.isGangFaWanPai = false;
             }
 
@@ -238,11 +242,11 @@ namespace ETHotfix
 
                 //从手牌中删除花牌
                 Log.Info("补花");
-                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
+//                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-                //                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
+//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
@@ -294,7 +298,13 @@ namespace ETHotfix
                     grabMahjong = deskComponent.RestLibrary[number];
                     deskComponent.RestLibrary.RemoveAt(number);
 
-                    Log.Debug("发牌："+ grabMahjong.m_weight);
+                    Log.Info("发牌："+ grabMahjong.m_weight);
+                }
+
+                //花牌返回
+                if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
+                {
+                    return grabMahjong;
                 }
 
                 //发牌

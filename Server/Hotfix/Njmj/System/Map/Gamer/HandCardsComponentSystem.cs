@@ -42,19 +42,39 @@ namespace ETHotfix
         {
             if (self == null) return null;
             Gamer gamer = self.GetParent<Gamer>();
-            List<MahjongInfo> mahjongInfos = self.GetAll();
-            int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
 
-            MahjongInfo mahjongInfo = mahjongInfos[randomNumber];
+            HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
+
+            List<MahjongInfo> mahjongInfos = self.GetAll();
+            MahjongInfo mahjongInfo = handCardsComponent.GrabCard;
+            int index = -1;
+            for (int i = 0; i < handCardsComponent.GetAll().Count; i++)
+            {
+                MahjongInfo info = handCardsComponent.GetAll()[i];
+                if (info.m_weight == mahjongInfo.m_weight)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            //最右边的一张
+            if (index < 0)
+            {
+                mahjongInfo = handCardsComponent.GetAll()[handCardsComponent.GetAll().Count - 1];
+                index = handCardsComponent.GetAll().Count - 1;
+            }
+//            int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
+//
+//            MahjongInfo mahjongInfo = mahjongInfos[randomNumber];
             Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
             {
                 Uid = gamer.UserID,
                 weight = (int)mahjongInfo.m_weight,
-                index = randomNumber
+                index = index
             });
 
             return mahjongInfo;
         }
-
     }
 }

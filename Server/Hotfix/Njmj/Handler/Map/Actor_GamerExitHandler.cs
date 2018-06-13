@@ -38,12 +38,12 @@ namespace ETHotfix
                 }
                 else
 	            {
-	                //人满了
-	                if (room.seats.Count == 4)
-	                {
-	                    roomComponent.readyRooms.Remove(room.Id);
-	                    roomComponent.idleRooms.Add(room);
-	                }
+//	                //人满了
+//	                if (room.seats.Count == 4)
+//	                {
+//	                    roomComponent.readyRooms.Remove(room.Id);
+//	                    roomComponent.idleRooms.Add(room.Id,room);
+//	                }
 
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)
@@ -68,7 +68,6 @@ namespace ETHotfix
 	                //房间没人就释放
 	                if (room.seats.Count == 0)
 	                {
-	                    Log.Debug($"房间释放:{room.Id}");
 	                    roomComponent.RemoveRoom(room);
 	                    room?.Dispose();
                     }

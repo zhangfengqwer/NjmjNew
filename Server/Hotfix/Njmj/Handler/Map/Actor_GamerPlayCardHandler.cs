@@ -62,7 +62,7 @@ namespace ETHotfix
 	                //停止倒计时
                     room.tokenSource.Cancel();
 	                gamer.IsTrusteeship = false;
-                    Log.Debug($"玩家自己{gamer.UserID}出牌:" + message.weight);
+                    Log.Info($"玩家自己{gamer.UserID}出牌:" + message.weight);
                     //当前出的牌
 	                deskComponent.CurrentCard = mahjongInfo;
 	                deskComponent.CurrentAuthority = gamer.UserID;

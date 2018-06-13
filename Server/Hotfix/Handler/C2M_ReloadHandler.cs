@@ -8,8 +8,6 @@ namespace ETHotfix
 	{
 		protected override async void Run(Session session, C2M_Reload message, Action<M2C_Reload> reply)
 		{
-		    Log.Debug("收到C2M_Reload：" + JsonHelper.ToJson(message));
-
             M2C_Reload response = new M2C_Reload();
 			try
 			{
@@ -24,7 +22,6 @@ namespace ETHotfix
 					}
 					InnerConfig innerConfig = startConfig.GetComponent<InnerConfig>();
 					Session serverSession = netInnerComponent.Get(innerConfig.IPEndPoint);
-				    Log.Debug("发送M2A_Reload");
                     await serverSession.Call(new M2A_Reload());
 				}
 				reply(response);

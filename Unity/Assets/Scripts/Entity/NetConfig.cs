@@ -104,6 +104,10 @@ namespace ETModel
             string serverUrl = NetConfig.getInstance().getServerUrl();
             int serverPort = NetConfig.getInstance().getServerPort();
 
+//            if (address != "")
+//            {
+//                serverPort = Convert.ToInt32(address.Split(':')[1]);
+//            }
             Log.Debug("serverUrl:" + serverUrl);
             Log.Debug("serverPort:" + serverPort);
             IPAddress ip;
