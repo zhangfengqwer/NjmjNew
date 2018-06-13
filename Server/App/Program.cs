@@ -71,7 +71,13 @@ namespace App
 						Game.Scene.AddComponent<ActorProxyComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
-						break;
+
+					    //GateGlobalComponent
+					    Game.Scene.AddComponent<RankDataComponent>();
+					    Game.Scene.AddComponent<HttpComponent>();
+					    Game.Scene.AddComponent<UserComponent>();
+					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
+                        break;
 					case AppType.Location:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationComponent>();
@@ -85,7 +91,9 @@ namespace App
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
-						break;
+					    //MapGlobalCoponent
+					    Game.Scene.AddComponent<RoomComponent>();
+                        break;
 					case AppType.AllServer:
 						Game.Scene.AddComponent<ActorProxyComponent>();
 						Game.Scene.AddComponent<PlayerComponent>();
@@ -105,12 +113,11 @@ namespace App
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
                         //Game.Scene.AddComponent<DBOperatorComponet>();
-                        Game.Scene.AddComponent<RankDataComponent>();
-                        Game.Scene.AddComponent<HttpComponent>();
 
-
-					    //GateGlobalComponent
-					    Game.Scene.AddComponent<UserComponent>();
+                        //GateGlobalComponent
+					    Game.Scene.AddComponent<RankDataComponent>();
+					    Game.Scene.AddComponent<HttpComponent>();
+                        Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
 
                         //MapGlobalCoponent

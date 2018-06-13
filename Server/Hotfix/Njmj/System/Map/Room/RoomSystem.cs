@@ -299,9 +299,9 @@ namespace ETHotfix
                     deskComponent.RestLibrary.RemoveAt(number);
 
                     Log.Info("发牌："+ grabMahjong.m_weight);
-                    Log.Info("发牌："+ grabMahjong.m_weight);
                 }
 
+                //花牌
                 if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
                 {
                     return grabMahjong;

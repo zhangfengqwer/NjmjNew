@@ -19,7 +19,7 @@ namespace ETHotfix
                 response.PlayerInfo = new PlayerInfo();
                 if (playerInfo != null)
                 {
-                    Log.Debug("获取玩家数据" + JsonHelper.ToJson(playerInfo));
+//                    Log.Debug("获取玩家数据" + JsonHelper.ToJson(playerInfo));
                     response.Message = "数据库里已存在玩家的基本信息，返回玩家信息";
                     response.PlayerInfo.Name = playerInfo.Name;
                     response.PlayerInfo.GoldNum = playerInfo.GoldNum;
