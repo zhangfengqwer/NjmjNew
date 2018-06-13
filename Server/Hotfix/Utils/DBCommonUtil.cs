@@ -221,14 +221,26 @@ namespace ETHotfix
 
         public static async Task<PlayerBaseInfo> getPlayerBaseInfo(long uid)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-            if (playerBaseInfos.Count > 0)
+            try
             {
-                return playerBaseInfos[0];
-            }
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                if (playerBaseInfos.Count > 0)
+                {
+                    return playerBaseInfos[0];
+                }
 
-            return null;
+                Log.Warning($"玩家{uid}PlayerBaseInfo为null,为其新增用户进去");
+
+                PlayerBaseInfo playerBaseInfo = await addPlayerBaseInfo(uid, "", "", "");
+
+                return playerBaseInfo;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                return null;
+            }
         }
 
         public static async Task<AccountInfo> getAccountInfo(long uid)
@@ -239,6 +251,8 @@ namespace ETHotfix
             {
                 return accountInfos[0];
             }
+
+            Log.Error("getAccountInfo为空：" + uid);
 
             return null;
         }
@@ -350,13 +364,19 @@ namespace ETHotfix
                 // 重置转盘次数
                 {
                     List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                    playerBaseInfos[0].ZhuanPanCount = 0;
-                    if (playerBaseInfos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                    if (playerBaseInfos.Count > 0)
                     {
-                        playerBaseInfos[0].ZhuanPanCount = 1;
+                        playerBaseInfos[0].ZhuanPanCount = 0;
+                        if (playerBaseInfos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                        {
+                            playerBaseInfos[0].ZhuanPanCount = 1;
+                        }
+                        await proxyComponent.Save(playerBaseInfos[0]);
                     }
-
-                    await proxyComponent.Save(playerBaseInfos[0]);
+                    else
+                    {
+                        Log.Warning($"玩家{uid}的PlayerBaseInfo为null");
+                    }
                 }
 
                 // 重置任务
@@ -497,7 +517,15 @@ namespace ETHotfix
                 playerBaseInfo.Icon = head;
             }
 
-            accountInfo.Phone = Phone;
+            if (accountInfo != null)
+            {
+                accountInfo.Phone = Phone;
+            }
+            else
+            {
+                Log.Error("addPlayerBaseInfo() accountInfo==null  uid = " + uid);
+            }
+            
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
             await proxyComponent.Save(playerBaseInfo);
             await proxyComponent.Save(accountInfo);

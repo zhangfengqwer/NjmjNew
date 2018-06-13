@@ -10,7 +10,7 @@ namespace ETHotfix
 		protected override async void Run(Session session, G2M_PlayerEnterRoom message, Action<M2G_PlayerEnterRoom> reply)
 		{
 		    M2G_PlayerEnterRoom response = new M2G_PlayerEnterRoom();
-		    Log.Info(JsonHelper.ToJson(message));
+		    Log.Info("G2M_PlayerEnterRoom:" + JsonHelper.ToJson(message));
             try
 			{
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
@@ -20,16 +20,18 @@ namespace ETHotfix
 			    foreach (var _room in roomCompnent.gameRooms.Values)
 			    {
 			        room = _room;
-			        Log.Info("找到房间:"+ _room.Id);
 			        gamer = room.Get(message.UserId);
-			        if (gamer != null) break;
+			        if (gamer != null)
+			        {
+			            Log.Info("找到房间:" + _room.Id);
+                        break;
+			        }
                 }
                 
                 //断线重连
 			    if (gamer != null)
 			    {
 			        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
-
 
                     //重新更新actor
 			        gamer.PlayerID = message.PlayerId;
@@ -39,6 +41,10 @@ namespace ETHotfix
 			        Actor_GamerReconnet reconnet = new Actor_GamerReconnet();
 			        foreach (var _gamer in room.GetAll())
 			        {
+			            if (_gamer == null)
+			            {
+			                continue;
+			            }
 			            GamerData gamerData = new GamerData();
 
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
@@ -69,7 +75,6 @@ namespace ETHotfix
 			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
 
 			            gamerData.playerInfo = playerInfo;
-
 
                         reconnet.Gamers.Add(gamerData);
                     }
@@ -106,17 +111,17 @@ namespace ETHotfix
 			        idleRoom.Add(gamer);
 
 			        //人满了
-			        if (idleRoom.seats.Count == 4)
-			        {
-			            if (roomComponent.readyRooms.TryGetValue(idleRoom.Id, out var _room))
-			            {
-			                roomComponent.readyRooms.Remove(idleRoom.Id);
-                        }
-
-                        roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
-                        roomComponent.idleRooms.Remove(idleRoom);
-                        //有key重复添加的问题
-			        }
+//			        if (idleRoom.seats.Count == 4)
+//			        {
+//			            if (roomComponent.readyRooms.TryGetValue(idleRoom.Id, out var _room))
+//			            {
+//			                roomComponent.readyRooms.Remove(idleRoom.Id);
+//                        }
+//
+//                        roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
+//                        roomComponent.idleRooms.Remove(idleRoom.Id);
+//                        //有key重复添加的问题
+//			        }
 
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
                     GamerInfo currentInfo = null;

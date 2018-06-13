@@ -56,7 +56,7 @@ namespace ETHotfix
 	                }
 
 	                roomComponent.gameRooms.Add(room.Id, room);
-	                roomComponent.readyRooms.Remove(room.Id);
+	                roomComponent.idleRooms.Remove(room.Id);
 
                     //初始玩家开始状态
                     foreach (var _gamer in gamers)

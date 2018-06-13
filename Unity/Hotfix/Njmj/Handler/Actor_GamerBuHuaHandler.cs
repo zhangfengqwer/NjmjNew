@@ -25,7 +25,7 @@ namespace ETHotfix
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
-                    handCardsComponent.BuHua(mahjongInfo,true);
+//                    handCardsComponent.BuHua(mahjongInfo,true);
                     SoundsHelp.Instance.PlayBuHua(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
                 }
                 else
@@ -35,7 +35,7 @@ namespace ETHotfix
                 }
 
                 //剩下的牌
-                //                uiRoomComponent.SetRestCount();
+                uiRoomComponent.SetRestCount();
 
             }
             catch (Exception e)
