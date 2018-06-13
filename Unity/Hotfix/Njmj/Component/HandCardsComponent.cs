@@ -858,11 +858,11 @@ namespace ETHotfix
                 //删除花牌
                 if (isSelf)
                 {
-                    GameObject gameObject = this.GetSprite(grabIndex);
-                    GameObject.Destroy(gameObject);
-                    handCards.RemoveAt(grabIndex);
-                    ItemCards.RemoveAt(grabIndex);
-                    UpdateCards();
+//                    GameObject gameObject = this.GetSprite(grabIndex);
+//                    GameObject.Destroy(gameObject);
+//                    handCards.RemoveAt(grabIndex);
+//                    ItemCards.RemoveAt(grabIndex);
+//                    UpdateCards();
                 }
                 else
                 {

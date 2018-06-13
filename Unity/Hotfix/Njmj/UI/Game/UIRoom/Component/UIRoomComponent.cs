@@ -265,6 +265,12 @@ namespace ETHotfix
             this.readyBtn.gameObject.SetActive(true);
             this.desk.SetActive(false);
             this.trustship.SetActive(false);
+            //碰刚按钮隐藏
+            this.giveUpBtn.gameObject.SetActive(false);
+            this.huBtn.gameObject.SetActive(false);
+            this.gangBtn.gameObject.SetActive(false);
+            this.pengBtn.gameObject.SetActive(false);
+           
             this.head.GetComponentInParent<RectTransform>().gameObject.SetActive(true);
             players.SetActive(false);
             isTreasureFinish = true;

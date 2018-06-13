@@ -61,7 +61,8 @@ namespace App
 						Game.Scene.AddComponent<LocationProxyComponent>();
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
-						break;
+					    Game.Scene.AddComponent<DBProxyComponent>();
+                        break;
 					case AppType.Gate:
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
@@ -72,8 +73,10 @@ namespace App
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
 
-					    //GateGlobalComponent
-					    Game.Scene.AddComponent<RankDataComponent>();
+                        //GateGlobalComponent
+					    Game.Scene.AddComponent<DBComponent>();
+					    Game.Scene.AddComponent<DBProxyComponent>();
+                        Game.Scene.AddComponent<RankDataComponent>();
 					    Game.Scene.AddComponent<HttpComponent>();
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
@@ -83,6 +86,12 @@ namespace App
 						Game.Scene.AddComponent<LocationComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
 						break;
+					case AppType.DB:
+						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
+					    Game.Scene.AddComponent<DBComponent>();
+					    Game.Scene.AddComponent<DBProxyComponent>();
+					    Game.Scene.AddComponent<DBCacheComponent>();
+                        break;
 					case AppType.Map:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<UnitComponent>();
@@ -91,8 +100,9 @@ namespace App
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
-					    //MapGlobalCoponent
-					    Game.Scene.AddComponent<RoomComponent>();
+                        //MapGlobalCoponent
+//					    Game.Scene.AddComponent<DBProxyComponent>();
+                        Game.Scene.AddComponent<RoomComponent>();
                         break;
 					case AppType.AllServer:
 						Game.Scene.AddComponent<ActorProxyComponent>();

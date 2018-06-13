@@ -30,6 +30,16 @@ namespace ETHotfix
                 uiRoomComponent.ShowTurn(message.Uid);
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte) message.weight, m_weight = (Consts.MahjongWeight) message.weight };
 
+
+                if (message.OperationType == 0)
+                {
+                    SoundsHelp.Instance.PlayPeng(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
+                }
+                else
+                {
+                    SoundsHelp.Instance.PlayGang(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
+                }
+
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
                     if (message.OperationType == 0)
@@ -42,12 +52,10 @@ namespace ETHotfix
                     if (message.OperationType == 5)
                     {
                         handCardsComponent.SetPengGang(message.OperationType, mahjongInfo);
-                        SoundsHelp.Instance.PlayGang(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
                     }
                     else
                     {
                         handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
-                        SoundsHelp.Instance.PlayPeng(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
                     }
                 }
                 else
@@ -56,12 +64,10 @@ namespace ETHotfix
                     if (message.OperationType == 5)
                     {
                         handCardsComponent.SetOtherPengGang(message.OperationType, mahjongInfo);
-                        SoundsHelp.Instance.PlayGang(gamer.PlayerInfo.PlayerSound);
                     }
                     else
                     {
                         handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
-                        SoundsHelp.Instance.PlayPeng(gamer.PlayerInfo.PlayerSound);
                     }
                 }
             }

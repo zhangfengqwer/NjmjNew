@@ -132,6 +132,12 @@ namespace ETHotfix
 	        return components;
 	    }
 
+        public static async Task Delete<T>(this DBProxyComponent self, long id)
+	    {
+	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            await dbComponent.GetCollection(typeof(T).Name).DeleteOneAsync(i => i.Id == id);
+        }
+
 //        public static async Task<List<T>> QueryJsonPlayerInfo<T>(this DBProxyComponent self, string json) where T : PlayerBaseInfo
 //        {
 //            List<T> list = new List<T>();

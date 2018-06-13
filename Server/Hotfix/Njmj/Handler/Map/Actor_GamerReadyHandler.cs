@@ -186,10 +186,11 @@ namespace ETHotfix
 	                foreach (var _gamer in gamers)
 	                {
 	                    HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
-	                    handCardsComponent.Sort();
-
+	                    //排序
+                        handCardsComponent.Sort();
+	                    handCardsComponent.GrabCard = handCardsComponent.GetAll()[handCardsComponent.GetAll().Count - 1];
                         //设置玩家在线开始时间
-	                    _gamer.StartTime = startTime;
+                        _gamer.StartTime = startTime;
 	                    DBCommonUtil.RecordGamerTime(startTime, true, _gamer.UserID);
 	                }
 
@@ -257,7 +258,7 @@ namespace ETHotfix
 	            else
 	            {
 	                handCardsComponent.GetAll().Add(grabMahjong);
-	                break;
+                    break;
                 }
             }
 	    }

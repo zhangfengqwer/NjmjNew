@@ -246,7 +246,7 @@ namespace ETHotfix
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-                //                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(700);
+//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
@@ -301,7 +301,7 @@ namespace ETHotfix
                     Log.Info("发牌："+ grabMahjong.m_weight);
                 }
 
-                //花牌
+                //花牌返回
                 if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
                 {
                     return grabMahjong;

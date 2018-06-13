@@ -127,6 +127,7 @@ namespace ETHotfix
                 gamer.IsCanGang = false;
                 gamer.IsCanHu = false;
                 gamer.IsWinner = false;
+                gamer.IsTrusteeship = false;
                 //离线踢出
                 if (gamer.isOffline)
                 {
