@@ -16,7 +16,7 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 PlayerBaseInfo playerInfo = await proxyComponent.Query<PlayerBaseInfo>(message.uid);
-                Log.Debug("获取玩家数据" + playerInfo.Id);
+                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{message.uid}}}");
                 response.PlayerInfo = new PlayerInfo();
                 if (playerInfo != null)
                 {
@@ -37,7 +37,11 @@ namespace ETHotfix
                     response.PlayerInfo.MaxHua = playerInfo.MaxHua;
                     response.PlayerInfo.TotalGameCount = playerInfo.TotalGameCount;
                     response.PlayerInfo.WinGameCount = playerInfo.WinGameCount;
-                    
+                    if(otherDatas.Count > 0)
+                    {
+                        response.OwnIcon = otherDatas[0].OwnIcon;
+                    }
+
                     // 今天是否签到过
                     {
                         List<DailySign> dailySigns = await proxyComponent.QueryJson<DailySign>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.uid}}}");

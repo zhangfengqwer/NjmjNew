@@ -35,7 +35,7 @@ namespace ETHotfix
                 }
 
                 //剩下的牌
-                //                uiRoomComponent.SetRestCount();
+                uiRoomComponent.SetRestCount();
 
             }
             catch (Exception e)

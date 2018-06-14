@@ -198,7 +198,9 @@ namespace ETHotfix
                             gamer.isFaWanPaiTingPai = false;
                             gamer.isGangEndBuPai = true;
                             gamer.isGetYingHuaBuPai = false;
+                            //杠完后是本人出牌
                             orderController.CurrentAuthority = gamer.UserID;
+                            HandCardsComponent cardsComponent = gamer.GetComponent<HandCardsComponent>();
                             //杠完之后抓牌
                             MahjongInfo grabMahjong = room.GrabMahjong();
                             if (grabMahjong == null)
@@ -206,6 +208,33 @@ namespace ETHotfix
                                 gameController.GameOver(0);
                                 return;
                             }
+                            while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
+                            {
+                                Actor_GamerBuHua actorGamerBuHua = new Actor_GamerBuHua()
+                                {
+                                    Uid = gamer.UserID,
+                                    weight = grabMahjong.weight
+                                };
+                                room.Broadcast(actorGamerBuHua);
+
+                                room.reconnectList.Add(actorGamerBuHua);
+
+                                //从手牌中删除花牌
+                                Log.Info("补花");
+                                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
+                                cardsComponent.FaceCards.Add(grabMahjong);
+
+                                //等待客户端显示
+                                gamer.isGangEndBuPai = false;
+                                gamer.isGetYingHuaBuPai = true;
+                                grabMahjong = room.GrabMahjong();
+                                if (grabMahjong == null)
+                                {
+                                    gameController.GameOver(0);
+                                    return;
+                                }
+                            }
+                            room.StartTime();
                         }
                         else
                         {

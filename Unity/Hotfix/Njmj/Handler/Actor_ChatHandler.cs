@@ -25,7 +25,11 @@ namespace ETHotfix
                     ui.GetComponent<UIChatShowComponent>().ShowChatContent(message.Value,message.UId);
                     
                 }
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
+
+                if (message.UId == PlayerInfoComponent.Instance.uid)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChat).GetComponent<UIChatComponent>().CloseOrOpenChatUI(false);
+                }
             }
             catch (Exception e)
             {

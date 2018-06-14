@@ -23,12 +23,12 @@ namespace ETHotfix
         private Image curIcon;
         private GameObject tip;
         private Button sureBtn;
-        private const int iconCount = 10;
+        private int iconCount = 10;
         private GameObject iconObj;
         private string curIconStr = "";
         private List<GameObject> iconList = new List<GameObject>();
         private List<UI> uiList = new List<UI>();
-        private string[] iconStr = new string[] { "f_icon1", "f_icon2", "f_icon3" , "f_icon4" , "f_icon5","m_icon1", "m_icon2", "m_icon3", "m_icon4", "m_icon5" };
+        private List<string> iconStr = new List<string>();
 
         public async void Awake()
         {
@@ -49,6 +49,8 @@ namespace ETHotfix
             {
                 HeadManager.setHeadSprite(curIcon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             }
+
+            GetOwnIcon();
 
             CreatePlayerIconList();
 
@@ -71,6 +73,25 @@ namespace ETHotfix
             if (GameUtil.isVIP())
             {
                 CurIconFrame.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
+        }
+
+        private void GetOwnIcon()
+        {
+            iconStr.Clear();
+            iconCount = 0;
+            iconStr = new List<string> { "f_icon1", "f_icon2", "f_icon3", "f_icon4", "f_icon5", "m_icon1", "m_icon2", "m_icon3", "m_icon4", "m_icon5" };
+            string ownIcon = PlayerInfoComponent.Instance.ownIcon;
+            iconCount += iconStr.Count;
+            if (!string.IsNullOrEmpty(ownIcon))
+            {
+                List<string> list_str = new List<string>();
+                CommonUtil.splitStr(ownIcon, list_str, ';');
+                iconCount += list_str.Count;
+                for (int i = 0; i < list_str.Count; ++i)
+                {
+                    iconStr.Add(list_str[i]);
+                }
             }
         }
 
@@ -136,6 +157,7 @@ namespace ETHotfix
             base.Dispose();
             iconList.Clear();
             uiList.Clear();
+            iconStr.Clear();
         }
     }
 }

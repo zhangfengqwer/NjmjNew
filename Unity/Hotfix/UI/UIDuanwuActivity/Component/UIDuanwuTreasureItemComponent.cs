@@ -21,7 +21,8 @@ namespace ETHotfix
     {
         private Image Icon;
         private Text Limit;
-        private TreasureInfo info;
+        public TreasureInfo info;
+        private int buyCount;
 
         public void Awake()
         {
@@ -31,10 +32,14 @@ namespace ETHotfix
 
             Icon.GetComponent<Button>().onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIDuanwuTreasure).GetComponent<UIDuanwuTreasureComponent>().SetReward(info);
+                if(buyCount == info.LimitCount)
+                {
+                    ToastScript.createToast("购买次数已达上限");
+                    return;
+                }
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIDuanwuTreasure).GetComponent<UIDuanwuTreasureComponent>().SetReward(this,info);
             });
         }
-
 
         public void RefreshUI(DuanwuTreasureLogInfo info)
         {
@@ -50,7 +55,8 @@ namespace ETHotfix
             try
             {
                 this.info = info;
-                Limit.text = $"已购<color=#810000FF>{buyCount}</color>次";
+                this.buyCount = buyCount;
+                Limit.text = $"<color=#810000FF>{buyCount}</color>/{info.LimitCount}";
 
                 string iconName = "";
                 if (info.TreasureId <= 3)

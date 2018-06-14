@@ -19,7 +19,6 @@ namespace ETHotfix
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 if (uiRoom == null) return;
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
-                gamerComponent.IsPlayed = false;
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
@@ -36,6 +35,7 @@ namespace ETHotfix
 
                 //当前出牌玩家
                 gamerComponent.CurrentPlayUid = message.Uid;
+                gamerComponent.IsPlayed = false;
 
                 //剩下的牌
                 uiRoomComponent.SetRestCount();

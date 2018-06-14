@@ -630,7 +630,7 @@ namespace ETHotfix
                 {
                     str += (list[i].m_weight + "、");
                 }
-                Log.Debug(str);
+//                Log.Debug(str);
 
                 if (list.Count % 3 != 0)
                 {

@@ -114,10 +114,12 @@ namespace ETHotfix
             });
 
             // 喇叭
-            LaBa.transform.Find("Btn_laba").GetComponent<Button>().onClick.Add(() =>
             {
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa);
-            });
+                LaBa.transform.Find("Btn_laba").GetComponent<Button>().onClick
+                        .Add(() => { Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa); });
+
+                LaBa.transform.Find("Text_content").GetComponent<Text>().text = "如有金币或元宝数据丢失，请联系客服处理。";
+            }
 
             // 商城
             BtnList_Down.transform.Find("Grid/Btn_Shop").GetComponent<Button>().onClick.Add(() =>
@@ -548,7 +550,7 @@ namespace ETHotfix
             RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
             GoldTxt.text = new StringBuilder().Append("获胜局数:")
-                                              .Append(ownGameRank.TotalCount)
+                                              .Append(ownGameRank.WinCount)
                                               .ToString();
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
@@ -638,7 +640,12 @@ namespace ETHotfix
 
             await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
 
-            LaBa.transform.Find("Text_content").GetComponent<Text>().text = "";
+            if (isDispose)
+            {
+                return;
+            }
+
+            LaBa.transform.Find("Text_content").GetComponent<Text>().text = "如有金币或元宝数据丢失，请联系客服处理。";
         }
     }
 }

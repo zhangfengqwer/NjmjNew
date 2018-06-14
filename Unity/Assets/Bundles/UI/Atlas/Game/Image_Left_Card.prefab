@@ -52,8 +52,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
+  - key: cover1
+    gameObject: {fileID: 21300000, guid: 7f2cb4f1b144a6940830e589497a1f83, type: 3}
+  - key: cover2
+    gameObject: {fileID: 21300000, guid: 248df76a0785d3a42b9da32639dfd95e, type: 3}
   - key: left_1
     gameObject: {fileID: 21300000, guid: c0740b58cf2813e44886bd8a8cc1924f, type: 3}
+  - key: left_2
+    gameObject: {fileID: 21300000, guid: 0063f86b0f7056b42b4ecddf0ec3d159, type: 3}
+  - key: left_3
+    gameObject: {fileID: 21300000, guid: 48dcead325cb0e2488cd4e8a0532396c, type: 3}
+  - key: left_4
+    gameObject: {fileID: 21300000, guid: 49b7ae6aa1d764243ae7b6728e5460a3, type: 3}
+  - key: left_5
+    gameObject: {fileID: 21300000, guid: fab8dca35f272cc44a916e956a3cf432, type: 3}
+  - key: left_6
+    gameObject: {fileID: 21300000, guid: 0824c41bd9aa1034c824f8749f887144, type: 3}
+  - key: left_7
+    gameObject: {fileID: 21300000, guid: 1d957f6752a5cd14cbb7a800eb57f68c, type: 3}
+  - key: left_8
+    gameObject: {fileID: 21300000, guid: 70ffc5417955d764988a5363d99de51a, type: 3}
+  - key: left_9
+    gameObject: {fileID: 21300000, guid: 33fb85c88dd92944a8e75f64b93db3f3, type: 3}
   - key: left_11
     gameObject: {fileID: 21300000, guid: 65e6351ca110daa4d81b82ce342e0e85, type: 3}
   - key: left_12
@@ -72,8 +92,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 4564f4abb1a13104a9f7517e604e691a, type: 3}
   - key: left_19
     gameObject: {fileID: 21300000, guid: ed59f4fe7bd825e42b1b6468daacb693, type: 3}
-  - key: left_2
-    gameObject: {fileID: 21300000, guid: 0063f86b0f7056b42b4ecddf0ec3d159, type: 3}
   - key: left_21
     gameObject: {fileID: 21300000, guid: 5ecb48748e8f7c04091adcb529013bc1, type: 3}
   - key: left_22
@@ -92,8 +110,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: f5e52d87cfdcc7a408376b2522d56741, type: 3}
   - key: left_29
     gameObject: {fileID: 21300000, guid: 1a31a274d2ab8a64d8be03fc0b8aa686, type: 3}
-  - key: left_3
-    gameObject: {fileID: 21300000, guid: 48dcead325cb0e2488cd4e8a0532396c, type: 3}
   - key: left_31
     gameObject: {fileID: 21300000, guid: deec855b2eadc60418d47e9a5f9e145c, type: 3}
   - key: left_33
@@ -102,16 +118,12 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 4f374a9da940a1349bf370ec900c8f0a, type: 3}
   - key: left_37
     gameObject: {fileID: 21300000, guid: e1ae219cd81187a488adff41c9c08e10, type: 3}
-  - key: left_4
-    gameObject: {fileID: 21300000, guid: 49b7ae6aa1d764243ae7b6728e5460a3, type: 3}
   - key: left_41
     gameObject: {fileID: 21300000, guid: 39459d7ff55608c45969764c397279ef, type: 3}
   - key: left_43
     gameObject: {fileID: 21300000, guid: b8742224917b0df4c809cd9f0eb1e7e5, type: 3}
   - key: left_45
     gameObject: {fileID: 21300000, guid: f6f9c8d487538d7429a870f02a39dfe0, type: 3}
-  - key: left_5
-    gameObject: {fileID: 21300000, guid: fab8dca35f272cc44a916e956a3cf432, type: 3}
   - key: left_51
     gameObject: {fileID: 21300000, guid: b6dd8d7f2dfeb3f42be851c876822a10, type: 3}
   - key: left_53
@@ -120,8 +132,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: c38c2c8651d5ad649aab8121553a90ce, type: 3}
   - key: left_57
     gameObject: {fileID: 21300000, guid: 1cfd9668f5d00db4fb14e62a253987e4, type: 3}
-  - key: left_6
-    gameObject: {fileID: 21300000, guid: 0824c41bd9aa1034c824f8749f887144, type: 3}
   - key: left_61
     gameObject: {fileID: 21300000, guid: 819d95637568f194cb8080da2e3f8984, type: 3}
   - key: left_63
@@ -130,12 +140,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 9fef34d34d265534089b889e637c8f3f, type: 3}
   - key: left_67
     gameObject: {fileID: 21300000, guid: 11a798b739fc2c848af52fe323ec8d18, type: 3}
-  - key: left_7
-    gameObject: {fileID: 21300000, guid: 8e86209c7f6e7d64f9c83ce2b4d0ef70, type: 3}
-  - key: left_8
-    gameObject: {fileID: 21300000, guid: 70ffc5417955d764988a5363d99de51a, type: 3}
-  - key: left_9
-    gameObject: {fileID: 21300000, guid: 33fb85c88dd92944a8e75f64b93db3f3, type: 3}
   - key: left_back
     gameObject: {fileID: 21300000, guid: 2f4974bdc295ace489e347ffb0b8233c, type: 3}
   - key: left_back1

@@ -23,6 +23,8 @@ namespace ETHotfix
 			        return;
 			    }
 
+			    await Game.Scene.GetComponent<DBProxyComponent>().Delete<Log_Login>(381665361202912);
+
                 // 检测是否已存在
                 UserComponentSystem.CheckIsExistTheUser(userId);
 
@@ -159,6 +161,14 @@ namespace ETHotfix
                         Log.Error("检测是否是老用户出错:" + ex);
                     }
                 }
+
+                #region 用户活动所获得的头像数据
+                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{userId}}}");
+                if(otherDatas.Count > 0)
+                {
+                    response.ownIcon = otherDatas[0].OwnIcon;
+                }
+                #endregion
 
                 reply(response);
 				session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });

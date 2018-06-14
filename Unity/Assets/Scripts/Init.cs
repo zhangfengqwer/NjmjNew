@@ -25,6 +25,8 @@ namespace ETModel
 			    Application.targetFrameRate = 45;
 			    // 永不息屏
                 Screen.sleepTimeout = SleepTimeout.NeverSleep;
+			    // 禁止多点触摸
+			    Input.multiTouchEnabled = false;
 
                 Game.EventSystem.Add(DLLType.Model, typeof(Init).Assembly);
 

@@ -120,7 +120,7 @@ namespace ETHotfix
 
                 //                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
                 HeadManager.setHeadSprite(headImage, gamer.PlayerInfo.Icon);
-                nameText.text = gamer.UserID + "";
+                nameText.text = gamer.PlayerInfo.Name + "";
                 //胡牌的ui
                 if (gamer.UserID == data.Uid)
                 {
@@ -246,7 +246,6 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
 
             UI ui = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-   
             //重新开始
             ui.GetComponent<UIRoomComponent>().ContinueGamer();
           

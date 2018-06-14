@@ -58,7 +58,7 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             gamePlayerList.Clear();
             gameRankList.Clear();
-            gamePlayerList.AddRange(await proxyComponent.QueryJsonGamePlayer<PlayerBaseInfo>($"{{}}"));
+            gamePlayerList.AddRange(await proxyComponent.QueryJsonGamePlayer());
             for (int i = 0; i < gamePlayerList.Count; ++i)
             {
                 GameRank rank = new GameRank();
@@ -81,7 +81,7 @@ namespace ETHotfix
             playerBaseInfoList.Clear();
             System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
+            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo());
             List<WealthRank> wealthList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
             for (int i = 0; i < playerBaseInfoList.Count; ++i)
             {

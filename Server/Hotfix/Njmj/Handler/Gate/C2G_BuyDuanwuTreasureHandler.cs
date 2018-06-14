@@ -14,12 +14,11 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                DuanwuTreasureInfo treasure = await proxyComponent.Query<DuanwuTreasureInfo>(message.UId);
                 List<DuanwuTreasureInfo> treasureInfoList = await proxyComponent.QueryJson<DuanwuTreasureInfo>($"{{UId:{message.UId},TreasureId:{message.TreasureId}}}");
 
                 if(treasureInfoList.Count > 0)
                 {
-                    if(treasureInfoList[0].BuyCount == 10)
+                    if(treasureInfoList[0].BuyCount == message.LimitCount)
                     {
                         //购买该宝箱已到达上限
                         response.Error = ErrorCode.ERR_Exception;
@@ -29,6 +28,14 @@ namespace ETHotfix
                     else
                     {
                         List<DuanwuDataBase> dataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.UId}}}");
+                        if (dataBases[0].ZongziCount <= 0)
+                        {
+                            dataBases[0].ZongziCount = 0;
+                            response.Error = ErrorCode.ERR_Exception;
+                            response.Message = "粽子数量不够";
+                            reply(response);
+                            return;
+                        }
                         dataBases[0].ZongziCount -= message.Price;
                         await proxyComponent.Save(dataBases[0]);
                         treasureInfoList[0].BuyCount += 1;
@@ -36,6 +43,8 @@ namespace ETHotfix
                         info.TreasureId = message.TreasureId;
                         info.buyCount = treasureInfoList[0].BuyCount;
                         response.Info = info;
+                        response.ZongZiCount = dataBases[0].ZongziCount;
+                        await proxyComponent.Save(treasureInfoList[0]);
                         await changeDuanwuDataWithStr(message.UId, message.Reward);
                     }
                 }
@@ -74,9 +83,29 @@ namespace ETHotfix
             //头像（端午活动头像）
             if (propId.Length >= 7)
             {
-                playerBaseInfos[0].Icon = propId;
+                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{uid}}}");
                 //之后要在数据库添加属于玩家的头像
-                await proxyComponent.Save(playerBaseInfos[0]);
+                if(otherDatas.Count > 0)
+                {
+                    List<string> str_list = new List<string>();
+                    CommonUtil.splitStr(otherDatas[0].OwnIcon, str_list, ';');
+                    if (!IsContains(str_list, propId))
+                    {
+                        otherDatas[0].OwnIcon += $"{propId};";
+                        await proxyComponent.Save(otherDatas[0]);
+                    }
+                    else
+                    {
+                        Log.Debug("已经拥有此头像");
+                    }
+                }
+                else
+                {
+                    OtherData otherData = ComponentFactory.CreateWithId<OtherData>(IdGenerater.GenerateId());
+                    otherData.UId = uid;
+                    otherData.OwnIcon = $"{propId};";
+                    await proxyComponent.Save(otherData);
+                }
             }
             else
             {
@@ -115,6 +144,16 @@ namespace ETHotfix
                         break;
                 }
             }
+        }
+
+        public static bool IsContains(List<string> list,string iconName)
+        {
+            for(int i = 0;i< list.Count; ++i)
+            {
+                if (iconName == list[i])
+                    return true;
+            }
+            return false;
         }
     }
 }

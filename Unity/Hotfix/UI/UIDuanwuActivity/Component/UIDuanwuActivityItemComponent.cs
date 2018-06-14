@@ -87,18 +87,19 @@ namespace ETHotfix
 
             IsComplete.SetActive(false);
             UIDuanwuActivityComponent.Instance.RefreshUI(g2cDuanwu.ZongziCount);
-
+            info.IsGet = g2cDuanwu.IsGet;
             //端午活动一级界面粽子个数旁显示 +XXX粽子
             UIDuanwuActivityComponent.Instance.ShowAddZongziCount(info.Reward);
         }
 
-        /// <summary>
+        /// <summary>  
         /// 设置子活动数据显示
         /// </summary>
         /// <param name="info"></param>
         public void SetItemInfo(DuanwuActivity info)
         {
             this.info = info;
+            IsComplete.SetActive(false);
             Reward.text = info.Reward.ToString();
             if (info.IsComplete)
             {

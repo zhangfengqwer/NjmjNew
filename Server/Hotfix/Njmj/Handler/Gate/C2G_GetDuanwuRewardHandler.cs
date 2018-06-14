@@ -20,9 +20,16 @@ namespace ETHotfix
                     DuanwuDataBase data = await DBCommonUtil.GetDuanwuDataBase(message.UId);
                     data.ZongziCount += message.Reward;
                     response.ZongziCount = data.ZongziCount;
+                    data.CompleteCount += 1;
                     await proxyComponent.Save(data);
                     infos[0].IsGet = true;
+                    response.IsGet = infos[0].IsGet;
+
                     await proxyComponent.Save(infos[0]);
+                }
+                else
+                {
+                    Log.Error($"用户{message.UId}的任务{message.TaskId}数据为空");
                 }
                 reply(response);   
             }

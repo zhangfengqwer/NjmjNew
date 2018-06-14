@@ -150,7 +150,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 0/3
 --- !u!114 &114755577548569054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,8 +263,8 @@ RectTransform:
   m_Father: {fileID: 224557276459220530}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.44818524, y: 0}
-  m_AnchorMax: {x: 0.44818524, y: 0}
-  m_AnchoredPosition: {x: -56, y: -24}
+  m_AnchorMin: {x: 0.35200003, y: 0}
+  m_AnchorMax: {x: 0.35200003, y: 0}
+  m_AnchoredPosition: {x: 1.2999992, y: -24}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}

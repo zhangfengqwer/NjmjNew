@@ -13,38 +13,47 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                PlayerBaseInfo my = await proxyComponent.Query<PlayerBaseInfo>(message.Uid);
-                response.RankList = new List<WealthRank>();
-                response.GameRankList = new List<GameRank>();
-                WealthRank wealthRank = new WealthRank();
-                GameRank gameRank = new GameRank();
-                wealthRank.Icon = my.Icon;
-                wealthRank.PlayerName = my.Name;
-                wealthRank.GoldNum = my.GoldNum;
-                wealthRank.UId = my.Id;
-
-                gameRank.PlayerName = my.Name;
-                gameRank.Icon = my.Icon;
-                gameRank.TotalCount = my.TotalGameCount;
-                gameRank.UId = my.Id;
-
-                if (message.RankType == 1)
+                List<PlayerBaseInfo> mys = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
+                if (mys.Count > 0)
                 {
-                    GetWealthRank(response, wealthRank);
-                    response.OwnWealthRank = wealthRank;
-                }
-                else if (message.RankType == 2)
-                {
-                    GetGameRank(response, gameRank);
-                    response.OwnGameRank = gameRank;
+                    response.RankList = new List<WealthRank>();
+                    response.GameRankList = new List<GameRank>();
+                    WealthRank wealthRank = new WealthRank();
+                    GameRank gameRank = new GameRank();
+                    wealthRank.Icon = mys[0].Icon;
+                    wealthRank.PlayerName = mys[0].Name;
+                    wealthRank.GoldNum = mys[0].GoldNum;
+                    wealthRank.UId = mys[0].Id;
+
+                    gameRank.PlayerName = mys[0].Name;
+                    gameRank.Icon = mys[0].Icon;
+                    gameRank.TotalCount = mys[0].TotalGameCount;
+                    gameRank.UId = mys[0].Id;
+
+
+                    if (message.RankType == 1)
+                    {
+                        GetWealthRank(response, wealthRank);
+                        response.OwnWealthRank = wealthRank;
+                    }
+                    else if (message.RankType == 2)
+                    {
+                        GetGameRank(response, gameRank);
+                        response.OwnGameRank = gameRank;
+                    }
+                    else
+                    {
+                        GetWealthRank(response, wealthRank);
+                        GetGameRank(response, gameRank);
+                        response.OwnGameRank = gameRank;
+                        response.OwnWealthRank = wealthRank;
+                    }
                 }
                 else
                 {
-                    GetWealthRank(response, wealthRank);
-                    GetGameRank(response, gameRank);
-                    response.OwnGameRank = gameRank;
-                    response.OwnWealthRank = wealthRank;
+                    Log.Error($"玩家{message.Uid}playerbaseinfo为空");
                 }
+
                 reply(response);
             }
             catch(Exception e)

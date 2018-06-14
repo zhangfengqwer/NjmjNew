@@ -29,7 +29,7 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
             List<WealthRank> rankList = new List<WealthRank>();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo<PlayerBaseInfo>($"{{}}"));
+            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo());
             for (int i = 0; i < playerBaseInfoList.Count; ++i)
             {
                 WealthRank rank = new WealthRank();
@@ -49,7 +49,7 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
             List<GameRank> rankList = new List<GameRank>();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonGamePlayer<PlayerBaseInfo>($"{{}}"));
+            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonGamePlayer());
             for (int i = 0; i < playerBaseInfoList.Count; ++i)
             {
                 GameRank rank = new GameRank();
