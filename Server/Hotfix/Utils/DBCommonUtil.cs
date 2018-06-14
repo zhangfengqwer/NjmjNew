@@ -137,7 +137,7 @@ namespace ETHotfix
         public static async void UpdateDuanwuActivity(long uid,int taskId,int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            string startTime = "2018-06-14 00:00:00";
+            string startTime = "2018-06-15 00:00:00";
             string endTime = "2018-06-20 00:00:00";
             string curTime = CommonUtil.getCurTimeNormalFormat();
             if (string.CompareOrdinal(curTime, startTime) >= 0

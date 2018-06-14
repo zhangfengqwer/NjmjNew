@@ -47,7 +47,7 @@ namespace ETHotfix
                         {
                             huaCount = HuPai(gamer, room, mahjongInfos, true);
 
-                            room.ziMoUid = gamer.UserID;
+                            room.huPaiUid = gamer.UserID;
                             isFinish = true;
                         }
                     }
@@ -60,7 +60,7 @@ namespace ETHotfix
                             temp.Add(deskComponent.CurrentCard);
                             huaCount = HuPai(gamer, room, temp, false);
                             isFinish = true;
-                            room.ziMoUid = gamer.UserID;
+                            room.huPaiUid = gamer.UserID;
                             room.fangPaoUid = orderController.CurrentAuthority;
                         }
                     }
@@ -296,7 +296,8 @@ namespace ETHotfix
         /// <param name="b"></param>
         private static int HuPai(Gamer gamer, Room room, List<MahjongInfo> mahjongInfos, bool isZimo)
         {
-            room.ziMoUid = gamer.UserID;
+            room.IsZimo = isZimo;
+            room.huPaiUid = gamer.UserID;
 
             int huaCount = 0;
 
@@ -345,7 +346,7 @@ namespace ETHotfix
             //比下胡
             if (room.IsLianZhuang)
             {
-                if (room.BankerGamer.UserID == room.ziMoUid)
+                if (room.BankerGamer.UserID == room.huPaiUid)
                 {
                     room.LiangZhuangCount++;
                     actorGamerHuPai.BixiaHuCount = room.LiangZhuangCount * 10;
