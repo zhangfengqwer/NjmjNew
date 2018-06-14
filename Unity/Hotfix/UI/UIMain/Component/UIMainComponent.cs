@@ -488,7 +488,7 @@ namespace ETHotfix
             RankTxt.text = str;
             NameTxt.text = ownWealthRank.PlayerName;
             GoldTxt.text = new StringBuilder().Append("金币:")
-                                              .Append(ownWealthRank.GoldNum)
+                                              .Append(PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum)
                                               .ToString();
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
@@ -550,7 +550,7 @@ namespace ETHotfix
             RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
             GoldTxt.text = new StringBuilder().Append("获胜局数:")
-                                              .Append(ownGameRank.WinCount)
+                                              .Append(PlayerInfoComponent.Instance.GetPlayerInfo().WinGameCount)
                                               .ToString();
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }

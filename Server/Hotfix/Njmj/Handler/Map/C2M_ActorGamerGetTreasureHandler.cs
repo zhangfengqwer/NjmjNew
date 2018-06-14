@@ -24,9 +24,9 @@ namespace ETHotfix
 	            DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
 	            DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
 
-                List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(gamer.UserID, DateTime.Now);
+	            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{gamer.UserID}}}");
 
-	            if (gamerInfos.Count == 0)
+                if (gamerInfos.Count == 0)
 	            {
 	                response.Error = ErrorCode.ERR_Common;
 	                response.Message = "未到时间";
@@ -35,19 +35,40 @@ namespace ETHotfix
 	            }
 	            GamerInfoDB gamerInfo = gamerInfos[0];
 	            gamerInfo.DailyTreasureCount++;
-	            TreasureConfig config = (TreasureConfig) configComponent.Get(typeof(TreasureConfig), gamerInfo.DailyTreasureCount);
-	            if (gamerInfo.DailyOnlineTime >= config.TotalTime)
+	            TreasureConfig config = configComponent.Get(typeof(TreasureConfig), gamerInfo.DailyTreasureCount) as TreasureConfig;
+
+	            Log.Debug("config:" + JsonHelper.ToJson(config));
+
+	            if (config == null)
 	            {
-	                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, config.Reward,"游戏内宝箱奖励");
-	                await proxyComponent.Save(gamerInfo);
-	                TreasureConfig treasureConfig = (TreasureConfig)configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount);
-	                response.RestSeconds = treasureConfig.TotalTime - gamerInfo.DailyOnlineTime;
-	                response.Reward = config.Reward;
-	            }
+                    response.Error = ErrorCode.ERR_Common;
+	                response.Message = "宝箱已领取完";
+                }
 	            else
 	            {
-	                response.Error = ErrorCode.ERR_Common;
-	                response.Message = "未到时间";
+	                if (gamerInfo.DailyOnlineTime >= config.TotalTime)
+	                {
+	                    await DBCommonUtil.ChangeWealth(gamer.UserID, 1, config.Reward, "游戏内宝箱奖励");
+	                    await proxyComponent.Save(gamerInfo);
+                        //下一个奖励
+	                    TreasureConfig treasureConfig = (TreasureConfig)configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount);
+                        //宝箱领完了
+	                    if (treasureConfig == null)
+	                    {
+	                        response.RestSeconds = -1;
+	                        response.Reward = config.Reward;
+                        }
+	                    else
+	                    {
+	                        response.RestSeconds = treasureConfig.TotalTime - gamerInfo.DailyOnlineTime;
+	                        response.Reward = config.Reward;
+                        }
+	                }
+	                else
+	                {
+	                    response.Error = ErrorCode.ERR_Common;
+	                    response.Message = "未到时间";
+	                }
                 }
 
 	            reply(response);

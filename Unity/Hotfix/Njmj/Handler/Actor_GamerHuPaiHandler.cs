@@ -30,6 +30,7 @@ namespace ETHotfix
 
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;
+                uiRoomComponent.ClosePropmtBtn();
 
                 Gamer gamer1 = gamerComponent.Get(message.Uid);
 

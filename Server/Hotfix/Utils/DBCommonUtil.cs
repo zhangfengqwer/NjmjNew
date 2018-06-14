@@ -617,7 +617,7 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
-            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{userId}}}");
             GamerInfoDB gamerInfo;
             if (gamerInfos.Count == 0)
             {
@@ -632,6 +632,10 @@ namespace ETHotfix
             gamerInfo.TotalOnlineTime += totalSeconds;
 
             TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
+
+            Log.Debug(gamerInfo.DailyTreasureCount + "");
+            Log.Debug(JsonHelper.ToJson(treasureConfig));
+
 
             if (gamerInfo.DailyOnlineTime > treasureConfig?.TotalTime)
             {
@@ -657,13 +661,26 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
-            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{userId}}}");
             if (gamerInfos.Count == 0)
             {
                 TreasureConfig config = (TreasureConfig) configComponent.Get(typeof(TreasureConfig), 1);
                 return config.TotalTime;
             }
+            else
+            {
+                for (int j = 1; j < gamerInfos.Count; j++)
+                {
+                    await proxyComponent.Delete<GamerInfoDB>(gamerInfos[j].Id);
+                }
+            }
             TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
+
+            //当天的宝箱已领取完
+            if (treasureConfig == null)
+            {
+                return -1;
+            }
 
             int i = treasureConfig.TotalTime - gamerInfos[0].DailyOnlineTime;
             Log.Debug("TotalTime" + treasureConfig.TotalTime);

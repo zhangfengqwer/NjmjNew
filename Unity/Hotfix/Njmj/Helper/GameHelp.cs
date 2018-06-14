@@ -14,6 +14,15 @@ namespace ETHotfix
     {
         private static List<int> numList = new List<int>();
 
+        public static void GoldChange(GameObject gameObject, int num)
+        {
+            if (num > 0)
+            {
+                ShowPlusGoldChange(gameObject, num);
+            }
+        }
+
+
         public static void ShowPlusGoldChange(GameObject gameObject, int num)
         {
             numList.Clear();
@@ -58,5 +67,6 @@ namespace ETHotfix
                 GameObject.Instantiate(obj, gameObject.transform);
             }
         }
+
     }
 }

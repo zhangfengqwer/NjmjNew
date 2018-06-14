@@ -29,6 +29,7 @@ namespace ETHotfix
                 GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
+                if (handCards == null) return;
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
                 Log.Debug("有人碰或刚,当前出牌" + JsonHelper.ToJson(deskComponent.CurrentCard));
 
