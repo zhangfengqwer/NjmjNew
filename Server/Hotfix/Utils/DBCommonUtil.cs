@@ -759,20 +759,38 @@ namespace ETHotfix
         }
 
         // 发送邮件
-        public static async Task SendMail(long uid, int EmailId,string EmailTitle, string Content, string RewardItem)
+        public static async Task SendMail(long uid,string EmailTitle, string Content, string RewardItem)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            EmailInfo emailInfo = ComponentFactory.CreateWithId<EmailInfo>(IdGenerater.GenerateId());
-            emailInfo.UId = uid;
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                EmailInfo emailInfo = ComponentFactory.CreateWithId<EmailInfo>(IdGenerater.GenerateId());
+                emailInfo.UId = uid;
 
-            int curAllCount = 0;
-            emailInfo.EmailId = ++curAllCount;
+                /*
+                 * ************************************************
+                 **************************************************
+                 **************************************************
+                 * 注意：按照10万人，每人只有2000条邮件的额度
+                 * ************************************************
+                 * ************************************************
+                 * *************************************************
+                */
+                {
+                    long curAllCount = proxyComponent.QueryJsonCount<EmailInfo>("{}");
+                    emailInfo.EmailId = (int)++curAllCount;
+                }
 
-            emailInfo.EmailTitle = EmailTitle;
-            emailInfo.Content = Content;
-            emailInfo.RewardItem = RewardItem;
+                emailInfo.EmailTitle = EmailTitle;
+                emailInfo.Content = Content;
+                emailInfo.RewardItem = RewardItem;
 
-            await proxyComponent.Save(emailInfo);
+                await proxyComponent.Save(emailInfo);
+            }
+            catch (Exception e)
+            {
+                Log.Error("SendMail异常:" + e);
+            }
         }
     } 
 }
