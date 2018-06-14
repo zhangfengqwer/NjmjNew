@@ -115,14 +115,32 @@ namespace ETHotfix
 	                        room.GamerBroadcast(_gamer, canOperation);
                         }
 
-                        if (room.CanHu(mahjongInfo, cards))
-                        {
-                            _gamer.IsCanHu = true;
-                            isNeedWait = true;
+	                    //判断小胡,4个花以上才能胡
+	                    if (handCardsComponent.PengGangCards.Count > 0 || handCardsComponent.PengCards.Count > 0)
+	                    {
+	                        if (handCardsComponent.FaceCards.Count >= 4)
+	                        {
+	                            if (room.CanHu(mahjongInfo, cards))
+	                            {
+	                                _gamer.IsCanHu = true;
+	                                isNeedWait = true;
 
-                            canOperation.OperationType = 2;
-                            room.GamerBroadcast(_gamer, canOperation);
-                        }
+	                                canOperation.OperationType = 2;
+	                                room.GamerBroadcast(_gamer, canOperation);
+                                }
+	                        }
+	                    }
+	                    else
+	                    {
+	                        if (room.CanHu(mahjongInfo, cards))
+	                        {
+	                            _gamer.IsCanHu = true;
+	                            isNeedWait = true;
+
+	                            canOperation.OperationType = 2;
+	                            room.GamerBroadcast(_gamer, canOperation);
+                            }
+	                    }
 	                }
 
 	                if (isNeedWait)

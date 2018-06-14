@@ -479,6 +479,13 @@ namespace ETHotfix
                 image.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "Treasure_Close");
                 button.interactable = false;
                 isTreasureFinish = false;
+
+                if (onlineSeconds < 0)
+                {
+                    this.treasure.SetActive(false);
+                    return;
+                }
+
                 while (onlineSeconds > 0)
                 {
                     await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
