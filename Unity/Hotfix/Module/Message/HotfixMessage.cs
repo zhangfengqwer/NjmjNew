@@ -1178,6 +1178,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
+		[ProtoMember(2, IsRequired = true)]
+		public string Message;
+
 	}
 
 	[Message(HotfixOpcode.Actor_StartGame)]

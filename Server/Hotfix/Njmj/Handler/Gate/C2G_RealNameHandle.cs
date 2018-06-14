@@ -40,6 +40,11 @@ namespace ETHotfix
                     {
                         playerBaseInfos[0].IsRealName = true;
                         await proxyComponent.Save(playerBaseInfos[0]);
+
+                        // 发放实名奖励
+                        {
+                            await DBCommonUtil.changeWealthWithStr(message.Uid,"1:3000","实名认证奖励");
+                        }
                     }
                 }
             }

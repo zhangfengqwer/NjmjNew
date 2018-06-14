@@ -53,6 +53,9 @@ namespace ETHotfix
         private Image faceImage;
         private Image faceImageGe;
 
+        private GameObject currentPlayCardObj;
+        private Vector3 cardBottonPosition;
+        private GameObject changeMoney;
         //当前抓牌的索引
         private int grabIndex;
 
@@ -70,6 +73,7 @@ namespace ETHotfix
             this.directionObj = panel.Get<GameObject>("Direction");
             this.pengObj = panel.Get<GameObject>("Peng");
             this.bg = panel.Get<GameObject>("Bg");
+            this.changeMoney = panel.Get<GameObject>("ChangeMoney");
             this.faceImage = panel.Get<GameObject>("FaceImage").GetComponent<Image>();
             this.faceImageGe = panel.Get<GameObject>("FaceImageGe").GetComponent<Image>();
             Image image = this.directionObj.GetComponent<Image>();
@@ -667,8 +671,7 @@ namespace ETHotfix
         }
 
         private int num = 0;
-        private GameObject currentPlayCardObj;
-        private Vector3 cardBottonPosition;
+  
 
         /// <summary>
         /// 其他人碰刚
@@ -900,5 +903,10 @@ namespace ETHotfix
             CardBottom.transform.localPosition = cardBottonPosition;
         }
 
+        public void ChangeGold(int amount)
+        {
+            Log.Debug("改变财富");
+            GameHelp.GoldChange(changeMoney.gameObject, amount);
+        }
     }
 }

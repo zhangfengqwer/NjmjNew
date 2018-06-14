@@ -198,7 +198,6 @@ namespace ETHotfix
             if (false)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin("zmr", "", "");
             }
             else
             {

@@ -76,7 +76,7 @@ namespace ETHotfix
             }
 
             room.IsGameOver = true;
-            room.State = RoomState.Ready;
+            room.State = RoomState.Idle;
             room.tokenSource.Cancel();
             room.IsLianZhuang = true;
          
@@ -96,7 +96,7 @@ namespace ETHotfix
             UpdatePlayerInfo(room, huaCount);
             //记录对局
             await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID, room.GetAll()[1].UserID,
-                room.GetAll()[2].UserID, room.GetAll()[3].UserID);
+                room.GetAll()[2].UserID, room.GetAll()[3].UserID, room.ziMoUid);
 
             //设置在线时长
             foreach (var gamer in room.GetAll())

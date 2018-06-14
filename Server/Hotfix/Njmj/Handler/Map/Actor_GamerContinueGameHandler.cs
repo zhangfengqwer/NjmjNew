@@ -17,6 +17,9 @@ namespace ETHotfix
 
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
+                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+                OrderControllerComponent orderControllerComponent = room.GetComponent<OrderControllerComponent>();
+
                 gamer.ReadyTimeOut = 0;
 
                 List<GamerInfo> Gamers = new List<GamerInfo>();
@@ -29,6 +32,17 @@ namespace ETHotfix
                     gamerInfo.SeatIndex = room.GetGamerSeat(_gamer.UserID);
                     gamerInfo.IsReady = _gamer.IsReady;
                     PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+
+//                    //判断金币是否不够
+//                    if (playerBaseInfo.GoldNum < gameControllerComponent.RoomConfig.MinThreshold)
+//                    {
+//                        room.GamerBroadcast(_gamer, new Actor_GamerReadyTimeOut()
+//                        {
+//                            Message = "金币不足"
+//                        });
+//                        room.Remove(_gamer.UserID);
+//                        continue;
+//                    }
 
                     PlayerInfo playerInfo = new PlayerInfo();
                     playerInfo.Icon = playerBaseInfo.Icon;
@@ -47,9 +61,9 @@ namespace ETHotfix
                     Gamers.Add(gamerInfo);
                 }
 
-
                 room.Broadcast(new Actor_GamerEnterRoom()
                 {
+                    RoomType = (int) gameControllerComponent.RoomConfig.Id,
                     Gamers = Gamers
                 });
             }

@@ -19,7 +19,8 @@ namespace ETHotfix
                 FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>($"{{UId:{message.Uid}}}");
                 List<ComponentWithId> components = await dbComponent.GetCollection(typeof(EmailInfo).Name).FindAsync(filterDefinition).Result.ToListAsync();
 
-                List<EmailInfo> listEmail = new List<EmailInfo>();
+             
+                List <EmailInfo> listEmail = new List<EmailInfo>();
 
                 // 未读
                 for (int i = components.Count - 1; i>= 0; i--)

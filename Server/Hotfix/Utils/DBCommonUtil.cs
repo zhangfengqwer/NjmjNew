@@ -354,7 +354,7 @@ namespace ETHotfix
             await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 
-        public static async Task Log_Login(long uid)
+        public static async Task Log_Login(long uid, Session session)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
@@ -447,11 +447,12 @@ namespace ETHotfix
 
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
             log_Login.Uid = uid;
+            log_Login.ip = session.RemoteAddress.ToString();
             await proxyComponent.Save(log_Login);
         }
 
         // 游戏日志
-        public static async Task Log_Game(string RoomName,long Player1_uid, long Player2_uid, long Player3_uid, long Player4_uid)
+        public static async Task Log_Game(string RoomName,long Player1_uid, long Player2_uid, long Player3_uid, long Player4_uid, long winner_uid)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_Game log = ComponentFactory.CreateWithId<Log_Game>(IdGenerater.GenerateId());
@@ -460,6 +461,7 @@ namespace ETHotfix
             log.Player2_uid = Player2_uid;
             log.Player3_uid = Player3_uid;
             log.Player4_uid = Player4_uid;
+            log.Winner_uid = winner_uid;
             await proxyComponent.Save(log);
         }
 
@@ -615,7 +617,7 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
-            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{userId}}}");
             GamerInfoDB gamerInfo;
             if (gamerInfos.Count == 0)
             {
@@ -630,6 +632,10 @@ namespace ETHotfix
             gamerInfo.TotalOnlineTime += totalSeconds;
 
             TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
+
+            Log.Debug(gamerInfo.DailyTreasureCount + "");
+            Log.Debug(JsonHelper.ToJson(treasureConfig));
+
 
             if (gamerInfo.DailyOnlineTime > treasureConfig?.TotalTime)
             {
@@ -655,13 +661,26 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
 
-            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJsonCurrentDayByUid<GamerInfoDB>(userId, DateTime.Now);
+            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{userId}}}");
             if (gamerInfos.Count == 0)
             {
                 TreasureConfig config = (TreasureConfig) configComponent.Get(typeof(TreasureConfig), 1);
                 return config.TotalTime;
             }
+            else
+            {
+                for (int j = 1; j < gamerInfos.Count; j++)
+                {
+                    await proxyComponent.Delete<GamerInfoDB>(gamerInfos[j].Id);
+                }
+            }
             TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
+
+            //当天的宝箱已领取完
+            if (treasureConfig == null)
+            {
+                return -1;
+            }
 
             int i = treasureConfig.TotalTime - gamerInfos[0].DailyOnlineTime;
             Log.Debug("TotalTime" + treasureConfig.TotalTime);
@@ -719,6 +738,58 @@ namespace ETHotfix
             catch (Exception e)
             {
                 Log.Error(e);
+            }
+        }
+
+        // 检查是否在黑名单中
+        public static async Task<bool> CheckIsInBlackList(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+            List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{Uid:{uid}}}");
+            if (blackLists.Count > 0)
+            {
+                if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // 发送邮件
+        public static async Task SendMail(long uid,string EmailTitle, string Content, string RewardItem)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                EmailInfo emailInfo = ComponentFactory.CreateWithId<EmailInfo>(IdGenerater.GenerateId());
+                emailInfo.UId = uid;
+
+                /*
+                 * ************************************************
+                 **************************************************
+                 **************************************************
+                 * 注意：按照10万人，每人只有2000条邮件的额度
+                 * ************************************************
+                 * ************************************************
+                 * *************************************************
+                */
+                {
+                    long curAllCount = proxyComponent.QueryJsonCount<EmailInfo>("{}");
+                    emailInfo.EmailId = (int)++curAllCount;
+                }
+
+                emailInfo.EmailTitle = EmailTitle;
+                emailInfo.Content = Content;
+                emailInfo.RewardItem = RewardItem;
+
+                await proxyComponent.Save(emailInfo);
+            }
+            catch (Exception e)
+            {
+                Log.Error("SendMail异常:" + e);
             }
         }
     } 

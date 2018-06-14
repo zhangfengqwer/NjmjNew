@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到准备超时:{message}");
+                Log.Info($"收到准备超时:{message.Message}");
                 CommonUtil.ShowUI(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
@@ -22,7 +22,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
 
-                ToastScript.createToast("超时未准备，被踢出");
+                ToastScript.createToast(message.Message);
             }
             catch (Exception e)
             {
