@@ -76,7 +76,7 @@ namespace ETHotfix
             }
 
             room.IsGameOver = true;
-            room.State = RoomState.Ready;
+            room.State = RoomState.Idle;
             room.tokenSource.Cancel();
             room.IsLianZhuang = true;
          

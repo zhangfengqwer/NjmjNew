@@ -270,6 +270,10 @@ namespace ETHotfix
                     return;
                 }
 
+                if (this.IsDisposed)
+                {
+                    return;
+                }
                 Text_daojishi.text = ("准备倒计时 " + time.ToString());
             }
 

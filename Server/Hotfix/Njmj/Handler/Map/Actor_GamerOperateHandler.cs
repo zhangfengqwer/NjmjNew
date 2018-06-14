@@ -28,6 +28,8 @@ namespace ETHotfix
                 OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
                 GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 
+                Gamer currentGamer = room.Get(orderController.CurrentAuthority);
+
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 if (handCards == null) return;
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
@@ -143,6 +145,11 @@ namespace ETHotfix
                             }
 
                             handCards.GangCards.Add(deskComponent.CurrentCard);
+
+                            //杠扣钱
+                           
+                            GameHelp.ChangeGamerGold(room, gamer, 20 * gameController.RoomConfig.Multiples);
+                            GameHelp.ChangeGamerGold(room, currentGamer, -20 * gameController.RoomConfig.Multiples);
                         }
                         //暗杠
                         else if (Logic_NJMJ.getInstance().IsAnGang(handCardsComponent.GetAll(), out var weight))
@@ -164,6 +171,19 @@ namespace ETHotfix
                             }
 
                             handCards.GangCards.Add(info);
+                            //杠扣钱
+                            foreach (var _gamer in room.GetAll())
+                            {
+                                if (_gamer.UserID == gamer.UserID)
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, 20 * gameController.RoomConfig.Multiples * 3);
+                                }
+                                else
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
+                                }
+                            }
+                           
                         }
                         //碰杠
                         else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards,
@@ -189,6 +209,19 @@ namespace ETHotfix
 
                             handCards.GangCards.Add(info);
                             handCards.PengGangCards.Add(info);
+
+                            //杠扣钱
+                            foreach (var _gamer in room.GetAll())
+                            {
+                                if (_gamer.UserID == gamer.UserID)
+                                {
+                                    GameHelp.ChangeGamerGold(room, gamer, 20 * gameController.RoomConfig.Multiples * 3);
+                                }
+                                else
+                                {
+                                    GameHelp.ChangeGamerGold(room, currentGamer, -20 * gameController.RoomConfig.Multiples);
+                                }
+                            }
                         }
 
                         if (isSuccess)

@@ -15,17 +15,19 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到改变金币:");
-
+                Log.Info($"收到改变金币:"+message.Uid+ "GoldAmount," + message.GoldAmount);
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
-                if (uiRoom == null) return;
+                if (uiRoom == null)
+                {
+                    Log.Warning("uiroom  null");
+                    return;
+                }
 
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 Gamer gamer = gamerComponent.Get(message.Uid);
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
                 handCardsComponent.ChangeGold(message.GoldAmount);
-
             }
             catch (Exception e)
             {

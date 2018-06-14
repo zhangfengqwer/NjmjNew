@@ -903,9 +903,10 @@ namespace ETHotfix
             CardBottom.transform.localPosition = cardBottonPosition;
         }
 
-        public void ChangeGold(int num)
+        public void ChangeGold(int amount)
         {
-            GameHelp.GoldChange(changeMoney.gameObject, num);
+            Log.Debug("改变财富");
+            GameHelp.GoldChange(changeMoney.gameObject, amount);
         }
     }
 }

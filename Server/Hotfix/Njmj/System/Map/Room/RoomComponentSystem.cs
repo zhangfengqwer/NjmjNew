@@ -112,7 +112,10 @@ namespace ETHotfix
                             //超时
                             if (gamer.ReadyTimeOut > 20)
                             {
-                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut());
+                                room.GamerBroadcast(gamer, new Actor_GamerReadyTimeOut()
+                                {
+                                    Message = "超时未准备，被踢出"
+                                });
 
                                 //房间移除玩家
                                 room.Remove(gamer.UserID);

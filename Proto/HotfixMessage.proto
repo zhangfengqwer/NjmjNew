@@ -409,6 +409,7 @@ message Actor_GamerReady // IActorMessage
 message Actor_GamerReadyTimeOut // IActorMessage
 {
     required long Uid = 1;
+    required string Message = 2;
 }
 
 message Actor_StartGame // IActorMessage
