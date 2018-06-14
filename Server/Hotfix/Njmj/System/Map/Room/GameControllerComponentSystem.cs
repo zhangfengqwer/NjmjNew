@@ -276,13 +276,13 @@ namespace ETHotfix
                             if (gamer.UserID == room.fangPaoUid)
                             {
                                 Log.Debug($"玩家：{gamer.UserID} 输了{huaCount * self.RoomConfig.Multiples}");
-                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples, self.RoomConfig.Name + "结算");
+                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.RoomConfig.Multiples, self.RoomConfig.Name + "结算");
                             }
                         }
                         else
                         {
                             Log.Debug($"玩家：{gamer.UserID} 输了{huaCount * self.RoomConfig.Multiples}");
-                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.Multiples, self.RoomConfig.Name + "结算");
+                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.RoomConfig.Multiples, self.RoomConfig.Name + "结算");
                         }
                     }
                 }

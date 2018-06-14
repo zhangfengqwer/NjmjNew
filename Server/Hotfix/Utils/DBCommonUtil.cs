@@ -136,14 +136,20 @@ namespace ETHotfix
         /// <param name="progress"></param>
         public static async void UpdateDuanwuActivity(long uid,int taskId,int progress)
         {
-            if (await IsCompleteEnough(uid))
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            string startTime = "2018-06-14 00:00:00";
+            string endTime = "2018-06-20 00:00:00";
+            string curTime = CommonUtil.getCurTimeNormalFormat();
+            if (string.CompareOrdinal(curTime, startTime) >= 0
+                && string.CompareOrdinal(curTime, endTime) < 0)
+            { 
+                if (await IsCompleteEnough(uid))
             {
                 Log.Debug("今日完成任务已达上限");
                 return;
             }
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
-            List<DuanwuDataBase> datas = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
             List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
             //
             if (infos.Count <= 0)
@@ -165,26 +171,24 @@ namespace ETHotfix
                 }
             }
             infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
-            if(infos.Count > 0)
-            {
-                infos[0].CurProgress += progress;
-                if(infos[0].CurProgress >= infos[0].Target)
+                if (infos.Count > 0)
                 {
-                    infos[0].IsComplete = true;
-                    //if(datas.Count > 0)
-                    //{
-                    //    datas[0].CompleteCount += 1;
-                    //}
-                    //else
-                    //{
-                    //    Log.Error($"用户{uid}的端午节基本信息为null");
-                    //}
+                    infos[0].CurProgress += progress;
+                    if (infos[0].CurProgress >= infos[0].Target)
+                    {
+                        infos[0].IsComplete = true;
+                    }
+                    else
+                    {
+                        infos[0].IsComplete = false;
+                    }
+
+                    await proxyComponent.Save(infos[0]);
                 }
                 else
                 {
-                    infos[0].IsComplete = false;
+                    Log.Debug("未到活动时间");
                 }
-                await proxyComponent.Save(infos[0]);
             }
         }
 

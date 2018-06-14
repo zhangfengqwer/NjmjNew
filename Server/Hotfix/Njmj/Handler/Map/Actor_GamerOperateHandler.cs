@@ -215,11 +215,11 @@ namespace ETHotfix
                             {
                                 if (_gamer.UserID == gamer.UserID)
                                 {
-                                    GameHelp.ChangeGamerGold(room, gamer, 20 * gameController.RoomConfig.Multiples * 3);
+                                    GameHelp.ChangeGamerGold(room, _gamer, 20 * gameController.RoomConfig.Multiples * 3);
                                 }
                                 else
                                 {
-                                    GameHelp.ChangeGamerGold(room, currentGamer, -20 * gameController.RoomConfig.Multiples);
+                                    GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
                                 }
                             }
                         }
