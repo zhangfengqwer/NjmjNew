@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,8 @@ namespace ETHotfix
         private Text ActivityFinishTime;
         private Text OwnZongziCount;
         private GameObject TaskGrid;
-       
+        private Text ShowZongzi;
+
         private Button RefreshTaskBtn;
         private Button TreasureBtn;
         private Text RefreshLeftCount;//
@@ -43,6 +45,7 @@ namespace ETHotfix
         private List<DuanwuActivity> duanwuActInfoList = new List<DuanwuActivity>();
         private string activityType = "";
         public DuanwuData duanwuData;
+        private CancellationTokenSource tokenSource;
         #endregion
 
         public void Start()
@@ -52,6 +55,7 @@ namespace ETHotfix
             Des = rc.Get<GameObject>("Des").GetComponent<Text>();
             Reward = rc.Get<GameObject>("Reward").GetComponent<Text>();
             Progress = rc.Get<GameObject>("Progress").GetComponent<Text>();
+            ShowZongzi = rc.Get<GameObject>("ShowZongzi").GetComponent<Text>();
             ActivityFinishTime = rc.Get<GameObject>("ActivityFinishTime").GetComponent<Text>();
             OwnZongziCount = rc.Get<GameObject>("OwnZongziCount").GetComponent<Text>();
             RefreshTaskBtn = rc.Get<GameObject>("RefreshTaskBtn").GetComponent<Button>();
@@ -76,7 +80,7 @@ namespace ETHotfix
                         if (duanwuData != null && duanwuData.RefreshCount > 0)
                         {
                             Tip.SetActive(true);
-                            TipTxt.text = "点击刷新后,之前所做的所有任务都清零,确定要继续刷新吗？";
+                            TipTxt.text = $"点击刷新后,任务进度全部清零\r\n本次需要花费{RefreshCost()}金币!";
                         }
                         else
                         {
@@ -145,29 +149,35 @@ namespace ETHotfix
             }
         }
 
+        private long RefreshCost()
+        {
+            int goldCost = 0;
+            switch (duanwuData.RefreshCount)
+            {
+                case 0:
+                    ToastScript.createToast("今日刷新次数已用完");
+                    break;
+                case 1:
+                    goldCost = 50000;
+                    break;
+                case 2:
+                    goldCost = 30000;
+                    break;
+                case 3:
+                    goldCost = 10000;
+                    break;
+                default:
+                    Log.Debug("刷新次数超出,检查代码逻辑");
+                    break;
+            }
+            return goldCost;
+        }
+
         private async void RefreshActivityType()
         {
             try
             {
-                int goldCost = 0;
-                switch (duanwuData.RefreshCount)
-                {
-                    case 0:
-                        ToastScript.createToast("今日刷新次数已用完");
-                        break;
-                    case 1:
-                        goldCost = 50000;
-                        break;
-                    case 2:
-                        goldCost = 30000;
-                        break;
-                    case 3:
-                        goldCost = 10000;
-                        break;
-                    default:
-                        Log.Debug("刷新次数超出,检查代码逻辑");
-                        break;
-                }
+                long goldCost = RefreshCost();
 
                 if (PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum >= goldCost)
                 {
@@ -245,6 +255,11 @@ namespace ETHotfix
             }
         }
 
+        public bool IsComplete()
+        {
+            return duanwuData.CompleteCount == 6;
+        }
+
         /// <summary>
         /// 创建端午活动任务列表
         /// </summary>
@@ -286,6 +301,11 @@ namespace ETHotfix
             }
         }
 
+        //public bool IsOpenTime()
+        //{
+
+        //}
+
         private List<int> GetActivityType()
         {
             List<int> activityList = new List<int>();
@@ -305,6 +325,26 @@ namespace ETHotfix
         public void ShowAddZongziCount(int count)
         {
             //显示领取了多少粽子，暂不处理
+            ShowZongzi.text = "+" + count;
+            SetTimeOut(3);
+        }
+
+        private async void SetTimeOut(int time)
+        {
+            try
+            {
+                tokenSource = new CancellationTokenSource();
+                while (time > 0)
+                {
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
+                    time--;
+                }
+                ShowZongzi.text = "";
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         /// <summary>
@@ -375,6 +415,7 @@ namespace ETHotfix
             taskItemList.Clear();
             uilist.Clear();
             duanwuActInfoList.Clear();
+            tokenSource.Cancel();
         }
     }
 }

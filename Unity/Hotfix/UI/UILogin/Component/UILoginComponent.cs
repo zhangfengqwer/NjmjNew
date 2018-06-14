@@ -198,7 +198,7 @@ namespace ETHotfix
             if (false)
             {
                 string Third_Id = CommonUtil.getCurTime();
-                await OnThirdLogin("zsr", "", "");
+                await OnThirdLogin("zmr", "", "");
             }
             else
             {
@@ -265,7 +265,7 @@ namespace ETHotfix
             try
             {
 
-//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
                 IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
@@ -354,7 +354,7 @@ namespace ETHotfix
                 UINetLoadingComponent.showNetLoading();
 
 
-//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                //connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
@@ -381,7 +381,7 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
-
+                PlayerInfoComponent.Instance.ownIcon = g2CLoginGate.ownIcon;
 
                 ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
                 await resourcesComponent.LoadBundleAsync($"UIMain.unity3d");
@@ -405,7 +405,7 @@ namespace ETHotfix
                 UINetLoadingComponent.showNetLoading();
 
 
-//                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
                 IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
@@ -424,7 +424,7 @@ namespace ETHotfix
 
                 UINetLoadingComponent.showNetLoading();
 
-//                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+               // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
@@ -444,6 +444,7 @@ namespace ETHotfix
 
                 PlayerInfoComponent.Instance.SetShopInfoList(g2CLoginGate.ShopInfoList);
                 PlayerInfoComponent.Instance.SetBagInfoList(g2CLoginGate.BagList);
+                PlayerInfoComponent.Instance.ownIcon = g2CLoginGate.ownIcon;
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);

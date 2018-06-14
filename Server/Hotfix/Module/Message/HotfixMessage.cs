@@ -2541,6 +2541,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public bool IsGet;
 
+		[ProtoMember(3, IsRequired = true)]
+		public bool IsComplete;
+
 	}
 
 	[Message(HotfixOpcode.DuanwuTreasureLogInfo)]

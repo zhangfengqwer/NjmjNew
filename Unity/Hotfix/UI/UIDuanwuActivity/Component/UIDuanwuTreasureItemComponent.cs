@@ -43,7 +43,7 @@ namespace ETHotfix
 
         public void RefreshUI(DuanwuTreasureLogInfo info)
         {
-            Limit.text = $"已购<color=#810000FF>{info.buyCount}</color>次";
+            Limit.text = $"<color=#810000FF>{info.buyCount}</color>/{this.info.LimitCount}";
         }
 
         /// <summary>

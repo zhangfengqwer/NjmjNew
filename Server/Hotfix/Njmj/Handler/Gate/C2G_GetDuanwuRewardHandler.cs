@@ -18,6 +18,23 @@ namespace ETHotfix
                 if(infos.Count > 0)
                 {
                     DuanwuDataBase data = await DBCommonUtil.GetDuanwuDataBase(message.UId);
+                    if(data.CompleteCount == 6)
+                    {
+                        response.Message = "任务领取已达上限";
+                        response.Error = ErrorCode.ERR_Exception;
+                        List<DuanwuActivityInfo> acInfos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{message.UId}}}");
+                        for(int i = 0;i< acInfos.Count; ++i)
+                        {
+                            if(acInfos[i].IsComplete && !acInfos[i].IsGet)
+                            {
+                                acInfos[i].CurProgress = 0;
+                                acInfos[i].IsComplete = false;
+                                await proxyComponent.Save(acInfos[i]);
+                            }
+                        }
+                        reply(response);
+                        return;
+                    }
                     data.ZongziCount += message.Reward;
                     response.ZongziCount = data.ZongziCount;
                     data.CompleteCount += 1;

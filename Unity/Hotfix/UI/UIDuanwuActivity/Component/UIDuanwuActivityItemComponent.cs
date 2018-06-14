@@ -24,6 +24,7 @@ namespace ETHotfix
         private Text Reward;
         private GameObject IsComplete;
         public DuanwuActivity info;
+        private bool isClick = false;
 
         public void Awake()
         {
@@ -86,6 +87,16 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
 
             IsComplete.SetActive(false);
+            if (g2cDuanwu.Error != ErrorCode.ERR_Success)
+            {
+                isClick = true;
+                if (!isClick)
+                {
+                    ToastScript.createToast(g2cDuanwu.Message);
+                }
+                return;
+            }
+           
             UIDuanwuActivityComponent.Instance.RefreshUI(g2cDuanwu.ZongziCount);
             info.IsGet = g2cDuanwu.IsGet;
             //端午活动一级界面粽子个数旁显示 +XXX粽子

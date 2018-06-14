@@ -90,7 +90,7 @@ namespace ETHotfix
                 iconCount += list_str.Count;
                 for (int i = 0; i < list_str.Count; ++i)
                 {
-                    iconStr.Add(list_str[i]);
+                    iconStr.Insert(0,list_str[i]);
                 }
             }
         }

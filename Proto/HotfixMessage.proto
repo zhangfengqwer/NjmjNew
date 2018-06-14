@@ -883,6 +883,7 @@ message G2C_GetDuanwuReward //IResponse
 {
 	required int ZongziCount = 1;
 	required bool IsGet = 2;
+	required bool IsComplete = 3;
 }
 
 message DuanwuTreasureLogInfo //IMessage
