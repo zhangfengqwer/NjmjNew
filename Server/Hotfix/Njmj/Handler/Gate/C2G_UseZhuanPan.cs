@@ -65,7 +65,7 @@ namespace ETHotfix
         {
             int itemId = 1;
 
-            int r = Common_Random.getRandom(1, 10000);
+            int r = Common_Random.getRandom(1, 1000);
             int temp = 0;
 
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
