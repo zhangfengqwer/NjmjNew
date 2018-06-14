@@ -37,6 +37,15 @@ namespace ETHotfix
                     {
                         AccountInfo accountInfo = accountInfos[0];
 
+                        // 黑名单检测
+                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id))
+                        {
+                            response.Message = "您的账号存在异常，请联系客服处理。";
+                            response.Error = ErrorCode.ERR_PhoneCodeError;
+                            reply(response);
+                            return;
+                        }
+
                         // 更新Token
                         accountInfo.Token = CommonUtil.getToken(message.Phone);
                         await proxyComponent.Save(accountInfo);
@@ -56,7 +65,7 @@ namespace ETHotfix
                         response.Token = accountInfo.Token;
                         reply(response);
                         // 登录日志
-                        await DBCommonUtil.Log_Login(accountInfo.Id);
+                        await DBCommonUtil.Log_Login(accountInfo.Id, session);
                     }
                     // 用户不存在，走注册流程
                     else
@@ -88,7 +97,7 @@ namespace ETHotfix
                         response.Token = accountInfo.Token;
                         reply(response);
                         // 登录日志
-                        await DBCommonUtil.Log_Login(accountInfo.Id);
+                        await DBCommonUtil.Log_Login(accountInfo.Id, session);
                     }
                 }
                 // 用Token登录
@@ -97,6 +106,16 @@ namespace ETHotfix
                     if (accountInfos.Count > 0)
                     {
                         AccountInfo accountInfo = accountInfos[0];
+
+                        // 黑名单检测
+                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id))
+                        {
+                            response.Message = "您的账号存在异常，请联系客服处理。";
+                            response.Error = ErrorCode.ERR_PhoneCodeError;
+                            reply(response);
+                            return;
+                        }
+
                         if (accountInfo.Token.CompareTo(message.Token) == 0)
                         {
                             // 随机分配一个Gate
@@ -115,7 +134,7 @@ namespace ETHotfix
                             reply(response);
 
                             // 登录日志
-                            await DBCommonUtil.Log_Login(accountInfo.Id);
+                            await DBCommonUtil.Log_Login(accountInfo.Id, session);
                         }
                         else
                         {

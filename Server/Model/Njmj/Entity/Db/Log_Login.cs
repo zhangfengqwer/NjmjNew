@@ -7,5 +7,6 @@ namespace ETModel
     public class Log_Login : EntityDB
 	{
         public long Uid { set; get; }
+        public string ip { set; get; }
     }
 }
