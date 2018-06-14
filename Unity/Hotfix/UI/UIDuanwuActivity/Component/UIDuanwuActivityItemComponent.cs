@@ -34,6 +34,8 @@ namespace ETHotfix
             Reward = rc.Get<GameObject>("Reward").GetComponent<Text>();
             IsComplete = rc.Get<GameObject>("IsComplete");
 
+            isClick = false;
+
             ActBtn.onClick.Add(() =>
             {
                 SetSelectState(true);
@@ -89,10 +91,10 @@ namespace ETHotfix
             IsComplete.SetActive(false);
             if (g2cDuanwu.Error != ErrorCode.ERR_Success)
             {
-                isClick = true;
                 if (!isClick)
                 {
                     ToastScript.createToast(g2cDuanwu.Message);
+                    isClick = true;
                 }
                 return;
             }
