@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 224114257004213712}
   - component: {fileID: 222483160043210780}
   - component: {fileID: 114555181416001060}
+  - component: {fileID: 114519472213278816}
   m_Layer: 5
   m_Name: Grid
   m_TagString: Untagged
@@ -477,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 1367256648, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
+  m_Content: {fileID: 224114257004213712}
   m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
@@ -671,6 +672,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114519472213278816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1924136097391790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!114 &114534671230307948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -771,8 +785,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 22
+    m_Bottom: 10
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
@@ -1134,7 +1148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 36, y: -16}
+  m_AnchoredPosition: {x: 36, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224174841532087946
@@ -1281,8 +1295,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.8, y: 5.5}
-  m_SizeDelta: {x: -17.7, y: -56}
+  m_AnchoredPosition: {x: -8.8, y: -4.9}
+  m_SizeDelta: {x: -17.7, y: -22.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224562848976984114
 RectTransform:

@@ -116,7 +116,7 @@ namespace ETHotfix
         /// <summary>
         /// 向服务器请求活动类型（）
         /// </summary>
-        private async void GetActivityTypeRequest()
+        public async void GetActivityTypeRequest()
         {
             UINetLoadingComponent.showNetLoading();
             //type = 1 则为单纯请求数据
@@ -192,7 +192,7 @@ namespace ETHotfix
                 {
                     ToastScript.createToast("金币不足");
                 }
-                
+                Tip.SetActive(false);
             }
             catch(Exception e)
             {
@@ -324,7 +324,14 @@ namespace ETHotfix
                 }
                 Des.text = activity.Desc;
                 Reward.text = activity.Reward.ToString();
-                Progress.text = activity.CurProgress + "/" + activity.Target;
+                if (activity.IsComplete)
+                {
+                    Progress.text = activity.Target + "/" + activity.Target;
+                }
+                else
+                {
+                    Progress.text = activity.CurProgress + "/" + activity.Target;
+                }
             }
             catch (Exception e)
             {
@@ -365,6 +372,9 @@ namespace ETHotfix
         public override void Dispose()
         {
             base.Dispose();
+            taskItemList.Clear();
+            uilist.Clear();
+            duanwuActInfoList.Clear();
         }
     }
 }

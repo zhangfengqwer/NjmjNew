@@ -275,6 +275,9 @@ namespace ETHotfix
 		[ProtoMember(5, TypeName = "ETHotfix.Bag")]
 		public List<Bag> BagList = new List<Bag>();
 
+		[ProtoMember(6, IsRequired = true)]
+		public string ownIcon;
+
 	}
 
 	[Message(HotfixOpcode.G2C_TestHotfixMessage)]
@@ -634,6 +637,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public PlayerInfo PlayerInfo;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string OwnIcon;
 
 	}
 
@@ -2385,6 +2391,9 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public int Price;
 
+		[ProtoMember(5, IsRequired = true)]
+		public int LimitCount;
+
 	}
 
 	[Message(HotfixOpcode.G2C_BuyDuanwuTreasure)]
@@ -2402,6 +2411,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public DuanwuTreasureLogInfo Info;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int ZongZiCount;
 
 	}
 
@@ -2423,6 +2435,9 @@ namespace ETHotfix
 
 		[ProtoMember(5, IsRequired = true)]
 		public string EndTime;
+
+		[ProtoMember(6, IsRequired = true)]
+		public int CompleteCount;
 
 	}
 
@@ -2522,6 +2537,9 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public int ZongziCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsGet;
 
 	}
 

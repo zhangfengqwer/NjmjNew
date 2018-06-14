@@ -49,6 +49,7 @@ namespace ETHotfix
         private TreasureInfo hInfo;
         private List<DuanwuTreasureLogInfo> duanwuTreasureLogInfoList = new List<DuanwuTreasureLogInfo>();
         private TreasureInfo curTreasureInfo;
+        private UIDuanwuTreasureItemComponent curDuanwuTreasureItemCoponent;
 
         public void Awake()
         {
@@ -78,8 +79,8 @@ namespace ETHotfix
 
             DuiBtn.onClick.Add(() =>
             {
-                ToastScript.createToast("未到活动时间");
-                return;
+                //ToastScript.createToast("未到活动时间");
+                //return;
                 try
                 {
                     DuanwuTreasureLogInfo treasureLogInfo = GetTreasureLogById(curTreasureInfo.TreasureId);
@@ -117,7 +118,8 @@ namespace ETHotfix
                 UId = PlayerInfoComponent.Instance.uid,
                 Reward = curTreasureInfo.Reward,
                 Price = curTreasureInfo.Price,
-                TreasureId = curTreasureInfo.TreasureId
+                TreasureId = curTreasureInfo.TreasureId,
+                LimitCount = curTreasureInfo.LimitCount
             });
             if(g2c.Error != ErrorCode.ERR_Success)
             {
@@ -125,9 +127,11 @@ namespace ETHotfix
             }
             else
             {
+                ToastScript.createToast("兑换成功");
                 //刷新数据
                 await SetPlayerInfo();
-                Game.Scene.GetComponent<UIDuanwuTreasureItemComponent>().RefreshUI(g2c.Info);
+                curDuanwuTreasureItemCoponent.RefreshUI(g2c.Info);
+                UIDuanwuActivityComponent.Instance.RefreshUI(g2c.ZongZiCount);
             }
         }
 
@@ -145,6 +149,7 @@ namespace ETHotfix
                 return;
             }
             PlayerInfoComponent.Instance.SetPlayerInfo(g2CPlayerInfo.PlayerInfo);
+            PlayerInfoComponent.Instance.ownIcon = g2CPlayerInfo.OwnIcon;
             GameUtil.changeData(1, 0);
         }
 
@@ -209,7 +214,6 @@ namespace ETHotfix
                         treasureItemList.Add(obj);
                         UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                         ui.AddComponent<UIDuanwuTreasureItemComponent>();
-                       // Game.Scene.GetComponent<UIComponent>().Add(UIType.UITreasure, ui);
                         uiList.Add(ui);
                     }
                     DuanwuTreasureLogInfo treasureLogInfo = GetTreasureLogById(info.TreasureId);
@@ -241,12 +245,13 @@ namespace ETHotfix
             }
         }
 
-        public void SetReward(TreasureInfo info)
+        public void SetReward(UIDuanwuTreasureItemComponent component, TreasureInfo info)
         {
             try
             {
+                curDuanwuTreasureItemCoponent = component;
                 curTreasureInfo = info;
-                Price.text = "粽子: " + info.Price;
+                Price.text = info.Price.ToString();
                 Title.text = info.Name;
                 rewardList.Clear();
                 CommonReward.gameObject.SetActive(true);

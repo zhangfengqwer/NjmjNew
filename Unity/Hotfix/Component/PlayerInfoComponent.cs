@@ -27,6 +27,7 @@ namespace ETHotfix
         private List<Bag> bagInfoList;//背包信息
         private List<TaskInfo> chengjiuList;
         public int RoomType { get; set; }
+        public string ownIcon;//玩家自己拥有的头像
 
         public void SetPlayerInfo(PlayerInfo playerInfo)
         {

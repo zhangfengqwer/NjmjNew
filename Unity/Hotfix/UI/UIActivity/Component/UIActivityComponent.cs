@@ -41,7 +41,7 @@ namespace ETHotfix
         {
             try
             {
-                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/online/files/activity.json", ActivityConfig.getInstance().init);
+                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/test/files/activity.json", ActivityConfig.getInstance().init);
 
                 ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
                 returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
@@ -84,8 +84,6 @@ namespace ETHotfix
             {
                 Log.Error(e);
             }
-
-
         }
 
         /// <summary>
