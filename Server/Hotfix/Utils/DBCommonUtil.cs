@@ -742,16 +742,21 @@ namespace ETHotfix
         }
 
         // 检查是否在黑名单中
-        public static async Task<bool> CheckIsInBlackList(long uid)
+        public static async Task<bool> CheckIsInBlackList(long uid,Session session)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-            List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{Uid:{uid}}}");
-            if (blackLists.Count > 0)
+            List<string> list = new List<string>();
+            CommonUtil.splitStr(session.RemoteAddress.ToString(), list,':');
+            if (list.Count > 0)
             {
-                if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{ip:'{list[0]}'}}");
+                if (blackLists.Count > 0)
                 {
-                    return true;
+                    if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                    {
+                        return true;
+                    }
                 }
             }
 
