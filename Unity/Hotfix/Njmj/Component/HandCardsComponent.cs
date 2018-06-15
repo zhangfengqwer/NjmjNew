@@ -474,16 +474,16 @@ namespace ETHotfix
                 Log.Debug("cardDisplayObjs:" + count);
                 int x = -107;
                 int y = -192;
-                int i = count / 8;
-                int i1 = count % 8;
+                int i = count / 10;
+                int i1 = count % 10;
 
                 if (i1 == 0)
                 {
-                    i1 = 8;
+                    i1 = 10;
                     i--;
                 }
 
-                this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 63), 40 * (i1 - 1) - 192, 0);
+                this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 53), 34 * (i1 - 1) - 192, 0);
             }
 
             currentItem = this.currentPlayCardObj;

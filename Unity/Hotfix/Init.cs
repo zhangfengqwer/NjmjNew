@@ -43,8 +43,8 @@ namespace ETHotfix
 			    // 永不息屏
 			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-
-			    GameObject.Destroy(GameObject.Find("Reporter"));
+			    if (NetConfig.getInstance().isFormal)
+			        GameObject.Destroy(GameObject.Find("Reporter"));
 			}
             catch (Exception e)
 			{

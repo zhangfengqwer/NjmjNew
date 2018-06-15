@@ -262,6 +262,7 @@ namespace ETHotfix
             HeartBeat.getInstance().startHeartBeat();
         }
 
+
         /// <summary>
         /// 清理内存
         /// </summary>

@@ -60,98 +60,96 @@ namespace ETHotfix
         /// <param name="huaCount"></param>
         public static async void GameOver(this GameControllerComponent self, int huaCount)
         {
-            Room room = self.GetParent<Room>();
-            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
-            GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
-
-            deskComponent.RestLibrary.Clear();
-
-            if (huaCount == 0)
+            try
             {
-                //没牌
-                room.huPaiUid = 0;
-                room.fangPaoUid = 0;
-                room.LiangZhuangCount = 0;
-                room.Broadcast(new Actor_GameFlow());
-            }
+                Room room = self.GetParent<Room>();
+                RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+                DeskComponent deskComponent = room.GetComponent<DeskComponent>();
+                GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
 
-            room.IsGameOver = true;
-            room.State = RoomState.Idle;
-            room.tokenSource.Cancel();
-            room.IsLianZhuang = true;
+                deskComponent.RestLibrary.Clear();
 
-
-            //游戏房间进入准备房间
-            roomComponent.gameRooms.Remove(room.Id);
-            roomComponent.idleRooms.Add(room.Id, room);
-
-            Log.Info("改变财富:" + huaCount * controllerComponent.RoomConfig.Multiples);
-
-            await ChangeWeath(self, huaCount, room);
-
-            //更新任务
-            UpdateTask(room);
-            Log.Info("更新成就：roomId为:" + room.Id);
-            UpdateChengjiu(room);
-            UpdatePlayerInfo(room, huaCount);
-            //记录对局
-            await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID,
-                room.GetAll()[1].UserID,
-                room.GetAll()[2].UserID, room.GetAll()[3].UserID, room.huPaiUid);
-
-            //设置在线时长
-            foreach (var gamer in room.GetAll())
-            {
-                //在线
-                if (!gamer.isOffline)
+                if (huaCount == 0)
                 {
-                    gamer.EndTime = DateTime.Now;
-                    TimeSpan span = gamer.EndTime - gamer.StartTime;
-                    int totalSeconds = (int) span.TotalSeconds;
-                    DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
-                    DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+                    //没牌
+                    room.huPaiUid = 0;
+                    room.fangPaoUid = 0;
+                    room.LiangZhuangCount = 0;
+                    room.Broadcast(new Actor_GameFlow());
+                }
+
+                await ChangeWeath(self, huaCount, room);
+
+                //更新任务
+                UpdateTask(room);
+                UpdateChengjiu(room);
+                UpdatePlayerInfo(room, huaCount);
+                //记录对局
+                await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID,
+                    room.GetAll()[1].UserID,
+                    room.GetAll()[2].UserID, room.GetAll()[3].UserID, room.huPaiUid);
+
+                //设置在线时长
+                foreach (var gamer in room.GetAll())
+                {
+                    //在线
+                    if (!gamer.isOffline)
+                    {
+                        gamer.EndTime = DateTime.Now;
+                        TimeSpan span = gamer.EndTime - gamer.StartTime;
+                        int totalSeconds = (int)span.TotalSeconds;
+                        DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+                        DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+                    }
+                }
+
+
+                room.IsGameOver = true;
+                room.State = RoomState.Idle;
+                room.tokenSource.Cancel();
+                room.IsLianZhuang = true;
+
+                //游戏房间进入准备房间
+                roomComponent.gameRooms.Remove(room.Id);
+                roomComponent.idleRooms.Add(room.Id, room);
+
+                foreach (var gamer in room.GetAll())
+                {
+                    if (gamer == null)
+                        continue;
+                    gamer.RemoveComponent<HandCardsComponent>();
+                    gamer.IsReady = false;
+                    gamer.ReadyTimeOut = 0;
+                    gamer.isGangFaWanPai = false;
+                    gamer.isFaWanPaiTingPai = false;
+                    gamer.isGangEndBuPai = false;
+                    gamer.isGetYingHuaBuPai = false;
+                    gamer.IsCanPeng = false;
+                    gamer.IsCanGang = false;
+                    gamer.IsCanHu = false;
+                    gamer.IsWinner = false;
+                    gamer.IsTrusteeship = false;
+                    //离线踢出
+                    if (gamer.isOffline)
+                    {
+                        room.Remove(gamer.UserID);
+                        gamer.isOffline = !gamer.isOffline;
+                    }
+                }
+
+                //房间没人就释放
+                if (room.seats.Count == 0)
+                {
+                    Log.Info($"房间释放:{room.Id}");
+                    roomComponent.RemoveRoom(room);
+                    room?.Dispose();
                 }
             }
-
-            foreach (var gamer in room.GetAll())
+            catch (Exception e)
             {
-                if (gamer == null)
-                    continue;
-                gamer.RemoveComponent<HandCardsComponent>();
-                gamer.IsReady = false;
-                gamer.ReadyTimeOut = 0;
-                gamer.isGangFaWanPai = false;
-                gamer.isFaWanPaiTingPai = false;
-                gamer.isGangEndBuPai = false;
-                gamer.isGetYingHuaBuPai = false;
-                gamer.IsCanPeng = false;
-                gamer.IsCanGang = false;
-                gamer.IsCanHu = false;
-                gamer.IsWinner = false;
-                gamer.IsTrusteeship = false;
-                //离线踢出
-                if (gamer.isOffline)
-                {
-                    room.Remove(gamer.UserID);
-                    gamer.isOffline = !gamer.isOffline;
-                }
+                Log.Error(e);
             }
-
-//            //人不足4人,准备进入空闲
-//            if (room.seats.Count < 4)
-//            {
-//                roomComponent.readyRooms.Remove(room.Id);
-//                roomComponent.idleRooms.Add(room.Id,room);
-//            }
-
-            //房间没人就释放
-            if (room.seats.Count == 0)
-            {
-                Log.Info($"房间释放:{room.Id}");
-                roomComponent.RemoveRoom(room);
-                room?.Dispose();
-            }
+           
         }
 
         private static void UpdatePlayerInfo(Room room, int huaCount)
@@ -172,11 +170,19 @@ namespace ETHotfix
             }
         }
 
-        private static void UpdateTask(Room room)
+        private static async void UpdateTask(Room room)
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+            var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             foreach (var gamer in room.GetAll())
             {
+                if (gamer == null) continue;
+                DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
+                List<DuanwuDataBase> databases =
+                    await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
+                List<string> str_list = new List<string>();
+                CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
+//                Log.Debug(str_list.Count + "");
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {
@@ -196,6 +202,17 @@ namespace ETHotfix
                     Log.Debug("	连赢5场");
                     //	104	游戏高手	连赢5场	10000	5
                     DBCommonUtil.UpdateTask(gamer.UserID, 104, 1);
+
+                    //端午任务
+                    for (int i = 0; i < str_list.Count; ++i)
+                    {
+                        int id = 100 + int.Parse(str_list[i]) + 1;
+                        Log.Debug(id + "");
+                        if (id == 105 || id == 106 || id == 107 || id == 108)
+                        {
+                            await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, 1);
+                        }
+                    }
                 }
                 //输了
                 else
@@ -207,6 +224,15 @@ namespace ETHotfix
 
                 //101  新的征程	完成一局游戏	100	1
                 DBCommonUtil.UpdateTask(gamer.UserID, 101, 1);
+
+                for (int i = 0; i < str_list.Count; ++i)
+                {
+                    int id = 100 + int.Parse(str_list[i]) + 1;
+                    if (id == 101 || id == 102 || id == 103 || id == 104)
+                    {
+                        await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, 1);
+                    }
+                }
             }
         }
 
@@ -322,7 +348,7 @@ namespace ETHotfix
             }
         }
 
-        private static void UpdateTask(Gamer gamer, int amount)
+        private static async void UpdateTask(Gamer gamer, int amount)
         {
             //	105	赚钱高手	当日累计赢取10000金币	10000	10000
             DBCommonUtil.UpdateTask(gamer.UserID, 105, amount);
@@ -336,6 +362,27 @@ namespace ETHotfix
             if (amount >= 100000000)
                 DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
             DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
+
+            {
+                var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<DuanwuDataBase> databases =
+                    await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
+                Log.Debug(databases.Count + "========");
+                List<string> str_list = new List<string>();
+                CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
+
+//                Log.Debug("str_list:" + JsonHelper.ToJson(str_list));
+                for (int i = 0; i < str_list.Count; ++i)
+                {
+                    int id = 100 + int.Parse(str_list[i]) + 1;
+                    Log.Debug(id + "任务ID");
+                    if (id == 109 || id == 110 || id == 111 || id == 112)
+                    {
+                        await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, amount);
+                    }
+                }
+            }
+
         }
     }
 }
