@@ -69,9 +69,11 @@ namespace ETModel
         // 剩余麻将数
         public int restMahjongCount = 100;
 
-        public long ziMoUid;
+        public long huPaiUid;
 
         public long fangPaoUid;
+
+        public bool IsZimo;
 
         /// <summary>
         /// 添加玩家
@@ -214,6 +216,7 @@ namespace ETModel
             IsLianZhuang = false;
             BankerGamer = null;
             IsPlayingCard = false;
+            IsZimo = false;
         }
     }
 }

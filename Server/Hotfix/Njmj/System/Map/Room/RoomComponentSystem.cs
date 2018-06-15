@@ -87,6 +87,7 @@ namespace ETHotfix
             Log.Info("idleRooms:" + self.idleRooms.Count);
             self.idleRooms.Remove(room.Id);
             Log.Info("idleRooms:" + self.idleRooms.Count);
+            Log.Info("gameRooms:" + self.gameRooms.Count);
         }
 
         public static async void Awake(this RoomComponent self)

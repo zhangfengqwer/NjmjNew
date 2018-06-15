@@ -262,6 +262,7 @@ namespace ETHotfix
             HeartBeat.getInstance().startHeartBeat();
         }
 
+
         /// <summary>
         /// 设置?点提示
         /// </summary>

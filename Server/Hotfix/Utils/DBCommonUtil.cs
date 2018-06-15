@@ -15,11 +15,12 @@ namespace ETHotfix
         /// <param name="uid"></param>
         /// <param name="taskId"></param>
         /// <param name="progress"></param>
-        public static async void UpdateTask(long uid,int taskId,int progress)
+        public static async void UpdateTask(long uid, int taskId, int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             TaskInfo taskInfo = new TaskInfo();
-            List<TaskProgressInfo> taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+            List<TaskProgressInfo> taskProgressInfoList =
+                await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid},TaskId:{taskId}}}");
             if (taskProgressInfoList.Count > 0)
             {
                 /*
@@ -60,7 +61,7 @@ namespace ETHotfix
             }
 
             // 增加转盘次数
-            if(taskId == 101)
+            if (taskId == 101)
             {
                 if (taskProgressInfoList[0].CurProgress < 4)
                 {
@@ -80,7 +81,8 @@ namespace ETHotfix
         public static async void UpdateChengjiu(long UId, int taskId, int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+            List<ChengjiuInfo> chengjiuInfoList =
+                await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
             if (chengjiuInfoList.Count > 0)
             {
                 chengjiuInfoList[0].CurProgress += progress;
@@ -92,6 +94,7 @@ namespace ETHotfix
                 {
                     chengjiuInfoList[0].IsComplete = false;
                 }
+
                 await proxyComponent.Save(chengjiuInfoList[0]);
             }
         }
@@ -114,11 +117,13 @@ namespace ETHotfix
                     {
                         playerBaseInfos[0].WinGameCount += 1;
                     }
+
                     playerBaseInfos[0].TotalGameCount += 1;
                     if (playerBaseInfos[0].MaxHua < maxHua)
                     {
                         playerBaseInfos[0].MaxHua = maxHua;
                     }
+
                     proxyComponent.Save(playerBaseInfos[0]);
                 }
             }
@@ -134,57 +139,66 @@ namespace ETHotfix
         /// <param name="uid"></param>
         /// <param name="taskId"></param>
         /// <param name="progress"></param>
-        public static async void UpdateDuanwuActivity(long uid,int taskId,int progress)
+        public static async Task UpdateDuanwuActivity(long uid, int taskId, int progress)
         {
-            if (await IsCompleteEnough(uid))
-            {
-                Log.Debug("今日完成任务已达上限");
-                return;
-            }
+            Log.Debug("更新端午活动taskId:" + taskId);
+
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
-            List<DuanwuDataBase> datas = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
-            List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
-            //
-            if (infos.Count <= 0)
+            string startTime = "2018-06-15 00:00:00";
+            string endTime = "2018-06-20 00:00:00";
+            string curTime = CommonUtil.getCurTimeNormalFormat();
+            if (string.CompareOrdinal(curTime, startTime) >= 0
+                && string.CompareOrdinal(curTime, endTime) < 0)
             {
-                for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
+                if (await IsCompleteEnough(uid))
                 {
-                    int id = 100 + j + 1;
-                    if(id == taskId)
+                    Log.Debug("今日完成任务已达上限");
+                    return;
+                }
+
+                ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
+                List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
+                //
+                if (infos.Count <= 0)
+                {
+                    for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
                     {
-                        DuanwuActivityConfig config = (DuanwuActivityConfig)configCom.Get(typeof(DuanwuActivityConfig), id);
-                        DuanwuActivityInfo info = ComponentFactory.CreateWithId<DuanwuActivityInfo>(IdGenerater.GenerateId());
+                        int id = 100 + j + 1;
+                        DuanwuActivityConfig config =
+                            (DuanwuActivityConfig) configCom.Get(typeof(DuanwuActivityConfig), id);
+                        DuanwuActivityInfo info =
+                            ComponentFactory.CreateWithId<DuanwuActivityInfo>(IdGenerater.GenerateId());
                         info.UId = uid;
-                        info.TaskId = (int)config.Id;
+                        info.TaskId = (int) config.Id;
                         info.Target = config.Target;
                         info.Reward = config.Reward;
                         info.Desc = config.Desc;
                         await proxyComponent.Save(info);
                     }
                 }
-            }
-            infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
-            if(infos.Count > 0)
-            {
-                infos[0].CurProgress += progress;
-                if(infos[0].CurProgress >= infos[0].Target)
+
+                infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+
+                if (infos.Count > 0)
                 {
-                    infos[0].IsComplete = true;
-                    //if(datas.Count > 0)
-                    //{
-                    //    datas[0].CompleteCount += 1;
-                    //}
-                    //else
-                    //{
-                    //    Log.Error($"用户{uid}的端午节基本信息为null");
-                    //}
+                    infos[0].CurProgress += progress;
+                    if (infos[0].CurProgress >= infos[0].Target)
+                    {
+                        infos[0].IsComplete = true;
+                    }
+                    else
+                    {
+                        infos[0].IsComplete = false;
+                    }
+
+                    Log.Debug("更新端午活动更新activiry：" + JsonHelper.ToJson(infos[0]));
+
+                    await proxyComponent.Save(infos[0]);
                 }
                 else
                 {
-                    infos[0].IsComplete = false;
+                    Log.Debug("未到活动时间");
                 }
-                await proxyComponent.Save(infos[0]);
             }
         }
 
@@ -197,13 +211,14 @@ namespace ETHotfix
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<DuanwuDataBase> infos = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
-           if(infos.Count > 0)
+            if (infos.Count > 0)
             {
-                if(infos[0].CompleteCount == 6)
+                if (infos[0].CompleteCount == 6)
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -220,6 +235,7 @@ namespace ETHotfix
             {
                 return BaseInfos[0];
             }
+
             return null;
         }
 
@@ -261,7 +277,7 @@ namespace ETHotfix
             return null;
         }
 
-        public static async Task changeWealthWithStr(long uid, string reward,string reason)
+        public static async Task changeWealthWithStr(long uid, string reward, string reason)
         {
             Log.Debug("changeWealthWithStr: uid = " + uid + "  reward = " + reward);
 
@@ -276,81 +292,88 @@ namespace ETHotfix
                 int id = int.Parse(list2[0]);
                 int num = int.Parse(list2[1]);
 
-                await ChangeWealth(uid,id, num, reason);
+                await ChangeWealth(uid, id, num, reason);
             }
         }
 
-        public static async Task ChangeWealth(long uid, int propId, int propNum,string reason)
+        public static async Task ChangeWealth(long uid, int propId, int propNum, string reason)
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
-            
+
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             switch (propId)
             {
                 // 金币
                 case 1:
+                {
+                    List<PlayerBaseInfo> playerBaseInfos =
+                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                    playerBaseInfos[0].GoldNum += propNum;
+                    if (playerBaseInfos[0].GoldNum < 0)
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                        playerBaseInfos[0].GoldNum += propNum;
-                        if (playerBaseInfos[0].GoldNum < 0)
-                        {
-                            playerBaseInfos[0].GoldNum = 0;
-                        }
-                        await proxyComponent.Save(playerBaseInfos[0]);
+                        playerBaseInfos[0].GoldNum = 0;
                     }
+
+                    await proxyComponent.Save(playerBaseInfos[0]);
+                }
                     break;
 
                 // 元宝
                 case 2:
+                {
+                    List<PlayerBaseInfo> playerBaseInfos =
+                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                    playerBaseInfos[0].WingNum += propNum;
+                    if (playerBaseInfos[0].WingNum < 0)
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                        playerBaseInfos[0].WingNum += propNum;
-                        if (playerBaseInfos[0].WingNum < 0)
-                        {
-                            playerBaseInfos[0].WingNum = 0;
-                        }
-                        await proxyComponent.Save(playerBaseInfos[0]);
+                        playerBaseInfos[0].WingNum = 0;
                     }
+
+                    await proxyComponent.Save(playerBaseInfos[0]);
+                }
                     break;
 
                 // 话费
                 case 3:
+                {
+                    List<PlayerBaseInfo> playerBaseInfos =
+                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                    playerBaseInfos[0].HuaFeiNum += propNum;
+                    if (playerBaseInfos[0].HuaFeiNum < 0)
                     {
-                        List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                        playerBaseInfos[0].HuaFeiNum += propNum;
-                        if (playerBaseInfos[0].HuaFeiNum < 0)
-                        {
-                            playerBaseInfos[0].HuaFeiNum = 0;
-                        }
-                        await proxyComponent.Save(playerBaseInfos[0]);
+                        playerBaseInfos[0].HuaFeiNum = 0;
                     }
+
+                    await proxyComponent.Save(playerBaseInfos[0]);
+                }
                     break;
 
                 // 其他道具
                 default:
+                {
+                    List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
+                    if (userBags.Count == 0)
                     {
-                        List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
-                        if (userBags.Count == 0)
-                        {
-                            UserBag itemInfo = new UserBag();
-                            itemInfo.BagId = propId;
-                            itemInfo.UId = uid;
-                            itemInfo.Count = propNum;
-                            DBHelper.AddItemToDB(itemInfo);
-                        }
-                        else
-                        {
-                            userBags[0].Count += propNum;
-                            if (userBags[0].Count < 0)
-                            {
-                                userBags[0].Count = 0;
-                            }
-                            await proxyComponent.Save(userBags[0]);
-                        }
+                        UserBag itemInfo = new UserBag();
+                        itemInfo.BagId = propId;
+                        itemInfo.UId = uid;
+                        itemInfo.Count = propNum;
+                        DBHelper.AddItemToDB(itemInfo);
                     }
+                    else
+                    {
+                        userBags[0].Count += propNum;
+                        if (userBags[0].Count < 0)
+                        {
+                            userBags[0].Count = 0;
+                        }
+
+                        await proxyComponent.Save(userBags[0]);
+                    }
+                }
                     break;
             }
-            
+
             await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 
@@ -359,7 +382,9 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
 
-            List<Log_Login> log_Logins = await proxyComponent.QueryJson<Log_Login>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
+            List<Log_Login> log_Logins =
+                await proxyComponent.QueryJson<Log_Login>(
+                    $"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
             if (log_Logins.Count == 0)
             {
                 // 今天第一天登录，做一些处理
@@ -367,7 +392,8 @@ namespace ETHotfix
 
                 // 重置转盘次数
                 {
-                    List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                    List<PlayerBaseInfo> playerBaseInfos =
+                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
                     if (playerBaseInfos.Count > 0)
                     {
                         playerBaseInfos[0].ZhuanPanCount = 0;
@@ -375,6 +401,7 @@ namespace ETHotfix
                         {
                             playerBaseInfos[0].ZhuanPanCount = 1;
                         }
+
                         await proxyComponent.Save(playerBaseInfos[0]);
                     }
                     else
@@ -385,7 +412,8 @@ namespace ETHotfix
 
                 // 重置任务
                 {
-                    List<TaskProgressInfo> progressList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid}}}");
+                    List<TaskProgressInfo> progressList =
+                        await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid}}}");
                     if (progressList.Count > 0)
                     {
                         for (int i = 0; i < progressList.Count; ++i)
@@ -395,10 +423,10 @@ namespace ETHotfix
                             {
                                 if (progressList[i].TaskId == id)
                                 {
-                                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                                    TaskConfig config = (TaskConfig) configCom.Get(typeof(TaskConfig), id);
                                     progressList[i].IsGet = false;
                                     progressList[i].Name = config.Name;
-                                    progressList[i].TaskId = (int)config.Id;
+                                    progressList[i].TaskId = (int) config.Id;
                                     progressList[i].IsComplete = false;
                                     progressList[i].Target = config.Target;
                                     progressList[i].Reward = config.Reward;
@@ -407,6 +435,7 @@ namespace ETHotfix
                                     break;
                                 }
                             }
+
                             await proxyComponent.Save(progressList[i]);
                         }
                     }
@@ -424,7 +453,8 @@ namespace ETHotfix
 
                 //重置端午节活动
                 {
-                    List<DuanwuActivityInfo> duanwuActivityList = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
+                    List<DuanwuActivityInfo> duanwuActivityList =
+                        await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{uid}}}");
                     if (duanwuActivityList.Count > 0)
                     {
                         for (int i = 0; i < duanwuActivityList.Count; ++i)
@@ -435,8 +465,10 @@ namespace ETHotfix
                             await proxyComponent.Save(duanwuActivityList[i]);
                         }
                     }
-                    List<DuanwuDataBase> duanwuDataBaseList = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
-                    if(duanwuDataBaseList.Count > 0)
+
+                    List<DuanwuDataBase> duanwuDataBaseList =
+                        await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{uid}}}");
+                    if (duanwuDataBaseList.Count > 0)
                     {
                         duanwuDataBaseList[0].RefreshCount = 3;
                         duanwuDataBaseList[0].CompleteCount = 0;
@@ -452,7 +484,8 @@ namespace ETHotfix
         }
 
         // 游戏日志
-        public static async Task Log_Game(string RoomName,long Player1_uid, long Player2_uid, long Player3_uid, long Player4_uid, long winner_uid)
+        public static async Task Log_Game(string RoomName, long Player1_uid, long Player2_uid, long Player3_uid,
+            long Player4_uid, long winner_uid)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_Game log = ComponentFactory.CreateWithId<Log_Game>(IdGenerater.GenerateId());
@@ -465,7 +498,7 @@ namespace ETHotfix
             await proxyComponent.Save(log);
         }
 
-        public static async Task Log_ChangeWealth(long uid,int propId, int propNum,string reason)
+        public static async Task Log_ChangeWealth(long uid, int propId, int propNum, string reason)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_ChangeWealth log = ComponentFactory.CreateWithId<Log_ChangeWealth>(IdGenerater.GenerateId());
@@ -476,7 +509,7 @@ namespace ETHotfix
             await proxyComponent.Save(log);
         }
 
-        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone,string name,string head)
+        public static async Task<PlayerBaseInfo> addPlayerBaseInfo(long uid, string Phone, string name, string head)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
@@ -497,7 +530,8 @@ namespace ETHotfix
             }
             else
             {
-                List<PlayerBaseInfo> playerBaseInfos_temp = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{name}'}}");
+                List<PlayerBaseInfo> playerBaseInfos_temp =
+                    await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{name}'}}");
 
                 // 昵称已经有人用了
                 if (playerBaseInfos_temp.Count > 0)
@@ -525,7 +559,7 @@ namespace ETHotfix
             {
                 Log.Error("addPlayerBaseInfo() accountInfo==null  uid = " + uid);
             }
-            
+
             playerBaseInfo.PlayerSound = Common_Random.getRandom(1, 4);
             await proxyComponent.Save(playerBaseInfo);
             await proxyComponent.Save(accountInfo);
@@ -539,12 +573,13 @@ namespace ETHotfix
                 for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
                 {
                     int id = 100 + i;
-                    TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
-                    TaskProgressInfo progress = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
+                    TaskConfig config = (TaskConfig) configCom.Get(typeof(TaskConfig), id);
+                    TaskProgressInfo progress =
+                        ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
                     progress.IsGet = false;
                     progress.UId = uid;
                     progress.Name = config.Name;
-                    progress.TaskId = (int)config.Id;
+                    progress.TaskId = (int) config.Id;
                     progress.IsComplete = false;
                     progress.Target = config.Target;
                     progress.Reward = config.Reward;
@@ -553,6 +588,7 @@ namespace ETHotfix
 
                     await proxyComponent.Save(progress);
                 }
+
                 Log.Debug("增加新用户任务完毕");
             }
             //插入新用户成就
@@ -561,12 +597,12 @@ namespace ETHotfix
                 for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
                 {
                     int id = 100 + i;
-                    ChengjiuConfig config = (ChengjiuConfig)configCom.Get(typeof(ChengjiuConfig), id);
+                    ChengjiuConfig config = (ChengjiuConfig) configCom.Get(typeof(ChengjiuConfig), id);
                     ChengjiuInfo chengjiu = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
                     chengjiu.IsGet = false;
                     chengjiu.UId = uid;
                     chengjiu.Name = config.Name;
-                    chengjiu.TaskId = (int)config.Id;
+                    chengjiu.TaskId = (int) config.Id;
                     chengjiu.IsComplete = false;
                     chengjiu.Target = config.Target;
                     chengjiu.Reward = config.Reward;
@@ -575,6 +611,7 @@ namespace ETHotfix
 
                     await proxyComponent.Save(chengjiu);
                 }
+
                 Log.Debug("增加新用户成就完毕");
             }
 
@@ -587,7 +624,7 @@ namespace ETHotfix
         /// <param name="startTime"></param>
         /// <param name="isStart"></param>
         /// <param name="userId"></param>
-        public static async void RecordGamerTime(DateTime startTime, bool isStart,long userId)
+        public static async void RecordGamerTime(DateTime startTime, bool isStart, long userId)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
@@ -627,11 +664,13 @@ namespace ETHotfix
             {
                 gamerInfo = gamerInfos[0];
             }
+
             gamerInfo.UId = userId;
             gamerInfo.DailyOnlineTime += totalSeconds;
             gamerInfo.TotalOnlineTime += totalSeconds;
 
-            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
+            TreasureConfig treasureConfig =
+                configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
 
             Log.Debug(gamerInfo.DailyTreasureCount + "");
             Log.Debug(JsonHelper.ToJson(treasureConfig));
@@ -674,7 +713,9 @@ namespace ETHotfix
                     await proxyComponent.Delete<GamerInfoDB>(gamerInfos[j].Id);
                 }
             }
-            TreasureConfig treasureConfig = configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
+
+            TreasureConfig treasureConfig =
+                configComponent.Get(typeof(TreasureConfig), ++gamerInfos[0].DailyTreasureCount) as TreasureConfig;
 
             //当天的宝箱已领取完
             if (treasureConfig == null)
@@ -713,6 +754,7 @@ namespace ETHotfix
                     reward = "1:120000;105:20;104:1;107:1";
                     await DBCommonUtil.changeWealthWithStr(userId, reward, "首充奖励");
                 }
+
                 reward = config.Items;
 
                 await DBCommonUtil.changeWealthWithStr(userId, reward, "购买元宝");
@@ -742,16 +784,21 @@ namespace ETHotfix
         }
 
         // 检查是否在黑名单中
-        public static async Task<bool> CheckIsInBlackList(long uid)
+        public static async Task<bool> CheckIsInBlackList(long uid,Session session)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-            List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{Uid:{uid}}}");
-            if (blackLists.Count > 0)
+            List<string> list = new List<string>();
+            CommonUtil.splitStr(session.RemoteAddress.ToString(), list,':');
+            if (list.Count > 0)
             {
-                if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{ip:'{list[0]}'}}");
+                if (blackLists.Count > 0)
                 {
-                    return true;
+                    if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -759,7 +806,7 @@ namespace ETHotfix
         }
 
         // 发送邮件
-        public static async Task SendMail(long uid,string EmailTitle, string Content, string RewardItem)
+        public static async Task SendMail(long uid, string EmailTitle, string Content, string RewardItem)
         {
             try
             {
@@ -778,7 +825,7 @@ namespace ETHotfix
                 */
                 {
                     long curAllCount = proxyComponent.QueryJsonCount<EmailInfo>("{}");
-                    emailInfo.EmailId = (int)++curAllCount;
+                    emailInfo.EmailId = (int) ++curAllCount;
                 }
 
                 emailInfo.EmailTitle = EmailTitle;
@@ -792,5 +839,5 @@ namespace ETHotfix
                 Log.Error("SendMail异常:" + e);
             }
         }
-    } 
+    }
 }

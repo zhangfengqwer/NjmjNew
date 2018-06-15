@@ -76,9 +76,9 @@ namespace ETHotfix
                     HandCardsComponent bankerHandCards = null;
                     if (room.IsLianZhuang)
                     {
-                        if(room.ziMoUid != 0 && room.ziMoUid == room.BankerGamer?.UserID)
+                        if(room.huPaiUid != 0 && room.huPaiUid == room.BankerGamer?.UserID)
                         {
-                            bankerGamer = room.Get(room.ziMoUid);
+                            bankerGamer = room.Get(room.huPaiUid);
                             bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
                             bankerHandCards.IsBanker = true;
                             room.BankerGamer = bankerGamer;
@@ -177,7 +177,7 @@ namespace ETHotfix
 	                actorStartGame.RoomType = (int) room.GetComponent<GameControllerComponent>().RoomConfig.Id;
                     //发送消息
                     room.Broadcast(actorStartGame);
-	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
+//	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
 
 	                room.reconnectList.Add(actorStartGame);
 

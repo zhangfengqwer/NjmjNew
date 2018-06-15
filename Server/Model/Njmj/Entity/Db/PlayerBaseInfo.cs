@@ -1,5 +1,4 @@
-﻿
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace ETModel
@@ -7,19 +6,29 @@ namespace ETModel
     public class PlayerBaseInfo : EntityDB
     {
         public string Name { get; set; }
-        public long GoldNum = 30000;
-        public long WingNum = 0;
-        public int HuaFeiNum = 0;
+        public long GoldNum { get; set; }
+        public long WingNum { get; set; }
+        public int HuaFeiNum { get; set; }
         public string Icon { get; set; }
-        public bool IsRealName = false;
-        public int RestChangeNameCount = 1;
-        public int TotalGameCount = 0;
-        public int WinGameCount = 0;
-        public int PlayerSound = RandomHelper.RandomNumber(1, 5);
-        public string VipTime = "2018-05-18 00:00:00";
-        public string EmogiTime = "2018-05-18 00:00:00";
-        public int ZhuanPanCount = 0;
-        public int LuckyValue = 0;
-        public int MaxHua = 0;
+        public bool IsRealName { get; set; }
+        public int RestChangeNameCount { get; set; }
+        public int TotalGameCount { get; set; }
+        public int WinGameCount { get; set; }
+        public int PlayerSound { get; set; }
+        public string VipTime { get; set; }
+        public string EmogiTime { get; set; }
+        public int ZhuanPanCount { get; set; }
+        public int LuckyValue { get; set; }
+        public int MaxHua { get; set; }
+
+        public PlayerBaseInfo() : base()
+        {
+            GoldNum = 30000;
+            RestChangeNameCount = 1;
+            IsRealName = false;
+            PlayerSound = RandomHelper.RandomNumber(1, 5);
+            VipTime = "2018-05-18 00:00:00";
+            EmogiTime = "2018-05-18 00:00:00";
+        }
     }
 }

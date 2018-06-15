@@ -38,7 +38,7 @@ namespace ETHotfix
                         AccountInfo accountInfo = accountInfos[0];
 
                         // 黑名单检测
-                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id))
+                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id,session))
                         {
                             response.Message = "您的账号存在异常，请联系客服处理。";
                             response.Error = ErrorCode.ERR_PhoneCodeError;
@@ -108,7 +108,7 @@ namespace ETHotfix
                         AccountInfo accountInfo = accountInfos[0];
 
                         // 黑名单检测
-                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id))
+                        if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id, session))
                         {
                             response.Message = "您的账号存在异常，请联系客服处理。";
                             response.Error = ErrorCode.ERR_PhoneCodeError;

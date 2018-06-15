@@ -7,9 +7,9 @@ namespace ETModel
         public string Desc { get; set; }
         public int Reward { get; set; }
         public int TaskId { get; set; }
-        public int CurProgress = 0;
+        public int CurProgress { get; set; }
         public int Target { get; set; }
         public bool IsComplete = false;
-        public bool IsGet = false;
+        public bool IsGet { get; set; }
     }
 }
