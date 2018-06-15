@@ -362,7 +362,7 @@ namespace ETHotfix
 
                 ToastScript.createToast("登录成功");
                 UINetLoadingComponent.closeNetLoading();
-                getAllData();
+                await getAllData();
 
                 isLoginSuccess = true;
 
@@ -434,7 +434,7 @@ namespace ETHotfix
 
                 UINetLoadingComponent.closeNetLoading();
 
-                getAllData();
+                await getAllData();
 
                 isLoginSuccess = true;
 
@@ -454,12 +454,13 @@ namespace ETHotfix
             }
         }
 
-        public async void getAllData()
+        public async Task getAllData()
         {
             UINetLoadingComponent.showNetLoading();
 
             try
             {
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/tips.json", TipsConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);

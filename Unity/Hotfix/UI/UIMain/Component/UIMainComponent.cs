@@ -118,7 +118,7 @@ namespace ETHotfix
                 LaBa.transform.Find("Btn_laba").GetComponent<Button>().onClick
                         .Add(() => { Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa); });
 
-                LaBa.transform.Find("Text_content").GetComponent<Text>().text = "如有金币或元宝数据丢失，请联系客服处理。";
+                LaBa.transform.Find("Text_content").GetComponent<Text>().text = GameUtil.getTips();
             }
 
             // 商城
@@ -691,7 +691,7 @@ namespace ETHotfix
                 return;
             }
 
-            LaBa.transform.Find("Text_content").GetComponent<Text>().text = "如有金币或元宝数据丢失，请联系客服处理。";
+            LaBa.transform.Find("Text_content").GetComponent<Text>().text = GameUtil.getTips();
         }
     }
 }
