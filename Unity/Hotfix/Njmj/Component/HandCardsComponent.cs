@@ -33,7 +33,7 @@ namespace ETHotfix
 
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
-        private List<GameObject> cardDisplayObjs = new List<GameObject>();
+        public List<GameObject> cardDisplayObjs = new List<GameObject>();
         private List<MahjongInfo> faceCards = new List<MahjongInfo>();
 
         //碰对应的obj
@@ -53,7 +53,7 @@ namespace ETHotfix
         private Image faceImage;
         private Image faceImageGe;
 
-        private GameObject currentPlayCardObj;
+        public GameObject currentPlayCardObj;
         private Vector3 cardBottonPosition;
         private GameObject changeMoney;
         //当前抓牌的索引
@@ -245,12 +245,12 @@ namespace ETHotfix
             //显示出牌
             GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
             GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
-            GameObject instantiate = GameObject.Instantiate(obj, this.cardDisplay.transform);
+            this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
 
-            instantiate.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
-            instantiate.layer = LayerMask.NameToLayer("UI");
+            currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
+            currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
 
-            //            currentItem = instantiate;
+            currentItem = currentPlayCardObj;
 
             ShowCard(mahjong.weight);
         }
@@ -466,12 +466,13 @@ namespace ETHotfix
             this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
             this.currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
             this.currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
+            currentPlayCardObj.name = item3;
             cardDisplayObjs.Add(this.currentPlayCardObj);
             if (Index == 1)
             {
                 this.currentPlayCardObj.transform.SetAsFirstSibling();
                 int count = this.cardDisplayObjs.Count;
-                Log.Debug("cardDisplayObjs:" + count);
+                Log.Info("cardDisplayObjs:" + count);
                 int x = -107;
                 int y = -192;
                 int i = count / 10;
@@ -486,7 +487,9 @@ namespace ETHotfix
                 this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 53), 34 * (i1 - 1) - 192, 0);
             }
 
-            currentItem = this.currentPlayCardObj;
+            currentItem = currentPlayCardObj;
+            Log.Info("别人出的牌：" + currentItem.name);
+
             ShowCard(mahjongInfo.weight);
         }
 

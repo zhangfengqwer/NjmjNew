@@ -70,6 +70,16 @@ namespace ETHotfix
                         handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
                     }
                 }
+
+                //碰和碰刚删除出的牌
+                if (message.OperationType == 0 || message.OperationType == 1)
+                {
+                    Gamer currentGamer = gamerComponent.Get(gamerComponent.LastPlayUid);
+                    HandCardsComponent currentCards = currentGamer.GetComponent<HandCardsComponent>();
+
+                    GameObject.Destroy(currentCards.currentPlayCardObj);
+                    currentCards.cardDisplayObjs.Remove(currentCards.currentPlayCardObj);
+                }
             }
             catch (Exception e)
             {

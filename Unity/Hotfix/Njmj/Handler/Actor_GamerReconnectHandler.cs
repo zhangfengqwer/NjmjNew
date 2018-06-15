@@ -61,6 +61,24 @@ namespace ETHotfix
                 actorStartGame.RoomType = message.RoomType;
                 Actor_StartGameHandler.StartGame(actorStartGame);
 
+                //打牌
+                foreach (var item in message.Gamers)
+                {
+                    Log.Debug($"{item.UserID} 重连出牌");
+                    for (int i = 0; i < item.playCards.Count; i++)
+                    {
+                        MahjongInfo card = item.playCards[i];
+                        int index = Logic_NJMJ.getInstance().GetIndex(item.handCards, card);
+                        Actor_GamerPlayCard playCard = new Actor_GamerPlayCard();
+                        playCard.Uid = item.UserID;
+                        playCard.weight = card.weight;
+                        playCard.index = index;
+//                        await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
+                        Actor_GamerPlayCardHandler.PlayCard(playCard);
+//                        item.handCards.RemoveAt(index);
+                    }
+                }
+
                 //碰刚
                 foreach (var item in message.Gamers)
                 {
@@ -81,24 +99,6 @@ namespace ETHotfix
                         gamerOperation.weight = card.weight;
                         gamerOperation.OperationType = 1;
                         Actor_GamerOperateHandler.GamerOperation(gamerOperation);
-                    }
-                }
-
-                //打牌
-                foreach (var item in message.Gamers)
-                {
-                    Log.Debug($"{item.UserID} 重连出牌");
-                    for (int i = 0; i < item.playCards.Count; i++)
-                    {
-                        MahjongInfo card = item.playCards[i];
-                        int index = Logic_NJMJ.getInstance().GetIndex(item.handCards, card);
-                        Actor_GamerPlayCard playCard = new Actor_GamerPlayCard();
-                        playCard.Uid = item.UserID;
-                        playCard.weight = card.weight;
-                        playCard.index = index;
-//                        await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
-                        Actor_GamerPlayCardHandler.PlayCard(playCard);
-//                        item.handCards.RemoveAt(index);
                     }
                 }
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
