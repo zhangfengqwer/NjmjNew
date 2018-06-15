@@ -258,7 +258,7 @@ namespace ETHotfix
             {
                 CommonUtil.ShowUI(UIType.UIDaily);
             }
-
+            SetRedTip();
             HeartBeat.getInstance().startHeartBeat();
         }
 
