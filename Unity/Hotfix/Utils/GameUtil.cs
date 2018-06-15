@@ -1,9 +1,11 @@
 ﻿using ETModel;
+using Hotfix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -160,6 +162,17 @@ namespace ETHotfix
             if (totalGame == 0)
                 return 0;
             return float.Parse(((float)winGame / totalGame).ToString("F2")) * 100;
+        }
+
+        static public string getTips()
+        {
+            if (TipsConfig.getInstance().getDataList().Count > 0)
+            {
+                int r = Common_Random.getRandom(1, TipsConfig.getInstance().getDataList().Count);
+                return TipsConfig.getInstance().getDataList()[r - 1];
+            }
+
+            return "";
         }
     }
 }
