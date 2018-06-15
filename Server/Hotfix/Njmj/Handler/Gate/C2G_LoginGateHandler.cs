@@ -67,6 +67,26 @@ namespace ETHotfix
                     shopInfoList.Add(info);
                 }
 
+			    List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{userId}}}");
+			    //
+			    if (infos.Count <= 0)
+			    {
+			        for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
+			        {
+			            int id = 100 + j + 1;
+			            DuanwuActivityConfig config =
+			                (DuanwuActivityConfig)configCom.Get(typeof(DuanwuActivityConfig), id);
+			            DuanwuActivityInfo info =
+			                ComponentFactory.CreateWithId<DuanwuActivityInfo>(IdGenerater.GenerateId());
+			            info.UId = userId;
+			            info.TaskId = (int)config.Id;
+			            info.Target = config.Target;
+			            info.Reward = config.Reward;
+			            info.Desc = config.Desc;
+			            await proxyComponent.Save(info);
+			        }
+			    }
+
                 //添加消息转发组件
                 await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
 
@@ -162,6 +182,19 @@ namespace ETHotfix
                     }
                 }
 
+			    {
+			        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{userId}}}");
+			        if (duanwuDataBases.Count <= 0)
+			        {
+			            //新建一个数据库的表
+			            DuanwuDataBase duanwu = ComponentFactory.CreateWithId<DuanwuDataBase>(IdGenerater.GenerateId());
+			            duanwu.UId = userId;
+			            string type = GetRandomIndex();
+			            duanwu.ActivityType = type;
+			            await proxyComponent.Save(duanwu);
+			        }
+                }
+
                 #region 用户活动所获得的头像数据
                 List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{userId}}}");
                 if(otherDatas.Count > 0)
@@ -187,7 +220,37 @@ namespace ETHotfix
 			{
 				ReplyError(response, e, reply);
 			}
+
 		}
+
+	    /// <summary>
+	    /// 从12个活动里面随机获取六个活动
+	    /// </summary>
+	    /// <returns></returns>
+	    private string GetRandomIndex()
+	    {
+	        List<int> randomIndexList = new List<int>();
+	        int i = 6;
+	        StringBuilder result = new StringBuilder();
+	        while (i > 0)
+	        {
+	            int index = Common_Random.getRandom(0, 11);
+	            if (!randomIndexList.Contains(index))
+	            {
+	                randomIndexList.Add(index);
+	                if (randomIndexList.Count == 1)
+	                {
+	                    result.Append(index);
+	                }
+	                else
+	                {
+	                    result.Append(";").Append(index);
+	                }
+	                --i;
+	            }
+	        }
+	        return result.ToString();
+	    }
 
         private void AddShopInfo()
         {

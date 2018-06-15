@@ -4,11 +4,20 @@ namespace ETModel
     public class DuanwuDataBase : EntityDB
     {
         public long UId { get; set; }
-        public int ZongziCount = 0;
-        public string ActivityType = "";
-        public int RefreshCount = 3;
-        public int CompleteCount = 0;
-        public string StartTime = "2018-06-14 08:50:00";
-        public string EndTime = "2018-06-20 00:00:00";
+        public int ZongziCount { get; set; }
+        public string ActivityType { get; set; }
+        public int RefreshCount { get; set; }
+        public int CompleteCount { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+
+        public DuanwuDataBase() : base()
+        {
+            ActivityType = "";
+            RefreshCount = 3;
+            CompleteCount = 0;
+            StartTime = "2018-06-15 00:00:00";
+            EndTime = "2018-06-20 00:00:00";
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace ETHotfix
 	    {
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
+	        if (room == null) return;
             try
 	        {
 	            MahjongInfo mahjongInfo = new MahjongInfo()
@@ -37,6 +38,7 @@ namespace ETHotfix
 	            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
+	            if (handCardsComponent == null) return;
 	            List<MahjongInfo> mahjongInfos = handCardsComponent.GetAll();
 
 	            if (orderController.CurrentAuthority != gamer.UserID)
@@ -93,6 +95,8 @@ namespace ETHotfix
 	                    if (_gamer.UserID == gamer.UserID)
 	                        continue;
 
+	                    HandCardsComponent currentCards = _gamer.GetComponent<HandCardsComponent>();
+
 	                    List<MahjongInfo> cards = _gamer.GetComponent<HandCardsComponent>().GetAll();
 	                    canOperation.Uid = _gamer.UserID;
 
@@ -116,17 +120,26 @@ namespace ETHotfix
                         }
 
 	                    //判断小胡,4个花以上才能胡
-	                    if (handCardsComponent.PengGangCards.Count > 0 || handCardsComponent.PengCards.Count > 0)
+	                    if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
 	                    {
-	                        if (handCardsComponent.FaceCards.Count >= 4)
+//	                        Log.Debug("小胡");
+//	                        Log.Debug("currentCards.PengGangCards.Count：" + currentCards.PengGangCards.Count);
+//	                        Log.Debug("currentCards.PengCards.Count：" + currentCards.PengCards.Count);
+//	                        Log.Debug("currentCards.FaceCards.Count：" + currentCards.FaceCards.Count);
+                            if (currentCards.FaceCards.Count >= 4)
 	                        {
 	                            if (room.CanHu(mahjongInfo, cards))
 	                            {
-	                                _gamer.IsCanHu = true;
+	                                Log.Debug("小胡能");
+                                    _gamer.IsCanHu = true;
 	                                isNeedWait = true;
 
 	                                canOperation.OperationType = 2;
 	                                room.GamerBroadcast(_gamer, canOperation);
+                                }
+	                            else
+	                            {
+//	                                Log.Debug("buneng");
                                 }
 	                        }
 	                    }

@@ -130,18 +130,8 @@ namespace ETHotfix
             try
             {
                 duanwuData = g2cDuanwu.DuanwuData;
-
-                //如果玩家随机活动类型为空，则随机添加六个活动
-                if (string.IsNullOrEmpty(g2cDuanwu.DuanwuData.ActivityType))
-                {
-                    activityType = GetRandomIndex();
-                    //type = 2 更改活动类型
-                    G2C_DuanwuDataBase g2cDuanwu1 = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 2, ActivityType = activityType });
-                }
-                else
-                {
-                    activityType = g2cDuanwu.DuanwuData.ActivityType;
-                }
+                activityType = g2cDuanwu.DuanwuData.ActivityType;
+                Log.Info(activityType+ "==ddddddd");
                 GetDuanwuTaskInfoList();
             }
             catch(Exception e)

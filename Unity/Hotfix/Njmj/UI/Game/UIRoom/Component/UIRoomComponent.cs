@@ -278,7 +278,9 @@ namespace ETHotfix
 
             //剩余牌数
             restText.text = $"";
-            Gamer[] gamers = this.GetParent<UI>().GetComponent<GamerComponent>().GetAll();
+            GamerComponent gamerComponent = this.GetParent<UI>().GetComponent<GamerComponent>();
+            gamerComponent.IsPlayed = false;
+            Gamer[] gamers = gamerComponent.GetAll();
 
             foreach (var gamer in gamers)
             {

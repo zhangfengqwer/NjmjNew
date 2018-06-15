@@ -14,6 +14,11 @@ namespace ETModel
         public string MachineId { set; get; }
         public string ChannelName { set; get; }
         public string ClientVersion { set; get; }
-        public int OldAccountState = 1;         // 1:未拉取   2:是老用户   3:不是老用户
+        public int OldAccountState { set; get; }       // 1:未拉取   2:是老用户   3:不是老用户
+
+        public AccountInfo() : base()
+        {
+            OldAccountState = 1;
+        }
     }
 }

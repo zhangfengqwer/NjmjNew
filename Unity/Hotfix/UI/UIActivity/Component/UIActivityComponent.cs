@@ -40,8 +40,8 @@ namespace ETHotfix
         public async void Start()
         {
             try
-            {
-                await HttpReqUtil.Req("http://fwdown.hy51v.com/njmj/test/files/activity.json", ActivityConfig.getInstance().init);
+            {   
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/activity.json", ActivityConfig.getInstance().init);
 
                 ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
                 returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
