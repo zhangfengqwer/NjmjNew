@@ -66,10 +66,10 @@ namespace ETHotfix
                             {
                                 goldNum = duanwuDataBases[0].ZongziCount * 100;
                                 duanwuDataBases[0].ZongziCount = 0;
+                                //添加邮件
+                                await DBCommonUtil.SendMail(message.uid, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
                                 await proxyComponent.Save(duanwuDataBases[0]);
                             }
-                            //添加邮件
-                           await DBCommonUtil.SendMail(message.uid, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
                         }
                     }
 
