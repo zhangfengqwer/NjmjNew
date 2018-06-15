@@ -69,6 +69,7 @@ namespace ETHotfix
             SureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             CancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
 
+            //刷新任务按钮
             RefreshTaskBtn.onClick.Add(() =>
             {
                 try
@@ -173,6 +174,9 @@ namespace ETHotfix
             return goldCost;
         }
 
+        /// <summary>
+        /// 刷新活动类型
+        /// </summary>
         private async void RefreshActivityType()
         {
             try
@@ -210,6 +214,10 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 刷新UI
+        /// </summary>
+        /// <param name="zongzi"></param>
         public void RefreshUI(int zongzi)
         {
             duanwuData.ZongziCount = zongzi;
@@ -230,6 +238,7 @@ namespace ETHotfix
                 ToastScript.createToast("活动还未开始");
                 return;
             }
+
             duanwuActInfoList = g2cduanwu.DuanwuActivityList;
             Init();
             CreateDuanwuList();
@@ -253,11 +262,6 @@ namespace ETHotfix
             {
                 Log.Error(e);
             }
-        }
-
-        public bool IsComplete()
-        {
-            return duanwuData.CompleteCount == 6;
         }
 
         /// <summary>
@@ -301,11 +305,10 @@ namespace ETHotfix
             }
         }
 
-        //public bool IsOpenTime()
-        //{
-
-        //}
-
+        /// <summary>
+        /// 获得
+        /// </summary>
+        /// <returns></returns>
         private List<int> GetActivityType()
         {
             List<int> activityList = new List<int>();
@@ -326,9 +329,13 @@ namespace ETHotfix
         {
             //显示领取了多少粽子，暂不处理
             ShowZongzi.text = "+" + count;
-            SetTimeOut(3);
+            SetTimeOut(2);
         }
 
+        /// <summary>
+        /// 设置定时器
+        /// </summary>
+        /// <param name="time"></param>
         private async void SetTimeOut(int time)
         {
             try
@@ -336,7 +343,7 @@ namespace ETHotfix
                 tokenSource = new CancellationTokenSource();
                 while (time > 0)
                 {
-                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000, tokenSource.Token);
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(500, tokenSource.Token);
                     time--;
                 }
                 ShowZongzi.text = "";
