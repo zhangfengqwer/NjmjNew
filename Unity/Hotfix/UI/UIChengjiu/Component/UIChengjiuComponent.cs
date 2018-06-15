@@ -67,8 +67,35 @@ namespace ETHotfix
                     (G2C_Chengjiu) await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
             CreateItems(g2cChengjiu.ChengjiuList);
+            GetNoGetCount(g2cChengjiu.ChengjiuList);
             CurProgress.text = new StringBuilder().Append("<color=#E8DBAAFF>").Append("已获勋章:").Append("</color>")
                     .Append(GetCompleteChengjiu(g2cChengjiu.ChengjiuList)).Append("/").Append(g2cChengjiu.ChengjiuList.Count).ToString();
+        }
+
+
+        int notGetcount = 0;
+        private int GetNoGetCount(List<TaskInfo> taskInfoList)
+        {
+            for (int i = 0; i < taskInfoList.Count; ++i)
+            {
+                if (taskInfoList[i].IsComplete && !taskInfoList[i].IsGet)
+                {
+                    notGetcount++;
+                }
+            }
+            return notGetcount;
+        }
+
+        public void DeCount()
+        {
+            Debug.Log(notGetcount + "qqqqqqq");
+            --notGetcount;
+            Debug.Log(notGetcount + "kkkkkkkkk");
+            if (notGetcount <= 0)
+            {
+                Debug.Log("成就奖励已经领取完");
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, false);
+            }
         }
 
         /// <summary>
@@ -141,6 +168,7 @@ namespace ETHotfix
             base.Dispose();
             itemList.Clear();
             uiList.Clear();
+            notGetcount = 0;
         }
     }
 }

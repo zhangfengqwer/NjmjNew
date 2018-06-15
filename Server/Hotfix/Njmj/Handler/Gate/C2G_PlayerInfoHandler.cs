@@ -20,7 +20,6 @@ namespace ETHotfix
                 response.PlayerInfo = new PlayerInfo();
                 if (playerInfo != null)
                 {
-                    Log.Debug("获取玩家数据" + JsonHelper.ToJson(playerInfo));
                     response.Message = "数据库里已存在玩家的基本信息，返回玩家信息";
                     response.PlayerInfo.Name = playerInfo[0].Name;
                     response.PlayerInfo.GoldNum = playerInfo[0].GoldNum;
@@ -52,6 +51,24 @@ namespace ETHotfix
                         else
                         {
                             response.PlayerInfo.IsSign = true;
+                        }
+                    }
+
+                    {
+                        //端午节活动是否结束
+                        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.uid}}}");
+                        string curTime = CommonUtil.getCurTimeNormalFormat();
+                        if (string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) >= 0)
+                        {
+                            long goldNum = 0;
+                            if (duanwuDataBases[0].ZongziCount > 0)
+                            {
+                                goldNum = duanwuDataBases[0].ZongziCount * 100;
+                                duanwuDataBases[0].ZongziCount = 0;
+                                //添加邮件
+                                await DBCommonUtil.SendMail(message.uid, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
+                                await proxyComponent.Save(duanwuDataBases[0]);
+                            }
                         }
                     }
 

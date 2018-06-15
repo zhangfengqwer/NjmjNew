@@ -15,7 +15,7 @@ namespace ETHotfix
         /// <param name="uid"></param>
         /// <param name="taskId"></param>
         /// <param name="progress"></param>
-        public static async void UpdateTask(long uid, int taskId, int progress)
+        public static async Task UpdateTask(long uid, int taskId, int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             TaskInfo taskInfo = new TaskInfo();
@@ -70,6 +70,8 @@ namespace ETHotfix
                     await proxyComponent.Save(playerBaseInfo);
                 }
             }
+
+//            Log.Debug("UpdateTask111111111111");
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace ETHotfix
         /// <param name="UId"></param>
         /// <param name="taskId"></param>
         /// <param name="progress"></param>
-        public static async void UpdateChengjiu(long UId, int taskId, int progress)
+        public static async Task UpdateChengjiu(long UId, int taskId, int progress)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList =
@@ -105,7 +107,7 @@ namespace ETHotfix
         /// <param name="uid"></param>
         /// <param name="maxHua"></param>
         /// <param name="isWin"></param>
-        public static async void UpdatePlayerInfo(long uid, int maxHua, bool isWin = false)
+        public static async Task UpdatePlayerInfo(long uid, int maxHua, bool isWin = false)
         {
             try
             {
@@ -124,7 +126,7 @@ namespace ETHotfix
                         playerBaseInfos[0].MaxHua = maxHua;
                     }
 
-                    proxyComponent.Save(playerBaseInfos[0]);
+                    await proxyComponent.Save(playerBaseInfos[0]);
                 }
             }
             catch (Exception e)
@@ -141,7 +143,7 @@ namespace ETHotfix
         /// <param name="progress"></param>
         public static async Task UpdateDuanwuActivity(long uid, int taskId, int progress)
         {
-            Log.Debug("更新端午活动taskId:" + taskId);
+//            Log.Debug("更新端午活动taskId:" + taskId);
 
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             string startTime = "2018-06-15 00:00:00";
@@ -191,7 +193,7 @@ namespace ETHotfix
                         infos[0].IsComplete = false;
                     }
 
-                    Log.Debug("更新端午活动更新activiry：" + JsonHelper.ToJson(infos[0]));
+//                    Log.Debug("更新端午活动更新activiry：" + JsonHelper.ToJson(infos[0]));
 
                     await proxyComponent.Save(infos[0]);
                 }
@@ -624,7 +626,7 @@ namespace ETHotfix
         /// <param name="startTime"></param>
         /// <param name="isStart"></param>
         /// <param name="userId"></param>
-        public static async void RecordGamerTime(DateTime startTime, bool isStart, long userId)
+        public static async Task RecordGamerTime(DateTime startTime, bool isStart, long userId)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
@@ -649,7 +651,7 @@ namespace ETHotfix
         /// <param name="userId"></param>
         /// <param name="totalSeconds"></param>
         /// <returns></returns>
-        public static async void RecordGamerInfo(long userId, int totalSeconds)
+        public static async Task RecordGamerInfo(long userId, int totalSeconds)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configComponent = Game.Scene.GetComponent<ConfigComponent>();
@@ -686,9 +688,9 @@ namespace ETHotfix
             await proxyComponent.Save(gamerInfo);
 
             //记录玩家在线时长
-            DBCommonUtil.UpdateChengjiu(userId, 107, totalSeconds);
-            DBCommonUtil.UpdateChengjiu(userId, 108, totalSeconds);
-            DBCommonUtil.UpdateChengjiu(userId, 109, totalSeconds);
+            await DBCommonUtil.UpdateChengjiu(userId, 107, totalSeconds);
+            await DBCommonUtil.UpdateChengjiu(userId, 108, totalSeconds);
+            await DBCommonUtil.UpdateChengjiu(userId, 109, totalSeconds);
         }
 
         /// <summary>
@@ -784,16 +786,21 @@ namespace ETHotfix
         }
 
         // 检查是否在黑名单中
-        public static async Task<bool> CheckIsInBlackList(long uid)
+        public static async Task<bool> CheckIsInBlackList(long uid,Session session)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-            List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{Uid:{uid}}}");
-            if (blackLists.Count > 0)
+            List<string> list = new List<string>();
+            CommonUtil.splitStr(session.RemoteAddress.ToString(), list,':');
+            if (list.Count > 0)
             {
-                if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                List<BlackList> blackLists = await proxyComponent.QueryJson<BlackList>($"{{ip:'{list[0]}'}}");
+                if (blackLists.Count > 0)
                 {
-                    return true;
+                    if (blackLists[0].EndTime.CompareTo(CommonUtil.getCurDataNormalFormat()) > 0)
+                    {
+                        return true;
+                    }
                 }
             }
 

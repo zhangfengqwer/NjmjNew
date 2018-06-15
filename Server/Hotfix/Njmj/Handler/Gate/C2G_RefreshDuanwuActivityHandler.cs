@@ -19,7 +19,7 @@ namespace ETHotfix
                 List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.UId}}}");
                 string curTime = CommonUtil.getCurTimeNormalFormat();
                 if (string.CompareOrdinal(curTime, duanwuDataBases[0].StartTime) >= 0
-                    && string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) <= 0)
+                    && string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) < 0)
                 {
                     //活动期间
                     //刷新任务

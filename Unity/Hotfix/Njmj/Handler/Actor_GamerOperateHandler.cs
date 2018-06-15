@@ -13,10 +13,10 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_GamerOperation message)
         {
-            GamerOperation(message);
+            GamerOperation(message,false);
         }
 
-        public static void GamerOperation(Actor_GamerOperation message)
+        public static void GamerOperation(Actor_GamerOperation message, bool isReconnect)
         {
             try
             {
@@ -71,6 +71,10 @@ namespace ETHotfix
                     }
                 }
 
+                if (isReconnect)
+                {
+                    return;
+                }
                 //碰和碰刚删除出的牌
                 if (message.OperationType == 0 || message.OperationType == 1)
                 {

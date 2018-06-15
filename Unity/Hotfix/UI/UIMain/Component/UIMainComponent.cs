@@ -258,10 +258,55 @@ namespace ETHotfix
             {
                 CommonUtil.ShowUI(UIType.UIDaily);
             }
-
+            SetRedTip();
             HeartBeat.getInstance().startHeartBeat();
         }
 
+
+        /// <summary>
+        /// 设置?点提示
+        /// </summary>
+        private async void SetRedTip()
+        {
+            G2C_Tip g2c = (G2C_Tip)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Tip
+            {
+                UId = PlayerInfoComponent.Instance.uid
+            });
+
+            //设置?点
+            SetRedTip(1, g2c.IsTaskComplete);
+            SetRedTip(2, g2c.IsChengjiuComplete);
+            SetRedTip(3, g2c.IsInActivity);
+            SetRedTip(4, g2c.IsZhuanpan);
+            SetRedTip(5, g2c.IsEmail);
+        }
+
+        /// <summary>
+        /// 设置红点提示状态 1,任务 2,成就 3,活动 4,转盘 5,邮件
+        /// </summary>
+        /// <param name="state"></param>
+        public void SetRedTip(int state, bool isHide)
+        {
+            switch (state)
+            {
+                case 1:
+                    BtnList_Down.transform.Find("Grid/Btn_Task/Tip").gameObject.SetActive(isHide);
+                    break;
+                case 2:
+                    Debug.Log("关闭红点" + isHide);
+                    BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip").gameObject.SetActive(isHide);
+                    break;
+                case 3:
+                    BtnList_Down.transform.Find("Grid/Btn_Activity/Tip").gameObject.SetActive(isHide);
+                    break;
+                case 4:
+                    BtnList_Down.transform.Find("Grid/Btn_ZhuanPan/Tip").gameObject.SetActive(isHide);
+                    break;
+                case 5:
+                    BtnList_Up.transform.Find("Btn_Mail/Tip").gameObject.SetActive(isHide);
+                    break;
+            }
+        }
 
         /// <summary>
         /// 清理内存

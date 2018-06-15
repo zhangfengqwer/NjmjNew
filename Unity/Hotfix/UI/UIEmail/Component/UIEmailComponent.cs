@@ -71,6 +71,7 @@ namespace ETHotfix
                 NoEmailTip.gameObject.SetActive(false);   
             }
             CreateEmailItemList();
+            GetNoGetCount();
         }
 
         //删除邮件后刷新界面显示
@@ -78,6 +79,28 @@ namespace ETHotfix
         {
             GetEmail();
             //删除之后remove相应的ui组件
+        }
+
+        int notGetcount = 0;
+        private int GetNoGetCount()
+        {
+            for (int i = 0; i < emailList.Count; ++i)
+            {
+                if (emailList[i].State == 0)
+                {
+                    notGetcount++;
+                }
+            }
+            return notGetcount;
+        }
+
+        public void DeCount()
+        {
+            --notGetcount;
+            if (notGetcount <= 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(5, false);
+            }
         }
 
         /// <summary>
@@ -173,6 +196,8 @@ namespace ETHotfix
                 });
                 }
             }
+
+            notGetcount = 0;
 
             emailItemList.Clear();
             uiList.Clear();

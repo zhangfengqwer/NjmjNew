@@ -71,6 +71,7 @@ namespace ETHotfix
             else
             {
                 RefreshUI(true);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UITask).GetComponent<UITaskComponent>().DeCount();
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
                     .GetComponent<UIMainComponent>().refreshUI();
             }

@@ -21,8 +21,8 @@ namespace ETHotfix
 	            gamer.EndTime = DateTime.Now;
 	            TimeSpan span = gamer.EndTime - gamer.StartTime;
 	            int totalSeconds = (int)span.TotalSeconds;
-	            DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
-	            DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+	            await DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+	            await DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
 
 	            List<GamerInfoDB> gamerInfos = await proxyComponent.QueryJson<GamerInfoDB>($"{{UId:{gamer.UserID}}}");
 
@@ -74,7 +74,7 @@ namespace ETHotfix
 	            reply(response);
 
 	            gamer.StartTime = DateTime.Now;
-	            DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+	            await DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
             }
 	        catch (Exception e)
 	        {

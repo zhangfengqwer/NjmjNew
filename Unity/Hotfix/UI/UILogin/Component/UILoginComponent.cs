@@ -111,21 +111,18 @@ namespace ETHotfix
             {
                 {
                     List<MahjongInfo> list = new List<MahjongInfo>();
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_1));
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_5));
                     list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_8));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_8));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_9));
-                    Log.Debug(Logic_NJMJ.getInstance().isHuPai(list).ToString());
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_1));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_2));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_3));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_4));
+                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_4));
+                    Debug.Log(Logic_NJMJ.getInstance().isHuPai(list).ToString());
                 }
             }
         }

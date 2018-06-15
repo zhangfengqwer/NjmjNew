@@ -2114,6 +2114,12 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public long Uid;
 
+		[ProtoMember(2, IsRequired = true)]
+		public int State;
+
+		[ProtoMember(3, IsRequired = true)]
+		public bool IsState;
+
 	}
 
 	[Message(HotfixOpcode.G2C_UseZhuanPan)]
@@ -2588,6 +2594,48 @@ namespace ETHotfix
 
 		[ProtoMember(1, TypeName = "ETHotfix.DuanwuTreasureLogInfo")]
 		public List<DuanwuTreasureLogInfo> Treasures = new List<DuanwuTreasureLogInfo>();
+
+	}
+
+	[Message(HotfixOpcode.C2G_Tip)]
+	[ProtoContract]
+	public partial class C2G_Tip: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_Tip)]
+	[ProtoContract]
+	public partial class G2C_Tip: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool IsTaskComplete;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsChengjiuComplete;
+
+		[ProtoMember(3, IsRequired = true)]
+		public bool IsInActivity;
+
+		[ProtoMember(4, IsRequired = true)]
+		public bool IsZhuanpan;
+
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsEmail;
 
 	}
 

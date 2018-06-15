@@ -54,6 +54,29 @@ namespace ETHotfix
                                                   .Append(taskProgressList.Count)
                                                   .ToString();
             CreateTaskItem(g2cTask.TaskProgressList);
+            GetNoGetCount(g2cTask.TaskProgressList);
+        }
+
+        int notGetcount = 0;
+        public int GetNoGetCount(List<TaskInfo> taskInfoList)
+        {
+            for(int i = 0;i< taskInfoList.Count; ++i)
+            {
+                if(taskInfoList[i].IsComplete && !taskInfoList[i].IsGet)
+                {
+                    notGetcount++;
+                }
+            }
+            return notGetcount;
+        }
+
+        public void DeCount()
+        {
+            --notGetcount;
+            if(notGetcount <= 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(1, false);
+            }
         }
 
         private int GetProgress()
@@ -94,6 +117,7 @@ namespace ETHotfix
             //taskInfoList.Clear();
             taskItemList.Clear();
             uiList.Clear();
+            notGetcount = 0;
         }
     }
 }

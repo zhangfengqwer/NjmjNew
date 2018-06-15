@@ -231,28 +231,36 @@ namespace ETHotfix
         /// <param name="messageWeight"></param>
         public void PlayCard(MahjongInfo mahjong, int index, GameObject currentItem)
         {
-            MahjongInfo info = handCards[index];
-            if (info.weight == mahjong.weight)
+            try
             {
-                GameObject gameObject = this.GetSprite(index);
-                GameObject.Destroy(gameObject);
-                handCards.RemoveAt(index);
-                ItemCards.RemoveAt(index);
+                MahjongInfo info = handCards[index];
+                if (info.weight == mahjong.weight)
+                {
+                    GameObject gameObject = this.GetSprite(index);
+                    GameObject.Destroy(gameObject);
+                    handCards.RemoveAt(index);
+                    ItemCards.RemoveAt(index);
+                }
+
+                UpdateCards();
+
+                //显示出牌
+                GameObject obj = (GameObject)this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
+                GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
+                this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
+
+                currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
+                currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
+
+                currentItem = currentPlayCardObj;
+
+                ShowCard(mahjong.weight);
             }
-
-            UpdateCards();
-
-            //显示出牌
-            GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Item_Vertical_Card.unity3d", "Item_Vertical_Card");
-            GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
-            this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
-
-            currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>("card_" + mahjong.weight);
-            currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
-
-            currentItem = currentPlayCardObj;
-
-            ShowCard(mahjong.weight);
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+          
         }
 
         private CancellationTokenSource tokenSource = new CancellationTokenSource();

@@ -148,5 +148,7 @@ namespace ETModel
 		 public const ushort DuanwuTreasureLogInfo = 10144;
 		 public const ushort C2G_GetDuanwuTreasureInfo = 10145;
 		 public const ushort G2C_GetDuanwuTreasureInfo = 10146;
+		 public const ushort C2G_Tip = 10147;
+		 public const ushort G2C_Tip = 10148;
 	}
 }

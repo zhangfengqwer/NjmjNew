@@ -7,6 +7,7 @@ namespace ETModel
     public class BlackList : EntityDB
 	{
         public long Uid { set; get; }
+        public string ip { set; get; }
         public string Reason { set; get; }
         public string EndTime { set; get; }
     }

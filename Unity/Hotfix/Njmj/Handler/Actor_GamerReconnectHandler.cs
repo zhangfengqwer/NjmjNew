@@ -49,7 +49,7 @@ namespace ETHotfix
 
                     Logic_NJMJ.getInstance().SortMahjong(item.handCards);
 
-                    Log.Debug($"{item.UserID} 手牌：{item.handCards.Count}");
+                    Log.Info($"{item.UserID} 手牌：{item.handCards.Count}");
                 }
 
                 await Actor_GamerEnterRoomHandler.GamerEnterRoom(new Actor_GamerEnterRoom() { Gamers = Gamers });
@@ -60,6 +60,29 @@ namespace ETHotfix
                 actorStartGame.restCount = message.RestCount;
                 actorStartGame.RoomType = message.RoomType;
                 Actor_StartGameHandler.StartGame(actorStartGame);
+
+                //碰刚
+                foreach (var item in message.Gamers)
+                {
+                    foreach (var card in item.pengCards)
+                    {
+                        Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
+                        gamerOperation.Uid = item.UserID;
+                        gamerOperation.weight = card.weight;
+                        gamerOperation.OperationType = 0;
+                        Actor_GamerOperateHandler.GamerOperation(gamerOperation, true);
+
+                    }
+
+                    foreach (var card in item.gangCards)
+                    {
+                        Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
+                        gamerOperation.Uid = item.UserID;
+                        gamerOperation.weight = card.weight;
+                        gamerOperation.OperationType = 1;
+                        Actor_GamerOperateHandler.GamerOperation(gamerOperation, true);
+                    }
+                }
 
                 //打牌
                 foreach (var item in message.Gamers)
@@ -79,28 +102,6 @@ namespace ETHotfix
                     }
                 }
 
-                //碰刚
-                foreach (var item in message.Gamers)
-                {
-                    foreach (var card in item.pengCards)
-                    {
-                        Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
-                        gamerOperation.Uid = item.UserID;
-                        gamerOperation.weight = card.weight;
-                        gamerOperation.OperationType = 0;
-                        Actor_GamerOperateHandler.GamerOperation(gamerOperation);
-
-                    }
-
-                    foreach (var card in item.gangCards)
-                    {
-                        Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
-                        gamerOperation.Uid = item.UserID;
-                        gamerOperation.weight = card.weight;
-                        gamerOperation.OperationType = 1;
-                        Actor_GamerOperateHandler.GamerOperation(gamerOperation);
-                    }
-                }
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                 bool b = PlayerPrefs.GetInt("isOpenSound", 0) == 0;
                 SoundsHelp.Instance.SoundMute(b);

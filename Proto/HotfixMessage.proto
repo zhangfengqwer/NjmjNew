@@ -734,7 +734,9 @@ message Actor_Chat // IActorMessage
 
 message C2G_UseZhuanPan // IRequest
 {
-	required long	Uid	 = 1;
+	required long Uid = 1;
+	required int State = 2;
+	required bool IsState = 3;
 }
 
 message G2C_UseZhuanPan // IResponse
@@ -901,5 +903,19 @@ message C2G_GetDuanwuTreasureInfo //IRequest
 message G2C_GetDuanwuTreasureInfo //IResponse
 {
 	repeated DuanwuTreasureLogInfo Treasures = 1;
+}
+
+message C2G_Tip //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_Tip //IResponse
+{
+	required bool IsTaskComplete = 1;
+	required bool IsChengjiuComplete = 2;
+	required bool IsInActivity = 3;
+	required bool IsZhuanpan = 4;
+	required bool IsEmail = 5;
 }
 #endregion

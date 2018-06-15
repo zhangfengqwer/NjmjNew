@@ -191,7 +191,7 @@ namespace ETHotfix
 	                    handCardsComponent.GrabCard = handCardsComponent.GetAll()[handCardsComponent.GetAll().Count - 1];
                         //设置玩家在线开始时间
                         _gamer.StartTime = startTime;
-	                    DBCommonUtil.RecordGamerTime(startTime, true, _gamer.UserID);
+	                    await DBCommonUtil.RecordGamerTime(startTime, true, _gamer.UserID);
 	                }
 
 	                foreach (var _gamer in room.GetAll())
