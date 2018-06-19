@@ -145,46 +145,19 @@ namespace ETHotfix
 	        return components;
 	    }
 
-        public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
-            List<AccountInfo> components = await dbComponent.GetAccountInfoCollection(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-            return components;
-        }
+        //public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
+        //{
+        //    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+        //    FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
+        //    List<AccountInfo> components = await dbComponent.GetAccountInfoCollection(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
+        //    return components;
+        //}
 
-        public static async Task<List<Log_Login>> QueryJsonLogLogins(this DBProxyComponent self,string time)
+        public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self, string time)
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<Log_Login> filterDefinition = new JsonFilterDefinition<Log_Login>($"{{CreateTime:/^{time}/}}");
-            List<Log_Login> components = await dbComponent.GetLogLoginCollection(typeof(Log_Login).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-            return components;
-        }
-
-        //Log_OldUserBind
-        public static async Task<List<Log_OldUserBind>> QueryJsonOldUserBinds(this DBProxyComponent self, string time)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<Log_OldUserBind> filterDefinition = new JsonFilterDefinition<Log_OldUserBind>($"{{CreateTime:/^{time}/}}");
-            List<Log_OldUserBind> components = await dbComponent.GetOldUserBindnCollection(typeof(Log_OldUserBind).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-            return components;
-        }
-
-        //Log_Recharge
-        public static async Task<List<Log_Recharge>> QueryJsonLogRecharges(this DBProxyComponent self, string time)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<Log_Recharge> filterDefinition = new JsonFilterDefinition<Log_Recharge>($"{{CreateTime:/^{time}/}}");
-            List<Log_Recharge> components = await dbComponent.GetLogRechargeCollection(typeof(Log_Recharge).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-            return components;
-        }
-
-        //Log_Game
-        public static async Task<List<Log_Game>> QueryJsonLogGames(this DBProxyComponent self, string time)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<Log_Game> filterDefinition = new JsonFilterDefinition<Log_Game>($"{{CreateTime:/^{time}/}}");
-            List<Log_Game> components = await dbComponent.GetLogGameCollection(typeof(Log_Game).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
+            FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{CreateTime:/^{time}/}}");
+            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
             return components;
         }
 

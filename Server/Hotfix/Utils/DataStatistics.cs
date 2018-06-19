@@ -31,7 +31,7 @@ namespace ETHotfix
         static async Task<string> NewUser(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<AccountInfo> listData = await proxyComponent.QueryJsonAccounts(time);
+            List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(time);
             return " 新增用户：" + listData.Count + "\r\n";
         }
 
@@ -39,7 +39,7 @@ namespace ETHotfix
         static async Task<string> DailyLogin(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Login> listData = await proxyComponent.QueryJsonLogLogins(time);
+            List<Log_Login> listData = await proxyComponent.QueryJsonDBInfos<Log_Login>(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
@@ -66,7 +66,7 @@ namespace ETHotfix
         static async Task<string> LoadOldUserCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_OldUserBind> listData = await proxyComponent.QueryJsonOldUserBinds(time);
+            List<Log_OldUserBind> listData = await proxyComponent.QueryJsonDBInfos<Log_OldUserBind>(time);
             return " 导入老用户：" + listData.Count + "\r\n";
         }
 
@@ -74,7 +74,7 @@ namespace ETHotfix
         static async Task<string> RechargeNum(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonLogRecharges(time);
+            List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
             int num = 0;
             for (int i = 0; i < listData.Count; i++)
             {
@@ -88,7 +88,7 @@ namespace ETHotfix
         static async Task<string> RechargeUserNum(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonLogRecharges(time);
+            List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
@@ -115,7 +115,7 @@ namespace ETHotfix
         static async Task<string> GameCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonLogGames(time);
+            List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
             return " 游戏局数：" + listData.Count + "\r\n";
         }
 
@@ -123,7 +123,7 @@ namespace ETHotfix
         static async Task<string> GameUserCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonLogGames(time);
+            List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
@@ -205,7 +205,7 @@ namespace ETHotfix
             StreamWriter sw = null;
             try
             {
-                string folderPath = "C:/Users/Administrator/Desktop/NjmjNew/Logs/BaoBiao";
+                string folderPath = "D:/NjmjNew/Logs/BaoBiao";
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
