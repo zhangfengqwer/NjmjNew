@@ -203,6 +203,10 @@
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuTreasureFactory.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
+    <Compile Include="UI\UIGM\UIComponent\UIGMComponent.cs" />
+    <Compile Include="UI\UIGM\UIComponent\UIGMLoginComponent.cs" />
+    <Compile Include="UI\UIGM\UIFactory\UIGMLoginFactory.cs" />
+    <Compile Include="UI\UIGM\UIFactory\UIGMFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
     <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
     <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />
