@@ -197,6 +197,8 @@ namespace ETHotfix
                 }
             }
 
+            notGetcount = 0;
+
             emailItemList.Clear();
             uiList.Clear();
             emailList.Clear();

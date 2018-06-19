@@ -40,6 +40,7 @@ namespace ETHotfix
         private GameObject headInfo;
         private GameObject changeMoney;
         private GameObject vip;
+        public GameObject FaceObj { get; set; }
         private GameObject zhuang;
 
         public int Index { get; set; }
@@ -97,6 +98,33 @@ namespace ETHotfix
 //            this.readyText = readyPanel.Get<GameObject>("Text").GetComponent<Text>();
 
             UpdatePanel();
+        }
+
+        /// <summary>
+        /// 设置花牌
+        /// </summary>
+        /// <param name="obj"></param>
+        public void SetFace(GameObject obj)
+        {
+            this.FaceObj = obj;
+        }
+
+        /// <summary>
+        /// 补花
+        /// </summary>
+        /// <param name="weight"></param>
+        public void SetBuHua(int weight)
+        {
+            try
+            {
+                GameObject obj = CommonUtil.getGameObjByBundle("Item_Top_Card");
+                obj.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + weight);
+                GameObject.Instantiate(obj, FaceObj.transform);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         public void SetGoldChange(int num)
@@ -279,13 +307,14 @@ namespace ETHotfix
 
             base.Dispose();
 
+            GameHelp.DeleteAllItem(FaceObj);
+            FaceObj = null;
         }
 
         public void SetReady()
         {
             readyText.text = "已准备";
         }
-
 
     }
 }

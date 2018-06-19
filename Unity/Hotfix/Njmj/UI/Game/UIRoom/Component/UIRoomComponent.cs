@@ -23,6 +23,7 @@ namespace ETHotfix
 
         public readonly GameObject[] GamersPanel = new GameObject[4];
         public readonly GameObject[] HeadPanel = new GameObject[4];
+        public readonly GameObject[] FacePanel = new GameObject[4];
 
         private Button exitBtn;
         public Button readyBtn;
@@ -55,6 +56,9 @@ namespace ETHotfix
         private InputField cheatInput;
         private Text roomConfigText;
         private GameObject trustship;
+        public GameObject faceCardObj;
+        public GameObject dice;
+        public GameObject tip;
         public int RoomType { get; set; }
 
         public void Awake()
@@ -170,6 +174,28 @@ namespace ETHotfix
             });
             #endregion
 
+            #region 花牌显示
+            this.faceCardObj = rc.Get<GameObject>("FaceCardObj");
+            faceCardObj.SetActive(false);
+            FacePanel[0] = this.faceCardObj.Get<GameObject>("Bottom");
+            FacePanel[1] = this.faceCardObj.Get<GameObject>("Right");
+            FacePanel[2] = this.faceCardObj.Get<GameObject>("Top");
+            FacePanel[3] = this.faceCardObj.Get<GameObject>("Left");
+            Button backBtn = this.faceCardObj.Get<GameObject>("Button_back").GetComponent<Button>();
+            backBtn.onClick.Add(() =>
+            {
+                faceCardObj.gameObject.SetActive(false);
+            });
+
+            #endregion
+
+            #region 骰子
+            this.dice = rc.Get<GameObject>("Dice");
+            #endregion
+
+            #region 提示
+            this.tip = rc.Get<GameObject>("Tip");
+            #endregion
         }
 
         /// <summary>
@@ -178,7 +204,7 @@ namespace ETHotfix
         public void SetRestCount()
         {
             restCardCount--;
-            restText.text = $"剩余牌数：{restCardCount}";
+            restText.text = $"剩余牌数:{restCardCount}";
         }
 
         private async void OnReady()
@@ -289,7 +315,6 @@ namespace ETHotfix
                 gamer.GetComponent<HandCardsComponent>().ClearAll();
                 gamer.RemoveComponent<HandCardsComponent>();
             }
-
         }
 
         /// <summary>

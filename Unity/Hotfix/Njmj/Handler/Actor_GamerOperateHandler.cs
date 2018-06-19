@@ -13,10 +13,10 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_GamerOperation message)
         {
-            GamerOperation(message);
+            GamerOperation(message,false);
         }
 
-        public static void GamerOperation(Actor_GamerOperation message)
+        public static void GamerOperation(Actor_GamerOperation message, bool isReconnect)
         {
             try
             {
@@ -69,6 +69,20 @@ namespace ETHotfix
                     {
                         handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
                     }
+                }
+
+                if (isReconnect)
+                {
+                    return;
+                }
+                //碰和碰刚删除出的牌
+                if (message.OperationType == 0 || message.OperationType == 1)
+                {
+                    Gamer currentGamer = gamerComponent.Get(gamerComponent.LastPlayUid);
+                    HandCardsComponent currentCards = currentGamer.GetComponent<HandCardsComponent>();
+
+                    GameObject.Destroy(currentCards.currentPlayCardObj);
+                    currentCards.cardDisplayObjs.Remove(currentCards.currentPlayCardObj);
                 }
             }
             catch (Exception e)

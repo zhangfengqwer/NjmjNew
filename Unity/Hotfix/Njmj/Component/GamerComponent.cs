@@ -8,6 +8,7 @@ namespace ETHotfix
         private readonly Dictionary<long, int> seats = new Dictionary<long, int>();
         private readonly Gamer[] gamers = new Gamer[4];
         public long CurrentPlayUid;
+        public long LastPlayUid;
         public bool IsPlayed = false;
         public Gamer LocalGamer { get; set; }
 
@@ -102,6 +103,8 @@ namespace ETHotfix
                     gamers[i] = null;
                 }
             }
+
+            LastPlayUid = 0;
         }
     }
 }
