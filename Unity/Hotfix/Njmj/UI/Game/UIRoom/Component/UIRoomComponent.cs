@@ -178,7 +178,7 @@ namespace ETHotfix
         public void SetRestCount()
         {
             restCardCount--;
-            restText.text = $"剩余牌数：{restCardCount}";
+            restText.text = $"剩余牌数:{restCardCount}";
         }
 
         private async void OnReady()
