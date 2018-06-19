@@ -59,7 +59,7 @@ namespace ETHotfix
                 actorStartGame.GamerDatas = message.Gamers;
                 actorStartGame.restCount = message.RestCount;
                 actorStartGame.RoomType = message.RoomType;
-                Actor_StartGameHandler.StartGame(actorStartGame);
+                Actor_StartGameHandler.StartGame(actorStartGame, true);
 
                 //碰刚
                 foreach (var item in message.Gamers)

@@ -21,6 +21,7 @@ namespace ETHotfix
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
+                GamerUIComponent gamerUiComponent = gamer.GetComponent<GamerUIComponent>();
                 HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
@@ -33,6 +34,9 @@ namespace ETHotfix
                     handCardsComponent.BuHua(mahjongInfo, false);
                     SoundsHelp.Instance.PlayBuHua(gamer.PlayerInfo.PlayerSound);
                 }
+
+                //补花显示
+                gamerUiComponent.SetBuHua(message.weight);
 
                 //剩下的牌
                 uiRoomComponent.SetRestCount();

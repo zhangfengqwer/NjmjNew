@@ -58,6 +58,9 @@ namespace ETHotfix
         private GameObject changeMoney;
         //当前抓牌的索引
         private int grabIndex;
+        private int num = 0;
+        private GameObject faceCard;
+
 
         public int Index { get; set; }
         public GameObject Panel { get; private set; }
@@ -78,6 +81,15 @@ namespace ETHotfix
             this.faceImageGe = panel.Get<GameObject>("FaceImageGe").GetComponent<Image>();
             Image image = this.directionObj.GetComponent<Image>();
 
+            //花牌显示
+            this.faceCard = panel.Get<GameObject>("FaceCard");
+
+            faceCard.GetComponent<Button>().onClick.Add(() =>
+            {
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.faceCardObj.SetActive(true);
+            });
             switch (index)
             {
                 case 0:
@@ -443,62 +455,69 @@ namespace ETHotfix
 
         public void PlayOtherCard(MahjongInfo mahjongInfo, GameObject currentItem)
         {
-            //grabObj.SetActive(false);
-            grabObj.transform.localScale = Vector3.zero;
-            //显示出牌
-            //显示出牌
-            string item1 = null;
-            string item2 = null;
-            string item3 = null;
-            if (Index == 1)
+            try
             {
-                item1 = "Item_Horizontal_Card";
-                item2 = "Image_Right_Card";
-                item3 = "right_" + mahjongInfo.weight;
-            }
-            else if (Index == 2)
-            {
-                item1 = "Item_Vertical_Card";
-                item2 = "Image_Top_Card";
-                item3 = "card_" + mahjongInfo.weight;
-            }
-            else if (Index == 3)
-            {
-                item1 = "Item_Horizontal_Card";
-                item2 = "Image_Left_Card";
-                item3 = "left_" + mahjongInfo.weight;
-            }
-
-            GameObject obj = (GameObject) this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
-            GameObject obj2 = (GameObject) this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
-            this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
-            this.currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
-            this.currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
-            currentPlayCardObj.name = item3;
-            cardDisplayObjs.Add(this.currentPlayCardObj);
-            if (Index == 1)
-            {
-                this.currentPlayCardObj.transform.SetAsFirstSibling();
-                int count = this.cardDisplayObjs.Count;
-                Log.Info("cardDisplayObjs:" + count);
-                int x = -107;
-                int y = -192;
-                int i = count / 10;
-                int i1 = count % 10;
-
-                if (i1 == 0)
+                //grabObj.SetActive(false);
+                grabObj.transform.localScale = Vector3.zero;
+                //显示出牌
+                //显示出牌
+                string item1 = null;
+                string item2 = null;
+                string item3 = null;
+                if (Index == 1)
                 {
-                    i1 = 10;
-                    i--;
+                    item1 = "Item_Horizontal_Card";
+                    item2 = "Image_Right_Card";
+                    item3 = "right_" + mahjongInfo.weight;
+                }
+                else if (Index == 2)
+                {
+                    item1 = "Item_Vertical_Card";
+                    item2 = "Image_Top_Card";
+                    item3 = "card_" + mahjongInfo.weight;
+                }
+                else if (Index == 3)
+                {
+                    item1 = "Item_Horizontal_Card";
+                    item2 = "Image_Left_Card";
+                    item3 = "left_" + mahjongInfo.weight;
                 }
 
-                this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 53), 34 * (i1 - 1) - 192, 0);
+                GameObject obj = (GameObject)this.resourcesComponent.GetAsset($"{item1}.unity3d", item1);
+                GameObject obj2 = (GameObject)this.resourcesComponent.GetAsset($"{item2}.unity3d", item2);
+                this.currentPlayCardObj = GameObject.Instantiate(obj, this.cardDisplay.transform);
+                this.currentPlayCardObj.GetComponent<Image>().sprite = obj2.Get<Sprite>(item3);
+                this.currentPlayCardObj.layer = LayerMask.NameToLayer("UI");
+                currentPlayCardObj.name = item3;
+                cardDisplayObjs.Add(this.currentPlayCardObj);
+                if (Index == 1)
+                {
+                    this.currentPlayCardObj.transform.SetAsFirstSibling();
+                    int count = this.cardDisplayObjs.Count;
+//                    Log.Info("cardDisplayObjs:" + count);
+                    int x = -107;
+                    int y = -192;
+                    int i = count / 10;
+                    int i1 = count % 10;
+
+                    if (i1 == 0)
+                    {
+                        i1 = 10;
+                        i--;
+                    }
+
+                    this.currentPlayCardObj.transform.localPosition = new Vector3(-107 + (i * 53), 34 * (i1 - 1) - 192, 0);
+                }
+
+                currentItem = currentPlayCardObj;
+                //            Log.Info("别人出的牌：" + currentItem.name);
+
+                ShowCard(mahjongInfo.weight);
             }
-
-            currentItem = currentPlayCardObj;
-            Log.Info("别人出的牌：" + currentItem.name);
-
-            ShowCard(mahjongInfo.weight);
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         public void ShowBg()
@@ -681,9 +700,7 @@ namespace ETHotfix
             }
         }
 
-        private int num = 0;
-  
-
+     
         /// <summary>
         /// 其他人碰刚
         /// </summary>

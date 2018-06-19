@@ -450,6 +450,7 @@ namespace ETHotfix
                     {
                         gamerInfo[0].DailyOnlineTime = 0;
                         gamerInfo[0].DailyTreasureCount = 0;
+                        await proxyComponent.Save(gamerInfo[0]);
                     }
                 }
 

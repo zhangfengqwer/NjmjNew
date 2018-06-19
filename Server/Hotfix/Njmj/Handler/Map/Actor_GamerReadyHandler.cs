@@ -225,8 +225,10 @@ namespace ETHotfix
 	                    }
                     }
 
+                    //等客户端掷骰子
+	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
 	                //是否超时
-	                room.StartTime();
+                    room.StartTime();
                 }
             }
 	        catch (Exception e)
