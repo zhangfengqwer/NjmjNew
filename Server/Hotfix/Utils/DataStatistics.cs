@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,7 @@ namespace ETHotfix
         static async Task<string> NewUser(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<AccountInfo> listData = await proxyComponent.QueryJsonByDay<AccountInfo>(time);
+            List<AccountInfo> listData = await proxyComponent.QueryJsonAccounts(time);
             return " 新增用户：" + listData.Count + "\r\n";
         }
 
@@ -38,7 +39,7 @@ namespace ETHotfix
         static async Task<string> DailyLogin(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Login> listData = await proxyComponent.QueryJsonByDay<Log_Login>(time);
+            List<Log_Login> listData = await proxyComponent.QueryJsonLogLogins(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
@@ -65,7 +66,7 @@ namespace ETHotfix
         static async Task<string> LoadOldUserCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_OldUserBind> listData = await proxyComponent.QueryJsonByDay<Log_OldUserBind>(time);
+            List<Log_OldUserBind> listData = await proxyComponent.QueryJsonOldUserBinds(time);
             return " 导入老用户：" + listData.Count + "\r\n";
         }
 
@@ -73,7 +74,7 @@ namespace ETHotfix
         static async Task<string> RechargeNum(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonByDay<Log_Recharge>(time);
+            List<Log_Recharge> listData = await proxyComponent.QueryJsonLogRecharges(time);
             int num = 0;
             for (int i = 0; i < listData.Count; i++)
             {
@@ -87,7 +88,7 @@ namespace ETHotfix
         static async Task<string> RechargeUserNum(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonByDay<Log_Recharge>(time);
+            List<Log_Recharge> listData = await proxyComponent.QueryJsonLogRecharges(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
@@ -114,7 +115,7 @@ namespace ETHotfix
         static async Task<string> GameCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonByDay<Log_Game>(time);
+            List<Log_Game> listData = await proxyComponent.QueryJsonLogGames(time);
             return " 游戏局数：" + listData.Count + "\r\n";
         }
 
@@ -122,7 +123,7 @@ namespace ETHotfix
         static async Task<string> GameUserCount(string time)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonByDay<Log_Game>(time);
+            List<Log_Game> listData = await proxyComponent.QueryJsonLogGames(time);
             List<long> listPlayer = new List<long>();
             for (int i = 0; i < listData.Count; i++)
             {
