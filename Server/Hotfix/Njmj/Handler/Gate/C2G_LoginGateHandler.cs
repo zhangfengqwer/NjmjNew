@@ -23,12 +23,8 @@ namespace ETHotfix
 			        return;
 			    }
 
-			    await Game.Scene.GetComponent<DBProxyComponent>().Delete<Log_Login>(381665361202912);
-
                 // 检测是否已存在
                 UserComponentSystem.CheckIsExistTheUser(userId);
-
-               
 
                 //创建User对象
                 User user = UserFactory.Create(userId, session);
