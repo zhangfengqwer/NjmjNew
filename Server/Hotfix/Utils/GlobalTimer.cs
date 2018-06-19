@@ -59,7 +59,7 @@ namespace ETHotfix
             #endregion
 
             // 每日报表
-            if ((45 == 0) && (sec == 0))
+            if ((min == 5) && (sec == 0))
             {
                 await DataStatistics.Start();
             }
