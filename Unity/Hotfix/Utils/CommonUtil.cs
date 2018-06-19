@@ -26,6 +26,17 @@ namespace ETHotfix
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        // 格式2017-07-12
+        public static string getCurDataNormalFormat()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd");
+        }
+
+        public static string timeAddDays(string time, int days)
+        {
+            return Convert.ToDateTime(time).AddDays(days).ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         /// <summary>
         /// 32位MD5加密
         /// </summary>

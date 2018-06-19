@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace ETHotfix
 {
-    [ObjectSystem]
-    public class HeartBeatSystem: UpdateSystem<HeartBeatComponent>
-    {
-        public override void Update(HeartBeatComponent self)
-        {
-            self.Update();
-        }
-    }
+//    [ObjectSystem]
+//    public class HeartBeatSystem: UpdateSystem<HeartBeatComponent>
+//    {
+//        public override void Update(HeartBeatComponent self)
+//        {
+//            self.Update();
+//        }
+//    }
 
     public class HeartBeatComponent: Component
     {

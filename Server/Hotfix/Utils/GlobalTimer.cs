@@ -24,7 +24,7 @@ namespace ETHotfix
             m_timer = new System.Threading.Timer(onTimer, "", 1000, 1000);
         }
 
-        static void onTimer(object data)
+        static async void onTimer(object data)
         {
             int year = CommonUtil.getCurYear();
             int month = CommonUtil.getCurMonth();
@@ -57,6 +57,12 @@ namespace ETHotfix
                 DBHelper.RefreshWealthRank();
             }
             #endregion
+
+            // 每日报表
+            if ((min == 0) && (sec == 0))
+            {
+                await DataStatistics.Start();
+            }
         }
     }
 }

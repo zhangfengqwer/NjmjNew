@@ -17,6 +17,7 @@ namespace ETHotfix
                 {
                     session.GetComponent<HeartBeatComponent>().CurrentTime = TimeHelper.ClientNowSeconds();
                 }
+                Log.Info("服务端发送心跳包");
                 reply(response);
             }
             catch (Exception e)

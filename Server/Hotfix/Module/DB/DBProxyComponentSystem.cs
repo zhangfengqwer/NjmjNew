@@ -95,15 +95,28 @@ namespace ETHotfix
 	        return list;
 	    }
 
-	    /// <summary>
-	    /// 根据UId查询指定的日期的数据,查询数据库的字段是:UId,CreateTime
-	    /// </summary>
-	    /// <typeparam name="T"></typeparam>
-	    /// <param name="self"></param>
-	    /// <param name="userId"></param>
-	    /// <param name="dateTime"></param>
-	    /// <returns></returns>
-	    public static async Task<List<T>> QueryJsonCurrentDayByUid<T>(this DBProxyComponent self,long userId,DateTime dateTime) where T : ComponentWithId
+        public static async Task<List<T>> QueryJsonByDay<T>(this DBProxyComponent self , string day) where T : ComponentWithId
+        {
+            List<T> list = new List<T>();
+            string json = $"{{CreateTime:/^{day}/}}";
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
+            foreach (ComponentWithId disposer in dbQueryJsonResponse.Components)
+            {
+                list.Add((T)disposer);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 根据UId查询指定的日期的数据,查询数据库的字段是:UId,CreateTime
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="userId"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static async Task<List<T>> QueryJsonCurrentDayByUid<T>(this DBProxyComponent self,long userId,DateTime dateTime) where T : ComponentWithId
 	    {
 	        List<T> list = new List<T>();
 	        string json = $"{{UId:{userId}, CreateTime:/^{dateTime.GetCurrentDay()}/}}";

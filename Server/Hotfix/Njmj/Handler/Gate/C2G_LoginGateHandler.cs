@@ -30,8 +30,8 @@ namespace ETHotfix
                 User user = UserFactory.Create(userId, session);
 			    await user.AddComponent<ActorComponent>().AddLocation();
 
-			    //添加心跳包
-			    session.AddComponent<HeartBeatComponent>();
+                //添加心跳包
+			    session.AddComponent<HeartBeatComponent>().CurrentTime = TimeHelper.ClientNowSeconds();
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
