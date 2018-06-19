@@ -363,6 +363,8 @@ namespace ETHotfix
                 UINetLoadingComponent.closeNetLoading();
 
                 ToastScript.createToast("登录成功");
+                //挂心跳包
+                Game.Scene.GetComponent<SessionWrapComponent>().Session.AddComponent<HeartBeatComponent>();
                 UINetLoadingComponent.closeNetLoading();
                 await getAllData();
 
@@ -435,7 +437,8 @@ namespace ETHotfix
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
-
+                //挂心跳包
+                Game.Scene.GetComponent<SessionWrapComponent>().Session.AddComponent<HeartBeatComponent>();
                 UINetLoadingComponent.closeNetLoading();
 
                 await getAllData();
