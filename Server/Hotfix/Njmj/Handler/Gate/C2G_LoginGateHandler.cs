@@ -31,7 +31,7 @@ namespace ETHotfix
 			    await user.AddComponent<ActorComponent>().AddLocation();
 
 			    //添加心跳包
-//			    session.AddComponent<HeartBeatComponent>();
+			    session.AddComponent<HeartBeatComponent>();
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
