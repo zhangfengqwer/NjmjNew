@@ -41,8 +41,7 @@ namespace ETHotfix
                     SoundsHelp.Instance.PlayCardSound(gamer.PlayerInfo.PlayerSound, message.weight);
                 }
 
-                int number = RandomHelper.RandomNumber(1, 3);
-//                SoundsHelp.Instance.playSound_Card_Nv1(message.weight);
+                gamerComponent.LastPlayUid = message.Uid;
                 SoundsHelp.Instance.playSound_ChuPai();
             }
             catch (Exception e)

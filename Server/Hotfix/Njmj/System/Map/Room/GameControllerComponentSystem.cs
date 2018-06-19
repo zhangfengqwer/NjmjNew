@@ -35,12 +35,12 @@ namespace ETHotfix
                 //发牌前有拍了
                 if (handCardsComponent.GetAll().Count > 0)
                 {
-                    Log.Debug("发牌前有牌了：" + handCardsComponent.GetAll().Count);
+//                    Log.Debug("发牌前有牌了：" + handCardsComponent.GetAll().Count);
                     temp.Add(null);
                 }
                 else
                 {
-                    Log.Debug("发牌前没有拍");
+//                    Log.Debug("发牌前没有拍");
                     temp.Add(handCardsComponent.GetAll());
                 }
             }
@@ -98,8 +98,8 @@ namespace ETHotfix
                         gamer.EndTime = DateTime.Now;
                         TimeSpan span = gamer.EndTime - gamer.StartTime;
                         int totalSeconds = (int)span.TotalSeconds;
-                        DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
-                        DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
+                        await DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+                        await DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
                     }
                 }
 
@@ -152,20 +152,20 @@ namespace ETHotfix
            
         }
 
-        private static void UpdatePlayerInfo(Room room, int huaCount)
+        private static async void UpdatePlayerInfo(Room room, int huaCount)
         {
             foreach (var gamer in room.GetAll())
             {
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {
-                    Log.Debug("玩家:" + gamer.UserID + "胜利");
-                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount, true);
+//                    Log.Debug("玩家:" + gamer.UserID + "胜利");
+                    await DBCommonUtil.UpdatePlayerInfo(gamer.UserID, huaCount, true);
                 }
                 else
                 {
-                    Log.Debug("玩家:" + gamer.UserID + "失败");
-                    DBCommonUtil.UpdatePlayerInfo(gamer.UserID, 0);
+//                    Log.Debug("玩家:" + gamer.UserID + "失败");
+                    await DBCommonUtil.UpdatePlayerInfo(gamer.UserID, 0);
                 }
             }
         }
@@ -177,7 +177,6 @@ namespace ETHotfix
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null) continue;
-                DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
                 List<DuanwuDataBase> databases =
                     await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
                 List<string> str_list = new List<string>();
@@ -190,24 +189,24 @@ namespace ETHotfix
                     {
                         Log.Debug("新手场SHENGLI");
                         //	102	新手场	在新手场赢得10场胜利	1000	10
-                        DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
+                        await DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
                     }
                     else if (controllerComponent.RoomName == RoomName.JingYing)
                     {
                         Log.Debug("精英场SHENGLI");
                         //	103	精英场	在精英场赢得30场胜利	100000	30
-                        DBCommonUtil.UpdateTask(gamer.UserID, 103, 1);
+                        await DBCommonUtil.UpdateTask(gamer.UserID, 103, 1);
                     }
 
-                    Log.Debug("	连赢5场");
+//                    Log.Debug("	连赢5场");
                     //	104	游戏高手	连赢5场	10000	5
-                    DBCommonUtil.UpdateTask(gamer.UserID, 104, 1);
+                    await DBCommonUtil.UpdateTask(gamer.UserID, 104, 1);
 
                     //端午任务
                     for (int i = 0; i < str_list.Count; ++i)
                     {
                         int id = 100 + int.Parse(str_list[i]) + 1;
-                        Log.Debug(id + "");
+//                        Log.Debug(id + "");
                         if (id == 105 || id == 106 || id == 107 || id == 108)
                         {
                             await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, 1);
@@ -217,13 +216,13 @@ namespace ETHotfix
                 //输了
                 else
                 {
-                    Log.Debug("SHULE");
+//                    Log.Debug("SHULE");
                     //	104	游戏高手	连赢5场	10000	5
-                    DBCommonUtil.UpdateTask(gamer.UserID, 104, -1);
+                    await DBCommonUtil.UpdateTask(gamer.UserID, 104, -1);
                 }
 
                 //101  新的征程	完成一局游戏	100	1
-                DBCommonUtil.UpdateTask(gamer.UserID, 101, 1);
+                await DBCommonUtil.UpdateTask(gamer.UserID, 101, 1);
 
                 for (int i = 0; i < str_list.Count; ++i)
                 {
@@ -236,32 +235,32 @@ namespace ETHotfix
             }
         }
 
-        private static void UpdateChengjiu(Room room)
+        private static async void UpdateChengjiu(Room room)
         {
-            Log.Debug("更新成就:房间ID为:" + room.Id);
+//            Log.Debug("更新成就:房间ID为:" + room.Id);
             foreach (var gamer in room.GetAll())
             {
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {
-                    Log.Debug("成就胜利");
+//                    Log.Debug("成就胜利");
                     //赢得10局游戏
-                    DBCommonUtil.UpdateChengjiu(gamer.UserID, 104, 1);
+                    await DBCommonUtil.UpdateChengjiu(gamer.UserID, 104, 1);
                     //赢得100局游戏
-                    DBCommonUtil.UpdateChengjiu(gamer.UserID, 105, 1);
+                    await DBCommonUtil.UpdateChengjiu(gamer.UserID, 105, 1);
                     //赢得1000局游戏
-                    DBCommonUtil.UpdateChengjiu(gamer.UserID, 106, 1);
+                    await DBCommonUtil.UpdateChengjiu(gamer.UserID, 106, 1);
                 }
 
                 //新手上路 完后10局游戏
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 101, 1);
-                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 101);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 101, 1);
+//                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 101);
                 //已有小成 完成100局游戏
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 102, 1);
-                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 102);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 102, 1);
+//                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 102);
                 //完成1000局游戏
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 103, 1);
-                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 103);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 103, 1);
+//                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 103);
             }
         }
 
@@ -291,7 +290,7 @@ namespace ETHotfix
                         }
                         else
                         {
-                            Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
+//                            Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
                             await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
                         }
                     }
@@ -306,7 +305,7 @@ namespace ETHotfix
                         {
                             if (gamer.UserID == room.fangPaoUid)
                             {
-                                Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
+//                                Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
                                 await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
                             }
                         }
@@ -351,23 +350,23 @@ namespace ETHotfix
         private static async void UpdateTask(Gamer gamer, int amount)
         {
             //	105	赚钱高手	当日累计赢取10000金币	10000	10000
-            DBCommonUtil.UpdateTask(gamer.UserID, 105, amount);
+            await DBCommonUtil.UpdateTask(gamer.UserID, 105, amount);
             // 110 小试身手 单局赢取10000金币满 100局
             if (amount >= 10000)
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 110, 1);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 110, 1);
             // 111 来者不拒 单局赢取100万金币满 100局
             if (amount >= 1000000)
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 111, 1);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 111, 1);
             // 112 富豪克星 单局赢取一亿金币满 100局
             if (amount >= 100000000)
-                DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-            DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
+                await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
+            await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
 
             {
                 var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<DuanwuDataBase> databases =
                     await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
-                Log.Debug(databases.Count + "========");
+//                Log.Debug(databases.Count + "========");
                 List<string> str_list = new List<string>();
                 CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
 
@@ -375,7 +374,7 @@ namespace ETHotfix
                 for (int i = 0; i < str_list.Count; ++i)
                 {
                     int id = 100 + int.Parse(str_list[i]) + 1;
-                    Log.Debug(id + "任务ID");
+//                    Log.Debug(id + "任务ID");
                     if (id == 109 || id == 110 || id == 111 || id == 112)
                     {
                         await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, amount);

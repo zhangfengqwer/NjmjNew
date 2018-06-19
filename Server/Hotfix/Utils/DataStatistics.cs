@@ -14,7 +14,7 @@ namespace ETHotfix
             string time = CommonUtil.timeAddDays(CommonUtil.getCurDataNormalFormat(), -1);
             time = Convert.ToDateTime(time).ToString("yyyy-MM-dd");
 
-            string logData = "";
+            string logData = CommonUtil.getCurTimeNormalFormat() + ":\r\n";
             logData += await NewUser(time);
             logData += await DailyLogin(time);
             logData += await LoadOldUserCount(time);

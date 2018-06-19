@@ -96,7 +96,7 @@ namespace ETHotfix
                     }
                     else
                     {
-                        Log.Debug("已经拥有此头像");
+                        Log.Info("已经拥有此头像");
                     }
                 }
                 else

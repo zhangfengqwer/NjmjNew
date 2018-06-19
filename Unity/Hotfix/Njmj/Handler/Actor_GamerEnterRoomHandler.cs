@@ -104,6 +104,7 @@ namespace ETHotfix
                         if (gamer?.PlayerInfo != null)
                         {
                             gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
+                            gamerUiComponent?.SetFace(roomComponent.FacePanel[index]);
                             uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
                             //根据座位的indax添加玩家
                             roomComponent?.AddGamer(gamer, index);

@@ -135,6 +135,7 @@ namespace ETHotfix
 
         public static void DeleteAllItem(GameObject gameObject)
         {
+            if (gameObject == null) return;
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
                 GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);

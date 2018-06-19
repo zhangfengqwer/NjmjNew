@@ -293,6 +293,7 @@ namespace ETHotfix
                     BtnList_Down.transform.Find("Grid/Btn_Task/Tip").gameObject.SetActive(isHide);
                     break;
                 case 2:
+                    Debug.Log("关闭红点" + isHide);
                     BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip").gameObject.SetActive(isHide);
                     break;
                 case 3:

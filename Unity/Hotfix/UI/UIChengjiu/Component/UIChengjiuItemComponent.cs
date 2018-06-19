@@ -71,6 +71,7 @@ namespace ETHotfix
                 ToastScript.createToast($"领取成功，金币x{info.Reward}");
                 string icon = new StringBuilder().Append("chengjiu_")
                                                  .Append(info.Id).ToString();
+                Debug.Log("已经领取成就奖励");
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIChengjiu).GetComponent<UIChengjiuComponent>().DeCount();
                 Complete.SetActive(false);
                 ChengjiuItemBtn.GetComponent<Image>().sprite =

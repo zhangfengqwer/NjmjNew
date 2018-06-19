@@ -36,7 +36,12 @@ namespace ETHotfix
             // 每日零点
             if ((hour == 0) && (min == 0) && (sec == 0))
             {
-                Log.Info("刷新数据库");
+                Log.Info("刷新数据库");  
+                NetOuterComponent netOuterComponent = Game.Scene.GetComponent<NetOuterComponent>();
+
+                Log.Warning("当前服务器session数量：" + netOuterComponent.sessions.Count);
+
+
                 // 刷新任务
                 // 刷新签到
             }
