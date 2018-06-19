@@ -425,7 +425,9 @@ namespace ETHotfix
                 UINetLoadingComponent.showNetLoading();
 
                // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
-                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+//                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                string[] temp = r2CLogin.Address.Split(':');
+                connetEndPoint = this.ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
