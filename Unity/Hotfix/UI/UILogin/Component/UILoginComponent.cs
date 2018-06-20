@@ -412,6 +412,7 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
+                Log.Info("connetEndPoint:" + connetEndPoint.ToString());
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 
@@ -434,6 +435,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
 
+                Log.Info("gateSession:"+ connetEndPoint.ToString());
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");

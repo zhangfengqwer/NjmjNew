@@ -123,7 +123,7 @@ namespace ETHotfix
                 uiRoomComponent.ISGaming = true;
 
                 uiRoomComponent.tip.SetActive(true);
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                 uiRoomComponent.tip.SetActive(false);
             }
             catch (Exception e)
