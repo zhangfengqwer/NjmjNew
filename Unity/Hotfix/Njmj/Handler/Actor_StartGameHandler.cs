@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ETModel;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ETHotfix
 {
@@ -13,10 +14,10 @@ namespace ETHotfix
     {
         protected override async void Run(Session session, Actor_StartGame message)
         {
-            StartGame(message);
+            StartGame(message,false);
         }
 
-        public static void StartGame(Actor_StartGame message)
+        public static async void StartGame(Actor_StartGame message, bool isReconnect)
         {
             Log.Debug($"收到开始");
 
@@ -30,6 +31,27 @@ namespace ETHotfix
 
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+
+                //先掷骰子
+                if (!isReconnect)
+                {
+                    GameObject DiceAnim = uiRoomComponent.dice.Get<GameObject>("DiceAnim");
+                    GameObject DiceBottom = uiRoomComponent.dice.Get<GameObject>("DiceBottom");
+                    Image Dice1 = DiceBottom.transform.Find("Dice1").GetComponent<Image>();
+                    Image Dice2 = DiceBottom.transform.Find("Dice2").GetComponent<Image>();
+                    DiceAnim.SetActive(true);
+                    SoundsHelp.Instance.playSound_ShaiZi();
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+                    DiceAnim.SetActive(false);
+                    DiceBottom.SetActive(true);
+                    int number1 = RandomHelper.RandomNumber(1, 7);
+                    Dice1.sprite = CommonUtil.getSpriteByBundle("Image_Dice", "num_" + number1);
+                    int number2 = RandomHelper.RandomNumber(1, 7);
+                    Dice2.sprite = CommonUtil.getSpriteByBundle("Image_Dice", "num_" + number2);
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+                    DiceBottom.SetActive(false);
+                }
+
                 uiRoomComponent.StartGame(message.restCount);
                 uiRoomComponent.SetRoomType(message.RoomType);
                 foreach (var gameData in message.GamerDatas)
@@ -81,6 +103,10 @@ namespace ETHotfix
                         gamerUi.SetZhuang();
 
                         handCards.SetFaceCards(gameData.faceCards);
+                        foreach (var card in gameData.faceCards)
+                        {
+                            gamerUi.SetBuHua(card.weight);
+                        }
                     }
                 }
 
@@ -95,6 +121,10 @@ namespace ETHotfix
 
                 uiRoom.GameObject.SetActive(true);
                 uiRoomComponent.ISGaming = true;
+
+                uiRoomComponent.tip.SetActive(true);
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+                uiRoomComponent.tip.SetActive(false);
             }
             catch (Exception e)
             {

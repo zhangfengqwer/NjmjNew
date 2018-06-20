@@ -15,6 +15,11 @@ namespace ETHotfix
 			{
 			    User user = session.GetComponent<SessionUserComponent>().User;
 
+			    if (user == null)
+			    {
+			        return;
+			    }
+
 			    //向map服务器发送请求
 			    StartConfigComponent config = Game.Scene.GetComponent<StartConfigComponent>();
 			    IPEndPoint mapIPEndPoint = config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;

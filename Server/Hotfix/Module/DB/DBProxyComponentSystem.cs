@@ -95,15 +95,28 @@ namespace ETHotfix
 	        return list;
 	    }
 
-	    /// <summary>
-	    /// 根据UId查询指定的日期的数据,查询数据库的字段是:UId,CreateTime
-	    /// </summary>
-	    /// <typeparam name="T"></typeparam>
-	    /// <param name="self"></param>
-	    /// <param name="userId"></param>
-	    /// <param name="dateTime"></param>
-	    /// <returns></returns>
-	    public static async Task<List<T>> QueryJsonCurrentDayByUid<T>(this DBProxyComponent self,long userId,DateTime dateTime) where T : ComponentWithId
+        public static async Task<List<T>> QueryJsonByDay<T>(this DBProxyComponent self , string day) where T : ComponentWithId
+        {
+            List<T> list = new List<T>();
+            string json = $"{{CreateTime:/^{day}/}}";
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
+            foreach (ComponentWithId disposer in dbQueryJsonResponse.Components)
+            {
+                list.Add((T)disposer);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 根据UId查询指定的日期的数据,查询数据库的字段是:UId,CreateTime
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="userId"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static async Task<List<T>> QueryJsonCurrentDayByUid<T>(this DBProxyComponent self,long userId,DateTime dateTime) where T : ComponentWithId
 	    {
 	        List<T> list = new List<T>();
 	        string json = $"{{UId:{userId}, CreateTime:/^{dateTime.GetCurrentDay()}/}}";
@@ -131,6 +144,22 @@ namespace ETHotfix
 	        List<PlayerBaseInfo> components = await dbComponent.GetPlayerBaseInfoCollection(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(30).ToListAsync();
 	        return components;
 	    }
+
+        //public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
+        //{
+        //    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+        //    FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
+        //    List<AccountInfo> components = await dbComponent.GetAccountInfoCollection(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
+        //    return components;
+        //}
+
+        public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self, string time)
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{CreateTime:/^{time}/}}");
+            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            return components;
+        }
 
         public static async Task Delete<T>(this DBProxyComponent self, long id)
 	    {

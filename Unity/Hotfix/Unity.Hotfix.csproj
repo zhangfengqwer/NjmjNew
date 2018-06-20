@@ -111,6 +111,7 @@
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
+    <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />

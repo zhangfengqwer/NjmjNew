@@ -165,12 +165,12 @@ namespace ETHotfix
                 }
 
                 self.GamerGrabCard();
-                Log.Debug("OperateTime超时");
+//                Log.Debug("OperateTime超时");
             }
             else
             {
                 self.IsTimeOut = false;
-                Log.Debug("OperateTime没有超时");
+//                Log.Debug("OperateTime没有超时");
             }
         }
 
@@ -220,7 +220,7 @@ namespace ETHotfix
             var currentGamer = room.Get(orderController.CurrentAuthority);
             HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
 
-            Log.Debug("当前:"+ orderController.CurrentAuthority);
+//            Log.Debug("当前:"+ orderController.CurrentAuthority);
             currentGamer.isGangEndBuPai = false;
             currentGamer.isGetYingHuaBuPai = false;
             var grabMahjong = GrabMahjong(room);
@@ -298,7 +298,7 @@ namespace ETHotfix
                     grabMahjong = deskComponent.RestLibrary[number];
                     deskComponent.RestLibrary.RemoveAt(number);
 
-                    Log.Info("发牌："+ grabMahjong.m_weight);
+//                    Log.Info("发牌："+ grabMahjong.m_weight);
                 }
 
                 //花牌返回

@@ -12,6 +12,8 @@ namespace ETHotfix
 	{
 	    protected override async void Run(Session session, C2R_ThirdLogin message, Action<R2C_ThirdLogin> reply)
 	    {
+	        Log.Debug("收到第三方登录");
+
             R2C_ThirdLogin response = new R2C_ThirdLogin();
 	        try
 	        {
@@ -43,6 +45,8 @@ namespace ETHotfix
                     G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await gateSession.Call(new R2G_GetLoginKey() { UserId = accountInfo.Id });
 
                     string outerAddress = config.GetComponent<OuterConfig>().IPEndPoint2.ToString();
+
+//                    Log.Warning("Gate的ip:" + outerAddress);
 
                     response.Address = outerAddress;
                     response.Key = g2RGetLoginKey.Key;

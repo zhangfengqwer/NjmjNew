@@ -23,8 +23,6 @@ namespace ETHotfix
 			        return;
 			    }
 
-			    await Game.Scene.GetComponent<DBProxyComponent>().Delete<Log_Login>(381665361202912);
-
                 // 检测是否已存在
                 UserComponentSystem.CheckIsExistTheUser(userId);
 
@@ -32,6 +30,8 @@ namespace ETHotfix
                 User user = UserFactory.Create(userId, session);
 			    await user.AddComponent<ActorComponent>().AddLocation();
 
+                //添加心跳包
+			    session.AddComponent<HeartBeatComponent>().CurrentTime = TimeHelper.ClientNowSeconds();
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();

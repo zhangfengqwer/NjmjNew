@@ -12,7 +12,7 @@ namespace ETModel
 
 		public AppType AppType;
 
-		private readonly Dictionary<long, Session> sessions = new Dictionary<long, Session>();
+		public readonly Dictionary<long, Session> sessions = new Dictionary<long, Session>();
 
 		public IMessagePacker MessagePacker { get; set; }
 

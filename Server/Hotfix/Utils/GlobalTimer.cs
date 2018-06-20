@@ -24,7 +24,7 @@ namespace ETHotfix
             m_timer = new System.Threading.Timer(onTimer, "", 1000, 1000);
         }
 
-        static void onTimer(object data)
+        static async void onTimer(object data)
         {
             int year = CommonUtil.getCurYear();
             int month = CommonUtil.getCurMonth();
@@ -36,7 +36,12 @@ namespace ETHotfix
             // 每日零点
             if ((hour == 0) && (min == 0) && (sec == 0))
             {
-                Log.Info("刷新数据库");
+                Log.Info("刷新数据库");  
+                NetOuterComponent netOuterComponent = Game.Scene.GetComponent<NetOuterComponent>();
+
+                Log.Warning("当前服务器session数量：" + netOuterComponent.sessions.Count);
+
+
                 // 刷新任务
                 // 刷新签到
             }
@@ -52,6 +57,12 @@ namespace ETHotfix
                 DBHelper.RefreshWealthRank();
             }
             #endregion
+
+            // 每日报表
+            if ((min == 10) && (sec == 0))
+            {
+                await DataStatistics.Start();
+            }
         }
     }
 }

@@ -294,6 +294,7 @@ namespace ETHotfix
                     BtnList_Down.transform.Find("Grid/Btn_Task/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
                 case 2:
+                    Debug.Log("关闭红点" + isHide);
                     BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip").gameObject.SetActive(isHide);
                     BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;

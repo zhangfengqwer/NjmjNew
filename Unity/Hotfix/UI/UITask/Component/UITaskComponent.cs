@@ -117,6 +117,7 @@ namespace ETHotfix
             //taskInfoList.Clear();
             taskItemList.Clear();
             uiList.Clear();
+            notGetcount = 0;
         }
     }
 }
