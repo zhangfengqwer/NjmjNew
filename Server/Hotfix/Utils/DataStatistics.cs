@@ -27,6 +27,21 @@ namespace ETHotfix
             writeLogToLocalNow(logData);
         }
 
+        // time : yyyy-MM-dd
+        public static async Task Start(string time)
+        {
+            string logData = CommonUtil.getCurTimeNormalFormat() + ":\r\n";
+            logData += await NewUser(time);
+            logData += await DailyLogin(time);
+            logData += await LoadOldUserCount(time);
+            logData += await RechargeNum(time);
+            logData += await RechargeUserNum(time);
+            logData += await GameCount(time);
+            logData += await GameUserCount(time);
+
+            writeLogToLocalNow(logData);
+        }
+
         // 新增用户
         static async Task<string> NewUser(string time)
         {
