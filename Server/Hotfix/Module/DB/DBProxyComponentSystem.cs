@@ -145,6 +145,22 @@ namespace ETHotfix
 	        return components;
 	    }
 
+        //public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
+        //{
+        //    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+        //    FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
+        //    List<AccountInfo> components = await dbComponent.GetAccountInfoCollection(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
+        //    return components;
+        //}
+
+        public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self, string time)
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{CreateTime:/^{time}/}}");
+            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            return components;
+        }
+
         public static async Task Delete<T>(this DBProxyComponent self, long id)
 	    {
 	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
