@@ -18,48 +18,55 @@ namespace ETHotfix
                     //任务
                     List<TaskProgressInfo> taskProgressInfos = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.UId}}}");
                     response.IsTaskComplete = false;
+                    int count = 0;
                     if (taskProgressInfos.Count > 0)
                     {
                         for (int i = 0; i < taskProgressInfos.Count; ++i)
                         {
                             if (taskProgressInfos[i].IsComplete && (!taskProgressInfos[i].IsGet))
                             {
+                                count++;
                                 response.IsTaskComplete = true;
                             }
                         }
                     }
+                    response.TaskCompleteCount = count;
                 }
                 {
                     //成就
                     List<ChengjiuInfo> chengjius = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.UId}}}");
                     response.IsChengjiuComplete = false;
+                    int count = 0;
                     if (chengjius.Count > 0)
                     {
                         for (int i = 0; i < chengjius.Count; ++i)
                         {
                             if (chengjius[i].IsComplete && (!chengjius[i].IsGet))
                             {
+                                count++;
                                 response.IsChengjiuComplete = true;
                             }
                         }
                     }
+                    response.ChengjiuCompleteCount = count;
                 }
                 {
                     //活动
-                    List<DuanwuDataBase> activitys = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.UId}}}");
-                   if(activitys.Count > 0)
+                    List<DuanwuActivityInfo> activitys = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{message.UId}}}");
+                    response.IsInActivity = false;
+                    int count = 0;
+                    if (activitys.Count > 0)
                     {
-                        string curTime = CommonUtil.getCurTimeNormalFormat();
-                        if (string.CompareOrdinal(curTime, activitys[0].StartTime) >= 0
-                    && string.CompareOrdinal(curTime, activitys[0].EndTime) < 0)
+                        for(int i = 0;i< activitys.Count; ++i)
                         {
-                            response.IsInActivity = true;
-                        }
-                        else
-                        {
-                            response.IsInActivity = false;
+                            if(activitys[i].IsComplete && !activitys[i].IsGet)
+                            {
+                                count++;
+                                response.IsInActivity = true;
+                            }
                         }
                     }
+                    response.ActivityCompleteCount = count;
                 }
                 {
                     //转盘
@@ -75,21 +82,25 @@ namespace ETHotfix
                             response.IsZhuanpan = false;
                         }
                     }
+                    response.ZhuanpanCount = playerInfos[0].ZhuanPanCount;
                 }
                 {
                     //邮件
                     List<EmailInfo> emails = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.UId}}}");
                     response.IsEmail = false;
+                    int count = 0;
                     if (emails.Count > 0)
                     {
                         for(int i = 0;i< emails.Count;++i)
                         {
                             if (emails[i].State == 0)
                             {
+                                count++;
                                 response.IsEmail = true;
                             }
                         }
                     }
+                    response.EmailCount = count;
                 }
                 reply(response);
             }

@@ -131,12 +131,33 @@ namespace ETHotfix
             {
                 duanwuData = g2cDuanwu.DuanwuData;
                 activityType = g2cDuanwu.DuanwuData.ActivityType;
-                Log.Info(activityType+ "==ddddddd");
                 GetDuanwuTaskInfoList();
             }
             catch(Exception e)
             {
                 Log.Error(e);
+            }
+        }
+
+        int notGetcount = 0;
+        private int GetNoGetCount()
+        {
+            for (int i = 0; i < duanwuActInfoList.Count; ++i)
+            {
+                if (duanwuActInfoList[i].IsComplete && !duanwuActInfoList[i].IsGet)
+                {
+                    notGetcount++;
+                }
+            }
+            return notGetcount;
+        }
+
+        public void DeCount()
+        {
+            --notGetcount;
+            if (notGetcount <= 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, false, notGetcount);
             }
         }
 
@@ -230,6 +251,8 @@ namespace ETHotfix
             }
 
             duanwuActInfoList = g2cduanwu.DuanwuActivityList;
+
+            GetNoGetCount();
             Init();
             CreateDuanwuList();
         }
@@ -413,6 +436,7 @@ namespace ETHotfix
             uilist.Clear();
             duanwuActInfoList.Clear();
             tokenSource.Cancel();
+            notGetcount = 0;
         }
     }
 }
