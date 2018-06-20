@@ -923,7 +923,7 @@ message G2C_Tip //IResponse
 message C2G_GM // IRequest
 {
 	required long UId = 1;
-	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表
+	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息
 	required string Title = 3;
 	required string Content = 4;
 	required string Reward = 5;
@@ -931,10 +931,14 @@ message C2G_GM // IRequest
     required string Date = 7;
     required string AdAddress = 8;
     required string EndTime = 9;
+    required string Reason = 10;
 }
 
 message G2C_GM // IResponse
 {
-
+	required PlayerInfo Info = 1;
+	required string RegisterTime = 2;
+	required string LastOnlineTime = 3;
+	required string Ip = 4;
 }
 #endregion

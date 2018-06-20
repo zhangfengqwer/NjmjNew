@@ -2673,6 +2673,9 @@ namespace ETHotfix
 		[ProtoMember(9, IsRequired = true)]
 		public string EndTime;
 
+		[ProtoMember(10, IsRequired = true)]
+		public string Reason;
+
 	}
 
 	[Message(HotfixOpcode.G2C_GM)]
@@ -2687,6 +2690,18 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public PlayerInfo Info;
+
+		[ProtoMember(2, IsRequired = true)]
+		public string RegisterTime;
+
+		[ProtoMember(3, IsRequired = true)]
+		public string LastOnlineTime;
+
+		[ProtoMember(4, IsRequired = true)]
+		public string Ip;
 
 	}
 
