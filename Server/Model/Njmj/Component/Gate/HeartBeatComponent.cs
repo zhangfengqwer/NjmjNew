@@ -23,7 +23,7 @@ namespace ETModel
         /// 超出时间
         /// </summary>
         /// <remarks>如果跟客户端连接时间间隔大于在服务器上删除该Session</remarks>
-        public long OutInterval = 15;
+        public long OutInterval = 30;
 
         /// <summary>
         /// 记录时间

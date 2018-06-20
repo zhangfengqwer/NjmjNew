@@ -1478,10 +1478,7 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int EmailId;
 
-		[ProtoMember(3, TypeName = "ETHotfix.GetItemInfo")]
-		public List<GetItemInfo> InfoList = new List<GetItemInfo>();
-
-		[ProtoMember(4, IsRequired = true)]
+		[ProtoMember(3, IsRequired = true)]
 		public int state;
 
 	}

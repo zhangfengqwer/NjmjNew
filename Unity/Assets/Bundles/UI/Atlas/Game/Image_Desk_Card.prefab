@@ -89,3 +89,5 @@ MonoBehaviour:
   - key: RoomMask
     gameObject: {fileID: 1374606894052620, guid: 414f94d57ec8cbf43ad7f4d5f595fa9c,
       type: 2}
+  - key: btn_tuoguan
+    gameObject: {fileID: 21300000, guid: 416ab1a38d6641144bb908d3ea50fe8a, type: 3}

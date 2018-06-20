@@ -514,8 +514,7 @@ message C2G_EmailOperate //IRequest
 {
 	required long Uid = 1;
 	required int EmailId = 2;
-	repeated GetItemInfo InfoList = 3;
-	required int state = 4;
+	required int state = 3;
 }
 
 message G2C_EmailOperate //IResponse

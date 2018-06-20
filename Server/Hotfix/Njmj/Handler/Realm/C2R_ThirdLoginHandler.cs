@@ -18,7 +18,6 @@ namespace ETHotfix
 	        try
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-	            Log.Debug("proxyComponent:" + proxyComponent.dbAddress);
 
 	            List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
                 

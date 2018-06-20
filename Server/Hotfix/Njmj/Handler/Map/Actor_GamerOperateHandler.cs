@@ -123,11 +123,7 @@ namespace ETHotfix
                             }
 
                             handCards.PengCards.Add(deskComponent.CurrentCard);
-
-                            Log.Info(currentGamer.UserID + "的牌被碰:" + deskComponent.CurrentCard);
-                            Log.Info(currentGamer.UserID + "之前打的牌：" + currentGamer.GetComponent<HandCardsComponent>().PlayCards.Count);
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
-                            Log.Info(currentGamer.UserID + "之后打的牌：" + currentGamer.GetComponent<HandCardsComponent>().PlayCards.Count);
                         }
                     }
                     // 杠
@@ -151,10 +147,7 @@ namespace ETHotfix
 
                             handCards.GangCards.Add(deskComponent.CurrentCard);
 
-                            Log.Info(currentGamer.UserID + "的牌被杠:" + deskComponent.CurrentCard.m_weight);
-                            Log.Info(currentGamer.UserID + "之前打的牌：" + currentGamer.GetComponent<HandCardsComponent>().PlayCards.Count);
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
-                            Log.Info(currentGamer.UserID + "之后打的牌：" + currentGamer.GetComponent<HandCardsComponent>().PlayCards.Count);
 
                             //杠扣钱
                             GameHelp.ChangeGamerGold(room, gamer, 20 * gameController.RoomConfig.Multiples);

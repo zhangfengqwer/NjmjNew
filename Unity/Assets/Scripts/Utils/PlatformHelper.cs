@@ -297,7 +297,7 @@ public class PlatformHelper
 
     public static string GetMacId()
     {
-        return "2";
+        return "1";
     }
 
     public static void SetIsFormal(string isFormal)

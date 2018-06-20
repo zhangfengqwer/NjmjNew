@@ -31,9 +31,10 @@ namespace ETHotfix
         /// <param name="room"></param>
         /// <param name="gamer"></param>
         /// <param name="amount"></param>
-        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount)
+        /// <param name="msg"></param>
+        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount,string msg = "游戏内改变金币")
         {
-            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, "游戏内改变金币");
+            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg);
 
             room.Broadcast(new Actor_GamerChangeGold()
             {

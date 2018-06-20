@@ -62,7 +62,7 @@ namespace ETHotfix
 	            if (index >= 0)
 	            {
 	                //停止倒计时
-                    room.tokenSource.Cancel();
+                    room?.tokenSource?.Cancel();
 	                gamer.IsTrusteeship = false;
 //                    Log.Info($"玩家自己{gamer.UserID}出牌:" + message.weight);
                     //当前出的牌
