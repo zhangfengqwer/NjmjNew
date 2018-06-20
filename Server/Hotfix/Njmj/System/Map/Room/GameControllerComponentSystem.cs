@@ -285,64 +285,35 @@ namespace ETHotfix
                     {
                         if (gamer.UserID == room.huPaiUid)
                         {
-                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount * 3,self.RoomConfig.Name + "结算");
+                            GameHelp.ChangeGamerGold(room, gamer, amount * 3, self.RoomConfig.Name + "结算");
+//                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount * 3,self.RoomConfig.Name + "结算");
                             UpdateTask(gamer, amount * 3);
                         }
                         else
                         {
 //                            Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
-                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
+//                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
+                            GameHelp.ChangeGamerGold(room, gamer, -amount, self.RoomConfig.Name + "结算");
                         }
                     }
                     else
                     {
                         if (gamer.UserID == room.huPaiUid)
                         {
-                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, self.RoomConfig.Name + "结算");
+//                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, self.RoomConfig.Name + "结算");
+                            GameHelp.ChangeGamerGold(room, gamer, amount, self.RoomConfig.Name + "结算");
                             UpdateTask(gamer, amount);
                         }
                         else
                         {
                             if (gamer.UserID == room.fangPaoUid)
-                            {
+                            { 
 //                                Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
-                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
+//                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
+                                GameHelp.ChangeGamerGold(room, gamer, -amount, self.RoomConfig.Name + "结算");
                             }
                         }
                     }
-
-//                    if (gamer.UserID == room.huPaiUid)
-//                    {
-//                        await DBCommonUtil.ChangeWealth(gamer.UserID, 1, huaCount * self.RoomConfig.Multiples * 3, self.RoomConfig.Name + "结算");
-//                        //	105	赚钱高手	当日累计赢取10000金币	10000	10000
-//                        DBCommonUtil.UpdateTask(gamer.UserID, 105, huaCount * self.RoomConfig.Multiples);
-//                        // 110 小试身手 单局赢取10000金币满 100局
-//                        if (huaCount * self.RoomConfig.Multiples >= 10000)
-//                            DBCommonUtil.UpdateChengjiu(gamer.UserID, 110, 1);
-//                        // 111 来者不拒 单局赢取100万金币满 100局
-//                        if (huaCount * self.RoomConfig.Multiples >= 1000000)
-//                            DBCommonUtil.UpdateChengjiu(gamer.UserID, 111, 1);
-//                        // 112 富豪克星 单局赢取一亿金币满 100局
-//                        if (huaCount * self.RoomConfig.Multiples >= 100000000)
-//                            DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-//                            DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-//                    }
-//                    else
-//                    {
-//                        if (room.fangPaoUid != 0)
-//                        {
-//                            if (gamer.UserID == room.fangPaoUid)
-//                            {
-//                                Log.Debug($"玩家：{gamer.UserID} 输了{huaCount * self.RoomConfig.Multiples}");
-//                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.RoomConfig.Multiples, self.RoomConfig.Name + "结算");
-//                            }
-//                        }
-//                        else
-//                        {
-//                            Log.Debug($"玩家：{gamer.UserID} 输了{huaCount * self.RoomConfig.Multiples}");
-//                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -huaCount * self.RoomConfig.Multiples, self.RoomConfig.Name + "结算");
-//                        }
-//                    }
                 }
             }
         }
@@ -360,7 +331,6 @@ namespace ETHotfix
             // 112 富豪克星 单局赢取一亿金币满 100局
             if (amount >= 100000000)
                 await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-            await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
 
             {
                 var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();

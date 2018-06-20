@@ -18,6 +18,8 @@ namespace ETHotfix
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UIReadyComponent uiReadyComponent = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady)?.GetComponent<UIReadyComponent>();
 
+                if (uiRoom == null) return;
+
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
 
                 Gamer gamer = gamerComponent.Get(message.Uid);
