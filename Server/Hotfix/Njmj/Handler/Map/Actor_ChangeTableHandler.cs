@@ -19,7 +19,7 @@ namespace ETHotfix
 
         private static async Task ChangeTable(Gamer gamer, Actor_ChangeTable message)
         {
-            await Task.CompletedTask;
+           
 
             try
             {
@@ -83,6 +83,7 @@ namespace ETHotfix
             {
                 Log.Error(e);
             }
+            await Task.CompletedTask;
         }
     }
 }

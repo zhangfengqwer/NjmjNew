@@ -28,6 +28,7 @@ namespace ETHotfix
 	        {
 	            Log.Error(e);
 	        }
-	    }
+	        await Task.CompletedTask;
+        }
 	}
 }

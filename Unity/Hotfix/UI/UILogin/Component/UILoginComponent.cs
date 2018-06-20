@@ -263,7 +263,7 @@ namespace ETHotfix
             {
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
@@ -319,7 +319,7 @@ namespace ETHotfix
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
@@ -412,7 +412,6 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                Log.Info("connetEndPoint:" + connetEndPoint.ToString());
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 

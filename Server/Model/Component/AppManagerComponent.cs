@@ -77,13 +77,14 @@ namespace ETModel
 			while (true)
 			{
 				await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+//			    Log.Info("1111");
 
 				if (this.IsDisposed)
 				{
 					return;
 				}
-
-				foreach (int appId in this.processes.Keys.ToArray())
+//			    Log.Info("2222");
+                foreach (int appId in this.processes.Keys.ToArray())
 				{
 					Process process = this.processes[appId];
 					if (!process.HasExited)

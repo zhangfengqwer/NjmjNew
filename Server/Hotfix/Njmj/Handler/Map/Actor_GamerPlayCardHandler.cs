@@ -11,10 +11,10 @@ namespace ETHotfix
 	{
 	    protected override async Task Run(Gamer gamer, Actor_GamerPlayCard message)
 	    {
-	        PlayCard(gamer, message);
+	        await PlayCard(gamer, message);
 	    }
 
-	    public static async void PlayCard(Gamer gamer, Actor_GamerPlayCard message)
+	    public static async Task PlayCard(Gamer gamer, Actor_GamerPlayCard message)
 	    {
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
@@ -179,6 +179,8 @@ namespace ETHotfix
 	            Log.Error(e);
 	            room.IsPlayingCard = false;
             }
-	    }
+
+	        await Task.CompletedTask;
+        }
 	}
 }
