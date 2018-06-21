@@ -20,23 +20,42 @@ namespace ETHotfix
 
                 if (taskProgressInfoList.Count <= 0)
                 {
-                    for (int j = 0; j < configCom.GetAll(typeof(TaskConfig)).Length; ++j)
+                    for (int j = 0; j < TaskData.getInstance().getDataList().Count; ++j)
                     {
-                        int id = 100 + j + 1;
-                        TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
                         TaskProgressInfo info = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
                         info.UId = message.uid;
-                        info.Name = config.Name;
-                        info.TaskId = (int)config.Id;
-                        info.Target = config.Target;
-                        info.Reward = config.Reward;
-                        info.Desc = config.Desc;
+                        info.Name = TaskData.getInstance().getDataList()[j].Name;
+                        info.TaskId = (int)TaskData.getInstance().getDataList()[j].Id;
+                        info.Target = TaskData.getInstance().getDataList()[j].Target;
+                        info.Reward = TaskData.getInstance().getDataList()[j].Reward;
+                        info.Desc = TaskData.getInstance().getDataList()[j].Desc;
                         info.CurProgress = 0;
                         await proxyComponent.Save(info);
                     }
+                    taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
+                }
+                else if (taskProgressInfoList.Count < TaskData.getInstance().getDataList().Count)
+                {
+                    for(int i = 0;i< TaskData.getInstance().getDataList().Count; ++i)
+                    {
+                        List<TaskProgressInfo> infos = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid},TaskId:{ TaskData.getInstance().getDataList()[i].Id}}}");
+                        if(infos.Count <= 0)
+                        {
+                            TaskConfig config = TaskData.getInstance().GetDataByTaskId(TaskData.getInstance().getDataList()[i].Id);
+                            TaskProgressInfo info = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
+                            info.UId = message.uid;
+                            info.Name = config.Name;
+                            info.TaskId = (int)config.Id;
+                            info.Target = config.Target;
+                            info.Reward = config.Reward;
+                            info.Desc = config.Desc;
+                            info.CurProgress = 0;
+                            await proxyComponent.Save(info);
+                        }
+                    }
+                    taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
                 }
 
-                taskProgressInfoList = await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{message.uid}}}");
                 for (int i = 0; i < taskProgressInfoList.Count; ++i)
                 {
                     TaskInfo taskInfo = new TaskInfo();

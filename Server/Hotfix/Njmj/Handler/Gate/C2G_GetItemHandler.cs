@@ -13,9 +13,10 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.UId);
+                List<PlayerBaseInfo> baseInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
                 PlayerInfo playerInfo = new PlayerInfo();
-
+                Log.Info("领取邮件");
+                Log.Info(JsonHelper.ToJson(message.InfoList));
                 for (int i = 0;i< message.InfoList.Count; ++i)
                 {
                     GetItemInfo getItem = message.InfoList[i];
