@@ -350,6 +350,17 @@ namespace Unity_Utils
             return go;
         }
 
+        static public string getTextFileByBundle(string bundleName, string fileName)
+        {
+            ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            //resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
+
+            TextAsset go = bundleGameObject.Get<TextAsset>($"{fileName}");
+
+            return go.text;
+        }
+
         static public GameObject getGameObjByBundle(string bundleName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
