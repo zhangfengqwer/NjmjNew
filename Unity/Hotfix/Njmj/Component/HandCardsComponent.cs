@@ -978,7 +978,7 @@ namespace ETHotfix
             dealNum = 0;
             dealObjs.Clear();
             myCard.Clear();
-       
+            faceCard.SetActive(false);
     }
 
         public void ChangeGold(int amount)
@@ -995,7 +995,7 @@ namespace ETHotfix
         public int dealNum = 0;
 
         public List<GameObject> dealObjs = new List<GameObject>();
-        public List<MahjongInfo> myCard;
+        public List<MahjongInfo> myCard = new List<MahjongInfo>();
 
         public void StartDealCardAnim(bool isSelf)
         {
