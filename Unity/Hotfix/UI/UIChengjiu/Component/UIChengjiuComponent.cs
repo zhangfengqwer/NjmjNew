@@ -91,7 +91,11 @@ namespace ETHotfix
             --notGetcount;
             if (notGetcount <= 0)
             {
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, false, notGetcount);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, false);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, true, notGetcount);
             }
         }
 
