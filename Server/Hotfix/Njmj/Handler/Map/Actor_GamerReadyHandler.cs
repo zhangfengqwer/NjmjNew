@@ -226,7 +226,7 @@ namespace ETHotfix
                     }
 
                     //等客户端掷骰子
-	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
 	                //是否超时
                     room.StartTime();
                     //扣服务费

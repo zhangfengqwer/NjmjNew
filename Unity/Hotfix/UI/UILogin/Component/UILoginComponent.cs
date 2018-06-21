@@ -472,8 +472,8 @@ namespace ETHotfix
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
-                //await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
-                SensitiveWordUtil.Init();
+                await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+                //SensitiveWordUtil.Init();
             }
             catch (Exception ex)
             {

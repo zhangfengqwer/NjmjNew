@@ -975,7 +975,11 @@ namespace ETHotfix
         {
             Log.Debug("重设bottom");
             CardBottom.transform.localPosition = cardBottonPosition;
-        }
+            dealNum = 0;
+            dealObjs.Clear();
+            myCard.Clear();
+       
+    }
 
         public void ChangeGold(int amount)
         {
@@ -988,9 +992,9 @@ namespace ETHotfix
         /// </summary>
         /// <param name="myCard"></param>
 
-        private int dealNum = 0;
+        public int dealNum = 0;
 
-        private List<GameObject> dealObjs = new List<GameObject>();
+        public List<GameObject> dealObjs = new List<GameObject>();
         public List<MahjongInfo> myCard;
 
         public void StartDealCardAnim(bool isSelf)
