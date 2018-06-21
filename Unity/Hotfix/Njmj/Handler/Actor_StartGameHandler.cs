@@ -35,6 +35,7 @@ namespace ETHotfix
                 //先掷骰子
                 if (!isReconnect)
                 {
+                    uiRoomComponent.players.SetActive(true);
                     GameObject DiceAnim = uiRoomComponent.dice.Get<GameObject>("DiceAnim");
                     GameObject DiceBottom = uiRoomComponent.dice.Get<GameObject>("DiceBottom");
                     Image Dice1 = DiceBottom.transform.Find("Dice1").GetComponent<Image>();
