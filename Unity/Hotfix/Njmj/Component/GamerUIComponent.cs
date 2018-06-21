@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
@@ -341,5 +342,7 @@ namespace ETHotfix
 
             HeadManager.setHeadSprite(head, playerInfo.Icon);
         }
+
+      
     }
 }

@@ -592,12 +592,5 @@ namespace ETHotfix
             trustship.SetActive(true);
         }
 
-        /// <summary>
-        /// 发牌动画
-        /// </summary>
-        public void StartDealCardAnim()
-        {
-
-        }
     }
 }

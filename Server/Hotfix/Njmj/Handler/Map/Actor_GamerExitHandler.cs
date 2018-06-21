@@ -28,7 +28,7 @@ namespace ETHotfix
 	                gamer.EndTime = DateTime.Now;
 	                TimeSpan span = gamer.EndTime - gamer.StartTime;
 	                int totalSeconds = (int) span.TotalSeconds;
-	                await DBCommonUtil.RecordGamerTime(gamer.EndTime, false,gamer.UserID);
+	                //await DBCommonUtil.RecordGamerTime(gamer.EndTime, false,gamer.UserID);
 	                await DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
 
                     Log.Info($"玩家{gamer.UserID}断开，切换为自动模式");

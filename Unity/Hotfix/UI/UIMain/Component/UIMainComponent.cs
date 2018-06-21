@@ -353,10 +353,10 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     obj.transform.localScale = Vector3.one;
                     rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
                 }
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                uiList.Add(ui);
 
                 if (i >= ownRank)
                 {   
@@ -389,11 +389,10 @@ namespace ETHotfix
                     obj.transform.localScale = Vector3.one;
                     obj.transform.localPosition = Vector3.zero;
                     rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    gameUiList.Add(ui);
                 }
-
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                gameUiList.Add(ui);
 
                 if (i >= ownGame)
                 {

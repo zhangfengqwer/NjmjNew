@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using DG.Tweening;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -405,6 +407,7 @@ namespace ETHotfix
             Logic_NJMJ.getInstance().SortMahjong(mahjongs);
             handCards.Clear();
             ItemCards.Clear();
+            GameHelp.DeleteAllItem(CardBottom);
 
             for (int i = 0; i < mahjongs.Count; i++)
             {
@@ -468,6 +471,7 @@ namespace ETHotfix
         /// <param name="messageMahjongs"></param>
         public void AddOtherCards(bool isBanker)
         {
+            GameHelp.DeleteAllItem(CardBottom);
             this.grabObj = this.CreateCardSprite($"{this.Direction}_back1", this.grabPostionX, this.grabPostionY);
 
             if (!isBanker)
@@ -977,6 +981,99 @@ namespace ETHotfix
         {
             Log.Debug("改变财富");
             GameHelp.GoldChange(changeMoney.gameObject, amount);
+        }
+
+        /// <summary>
+        /// 开始发牌动画
+        /// </summary>
+        /// <param name="myCard"></param>
+
+        private int dealNum = 0;
+
+        private List<GameObject> dealObjs = new List<GameObject>();
+        public List<MahjongInfo> myCard;
+
+        public void StartDealCardAnim(bool isSelf)
+        {
+            dealObjs.Clear();
+
+            int myCardCount = myCard.Count;
+            int temp = 0;
+
+            int x = 0;
+            int y = 0;
+            temp = myCardCount >= 4? 4 : myCardCount;
+            for (int i = 0; i < temp; i++)
+            {
+                MahjongInfo mahjongInfo = myCard[i];
+                GameObject ItemCard = null;
+                if (Index == 0)
+                {
+                    string cardName = $"{Direction}_{mahjongInfo.weight}";
+                    ItemCard = this.CreateSprite(cardName);
+                    x = 0;
+                    y = 90;
+                    SetPosition(ItemCard, dealNum * postionX, y);
+                }
+                else if (Index == 1)
+                {
+                    string cardName = $"{Direction}_back1";
+                    ItemCard = this.CreateSprite(cardName);
+                    ItemCard.transform.SetAsFirstSibling();
+                    x = -78;
+                    y = 0;
+                    SetPosition(ItemCard, x, -420 - (dealNum * postionY));
+                }
+                else if (Index == 2)
+                {
+                    string cardName = $"{Direction}_back1";
+                    ItemCard = this.CreateSprite(cardName);
+                    x = 0;
+                    y = -90;
+                    SetPosition(ItemCard, 563 - (dealNum * (postionX + 1)), y);
+                }
+                else if (Index == 3)
+                {
+                    string cardName = $"{Direction}_back1";
+                    ItemCard = this.CreateSprite(cardName);
+                    x = 78;
+                    y = 0;
+                    SetPosition(ItemCard, x, dealNum * postionY);
+                }
+
+                dealObjs.Add(ItemCard);
+                dealNum++;
+            }
+
+            foreach (var gameObject in dealObjs)
+            {
+                Vector3 localPosition = gameObject.transform.localPosition;
+                gameObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(localPosition.x - x, localPosition.y - y), 0.4f, false).OnComplete(() =>
+                {
+//                    gameObject.transform.localPosition = localPosition;
+//                    DeleteAllItem(gameObject);
+                });
+            }
+
+            myCard.RemoveRange(0, temp);
+        }
+
+        private GameObject CreateSprite(string cardName)
+        {
+            Sprite sprite = this.prefabObj.Get<Sprite>(cardName);
+            GameObject ItemCard = GameObject.Instantiate(this.itemObj, this.CardBottom.transform);
+            ItemCard.GetComponent<Image>().sprite = sprite;
+            ItemCard.name = cardName;
+            ItemCard.layer = LayerMask.NameToLayer("UI");
+            return ItemCard;
+        }
+
+        public void FanPai()
+        {
+            for (int i = 0; i < CardBottom.transform.childCount; i++)
+            {
+                CardBottom.transform.GetChild(i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Bottom_Card", "bottom_back");
+            }
         }
     }
 }

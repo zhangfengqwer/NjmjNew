@@ -306,6 +306,12 @@ namespace ETHotfix
                             response.Info = null;
                         }
                         break;
+                    case 7:
+                        {
+                            //强制玩家离线
+                            UserComponentSystem.ForceOffline(message.UId,message.Reason);
+                        }
+                        break;
                 }
                 reply(response);
             }

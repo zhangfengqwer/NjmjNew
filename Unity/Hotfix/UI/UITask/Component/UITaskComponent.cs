@@ -73,9 +73,13 @@ namespace ETHotfix
         public void DeCount()
         {
             --notGetcount;
-            if(notGetcount <= 0)
+            if (notGetcount <= 0)
             {
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(1, false,notGetcount);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(1, false);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(1, true, notGetcount);
             }
         }
 
