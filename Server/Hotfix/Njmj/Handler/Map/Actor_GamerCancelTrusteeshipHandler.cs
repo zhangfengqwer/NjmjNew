@@ -11,18 +11,24 @@ namespace ETHotfix
 	{
 	    protected override async Task Run(Gamer gamer, Actor_GamerCancelTrusteeship message)
 	    {
-	        await Task.CompletedTask;
-	        try
-	        {
-	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-	            Room room = roomComponent.Get(gamer.RoomID);
+            try
+            {
+                RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+                Room room = roomComponent.Get(gamer.RoomID);
                 gamer.IsTrusteeship = false;
-	            room.StartTime();
-	        }
-	        catch (Exception e)
+                room.StartTime();
+
+                room.Broadcast(new Actor_GamerCancelTrusteeship()
+                {
+                    Uid = gamer.UserID
+                });
+                await Task.CompletedTask;
+            }
+            catch (Exception e)
 	        {
 	            Log.Error(e);
 	        }
-	    }
+	        await Task.CompletedTask;
+        }
 	}
 }

@@ -130,9 +130,15 @@ namespace ETHotfix
                 }
 
                 MahjongInfo mahjongInfo = gamer.GetComponent<HandCardsComponent>()?.PopCard();
-//                Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
-                gamer.IsTrusteeship = true;
-                self.GamerBroadcast(gamer, new Actor_GamerTrusteeship());
+                //Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
+                if (!gamer.IsTrusteeship)
+                {
+                    gamer.IsTrusteeship = true;
+                    self.Broadcast(new Actor_GamerTrusteeship()
+                    {
+                        Uid = gamer.UserID
+                    });
+                }
             }
             else
             {
@@ -246,7 +252,7 @@ namespace ETHotfix
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);

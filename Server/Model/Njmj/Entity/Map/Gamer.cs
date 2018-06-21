@@ -3,7 +3,7 @@
 namespace ETModel
 {
     [ObjectSystem]
-    public class GamerAwakeSystem : AwakeSystem<Gamer,long>
+    public class GamerAwakeSystem : AwakeSystem<Gamer, long>
     {
         public override void Awake(Gamer self, long id)
         {
@@ -27,7 +27,7 @@ namespace ETModel
 
         //是否准备
         public bool IsReady { get; set; }
-        
+
         //是否赢
         public bool IsWinner { get; set; }
 
@@ -44,11 +44,11 @@ namespace ETModel
         public bool isGangEndBuPai = false;
 
         // 是否是抓到硬花补牌
-        public bool isGetYingHuaBuPai = false; 
-        
+        public bool isGetYingHuaBuPai = false;
+
         // 是否是自摸
         public bool isZimo = false;
-        
+
         // 是否是自摸
         public bool isFangPao = false;
 
@@ -56,9 +56,12 @@ namespace ETModel
 
         public bool IsCanPeng { get; set; }
         public bool IsCanGang { get; set; }
+
         public bool IsCanHu { get; set; }
+
         //玩家在线开始的时间
         public DateTime StartTime { get; set; }
+
         //游戏离线结束的时间
         public DateTime EndTime { get; set; }
         public bool IsTrusteeship { get; set; }
@@ -70,7 +73,7 @@ namespace ETModel
 
         public override void Dispose()
         {
-            if(this.IsDisposed)
+            if (this.IsDisposed)
             {
                 return;
             }
@@ -84,6 +87,16 @@ namespace ETModel
             this.isOffline = false;
             this.ReadyTimeOut = 0;
             IsTrusteeship = false;
+            IsWinner = false;
+            isGangFaWanPai = false;
+            isFaWanPaiTingPai = false;
+            isGangEndBuPai = false;
+            isGetYingHuaBuPai = false;
+            isZimo = false;
+            isFangPao = false;
+            IsCanPeng = false;
+            IsCanGang = false;
+            IsCanHu = false;
         }
     }
 }

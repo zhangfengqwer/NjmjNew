@@ -59,6 +59,7 @@ namespace ETHotfix
         public GameObject faceCardObj;
         public GameObject dice;
         public GameObject tip;
+        private GameObject baoxiang;
         public int RoomType { get; set; }
 
         public void Awake()
@@ -76,6 +77,7 @@ namespace ETHotfix
 
             this.desk = rc.Get<GameObject>("Desk");
             this.head = rc.Get<GameObject>("Head");
+            this.baoxiang = rc.Get<GameObject>("Baoxiang");
 
             HeadPanel[0] = head.Get<GameObject>("Bottom");
             HeadPanel[1] = head.Get<GameObject>("Right");
@@ -552,7 +554,15 @@ namespace ETHotfix
             if (gamerGetTreasure.Error == ErrorCode.ERR_Success)
             {
                 SetTreasureTime(gamerGetTreasure.RestSeconds);
-                ToastScript.createToast($"恭喜你领取{gamerGetTreasure.Reward}金币");
+                baoxiang.SetActive(true);
+                baoxiang.GetComponentInChildren<Text>().text = $"恭喜你领取{gamerGetTreasure.Reward}金币";
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+                baoxiang.SetActive(false);
+
             }
             else
             {

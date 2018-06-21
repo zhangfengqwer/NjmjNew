@@ -32,6 +32,7 @@ namespace ETHotfix
         public int grabPostionY = 0;
 
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
+        private List<MahjongInfo> playCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
         public List<GameObject> cardDisplayObjs = new List<GameObject>();
         private List<MahjongInfo> faceCards = new List<MahjongInfo>();
@@ -185,7 +186,7 @@ namespace ETHotfix
             faceImageGe = null;
             tokenSource.Cancel();
             handCards.Clear();
-           
+            playCards.Clear();
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ namespace ETHotfix
         /// <param name="mahjong"></param>
         /// <param name="messageIndex"></param>
         /// <param name="messageWeight"></param>
-        public void PlayCard(MahjongInfo mahjong, int index, GameObject currentItem)
+        public async void PlayCard(MahjongInfo mahjong, int index, GameObject currentItem)
         {
             try
             {
@@ -251,6 +252,7 @@ namespace ETHotfix
                     GameObject gameObject = this.GetSprite(index);
                     GameObject.Destroy(gameObject);
                     handCards.RemoveAt(index);
+                    playCards.Add(info);
                     ItemCards.RemoveAt(index);
                 }
 
@@ -267,6 +269,29 @@ namespace ETHotfix
                 currentItem = currentPlayCardObj;
 
                 ShowCard(mahjong.weight);
+
+                //出了几张一样的牌
+                int playCount = 0;
+                foreach (var card in playCards)
+                {
+                    if (card.weight == info.weight)
+                    {
+                        playCount++;
+                    }
+                }
+                if (playCount == 3)
+                {
+                    UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                    UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                    uiRoomComponent.tip.SetActive(true);
+                    uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "foursame_tip");
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+                    if (this.IsDisposed)
+                    {
+                        return;
+                    }
+                    uiRoomComponent?.tip?.SetActive(false);
+                }
             }
             catch (Exception e)
             {
@@ -297,7 +322,7 @@ namespace ETHotfix
         /// 抓牌
         /// </summary>
         /// <param name="mahjong"></param>
-        public void GrabCard(MahjongInfo mahjong)
+        public async void GrabCard(MahjongInfo mahjong)
         {
             GameObject cardSprite = this.CreateCardSprite($"{Direction}_" + mahjong.weight, 0, 0);
             SetPosition(cardSprite, (handCards.Count) * postionX + 30, 0);
@@ -345,6 +370,21 @@ namespace ETHotfix
             cardSprite.GetComponent<ItemCardScipt>().index = index;
 
             grabIndex = index;
+
+            //第4张显示门清提示
+            if (playCards.Count == 3)
+            {
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                uiRoomComponent.tip.SetActive(true);
+                uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "menqing_tip");
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+                uiRoomComponent?.tip?.SetActive(false);
+            }
         }
 
         /// <summary>
@@ -758,7 +798,7 @@ namespace ETHotfix
             int count = this.pengObj.transform.childCount;
             if (Index == 1)
             {
-                gameObject.transform.localPosition = new Vector3(0, (count - 1) * 150, 0);
+                gameObject.transform.localPosition = new Vector3(0, (count - 1) * 115, 0);
             }
             else if (Index == 2)
             {

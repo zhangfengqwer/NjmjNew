@@ -22,45 +22,16 @@ namespace ETHotfix
                         //领取奖励
                         PlayerBaseInfo baseInfo = await proxyComponent.Query<PlayerBaseInfo>(message.Uid);
                         PlayerInfo playerInfo = new PlayerInfo();
-                        for (int i = 0; i < message.InfoList.Count; ++i)
-                        {
-                            GetItemInfo getItem = message.InfoList[i];
-                            if (getItem.ItemID == 1 || getItem.ItemID == 2)
-                            {
-                                //如果奖励是元宝和金币
-                                if (getItem.ItemID == 1)
-                                    baseInfo.WingNum += getItem.Count;
-                                if (getItem.ItemID == 2)
-                                    baseInfo.GoldNum += getItem.Count;
-                                await proxyComponent.Save(baseInfo);
-                            }
-                            else
-                            {
-                                //物品道具
-                                List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.Uid},BagId:{getItem.ItemID}}}");
-                                if (itemInfos.Count > 0)
-                                {
-                                    itemInfos[0].Count += getItem.Count;
-                                    await proxyComponent.Save(itemInfos[0]);
-                                }
-                                else
-                                {
-                                    UserBag itemInfo = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
-                                    itemInfo.BagId = getItem.ItemID;
-                                    itemInfo.UId = message.Uid;
-                                    itemInfo.Count = getItem.Count;
-                                    await proxyComponent.Save(itemInfo);
-                                }
-                            }
-                        }
+                        await DBCommonUtil.changeWealthWithStr(message.Uid, emailInfoList[0].RewardItem, "领取邮件奖励");
                         emailInfoList[0].State = 1;
+                        await proxyComponent.Save(emailInfoList[0]);
                     }
                     else if (message.state == 2)
                     {
                         //删除邮件
                         emailInfoList[0].State = 2;//1,已领取 2,删除
+                        await proxyComponent.Save(emailInfoList[0]);
                     }
-                    await proxyComponent.Save(emailInfoList[0]);
                 }
                 reply(response);
             }

@@ -98,7 +98,6 @@ namespace ETHotfix
                 .Session.Call(new C2G_EmailOperate
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
-                    InfoList = itemList,
                     EmailId = (int)email.EId,
                     state = 1
                 });

@@ -42,6 +42,9 @@ namespace ETHotfix
         private GameObject vip;
         public GameObject FaceObj { get; set; }
         private GameObject zhuang;
+        private CancellationTokenSource tokenSource;
+        private GameObject buHua;
+
 
         public int Index { get; set; }
 
@@ -80,11 +83,12 @@ namespace ETHotfix
             this.prompt = this.Panel.Get<GameObject>("Prompt").GetComponent<Text>();
             this.changeMoney = this.Panel.Get<GameObject>("ChangeMoney");
             this.zhuang = this.Panel.Get<GameObject>("Zhuang");
+            this.buHua = this.Panel.Get<GameObject>("BuHua");
 
 
             if (index != 0)
             {
-                this.headInfo = this.head.transform.GetChild(0).gameObject;
+                this.headInfo = this.head.transform.Find("HeadInfo").gameObject;
                 this.shengLvText = this.headInfo.Get<GameObject>("Shenglv").GetComponent<Text>();
                 this.jinbiText = this.headInfo.Get<GameObject>("Jinbi").GetComponent<Text>();
                 this.uidText = this.headInfo.Get<GameObject>("Uid").GetComponent<Text>();
@@ -120,11 +124,23 @@ namespace ETHotfix
                 GameObject obj = CommonUtil.getGameObjByBundle("Item_Top_Card");
                 obj.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + weight);
                 GameObject.Instantiate(obj, FaceObj.transform);
+              
             }
             catch (Exception e)
             {
                 Log.Error(e);
             }
+        }
+
+        public async void ShowBuHua()
+        {
+            buHua.gameObject.SetActive(true);
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            buHua.gameObject.SetActive(false);
         }
 
         public void SetGoldChange(int num)
@@ -232,9 +248,7 @@ namespace ETHotfix
             }
         }
 
-        private CancellationTokenSource tokenSource;
-
-//        public async Task GetPlayerInfo()
+        //        public async Task GetPlayerInfo()
 //        {
 //            tokenSource = new CancellationTokenSource();
 //            try
@@ -316,5 +330,15 @@ namespace ETHotfix
             readyText.text = "已准备";
         }
 
+        public void ShowTrust()
+        {
+            head.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "btn_tuoguan");
+        }
+
+        public void ShowPlayerIcon()
+        {
+            PlayerInfo playerInfo = this.GetParent<Gamer>().PlayerInfo;
+            head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+        }
     }
 }

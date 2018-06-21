@@ -12,8 +12,6 @@ namespace ETHotfix
 
 	    protected override async Task Run(Gamer gamer, Actor_GamerExitRoom message)
 	    {
-	        await Task.CompletedTask;
-
             try
             {
 	            Log.Info($"玩家{gamer.UserID}退出房间");
@@ -77,6 +75,8 @@ namespace ETHotfix
 	        {
 	            Log.Error(e);
             }
-	    }
-	}
+
+	        await Task.CompletedTask;
+        }
+    }
 }

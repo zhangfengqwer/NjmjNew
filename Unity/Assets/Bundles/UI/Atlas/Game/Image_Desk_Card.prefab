@@ -89,3 +89,13 @@ MonoBehaviour:
   - key: RoomMask
     gameObject: {fileID: 1374606894052620, guid: 414f94d57ec8cbf43ad7f4d5f595fa9c,
       type: 2}
+  - key: btn_tuoguan
+    gameObject: {fileID: 21300000, guid: 416ab1a38d6641144bb908d3ea50fe8a, type: 3}
+  - key: foursame_tip
+    gameObject: {fileID: 21300000, guid: 8c607766ba5361b44a948503a8b0d965, type: 3}
+  - key: lianxu_tip
+    gameObject: {fileID: 21300000, guid: c7d109f5fa902b44895430e76cd1f5d8, type: 3}
+  - key: menqing_tip
+    gameObject: {fileID: 21300000, guid: 1bc2bcd2af5dd3640b7299f8ee480330, type: 3}
+  - key: shangji_tip
+    gameObject: {fileID: 21300000, guid: 6a4643aa16117c0438d59f6977ca753b, type: 3}
