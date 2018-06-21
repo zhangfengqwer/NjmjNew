@@ -18,7 +18,7 @@ namespace ETHotfix
             
             foreach (var gamer in room.GetAll())
             {
-                ChangeGamerGold(room, gamer, (int) cost, controllerComponent.RoomConfig.Name + "报名费");
+                ChangeGamerGold(room, gamer, (int) - cost, controllerComponent.RoomConfig.Name + "报名费");
             }
         }
 
