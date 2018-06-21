@@ -43,7 +43,7 @@ namespace ETHotfix
         public GameObject currentItem ;
 
         private Text restText;
-        private GameObject players;
+        public GameObject players;
         private CancellationTokenSource tokenSource;
         public Actor_GamerEnterRoom enterRoomMsg;
         private int restCardCount;
@@ -314,8 +314,8 @@ namespace ETHotfix
             {
                 if (gamer == null)
                     continue;
-                gamer.GetComponent<HandCardsComponent>().ClearAll();
-                gamer.RemoveComponent<HandCardsComponent>();
+                gamer?.GetComponent<HandCardsComponent>()?.ClearAll();
+                gamer?.RemoveComponent<HandCardsComponent>();
             }
         }
 
