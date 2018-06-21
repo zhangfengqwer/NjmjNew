@@ -310,7 +310,7 @@ namespace ETHotfix
                 Text goldText = gameObject.transform.Find("Text_gold").GetComponent<Text>();
 
                 HeadManager.setHeadSprite(headImage, gamer.PlayerInfo.Icon);
-                nameText.text = gamer.UserID + "";
+                nameText.text = gamer.PlayerInfo.Name;
                 goldText.text = 0 + "";
             }
 

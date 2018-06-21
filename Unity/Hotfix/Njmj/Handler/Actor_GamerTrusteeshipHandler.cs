@@ -10,7 +10,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"玩家托管:");
+                Log.Info($"玩家托管:"+message.Uid);
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
