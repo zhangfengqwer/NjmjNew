@@ -263,7 +263,7 @@ namespace ETHotfix
             {
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
@@ -319,7 +319,7 @@ namespace ETHotfix
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
@@ -354,7 +354,7 @@ namespace ETHotfix
                 //connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 //connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 string[] temp = r2CLogin.Address.Split(':');
-                connetEndPoint = this.ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
+                connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -412,7 +412,6 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
-                Log.Info("connetEndPoint:" + connetEndPoint.ToString());
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 
@@ -430,7 +429,7 @@ namespace ETHotfix
                // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
 //                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 string[] temp = r2CLogin.Address.Split(':');
-                connetEndPoint = this.ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
+                connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
                 Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
                 ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
@@ -473,7 +472,8 @@ namespace ETHotfix
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
-                await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+                //await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
+                SensitiveWordUtil.Init();
             }
             catch (Exception ex)
             {
@@ -483,7 +483,7 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
         }
 
-        public IPEndPoint ToIPEndPointWithYuMing(int port)
+        public static IPEndPoint ToIPEndPointWithYuMing(int port)
         {
             string serverUrl = NetConfig.getInstance().getServerUrl();
           

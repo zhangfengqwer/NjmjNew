@@ -93,12 +93,12 @@ namespace ETHotfix
                 itemInfo.Count = rewardList[i].rewardNum;
                 itemList.Add(itemInfo);
             }
+            Log.Debug(JsonHelper.ToJson(itemList));
             UINetLoadingComponent.showNetLoading();
             G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
                 .Session.Call(new C2G_EmailOperate
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
-                    InfoList = itemList,
                     EmailId = (int)email.EId,
                     state = 1
                 });
@@ -127,8 +127,9 @@ namespace ETHotfix
             if (reward != null && !reward.Equals(""))
             {
                 get.gameObject.SetActive(state == 0);
-                string[] rewardArr = reward.Split(';');
-                for(int i = 0;i< rewardArr.Length; ++i)
+                List<string> rewardArr = new List<string>();
+                CommonUtil.splitStr(reward, rewardArr, ';');
+                for(int i = 0;i< rewardArr.Count; ++i)
                 {
                     int itemId = CommonUtil.splitStr_Start(rewardArr[i], ':');
                     int rewardNum = CommonUtil.splitStr_End(rewardArr[i], ':');

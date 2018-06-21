@@ -35,6 +35,7 @@ namespace ETHotfix
                 //先掷骰子
                 if (!isReconnect)
                 {
+                    uiRoomComponent.players.SetActive(true);
                     GameObject DiceAnim = uiRoomComponent.dice.Get<GameObject>("DiceAnim");
                     GameObject DiceBottom = uiRoomComponent.dice.Get<GameObject>("DiceBottom");
                     Image Dice1 = DiceBottom.transform.Find("Dice1").GetComponent<Image>();
@@ -50,6 +51,12 @@ namespace ETHotfix
                     Dice2.sprite = CommonUtil.getSpriteByBundle("Image_Dice", "num_" + number2);
                     await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                     DiceBottom.SetActive(false);
+
+                    //发牌动画
+
+                    uiRoomComponent.StartDealCardAnim();
+
+
                 }
 
                 uiRoomComponent.StartGame(message.restCount);
@@ -83,11 +90,14 @@ namespace ETHotfix
 
                         //设置庄家
                         gamer.IsBanker = gameData.IsBanker;
+                        gamerUi.SetZhuang();
+
                         //当前出牌玩家
                         if (gamer.IsBanker)
                         {
                             gamerComponent.CurrentPlayUid = gamer.UserID;
                         }
+
                         if (gamer.UserID == gamerComponent.LocalGamer.UserID)
                         {
                             //本地玩家添加手牌
@@ -99,8 +109,6 @@ namespace ETHotfix
                         {
                             handCards.AddOtherCards(gamer.IsBanker);
                         }
-
-                        gamerUi.SetZhuang();
 
                         handCards.SetFaceCards(gameData.faceCards);
                         foreach (var card in gameData.faceCards)
@@ -122,9 +130,12 @@ namespace ETHotfix
                 uiRoom.GameObject.SetActive(true);
                 uiRoomComponent.ISGaming = true;
 
+           
                 uiRoomComponent.tip.SetActive(true);
+                uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "shangji_tip");
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
-                uiRoomComponent.tip.SetActive(false);
+               
+                uiRoomComponent?.tip?.SetActive(false);
             }
             catch (Exception e)
             {

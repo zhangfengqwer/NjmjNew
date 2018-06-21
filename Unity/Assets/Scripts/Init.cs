@@ -45,11 +45,14 @@ namespace ETModel
 
 			    // 获取网络配置表
 			    await NetConfig.getInstance().Req("http://fwdown.hy51v.com/njmj/online/files/netconfig.json");
-			 
-                // 下载ab包
-                await BundleHelper.DownloadBundle();
+#if GM
+                    //不加载AB包
+#else
+                    // 下载ab包
+                    await BundleHelper.DownloadBundle();
+#endif
 
-				Game.Hotfix.LoadHotfixAssembly();
+                Game.Hotfix.LoadHotfixAssembly();
 
 				// 加载配置
 				Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");

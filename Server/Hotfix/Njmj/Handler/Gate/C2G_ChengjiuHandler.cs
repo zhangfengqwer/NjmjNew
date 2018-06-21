@@ -16,27 +16,45 @@ namespace ETHotfix
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<ChengjiuInfo> chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid}}}");
-
                 if (chengjiuInfoList.Count <= 0)
                 {
-                    for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
+                    for (int i = 1; i < ChengjiuData.getInstance().getDataList().Count; ++i)
                     {
-                        int id = 100 + i;
-                        ChengjiuConfig config = (ChengjiuConfig)configCom.Get(typeof(ChengjiuConfig), id);
-                        ChengjiuInfo progress = new ChengjiuInfo();
+                        ChengjiuInfo progress = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
                         progress.IsGet = false;
                         progress.UId = message.Uid;
-                        progress.Name = config.Name;
-                        progress.TaskId = (int)config.Id;
+                        progress.Name = ChengjiuData.getInstance().getDataList()[i].Name;
+                        progress.TaskId = (int)ChengjiuData.getInstance().getDataList()[i].Id;
                         progress.IsComplete = false;
-                        progress.Target = config.Target;
-                        progress.Reward = config.Reward;
-                        progress.Desc = config.Desc;
+                        progress.Target = ChengjiuData.getInstance().getDataList()[i].Target;
+                        progress.Reward = ChengjiuData.getInstance().getDataList()[i].Reward;
+                        progress.Desc = ChengjiuData.getInstance().getDataList()[i].Desc;
                         progress.CurProgress = 0;
-                        DBHelper.AddChengjiuInfoToDB(message.Uid, progress);
+                        await proxyComponent.Save(progress);
                     }
+                    chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid}}}");
                 }
-                chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid}}}");
+                else if(chengjiuInfoList.Count < ChengjiuData.getInstance().getDataList().Count)
+                {
+                    for (int i = 0; i < ChengjiuData.getInstance().getDataList().Count; ++i)
+                    {
+                        List<ChengjiuInfo> infos = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid},TaskId:{ TaskData.getInstance().getDataList()[i].Id}}}");
+                        if (infos.Count <= 0)
+                        {
+                            ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(ChengjiuData.getInstance().getDataList()[i].Id);
+                            ChengjiuInfo info = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+                            info.UId = message.Uid;
+                            info.Name = config.Name;
+                            info.TaskId = (int)config.Id;
+                            info.Target = config.Target;
+                            info.Reward = config.Reward;
+                            info.Desc = config.Desc;
+                            info.CurProgress = 0;
+                            await proxyComponent.Save(info);
+                        }
+                    }
+                    chengjiuInfoList = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid}}}");
+                }
 
                 for (int i = 0; i < chengjiuInfoList.Count; ++i)
                 {

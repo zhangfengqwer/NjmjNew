@@ -11,8 +11,10 @@ namespace ETHotfix
 			A2M_Reload response = new A2M_Reload();
 			try
 			{
-				Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
-				reply(response);
+			    Log.Info("开始热更代码");
+                Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
+			    Log.Info("结束热更代码");
+                reply(response);
 			}
 			catch (Exception e)
 			{

@@ -7,28 +7,32 @@ namespace ETHotfix
 	{
 		public static void Warning(string msg)
 		{
-			ETModel.Log.Warning(msg);
+//		    if (!NetConfig.getInstance().isFormal)
+                ETModel.Log.Warning(msg);
 		}
 
 		public static void Info(string msg)
 		{
-			ETModel.Log.Info(msg);
+//		    if (!NetConfig.getInstance().isFormal)
+                ETModel.Log.Info(msg);
 		}
 
 		public static void Error(Exception e)
 		{
-			ETModel.Log.Error(e.ToStr());
-		    //HttpReqUtil.Req($"http://10.224.4.158:8080/GetClientError?data=" + e.ToStr());
+//		    if (!NetConfig.getInstance().isFormal)
+                ETModel.Log.Error(e.ToStr());
 		}
 
 	    public static void Error(string msg)
 		{
-		    ETModel.Log.Error(msg);
+//		    if (!NetConfig.getInstance().isFormal)
+                ETModel.Log.Error(msg);
         }
 
 		public static void Debug(string msg)
 		{
-			//ETModel.Log.Debug(msg);
-		}
+		    if (!NetConfig.getInstance().isFormal)
+                ETModel.Log.Debug(msg);
+        }
 	}
 }

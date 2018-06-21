@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ETModel;
-using UnityEngine;
+﻿using ETModel;
+using System;
 
 namespace ETHotfix
 {
@@ -15,15 +10,21 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"玩家托管:");
+                Log.Info($"玩家托管:"+message.Uid);
 
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 Gamer gamer = gamerComponent.Get(message.Uid);
-
-                uiRoomComponent.ShowTrustship();
-
+                if (message.Uid == PlayerInfoComponent.Instance.uid)
+                {
+                    uiRoomComponent.ShowTrustship();
+                }
+                else
+                {
+                    GamerUIComponent gamerUIComponent = gamer.GetComponent<GamerUIComponent>();
+                    gamerUIComponent.ShowTrust();
+                }
             }
             catch (Exception e)
             {

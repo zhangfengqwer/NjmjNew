@@ -37,6 +37,7 @@ namespace ETHotfix
 
                 //补花显示
                 gamerUiComponent.SetBuHua(message.weight);
+                gamerUiComponent.ShowBuHua();
 
                 //剩下的牌
                 uiRoomComponent.SetRestCount();
