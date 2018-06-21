@@ -65,6 +65,15 @@ namespace ETHotfix
         private Text IpTxt;
         #endregion
 
+        #region 强制离线
+        private Button ForceOfflineBtn;
+        private Button ForceUserBtn;
+        private GameObject ForceOffline;
+        private InputField FReasonInputField;
+        private InputField ForceUIdInputField;
+        private Button ForceOfflineCloseBtn;
+        #endregion
+
         private bool isOn = false;
 
         public void Start()
@@ -111,6 +120,15 @@ namespace ETHotfix
             IpTxt = rc.Get<GameObject>("IpTxt").GetComponent<Text>();
             RegisterTimeTxt = rc.Get<GameObject>("RegisterTimeTxt").GetComponent<Text>();
             NameInputField  = rc.Get<GameObject>("NameInputField").GetComponent<InputField>();
+            #endregion
+
+            #region ForceOffline
+            ForceOfflineBtn = rc.Get<GameObject>("ForceOfflineBtn").GetComponent<Button>();
+            ForceUserBtn = rc.Get<GameObject>("ForceUserBtn").GetComponent<Button>();
+            FReasonInputField = rc.Get<GameObject>("FReasonInputField").GetComponent<InputField>();
+            ForceUIdInputField = rc.Get<GameObject>("ForceUIdInputField").GetComponent<InputField>();
+            ForceOfflineCloseBtn = rc.Get<GameObject>("ForceOfflineCloseBtn").GetComponent<Button>();
+            ForceOffline = rc.Get<GameObject>("ForceOffline");
             #endregion
 
             Mail = rc.Get<GameObject>("Mail");
@@ -205,6 +223,22 @@ namespace ETHotfix
                 CreateExelData();
             });
 
+            //强制玩家离线
+            ForceOfflineBtn.onClick.Add(() =>
+            {
+                ForceOffline.SetActive(true);
+            });
+
+            ForceUserBtn.onClick.Add(() =>
+            {
+                ForceOfflineOnClick();
+            });
+
+            ForceOfflineCloseBtn.onClick.Add(() =>
+            {
+                ForceOffline.SetActive(false);
+            });
+
             ShowUserInfoBtn.onClick.Add(() =>
             {
                 UserData.SetActive(true);
@@ -222,6 +256,16 @@ namespace ETHotfix
 
             HeartBeat.getInstance().startHeartBeat();
 
+        }
+
+        private async void ForceOfflineOnClick()
+        {
+            G2C_GM gm = (G2C_GM)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GM
+            {
+                UId = long.Parse(ForceUIdInputField.text),
+                Reason = FReasonInputField.text,
+                Type = 7
+            });
         }
 
         private async void GetUserInfo()

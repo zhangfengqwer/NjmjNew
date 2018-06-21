@@ -32,6 +32,63 @@ namespace ETHotfix
             }
         }
 
+        public static void ForceOffline(long uid,string reason)
+        {
+            User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
+            if(uid == -1)
+            {
+                //全部强制离线
+                for(int i = 0;i< users.Length; ++i)
+                {
+                    try
+                    {
+                        // 发送强制离线
+                        {
+                            Actor_ForceOffline actor_ForceOffline = new Actor_ForceOffline();
+                            actor_ForceOffline.Reason = reason;
+                            users[i].session.Send(actor_ForceOffline);
+                        }
+
+                        users[i].session.Dispose();
+                        Game.Scene.GetComponent<UserComponent>().Remove(users[i].UserID);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }
+
+            }
+            else
+            {
+                //单个强制离线
+                foreach (var _user in users)
+                {
+                    if (_user.UserID == uid)
+                    {
+                        try
+                        {
+                            // 发送强制离线
+                            {
+                                Actor_ForceOffline actor_ForceOffline = new Actor_ForceOffline();
+                                actor_ForceOffline.Reason = reason;
+                                _user.session.Send(actor_ForceOffline);
+                            }
+
+                            _user.session.Dispose();
+                            Game.Scene.GetComponent<UserComponent>().Remove(_user.UserID);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
         public static void CheckIsExistTheUser(long uid)
         {
             User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
