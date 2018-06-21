@@ -2676,48 +2676,6 @@ namespace ETHotfix
 		[ProtoMember(6, IsRequired = true)]
 		public string IP;
 
-	}
-
-	[Message(HotfixOpcode.G2C_GM)]
-	[ProtoContract]
-	public partial class G2C_GM: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-	}
-
-	[Message(HotfixOpcode.C2G_GM)]
-	[ProtoContract]
-	public partial class C2G_GM: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int Type;
-
-		[ProtoMember(3, IsRequired = true)]
-		public string Title;
-
-		[ProtoMember(4, IsRequired = true)]
-		public string Content;
-
-		[ProtoMember(5, IsRequired = true)]
-		public string Reward;
-
-		[ProtoMember(6, IsRequired = true)]
-		public string IP;
-
 		[ProtoMember(7, IsRequired = true)]
 		public string Date;
 
