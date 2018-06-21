@@ -140,6 +140,9 @@ namespace ETHotfix
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public string Reason;
+
 	}
 
 	[Message(HotfixOpcode.C2R_SendSms)]

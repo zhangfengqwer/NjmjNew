@@ -42,6 +42,7 @@ message R2C_ChangeAccount // IResponse
 
 message Actor_ForceOffline // IActorMessage
 {
+	required string Reason = 1;
 }
 
 message C2R_SendSms // IRequest
