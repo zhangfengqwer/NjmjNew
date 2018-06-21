@@ -60,3 +60,5 @@ MonoBehaviour:
     gameObject: {fileID: 4900000, guid: 5c37cd5807f570a4b91b185a943b50cd, type: 3}
   - key: RoomConfig
     gameObject: {fileID: 4900000, guid: 6c55323ab8c9fb3479cf3aff477c17bf, type: 3}
+  - key: stopwords
+    gameObject: {fileID: 4900000, guid: 87cd684f22df7154c997d8795ecd3742, type: 3}
