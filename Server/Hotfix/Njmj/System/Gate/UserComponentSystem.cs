@@ -44,6 +44,7 @@ namespace ETHotfix
                         // 发送强制离线
                         {
                             Actor_ForceOffline actor_ForceOffline = new Actor_ForceOffline();
+                            actor_ForceOffline.Reason = "您的账号已在别处登录，请重新登录。";
                             _user.session.Send(actor_ForceOffline);
                         }
 
