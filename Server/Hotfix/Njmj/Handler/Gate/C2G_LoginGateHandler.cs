@@ -34,6 +34,7 @@ namespace ETHotfix
 			    session.AddComponent<HeartBeatComponent>().CurrentTime = TimeHelper.ClientNowSeconds();
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
+
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 

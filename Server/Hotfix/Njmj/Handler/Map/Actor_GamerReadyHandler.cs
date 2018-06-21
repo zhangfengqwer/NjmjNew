@@ -9,23 +9,23 @@ namespace ETHotfix
 	[ActorMessageHandler(AppType.Map)]
 	public class Actor_GamerReadyHandler : AMActorHandler<Gamer,Actor_GamerReady>
 	{
-	    private static List<MahjongInfo> list = new List<MahjongInfo>()
-	    {
-            new MahjongInfo(Consts.MahjongWeight.Wan_1),
-            new MahjongInfo(Consts.MahjongWeight.Wan_1),
-            new MahjongInfo(Consts.MahjongWeight.Wan_1),
-            new MahjongInfo(Consts.MahjongWeight.Wan_2),
-            new MahjongInfo(Consts.MahjongWeight.Wan_2),
-            new MahjongInfo(Consts.MahjongWeight.Wan_2),
-            new MahjongInfo(Consts.MahjongWeight.Wan_3),
-            new MahjongInfo(Consts.MahjongWeight.Wan_3),
-            new MahjongInfo(Consts.MahjongWeight.Wan_3),
-            new MahjongInfo(Consts.MahjongWeight.Wan_4),
-            new MahjongInfo(Consts.MahjongWeight.Wan_4),
-            new MahjongInfo(Consts.MahjongWeight.Wan_4),
-            new MahjongInfo(Consts.MahjongWeight.Wan_5),
-            new MahjongInfo(Consts.MahjongWeight.Wan_5),
-	    };
+//	    private static List<MahjongInfo> list = new List<MahjongInfo>()
+//	    {
+//            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_1),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_2),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_3),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_4),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_5),
+//            new MahjongInfo(Consts.MahjongWeight.Wan_5),
+//	    };
 
 	    protected override async Task Run(Gamer gamer, Actor_GamerReady message)
 	    {
@@ -229,6 +229,8 @@ namespace ETHotfix
 	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
 	                //是否超时
                     room.StartTime();
+                    //扣服务费
+	                GameHelp.CostServiceCharge(room);
                 }
             }
 	        catch (Exception e)

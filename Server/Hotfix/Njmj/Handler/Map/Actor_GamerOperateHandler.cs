@@ -11,7 +11,6 @@ namespace ETHotfix
     {
         protected override async Task Run(Gamer gamer, Actor_GamerOperation message)
         {
-            await Task.CompletedTask;
             try
             {
                 MahjongInfo mahjongInfo = new MahjongInfo()
@@ -289,6 +288,8 @@ namespace ETHotfix
             {
                 Log.Error(e);
             }
+
+            await Task.CompletedTask;
         }
 
         /// <summary>

@@ -11,18 +11,15 @@ namespace ETHotfix
         /// 收服务费
         /// </summary>
         /// <param name="room"></param>
-        public static async void CostServiceCharge(Room room)
+        public static void CostServiceCharge(Room room)
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
-            long cost = controllerComponent.ServiceCharge;
+            long cost = controllerComponent.RoomConfig.ServiceCharge;
             
             foreach (var gamer in room.GetAll())
             {
-                string reason = controllerComponent.RoomConfig.Name + "报名费";
-                await DBCommonUtil.ChangeWealth(gamer.UserID,1, -(int)cost, reason);
+                ChangeGamerGold(room, gamer, (int) cost, controllerComponent.RoomConfig.Name + "报名费");
             }
-
-//            room.Broadcast(new Actor_GamerChangeGold())
         }
 
         /// <summary>
