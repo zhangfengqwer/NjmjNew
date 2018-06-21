@@ -895,6 +895,8 @@ namespace ETHotfix
         /// <param name="gameDataFaceCards"></param>
         public void SetFaceCards(List<MahjongInfo> gameDataFaceCards)
         {
+            faceCard.SetActive(true);
+
             faceCards = gameDataFaceCards;
 
             int geWei = gameDataFaceCards.Count % 10;
