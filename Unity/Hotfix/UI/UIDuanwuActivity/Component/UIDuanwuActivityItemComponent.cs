@@ -98,7 +98,8 @@ namespace ETHotfix
                 }
                 return;
             }
-           
+
+            UIDuanwuActivityComponent.Instance.DeCount();
             UIDuanwuActivityComponent.Instance.RefreshUI(g2cDuanwu.ZongziCount);
             info.IsGet = g2cDuanwu.IsGet;
             //端午活动一级界面粽子个数旁显示 +XXX粽子

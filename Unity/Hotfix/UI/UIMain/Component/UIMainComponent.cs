@@ -274,35 +274,40 @@ namespace ETHotfix
             });
 
             //设置?点
-            SetRedTip(1, g2c.IsTaskComplete);
-            SetRedTip(2, g2c.IsChengjiuComplete);
-            SetRedTip(3, g2c.IsInActivity);
-            SetRedTip(4, g2c.IsZhuanpan);
-            SetRedTip(5, g2c.IsEmail);
+            SetRedTip(1, g2c.IsTaskComplete,g2c.TaskCompleteCount);
+            SetRedTip(2, g2c.IsChengjiuComplete, g2c.ChengjiuCompleteCount);
+            SetRedTip(3, g2c.IsInActivity, g2c.ActivityCompleteCount);
+            SetRedTip(4, g2c.IsZhuanpan, g2c.ZhuanpanCount);
+            SetRedTip(5, g2c.IsEmail, g2c.EmailCount);
         }
 
         /// <summary>
         /// 设置红点提示状态 1,任务 2,成就 3,活动 4,转盘 5,邮件
         /// </summary>
         /// <param name="state"></param>
-        public void SetRedTip(int state, bool isHide)
+        public void SetRedTip(int state, bool isHide,int count = 0)
         {
             switch (state)
             {
                 case 1:
                     BtnList_Down.transform.Find("Grid/Btn_Task/Tip").gameObject.SetActive(isHide);
+                    BtnList_Down.transform.Find("Grid/Btn_Task/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
                 case 2:
                     BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip").gameObject.SetActive(isHide);
+                    BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
                 case 3:
                     BtnList_Down.transform.Find("Grid/Btn_Activity/Tip").gameObject.SetActive(isHide);
+                    BtnList_Down.transform.Find("Grid/Btn_Activity/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
                 case 4:
                     BtnList_Down.transform.Find("Grid/Btn_ZhuanPan/Tip").gameObject.SetActive(isHide);
+                    BtnList_Down.transform.Find("Grid/Btn_ZhuanPan/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
                 case 5:
                     BtnList_Up.transform.Find("Btn_Mail/Tip").gameObject.SetActive(isHide);
+                    BtnList_Up.transform.Find("Btn_Mail/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
             }
         }
@@ -348,10 +353,10 @@ namespace ETHotfix
                     obj.transform.localPosition = Vector3.zero;
                     obj.transform.localScale = Vector3.one;
                     rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
                 }
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                uiList.Add(ui);
 
                 if (i >= ownRank)
                 {   
@@ -384,11 +389,10 @@ namespace ETHotfix
                     obj.transform.localScale = Vector3.one;
                     obj.transform.localPosition = Vector3.zero;
                     rankItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    gameUiList.Add(ui);
                 }
-
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                gameUiList.Add(ui);
 
                 if (i >= ownGame)
                 {

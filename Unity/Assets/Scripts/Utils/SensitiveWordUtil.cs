@@ -24,6 +24,12 @@ namespace Unity_Utils
             }
         }
 
+        public static void Init()
+        {
+            string data = CommonUtil.getTextFileByBundle("config", "stopwords");
+            WordsDatas = data.Split(',');
+        }
+
         public static void InitWords(string data)
         {
             WordsDatas = data.Split(',');

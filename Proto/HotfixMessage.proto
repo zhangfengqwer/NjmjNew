@@ -42,6 +42,7 @@ message R2C_ChangeAccount // IResponse
 
 message Actor_ForceOffline // IActorMessage
 {
+	required string Reason = 1;
 }
 
 message C2R_SendSms // IRequest
@@ -916,6 +917,11 @@ message G2C_Tip //IResponse
 	required bool IsInActivity = 3;
 	required bool IsZhuanpan = 4;
 	required bool IsEmail = 5;
+	required int TaskCompleteCount = 6;
+	required int ChengjiuCompleteCount = 7;
+	required int ActivityCompleteCount = 8;
+	required int ZhuanpanCount = 9;
+	required int EmailCount = 10;
 }
 
 

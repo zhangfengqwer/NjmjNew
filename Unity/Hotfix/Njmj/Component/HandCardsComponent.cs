@@ -1056,7 +1056,6 @@ namespace ETHotfix
             }
 
             myCard.RemoveRange(0, temp);
-            Log.Info("删除之后的：" + myCard.Count);
         }
 
         private GameObject CreateSprite(string cardName)

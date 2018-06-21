@@ -192,6 +192,11 @@ namespace ETHotfix
                 {
                     Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(4, false);
                 }
+                else
+                {
+
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(4, true, ZhuanPanCount);
+                }
 
                 if (LuckyValue == 99)
                 {

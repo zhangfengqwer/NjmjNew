@@ -620,6 +620,7 @@
     <None Include="Assets\Res\Config\GlobalProto.txt" />
     <None Include="Assets\Res\Config\RoomConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
+    <None Include="Assets\Res\Config\stopwords.txt" />
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\link.xml" />

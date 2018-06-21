@@ -140,6 +140,9 @@ namespace ETHotfix
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public string Reason;
+
 	}
 
 	[Message(HotfixOpcode.C2R_SendSms)]
@@ -2633,6 +2636,21 @@ namespace ETHotfix
 
 		[ProtoMember(5, IsRequired = true)]
 		public bool IsEmail;
+
+		[ProtoMember(6, IsRequired = true)]
+		public int TaskCompleteCount;
+
+		[ProtoMember(7, IsRequired = true)]
+		public int ChengjiuCompleteCount;
+
+		[ProtoMember(8, IsRequired = true)]
+		public int ActivityCompleteCount;
+
+		[ProtoMember(9, IsRequired = true)]
+		public int ZhuanpanCount;
+
+		[ProtoMember(10, IsRequired = true)]
+		public int EmailCount;
 
 	}
 

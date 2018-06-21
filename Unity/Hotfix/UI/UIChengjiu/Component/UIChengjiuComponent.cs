@@ -88,13 +88,14 @@ namespace ETHotfix
 
         public void DeCount()
         {
-            Debug.Log(notGetcount + "qqqqqqq");
             --notGetcount;
-            Debug.Log(notGetcount + "kkkkkkkkk");
             if (notGetcount <= 0)
             {
-                Debug.Log("成就奖励已经领取完");
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, false);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(2, true, notGetcount);
             }
         }
 
@@ -168,7 +169,6 @@ namespace ETHotfix
             base.Dispose();
             itemList.Clear();
             uiList.Clear();
-            notGetcount = 0;
         }
     }
 }

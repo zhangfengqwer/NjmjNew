@@ -38,7 +38,7 @@ namespace ETHotfix
                 {
                     for (int i = 0; i < ChengjiuData.getInstance().getDataList().Count; ++i)
                     {
-                        List<ChengjiuInfo> infos = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid},TaskId:{ TaskData.getInstance().getDataList()[i].Id}}}");
+                        List<ChengjiuInfo> infos = await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.Uid},TaskId:{ ChengjiuData.getInstance().getDataList()[i].Id}}}");
                         if (infos.Count <= 0)
                         {
                             ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(ChengjiuData.getInstance().getDataList()[i].Id);
