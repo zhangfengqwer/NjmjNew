@@ -332,13 +332,14 @@ namespace ETHotfix
 
         public void ShowTrust()
         {
-            head.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "btn_tuoguan");
+            head.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "tuoguan_icon");
         }
 
         public void ShowPlayerIcon()
         {
             PlayerInfo playerInfo = this.GetParent<Gamer>().PlayerInfo;
-            head.sprite = Game.Scene.GetComponent<UIIconComponent>().GetSprite(playerInfo.Icon);
+
+            HeadManager.setHeadSprite(head, playerInfo.Icon);
         }
     }
 }

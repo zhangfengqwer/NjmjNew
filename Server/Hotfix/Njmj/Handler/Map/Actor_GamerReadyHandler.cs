@@ -230,7 +230,7 @@ namespace ETHotfix
 	                //是否超时
                     room.StartTime();
                     //扣服务费
-	                GameHelp.CostServiceCharge(room);
+//	                GameHelp.CostServiceCharge(room);
                 }
             }
 	        catch (Exception e)

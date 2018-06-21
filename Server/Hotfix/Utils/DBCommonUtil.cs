@@ -21,6 +21,25 @@ namespace ETHotfix
             TaskInfo taskInfo = new TaskInfo();
             List<TaskProgressInfo> taskProgressInfoList =
                 await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+            if (taskProgressInfoList.Count <= 0)
+            {
+                TaskProgressInfo info = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
+                TaskConfig config = TaskData.getInstance().GetDataByTaskId(taskId);
+                info.IsGet = false;
+                info.UId = uid;
+                info.Name = config.Name;
+                info.TaskId = (int)config.Id;
+                info.IsComplete = false;
+                info.Target = config.Target;
+                info.Reward = config.Reward;
+                info.Desc = config.Desc;
+                info.CurProgress = 0;
+
+                await proxyComponent.Save(info);
+                taskProgressInfoList =
+               await proxyComponent.QueryJson<TaskProgressInfo>($"{{UId:{uid},TaskId:{taskId}}}");
+            }
+
             if (taskProgressInfoList.Count > 0)
             {
                 /*
@@ -85,6 +104,25 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList =
                 await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+
+            if(chengjiuInfoList.Count <= 0)
+            {
+                ChengjiuInfo info = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+                ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(taskId);
+                info.IsGet = false;
+                info.UId = UId;
+                info.Name = config.Name;
+                info.TaskId = (int)config.Id;
+                info.IsComplete = false;
+                info.Target = config.Target;
+                info.Reward = config.Reward;
+                info.Desc = config.Desc;
+                info.CurProgress = 0;
+                await proxyComponent.Save(info);
+
+                chengjiuInfoList =
+               await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+            }
             if (chengjiuInfoList.Count > 0)
             {
                 chengjiuInfoList[0].CurProgress += progress;
@@ -569,54 +607,54 @@ namespace ETHotfix
 
             Log.Debug("增加新用户完毕");
 
-            // 插入任务数据
-            {
-                Log.Debug("增加新用户任务");
+            //// 插入任务数据
+            //{
+            //    Log.Debug("增加新用户任务");
 
-                for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
-                {
-                    int id = 100 + i;
-                    TaskConfig config = (TaskConfig) configCom.Get(typeof(TaskConfig), id);
-                    TaskProgressInfo progress =
-                        ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
-                    progress.IsGet = false;
-                    progress.UId = uid;
-                    progress.Name = config.Name;
-                    progress.TaskId = (int) config.Id;
-                    progress.IsComplete = false;
-                    progress.Target = config.Target;
-                    progress.Reward = config.Reward;
-                    progress.Desc = config.Desc;
-                    progress.CurProgress = 0;
+            //    for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
+            //    {
+            //        int id = 100 + i;
+            //        TaskConfig config = (TaskConfig) configCom.Get(typeof(TaskConfig), id);
+            //        TaskProgressInfo progress =
+            //            ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
+            //        progress.IsGet = false;
+            //        progress.UId = uid;
+            //        progress.Name = config.Name;
+            //        progress.TaskId = (int) config.Id;
+            //        progress.IsComplete = false;
+            //        progress.Target = config.Target;
+            //        progress.Reward = config.Reward;
+            //        progress.Desc = config.Desc;
+            //        progress.CurProgress = 0;
 
-                    await proxyComponent.Save(progress);
-                }
+            //        await proxyComponent.Save(progress);
+            //    }
 
-                Log.Debug("增加新用户任务完毕");
-            }
+            //    Log.Debug("增加新用户任务完毕");
+            //}
             //插入新用户成就
-            {
-                Log.Debug("增加新用户成就");
-                for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
-                {
-                    int id = 100 + i;
-                    ChengjiuConfig config = (ChengjiuConfig) configCom.Get(typeof(ChengjiuConfig), id);
-                    ChengjiuInfo chengjiu = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
-                    chengjiu.IsGet = false;
-                    chengjiu.UId = uid;
-                    chengjiu.Name = config.Name;
-                    chengjiu.TaskId = (int) config.Id;
-                    chengjiu.IsComplete = false;
-                    chengjiu.Target = config.Target;
-                    chengjiu.Reward = config.Reward;
-                    chengjiu.Desc = config.Desc;
-                    chengjiu.CurProgress = 0;
+            //{
+            //    Log.Debug("增加新用户成就");
+            //    for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
+            //    {
+            //        int id = 100 + i;
+            //        ChengjiuConfig config = (ChengjiuConfig) configCom.Get(typeof(ChengjiuConfig), id);
+            //        ChengjiuInfo chengjiu = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
+            //        chengjiu.IsGet = false;
+            //        chengjiu.UId = uid;
+            //        chengjiu.Name = config.Name;
+            //        chengjiu.TaskId = (int) config.Id;
+            //        chengjiu.IsComplete = false;
+            //        chengjiu.Target = config.Target;
+            //        chengjiu.Reward = config.Reward;
+            //        chengjiu.Desc = config.Desc;
+            //        chengjiu.CurProgress = 0;
 
-                    await proxyComponent.Save(chengjiu);
-                }
+            //        await proxyComponent.Save(chengjiu);
+            //    }
 
-                Log.Debug("增加新用户成就完毕");
-            }
+            //    Log.Debug("增加新用户成就完毕");
+            //}
 
             return playerBaseInfo;
         }

@@ -62,5 +62,7 @@ namespace ETHotfix
         public const string UIDuanwuTreasure = "UIDuanwuTreasure";
         public const string UITreasure = "UITreasure";
         public const string UIDuanwuRewardItem = "UIDuanwuRewardItem";
+        public const string UIGM = "gm";
+        public const string UIGMLogin = "GMLogin";
     }
 }
