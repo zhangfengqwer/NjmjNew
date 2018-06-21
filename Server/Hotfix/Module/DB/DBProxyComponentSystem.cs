@@ -161,6 +161,14 @@ namespace ETHotfix
             return components;
         }
 
+        public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self)
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{}}");
+            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            return components;
+        }
+
         public static async Task Delete<T>(this DBProxyComponent self, long id)
 	    {
 	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();

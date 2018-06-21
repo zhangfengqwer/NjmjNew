@@ -931,6 +931,8 @@ message C2G_GM // IRequest
     required string AdAddress = 8;
     required string EndTime = 9;
     required string Reason = 10;
+    required string Name = 11;
+    required string CreateBaobiaoTime = 12;
 }
 
 message G2C_GM // IResponse
@@ -939,5 +941,6 @@ message G2C_GM // IResponse
 	required string RegisterTime = 2;
 	required string LastOnlineTime = 3;
 	required string Ip = 4;
+	repeated ShopInfo ShopInfoList = 5;//商店商品
 }
 #endregion

@@ -37,37 +37,71 @@ namespace ETHotfix
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                if (ShopData.getInstance().getDataList().Count == 0)
                 {
-                    List<ShopConfig> shopList = new List<ShopConfig>();
-                    for (int i = 1; i < configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+                    //商城
+                    if (ShopData.getInstance().getDataList().Count == 0)
                     {
-                        int id = 1000 + i;
-                        ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
-                        shopList.Add(config);
+                        List<ShopConfig> shopList = new List<ShopConfig>();
+                        for (int i = 1; i < configCom.GetAll(typeof(ShopConfig)).Length + 1; ++i)
+                        {
+                            int id = 1000 + i;
+                            ShopConfig config = (ShopConfig)configCom.Get(typeof(ShopConfig), id);
+                            shopList.Add(config);
+                        }
+                        ShopData.getInstance().getDataList().AddRange(shopList);
                     }
-                    ShopData.getInstance().getDataList().AddRange(shopList);
-                }
 
-                //#region AddShopInfo
-                List<ShopInfo> shopInfoList = new List<ShopInfo>();
-                for (int i = 0; i < ShopData.getInstance().getDataList().Count; ++i)
+
+                    //#region AddShopInfo
+                    List<ShopInfo> shopInfoList = new List<ShopInfo>();
+                    for (int i = 0; i < ShopData.getInstance().getDataList().Count; ++i)
+                    {
+                        ShopConfig config = ShopData.getInstance().getDataList()[i];
+                        ShopInfo info = new ShopInfo();
+                        info.Id = config.Id;
+                        info.Name = config.Name;
+                        info.Price = config.Price;
+                        info.ShopType = config.shopType;
+                        info.Desc = config.Desc;
+                        info.CurrencyType = config.CurrencyType;
+                        info.Items = config.Items;
+                        info.Icon = config.Icon;
+                        info.VipPrice = config.VipPrice;
+                        shopInfoList.Add(info);
+                    }
+                    response.ShopInfoList = shopInfoList;
+                }
                 {
-                    ShopConfig config = ShopData.getInstance().getDataList()[i];
-                    ShopInfo info = new ShopInfo();
-                    info.Id = config.Id;
-                    info.Name = config.Name;
-                    info.Price = config.Price;
-                    info.ShopType = config.shopType;
-                    info.Desc = config.Desc;
-                    info.CurrencyType = config.CurrencyType;
-                    info.Items = config.Items;
-                    info.Icon = config.Icon;
-                    info.VipPrice = config.VipPrice;
-                    shopInfoList.Add(info);
+                    //任务
+                    if (TaskData.getInstance().getDataList().Count == 0)
+                    {
+                        List<TaskConfig> taskList = new List<TaskConfig>();
+                        for (int i = 1; i < configCom.GetAll(typeof(TaskConfig)).Length + 1; ++i)
+                        {
+                            int id = 100 + i;
+                            TaskConfig config = (TaskConfig)configCom.Get(typeof(TaskConfig), id);
+                            taskList.Add(config);
+                        }
+                        TaskData.getInstance().getDataList().AddRange(taskList);
+                    }
                 }
 
-			    List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{userId}}}");
+                {
+                    //成就
+                    if (ChengjiuData.getInstance().getDataList().Count == 0)
+                    {
+                        List<ChengjiuConfig> chengjiuList = new List<ChengjiuConfig>();
+                        for (int i = 1; i < configCom.GetAll(typeof(ChengjiuConfig)).Length + 1; ++i)
+                        {
+                            int id = 100 + i;
+                            ChengjiuConfig config = (ChengjiuConfig)configCom.Get(typeof(ChengjiuConfig), id);
+                            chengjiuList.Add(config);
+                        }
+                        ChengjiuData.getInstance().getDataList().AddRange(chengjiuList);
+                    }
+                }
+
+                List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{userId}}}");
 			    //
 			    if (infos.Count <= 0)
 			    {
@@ -92,7 +126,6 @@ namespace ETHotfix
 
                 response.PlayerId = user.Id;
                 response.Uid = userId;
-                response.ShopInfoList = shopInfoList;
 
                 List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 response.BagList = new List<Bag>();

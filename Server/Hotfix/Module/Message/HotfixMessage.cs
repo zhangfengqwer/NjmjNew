@@ -2673,6 +2673,12 @@ namespace ETHotfix
 		[ProtoMember(10, IsRequired = true)]
 		public string Reason;
 
+		[ProtoMember(11, IsRequired = true)]
+		public string Name;
+
+		[ProtoMember(12, IsRequired = true)]
+		public string CreateBaobiaoTime;
+
 	}
 
 	[Message(HotfixOpcode.G2C_GM)]
@@ -2699,6 +2705,9 @@ namespace ETHotfix
 
 		[ProtoMember(4, IsRequired = true)]
 		public string Ip;
+
+		[ProtoMember(5)]
+		public List<ShopInfo> ShopInfoList = new List<ShopInfo>();
 
 	}
 
