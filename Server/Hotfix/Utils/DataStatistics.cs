@@ -270,7 +270,7 @@ namespace ETHotfix
             StreamWriter sw = null;
             try
             {
-                string folderPath = AppDomain.CurrentDomain.BaseDirectory + "../Logs/BaoBiao/";
+                string folderPath = AppDomain.CurrentDomain.BaseDirectory + "../BaoBiao/";
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
