@@ -253,7 +253,8 @@ namespace ETHotfix
                     case 5:
                         {
                             //生成报表
-                            await DataStatistics.Start(message.CreateBaobiaoTime);
+                            string logData = await DataStatistics.Start(message.CreateBaobiaoTime);
+                            response.LogData = logData;
                         }
                         break;
                     case 6:
@@ -270,8 +271,11 @@ namespace ETHotfix
                         else if (!string.IsNullOrEmpty(message.Name))
                         {
                             infos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{Name:'{message.Name}'}}");
-                            accountInfo = await DBCommonUtil.getAccountInfo(infos[0].Id);
-                            logLogins = await proxyComponent.QueryJson<Log_Login>($"{{Uid:{infos[0].Id}}}");
+                            if (infos.Count > 0)
+                            {
+                                accountInfo = await DBCommonUtil.getAccountInfo(infos[0].Id);
+                                logLogins = await proxyComponent.QueryJson<Log_Login>($"{{Uid:{infos[0].Id}}}");
+                            }
                         }
 
                         if(infos.Count > 0)
@@ -349,7 +353,7 @@ namespace ETHotfix
                         Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
 
                         M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GetRoomInfo());
-
+                        response.Room = new RoomInfo();
                         response.Room.NewRoomCount = getRoomInfo.NewRoomCount;
                         response.Room.NewTotalPlayerInGameCount = getRoomInfo.NewTotalPlayerInGameCount;
                         response.Room.JingRoomCount = getRoomInfo.JingRoomCount;

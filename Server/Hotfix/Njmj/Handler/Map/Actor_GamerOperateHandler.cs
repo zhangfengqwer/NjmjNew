@@ -13,6 +13,7 @@ namespace ETHotfix
         {
             try
             {
+              
                 MahjongInfo mahjongInfo = new MahjongInfo()
                 {
                     weight = (byte) message.weight,
@@ -22,6 +23,7 @@ namespace ETHotfix
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
                 room.IsOperate = true;
+                if (room.IsGameOver) return;
 
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
@@ -242,6 +244,7 @@ namespace ETHotfix
                             MahjongInfo grabMahjong = room.GrabMahjong();
                             if (grabMahjong == null)
                             {
+                                Log.Info("没牌流局了");
                                 gameController.GameOver(0);
                                 return;
                             }
@@ -267,6 +270,7 @@ namespace ETHotfix
                                 grabMahjong = room.GrabMahjong();
                                 if (grabMahjong == null)
                                 {
+                                    Log.Info("没牌流局了");
                                     gameController.GameOver(0);
                                     return;
                                 }

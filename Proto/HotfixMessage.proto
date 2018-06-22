@@ -962,5 +962,6 @@ message G2C_GM // IResponse
 	required long UId = 5;
 	required string Channel = 6;
 	required RoomInfo Room = 7;
+	required string LogData = 8;
 }
 #endregion

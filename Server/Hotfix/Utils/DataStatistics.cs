@@ -36,7 +36,7 @@ namespace ETHotfix
         }
 
         // time : yyyy-MM-dd
-        public static async Task Start(string time)
+        public static async Task<string> Start(string time)
         {
             try
             { 
@@ -48,12 +48,13 @@ namespace ETHotfix
                 logData += await RechargeUserNum(time);
                 logData += await GameCount(time);
                 logData += await GameUserCount(time);
-
+                return logData;
                 writeLogToLocalNow(logData);
             }
             catch (Exception ex)
             {
-
+                Log.Error("生成报表异常" + ex);
+                return "";
             }
         }
 
