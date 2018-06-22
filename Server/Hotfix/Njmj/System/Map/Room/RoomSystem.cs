@@ -252,7 +252,7 @@ namespace ETHotfix
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 //等待客户端显示
-                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);

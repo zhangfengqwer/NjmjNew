@@ -1088,20 +1088,34 @@ namespace ETHotfix
         /// <param name="operationType"></param>
         public async void ShowOperateAnimAsync(int operationType)
         {
+            string name = null;
             switch ((GamerOpearteType)operationType)
             {
                 //碰
                 case GamerOpearteType.Peng:
-                    GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", "PengAnim");
-                    GameObject gameObject = UnityEngine.Object.Instantiate(obj, this.prompt.transform);
-                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-                    if (this.IsDisposed)
-                    {
-                        return;
-                    }
-                    GameObject.Destroy(gameObject);
+                    name = "PengAnim";
+                    break;
+                case GamerOpearteType.AnGang:
+                case GamerOpearteType.MingGang:
+                case GamerOpearteType.PengGang:
+                    name = "GangAnim";
+                    break;
+                case GamerOpearteType.Hu:
+                    name = "HuAnim";
                     break;
             }
+            if (name == null) return;
+            GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", name);
+            GameObject gameObject = UnityEngine.Object.Instantiate(obj, this.prompt.transform);
+
+            Animator animator = gameObject.GetComponent<Animator>();
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync((long)(stateInfo.length * 1000));
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            GameObject.Destroy(gameObject);
         }
     }
 }

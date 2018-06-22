@@ -71,7 +71,7 @@ namespace ETHotfix
                     }
                 }
                 //显示碰刚动画
-                //handCardsComponent.ShowOperateAnimAsync(message.OperationType);
+                handCardsComponent.ShowOperateAnimAsync(message.OperationType);
 
 
                 if (isReconnect)
