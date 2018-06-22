@@ -18,6 +18,18 @@
 	{
 	}
 
+	message G2M_GetRoomInfo // IRequest
+	{
+	}
+
+	message M2G_GetRoomInfo // IResponse
+	{
+		required int NewRoomCount = 1;
+		required int NewTotalPlayerInGameCount = 2;
+		required int JingRoomCount = 3;
+		required int JingTotalPlayerInGameCount = 4;
+	}
+
 	message G2G_LockRequest // IRequest
 	{
 		required int64 Id = 1;

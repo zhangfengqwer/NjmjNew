@@ -151,6 +151,7 @@ namespace ETModel
 		 public const ushort C2G_Tip = 10147;
 		 public const ushort G2C_Tip = 10148;
 		 public const ushort C2G_GM = 10149;
-		 public const ushort G2C_GM = 10150;
+		 public const ushort RoomInfo = 10150;
+		 public const ushort G2C_GM = 10151;
 	}
 }

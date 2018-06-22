@@ -57,14 +57,24 @@ namespace ETHotfix
                     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "与服务器断开连接，请重新登录。");
                     script.setOnClickOkEvent(() =>
                     {
+#if GM
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGMLogin);
+#else
                         Game.Scene.GetComponent<UIComponent>().RemoveAll();
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+#endif
                     });
 
                     script.setOnClickCloseEvent(() =>
                     {
+#if GM
+                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGMLogin);
+#else
                         Game.Scene.GetComponent<UIComponent>().RemoveAll();
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+#endif
                     });
                 }
             }
