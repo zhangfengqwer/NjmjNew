@@ -7,11 +7,7 @@ namespace ETHotfix
 	{
 		public override void Run()
 		{
-#if GM
-            UI ui = CommonUtil.ShowUI(UIType.UIGMLogin);
-#else
             UI ui = CommonUtil.ShowUI(UIType.UILogin);
-#endif
         }
 	}
 }
