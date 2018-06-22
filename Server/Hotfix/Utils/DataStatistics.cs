@@ -17,7 +17,7 @@ namespace ETHotfix
                 string time = CommonUtil.timeAddDays(CommonUtil.getCurDataNormalFormat(), -1);
                 time = Convert.ToDateTime(time).ToString("yyyy-MM-dd");
 
-                string logData = CommonUtil.getCurTimeNormalFormat() + ":\r\n";
+                string logData = "";
                 logData += await NewUser(time);
                 logData += await DailyLogin(time);
                 logData += await LoadOldUserCount(time);
@@ -39,8 +39,8 @@ namespace ETHotfix
         public static async Task<string> Start(string time)
         {
             try
-            { 
-                string logData = CommonUtil.getCurTimeNormalFormat() + ":\r\n";
+            {
+                string logData = "";
                 logData += await NewUser(time);
                 logData += await DailyLogin(time);
                 logData += await LoadOldUserCount(time);
@@ -266,10 +266,11 @@ namespace ETHotfix
         // 记录文本日志到本地
         static void writeLogToLocalNow(string data)
         {
+            data = CommonUtil.getCurTimeNormalFormat() + ":\r\n" + data;
             StreamWriter sw = null;
             try
             {
-                string folderPath = AppDomain.CurrentDomain.BaseDirectory + "../Logs/BaoBiao/";
+                string folderPath = AppDomain.CurrentDomain.BaseDirectory + "../BaoBiao/";
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);

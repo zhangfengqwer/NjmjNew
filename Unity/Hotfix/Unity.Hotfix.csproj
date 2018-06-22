@@ -290,6 +290,7 @@
     <Compile Include="UI\UIVIP\Component\UIVIPComponent.cs" />
     <Compile Include="UI\UIVIP\Factory\UIVIPFactory.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
+    <Compile Include="Utils\FrameAnimation.cs" />
     <Compile Include="Utils\GameUtil.cs" />
     <Compile Include="Utils\HeartBeat.cs" />
     <Compile Include="Utils\HttpReqUtil.cs" />
