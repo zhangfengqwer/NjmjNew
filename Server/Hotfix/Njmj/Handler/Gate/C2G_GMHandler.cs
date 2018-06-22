@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace ETHotfix
@@ -8,7 +9,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Gate)]
     public class C2G_GMHandler : AMRpcHandler<C2G_GM, G2C_GM>
     {
-        //1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表
+        //1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线 8,修改用户信息 9,查看游戏内信息
         protected override async void Run(Session session, C2G_GM message, Action<G2C_GM> reply)
         {
             G2C_GM response = new G2C_GM();
@@ -286,7 +287,7 @@ namespace ETHotfix
                             info.MaxHua = infos[0].MaxHua;
                             info.TotalGameCount = infos[0].TotalGameCount;
                             info.WinGameCount = infos[0].WinGameCount;
-                            
+                            response.UId = infos[0].Id;
                             if(logLogins.Count > 0)
                             {
                                 response.LastOnlineTime = logLogins[logLogins.Count - 1].CreateTime;
@@ -295,9 +296,10 @@ namespace ETHotfix
                             {
                                 info.Phone = accountInfo.Phone;
                                 response.RegisterTime = accountInfo.CreateTime;
+                                response.Channel = accountInfo.ChannelName;
                             }
                             response.Info = info;
-                            response.Ip = session.RemoteAddress.ToString().Split(':')[0];
+                            response.Ip = logLogins[logLogins.Count - 1].ip;
                         }
                         else
                         {
@@ -311,6 +313,47 @@ namespace ETHotfix
                             //强制玩家离线
                             UserComponentSystem.ForceOffline(message.UId,message.Reason);
                         }
+                        break;
+                    case 8:
+                        {
+                            //更改用户信息
+                            List<PlayerBaseInfo> playerInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
+                            if (playerInfos.Count > 0)
+                            {
+                                if (!message.Icon.Equals("0"))
+                                {
+                                    playerInfos[0].Icon = message.Icon;
+                                }
+                                if (message.RestChangeNameCount != 0)
+                                {
+                                    playerInfos[0].RestChangeNameCount = message.RestChangeNameCount;
+                                }
+                                if (!message.Prop.Equals("0"))
+                                {
+                                    await DBCommonUtil.changeWealthWithStr(message.UId,message.Prop,"GM中增加玩家道具");
+                                }
+                                await proxyComponent.Save(playerInfos[0]);
+                            }
+                            else
+                            {
+                                response.Error = ErrorCode.ERR_Exception;
+                                response.Message = "用户不存在，请检查UID是否正确";
+                            }
+                        }
+                        break;
+                    case 9:
+                        //查看游戏内信息
+
+                        StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
+                        IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
+                        Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
+
+                        M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GetRoomInfo());
+
+                        response.Room.NewRoomCount = getRoomInfo.NewRoomCount;
+                        response.Room.NewTotalPlayerInGameCount = getRoomInfo.NewTotalPlayerInGameCount;
+                        response.Room.JingRoomCount = getRoomInfo.JingRoomCount;
+                        response.Room.JingTotalPlayerInGameCount = getRoomInfo.JingTotalPlayerInGameCount;
                         break;
                 }
                 reply(response);

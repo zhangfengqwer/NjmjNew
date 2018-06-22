@@ -1209,7 +1209,7 @@ namespace ETHotfix
 
 	[Message(HotfixOpcode.GamerData)]
 	[ProtoContract]
-	public partial class  GamerData: IMessage
+	public partial class GamerData: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
 		public long UserID;
@@ -2697,6 +2697,34 @@ namespace ETHotfix
 		[ProtoMember(12, IsRequired = true)]
 		public string CreateBaobiaoTime;
 
+		[ProtoMember(13, IsRequired = true)]
+		public int RestChangeNameCount;
+
+		[ProtoMember(14, IsRequired = true)]
+		public string Prop;
+
+		[ProtoMember(15, IsRequired = true)]
+		public string Icon;
+
+	}
+
+//房间信息
+	[Message(HotfixOpcode.RoomInfo)]
+	[ProtoContract]
+	public partial class RoomInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public int NewRoomCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int NewTotalPlayerInGameCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int JingRoomCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int JingTotalPlayerInGameCount;
+
 	}
 
 	[Message(HotfixOpcode.G2C_GM)]
@@ -2724,8 +2752,14 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public string Ip;
 
-		[ProtoMember(5, TypeName = "ETHotfix.ShopInfo")]
-		public List<ShopInfo> ShopInfoList = new List<ShopInfo>();
+		[ProtoMember(5, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(6, IsRequired = true)]
+		public string Channel;
+
+		[ProtoMember(7, IsRequired = true)]
+		public RoomInfo Room;
 
 	}
 
