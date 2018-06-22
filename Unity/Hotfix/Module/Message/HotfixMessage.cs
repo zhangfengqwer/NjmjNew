@@ -1209,7 +1209,7 @@ namespace ETHotfix
 
 	[Message(HotfixOpcode.GamerData)]
 	[ProtoContract]
-	public partial class  GamerData: IMessage
+	public partial class GamerData: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
 		public long UserID;
