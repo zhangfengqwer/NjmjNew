@@ -2761,6 +2761,9 @@ namespace ETHotfix
 		[ProtoMember(7, IsRequired = true)]
 		public RoomInfo Room;
 
+		[ProtoMember(8, IsRequired = true)]
+		public string LogData;
+
 	}
 
 }
