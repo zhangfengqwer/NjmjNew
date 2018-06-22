@@ -55,7 +55,7 @@ namespace ETHotfix
                     SelToggle.transform.Find("Background/Checkmark").gameObject.SetActive(false);
                 }
 
-                PlatformHelper.SetIsFormal(NetConfig.getInstance().isFormal ? "0" : "1");
+                //PlatformHelper.SetIsFormal(NetConfig.getInstance().isFormal ? "0" : "1");
             });
         }
 

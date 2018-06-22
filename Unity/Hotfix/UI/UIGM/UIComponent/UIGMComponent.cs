@@ -44,6 +44,7 @@ namespace ETHotfix
         private InputField ReasonInputField;
 
         #region User
+        private Text UserIdTxt;
         private Text MaxhuaTxt;
         private Text ExTxt;
         private Text VipTimeTxt;
@@ -63,6 +64,7 @@ namespace ETHotfix
         private Text PhoneTxt;
         private Text RegisterTimeTxt;
         private Text IpTxt;
+        private Text ChannelTxt;
         #endregion
 
         #region 强制离线
@@ -72,6 +74,27 @@ namespace ETHotfix
         private InputField FReasonInputField;
         private InputField ForceUIdInputField;
         private Button ForceOfflineCloseBtn;
+        #endregion
+
+        #region 修改用户信息
+        private Button ModifyBtn;
+        private GameObject Modify;
+        private Button ModifyCloseBtn;
+        private InputField RestChangeNameInputField;
+        private Button ModifySureBtn;
+        private InputField ModifyPropInputField;
+        private InputField ModifyIconInputField;
+        #endregion
+
+        #region 房间信息
+        private Button RoomBtn;
+        private Button CloseRoomBtn;
+        private GameObject RoomInfo;
+        private Button RequestBtn;
+        private Text NewRoomTxt;
+        private Text NewInGameTxt;
+        private Text JingRoomTxt;
+        private Text JingInGameTxt;
         #endregion
 
         private bool isOn = false;
@@ -102,6 +125,7 @@ namespace ETHotfix
 
             #region User
             MaxhuaTxt = rc.Get<GameObject>("MaxhuaTxt").GetComponent<Text>();
+            UserIdTxt = rc.Get<GameObject>("UserIdTxt").GetComponent<Text>();
             ExTxt = rc.Get<GameObject>("ExTxt").GetComponent<Text>();
             VipTimeTxt = rc.Get<GameObject>("VipTimeTxt").GetComponent<Text>();
             WinGameTxt = rc.Get<GameObject>("WinGameTxt").GetComponent<Text>();
@@ -120,6 +144,7 @@ namespace ETHotfix
             IpTxt = rc.Get<GameObject>("IpTxt").GetComponent<Text>();
             RegisterTimeTxt = rc.Get<GameObject>("RegisterTimeTxt").GetComponent<Text>();
             NameInputField  = rc.Get<GameObject>("NameInputField").GetComponent<InputField>();
+            ChannelTxt = rc.Get<GameObject>("ChannelTxt").GetComponent<Text>();
             #endregion
 
             #region ForceOffline
@@ -129,6 +154,27 @@ namespace ETHotfix
             ForceUIdInputField = rc.Get<GameObject>("ForceUIdInputField").GetComponent<InputField>();
             ForceOfflineCloseBtn = rc.Get<GameObject>("ForceOfflineCloseBtn").GetComponent<Button>();
             ForceOffline = rc.Get<GameObject>("ForceOffline");
+            #endregion
+
+            #region 修改用户信息
+            ModifyBtn = rc.Get<GameObject>("ModifyBtn").GetComponent<Button>();
+            Modify = rc.Get<GameObject>("Modify");
+            ModifyCloseBtn = rc.Get<GameObject>("ModifyCloseBtn").GetComponent<Button>();
+            ModifySureBtn = rc.Get<GameObject>("ModifySureBtn").GetComponent<Button>();
+            RestChangeNameInputField = rc.Get<GameObject>("RestChangeNameInputField").GetComponent<InputField>();
+            ModifyPropInputField = rc.Get<GameObject>("ModifyPropInputField").GetComponent<InputField>();
+            ModifyIconInputField = rc.Get<GameObject>("ModifyIconInputField").GetComponent<InputField>();
+            #endregion
+
+            #region Room
+            RoomBtn = rc.Get<GameObject>("RoomBtn").GetComponent<Button>();
+            CloseRoomBtn = rc.Get<GameObject>("CloseRoomBtn").GetComponent<Button>();
+            RoomInfo = rc.Get<GameObject>("RoomInfo");
+            RequestBtn = rc.Get<GameObject>("RequestBtn").GetComponent<Button>();
+            NewRoomTxt = rc.Get<GameObject>("NewRoomTxt").GetComponent<Text>();
+            NewInGameTxt = rc.Get<GameObject>("NewInGameTxt").GetComponent<Text>();
+            JingRoomTxt = rc.Get<GameObject>("JingRoomTxt").GetComponent<Text>();
+            JingInGameTxt = rc.Get<GameObject>("JingInGameTxt").GetComponent<Text>();
             #endregion
 
             Mail = rc.Get<GameObject>("Mail");
@@ -229,33 +275,123 @@ namespace ETHotfix
                 ForceOffline.SetActive(true);
             });
 
+            //发送消息强制玩家离线
             ForceUserBtn.onClick.Add(() =>
             {
                 ForceOfflineOnClick();
             });
 
+            //关闭强制玩家离线界面
             ForceOfflineCloseBtn.onClick.Add(() =>
             {
                 ForceOffline.SetActive(false);
             });
 
+            //显示用户信息
             ShowUserInfoBtn.onClick.Add(() =>
             {
                 UserData.SetActive(true);
             });
 
+            //关闭用户信息界面
             UserDataBtn.onClick.Add(() =>
             {
                 UserData.SetActive(false);
             });
 
+            //请求用户信息
             SureBtn.onClick.Add(() =>
             {
                 GetUserInfo();
             });
 
+            RoomBtn.onClick.Add(() =>
+            {
+                RoomInfo.SetActive(true);
+            });
+
+            CloseRoomBtn.onClick.Add(() =>
+            {
+                RoomInfo.SetActive(false);
+            });
+
+            RequestBtn.onClick.Add(() =>
+            {
+                RequestRoomInfo();
+            });
+
+            ModifyBtn.onClick.Add(() =>
+            {
+                Modify.SetActive(true);
+            });
+
+            ModifyCloseBtn.onClick.Add(() =>
+            {
+                Modify.SetActive(false);
+            });
+
+            ModifySureBtn.onClick.Add(() =>
+            {
+                ModifyUserInfo();
+            });
+
             HeartBeat.getInstance().startHeartBeat();
 
+        }
+
+        private async void ModifyUserInfo()
+        {
+            if(string.IsNullOrEmpty(RestChangeNameInputField.text ))
+            {
+                RestChangeNameInputField.text = "0";
+            }
+            if (string.IsNullOrEmpty(ModifyIconInputField.text))
+            {
+                ModifyIconInputField.text = "0";
+            }
+            if (string.IsNullOrEmpty(ModifyPropInputField.text))
+            {
+                ModifyPropInputField.text = "0";
+            }
+
+            G2C_GM gm = (G2C_GM)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GM
+            {
+                RestChangeNameCount = int.Parse(RestChangeNameInputField.text),
+                Icon = ModifyIconInputField.text,
+                Prop = ModifyPropInputField.text,
+                Type = 8
+            });
+
+            if(gm.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(gm.Message);
+                return;
+            }
+            ToastScript.createToast("修改成功");
+        }
+
+        private async void RequestRoomInfo()
+        {
+            G2C_GM gm = (G2C_GM)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GM
+            {
+                Type = 9
+            });
+
+            if(gm.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(gm.Message);
+                return;
+            }
+
+            SetRoomInfo(gm.Room);
+        }
+
+        private void SetRoomInfo(RoomInfo info)
+        {
+            NewRoomTxt.text = info.NewRoomCount.ToString();
+            NewInGameTxt.text = info.NewTotalPlayerInGameCount.ToString();
+            JingRoomTxt.text = info.JingRoomCount.ToString();
+            JingInGameTxt.text = info.JingTotalPlayerInGameCount.ToString();
         }
 
         private async void ForceOfflineOnClick()
@@ -308,6 +444,7 @@ namespace ETHotfix
 
         private void SetUserInfo(G2C_GM gm)
         {
+            UserIdTxt.text = gm.UId.ToString();
             UserNameTxt.text = gm.Info.Name;
             GoldNumTxt.text = gm.Info.GoldNum.ToString();
             YuanbaoTxt.text = gm.Info.WingNum.ToString();
