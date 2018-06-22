@@ -14,7 +14,8 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info($"收到有人碰刚胡");
+                Log.Info($"收到有人能够碰刚：" + JsonHelper.ToJson(message));
+
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();

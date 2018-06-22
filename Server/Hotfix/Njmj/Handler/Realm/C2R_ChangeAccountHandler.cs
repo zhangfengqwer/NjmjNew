@@ -7,8 +7,8 @@ using MongoDB.Driver;
 
 namespace ETHotfix
 {
-	[MessageHandler(AppType.Realm)]
-	public class C2R_ChangeAccountHandler : AMRpcHandler<C2R_ChangeAccount, R2C_ChangeAccount>
+	[MessageHandler(AppType.Gate)]
+	public class C2G_ChangeAccountHandler : AMRpcHandler<C2R_ChangeAccount, R2C_ChangeAccount>
 	{
 	    protected override async void Run(Session session, C2R_ChangeAccount message, Action<R2C_ChangeAccount> reply)
 	    {
