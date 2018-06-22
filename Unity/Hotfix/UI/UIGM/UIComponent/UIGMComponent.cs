@@ -84,6 +84,7 @@ namespace ETHotfix
         private Button ModifySureBtn;
         private InputField ModifyPropInputField;
         private InputField ModifyIconInputField;
+        private InputField MoUIdInputField;
         #endregion
 
         #region 房间信息
@@ -164,6 +165,7 @@ namespace ETHotfix
             RestChangeNameInputField = rc.Get<GameObject>("RestChangeNameInputField").GetComponent<InputField>();
             ModifyPropInputField = rc.Get<GameObject>("ModifyPropInputField").GetComponent<InputField>();
             ModifyIconInputField = rc.Get<GameObject>("ModifyIconInputField").GetComponent<InputField>();
+            MoUIdInputField = rc.Get<GameObject>("MoUIdInputField").GetComponent<InputField>();
             #endregion
 
             #region Room
@@ -317,7 +319,7 @@ namespace ETHotfix
 
             RequestBtn.onClick.Add(() =>
             {
-                RequestRoomInfo();
+                //RequestRoomInfo();
             });
 
             ModifyBtn.onClick.Add(() =>
@@ -341,21 +343,27 @@ namespace ETHotfix
 
         private async void ModifyUserInfo()
         {
-            if(string.IsNullOrEmpty(RestChangeNameInputField.text ))
+            if (string.IsNullOrEmpty(MoUIdInputField.text))
+            {
+                ToastScript.createToast("UID不能为空");
+                return;
+            }
+            if(string.IsNullOrEmpty(RestChangeNameInputField.text) || RestChangeNameInputField.text.Equals("0"))
             {
                 RestChangeNameInputField.text = "0";
             }
-            if (string.IsNullOrEmpty(ModifyIconInputField.text))
+            if (string.IsNullOrEmpty(ModifyIconInputField.text) || ModifyIconInputField.text.Equals("0"))
             {
                 ModifyIconInputField.text = "0";
             }
-            if (string.IsNullOrEmpty(ModifyPropInputField.text))
+            if (string.IsNullOrEmpty(ModifyPropInputField.text) || ModifyPropInputField.text.Equals("0"))
             {
                 ModifyPropInputField.text = "0";
             }
 
             G2C_GM gm = (G2C_GM)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GM
             {
+                UId = long.Parse(MoUIdInputField.text),
                 RestChangeNameCount = int.Parse(RestChangeNameInputField.text),
                 Icon = ModifyIconInputField.text,
                 Prop = ModifyPropInputField.text,

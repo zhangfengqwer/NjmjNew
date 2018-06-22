@@ -298,7 +298,7 @@ namespace ETHotfix
                                 response.Channel = accountInfo.ChannelName;
                             }
                             response.Info = info;
-                            response.Ip = session.RemoteAddress.ToString().Split(':')[0];
+                            response.Ip = logLogins[logLogins.Count - 1].ip;
                         }
                         else
                         {
