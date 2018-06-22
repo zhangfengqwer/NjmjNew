@@ -86,6 +86,7 @@ namespace ETHotfix
 
             //花牌显示
             this.faceCard = panel.Get<GameObject>("FaceCard");
+            this.prompt = panel.Get<GameObject>("Prompt");
 
             faceCard.GetComponent<Button>().onClick.Add(() =>
             {
@@ -975,7 +976,11 @@ namespace ETHotfix
         {
             Log.Debug("重设bottom");
             CardBottom.transform.localPosition = cardBottonPosition;
-        }
+            dealNum = 0;
+            dealObjs.Clear();
+            myCard.Clear();
+            faceCard.SetActive(false);
+    }
 
         public void ChangeGold(int amount)
         {
@@ -988,10 +993,11 @@ namespace ETHotfix
         /// </summary>
         /// <param name="myCard"></param>
 
-        private int dealNum = 0;
+        public int dealNum = 0;
 
-        private List<GameObject> dealObjs = new List<GameObject>();
-        public List<MahjongInfo> myCard;
+        public List<GameObject> dealObjs = new List<GameObject>();
+        public List<MahjongInfo> myCard = new List<MahjongInfo>();
+        private GameObject prompt;
 
         public void StartDealCardAnim(bool isSelf)
         {
@@ -1073,6 +1079,28 @@ namespace ETHotfix
             for (int i = 0; i < CardBottom.transform.childCount; i++)
             {
                 CardBottom.transform.GetChild(i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Bottom_Card", "bottom_back");
+            }
+        }
+
+        /// <summary>
+        /// 显示碰刚动画
+        /// </summary>
+        /// <param name="operationType"></param>
+        public async void ShowOperateAnimAsync(int operationType)
+        {
+            switch ((GamerOpearteType)operationType)
+            {
+                //碰
+                case GamerOpearteType.Peng:
+                    GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", "PengAnim");
+                    GameObject gameObject = UnityEngine.Object.Instantiate(obj, this.prompt.transform);
+                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+                    if (this.IsDisposed)
+                    {
+                        return;
+                    }
+                    GameObject.Destroy(gameObject);
+                    break;
             }
         }
     }

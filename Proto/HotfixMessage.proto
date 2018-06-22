@@ -928,7 +928,7 @@ message G2C_Tip //IResponse
 message C2G_GM // IRequest
 {
 	required long UId = 1;
-	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线
+	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线 8,修改用户信息 9,查看游戏内信息
 	required string Title = 3;
 	required string Content = 4;
 	required string Reward = 5;
@@ -939,6 +939,18 @@ message C2G_GM // IRequest
     required string Reason = 10;
     required string Name = 11;
     required string CreateBaobiaoTime = 12;
+    required int RestChangeNameCount = 13;
+    required string Prop = 14;
+    required string Icon = 15;
+}
+
+//房间信息
+message RoomInfo //IMessage
+{
+	required int NewRoomCount = 1;
+	required int NewTotalPlayerInGameCount = 2;
+	required int JingRoomCount = 3;
+	required int JingTotalPlayerInGameCount = 4;
 }
 
 message G2C_GM // IResponse
@@ -947,6 +959,9 @@ message G2C_GM // IResponse
 	required string RegisterTime = 2;
 	required string LastOnlineTime = 3;
 	required string Ip = 4;
-	repeated ShopInfo ShopInfoList = 5;//商店商品
+	required long UId = 5;
+	required string Channel = 6;
+	required RoomInfo Room = 7;
+	required string LogData = 8;
 }
 #endregion

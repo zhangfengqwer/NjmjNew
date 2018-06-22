@@ -52,7 +52,6 @@ namespace ETHotfix
                         ShopData.getInstance().getDataList().AddRange(shopList);
                     }
 
-
                     //#region AddShopInfo
                     List<ShopInfo> shopInfoList = new List<ShopInfo>();
                     for (int i = 0; i < ShopData.getInstance().getDataList().Count; ++i)

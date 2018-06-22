@@ -102,7 +102,7 @@ namespace ETHotfix
 
             if (gamer.isOffline)
             {
-                self.TimeOut = 1;
+                self.TimeOut = 2;
             }
             else
             {
@@ -155,8 +155,7 @@ namespace ETHotfix
             }
 
             self.tokenSource = new CancellationTokenSource();
-            await Game.Scene.GetComponent<TimerComponent>()
-                .WaitAsync(self.OperationTimeOut * 1000, self.tokenSource.Token);
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(self.OperationTimeOut * 1000, self.tokenSource.Token);
 
             if (!self.tokenSource.IsCancellationRequested)
             {
@@ -232,6 +231,7 @@ namespace ETHotfix
             var grabMahjong = GrabMahjong(room);
             if (grabMahjong == null)
             {
+                Log.Info("没牌流局了");
                 gameController.GameOver(0);
                 return;
             }
@@ -258,6 +258,7 @@ namespace ETHotfix
                 grabMahjong = GrabMahjong(room);
                 if (grabMahjong == null)
                 {
+                    Log.Info("没牌流局了");
                     gameController.GameOver(0);
                     return;
                 }

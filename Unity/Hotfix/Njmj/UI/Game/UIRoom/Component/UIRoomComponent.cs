@@ -289,10 +289,12 @@ namespace ETHotfix
         /// </summary>
         public void ContinueGamer()
         {
+            players.SetActive(false);
             this.changeTableBtn.gameObject.SetActive(true);
             this.readyBtn.gameObject.SetActive(true);
             this.desk.SetActive(false);
             this.trustship.SetActive(false);
+
             //碰刚按钮隐藏
             this.giveUpBtn.gameObject.SetActive(false);
             this.huBtn.gameObject.SetActive(false);

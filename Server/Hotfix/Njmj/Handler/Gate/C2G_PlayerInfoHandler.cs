@@ -34,8 +34,13 @@ namespace ETHotfix
                     response.PlayerInfo.VipTime = playerInfo[0].VipTime;
                     response.PlayerInfo.EmogiTime = playerInfo[0].EmogiTime;
                     response.PlayerInfo.MaxHua = playerInfo[0].MaxHua;
-                    response.PlayerInfo.TotalGameCount = playerInfo[0].TotalGameCount;
                     response.PlayerInfo.WinGameCount = playerInfo[0].WinGameCount;
+                    List<ChengjiuInfo> infos =
+                        await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.uid},TaskId:{102}}}");
+                    if (infos.Count > 0)
+                    {
+                        response.PlayerInfo.TotalGameCount = infos[0].CurProgress;
+                    }
                     if(otherDatas.Count > 0)
                     {
                         response.OwnIcon = otherDatas[0].OwnIcon;

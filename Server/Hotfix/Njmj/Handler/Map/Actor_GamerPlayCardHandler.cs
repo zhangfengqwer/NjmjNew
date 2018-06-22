@@ -77,6 +77,7 @@ namespace ETHotfix
 	                    Uid = gamer.UserID,
 	                    index = message.index
 	                };
+
                     room.Broadcast(actorGamerPlayCard);
 	                room.reconnectList.Add(actorGamerPlayCard);
 
@@ -106,7 +107,7 @@ namespace ETHotfix
                             isNeedWait = true;
 
                             canOperation.OperationType = 0;
-
+	                        Log.Info($"{_gamer.UserID}可碰");
 	                        room.GamerBroadcast(_gamer, canOperation);
 	                    }
 
@@ -116,7 +117,8 @@ namespace ETHotfix
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
-	                        room.GamerBroadcast(_gamer, canOperation);
+	                        Log.Info($"{_gamer.UserID}可杠");
+                            room.GamerBroadcast(_gamer, canOperation);
                         }
 
 	                    //判断小胡,4个花以上才能胡
@@ -130,7 +132,7 @@ namespace ETHotfix
 	                        {
 	                            if (room.CanHu(mahjongInfo, cards))
 	                            {
-	                                Log.Debug("小胡能");
+	                               
                                     _gamer.IsCanHu = true;
 	                                isNeedWait = true;
 

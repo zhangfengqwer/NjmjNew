@@ -63,6 +63,7 @@ namespace ETHotfix
             try
             {
                 Room room = self.GetParent<Room>();
+                room.tokenSource.Cancel();
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
@@ -261,6 +262,7 @@ namespace ETHotfix
                 //完成1000局游戏
                 await DBCommonUtil.UpdateChengjiu(gamer.UserID, 103, 1);
 //                Log.Debug("不论输赢都会加一" + gamer.UserID + "任务" + 103);
+                 
             }
         }
 

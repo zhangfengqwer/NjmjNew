@@ -70,6 +70,9 @@ namespace ETHotfix
                         handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
                     }
                 }
+                //显示碰刚动画
+                //handCardsComponent.ShowOperateAnimAsync(message.OperationType);
+
 
                 if (isReconnect)
                 {

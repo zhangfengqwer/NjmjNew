@@ -111,14 +111,17 @@ namespace ETHotfix
                 ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(taskId);
                 info.IsGet = false;
                 info.UId = UId;
-                info.Name = config.Name;
-                info.TaskId = (int)config.Id;
-                info.IsComplete = false;
-                info.Target = config.Target;
-                info.Reward = config.Reward;
-                info.Desc = config.Desc;
-                info.CurProgress = 0;
-                await proxyComponent.Save(info);
+                if(config != null)
+                {
+                    info.Name = config.Name;
+                    info.TaskId = (int)config.Id;
+                    info.IsComplete = false;
+                    info.Target = config.Target;
+                    info.Reward = config.Reward;
+                    info.Desc = config.Desc;
+                    info.CurProgress = 0;
+                    await proxyComponent.Save(info);
+                }
 
                 chengjiuInfoList =
                await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
