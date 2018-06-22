@@ -8,6 +8,9 @@ namespace ETHotfix
 {
     public class Gamer : Entity
     {
+        //玩家打牌数据
+        public GamerData gameData;
+
         //用户ID（唯一）
         public long UserID { get; set; }
 

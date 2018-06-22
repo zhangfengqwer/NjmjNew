@@ -92,7 +92,7 @@ namespace ETHotfix
 			        Log.Info($"玩家{message.UserId}断线重连");
 
                     gamer.StartTime = DateTime.Now;
-			        DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
+			        //DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
                 }
                 else
 			    {

@@ -77,6 +77,7 @@ namespace ETHotfix
 	                    Uid = gamer.UserID,
 	                    index = message.index
 	                };
+
                     room.Broadcast(actorGamerPlayCard);
 	                room.reconnectList.Add(actorGamerPlayCard);
 

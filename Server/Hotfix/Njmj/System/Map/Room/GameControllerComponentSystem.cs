@@ -63,6 +63,7 @@ namespace ETHotfix
             try
             {
                 Room room = self.GetParent<Room>();
+                room.tokenSource.Cancel();
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
