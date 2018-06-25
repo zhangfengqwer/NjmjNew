@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ETModel;
 
 namespace ETHotfix
@@ -38,7 +39,7 @@ namespace ETHotfix
         /// 出牌
         /// </summary>
         /// <param name="self"></param>
-        public static MahjongInfo PopCard(this HandCardsComponent self)
+        public static async Task<MahjongInfo> PopCard(this HandCardsComponent self)
         {
             if (self == null) return null;
             Gamer gamer = self.GetParent<Gamer>();
@@ -67,7 +68,7 @@ namespace ETHotfix
 //            int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
 //
 //            MahjongInfo mahjongInfo = mahjongInfos[randomNumber];
-            Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
+            await Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
             {
                 Uid = gamer.UserID,
                 weight = (int)mahjongInfo.m_weight,

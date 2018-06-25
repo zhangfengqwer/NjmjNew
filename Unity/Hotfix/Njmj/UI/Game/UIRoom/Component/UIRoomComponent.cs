@@ -25,7 +25,7 @@ namespace ETHotfix
         public readonly GameObject[] HeadPanel = new GameObject[4];
         public readonly GameObject[] FacePanel = new GameObject[4];
 
-        private Button exitBtn;
+        public Button exitBtn;
         public Button readyBtn;
         private Image timeImage;
 

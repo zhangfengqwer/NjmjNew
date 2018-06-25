@@ -107,19 +107,20 @@ namespace ETHotfix
                             isNeedWait = true;
                             canOperation.OperationType = 0;
 	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
+                            room.GamerBroadcast(_gamer, canOperation);
 	                        room.Broadcast(canOperation);
-	                        //room.GamerBroadcast(_gamer, canOperation);
-	                    }
+
+                        }
 
                         //明杠
-	                    if (Logic_NJMJ.getInstance().isCanGang(mahjongInfo, cards))
+                        if (Logic_NJMJ.getInstance().isCanGang(mahjongInfo, cards))
 	                    {
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
 	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        //	                        room.Broadcast(canOperation);
+	                        //room.Broadcast(canOperation);
                         }
 
                         //判断小胡,4个花以上才能胡

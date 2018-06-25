@@ -21,7 +21,7 @@ namespace ETHotfix
 				// 发送给客户端
 				Session clientSession = entity as Session;
 				actorMessage.ActorId = 0;
-			    Log.Info("收到map传了的：" + JsonHelper.ToJson(actorMessage));
+			    //Log.Info("收到map传了的：" + JsonHelper.ToJson(actorMessage));
 
 				clientSession.Send(actorMessage);
 

@@ -42,7 +42,7 @@ namespace ETHotfix
 
 				Game.EventSystem.Run(EventIdType.InitSceneStart);
 
-			    Application.targetFrameRate = 45;
+			    Application.targetFrameRate = 30;
 			    // 永不息屏
 			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
