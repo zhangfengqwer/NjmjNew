@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using Hotfix;
 using System;
 using System.Net;
 using UnityEngine;
@@ -155,12 +156,20 @@ namespace ETHotfix
             {
                 VipTimeTxt.text = "";
             }
-            bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
-            bindPhoneBtn.transform.parent.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone));
+            if (OtherData.getIsShiedBindPhone())
+            {
+                bindPhoneBtn.transform.localScale = Vector3.zero;
+            }
+            if (OtherData.getIsShiedRealName())
+            {
+                realNameBtn.transform.localScale = Vector3.zero;
+            }
+            bindPhoneBtn.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone) && !OtherData.getIsShiedBindPhone());
+            bindPhoneBtn.transform.parent.gameObject.SetActive(string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone) && !OtherData.getIsShiedBindPhone());
             changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
-            realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
-            realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName);
+            realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
+            realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
             HuafeiNumTxt.text = (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum / 100.0f).ToString();
@@ -174,19 +183,7 @@ namespace ETHotfix
         {
             HeadManager.setHeadSprite(playerIcon.GetComponent<Image>(), PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
             nameTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Name;
-            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
-            {
-                realNameTxt.text = "已实名";
-                realNameBtn.gameObject.SetActive(false);
-                realNameBtn.transform.parent.gameObject.SetActive(false);
-            }
-               
-            if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
-            {
-                noBindPhoneTxt.text = "已绑定";
-                bindPhoneBtn.gameObject.SetActive(false);
-                bindPhoneBtn.transform.parent.gameObject.SetActive(false);
-            }
+
             if(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount <= 0)
             {
                 changeNameBtn.gameObject.SetActive(false);
@@ -200,6 +197,25 @@ namespace ETHotfix
             else
             {
                 VipTimeTxt.text = "";
+            }
+
+            changeNameBtn.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
+            changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
+            realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
+            realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
+
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+            {
+                realNameTxt.text = "已实名";
+                realNameBtn.gameObject.SetActive(false);
+                realNameBtn.transform.parent.gameObject.SetActive(false);
+            }
+
+            if (!string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            {
+                noBindPhoneTxt.text = "已绑定";
+                bindPhoneBtn.gameObject.SetActive(false);
+                bindPhoneBtn.transform.parent.gameObject.SetActive(false);
             }
         }
 

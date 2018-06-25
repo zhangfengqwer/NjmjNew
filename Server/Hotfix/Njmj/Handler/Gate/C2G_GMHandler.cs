@@ -327,16 +327,17 @@ namespace ETHotfix
                                 if (!message.Icon.Equals("0"))
                                 {
                                     playerInfos[0].Icon = message.Icon;
+                                    await proxyComponent.Save(playerInfos[0]);
                                 }
                                 if (message.RestChangeNameCount != 0)
                                 {
                                     playerInfos[0].RestChangeNameCount = message.RestChangeNameCount;
+                                    await proxyComponent.Save(playerInfos[0]);
                                 }
                                 if (!message.Prop.Equals("0"))
                                 {
                                     await DBCommonUtil.changeWealthWithStr(message.UId,message.Prop,"GM中增加玩家道具");
                                 }
-                                await proxyComponent.Save(playerInfos[0]);
                             }
                             else
                             {

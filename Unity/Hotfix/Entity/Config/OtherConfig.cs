@@ -12,8 +12,6 @@ namespace Hotfix
     {
         public static OtherConfig s_instance = null;
 
-        public string shieldShare = "";
-
         public static OtherConfig getInstance()
         {
             if (s_instance == null)
@@ -30,14 +28,44 @@ namespace Hotfix
 
             // 分享开关
             {
-                shieldShare = jd["shieldShare"].ToString();
+                string data = jd["shieldShare"].ToString();
                 List<string> list = new List<string>();
-                CommonUtil.splitStr(shieldShare,list,';');
+                CommonUtil.splitStr(data, list,';');
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
                     {
                         OtherData.isShiedShare = true;
+                        break;
+                    }
+                }
+            }
+
+            // 实名开关
+            {
+                string data = jd["shieldRealName"].ToString();
+                List<string> list = new List<string>();
+                CommonUtil.splitStr(data, list, ';');
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    {
+                        OtherData.isShiedRealName = true;
+                        break;
+                    }
+                }
+            }
+
+            // 绑定手机开关
+            {
+                string data = jd["shieldBindPhone"].ToString();
+                List<string> list = new List<string>();
+                CommonUtil.splitStr(data, list, ';');
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    {
+                        OtherData.isShiedBindPhone = true;
                         break;
                     }
                 }

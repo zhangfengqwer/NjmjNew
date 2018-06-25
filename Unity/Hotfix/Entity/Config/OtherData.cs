@@ -11,10 +11,22 @@ namespace Hotfix
     class OtherData
     {
         public static bool isShiedShare = false;
+        public static bool isShiedRealName = false;
+        public static bool isShiedBindPhone = false;
 
         public static bool getIsShiedShare()
         {
             return isShiedShare;
+        }
+
+        public static bool getIsShiedRealName()
+        {
+            return isShiedRealName;
+        }
+
+        public static bool getIsShiedBindPhone()
+        {
+            return isShiedBindPhone;
         }
     }
 }
