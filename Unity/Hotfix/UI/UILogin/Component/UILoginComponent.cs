@@ -91,15 +91,6 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
-//            panel_start.transform.Find("Image_bg/Btn_test").GetComponent<Button>().onClick.AddListener(()=>
-//            {
-//                if (++NetConfig.getInstance().clickCount == 5)
-//                {
-//                    NetConfig.getInstance().isFormal = false;
-//                    ToastScript.createToast("test");
-//                }
-//            });
-
             // 测试服开启游客登录按钮
             if (!NetConfig.getInstance().isFormal)
             {
