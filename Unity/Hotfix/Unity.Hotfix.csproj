@@ -114,6 +114,7 @@
     <Compile Include="Entity\Config\RoomConfig.cs" />
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
+    <Compile Include="Njmj\Component\ThirdSDKQuitComponent.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />

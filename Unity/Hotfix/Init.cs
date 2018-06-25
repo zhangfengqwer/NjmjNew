@@ -29,6 +29,9 @@ namespace ETHotfix
                 Game.Scene.AddComponent<UIIconComponent>();
                 Game.Scene.AddComponent<SessionWrapComponent>();
 
+                //第三方退出
+                Game.Scene.AddComponent<ThirdSDKQuitComponent>();
+
                 // 加载热更配置
                 ETModel.Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");
 				Game.Scene.AddComponent<ConfigComponent>();
