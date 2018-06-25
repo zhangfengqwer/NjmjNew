@@ -118,6 +118,7 @@
     <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Entity\Type.cs" />
+    <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_CheatHandler.cs" />
@@ -210,10 +211,6 @@
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuTreasureFactory.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
-    <Compile Include="UI\UIGM\UIComponent\UIGMComponent.cs" />
-    <Compile Include="UI\UIGM\UIComponent\UIGMLoginComponent.cs" />
-    <Compile Include="UI\UIGM\UIFactory\UIGMLoginFactory.cs" />
-    <Compile Include="UI\UIGM\UIFactory\UIGMFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
     <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
     <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />

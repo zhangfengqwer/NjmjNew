@@ -346,18 +346,27 @@ namespace ETHotfix
                         }
                         break;
                     case 9:
-                        //查看游戏内信息
+                        {
+                            //查看游戏内信息
 
-                        StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
-                        IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                        Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
+                            StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
+                            IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
+                            Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
 
-                        M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GetRoomInfo());
-                        response.Room = new RoomInfo();
-                        response.Room.NewRoomCount = getRoomInfo.NewRoomCount;
-                        response.Room.NewTotalPlayerInGameCount = getRoomInfo.NewTotalPlayerInGameCount;
-                        response.Room.JingRoomCount = getRoomInfo.JingRoomCount;
-                        response.Room.JingTotalPlayerInGameCount = getRoomInfo.JingTotalPlayerInGameCount;
+                            M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GetRoomInfo());
+                            response.Room = new RoomInfo();
+                            response.Room.NewRoomCount = getRoomInfo.NewRoomCount;
+                            response.Room.NewTotalPlayerInGameCount = getRoomInfo.NewTotalPlayerInGameCount;
+                            response.Room.JingRoomCount = getRoomInfo.JingRoomCount;
+                            response.Room.JingTotalPlayerInGameCount = getRoomInfo.JingTotalPlayerInGameCount;
+                        }
+                        break;
+
+                    case 10:
+                        {
+                            // 发送通知
+                            UserComponentSystem.EmergencyNotice(message.UId, message.Content);
+                        }
                         break;
                 }
                 reply(response);

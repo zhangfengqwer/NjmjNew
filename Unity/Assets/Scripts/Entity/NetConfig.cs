@@ -11,11 +11,9 @@ namespace ETModel
     public class NetConfig
     {
         public int clickCount = 0;
-#if GM
-        public bool isFormal = false;
-#else
+
         public bool isFormal = true;
-#endif
+
         public static NetConfig s_instance = null;
 
         string formal_url = "";
