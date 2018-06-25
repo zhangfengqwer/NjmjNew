@@ -20,7 +20,7 @@ namespace ETHotfix
             }
         }
 
-        public static async void Req(string url)
+        static async void Req(string url)
         {
             using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
             {
