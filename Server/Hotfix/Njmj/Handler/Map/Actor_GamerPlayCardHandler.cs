@@ -105,10 +105,10 @@ namespace ETHotfix
 	                    {
                             _gamer.IsCanPeng = true;
                             isNeedWait = true;
-
                             canOperation.OperationType = 0;
-	                        Log.Info($"{_gamer.UserID}可碰");
-	                        room.GamerBroadcast(_gamer, canOperation);
+	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
+	                        room.Broadcast(canOperation);
+	                        //room.GamerBroadcast(_gamer, canOperation);
 	                    }
 
                         //明杠
@@ -117,12 +117,13 @@ namespace ETHotfix
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
-	                        Log.Info($"{_gamer.UserID}可杠");
+	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
+	                        //	                        room.Broadcast(canOperation);
                         }
 
-	                    //判断小胡,4个花以上才能胡
-	                    if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
+                        //判断小胡,4个花以上才能胡
+                        if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
 	                    {
 //	                        Log.Debug("小胡");
 //	                        Log.Debug("currentCards.PengGangCards.Count：" + currentCards.PengGangCards.Count);
@@ -138,6 +139,7 @@ namespace ETHotfix
 
 	                                canOperation.OperationType = 2;
 	                                room.GamerBroadcast(_gamer, canOperation);
+//	                                room.Broadcast(canOperation);
                                 }
 	                            else
 	                            {
@@ -154,6 +156,7 @@ namespace ETHotfix
 
 	                            canOperation.OperationType = 2;
 	                            room.GamerBroadcast(_gamer, canOperation);
+//	                            room.Broadcast(canOperation);
                             }
 	                    }
 	                }
