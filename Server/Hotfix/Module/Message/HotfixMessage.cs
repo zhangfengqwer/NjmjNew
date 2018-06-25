@@ -145,6 +145,21 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_EmergencyNotice)]
+	[ProtoContract]
+	public partial class Actor_EmergencyNotice: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Content;
+
+	}
+
 	[Message(HotfixOpcode.C2R_SendSms)]
 	[ProtoContract]
 	public partial class C2R_SendSms: IRequest

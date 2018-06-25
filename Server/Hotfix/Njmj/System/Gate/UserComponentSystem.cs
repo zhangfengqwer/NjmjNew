@@ -89,6 +89,51 @@ namespace ETHotfix
             }
         }
 
+        public static void EmergencyNotice(long uid, string content)
+        {
+            User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
+            if (uid == -1)
+            {
+                // 群发
+                for (int i = 0; i < users.Length; ++i)
+                {
+                    try
+                    {
+                        Actor_EmergencyNotice actor = new Actor_EmergencyNotice();
+                        actor.Content = content;
+                        users[i].session.Send(actor);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }
+
+            }
+            else
+            {
+                // 单发
+                foreach (var _user in users)
+                {
+                    if (_user.UserID == uid)
+                    {
+                        try
+                        {
+                            Actor_EmergencyNotice actor = new Actor_EmergencyNotice();
+                            actor.Content = content;
+                            _user.session.Send(actor);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
         public static void CheckIsExistTheUser(long uid)
         {
             User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();

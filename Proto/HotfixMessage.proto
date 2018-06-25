@@ -45,6 +45,11 @@ message Actor_ForceOffline // IActorMessage
 	required string Reason = 1;
 }
 
+message Actor_EmergencyNotice // IActorMessage
+{
+	required string Content = 1;
+}
+
 message C2R_SendSms // IRequest
 {
 	required string	Phone	 = 1;	// 手机号
@@ -928,7 +933,7 @@ message G2C_Tip //IResponse
 message C2G_GM // IRequest
 {
 	required long UId = 1;
-	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线 8,修改用户信息 9,查看游戏内信息
+	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线 8,修改用户信息 9,查看游戏内信息 10,通知
 	required string Title = 3;
 	required string Content = 4;
 	required string Reward = 5;

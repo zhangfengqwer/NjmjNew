@@ -114,6 +114,7 @@
     <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Entity\Type.cs" />
+    <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_CheatHandler.cs" />
