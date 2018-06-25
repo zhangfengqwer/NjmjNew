@@ -42,6 +42,36 @@ namespace Hotfix
                     }
                 }
             }
+
+            // 实名开关
+            {
+                shieldShare = jd["shieldRealName"].ToString();
+                List<string> list = new List<string>();
+                CommonUtil.splitStr(shieldShare, list, ';');
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    {
+                        OtherData.isShiedRealName = true;
+                        break;
+                    }
+                }
+            }
+
+            // 绑定手机开关
+            {
+                shieldShare = jd["shieldBindPhone"].ToString();
+                List<string> list = new List<string>();
+                CommonUtil.splitStr(shieldShare, list, ';');
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    {
+                        OtherData.isShiedBindPhone = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }
