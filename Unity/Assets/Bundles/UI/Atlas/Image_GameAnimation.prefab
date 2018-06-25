@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1667872102484228}
+  m_IsPrefabParent: 1
+--- !u!1 &1667872102484228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224957057828835144}
+  - component: {fileID: 114300973090336952}
+  m_Layer: 5
+  m_Name: Image_GameAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114300973090336952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667872102484228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: peng_1
+    gameObject: {fileID: 21300000, guid: 0c4e3cbac5d521f4e947ffd8382b61cf, type: 3}
+  - key: peng_2
+    gameObject: {fileID: 21300000, guid: dc8d61bac286ce84296c4269ddb7edde, type: 3}
+  - key: peng_3
+    gameObject: {fileID: 21300000, guid: e52a28a3faebec54baa0ba95926db0d6, type: 3}
+  - key: peng_4
+    gameObject: {fileID: 21300000, guid: 522a54854e96ef3428e6748eda3d1fc2, type: 3}
+  - key: peng_5
+    gameObject: {fileID: 21300000, guid: 38ecfa4deb8aa98479a7bc078a30bd77, type: 3}
+  - key: peng_6
+    gameObject: {fileID: 21300000, guid: 42e07415e5a7f6043beb663cea474232, type: 3}
+  - key: peng_7
+    gameObject: {fileID: 21300000, guid: be0bf009a2e767f4fb630f825c9ab4ab, type: 3}
+  - key: peng_8
+    gameObject: {fileID: 21300000, guid: d16e9cc5677e57547b2d42ca49f905c6, type: 3}
+  - key: peng_9
+    gameObject: {fileID: 21300000, guid: 9f919bbad31ab124088c09e26b7cb3ac, type: 3}
+  - key: gang_1
+    gameObject: {fileID: 21300000, guid: f91dad50b8778a842ba54cc310136a35, type: 3}
+  - key: gang_2
+    gameObject: {fileID: 21300000, guid: 22e3a65f0312f8347a0d57f8893f68f7, type: 3}
+  - key: gang_3
+    gameObject: {fileID: 21300000, guid: a1863089aadaf3b419af9a41c27face8, type: 3}
+  - key: gang_4
+    gameObject: {fileID: 21300000, guid: 877272fcc209a0a4cb24e00b046a3172, type: 3}
+  - key: gang_5
+    gameObject: {fileID: 21300000, guid: 7afdfb9a581cfcd46ab4d49ac91fba05, type: 3}
+  - key: gang_6
+    gameObject: {fileID: 21300000, guid: 4d04de6fd81ce254eae35d4b825a3440, type: 3}
+  - key: gang_7
+    gameObject: {fileID: 21300000, guid: f961c23c369d3654a8d148d2c8c4c291, type: 3}
+  - key: gang_8
+    gameObject: {fileID: 21300000, guid: a680f9f6dd05bb642a75957eaca3bd26, type: 3}
+  - key: hu_1
+    gameObject: {fileID: 21300000, guid: e0ef7e1782e807840aabfc171b347bc1, type: 3}
+  - key: hu_2
+    gameObject: {fileID: 21300000, guid: 19c41a31240967c4aa81f5e780ca93ae, type: 3}
+  - key: hu_3
+    gameObject: {fileID: 21300000, guid: d36ea1090c0e5514ca9ec4a8717b777e, type: 3}
+  - key: hu_4
+    gameObject: {fileID: 21300000, guid: 87a978d74709f7e4db49ba6461632b55, type: 3}
+  - key: hu_5
+    gameObject: {fileID: 21300000, guid: 459b9048232c81c49855069fb7fb1880, type: 3}
+  - key: hu_6
+    gameObject: {fileID: 2800000, guid: 8d9ac5a80a2963140b5ff5cdd5e9125c, type: 3}
+  - key: hu_7
+    gameObject: {fileID: 21300000, guid: e43251e50b6c5444a9c93bd7b39167d6, type: 3}
+  - key: hu_8
+    gameObject: {fileID: 21300000, guid: 322690591c01ab34597fd102aa7e6c8e, type: 3}
+  - key: hu_9
+    gameObject: {fileID: 21300000, guid: 899e2bf1729355045a8377ec09ec1b4d, type: 3}
+  - key: hu_10
+    gameObject: {fileID: 21300000, guid: f564f97f974a0e14895b18da98d61554, type: 3}
+  - key: hu_11
+    gameObject: {fileID: 21300000, guid: 3dc3c311fd79fcb41b0f531737b33565, type: 3}
+  - key: hu_12
+    gameObject: {fileID: 21300000, guid: 67253432347d51b46b06765c4f173aa0, type: 3}
+  - key: zimo_1
+    gameObject: {fileID: 21300000, guid: d5e8c4c73b2cafe49b92f9478475c56d, type: 3}
+  - key: zimo_2
+    gameObject: {fileID: 21300000, guid: 54071528234b10a4ca783d2fa339a428, type: 3}
+  - key: zimo_3
+    gameObject: {fileID: 21300000, guid: 2b161c3a3a0c0ba4c93a39c6f4b0b27c, type: 3}
+  - key: zimo_4
+    gameObject: {fileID: 21300000, guid: d84c68a3364fdcd45868f95cace6a7de, type: 3}
+  - key: zimo_5
+    gameObject: {fileID: 21300000, guid: 56e5f62f3a4f65a48a066808a901a3e9, type: 3}
+  - key: zimo_6
+    gameObject: {fileID: 21300000, guid: b877f4642a04dd6479347a1d69fef795, type: 3}
+  - key: zimo_7
+    gameObject: {fileID: 21300000, guid: 65383cb64d0d61d43b770c0ea7bd4645, type: 3}
+  - key: zimo_8
+    gameObject: {fileID: 21300000, guid: 47b52a01606f9ba49a7df97630eab1ab, type: 3}
+  - key: zimo_9
+    gameObject: {fileID: 21300000, guid: 9c155a637c6a80d4fa515881f26f68f3, type: 3}
+  - key: zimo_10
+    gameObject: {fileID: 21300000, guid: e37301d4e76c29d479fce948a93fd5f2, type: 3}
+  - key: zimo_11
+    gameObject: {fileID: 21300000, guid: f130f90b5cdc7a847ab47c1631fbce00, type: 3}
+  - key: zimo_12
+    gameObject: {fileID: 21300000, guid: 8ee49094060d046458884b184804b1bd, type: 3}
+  - key: zimo_13
+    gameObject: {fileID: 21300000, guid: 8d3b24322cd062244bc4ced64e0afd88, type: 3}
+  - key: zimo_14
+    gameObject: {fileID: 21300000, guid: e95d29e9671d7db488b9ad6da7990f67, type: 3}
+  - key: zimo_15
+    gameObject: {fileID: 21300000, guid: 3fd5a40887bd53149a8ef73c653ffc35, type: 3}
+  - key: zimo_16
+    gameObject: {fileID: 21300000, guid: e8c5e76ae44fb154ab052d8bc3b049e0, type: 3}
+  - key: zimo_17
+    gameObject: {fileID: 21300000, guid: 83514e6a0ae9da7438b0ba225892d112, type: 3}
+--- !u!224 &224957057828835144
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667872102484228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
