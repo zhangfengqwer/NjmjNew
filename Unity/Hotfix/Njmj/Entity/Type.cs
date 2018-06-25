@@ -14,5 +14,6 @@ namespace ETHotfix
         GiveUp,
         AnGang,
         PengGang,
+        zimo
     }
 }

@@ -148,15 +148,15 @@ public class AndroidCallBack : MonoBehaviour {
             JsonData jsonData = JsonMapper.ToObject(data);
             var openId = (string)jsonData["code"];
 //            var icon = (string)jsonData["icon"];
-//            var nickname = (string)jsonData["nickname"];
+            var nickname = (string)jsonData["nickname"];
             var channelname = (string)jsonData["channelname"];
             var response = (string)jsonData["response"];
-            Game.EventSystem.Run(EventIdType.WeChatLogin, openId, channelname,response);
+            Game.EventSystem.Run(EventIdType.WeChatLogin, openId, nickname, response);
 
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Log.Error(e);
         }
     }
 

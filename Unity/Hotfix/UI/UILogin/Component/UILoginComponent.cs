@@ -26,6 +26,7 @@ namespace ETHotfix
     public class ThirdLoginData
     {
         public string channel_name = "";
+        public string nick_name = "";
         public string response = "";
         public string third_id = "";
         public string otherStr1 = "";
@@ -52,6 +53,7 @@ namespace ETHotfix
         private Text text_yanzhengmadaojishi;
 
         bool isLoginSuccess = false;
+        private Button btn_third;
         public static UILoginComponent Instance { get; set; }
 
         public void Awake()
@@ -72,6 +74,7 @@ namespace ETHotfix
             btn_wechat = rc.Get<GameObject>("Button_wechat").GetComponent<Button>();
             btn_guest = rc.Get<GameObject>("Button_guest").GetComponent<Button>();
             btn_login = rc.Get<GameObject>("Button_Login").GetComponent<Button>();
+            btn_third = rc.Get<GameObject>("Button_Third").GetComponent<Button>();
             btn_yanzhengma = rc.Get<GameObject>("Button_YanZhengMa").GetComponent<Button>();
             btn_backToStart = rc.Get<GameObject>("Button_back").GetComponent<Button>();
 
@@ -82,6 +85,7 @@ namespace ETHotfix
 
             btn_phone.onClick.Add(onClickOpenPhoneLogin);
             btn_wechat.onClick.Add(onClickWechatLogin);
+            btn_third.onClick.Add(onClickWechatLogin);
             btn_guest.onClick.Add(onClickGuestLogin);
             btn_login.onClick.Add(onClickPhoneCodeLogin);
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
@@ -125,6 +129,24 @@ namespace ETHotfix
                     Debug.Log(Logic_NJMJ.getInstance().isHuPai(list).ToString());
                 }
             }
+
+            #region 第三方登录
+
+            if (ChannelHelper.IsThirdChannel() && PlatformHelper.IsThirdLogin())
+            {
+                btn_third.gameObject.SetActive(true);
+                btn_third.GetComponentInChildren<Text>().text = PlatformHelper.GetChannelName() + "登录";
+                btn_phone.gameObject.SetActive(false);
+                btn_wechat.gameObject.SetActive(false);
+            }
+            else
+            {
+                btn_third.gameObject.SetActive(false);
+                btn_phone.gameObject.SetActive(true);
+                btn_wechat.gameObject.SetActive(true);
+            }
+
+            #endregion
         }
 
         public void onClickDebugAccount1()
@@ -222,15 +244,17 @@ namespace ETHotfix
             }
             else
             {
-                switch (thirdLoginData.channel_name)
-                {
-                    // 官方包
-                    case "":
-                        {
-
-                        }
-                        break;
-                }
+                await OnThirdLogin(thirdLoginData.third_id, thirdLoginData.nick_name, "");
+//
+//                switch (thirdLoginData.channel_name)
+//                {
+//                    // 官方包
+//                    case "":
+//                        {
+//
+//                        }
+//                        break;
+//                }
             }
         }
 

@@ -1089,33 +1089,46 @@ namespace ETHotfix
         public async void ShowOperateAnimAsync(int operationType)
         {
             string name = null;
+            string animName = null;
             switch ((GamerOpearteType)operationType)
             {
                 //碰
                 case GamerOpearteType.Peng:
                     name = "PengAnim";
+                    animName = "peng_";
                     break;
                 case GamerOpearteType.AnGang:
                 case GamerOpearteType.MingGang:
                 case GamerOpearteType.PengGang:
                     name = "GangAnim";
+                    animName = "gang_";
                     break;
                 case GamerOpearteType.Hu:
                     name = "HuAnim";
+                    animName = "hu_";
                     break;
             }
             if (name == null) return;
+
             GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", name);
             GameObject gameObject = UnityEngine.Object.Instantiate(obj, this.prompt.transform);
 
-            Animator animator = gameObject.GetComponent<Animator>();
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync((long)(stateInfo.length * 1000));
-            if (this.IsDisposed)
-            {
-                return;
-            }
-            GameObject.Destroy(gameObject);
+            FrameAnimation.Start(gameObject.GetComponent<Image>(), 
+                                 "image_gameanimation", animName, 
+                                 200,
+                                 () => { GameObject.Destroy(gameObject); });
+
+//            GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", name);
+//            GameObject gameObject = UnityEngine.Object.Instantiate(obj, this.prompt.transform);
+//
+//            Animator animator = gameObject.GetComponent<Animator>();
+//            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+//            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync((long)(stateInfo.length * 1000));
+//            if (this.IsDisposed)
+//            {
+//                return;
+//            }
+//            GameObject.Destroy(gameObject);
         }
     }
 }

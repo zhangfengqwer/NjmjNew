@@ -19,6 +19,7 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private float lastClickedTime = 0;
     private float count = 0;
+    public bool IsSelect;
 
     private Vector3 beginPosition;
 
@@ -28,7 +29,6 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         _rectTransform = gameObject.GetComponent<RectTransform>();
         _rectTransform.GetComponent<Button>().onClick.Add(this.OnClicked);
     }
-
    
     public void OnClicked()
     {
