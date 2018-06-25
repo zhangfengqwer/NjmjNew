@@ -70,6 +70,7 @@ namespace ETHotfix
                     taskInfo.Target = chengjiu.Target;
                     taskInfoList.Add(taskInfo);
                 }
+
                 response.ChengjiuList = taskInfoList;
                 reply(response);
             }
