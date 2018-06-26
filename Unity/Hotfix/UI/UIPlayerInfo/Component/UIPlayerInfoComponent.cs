@@ -170,6 +170,8 @@ namespace ETHotfix
             changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
             realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
+            realNameTxt.gameObject.SetActive(!OtherData.getIsShiedRealName());
+            noBindPhoneTxt.gameObject.SetActive(!OtherData.getIsShiedBindPhone());
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
             WingNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum.ToString();
             HuafeiNumTxt.text = (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum / 100.0f).ToString();
