@@ -52,7 +52,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+                    if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName())
                     {
                         ToastScript.createToast("请先完成实名认证！");
                         Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
