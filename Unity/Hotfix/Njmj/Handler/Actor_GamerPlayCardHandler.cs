@@ -43,6 +43,8 @@ namespace ETHotfix
 
                 gamerComponent.LastPlayUid = message.Uid;
                 SoundsHelp.Instance.playSound_ChuPai();
+
+                uiRoomComponent.CurrentMahjong = mahjongInfo;
             }
             catch (Exception e)
             {

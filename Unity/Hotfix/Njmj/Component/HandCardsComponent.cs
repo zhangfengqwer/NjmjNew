@@ -1149,5 +1149,29 @@ namespace ETHotfix
 //            }
 //            GameObject.Destroy(gameObject);
         }
+
+        public void ShowHandCardCanPeng(int weight)
+        {
+            int childCount = this.CardBottom.transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                GameObject obj = this.CardBottom.transform.GetChild(i).gameObject;
+                ItemCardScipt itemCardScipt = obj.GetComponent<ItemCardScipt>();
+                if (itemCardScipt.weight != weight)
+                {
+                    obj.GetComponent<Image>().color = new Color(1, 1, 1, 179 / 255f);
+                }
+            }
+        }
+
+        public void CloseHandCardCanPeng()
+        {
+            int childCount = this.CardBottom.transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                GameObject obj = this.CardBottom.transform.GetChild(i).gameObject;
+                obj.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+        }
     }
 }

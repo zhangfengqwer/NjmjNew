@@ -307,6 +307,11 @@ namespace ETHotfix
         {
             room.IsZimo = isZimo;
             room.huPaiUid = gamer.UserID;
+            if (!isZimo)
+            {
+                gamer.isGangEndBuPai = false;
+                gamer.isGetYingHuaBuPai = false;
+            }
 
             int huaCount = 0;
 
