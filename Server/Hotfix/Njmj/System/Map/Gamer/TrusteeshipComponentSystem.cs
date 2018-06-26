@@ -44,7 +44,7 @@ namespace ETHotfix
                 }
 
                 //出牌
-                gamer.GetComponent<HandCardsComponent>().PopCard();
+                await gamer.GetComponent<HandCardsComponent>().PopCard();
             }
         }
     }

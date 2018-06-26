@@ -32,6 +32,20 @@ public class ItemCardScipt: MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
    
     public void OnClicked()
     {
+//        float move = 40.0f;
+//        if (IsSelect)
+//        {
+//            move = -move;
+//            Game.EventSystem.Run(EventIdType.GamerPlayCard, weight, index);
+//        }
+//        else
+//        {
+//        }
+//
+//        RectTransform rectTransform = this.GetComponent<RectTransform>();
+//        rectTransform.anchoredPosition += Vector2.up * move;
+//        IsSelect = !IsSelect;
+
         float interval = Time.realtimeSinceStartup - lastClickedTime;
         if (interval <= clickedInterval)
         {

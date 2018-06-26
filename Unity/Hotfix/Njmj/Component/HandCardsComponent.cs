@@ -372,7 +372,26 @@ namespace ETHotfix
             cardSprite.GetComponent<ItemCardScipt>().weight = mahjong.weight;
             cardSprite.GetComponent<ItemCardScipt>().index = index;
 
+            //添加点击事件
+            Button cardBtn = cardSprite.GetComponent<Button>();
+            cardBtn.onClick.RemoveAllListeners();
+//            cardBtn.onClick.Add(() =>
+//            {
+//                if (IsSelect)
+//                {
+//
+//                }
+//                else
+//                {
+//                    IsSelect = true;
+//                    Vector3 localPosition = this._rectTransform.localPosition;
+//                    this._rectTransform.localPosition = new Vector3(localPosition.x, localPosition.y + 20, localPosition.z);
+//                }
+//            })
+
             grabIndex = index;
+
+
 
             //第4张显示门清提示
             if (playCards.Count == 3)

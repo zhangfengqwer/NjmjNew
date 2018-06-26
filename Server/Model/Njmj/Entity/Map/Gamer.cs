@@ -19,7 +19,7 @@ namespace ETModel
         //用户ID（唯一）
         public long UserID { get; set; }
 
-        //玩家GateActorID
+        //玩家GateActorID,给gate传送消息的id
         public long PlayerID { get; set; }
 
         //玩家所在房间ID
