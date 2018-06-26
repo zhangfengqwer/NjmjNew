@@ -217,6 +217,7 @@ namespace ETHotfix
                 bindPhoneBtn.gameObject.SetActive(false);
                 bindPhoneBtn.transform.parent.gameObject.SetActive(false);
             }
+            GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
         }
 
         public async void onClickChangeAccount()
