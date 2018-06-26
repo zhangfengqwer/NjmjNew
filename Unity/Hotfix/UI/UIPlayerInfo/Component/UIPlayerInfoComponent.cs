@@ -203,6 +203,8 @@ namespace ETHotfix
             changeNameBtn.transform.parent.gameObject.SetActive(PlayerInfoComponent.Instance.GetPlayerInfo().RestChangeNameCount > 0);
             realNameBtn.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
             realNameBtn.transform.parent.gameObject.SetActive(!PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName && !OtherData.getIsShiedRealName());
+            realNameTxt.gameObject.SetActive(!OtherData.getIsShiedRealName());
+            noBindPhoneTxt.gameObject.SetActive(!OtherData.getIsShiedBindPhone());
 
             if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
             {
