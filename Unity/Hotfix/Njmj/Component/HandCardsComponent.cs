@@ -18,7 +18,7 @@ namespace ETHotfix
         }
     }
 
-    public class HandCardsComponent: Component
+    public class HandCardsComponent: ComponentWithId
     {
         public const string HANDCARD_NAME = "HandCard";
         public const string PLAYCARD_NAME = "PlayCard";
