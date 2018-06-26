@@ -49,6 +49,7 @@ namespace ETHotfix
             List<MahjongInfo> mahjongInfos = self.GetAll();
             MahjongInfo mahjongInfo = handCardsComponent.GrabCard;
             int index = -1;
+
             for (int i = 0; i < handCardsComponent.GetAll().Count; i++)
             {
                 MahjongInfo info = handCardsComponent.GetAll()[i];
