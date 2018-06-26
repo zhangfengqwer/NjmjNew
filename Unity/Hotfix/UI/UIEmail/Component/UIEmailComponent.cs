@@ -72,6 +72,14 @@ namespace ETHotfix
             }
             CreateEmailItemList();
             GetNoGetCount();
+            if(notGetcount != 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(5, true, notGetcount);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(5, false);
+            }
         }
 
         //删除邮件后刷新界面显示
