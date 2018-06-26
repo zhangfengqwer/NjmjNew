@@ -193,7 +193,7 @@ namespace ETHotfix
                     case 2:
                         {
                             //发送邮件 uid为空则为给全部玩家发送邮件
-                            if(message.UId != 0)
+                            if(message.UId != -1)
                             {
                                 Log.Debug("Mail" + message.UId + message.Title + message.Content + message.Reward);
                                 await DBCommonUtil.SendMail(message.UId, message.Title, message.Content, message.Reward);
