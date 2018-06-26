@@ -110,7 +110,7 @@ namespace ETHotfix
                 ChengjiuInfo info = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
                 ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(taskId);
                 info.IsGet = false;
-                info.UId = UId;
+                info.UId = UId; 
                 if(config != null)
                 {
                     info.Name = config.Name;
@@ -359,7 +359,7 @@ namespace ETHotfix
 
                     await proxyComponent.Save(playerBaseInfos[0]);
                 }
-                    break;
+                break;
 
                 // 元宝
                 case 2:

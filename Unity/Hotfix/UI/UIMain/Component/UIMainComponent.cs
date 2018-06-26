@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Hotfix;
 
 namespace ETHotfix
 {
@@ -62,6 +63,8 @@ namespace ETHotfix
         private int ownGame = 30;
         private bool isOwnRank = false;
         private bool isGameRank = false;
+
+        GameObject RealNameTip = null;
 
         public async void Start()
         {
@@ -260,6 +263,37 @@ namespace ETHotfix
             }
             SetRedTip();
             HeartBeat.getInstance().startHeartBeat();
+
+            // 实名认证提示
+            try
+            {
+                RealNameTip = PlayerInfoBg.transform.Find("RealNameTip").gameObject;
+                RealNameTip.transform.Find("Button_close").GetComponent<Button>().onClick.Add(() =>
+                {
+                    RealNameTip.transform.localScale = Vector3.zero;
+                });
+
+                if (OtherData.getIsShiedRealName())
+                {
+                    RealNameTip.transform.localScale = Vector3.zero;
+                }
+                else
+                {
+                    if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+                    {
+                        RealNameTip.transform.localScale = Vector3.zero;
+                    }
+                    else
+                    {
+                        DOTween.Sequence().Append(RealNameTip.GetComponent<RectTransform>().DOAnchorPos(new Vector2(117.3f, 114.38f), 0.8f, false))
+                            .Append(RealNameTip.GetComponent<RectTransform>().DOAnchorPos(new Vector2(117.3f, 97.1f), 0.8f, false)).SetLoops(-1).Play();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex.ToString());
+            }
         }
 
 
@@ -681,6 +715,14 @@ namespace ETHotfix
             if (GameUtil.isVIP())
             {
                 PlayerInfoBg.transform.Find("HeadKuang").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "touxiangkuang_vip");
+            }
+
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName)
+            {
+                if (RealNameTip != null)
+                {
+                    RealNameTip.transform.localScale = Vector3.zero;
+                }
             }
         }
 

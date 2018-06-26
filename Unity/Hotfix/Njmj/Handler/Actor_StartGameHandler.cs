@@ -35,6 +35,7 @@ namespace ETHotfix
                 //先掷骰子
                 if (!isReconnect)
                 {
+                    uiRoomComponent.exitBtn.interactable = false;
                     uiRoomComponent.players.SetActive(true);
                     GameObject DiceAnim = uiRoomComponent.dice.Get<GameObject>("DiceAnim");
                     GameObject DiceBottom = uiRoomComponent.dice.Get<GameObject>("DiceBottom");
@@ -91,6 +92,8 @@ namespace ETHotfix
 
                             handCards.myCard = new List<MahjongInfo>(gameData.handCards);
                         }
+
+                      
                     }
 
                     for (int i = 0; i < 4; i++)
@@ -125,6 +128,7 @@ namespace ETHotfix
                 }
 
                 uiRoomComponent.StartGame(message.restCount);
+                uiRoomComponent.exitBtn.interactable = true;
                 uiRoomComponent.SetRoomType(message.RoomType);
 
                 foreach (var gameData in message.GamerDatas)

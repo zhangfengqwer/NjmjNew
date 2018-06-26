@@ -60,11 +60,13 @@ namespace ETHotfix
         /// <param name="huaCount"></param>
         public static async void GameOver(this GameControllerComponent self, int huaCount)
         {
+            RoomComponent roomComponent = null;
+            Room room = null;
             try
             {
-                Room room = self.GetParent<Room>();
+                room = self.GetParent<Room>();
                 room.tokenSource.Cancel();
-                RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+                roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
                 GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
 
@@ -82,9 +84,9 @@ namespace ETHotfix
                 await ChangeWeath(self, huaCount, room);
 
                 //更新任务
-                UpdateTask(room);
-                UpdateChengjiu(room);
-                UpdatePlayerInfo(room, huaCount);
+                await UpdateTask(room);
+                await UpdateChengjiu(room);
+                await UpdatePlayerInfo(room, huaCount);
                 //记录对局
                 await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID,
                     room.GetAll()[1].UserID,
@@ -149,11 +151,14 @@ namespace ETHotfix
             catch (Exception e)
             {
                 Log.Error(e);
+                //游戏房间进入准备房间
+                roomComponent?.gameRooms.Remove(room.Id);
+                roomComponent?.idleRooms.Add(room.Id, room);
             }
            
         }
 
-        private static async void UpdatePlayerInfo(Room room, int huaCount)
+        private static async Task UpdatePlayerInfo(Room room, int huaCount)
         {
             foreach (var gamer in room.GetAll())
             {
@@ -171,7 +176,7 @@ namespace ETHotfix
             }
         }
 
-        private static async void UpdateTask(Room room)
+        private static async Task UpdateTask(Room room)
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
             var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
@@ -236,7 +241,7 @@ namespace ETHotfix
             }
         }
 
-        private static async void UpdateChengjiu(Room room)
+        private static async Task UpdateChengjiu(Room room)
         {
 //            Log.Debug("更新成就:房间ID为:" + room.Id);
             foreach (var gamer in room.GetAll())

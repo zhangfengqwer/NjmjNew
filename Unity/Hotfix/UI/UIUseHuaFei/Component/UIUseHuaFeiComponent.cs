@@ -50,17 +50,17 @@ namespace ETHotfix
         
         public void onClick_huafei5()
         {
-            if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum < 500)
             {
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseHuaFei);
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
+                ToastScript.createToast("您的话费余额不足");
 
                 return;
             }
 
-            if (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum < 500)
+            if (string.IsNullOrEmpty(PlayerInfoComponent.Instance.GetPlayerInfo().Phone))
             {
-                ToastScript.createToast("您的话费余额不足");
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIUseHuaFei);
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBindPhone);
 
                 return;
             }
