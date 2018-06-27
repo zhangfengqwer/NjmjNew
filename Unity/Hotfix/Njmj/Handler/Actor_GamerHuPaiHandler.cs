@@ -22,9 +22,9 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 Gamer gamer = gamerComponent.Get(message.Uid);
-                Gamer gamer1 = gamerComponent.Get(message.Uid);
+                HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
 
-                SoundsHelp.Instance.PlayHuSound(gamer1.PlayerInfo.PlayerSound);
+                SoundsHelp.Instance.PlayHuSound(gamer.PlayerInfo.PlayerSound);
 
                 if (PlayerInfoComponent.Instance.uid == message.Uid)
                 {
@@ -33,6 +33,15 @@ namespace ETHotfix
                 else
                 {
                     SoundsHelp.Instance.playSound_Fail();
+                }
+
+                if (message.IsZiMo)
+                {
+                    handCardsComponent.ShowOperateAnimAsync((int) GamerOpearteType.zimo);
+                }
+                else
+                {
+                    handCardsComponent.ShowOperateAnimAsync((int)GamerOpearteType.Hu);
                 }
 
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);

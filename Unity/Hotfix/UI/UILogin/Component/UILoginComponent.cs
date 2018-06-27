@@ -56,8 +56,10 @@ namespace ETHotfix
         private Button btn_third;
         public static UILoginComponent Instance { get; set; }
 
-        public void Awake()
+        public async void Awake()
         {
+            await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/otherConfig.json", OtherConfig.getInstance().init);
+
             ToastScript.clear();
             Instance = this;
             initData();
@@ -135,6 +137,11 @@ namespace ETHotfix
                 btn_third.gameObject.SetActive(false);
                 btn_phone.gameObject.SetActive(true);
                 btn_wechat.gameObject.SetActive(true);
+
+                if (OtherData.getIsShiedPhoneLogin())
+                {
+                    btn_phone.transform.localScale = Vector3.zero;
+                }
             }
 
             #endregion
@@ -224,28 +231,36 @@ namespace ETHotfix
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
         {
-            // 官方包
-            if (!ChannelHelper.IsThirdChannel())
+            try
             {
-                JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
-                string name = (string)jd["nick"];
-                string head = (string)jd["url"];
+                // 官方包
+                if (!ChannelHelper.IsThirdChannel() || "vivo".Equals(PlatformHelper.GetChannelName()))
+                {
+                    Log.Info("vivo包");
+                    JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
+                    string name = (string)jd["nick"];
+                    string head = (string)jd["url"];
 
-                await OnThirdLogin(thirdLoginData.third_id, name, head);
+                    await OnThirdLogin(thirdLoginData.third_id, name, head);
+                }
+                else
+                {
+                    await OnThirdLogin(thirdLoginData.third_id, thirdLoginData.nick_name, "");
+                    //
+                    //                switch (thirdLoginData.channel_name)
+                    //                {
+                    //                    // 官方包
+                    //                    case "":
+                    //                        {
+                    //
+                    //                        }
+                    //                        break;
+                    //                }
+                }
             }
-            else
+            catch (Exception e)
             {
-                await OnThirdLogin(thirdLoginData.third_id, thirdLoginData.nick_name, "");
-//
-//                switch (thirdLoginData.channel_name)
-//                {
-//                    // 官方包
-//                    case "":
-//                        {
-//
-//                        }
-//                        break;
-//                }
+                Log.Error(e);
             }
         }
 
@@ -490,7 +505,6 @@ namespace ETHotfix
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/prop.json", PropConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/zhuanpan.json", ZhuanPanConfig.getInstance().init);
                 await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/notice.json", NoticeConfig.getInstance().init);
-                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/otherConfig.json", OtherConfig.getInstance().init);
                 //await SensitiveWordUtil.Req("http://fwdown.hy51v.com/online/file/stopwords.txt");
 
                 string data = CommonUtil.getTextFileByBundle("config", "stopwords");

@@ -1126,6 +1126,10 @@ namespace ETHotfix
                     name = "HuAnim";
                     animName = "hu_";
                     break;
+                case GamerOpearteType.zimo:
+                    name = "ZimoAnim";
+                    animName = "zimo_";
+                    break;
             }
             if (name == null) return;
 
@@ -1134,7 +1138,7 @@ namespace ETHotfix
 
             FrameAnimation.Start(gameObject.GetComponent<Image>(), 
                                  "image_gameanimation", animName, 
-                                 200,
+                                 150,
                                  () => { GameObject.Destroy(gameObject); });
 
 //            GameObject obj = CommonUtil.getGameObjByBundle("GameOperateAnim", name);
