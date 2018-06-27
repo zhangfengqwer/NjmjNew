@@ -45,6 +45,14 @@ namespace ETHotfix
                 uiRoomComponent.ClosePropmtBtn();
 
                 SoundsHelp.Instance.playSound_MoPai();
+
+                uiRoomComponent.CurrentMahjong = mahjongInfo;
+
+
+
+                Gamer currentGamer = gamerComponent.Get(PlayerInfoComponent.Instance.uid);
+                HandCardsComponent currentGamerCard = currentGamer.GetComponent<HandCardsComponent>();
+                currentGamerCard.CloseHandCardCanPeng();
             }
             catch (Exception e)
             {

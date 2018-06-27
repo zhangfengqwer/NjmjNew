@@ -61,6 +61,8 @@ namespace ETHotfix
         public GameObject tip;
         private GameObject baoxiang;
         public int RoomType { get; set; }
+        //当前出牌或者抓牌
+        public MahjongInfo CurrentMahjong { get; set; }
 
         public void Awake()
         {
@@ -462,15 +464,23 @@ namespace ETHotfix
 
         public void ShowOperation(int operationType)
         {
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+
+            Gamer gamer = gamerComponent.Get(PlayerInfoComponent.Instance.uid);
+            HandCardsComponent handCardsComponent = gamer.GetComponent<HandCardsComponent>();
             switch (operationType)
             {
                 case 0:
                     pengBtn.gameObject.SetActive(true);
+                    handCardsComponent.ShowHandCardCanPeng(CurrentMahjong.weight);
+
                     break;
                 case 1:
                 case 4:
                 case 5:
                     gangBtn.gameObject.SetActive(true);
+                    handCardsComponent.ShowHandCardCanPeng(CurrentMahjong.weight);
                     break;
                 case 2:
                     huBtn.gameObject.SetActive(true);

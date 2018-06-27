@@ -432,6 +432,9 @@ namespace ETHotfix
 
                 Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = new SessionWrap(session);
+
+                name = name.Replace("'","*");
+
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
                 sessionWrap.Dispose();
 

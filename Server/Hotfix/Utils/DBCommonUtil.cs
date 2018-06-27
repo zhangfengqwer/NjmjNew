@@ -588,7 +588,17 @@ namespace ETHotfix
 
             if (string.IsNullOrEmpty(head))
             {
-                playerBaseInfo.Icon = "f_icon1";
+                int random = Common_Random.getRandom(1, 5);
+                //百分之五十的概率随机生成男生或女生头像
+                int rate = Common_Random.getRandom(1, 100);
+                if(rate <= 50)
+                {
+                    playerBaseInfo.Icon = $"f_icon{random}";
+                }
+                else
+                {
+                    playerBaseInfo.Icon = $"m_icon{random}";
+                }
             }
             else
             {

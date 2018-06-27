@@ -19,21 +19,9 @@ namespace ETHotfix
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 if (uiRoom == null) return;
 
-                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
-
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 Gamer gamer = gamerComponent.Get(message.Uid);
-
-                UIGameResultComponent gameResultComponent =
-                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
-
-                RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
-
-                gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
-                uiRoomComponent.ISGaming = false;
-                uiRoomComponent.ClosePropmtBtn();
-
                 Gamer gamer1 = gamerComponent.Get(message.Uid);
 
                 SoundsHelp.Instance.PlayHuSound(gamer1.PlayerInfo.PlayerSound);
@@ -46,6 +34,17 @@ namespace ETHotfix
                 {
                     SoundsHelp.Instance.playSound_Fail();
                 }
+
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
+
+                UIGameResultComponent gameResultComponent =
+                        Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
+
+                RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
+
+                gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
+                uiRoomComponent.ISGaming = false;
+                uiRoomComponent.ClosePropmtBtn();
             }
             catch (Exception e)
             {
