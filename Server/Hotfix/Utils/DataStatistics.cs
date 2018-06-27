@@ -18,14 +18,14 @@ namespace ETHotfix
                 time = Convert.ToDateTime(time).ToString("yyyy-MM-dd");
 
                 string logData = "";
-                logData += await NewUser(time);
-                logData += await DailyLogin(time);
-                logData += await LoadOldUserCount(time);
-                logData += await CiLiu(time);
-                logData += await RechargeNum(time);
-                logData += await RechargeUserNum(time);
-                logData += await GameCount(time);
-                logData += await GameUserCount(time);
+                logData += await NewUser(time,"");
+                logData += await DailyLogin(time, "");
+                logData += await LoadOldUserCount(time, "");
+                logData += await CiLiu(time, "");
+                logData += await RechargeNum(time, "");
+                logData += await RechargeUserNum(time, "");
+                logData += await GameCount(time, "");
+                logData += await GameUserCount(time, "");
 
                 writeLogToLocalNow(logData);
             }
@@ -36,19 +36,19 @@ namespace ETHotfix
         }
 
         // time : yyyy-MM-dd
-        public static async Task<string> Start(string time)
+        public static async Task<string> Start(string time,string channelName)
         {
             try
             {
                 string logData = "";
-                logData += await NewUser(time);
-                logData += await DailyLogin(time);
-                logData += await LoadOldUserCount(time);
-                logData += await CiLiu(time);
-                logData += await RechargeNum(time);
-                logData += await RechargeUserNum(time);
-                logData += await GameCount(time);
-                logData += await GameUserCount(time);
+                logData += await NewUser(time, channelName);
+                logData += await DailyLogin(time, channelName);
+                logData += await LoadOldUserCount(time, channelName);
+                logData += await CiLiu(time, channelName);
+                logData += await RechargeNum(time, channelName);
+                logData += await RechargeUserNum(time, channelName);
+                logData += await GameCount(time, channelName);
+                logData += await GameUserCount(time, channelName);
                 writeLogToLocalNow(logData);
                 return logData;
             }
@@ -60,207 +60,368 @@ namespace ETHotfix
         }
 
         // 新增用户
-        static async Task<string> NewUser(string time)
+        static async Task<string> NewUser(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(time);
-            return "新增用户：" + listData.Count + "\r\n";
+            if (string.IsNullOrEmpty(channelName))
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(time);
+                return "新增用户：" + listData.Count + "\r\n";
+            }
+            else
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(time);
+
+                int count = 0;
+
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (listData[i].ChannelName.CompareTo(channelName) == 0)
+                    {
+                        ++count;
+                    }
+                }
+
+                return "新增用户：" + count + "\r\n";
+            }
         }
 
         // 日活
-        static async Task<string> DailyLogin(string time)
+        static async Task<string> DailyLogin(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Login> listData = await proxyComponent.QueryJsonDBInfos<Log_Login>(time);
-            List<long> listPlayer = new List<long>();
-            for (int i = 0; i < listData.Count; i++)
+            if (string.IsNullOrEmpty(channelName))
             {
-                bool isFind = false;
-                for (int j = 0; j < listPlayer.Count; j++)
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Login> listData = await proxyComponent.QueryJsonDBInfos<Log_Login>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
                 {
-                    if (listPlayer[j] == listData[i].Uid)
+                    bool isFind = false;
+                    for (int j = 0; j < listPlayer.Count; j++)
                     {
-                        isFind = true;
-                        break;
+                        if (listPlayer[j] == listData[i].Uid)
+                        {
+                            isFind = true;
+                            break;
+                        }
+                    }
+
+                    if (!isFind)
+                    {
+                        listPlayer.Add(listData[i].Uid);
                     }
                 }
 
-                if (!isFind)
-                {
-                    listPlayer.Add(listData[i].Uid);
-                }
+                return "日活：" + listPlayer.Count + "\r\n";
             }
+            else
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Login> listData = await proxyComponent.QueryJsonDBInfos<Log_Login>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    bool isFind = false;
+                    for (int j = 0; j < listPlayer.Count; j++)
+                    {
+                        if (listPlayer[j] == listData[i].Uid)
+                        {
+                            isFind = true;
+                            break;
+                        }
+                    }
 
-            return "日活：" + listPlayer.Count + "\r\n";
+                    if (!isFind)
+                    {
+                        listPlayer.Add(listData[i].Uid);
+                    }
+                }
+
+                int count = 0;
+
+                for (int i = 0; i < listPlayer.Count; i++)
+                {
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(listPlayer[i]);
+                    if (accountInfo.ChannelName.CompareTo(channelName) == 0)
+                    {
+                        ++count;
+                    }
+                }
+
+                return "日活：" + count + "\r\n";
+            }
         }
 
         // 导入老用户
-        static async Task<string> LoadOldUserCount(string time)
+        static async Task<string> LoadOldUserCount(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_OldUserBind> listData = await proxyComponent.QueryJsonDBInfos<Log_OldUserBind>(time);
-            return "导入老用户：" + listData.Count + "\r\n";
+            if (string.IsNullOrEmpty(channelName))
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_OldUserBind> listData = await proxyComponent.QueryJsonDBInfos<Log_OldUserBind>(time);
+                return "导入老用户：" + listData.Count + "\r\n";
+            }
+            else
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_OldUserBind> listData = await proxyComponent.QueryJsonDBInfos<Log_OldUserBind>(time);
+
+                int count = 0;
+
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(listData[i].Uid);
+                    if (accountInfo.ChannelName.CompareTo(channelName) == 0)
+                    {
+                        ++count;
+                    }
+                }
+
+                return "导入老用户：" + count + "\r\n";
+            }
         }
 
         // 次留
-        static async Task<string> CiLiu(string time)
+        static async Task<string> CiLiu(string time, string channelName)
         {
-            string zuotianTime = Convert.ToDateTime(time).AddDays(-1).ToString("yyyy-MM-dd");
-
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(zuotianTime);
-
-            float ciliu = 0;
-            int loginCount = 0;
-
-            if (listData.Count > 0)
+            if (string.IsNullOrEmpty(channelName))
             {
-                for (int i = 0; i < listData.Count; i++)
+                string zuotianTime = Convert.ToDateTime(time).AddDays(-1).ToString("yyyy-MM-dd");
+
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(zuotianTime);
+
+                float ciliu = 0;
+                int loginCount = 0;
+
+                if (listData.Count > 0)
                 {
-                    long uid = listData[i].Id;
-                    List<Log_Login> listData2 = await proxyComponent.QueryJsonDBInfos<Log_Login>(time, uid);
-                    if (listData2.Count > 0)
+                    for (int i = 0; i < listData.Count; i++)
                     {
-                        ++loginCount;
+                        long uid = listData[i].Id;
+                        List<Log_Login> listData2 = await proxyComponent.QueryJsonDBInfos<Log_Login>(time, uid);
+                        if (listData2.Count > 0)
+                        {
+                            ++loginCount;
+                        }
                     }
+
+                    ciliu = ((float)loginCount / (float)listData.Count) * 100;
                 }
 
-                ciliu = ((float)loginCount / (float)listData.Count) * 100;
+                //Log.Debug("昨日新增：" + listData.Count);
+                //Log.Debug("今日登陆：" + loginCount);
+
+                return "次留：" + ciliu + "%\r\n";
             }
-
-            //Log.Debug("昨日新增：" + listData.Count);
-            //Log.Debug("今日登陆：" + loginCount);
-
-            return "次留：" + ciliu + "%\r\n";
+            else
+            {
+                return "次留：无法查看" + "\r\n";
+            }
         }
 
         // 充值金额
-        static async Task<string> RechargeNum(string time)
+        static async Task<string> RechargeNum(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
-            int num = 0;
-            for (int i = 0; i < listData.Count; i++)
+            if (string.IsNullOrEmpty(channelName))
             {
-                num += listData[i].Price;
-            }
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
+                int num = 0;
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    num += listData[i].Price;
+                }
 
-            return "充值金额：" + num + "\r\n";
+                return "充值金额：" + num + "\r\n";
+            }
+            else
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
+
+                int num = 0;
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(listData[i].Uid);
+                    if (accountInfo.ChannelName.CompareTo(channelName) == 0)
+                    {
+                        num += listData[i].Price;
+                    }
+                    
+                }
+
+                return "充值金额：" + num + "\r\n";
+            }
         }
 
         // 充值人数
-        static async Task<string> RechargeUserNum(string time)
+        static async Task<string> RechargeUserNum(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
-            List<long> listPlayer = new List<long>();
-            for (int i = 0; i < listData.Count; i++)
+            if (string.IsNullOrEmpty(channelName))
             {
-                bool isFind = false;
-                for (int j = 0; j < listPlayer.Count; j++)
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
                 {
-                    if (listPlayer[j] == listData[i].Uid)
+                    bool isFind = false;
+                    for (int j = 0; j < listPlayer.Count; j++)
                     {
-                        isFind = true;
-                        break;
+                        if (listPlayer[j] == listData[i].Uid)
+                        {
+                            isFind = true;
+                            break;
+                        }
+                    }
+
+                    if (!isFind)
+                    {
+                        listPlayer.Add(listData[i].Uid);
                     }
                 }
 
-                if (!isFind)
-                {
-                    listPlayer.Add(listData[i].Uid);
-                }
+                return "充值人数：" + listPlayer.Count + "\r\n";
             }
+            else
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Recharge> listData = await proxyComponent.QueryJsonDBInfos<Log_Recharge>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    bool isFind = false;
+                    for (int j = 0; j < listPlayer.Count; j++)
+                    {
+                        if (listPlayer[j] == listData[i].Uid)
+                        {
+                            isFind = true;
+                            break;
+                        }
+                    }
 
-            return "充值人数：" + listPlayer.Count + "\r\n";
+                    if (!isFind)
+                    {
+                        listPlayer.Add(listData[i].Uid);
+                    }
+                }
+
+                int count = 0;
+
+                for (int i = 0; i < listPlayer.Count; i++)
+                {
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(listPlayer[i]);
+                    if (accountInfo.ChannelName.CompareTo(channelName) == 0)
+                    {
+                        ++count;
+                    }
+                }
+
+                return "充值人数：" + count + "\r\n";
+            }
         }
 
         // 游戏局数
-        static async Task<string> GameCount(string time)
+        static async Task<string> GameCount(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
-            return "游戏局数：" + listData.Count + "\r\n";
+            if (string.IsNullOrEmpty(channelName))
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
+                return "游戏局数：" + listData.Count + "\r\n";
+            }
+            else
+            {
+                return "游戏局数：无法查看" + "\r\n";
+            }
         }
 
         // 游戏人数
-        static async Task<string> GameUserCount(string time)
+        static async Task<string> GameUserCount(string time, string channelName)
         {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
-            List<long> listPlayer = new List<long>();
-            for (int i = 0; i < listData.Count; i++)
+            if (string.IsNullOrEmpty(channelName))
             {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
                 {
-                    bool isFind = false;
-                    for (int j = 0; j < listPlayer.Count; j++)
                     {
-                        if (listPlayer[j] == listData[i].Player1_uid)
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
                         {
-                            isFind = true;
-                            break;
+                            if (listPlayer[j] == listData[i].Player1_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player1_uid);
                         }
                     }
 
-                    if (!isFind)
                     {
-                        listPlayer.Add(listData[i].Player1_uid);
-                    }
-                }
-
-                {
-                    bool isFind = false;
-                    for (int j = 0; j < listPlayer.Count; j++)
-                    {
-                        if (listPlayer[j] == listData[i].Player2_uid)
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
                         {
-                            isFind = true;
-                            break;
+                            if (listPlayer[j] == listData[i].Player2_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player2_uid);
                         }
                     }
 
-                    if (!isFind)
                     {
-                        listPlayer.Add(listData[i].Player2_uid);
-                    }
-                }
-
-                {
-                    bool isFind = false;
-                    for (int j = 0; j < listPlayer.Count; j++)
-                    {
-                        if (listPlayer[j] == listData[i].Player3_uid)
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
                         {
-                            isFind = true;
-                            break;
+                            if (listPlayer[j] == listData[i].Player3_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player3_uid);
                         }
                     }
 
-                    if (!isFind)
                     {
-                        listPlayer.Add(listData[i].Player3_uid);
-                    }
-                }
-
-                {
-                    bool isFind = false;
-                    for (int j = 0; j < listPlayer.Count; j++)
-                    {
-                        if (listPlayer[j] == listData[i].Player4_uid)
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
                         {
-                            isFind = true;
-                            break;
+                            if (listPlayer[j] == listData[i].Player4_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player4_uid);
                         }
                     }
-
-                    if (!isFind)
-                    {
-                        listPlayer.Add(listData[i].Player4_uid);
-                    }
                 }
+
+                return "游戏人数：" + listPlayer.Count + "\r\n";
             }
-
-            return "游戏人数：" + listPlayer.Count + "\r\n";
+            else
+            {
+                return "游戏人数：无法查看" + "\r\n";
+            }
         }
 
         // 记录文本日志到本地
