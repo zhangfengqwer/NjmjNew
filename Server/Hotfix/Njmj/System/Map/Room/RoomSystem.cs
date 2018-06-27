@@ -19,7 +19,7 @@ namespace ETHotfix
                     continue;
                 }
 
-                ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>()?.GetActorProxy();
+                ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
                 actorProxy?.Send(message);
             }
         }
@@ -31,8 +31,8 @@ namespace ETHotfix
                 return;
             }
 
-            ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorProxy();
-            actorProxy.Send(message);
+            ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
+            actorProxy?.Send(message);
         }
 
 

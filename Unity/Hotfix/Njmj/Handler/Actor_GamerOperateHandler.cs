@@ -30,7 +30,6 @@ namespace ETHotfix
                 uiRoomComponent.ShowTurn(message.Uid);
                 MahjongInfo mahjongInfo = new MahjongInfo() { weight = (byte) message.weight, m_weight = (Consts.MahjongWeight) message.weight };
 
-
                 if (message.OperationType == 0)
                 {
                     SoundsHelp.Instance.PlayPeng(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
@@ -57,6 +56,8 @@ namespace ETHotfix
                     {
                         handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
                     }
+                    //隐藏碰刚
+                    handCardsComponent.CloseHandCardCanPeng();
                 }
                 else
                 {

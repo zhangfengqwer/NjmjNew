@@ -116,7 +116,7 @@ namespace ETHotfix
                             return;
                         }
 
-                        if (accountInfo.Token.CompareTo(message.Token) == 0)
+                        if (accountInfo?.Token?.CompareTo(message.Token) == 0)
                         {
                             // 随机分配一个Gate
                             StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
