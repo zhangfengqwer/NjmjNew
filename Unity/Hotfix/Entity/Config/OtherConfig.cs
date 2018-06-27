@@ -70,6 +70,21 @@ namespace Hotfix
                     }
                 }
             }
+
+            // 手机登录开关
+            {
+                string data = jd["shieldPhoneLogin"].ToString();
+                List<string> list = new List<string>();
+                CommonUtil.splitStr(data, list, ';');
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    {
+                        OtherData.isShiedPhoneLogin = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

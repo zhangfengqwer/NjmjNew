@@ -76,7 +76,7 @@ namespace ETHotfix
             for (int i = 0; i < listData.Count; i++)
             {
                 bool isFind = false;
-                for(int j = 0; j < listPlayer.Count; j++)
+                for (int j = 0; j < listPlayer.Count; j++)
                 {
                     if (listPlayer[j] == listData[i].Uid)
                     {

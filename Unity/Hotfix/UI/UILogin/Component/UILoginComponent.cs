@@ -135,6 +135,11 @@ namespace ETHotfix
                 btn_third.gameObject.SetActive(false);
                 btn_phone.gameObject.SetActive(true);
                 btn_wechat.gameObject.SetActive(true);
+
+                if (OtherData.getIsShiedPhoneLogin())
+                {
+                    btn_phone.transform.localScale = Vector3.zero;
+                }
             }
 
             #endregion
