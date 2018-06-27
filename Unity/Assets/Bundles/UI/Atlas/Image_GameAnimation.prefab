@@ -84,7 +84,7 @@ MonoBehaviour:
   - key: hu_5
     gameObject: {fileID: 21300000, guid: 459b9048232c81c49855069fb7fb1880, type: 3}
   - key: hu_6
-    gameObject: {fileID: 2800000, guid: 8d9ac5a80a2963140b5ff5cdd5e9125c, type: 3}
+    gameObject: {fileID: 21300000, guid: 8d9ac5a80a2963140b5ff5cdd5e9125c, type: 3}
   - key: hu_7
     gameObject: {fileID: 21300000, guid: e43251e50b6c5444a9c93bd7b39167d6, type: 3}
   - key: hu_8
@@ -96,7 +96,7 @@ MonoBehaviour:
   - key: hu_11
     gameObject: {fileID: 21300000, guid: 3dc3c311fd79fcb41b0f531737b33565, type: 3}
   - key: hu_12
-    gameObject: {fileID: 21300000, guid: 67253432347d51b46b06765c4f173aa0, type: 3}
+    gameObject: {fileID: 21300000, guid: 3dc3c311fd79fcb41b0f531737b33565, type: 3}
   - key: zimo_1
     gameObject: {fileID: 21300000, guid: d5e8c4c73b2cafe49b92f9478475c56d, type: 3}
   - key: zimo_2

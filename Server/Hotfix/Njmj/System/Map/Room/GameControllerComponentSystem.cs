@@ -65,6 +65,7 @@ namespace ETHotfix
             try
             {
                 room = self.GetParent<Room>();
+                room.IsGameOver = true;
                 room.tokenSource.Cancel();
                 roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
@@ -107,7 +108,7 @@ namespace ETHotfix
                 }
 
 
-                room.IsGameOver = true;
+            
                 room.State = RoomState.Idle;
                 room.tokenSource.Cancel();
                 room.IsLianZhuang = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using ETModel;
 
 namespace ETHotfix
@@ -206,7 +207,7 @@ namespace ETHotfix
         /// 发牌,包含抓牌和补花
         /// </summary>
         /// <param name="room"></param>
-        public static async void GamerGrabCard(this Room room)
+        public static void GamerGrabCard(this Room room)
         {
             foreach (var gamer in room.GetAll())
             {

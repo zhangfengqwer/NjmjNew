@@ -99,6 +99,8 @@ namespace ETHotfix
                     //有没有人胡牌
 //                    while (true)
 //                    {
+//                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+//
 //                        if (!GetCanHu(room))
 //                        {
 //                            break;

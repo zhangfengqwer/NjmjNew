@@ -224,28 +224,36 @@ namespace ETHotfix
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
         {
-            // 官方包
-            if (!ChannelHelper.IsThirdChannel())
+            try
             {
-                JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
-                string name = (string)jd["nick"];
-                string head = (string)jd["url"];
+                // 官方包
+                if (!ChannelHelper.IsThirdChannel() || "vivo".Equals(PlatformHelper.GetChannelName()))
+                {
+                    Log.Info("vivo包");
+                    JsonData jd = JsonMapper.ToObject(thirdLoginData.response);
+                    string name = (string)jd["nick"];
+                    string head = (string)jd["url"];
 
-                await OnThirdLogin(thirdLoginData.third_id, name, head);
+                    await OnThirdLogin(thirdLoginData.third_id, name, head);
+                }
+                else
+                {
+                    await OnThirdLogin(thirdLoginData.third_id, thirdLoginData.nick_name, "");
+                    //
+                    //                switch (thirdLoginData.channel_name)
+                    //                {
+                    //                    // 官方包
+                    //                    case "":
+                    //                        {
+                    //
+                    //                        }
+                    //                        break;
+                    //                }
+                }
             }
-            else
+            catch (Exception e)
             {
-                await OnThirdLogin(thirdLoginData.third_id, thirdLoginData.nick_name, "");
-//
-//                switch (thirdLoginData.channel_name)
-//                {
-//                    // 官方包
-//                    case "":
-//                        {
-//
-//                        }
-//                        break;
-//                }
+                Log.Error(e);
             }
         }
 
