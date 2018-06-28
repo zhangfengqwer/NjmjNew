@@ -24,7 +24,8 @@ namespace ETHotfix
             if (taskProgressInfoList.Count <= 0)
             {
                 TaskProgressInfo info = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
-                TaskConfig config = TaskData.getInstance().GetDataByTaskId(taskId);
+                TaskConfig config = ConfigHelp.Get<TaskConfig>(taskId);
+//                TaskConfig config = TaskData.getInstance().GetDataByTaskId(taskId);
                 info.IsGet = false;
                 info.UId = uid;
                 info.Name = config.Name;

@@ -21,14 +21,8 @@ namespace ETHotfix
 				// 发送给客户端
 				Session clientSession = entity as Session;
 				actorMessage.ActorId = 0;
-			    if (actorMessage is Actor_GamerCanOperation)
-			    {
-			        User user = session.GetComponent<SessionUserComponent>().User;
 
-			        Log.Info($"收到{user.UserID}map传了的：" + JsonHelper.ToJson(actorMessage));
-                }
-
-                clientSession.Send(actorMessage);
+				clientSession.Send(actorMessage);
 
 				session.Reply(actorResponse);
 				await Task.CompletedTask;

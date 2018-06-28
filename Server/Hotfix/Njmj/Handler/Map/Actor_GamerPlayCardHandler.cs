@@ -86,7 +86,6 @@ namespace ETHotfix
 	                gamer.IsCanGang = false;
 
                     //等待客户端有没有人碰
-                    Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
 	                bool isNeedWait = false;
 
 	                foreach (var _gamer in room.GetAll())
@@ -99,10 +98,12 @@ namespace ETHotfix
 	                    HandCardsComponent currentCards = _gamer.GetComponent<HandCardsComponent>();
 
 	                    List<MahjongInfo> cards = _gamer.GetComponent<HandCardsComponent>().GetAll();
-	                    canOperation.Uid = _gamer.UserID;
 
                         if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards))
 	                    {
+	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                        canOperation.Uid = _gamer.UserID;
+
                             _gamer.IsCanPeng = true;
                             isNeedWait = true;
                             canOperation.OperationType = 0;
@@ -113,6 +114,9 @@ namespace ETHotfix
                         //明杠
                         if (Logic_NJMJ.getInstance().isCanGang(mahjongInfo, cards))
 	                    {
+	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                        canOperation.Uid = _gamer.UserID;
+
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
@@ -131,7 +135,9 @@ namespace ETHotfix
 	                        {
 	                            if (room.CanHu(mahjongInfo, cards))
 	                            {
-	                               
+	                                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                                canOperation.Uid = _gamer.UserID;
+
                                     _gamer.IsCanHu = true;
 	                                isNeedWait = true;
 
@@ -150,8 +156,10 @@ namespace ETHotfix
 	                        {
 	                            _gamer.IsCanHu = true;
 	                            isNeedWait = true;
+	                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                            canOperation.Uid = _gamer.UserID;
 
-	                            canOperation.OperationType = 2;
+                                canOperation.OperationType = 2;
 	                            room.GamerBroadcast(_gamer, canOperation);
                             }
 	                    }
