@@ -13,6 +13,7 @@ namespace Hotfix
         public static bool isShiedShare = false;
         public static bool isShiedRealName = false;
         public static bool isShiedBindPhone = false;
+        public static bool isShiedPhoneLogin = false;
 
         public static bool getIsShiedShare()
         {
@@ -27,6 +28,11 @@ namespace Hotfix
         public static bool getIsShiedBindPhone()
         {
             return isShiedBindPhone;
+        }
+
+        public static bool getIsShiedPhoneLogin()
+        {
+            return isShiedPhoneLogin;
         }
     }
 }

@@ -379,7 +379,10 @@ namespace ETHotfix
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
+                {
+                    rankItemList[i].SetActive(true);
                     obj = rankItemList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(RankItem);
@@ -401,6 +404,15 @@ namespace ETHotfix
                     uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
                 }
             }
+            SetMoreHide(wealthRankList.Count, rankItemList);
+        }
+
+        private void SetMoreHide(int index,List<GameObject> list)
+        {
+            for(int i = index;i < list.Count; ++i)
+            {
+                list[index].SetActive(false);
+            }
         }
 
         /// <summary>
@@ -415,7 +427,10 @@ namespace ETHotfix
             for (int i = 0; i < gameRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
+                {
+                    rankItemList[i].SetActive(true);
                     obj = rankItemList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(RankItem);
@@ -438,6 +453,7 @@ namespace ETHotfix
                     gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
                 }
             }
+            SetMoreHide(gameRankList.Count, rankItemList);
         }
 
         /// <summary>

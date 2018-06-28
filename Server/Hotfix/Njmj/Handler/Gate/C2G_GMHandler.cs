@@ -253,7 +253,7 @@ namespace ETHotfix
                     case 5:
                         {
                             //生成报表
-                            string logData = await DataStatistics.Start(message.CreateBaobiaoTime);
+                            string logData = await DataStatistics.Start(message.CreateBaobiaoTime, message.Content);
                             response.LogData = logData;
                         }
                         break;
