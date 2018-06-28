@@ -108,8 +108,6 @@ namespace ETHotfix
                             canOperation.OperationType = 0;
 	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        room.Broadcast(canOperation);
-
                         }
 
                         //明杠
@@ -120,7 +118,6 @@ namespace ETHotfix
                             canOperation.OperationType = 1;
 	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        //room.Broadcast(canOperation);
                         }
 
                         //判断小胡,4个花以上才能胡
@@ -140,7 +137,6 @@ namespace ETHotfix
 
 	                                canOperation.OperationType = 2;
 	                                room.GamerBroadcast(_gamer, canOperation);
-//	                                room.Broadcast(canOperation);
                                 }
 	                            else
 	                            {
@@ -157,7 +153,6 @@ namespace ETHotfix
 
 	                            canOperation.OperationType = 2;
 	                            room.GamerBroadcast(_gamer, canOperation);
-//	                            room.Broadcast(canOperation);
                             }
 	                    }
 	                }

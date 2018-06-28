@@ -199,6 +199,7 @@ namespace ETHotfix
                                         playerBaseInfo.GoldNum = moneyAmount;
                                         playerBaseInfo.WingNum = gIngotAmount;
                                         await proxyComponent.Save(playerBaseInfo);
+
                                     }
 
                                     // 发送老用户广播
