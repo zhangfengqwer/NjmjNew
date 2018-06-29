@@ -523,12 +523,6 @@
     <Compile Include="Assets\Scripts\Utils\PlatformHelper.cs" />
     <Compile Include="Assets\Scripts\Utils\SensitiveWordUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\ToastScript.cs" />
-    <Compile Include="Assets\Test\CoordinateLocal.cs" />
-    <Compile Include="Assets\Test\CoordinateWorld.cs" />
-    <Compile Include="Assets\Test\Dictance.cs" />
-    <Compile Include="Assets\Test\LookAtScript.cs" />
-    <Compile Include="Assets\Test\MotionScript.cs" />
-    <Compile Include="Assets\Test\MoveToTarget.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\CLRBindings.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_ShortcutExtensions46_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_TweenSettingsExtensions_Binding.cs" />
@@ -1040,11 +1034,6 @@
     <None Include="Assets\Res\Config\RoomConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\Res\Config\stopwords.txt" />
-    <None Include="Assets\Shader.shader" />
-    <None Include="Assets\Shader2.shader" />
-    <None Include="Assets\Shader3.shader" />
-    <None Include="Assets\Shader4.shader" />
-    <None Include="Assets\Shader5.shader" />
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\link.xml" />

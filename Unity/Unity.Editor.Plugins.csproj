@@ -368,11 +368,6 @@
     <None Include="Assets\Res\Config\RoomConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\Res\Config\stopwords.txt" />
-    <None Include="Assets\Shader.shader" />
-    <None Include="Assets\Shader2.shader" />
-    <None Include="Assets\Shader3.shader" />
-    <None Include="Assets\Shader4.shader" />
-    <None Include="Assets\Shader5.shader" />
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\StreamingAssets\build_info.txt" />
     <None Include="Assets\link.xml" />
