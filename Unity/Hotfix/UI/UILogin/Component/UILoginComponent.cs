@@ -105,7 +105,7 @@ namespace ETHotfix
                 if (ChannelHelper.IsThirdChannel() && PlatformHelper.IsThirdLogin())
                 {
                     btn_third.transform.localScale = new Vector3(1, 1, 1);
-                    btn_third.GetComponentInChildren<Text>().text = PlatformHelper.GetChannelName() + "登录";
+                    btn_third.GetComponentInChildren<Text>().text = ChannelHelper.GetChannelAllName() + "登录";
                 }
                 else
                 {

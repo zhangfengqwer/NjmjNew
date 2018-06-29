@@ -90,6 +90,7 @@ namespace ETHotfix
 	        {
 	            ReplyError(response, e, reply);
 	        }
-	    }
+	        session.Dispose();
+        }
 	}
 }
