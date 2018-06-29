@@ -108,7 +108,7 @@ namespace ETHotfix
                             canOperation.OperationType = 0;
 	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        room.Broadcast(canOperation);
+	                        //room.Broadcast(canOperation);
 
                         }
 
@@ -156,7 +156,8 @@ namespace ETHotfix
 	                            isNeedWait = true;
 
 	                            canOperation.OperationType = 2;
-	                            room.GamerBroadcast(_gamer, canOperation);
+                                Log.Info($"{_gamer.UserID}可胡" + JsonHelper.ToJson(canOperation));
+                                room.GamerBroadcast(_gamer, canOperation);
 //	                            room.Broadcast(canOperation);
                             }
 	                    }
