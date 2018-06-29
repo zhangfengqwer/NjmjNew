@@ -93,57 +93,31 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
-            // 测试服开启游客登录按钮
-            if (!NetConfig.getInstance().isFormal)
-            {
-                btn_guest.transform.localScale = new Vector3(1,1,1);
-            }
 
-            // 隐藏手机登录界面
+            #region 登录按钮设置
             {
-                panel_phoneLogin.transform.localScale = Vector3.zero;
-            }
-
-            if (false)
-            {
+                // 测试服开启游客登录按钮
+                if (!NetConfig.getInstance().isFormal)
                 {
-                    List<MahjongInfo> list = new List<MahjongInfo>();
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_1));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_2));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_3));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_4));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_5));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Wan_6));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_1));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_2));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_3));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_4));
-                    list.Add(new MahjongInfo(Consts.MahjongWeight.Tong_4));
-                    Debug.Log(Logic_NJMJ.getInstance().isHuPai(list).ToString());
+                    btn_guest.transform.localScale = new Vector3(1, 1, 1);
+                }
+
+                if (ChannelHelper.IsThirdChannel() && PlatformHelper.IsThirdLogin())
+                {
+                    btn_third.transform.localScale = new Vector3(1, 1, 1);
+                    btn_third.GetComponentInChildren<Text>().text = PlatformHelper.GetChannelName() + "登录";
+                }
+                else
+                {
+                    btn_phone.transform.localScale = new Vector3(1, 1, 1);
+                    btn_wechat.transform.localScale = new Vector3(1, 1, 1);
+
+                    if (OtherData.getIsShiedPhoneLogin())
+                    {
+                        btn_phone.transform.localScale = Vector3.zero;
+                    }
                 }
             }
-
-            #region 第三方登录
-
-            if (ChannelHelper.IsThirdChannel() && PlatformHelper.IsThirdLogin())
-            {
-                btn_third.gameObject.SetActive(true);
-                btn_third.GetComponentInChildren<Text>().text = PlatformHelper.GetChannelName() + "登录";
-                btn_phone.gameObject.SetActive(false);
-                btn_wechat.gameObject.SetActive(false);
-            }
-            else
-            {
-                btn_third.gameObject.SetActive(false);
-                btn_phone.gameObject.SetActive(true);
-                btn_wechat.gameObject.SetActive(true);
-
-                if (OtherData.getIsShiedPhoneLogin())
-                {
-                    btn_phone.transform.localScale = Vector3.zero;
-                }
-            }
-
             #endregion
         }
 
