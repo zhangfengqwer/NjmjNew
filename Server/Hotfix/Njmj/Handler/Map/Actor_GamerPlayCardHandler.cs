@@ -19,8 +19,9 @@ namespace ETHotfix
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
 	        if (room == null) return;
+
             try
-	        {
+            {
 	            MahjongInfo mahjongInfo = new MahjongInfo()
 	            {
 	                weight = (byte) message.weight,
@@ -127,10 +128,6 @@ namespace ETHotfix
                         //判断小胡,4个花以上才能胡
                         if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
 	                    {
-//	                        Log.Debug("小胡");
-//	                        Log.Debug("currentCards.PengGangCards.Count：" + currentCards.PengGangCards.Count);
-//	                        Log.Debug("currentCards.PengCards.Count：" + currentCards.PengCards.Count);
-//	                        Log.Debug("currentCards.FaceCards.Count：" + currentCards.FaceCards.Count);
                             if (currentCards.FaceCards.Count >= 4)
 	                        {
 	                            if (room.CanHu(mahjongInfo, cards))
