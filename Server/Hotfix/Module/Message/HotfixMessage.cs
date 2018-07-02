@@ -1346,10 +1346,10 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = false)]
 		public long Uid;
 
-		[ProtoMember(2, IsRequired = true)]
+		[ProtoMember(2, IsRequired = false)]
 		public int OperationType;
 
-		[ProtoMember(3, IsRequired = true)]
+		[ProtoMember(3, IsRequired = false)]
 		public int weight;
 
 	}
@@ -1367,7 +1367,7 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = false)]
 		public long Uid;
 
-		[ProtoMember(2, IsRequired = true)]
+		[ProtoMember(2, IsRequired = false)]
 		public int OperationType;
 
 	}

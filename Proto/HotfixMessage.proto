@@ -466,15 +466,15 @@ message Actor_GamerBuHua // IActorMessage
 
 message Actor_GamerOperation // IActorMessage
 {
-   optional long Uid = 1;
-   required int OperationType = 2;
-   required int weight = 3;
+   	optional long Uid = 1;
+   	optional int OperationType = 2;
+   	optional int weight = 3;
 }
 
 message Actor_GamerCanOperation // IActorMessage
 {
-   optional long Uid = 1;
-   required int OperationType = 2;
+   	optional long Uid = 1;
+   	optional int OperationType = 2;
 }
 
 message Actor_GamerHuPai // IActorMessage

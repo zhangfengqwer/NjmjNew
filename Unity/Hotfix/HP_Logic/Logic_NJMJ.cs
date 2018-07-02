@@ -737,7 +737,7 @@ namespace ETHotfix
                             strTemp += "----";
                         }
                     }
-                    Log.Debug("成牌排列：" + strTemp);
+                    //Log.Debug("成牌排列：" + strTemp);
                 }
 
                 return true;
