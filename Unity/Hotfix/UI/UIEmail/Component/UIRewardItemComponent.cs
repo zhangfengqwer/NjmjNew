@@ -28,8 +28,7 @@ namespace ETHotfix
         public void SetRewardInfo(string spriteName,int num)
         {
             rewardItem.sprite = CommonUtil.getSpriteByBundle("image_shop", spriteName);
-            rewardItem.SetNativeSize();
-            itemNum.text = num.ToString();
+            itemNum.text = "x" + num;
         }
     }
 }

@@ -100,7 +100,10 @@ namespace ETHotfix
             self.tokenSource = new CancellationTokenSource();
             OrderControllerComponent controllerComponent = self.GetComponent<OrderControllerComponent>();
             Gamer gamer = self.Get(controllerComponent.CurrentAuthority);
-
+            if (gamer == null)
+            {
+                return;
+            }
             if (gamer.isOffline)
             {
                 self.TimeOut = 2;
