@@ -278,7 +278,7 @@ namespace ETHotfix
                 {
                     for (int i = 0; i < listData.Count; i++)
                     {
-                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        if (listData[i].ChannelName.CompareTo(channelName) == 0)
                         {
                             ++allCount;
                         }
@@ -292,7 +292,7 @@ namespace ETHotfix
                 {
                     for (int i = 0; i < listData.Count; i++)
                     {
-                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        if (listData[i].ChannelName.CompareTo(channelName) == 0)
                         {
                             long uid = listData[i].Id;
                             List<Log_Login> listData2 = await proxyComponent.QueryJsonDBInfos<Log_Login>(time, uid);
