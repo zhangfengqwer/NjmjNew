@@ -108,6 +108,7 @@ namespace ETHotfix
             GameUtil.changeDataWithStr(email.RewardItem);
             flag.SetActive(false);
             Delete.gameObject.SetActive(true);
+            Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().RefreshMailUI();
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().DeCount();
         }
 

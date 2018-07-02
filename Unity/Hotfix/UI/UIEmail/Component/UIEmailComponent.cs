@@ -87,6 +87,7 @@ namespace ETHotfix
                 NoEmailTip.gameObject.SetActive(false);   
             }
             CreateEmailItemList();
+            notGetcount = 0;
             GetNoGetCount();
             if(notGetcount != 0)
             {
