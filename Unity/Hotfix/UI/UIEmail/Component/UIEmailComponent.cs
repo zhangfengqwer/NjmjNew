@@ -61,7 +61,23 @@ namespace ETHotfix
             UINetLoadingComponent.closeNetLoading();
 
             emailList = g2cEmail.EmailInfoList;
-            if(emailList.Count <= 0)
+
+            Email temp; //临时变量，保存最大值
+            int i, j; //循环变量
+            for (i = 0; i < emailList.Count - 1; i++)
+            {
+                for (j = 0; j < emailList.Count - 1 - i; j++)
+                {
+                    if (emailList[j].EId > emailList[j + 1].EId)
+                    {
+                        temp = emailList[j];
+                        emailList[j] = emailList[j + 1];
+                        emailList[j + 1] = temp;
+                    }
+                }
+            }
+
+            if (emailList.Count <= 0)
             {
                 NoEmailTip.gameObject.SetActive(true);
                 NoEmailTip.text = "暂无邮件!";

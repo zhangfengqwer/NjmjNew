@@ -66,7 +66,14 @@ namespace ETModel
 					return;
 				}
 
-				await this.Accept();
+			    try
+			    {
+			        await this.Accept();
+                }
+                catch (Exception e)
+			    {
+			        Log.Error(e);
+			    }
 			}
 		}
 
@@ -119,13 +126,14 @@ namespace ETModel
 			}
 		}
 
-		public void Update()
+		public async void Update()
 		{
 			if (this.Service == null)
 			{
 				return;
 			}
 			this.Service.Update();
+
 		}
 
 		public override void Dispose()

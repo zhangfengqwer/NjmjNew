@@ -126,7 +126,7 @@ namespace ETHotfix
 
             Session managerSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(manager);
 
-            M2C_Reload g2cUpdateServer = (M2C_Reload)await managerSession.Call(new C2M_Reload() {AppType = AppType.AllServer});
+            M2C_Reload g2cUpdateServer = (M2C_Reload)await managerSession.Call(new C2M_Reload() {AppType = AppType.Map});
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cUpdateServer.Error != ErrorCode.ERR_Success)
@@ -137,6 +137,7 @@ namespace ETHotfix
             }
 
             ToastScript.createToast("更新成功");
+            managerSession.Dispose();
         }
     }
 }

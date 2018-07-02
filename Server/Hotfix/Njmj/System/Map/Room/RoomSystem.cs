@@ -100,7 +100,10 @@ namespace ETHotfix
             self.tokenSource = new CancellationTokenSource();
             OrderControllerComponent controllerComponent = self.GetComponent<OrderControllerComponent>();
             Gamer gamer = self.Get(controllerComponent.CurrentAuthority);
-
+            if (gamer == null)
+            {
+                return;
+            }
             if (gamer.isOffline)
             {
                 self.TimeOut = 2;
@@ -130,8 +133,7 @@ namespace ETHotfix
                     return;
                 }
 
-                await gamer?.GetComponent<HandCardsComponent>()?.PopCard();
-                //Log.Debug($"玩家{gamer.UserID}超时，自动出牌:"+ mahjongInfo.m_weight);
+                MahjongInfo mahjongInfo = await gamer.GetComponent<HandCardsComponent>().PopCard();
                 if (!gamer.IsTrusteeship)
                 {
                     gamer.IsTrusteeship = true;

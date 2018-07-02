@@ -35,6 +35,12 @@ namespace ETHotfix
                 //添加User对象关联到Session上
                 session.AddComponent<SessionUserComponent>().User = user;
 
+			    //添加消息转发组件
+			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
+
+			    response.PlayerId = user.Id;
+			    response.Uid = userId;
+
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
@@ -121,12 +127,6 @@ namespace ETHotfix
 			        }
 			    }
 
-                //添加消息转发组件
-                await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
-
-                response.PlayerId = user.Id;
-                response.Uid = userId;
-
                 List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 response.BagList = new List<Bag>();
                 List<Bag> bagList = new List<Bag>();
@@ -199,6 +199,7 @@ namespace ETHotfix
                                         playerBaseInfo.GoldNum = moneyAmount;
                                         playerBaseInfo.WingNum = gIngotAmount;
                                         await proxyComponent.Save(playerBaseInfo);
+
                                     }
 
                                     // 发送老用户广播

@@ -36,13 +36,6 @@ namespace ETHotfix
                 }
                 else
 	            {
-//	                //人满了
-//	                if (room.seats.Count == 4)
-//	                {
-//	                    roomComponent.readyRooms.Remove(room.Id);
-//	                    roomComponent.idleRooms.Add(room.Id,room);
-//	                }
-
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)
 	                {

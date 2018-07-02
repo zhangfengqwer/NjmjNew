@@ -11,7 +11,7 @@ namespace ETHotfix
 		protected override async void Run(Session session, G2M_PlayerEnterRoom message, Action<M2G_PlayerEnterRoom> reply)
 		{
 		    M2G_PlayerEnterRoom response = new M2G_PlayerEnterRoom();
-		    Log.Info("G2M_PlayerEnterRoom:" + JsonHelper.ToJson(message));
+		    Log.Debug("G2M_PlayerEnterRoom:" + JsonHelper.ToJson(message));
             try
 			{
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();

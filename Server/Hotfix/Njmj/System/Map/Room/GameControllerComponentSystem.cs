@@ -106,8 +106,6 @@ namespace ETHotfix
                         await DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
                     }
                 }
-
-
             
                 room.State = RoomState.Idle;
                 room.tokenSource.Cancel();
