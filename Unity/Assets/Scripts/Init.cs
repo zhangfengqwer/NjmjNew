@@ -49,7 +49,7 @@ namespace ETModel
                 await BundleHelper.DownloadBundle();
 
                 Game.Hotfix.LoadHotfixAssembly();
-
+                
 				// 加载配置
 				Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");
 				Game.Scene.AddComponent<ConfigComponent>();
@@ -60,6 +60,8 @@ namespace ETModel
 				Game.Hotfix.GotoHotfix();
 
                 Game.EventSystem.Run(EventIdType.TestHotfixSubscribMonoEvent, "TestHotfixSubscribMonoEvent");
+
+                
 
             }
 			catch (Exception e)

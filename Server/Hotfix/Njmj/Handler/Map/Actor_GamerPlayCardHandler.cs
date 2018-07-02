@@ -19,8 +19,9 @@ namespace ETHotfix
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
 	        if (room == null) return;
+
             try
-	        {
+            {
 	            MahjongInfo mahjongInfo = new MahjongInfo()
 	            {
 	                weight = (byte) message.weight,
@@ -86,7 +87,6 @@ namespace ETHotfix
 	                gamer.IsCanGang = false;
 
                     //等待客户端有没有人碰
-                    Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
 	                bool isNeedWait = false;
 
 	                foreach (var _gamer in room.GetAll())
@@ -99,48 +99,47 @@ namespace ETHotfix
 	                    HandCardsComponent currentCards = _gamer.GetComponent<HandCardsComponent>();
 
 	                    List<MahjongInfo> cards = _gamer.GetComponent<HandCardsComponent>().GetAll();
-	                    canOperation.Uid = _gamer.UserID;
 
                         if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards))
 	                    {
+	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                        canOperation.Uid = _gamer.UserID;
+
                             _gamer.IsCanPeng = true;
                             isNeedWait = true;
                             canOperation.OperationType = 0;
 	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        //room.Broadcast(canOperation);
-
                         }
 
                         //明杠
                         if (Logic_NJMJ.getInstance().isCanGang(mahjongInfo, cards))
 	                    {
+	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                        canOperation.Uid = _gamer.UserID;
+
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
 	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
-	                        //room.Broadcast(canOperation);
                         }
 
                         //判断小胡,4个花以上才能胡
                         if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
 	                    {
-//	                        Log.Debug("小胡");
-//	                        Log.Debug("currentCards.PengGangCards.Count：" + currentCards.PengGangCards.Count);
-//	                        Log.Debug("currentCards.PengCards.Count：" + currentCards.PengCards.Count);
-//	                        Log.Debug("currentCards.FaceCards.Count：" + currentCards.FaceCards.Count);
                             if (currentCards.FaceCards.Count >= 4)
 	                        {
 	                            if (room.CanHu(mahjongInfo, cards))
 	                            {
-	                               
+	                                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                                canOperation.Uid = _gamer.UserID;
+
                                     _gamer.IsCanHu = true;
 	                                isNeedWait = true;
 
 	                                canOperation.OperationType = 2;
 	                                room.GamerBroadcast(_gamer, canOperation);
-//	                                room.Broadcast(canOperation);
                                 }
 	                            else
 	                            {
@@ -154,11 +153,11 @@ namespace ETHotfix
 	                        {
 	                            _gamer.IsCanHu = true;
 	                            isNeedWait = true;
+	                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                            canOperation.Uid = _gamer.UserID;
 
-	                            canOperation.OperationType = 2;
-                                Log.Info($"{_gamer.UserID}可胡" + JsonHelper.ToJson(canOperation));
-                                room.GamerBroadcast(_gamer, canOperation);
-//	                            room.Broadcast(canOperation);
+                                canOperation.OperationType = 2;
+	                            room.GamerBroadcast(_gamer, canOperation);
                             }
 	                    }
 	                }

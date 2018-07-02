@@ -14,9 +14,18 @@ namespace ETHotfix
             G2C_PlayerInfo response = new G2C_PlayerInfo();
             try
             {
+                User user = session.GetComponent<SessionUserComponent>()?.User;
+
+                if (user == null)
+                {
+                    response.Error = ErrorCode.ERR_Common;
+                    reply(response);
+                    session.Dispose();
+                    return;
+                }
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<PlayerBaseInfo> playerInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.uid}}}");
-                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{message.uid}}}");
+                List<PlayerBaseInfo> playerInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{user.UserID}}}");
+                List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{user.UserID}}}");
                 response.PlayerInfo = new PlayerInfo();
                 if (playerInfo != null)
                 {
@@ -27,7 +36,7 @@ namespace ETHotfix
                     response.PlayerInfo.HuaFeiNum = playerInfo[0].HuaFeiNum;
                     response.PlayerInfo.Icon = playerInfo[0].Icon;
                     response.PlayerInfo.IsRealName = playerInfo[0].IsRealName;
-                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(message.uid);
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(user.UserID);
                     response.PlayerInfo.Phone = accountInfo.Phone;
                     response.PlayerInfo.PlayerSound = playerInfo[0].PlayerSound;
                     response.PlayerInfo.RestChangeNameCount = playerInfo[0].RestChangeNameCount;
@@ -36,7 +45,7 @@ namespace ETHotfix
                     response.PlayerInfo.MaxHua = playerInfo[0].MaxHua;
                     response.PlayerInfo.WinGameCount = playerInfo[0].WinGameCount;
                     List<ChengjiuInfo> infos =
-                        await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{message.uid},TaskId:{102}}}");
+                        await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{user.UserID},TaskId:{102}}}");
                     if (infos.Count > 0)
                     {
                         response.PlayerInfo.TotalGameCount = infos[0].CurProgress;
@@ -48,7 +57,7 @@ namespace ETHotfix
 
                     // 今天是否签到过
                     {
-                        List<DailySign> dailySigns = await proxyComponent.QueryJson<DailySign>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.uid}}}");
+                        List<DailySign> dailySigns = await proxyComponent.QueryJson<DailySign>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{user.UserID}}}");
                         if (dailySigns.Count == 0)
                         {
                             response.PlayerInfo.IsSign = false;
@@ -61,7 +70,7 @@ namespace ETHotfix
 
                     {
                         //端午节活动是否结束
-                        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{message.uid}}}");
+                        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{user.UserID}}}");
                         string curTime = CommonUtil.getCurTimeNormalFormat();
                         if (string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) >= 0)
                         {
@@ -71,7 +80,7 @@ namespace ETHotfix
                                 goldNum = duanwuDataBases[0].ZongziCount * 100;
                                 duanwuDataBases[0].ZongziCount = 0;
                                 //添加邮件
-                                await DBCommonUtil.SendMail(message.uid, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
+                                await DBCommonUtil.SendMail(user.UserID, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
                                 await proxyComponent.Save(duanwuDataBases[0]);
                             }
                         }

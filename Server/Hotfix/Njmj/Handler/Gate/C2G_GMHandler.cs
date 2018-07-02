@@ -23,7 +23,7 @@ namespace ETHotfix
                 Game.Scene.AddComponent<ConfigComponent>();
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
                 
-                switch (message.Type)
+                switch (message.Type)                                                                          
                 {
                     case 1:
                         {
@@ -368,6 +368,13 @@ namespace ETHotfix
                             // 发送通知
                             UserComponentSystem.EmergencyNotice(message.UId, message.Content);
                         }
+                        break;
+                    case 11:
+                    {
+                        //session
+                        int count = Game.Scene.GetComponent<NetOuterComponent>().sessions.Count;
+                        response.Channel = count.ToString();
+                    }
                         break;
                 }
                 reply(response);

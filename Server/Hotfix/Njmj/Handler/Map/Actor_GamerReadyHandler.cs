@@ -31,7 +31,7 @@ namespace ETHotfix
 	    {
             try
 	        {
-	            Log.Info("收到玩家准备：" + JsonHelper.ToJson(message));
+	            Log.Debug("收到玩家准备：" + JsonHelper.ToJson(message));
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 	           

@@ -12,7 +12,7 @@ namespace ETHotfix
         {
             try
             {
-                Log.Info("收到表情：" + JsonHelper.ToJson(message));
+                Log.Debug("收到表情：" + JsonHelper.ToJson(message));
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
                 room.Broadcast(new Actor_Chat { ChatType = message.ChatType, Value = message.Value, UId = message.UId });

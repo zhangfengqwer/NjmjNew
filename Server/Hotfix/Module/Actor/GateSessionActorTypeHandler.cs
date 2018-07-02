@@ -10,9 +10,7 @@ namespace ETHotfix
 	[ActorTypeHandler(AppType.Gate, ActorType.GateSession)]
 	public class GateSessionActorTypeHandler : IActorTypeHandler
 	{
-	    private Actor_GamerOperation _actorGamerOperation;
-
-	    public async Task Handle(Session session, Entity entity, IActorMessage actorMessage)
+		public async Task Handle(Session session, Entity entity, IActorMessage actorMessage)
 		{
 			ActorResponse actorResponse = new ActorResponse
 			{
@@ -23,17 +21,8 @@ namespace ETHotfix
 				// 发送给客户端
 				Session clientSession = entity as Session;
 				actorMessage.ActorId = 0;
-			    _actorGamerOperation = actorMessage as Actor_GamerOperation;
 
-			    if (typeof(ETHotfix.Actor_GamerCanOperation).ToString() == actorMessage.GetType().ToString())
-                {
-                    Log.Info("收到map传了的：" + JsonHelper.ToJson(actorMessage));
-                    Log.Info("收到map传了的session：" + session.Id);
-                }
-
-                //Log.Info("收到map传了的：" + JsonHelper.ToJson(actorMessage));
-                //Log.Info("收到map传了的session：" + session.Id);
-                clientSession.Send(actorMessage);
+				clientSession.Send(actorMessage);
 
 				session.Reply(actorResponse);
 				await Task.CompletedTask;
