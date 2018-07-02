@@ -217,7 +217,46 @@ namespace ETHotfix
             }
             else
             {
-                return "次留：无法查看" + "\r\n";
+                string zuotianTime = Convert.ToDateTime(time).AddDays(-1).ToString("yyyy-MM-dd");
+
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>(zuotianTime);
+                int allCount = 0;
+                {
+                    for (int i = 0; i < listData.Count; i++)
+                    {
+                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        {
+                            ++allCount;
+                        }
+                    }
+                }
+
+                float ciliu = 0;
+                int loginCount = 0;
+
+                if (allCount > 0)
+                {
+                    for (int i = 0; i < listData.Count; i++)
+                    {
+                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        {
+                            long uid = listData[i].Id;
+                            List<Log_Login> listData2 = await proxyComponent.QueryJsonDBInfos<Log_Login>(time, uid);
+                            if (listData2.Count > 0)
+                            {
+                                ++loginCount;
+                            }
+                        }
+                    }
+
+                    ciliu = ((float)loginCount / (float)allCount) * 100;
+                }
+
+                //Log.Debug("昨日新增：" + listData.Count);
+                //Log.Debug("今日登陆：" + loginCount);
+
+                return "次留：" + ciliu + "%\r\n";
             }
         }
 
