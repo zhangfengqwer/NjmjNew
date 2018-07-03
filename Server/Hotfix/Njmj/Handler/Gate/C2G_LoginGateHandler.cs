@@ -200,6 +200,7 @@ namespace ETHotfix
                                         playerBaseInfo.WingNum = gIngotAmount;
                                         await proxyComponent.Save(playerBaseInfo);
 
+                                        await DBCommonUtil.changeWealthWithStr(userId,"111:10;2:10","老用户赠送");
                                     }
 
                                     // 发送老用户广播

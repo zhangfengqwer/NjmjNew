@@ -253,6 +253,9 @@ namespace ETHotfix
                 SetMyGameRank();
             });
 
+            //PlayerPrefs.DeleteAll();
+            ShowNotice();
+
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
             await SetPlayerInfo();
             GetRankInfo();
@@ -263,7 +266,6 @@ namespace ETHotfix
             }
             SetRedTip();
             HeartBeat.getInstance().startHeartBeat();
-
             // 实名认证提示
             try
             {
@@ -296,6 +298,33 @@ namespace ETHotfix
             }
         }
 
+        private void ShowNotice()
+        {
+            for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; i++)
+            {
+                NoticeInfo config = NoticeConfig.getInstance().getDataList()[i];
+               
+                string key = $"{PlayerInfoComponent.Instance.uid}{config.id}";
+                if (PlayerPrefs.GetInt(key) != 1)
+                {
+                    PlayerPrefs.SetInt(key, 1);
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel(config.title, config.content);
+                    script.setOnClickOkEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                        ShowNotice();
+                    });
+
+                    script.setOnClickCloseEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                        ShowNotice();
+                    });
+
+                    break;
+                }
+            }
+        }
 
         /// <summary>
         /// 设置?点提示

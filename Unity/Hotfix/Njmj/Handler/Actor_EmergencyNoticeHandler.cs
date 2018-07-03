@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             try
             {
-                HeartBeat.getInstance().stopHeartBeat();
+                // HeartBeat.getInstance().stopHeartBeat();
 
                 {
                     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", message.Content);
