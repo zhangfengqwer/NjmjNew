@@ -58,12 +58,15 @@ namespace ETHotfix
             }
             #endregion
 
-            // 每日报表
-            //if ((sec % 10) == 0)
-            if ((min == 10) && (sec == 0))
-            {
-                await DataStatistics.Start();
-            }
+            //// 每日报表
+            //if (sec == 0)
+            ////if ((min == 10) && (sec == 0))
+            //{
+            //    for (int i = 0; i < DataStatistics.channelList.Count; i++)
+            //    {
+            //        await DataStatistics.Start(DataStatistics.channelList[i]);
+            //    }
+            //}
         }
     }
 }

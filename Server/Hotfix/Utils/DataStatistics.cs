@@ -10,7 +10,9 @@ namespace ETHotfix
 {
     public class DataStatistics
     {
-        public static async Task Start()
+        public static List<string> channelList = new List<string>() { "","vivo","oppo","huawei","xiaomi"};
+
+        public static async Task Start(string channelName)
         {
             try
             {
@@ -18,14 +20,23 @@ namespace ETHotfix
                 time = Convert.ToDateTime(time).ToString("yyyy-MM-dd");
 
                 string logData = "";
-                logData += await NewUser(time,"");
-                logData += await DailyLogin(time, "");
-                logData += await LoadOldUserCount(time, "");
-                logData += await CiLiu(time, "");
-                logData += await RechargeNum(time, "");
-                logData += await RechargeUserNum(time, "");
-                logData += await GameCount(time, "");
-                logData += await GameUserCount(time, "");
+                if (string.IsNullOrEmpty(channelName))
+                {
+                    logData = "渠道：所有\r\n";
+                }
+                else
+                {
+                    logData = "渠道：" + channelName + "\r\n";
+                }
+               
+                logData += await NewUser(time, channelName);
+                logData += await DailyLogin(time, channelName);
+                logData += await LoadOldUserCount(time, channelName);
+                logData += await CiLiu(time, channelName);
+                logData += await RechargeNum(time, channelName);
+                logData += await RechargeUserNum(time, channelName);
+                logData += await GameCount(time, channelName);
+                logData += await GameUserCount(time, channelName);
 
                 writeLogToLocalNow(logData);
             }
@@ -40,17 +51,59 @@ namespace ETHotfix
         {
             try
             {
-                string logData = "";
-                logData += await NewUser(time, channelName);
-                logData += await DailyLogin(time, channelName);
-                logData += await LoadOldUserCount(time, channelName);
-                logData += await CiLiu(time, channelName);
-                logData += await RechargeNum(time, channelName);
-                logData += await RechargeUserNum(time, channelName);
-                logData += await GameCount(time, channelName);
-                logData += await GameUserCount(time, channelName);
-                writeLogToLocalNow(logData);
-                return logData;
+                if (string.IsNullOrEmpty(channelName))
+                {
+                    string backData = "";
+                    for (int i = 0; i < channelList.Count; i++)
+                    {
+                        string logData = "";
+                        if (string.IsNullOrEmpty(channelList[i]))
+                        {
+                            logData = "渠道：所有\r\n";
+                            logData += await NewUser(time, channelList[i]);
+                            logData += await DailyLogin(time, channelList[i]);
+                            logData += await LoadOldUserCount(time, channelList[i]);
+                            logData += await CiLiu(time, channelList[i]);
+                            logData += await RechargeNum(time, channelList[i]);
+                            logData += await RechargeUserNum(time, channelList[i]);
+                            logData += await GameCount(time, channelList[i]);
+                            logData += await GameUserCount(time, channelList[i]);
+                            
+                            writeLogToLocalNow(logData);
+
+                            backData = logData;
+                        }
+                        else
+                        {
+                            logData = "渠道：" + channelList[i] + "\r\n";
+                            logData += await NewUser(time, channelList[i]);
+                            logData += await DailyLogin(time, channelList[i]);
+                            logData += await LoadOldUserCount(time, channelList[i]);
+                            logData += await CiLiu(time, channelList[i]);
+                            logData += await RechargeNum(time, channelList[i]);
+                            logData += await RechargeUserNum(time, channelList[i]);
+                            logData += await GameCount(time, channelList[i]);
+                            logData += await GameUserCount(time, channelList[i]);
+                            writeLogToLocalNow(logData);
+                        }
+                    }
+
+                    return backData;
+                }
+                else
+                {
+                    string logData = "渠道：" + channelName + "\r\n";
+                    logData += await NewUser(time, channelName);
+                    logData += await DailyLogin(time, channelName);
+                    logData += await LoadOldUserCount(time, channelName);
+                    logData += await CiLiu(time, channelName);
+                    logData += await RechargeNum(time, channelName);
+                    logData += await RechargeUserNum(time, channelName);
+                    logData += await GameCount(time, channelName);
+                    logData += await GameUserCount(time, channelName);
+                    writeLogToLocalNow(logData);
+                    return logData;
+                }
             }
             catch (Exception ex)
             {
@@ -225,7 +278,7 @@ namespace ETHotfix
                 {
                     for (int i = 0; i < listData.Count; i++)
                     {
-                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        if (listData[i].ChannelName.CompareTo(channelName) == 0)
                         {
                             ++allCount;
                         }
@@ -239,7 +292,7 @@ namespace ETHotfix
                 {
                     for (int i = 0; i < listData.Count; i++)
                     {
-                        if (listData[i].Id.CompareTo(channelName) == 0)
+                        if (listData[i].ChannelName.CompareTo(channelName) == 0)
                         {
                             long uid = listData[i].Id;
                             List<Log_Login> listData2 = await proxyComponent.QueryJsonDBInfos<Log_Login>(time, uid);
@@ -459,7 +512,92 @@ namespace ETHotfix
             }
             else
             {
-                return "游戏人数：无法查看" + "\r\n";
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Game> listData = await proxyComponent.QueryJsonDBInfos<Log_Game>(time);
+                List<long> listPlayer = new List<long>();
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    {
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
+                        {
+                            if (listPlayer[j] == listData[i].Player1_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player1_uid);
+                        }
+                    }
+
+                    {
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
+                        {
+                            if (listPlayer[j] == listData[i].Player2_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player2_uid);
+                        }
+                    }
+
+                    {
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
+                        {
+                            if (listPlayer[j] == listData[i].Player3_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player3_uid);
+                        }
+                    }
+
+                    {
+                        bool isFind = false;
+                        for (int j = 0; j < listPlayer.Count; j++)
+                        {
+                            if (listPlayer[j] == listData[i].Player4_uid)
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind)
+                        {
+                            listPlayer.Add(listData[i].Player4_uid);
+                        }
+                    }
+                }
+
+                int count = 0;
+
+                for (int i = 0; i < listPlayer.Count; i++)
+                {
+                    AccountInfo accountInfo = await DBCommonUtil.getAccountInfo(listPlayer[i]);
+                    if (accountInfo.ChannelName.CompareTo(channelName) == 0)
+                    {
+                        ++count;
+                    }
+                }
+
+                return "游戏人数：" + count + "\r\n";
             }
         }
 
