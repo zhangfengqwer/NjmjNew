@@ -58,7 +58,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="self"></param>
         /// <param name="huaCount"></param>
-        public static async void GameOver(this GameControllerComponent self, int huaCount)
+        public static async Task GameOver(this GameControllerComponent self, int huaCount)
         {
             RoomComponent roomComponent = null;
             Room room = null;
@@ -149,7 +149,7 @@ namespace ETHotfix
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                Log.Error("房间结算："+ e);
                 //游戏房间进入准备房间
                 roomComponent?.gameRooms.Remove(room.Id);
                 roomComponent?.idleRooms.Add(room.Id, room);

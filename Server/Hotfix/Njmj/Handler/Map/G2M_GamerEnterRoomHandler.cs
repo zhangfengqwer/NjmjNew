@@ -49,6 +49,11 @@ namespace ETHotfix
 			            GamerData gamerData = new GamerData();
 
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
+			            if (handCardsComponent == null)
+			            {
+			                room.Remove(_gamer.UserID);
+			                return;
+			            }
 			            List<MahjongInfo> handCards = handCardsComponent.GetAll();
 
 			            gamerData.handCards = handCards;

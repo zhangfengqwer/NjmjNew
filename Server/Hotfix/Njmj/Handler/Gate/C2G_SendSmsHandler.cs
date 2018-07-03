@@ -6,7 +6,7 @@ using MongoDB.Bson;
 
 namespace ETHotfix
 {
-	[MessageHandler(AppType.Realm)]
+	[MessageHandler(AppType.Gate)]
 	public class C2G_SendSmsHandler : AMRpcHandler<C2G_SendSms, G2C_SendSms>
 	{
 		protected override async void Run(Session session, C2G_SendSms message, Action<G2C_SendSms> reply)

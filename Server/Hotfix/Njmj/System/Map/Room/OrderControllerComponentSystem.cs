@@ -34,12 +34,36 @@ namespace ETHotfix
         {
             Room room = self.GetParent<Room>();
             Gamer[] gamers = room.GetAll();
-            int index = Array.FindIndex(gamers, (gamer) => self.CurrentAuthority == gamer.UserID);
+
+            int index = -1;
+            for (int i = 0; i < gamers.Length; i++)
+            {
+                Gamer gamer = gamers[i];
+                if (gamer == null)
+                {
+                    Log.Error("在轮转的时候玩家为null:" + room.State);
+                    continue;
+                }
+
+                if (self.CurrentAuthority == gamer.UserID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index < 0)
+            {
+                Log.Error("玩家轮转的时候room的玩家都是null");
+                return;
+            }
+
             index++;
             if (index == gamers.Length)
             {
                 index = 0;
             }
+
             self.CurrentAuthority = gamers[index].UserID;
         }
     }
