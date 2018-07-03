@@ -104,6 +104,7 @@ namespace ETHotfix
             Notice.SetActive(false);
             Activity.SetActive(true);
             ActivityBtn.transform.GetChild(0).gameObject.SetActive(true);
+
             CreateActivityItems(ActivityConfig.getInstance().getActivityInfoList());
         }
 
