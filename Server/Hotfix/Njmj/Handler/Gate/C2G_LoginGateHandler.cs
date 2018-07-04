@@ -182,6 +182,7 @@ namespace ETHotfix
                                         log_OldUserBind.Uid = userId;
                                         log_OldUserBind.OldUid = old_uid;
                                         log_OldUserBind.macId = accountInfo.MachineId;
+                                        log_OldUserBind.isSendReward = 1;
 
                                         await proxyComponent.Save(log_OldUserBind);
                                     }
@@ -200,13 +201,27 @@ namespace ETHotfix
                                         playerBaseInfo.WingNum = gIngotAmount;
                                         await proxyComponent.Save(playerBaseInfo);
 
-                                        await DBCommonUtil.changeWealthWithStr(userId,"111:10;2:10","老用户赠送");
+                                        await DBCommonUtil.changeWealthWithStr(userId, "111:10;2:10", "老用户赠送");
                                     }
 
                                     // 发送老用户广播
                                     Actor_OldUser actor_OldUser = new Actor_OldUser();
                                     actor_OldUser.OldAccount = old_uid;
                                     Game.Scene.GetComponent<UserComponent>().BroadCastToSingle(actor_OldUser, userId);
+                                }
+                            }
+                        }
+                        else if (accountInfo.OldAccountState == 2)
+                        {
+                            List<Log_OldUserBind> log_OldUserBinds = await proxyComponent.QueryJson<Log_OldUserBind>($"{{macId:'{accountInfo.MachineId}'}}");
+                            if (log_OldUserBinds.Count > 0)
+                            {
+                                if (log_OldUserBinds[0].isSendReward != 1)
+                                {
+                                    log_OldUserBinds[0].isSendReward = 1;
+                                    await proxyComponent.Save(log_OldUserBinds[0]);
+
+                                    await DBCommonUtil.SendMail(userId, "更新游戏奖励", "亲爱的玩家，南京麻将最新版本更新了，特意送上更新奖励，请笑纳，祝您游戏愉快!", "111:10;2:10");
                                 }
                             }
                         }
