@@ -46,11 +46,13 @@ namespace ETHotfix
         public void onClickClose()
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIAccountBind);
+            ToastScript.createToast("奖励已发送，请到背包查看。");
         }
 
         public void onClickOK()
         {
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIAccountBind);
+            ToastScript.createToast("奖励已发送，请到背包查看。");
         }
     }
 }
