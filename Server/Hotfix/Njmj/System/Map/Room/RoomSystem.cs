@@ -149,7 +149,7 @@ namespace ETHotfix
             }
         }
 
-        public static async void StartOperateTime(this Room self)
+        public static async Task StartOperateTime(this Room self)
         {
             if (self.tokenSource != null)
             {
