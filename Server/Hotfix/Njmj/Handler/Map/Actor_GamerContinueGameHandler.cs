@@ -21,7 +21,7 @@ namespace ETHotfix
                 OrderControllerComponent orderControllerComponent = room.GetComponent<OrderControllerComponent>();
 
                 gamer.ReadyTimeOut = 0;
-
+//                gamer.IsReady = true;
                 List<GamerInfo> Gamers = new List<GamerInfo>();
                 for (int i = 0; i < room.GetAll().Length; i++)
                 {

@@ -34,7 +34,12 @@ namespace ETHotfix
 	            Log.Debug("收到玩家准备：" + JsonHelper.ToJson(message));
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
-	           
+
+	            if (gamer.IsReady)
+	            {
+	                return;
+	            }
+
                 gamer.IsReady = true;
 	            //消息广播给其他人
 	            room?.Broadcast(new Actor_GamerReady() { Uid = gamer.UserID });
