@@ -33,7 +33,6 @@ namespace ETHotfix
             }
 
             ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
-            Log.Info($"给{gamer.UserID}发送actor消息,sessionId:{gamer?.GetComponent<UnitGateComponent>() ?.GateSessionId}");
             actorProxy?.Send(message);
         }
 
@@ -150,7 +149,7 @@ namespace ETHotfix
             }
         }
 
-        public static async void StartOperateTime(this Room self)
+        public static async Task StartOperateTime(this Room self)
         {
             if (self.tokenSource != null)
             {
@@ -209,13 +208,13 @@ namespace ETHotfix
         /// 发牌,包含抓牌和补花
         /// </summary>
         /// <param name="room"></param>
-        public static void GamerGrabCard(this Room room)
+        public static async void GamerGrabCard(this Room room)
         {
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null)
                 {
-                    Log.Warning("发牌的时候gamer为null");
+                    Log.Warning("发牌的时候gamer为null:"+JsonHelper.ToJson(room.GetAll()));
                     continue;
                 }
                 gamer.isGangFaWanPai = false;
@@ -235,7 +234,7 @@ namespace ETHotfix
             if (grabMahjong == null)
             {
                 Log.Info("没牌流局了");
-                gameController.GameOver(0);
+                await gameController.GameOver(0);
                 return;
             }
             while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
@@ -262,7 +261,7 @@ namespace ETHotfix
                 if (grabMahjong == null)
                 {
                     Log.Info("没牌流局了");
-                    gameController.GameOver(0);
+                    await gameController.GameOver(0);
                     return;
                 }
             }

@@ -69,7 +69,7 @@ namespace ETHotfix
                     if (isFinish)
                     {
                         //游戏结束结算
-                        gameController.GameOver(huaCount);
+                        await gameController.GameOver(huaCount);
                     }
                 }
                 //放弃
@@ -247,7 +247,7 @@ namespace ETHotfix
                             if (grabMahjong == null)
                             {
                                 Log.Info("没牌流局了");
-                                gameController.GameOver(0);
+                                await gameController.GameOver(0);
                                 return;
                             }
                             while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
@@ -273,7 +273,7 @@ namespace ETHotfix
                                 if (grabMahjong == null)
                                 {
                                     Log.Info("没牌流局了");
-                                    gameController.GameOver(0);
+                                    await gameController.GameOver(0);
                                     return;
                                 }
                             }

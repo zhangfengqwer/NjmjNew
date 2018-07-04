@@ -6,7 +6,7 @@ using ETModel;
 
 namespace ETHotfix
 {
-	[MessageHandler(AppType.Realm)]
+	[MessageHandler(AppType.Gate)]
 	public class C2G_BindPhoneHandler : AMRpcHandler<C2G_BindPhone, G2C_BindPhone>
 	{
         protected override async void Run(Session session, C2G_BindPhone message, Action<G2C_BindPhone> reply)

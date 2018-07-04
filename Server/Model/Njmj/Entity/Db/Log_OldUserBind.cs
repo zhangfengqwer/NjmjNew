@@ -9,5 +9,6 @@ namespace ETModel
         public long Uid { set; get; }
         public string OldUid { set; get; }
         public string macId { set; get; }
+        public int isSendReward { set; get; }
     }
 }

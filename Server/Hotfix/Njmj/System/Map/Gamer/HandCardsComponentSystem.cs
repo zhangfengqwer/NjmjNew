@@ -69,6 +69,7 @@ namespace ETHotfix
 //            int randomNumber = RandomHelper.RandomNumber(0, mahjongInfos.Count);
 //
 //            MahjongInfo mahjongInfo = mahjongInfos[randomNumber];
+            //Log.Info("超时自动出牌");
             await Actor_GamerPlayCardHandler.PlayCard(gamer, new Actor_GamerPlayCard()
             {
                 Uid = gamer.UserID,
