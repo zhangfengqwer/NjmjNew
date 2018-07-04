@@ -33,7 +33,6 @@ namespace ETHotfix
             }
 
             ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
-            Log.Info($"给{gamer.UserID}发送actor消息,sessionId:{gamer?.GetComponent<UnitGateComponent>() ?.GateSessionId}");
             actorProxy?.Send(message);
         }
 
