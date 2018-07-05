@@ -370,11 +370,11 @@ namespace ETHotfix
                         }
                         break;
                     case 11:
-                    {
-                        //session
-                        int count = Game.Scene.GetComponent<NetOuterComponent>().sessions.Count;
-                        response.Channel = count.ToString();
-                    }
+                        {
+                            //session
+                            int count = Game.Scene.GetComponent<NetOuterComponent>().sessions.Count;
+                            response.Channel = count.ToString();
+                        }
                         break;
                 }
                 reply(response);

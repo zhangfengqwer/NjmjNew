@@ -83,6 +83,10 @@ namespace ETHotfix
                 }
 
                 await ChangeWeath(self, huaCount, room);
+                if(room.huPaiUid != 0)
+                {
+                    await DBCommonUtil.RecordWeekRankLog(room.huPaiUid, 0, 1);
+                }
 
                 //更新任务
                 await UpdateTask(room);
@@ -190,6 +194,7 @@ namespace ETHotfix
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {
+                    
                     if (controllerComponent.RoomName == RoomName.ChuJi)
                     {
                         Log.Debug("新手场SHENGLI");

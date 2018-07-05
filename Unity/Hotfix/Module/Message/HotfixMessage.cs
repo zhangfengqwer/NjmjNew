@@ -389,6 +389,12 @@ namespace ETHotfix
 		[ProtoMember(15, IsRequired = true)]
 		public bool IsSign;
 
+		[ProtoMember(16, IsRequired = true)]
+		public bool IsGetWealthReward;
+
+		[ProtoMember(17, IsRequired = true)]
+		public bool IsGetGameReward;
+
 	}
 
 	[Message(HotfixOpcode.PlayerIcon)]

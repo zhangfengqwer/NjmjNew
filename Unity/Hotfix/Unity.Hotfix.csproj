@@ -213,6 +213,9 @@
     <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuTreasureFactory.cs" />
     <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
+    <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomItemComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Factory\UIFriendRoomFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
     <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
     <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />

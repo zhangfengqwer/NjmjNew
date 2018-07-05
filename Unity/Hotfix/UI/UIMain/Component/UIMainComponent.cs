@@ -191,7 +191,8 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
+                /*ToastScript.createToast("暂未开放：比赛场");*/
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
             });
 
             // 休闲场返回按钮

@@ -143,6 +143,35 @@ namespace ETHotfix
             }
         }
 
+        //记录一周获胜记录
+        //如果只变化财富或胜场数 对应的另外一个输入时为0
+        public static async Task RecordWeekRankLog(long uid,long wealth,int count)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Rank> logs = await proxyComponent.QueryJson<Log_Rank>($"{{_id:{uid}}}");
+                if(logs.Count <= 0)
+                {
+                    Log_Rank info = ComponentFactory.CreateWithId<Log_Rank>(IdGenerater.GenerateId());
+                    info.UId = uid;
+                    info.WinGameCount += count;
+                    info.Wealth += wealth;
+                    await proxyComponent.Save(info);
+                }
+                else
+                {
+                    logs[0].WinGameCount += 1;
+                    logs[0].Wealth += wealth;
+                    await proxyComponent.Save(logs[0]);
+                }
+            }
+            catch(Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
         /// <summary>
         /// 更新用户信息
         /// </summary>
@@ -359,6 +388,7 @@ namespace ETHotfix
                     }
 
                     await proxyComponent.Save(playerBaseInfos[0]);
+                    await RecordWeekRankLog(uid, propNum, 0);
                 }
                 break;
 
@@ -893,6 +923,16 @@ namespace ETHotfix
             {
                 Log.Error("SendMail异常:" + e);
             }
+        }
+
+        public static async Task AccountWeekData()
+        {
+            //结算是否上榜
+            Game.Scene.GetComponent<RankDataComponent>().SetFRankData();
+
+            //结算后数据清零
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            await proxyComponent.DeleteAll<Log_Rank>();
         }
     }
 }
