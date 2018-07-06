@@ -349,7 +349,6 @@
     <Compile Include="Assets\Scripts\Entity\Scene.cs" />
     <Compile Include="Assets\Scripts\Entity\UnityWebRequestAsync.cs" />
     <Compile Include="Assets\Scripts\Entity\WWWAsync.cs" />
-    <Compile Include="Assets\Scripts\G2C_TestHandler.cs" />
     <Compile Include="Assets\Scripts\Helper\ActionHelper.cs" />
     <Compile Include="Assets\Scripts\Helper\BundleHelper.cs" />
     <Compile Include="Assets\Scripts\Helper\GameObjectHelper.cs" />

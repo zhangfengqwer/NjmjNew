@@ -18,6 +18,11 @@ namespace ETModel
 				return ms.ToArray();
 			}
 		}
+		
+		public static void ToStream(object message, Stream stream)
+		{
+			Serializer.Serialize(stream, message);
+		}
 
 		public static T FromBytes<T>(byte[] bytes)
 		{

@@ -6,6 +6,7 @@ namespace ETModel
 	public interface IMessagePacker
 	{
 		byte[] SerializeToByteArray(object obj);
+		void SerializeToStream(object obj, Stream stream);
 		string SerializeToText(object obj);
 
 		object DeserializeFrom(Type type, byte[] bytes);

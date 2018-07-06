@@ -10,6 +10,11 @@ namespace ETModel
 			return MongoHelper.ToBson(obj);
 		}
 
+		public void SerializeToStream(object obj, Stream stream)
+		{
+			MongoHelper.ToStream(obj, stream);
+		}
+
 		public string SerializeToText(object obj)
 		{
 			return MongoHelper.ToJson(obj);

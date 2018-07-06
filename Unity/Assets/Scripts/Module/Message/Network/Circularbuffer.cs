@@ -113,6 +113,33 @@ namespace ETModel
 			    this.RemoveFirst();
 		    }
 		}
+	    
+	    public void WriteTo(Stream stream, int count)
+	    {
+		    if (count > this.Length)
+		    {
+			    throw new Exception($"bufferList length < count, {Length} {count}");
+		    }
+
+		    int alreadyCopyCount = 0;
+		    while (alreadyCopyCount < count)
+		    {
+			    int n = count - alreadyCopyCount;
+			    if (ChunkSize - this.FirstIndex > n)
+			    {
+				    stream.Write(this.First, this.FirstIndex, n);
+				    this.FirstIndex += n;
+				    alreadyCopyCount += n;
+			    }
+			    else
+			    {
+				    stream.Write(this.First, this.FirstIndex, ChunkSize - this.FirstIndex);
+				    alreadyCopyCount += ChunkSize - this.FirstIndex;
+				    this.FirstIndex = 0;
+				    this.RemoveFirst();
+			    }
+		    }
+	    }
 
 		/// <summary>
 		/// 从stream流读到CircularBuffer中
@@ -139,6 +166,31 @@ namespace ETModel
 		    }
 
 		    return n;
+	    }
+
+	    public void ReadFrom(Stream stream)
+	    {
+		    int count = (int)(stream.Length - stream.Position);
+		    
+		    int alreadyCopyCount = 0;
+		    
+		    while (alreadyCopyCount < count)
+		    {
+			    int n = count - alreadyCopyCount;
+			    if (ChunkSize - this.FirstIndex > n)
+			    {
+				    stream.Read(this.First, this.FirstIndex, n);
+				    this.FirstIndex += n;
+				    alreadyCopyCount += n;
+			    }
+			    else
+			    {
+				    stream.Read(this.First, this.FirstIndex, ChunkSize - this.FirstIndex);
+				    alreadyCopyCount += ChunkSize - this.FirstIndex;
+				    this.FirstIndex = 0;
+				    this.RemoveFirst();
+			    }
+		    }
 	    }
 
         public override int Read(byte[] buffer, int offset, int count)

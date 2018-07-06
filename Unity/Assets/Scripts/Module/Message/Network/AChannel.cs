@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 
 namespace ETModel
@@ -26,6 +27,8 @@ namespace ETModel
 		protected AService service;
 
 		public IPEndPoint RemoteAddress { get; protected set; }
+
+		public abstract Packet GetPacket();
 
 		private Action<AChannel, int> errorCallback;
 
@@ -79,7 +82,7 @@ namespace ETModel
 		/// </summary>
 		public abstract void Send(byte[] buffer, int index, int length);
 
-		public abstract void Send(List<byte[]> buffers);
+		public abstract void Send(MemoryStream stream);
 		
 		public override void Dispose()
 		{

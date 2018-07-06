@@ -87,8 +87,7 @@ namespace ETHotfix
 		public void Send(byte flag, IMessage message)
 		{
 			ushort opcode = Game.Scene.GetComponent<OpcodeTypeComponent>().GetOpcode(message.GetType());
-			byte[] bytes = ProtobufHelper.ToBytes(message);
-			session.Send(flag, opcode, bytes);
+			session.Send(flag, opcode, message);
 		}
 
 		public void Send(byte flag, ushort opcode, byte[] bytes)
