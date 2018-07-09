@@ -18,7 +18,7 @@ namespace ETHotfix
 	    {
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
-	        if (room == null) return;
+	        if (room == null || room.IsGameOver) return;
 
             try
             {

@@ -11,6 +11,7 @@ namespace ETHotfix
 	{
 	    protected override async Task Run(Gamer gamer, Actor_GamerCancelTrusteeship message)
 	    {
+	        Log.Info($"玩家{gamer.UserID}取消托管");
             try
             {
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
@@ -22,7 +23,6 @@ namespace ETHotfix
                 {
                     Uid = gamer.UserID
                 });
-                await Task.CompletedTask;
             }
             catch (Exception e)
 	        {

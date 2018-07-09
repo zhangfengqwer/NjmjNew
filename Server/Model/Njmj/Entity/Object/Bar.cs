@@ -14,6 +14,7 @@ namespace ETModel
 
     public enum BarType
     {
+        None,
         DarkBar,
         LightBar,
         PengBar
