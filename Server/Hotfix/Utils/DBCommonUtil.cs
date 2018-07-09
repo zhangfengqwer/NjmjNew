@@ -91,6 +91,7 @@ namespace ETHotfix
                 }
             }
 
+//            Log.Debug("UpdateTask111111111111");
         }
 
         /// <summary>
@@ -139,35 +140,6 @@ namespace ETHotfix
                 }
 
                 await proxyComponent.Save(chengjiuInfoList[0]);
-            }
-        }
-
-        //记录一周获胜记录
-        //如果只变化财富或胜场数 对应的另外一个输入时为0
-        public static async Task RecordWeekRankLog(long uid,long wealth,int count)
-        {
-            try
-            {
-                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<Log_Rank> logs = await proxyComponent.QueryJson<Log_Rank>($"{{UId:{uid}}}");
-                if(logs.Count <= 0)
-                {
-                    Log_Rank info = ComponentFactory.CreateWithId<Log_Rank>(IdGenerater.GenerateId());
-                    info.UId = uid;
-                    info.WinGameCount += count;
-                    info.Wealth += wealth;
-                    await proxyComponent.Save(info);
-                }
-                else
-                {
-                    logs[0].WinGameCount += count;
-                    logs[0].Wealth += wealth;
-                    await proxyComponent.Save(logs[0]);
-                }
-            }
-            catch(Exception e)
-            {
-                Log.Error(e);
             }
         }
 
@@ -387,7 +359,6 @@ namespace ETHotfix
                     }
 
                     await proxyComponent.Save(playerBaseInfos[0]);
-                    await RecordWeekRankLog(uid, propNum, 0);
                 }
                 break;
 
@@ -924,10 +895,158 @@ namespace ETHotfix
             }
         }
 
+        // 获取玩家好友房钥匙数量
+        public static async Task<int> GetUserFriendKeyNum(long uid)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<FriendKey> listData = await proxyComponent.QueryJsonDB<FriendKey>($"{{Uid:{uid}}}");
+
+                int count = 0;
+                
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (listData[i].endTime.CompareTo("-1") == 0)
+                    {
+                        ++count;
+                    }
+                    else
+                    {
+                        if (listData[i].endTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                        {
+                            ++count;
+                        }
+                    }
+                }
+
+                return count;
+            }
+            catch (Exception e)
+            {
+                Log.Error("GetUserFriendKeyNum异常:" + e);
+
+                return 0;
+            }
+        }
+
+        // 给玩家发送好友房钥匙
+        // endTime为“-1”代表永久有效
+        public static async Task AddFriendKey(long uid, int num,string endTime,string reason)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+                for(int i = 0; i < num; i++)
+                {
+                    FriendKey friendKey = ComponentFactory.CreateWithId<FriendKey>(IdGenerater.GenerateId());
+                    friendKey.Uid = uid;
+                    friendKey.endTime = endTime;
+
+                    await proxyComponent.Save(friendKey);
+                }
+
+                await Log_ChangeWealth(uid, 112, num, reason);
+
+                //Log.Info("修改完后玩家：" + uid + "钥匙数量为：" + await GetUserFriendKeyNum(uid));
+            }
+            catch (Exception e)
+            {
+                Log.Error("AddFriendKey异常:" + e);
+            }
+        }
+
+        // 扣除玩家好友房钥匙
+        public static async Task DeleteFriendKey(long uid, int num, string reason)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<FriendKey> listData = await proxyComponent.QueryJsonDB<FriendKey>($"{{Uid:{uid}}}");
+
+                int count = 0;
+
+                // 先删非永久的并且在有效期以内的
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (count < num)
+                    {
+                        if (listData[i].endTime.CompareTo("-1") != 0)
+                        {
+                            if (listData[i].endTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                            {
+                                ++count;
+                                await proxyComponent.Delete<FriendKey>(listData[i].Id);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                // 后删永久的
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (count < num)
+                    {
+                        if (listData[i].endTime.CompareTo("-1") == 0)
+                        {
+                            ++count;
+                            await proxyComponent.Delete<FriendKey>(listData[i].Id);
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                await Log_ChangeWealth(uid, 112, -num, reason);
+
+                //Log.Info("修改完后玩家：" + uid + "钥匙数量为：" + await GetUserFriendKeyNum(uid));
+            }
+            catch (Exception e)
+            {
+                Log.Error("DeleteFriendKey异常:" + e);
+            }
+        }
+
         public static void AccountWeekData()
         {
             //结算是否上榜
             Game.Scene.GetComponent<RankDataComponent>().SetFRankData();
+        }
+
+        //记录一周获胜记录
+        //如果只变化财富或胜场数 对应的另外一个输入时为0
+        public static async Task RecordWeekRankLog(long uid, long wealth, int count)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<Log_Rank> logs = await proxyComponent.QueryJson<Log_Rank>($"{{UId:{uid}}}");
+                if (logs.Count <= 0)
+                {
+                    Log_Rank info = ComponentFactory.CreateWithId<Log_Rank>(IdGenerater.GenerateId());
+                    info.UId = uid;
+                    info.WinGameCount += count;
+                    info.Wealth += wealth;
+                    await proxyComponent.Save(info);
+                }
+                else
+                {
+                    logs[0].WinGameCount += count;
+                    logs[0].Wealth += wealth;
+                    await proxyComponent.Save(logs[0]);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
     }
 }

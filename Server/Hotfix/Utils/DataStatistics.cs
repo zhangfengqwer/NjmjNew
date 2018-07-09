@@ -10,7 +10,7 @@ namespace ETHotfix
 {
     public class DataStatistics
     {
-        public static List<string> channelList = new List<string>() { "","vivo","oppo","huawei","xiaomi"};
+        public static List<string> channelList = new List<string>() { "","javgame","vivo","oppo","huawei","xiaomi"};
 
         public static async Task Start(string channelName)
         {
