@@ -894,5 +894,124 @@ namespace ETHotfix
                 Log.Error("SendMail异常:" + e);
             }
         }
+
+        // 获取玩家好友房钥匙数量
+        public static async Task<int> GetUserFriendKeyNum(long uid)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<FriendKey> listData = await proxyComponent.QueryJsonDB<FriendKey>($"{{Uid:{uid}}}");
+
+                int count = 0;
+                
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (listData[i].endTime.CompareTo("-1") == 0)
+                    {
+                        ++count;
+                    }
+                    else
+                    {
+                        if (listData[i].endTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                        {
+                            ++count;
+                        }
+                    }
+                }
+
+                return count;
+            }
+            catch (Exception e)
+            {
+                Log.Error("GetUserFriendKeyNum异常:" + e);
+
+                return 0;
+            }
+        }
+
+        // 给玩家发送好友房钥匙
+        // endTime为“-1”代表永久有效
+        public static async Task AddFriendKey(long uid, int num,string endTime,string reason)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
+                for(int i = 0; i < num; i++)
+                {
+                    FriendKey friendKey = ComponentFactory.CreateWithId<FriendKey>(IdGenerater.GenerateId());
+                    friendKey.Uid = uid;
+                    friendKey.endTime = endTime;
+
+                    await proxyComponent.Save(friendKey);
+                }
+
+                await Log_ChangeWealth(uid, 112, num, reason);
+
+                //Log.Info("修改完后玩家：" + uid + "钥匙数量为：" + await GetUserFriendKeyNum(uid));
+            }
+            catch (Exception e)
+            {
+                Log.Error("AddFriendKey异常:" + e);
+            }
+        }
+
+        // 扣除玩家好友房钥匙
+        public static async Task DeleteFriendKey(long uid, int num, string reason)
+        {
+            try
+            {
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                List<FriendKey> listData = await proxyComponent.QueryJsonDB<FriendKey>($"{{Uid:{uid}}}");
+
+                int count = 0;
+
+                // 先删非永久的并且在有效期以内的
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (count < num)
+                    {
+                        if (listData[i].endTime.CompareTo("-1") != 0)
+                        {
+                            if (listData[i].endTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                            {
+                                ++count;
+                                await proxyComponent.Delete<FriendKey>(listData[i].Id);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                // 后删永久的
+                for (int i = 0; i < listData.Count; i++)
+                {
+                    if (count < num)
+                    {
+                        if (listData[i].endTime.CompareTo("-1") == 0)
+                        {
+                            ++count;
+                            await proxyComponent.Delete<FriendKey>(listData[i].Id);
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                await Log_ChangeWealth(uid, 112, -num, reason);
+
+                //Log.Info("修改完后玩家：" + uid + "钥匙数量为：" + await GetUserFriendKeyNum(uid));
+            }
+            catch (Exception e)
+            {
+                Log.Error("DeleteFriendKey异常:" + e);
+            }
+        }
     }
 }

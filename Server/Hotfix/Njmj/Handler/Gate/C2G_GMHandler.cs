@@ -376,6 +376,43 @@ namespace ETHotfix
                         response.Channel = count.ToString();
                     }
                         break;
+
+                    case 12:
+                        {
+                            //改变玩家好友房钥匙
+                            long uid = message.UId;                 // -1代表给所有人发
+                            int num = message.RestChangeNameCount;
+                            string endTime = message.EndTime;       // 如果是删除钥匙，此参数可以为空
+                            string reason = message.Reason;
+
+                            if (uid != -1)
+                            {
+                                if (num > 0)
+                                {
+                                    await DBCommonUtil.AddFriendKey(uid, num, endTime, reason);
+                                }
+                                else if (num < 0)
+                                {
+                                    await DBCommonUtil.DeleteFriendKey(uid, -num, reason);
+                                }
+                            }
+                            else
+                            {
+                                List<AccountInfo> listData = await proxyComponent.QueryJsonDBInfos<AccountInfo>();
+                                for (int i = 0; i < listData.Count; i++)
+                                {
+                                    if (num > 0)
+                                    {
+                                        await DBCommonUtil.AddFriendKey(listData[i].Id, num, endTime, reason);
+                                    }
+                                    else if (num < 0)
+                                    {
+                                        await DBCommonUtil.DeleteFriendKey(listData[i].Id, -num, reason);
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
                 reply(response);
             }
