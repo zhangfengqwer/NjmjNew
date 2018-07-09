@@ -190,6 +190,12 @@ namespace ETHotfix
             await dbComponent.GetCollection(typeof(T).Name).DeleteOneAsync(i => i.Id == id);
         }
 
+        public static async Task DeleteAll<T>(this DBProxyComponent self)
+	    {
+	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+	        var filter = Builders<ComponentWithId>.Filter.Empty;
+            await dbComponent.GetCollection(typeof(T).Name).DeleteManyAsync(filter);
+        }
 
 	    public static long QueryJsonCount<T>(this DBProxyComponent self, string json)
 	    {

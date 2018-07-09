@@ -108,14 +108,13 @@ namespace ETModel
             }
             
             await LoadRes();
-
             ToastScript.createToast("加载完毕");
 
             Game.EventSystem.Run(EventIdType.LoadingFinish);
         }
 
         // 加载资源
-        public static async Task LoadRes()
+        public async Task LoadRes()
         {
             string fileName = "";
             try
@@ -125,40 +124,22 @@ namespace ETModel
 
                 VersionConfig localVersionConfig = JsonHelper.FromJson<VersionConfig>(File.ReadAllText(versionPath));
 
+                var tasks = new List<Task>();
                 foreach (var data in localVersionConfig.FileInfoDict)
                 {
                     fileName = data.Value.File;
-                    if ((fileName.Equals("Version.txt")) ||
-                        (fileName.Equals("StreamingAssets")))
+                    if (fileName.Equals("Version.txt") || fileName.Equals("StreamingAssets"))
                     {
                         continue;
                     }
-
-                    await resourcesComponent.LoadBundleAsync(fileName);
+                    Task task = resourcesComponent.LoadBundleAsync(fileName);
+                    tasks.Add(task);
                 }
-
-                //foreach (var str in fileList)
-                //{
-                //    fileName = str;
-                //    if ((fileName.Equals("Version.txt")) ||
-                //        (fileName.Equals("StreamingAssets")))
-                //    {
-                //        continue;
-                //    }
-
-                //    try
-                //    {
-                //        await resourcesComponent.LoadBundleAsync(fileName);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Log.Debug("LoadRes异常：" + ex + "----" + fileName);
-                //    }
-                //}
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
-                Log.Debug("LoadRes异常：" + ex + "----" + fileName);
+                Log.Error("LoadRes异常：" + ex + "----" + fileName);
                 ToastScript.createToast("加载音频出错：" + fileName);
             }
         }

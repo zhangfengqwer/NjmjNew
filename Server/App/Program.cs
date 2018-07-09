@@ -64,7 +64,7 @@ namespace App
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
 					    Game.Scene.AddComponent<DBProxyComponent>();
-					    Game.Scene.AddComponent<ConfigComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
                         break;
 					case AppType.Gate:
 						Game.Scene.AddComponent<PlayerComponent>();
@@ -106,7 +106,8 @@ namespace App
 						Game.Scene.AddComponent<ActorManagerComponent>();
                         //MapGlobalCoponent
                         Game.Scene.AddComponent<DBProxyComponent>();
-					    Game.Scene.AddComponent<ConfigComponent>();
+					    Game.Scene.AddComponent<DBComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
                         Game.Scene.AddComponent<RoomComponent>();
                         break;
 					case AppType.AllServer:

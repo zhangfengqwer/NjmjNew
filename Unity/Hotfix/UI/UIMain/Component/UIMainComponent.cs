@@ -440,7 +440,7 @@ namespace ETHotfix
         {
             for(int i = index;i < list.Count; ++i)
             {
-                list[index].SetActive(false);
+                list[i].SetActive(false);
             }
         }
 

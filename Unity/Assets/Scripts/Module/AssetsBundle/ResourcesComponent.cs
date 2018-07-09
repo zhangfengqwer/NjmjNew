@@ -262,81 +262,81 @@ namespace ETModel
 			}
 		}
 
-		public async Task LoadOneBundleAsync(string assetBundleName)
-		{
-			//Log.Debug($"---------------load one bundle {assetBundleName}");
-			ABInfo abInfo;
-			if (this.bundles.TryGetValue(assetBundleName, out abInfo))
-			{
-				++abInfo.RefCount;
-				return;
-			}
+        public async Task LoadOneBundleAsync(string assetBundleName)
+        {
+            //Log.Debug($"---------------load one bundle {assetBundleName}");
+            ABInfo abInfo;
+            if (this.bundles.TryGetValue(assetBundleName, out abInfo))
+            {
+                ++abInfo.RefCount;
+                return;
+            }
 
 
-			if (this.cacheDictionary.ContainsKey(assetBundleName))
-			{
-				abInfo = this.cacheDictionary[assetBundleName];
-				++abInfo.RefCount;
-				this.bundles[assetBundleName] = abInfo;
-				this.cacheDictionary.Remove(assetBundleName);
-				return;
-			}
+            if (this.cacheDictionary.ContainsKey(assetBundleName))
+            {
+                abInfo = this.cacheDictionary[assetBundleName];
+                ++abInfo.RefCount;
+                this.bundles[assetBundleName] = abInfo;
+                this.cacheDictionary.Remove(assetBundleName);
+                return;
+            }
 
 
-			if (!Define.IsAsync)
-			{
-				string[] realPath = null;
+            if (!Define.IsAsync)
+            {
+                string[] realPath = null;
 #if UNITY_EDITOR
-				realPath = AssetDatabase.GetAssetPathsFromAssetBundle(assetBundleName);
-				foreach (string s in realPath)
-				{
-					string assetName = Path.GetFileNameWithoutExtension(s);
-					string path = $"{assetBundleName}/{assetName}".ToLower();
-					UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
-					this.resourceCache[path] = resource;
-				}
+                realPath = AssetDatabase.GetAssetPathsFromAssetBundle(assetBundleName);
+                foreach (string s in realPath)
+                {
+                    string assetName = Path.GetFileNameWithoutExtension(s);
+                    string path = $"{assetBundleName}/{assetName}".ToLower();
+                    UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
+                    this.resourceCache[path] = resource;
+                }
 
-				this.bundles[assetBundleName] = new ABInfo(assetBundleName, null);
+                this.bundles[assetBundleName] = new ABInfo(assetBundleName, null);
 #endif
-				return;
-			}
+                return;
+            }
 
-			string p = Path.Combine(PathHelper.AppHotfixResPath, assetBundleName);
-			AssetBundle assetBundle = null;
-			if (File.Exists(p))
-			{
-				assetBundle = AssetBundle.LoadFromFile(p);
-			}
-			else
-			{
-				p = Path.Combine(PathHelper.AppResPath, assetBundleName);
-				assetBundle = AssetBundle.LoadFromFile(p);
-			}
+            string p = Path.Combine(PathHelper.AppHotfixResPath, assetBundleName);
+            AssetBundle assetBundle = null;
+            if (!File.Exists(p))
+            {
+                p = Path.Combine(PathHelper.AppResPath, assetBundleName);
+            }
 
-			if (assetBundle == null)
-			{
-				throw new Exception($"assets bundle not found: {assetBundleName}");
-			}
+            using (AssetsBundleLoaderAsync assetsBundleLoaderAsync = ComponentFactory.Create<AssetsBundleLoaderAsync>())
+            {
+                assetBundle = await assetsBundleLoaderAsync.LoadAsync(p);
+            }
 
-			if (!assetBundle.isStreamedSceneAssetBundle)
-			{
-				// 异步load资源到内存cache住
-				UnityEngine.Object[] assets;
-				using (AssetsLoaderAsync assetsLoaderAsync = ComponentFactory.Create<AssetsLoaderAsync, AssetBundle>(assetBundle))
-				{
-					assets = await assetsLoaderAsync.LoadAllAssetsAsync();
-				}
-				foreach (UnityEngine.Object asset in assets)
-				{
-					string path = $"{assetBundleName}/{asset.name}".ToLower();
-					this.resourceCache[path] = asset;
-				}
-			}
+            if (assetBundle == null)
+            {
+                throw new Exception($"assets bundle not found: {assetBundleName}");
+            }
 
-			this.bundles[assetBundleName] = new ABInfo(assetBundleName, assetBundle);
-		}
+            if (!assetBundle.isStreamedSceneAssetBundle)
+            {
+                // 异步load资源到内存cache住
+                UnityEngine.Object[] assets;
+                using (AssetsLoaderAsync assetsLoaderAsync = ComponentFactory.Create<AssetsLoaderAsync, AssetBundle>(assetBundle))
+                {
+                    assets = await assetsLoaderAsync.LoadAllAssetsAsync();
+                }
+                foreach (UnityEngine.Object asset in assets)
+                {
+                    string path = $"{assetBundleName}/{asset.name}".ToLower();
+                    this.resourceCache[path] = asset;
+                }
+            }
 
-		public string DebugString()
+            this.bundles[assetBundleName] = new ABInfo(assetBundleName, assetBundle);
+        }
+
+        public string DebugString()
 		{
 			StringBuilder sb = new StringBuilder();
 			foreach (ABInfo abInfo in this.bundles.Values)

@@ -108,9 +108,8 @@ namespace ETHotfix
                 }
             
                 room.State = RoomState.Idle;
-                room.tokenSource.Cancel();
                 room.IsLianZhuang = true;
-
+                
                 //游戏房间进入准备房间
                 roomComponent.gameRooms.Remove(room.Id);
                 roomComponent.idleRooms.Add(room.Id, room);

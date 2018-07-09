@@ -170,9 +170,8 @@ namespace ETHotfix
                     gamer.IsCanGang = false;
                     gamer.IsCanHu = false;
                 }
-
                 self.GamerGrabCard();
-//                Log.Debug("OperateTime超时");
+                //                Log.Debug("OperateTime超时");
             }
             else
             {

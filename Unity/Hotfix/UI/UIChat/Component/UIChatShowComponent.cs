@@ -76,7 +76,7 @@ namespace ETHotfix
                     GameObject.DestroyObject(expressionObj);
                 }
 
-                expressItem = CommonUtil.getGameObjByBundle(name);
+                expressItem = CommonUtil.getGameObjByBundle("ExpressionAni", name);
                 expressionObj = GameObject.Instantiate(expressItem);
                 expressionObj.transform.SetParent(GameObject.Find("CommonWorld").transform);
                 isExcExit = false;

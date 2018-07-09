@@ -28,6 +28,7 @@ namespace ETHotfix
 	                m_weight = (Consts.MahjongWeight) message.weight
 	            };
 
+                //加锁
 	            if (room.IsPlayingCard)
 	            {
 	                Log.Warning("当前正在出牌，不能再出牌了");

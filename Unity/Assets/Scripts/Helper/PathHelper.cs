@@ -28,7 +28,12 @@ namespace ETModel
         {
             get
             {
+#if UNITY_IOS
+                return $"file://{Application.streamingAssetsPath}";
+#else
                 return Application.streamingAssetsPath;
+#endif
+
             }
         }
     }

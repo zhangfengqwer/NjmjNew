@@ -233,6 +233,7 @@
     <Compile Include="UI\UIChengjiu\Component\UIChengjiuComponent.cs" />
     <Compile Include="UI\UIChengjiu\Component\UIChengjiuItemComponent.cs" />
     <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
+    <Compile Include="UI\UIPlayerInfo\Event\ChangeAccount.cs" />
     <Compile Include="UI\UISet\Component\UISetComponent.cs" />
     <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
     <Compile Include="UI\UIAccountBind\Component\UIAccountBindComponent.cs" />

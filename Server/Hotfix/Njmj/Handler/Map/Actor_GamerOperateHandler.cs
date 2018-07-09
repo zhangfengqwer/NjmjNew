@@ -23,6 +23,7 @@ namespace ETHotfix
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
                 room.IsOperate = true;
+                room.IsPlayingCard = false;
                 if (room.IsGameOver) return;
 
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();
@@ -429,6 +430,7 @@ namespace ETHotfix
 
             //基数
             huaCount += 20;
+            huaCount += actorGamerHuPai.BixiaHuCount;
             huaCount *= 2;
 
             return huaCount;

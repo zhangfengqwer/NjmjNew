@@ -25,8 +25,10 @@ namespace ETModel
 			appDomain.DelegateManager.RegisterMethodDelegate<Session, Packet>();
 			appDomain.DelegateManager.RegisterMethodDelegate<Session>();
 			appDomain.DelegateManager.RegisterMethodDelegate<ILTypeInstance>();
+		    appDomain.DelegateManager.RegisterMethodDelegate<System.Boolean>();
+		    appDomain.DelegateManager.RegisterFunctionDelegate<System.Int32, System.Int32, System.Int32>();
 
-			CLRBindings.Initialize(appDomain);
+            CLRBindings.Initialize(appDomain);
 
 			// 注册适配器
 			Assembly assembly = typeof(Init).Assembly;
@@ -55,6 +57,15 @@ namespace ETModel
                     });
                 });
             }
+
+		    appDomain.DelegateManager.RegisterDelegateConvertor<System.Comparison<System.Int32>>((act) =>
+		    {
+		        return new System.Comparison<System.Int32>((x, y) =>
+		        {
+		            return ((Func<System.Int32, System.Int32, System.Int32>)act)(x, y);
+		        });
+		    });
+
 
             {
                 appDomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
@@ -55,6 +56,8 @@ namespace ETHotfix
         bool isLoginSuccess = false;
         private Button btn_third;
         public static UILoginComponent Instance { get; set; }
+        private bool isLogining;
+        private Toggle toggle;
 
         public async void Awake()
         {
@@ -92,7 +95,6 @@ namespace ETHotfix
             btn_login.onClick.Add(onClickPhoneCodeLogin);
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
-
 
             #region 登录按钮设置
             {
@@ -200,7 +202,11 @@ namespace ETHotfix
         public async void onClickGuestLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-            await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
+            for (int i = 0; i < 10; i++)
+            {
+                OnThirdLogin(PlatformHelper.GetMacId(), "", "");
+            }
+            // await 
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
@@ -405,6 +411,13 @@ namespace ETHotfix
 
         public async Task OnThirdLogin(string third_id,string name,string head)
         {
+            //加锁
+            if (isLogining)
+            {
+                return;
+            }
+            isLogining = true;
+
             SessionWrap sessionWrap = null;
             try
             {
@@ -427,7 +440,6 @@ namespace ETHotfix
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {
                     ToastScript.createToast(r2CLogin.Message);
-
                     return;
                 }
 
@@ -461,11 +473,13 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
+                isLogining = false;
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
                 Log.Error("OnThirdLogin:" + e);
+                isLogining = false;
             }
         }
 

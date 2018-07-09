@@ -33,13 +33,6 @@ namespace ETModel
 				// 执行查询数据库任务
 				FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>(this.Json);
 				List<ComponentWithId> components = await dbComponent.GetCollection(this.CollectionName).FindAsync(filterDefinition).Result.ToListAsync();
-
-                if (CollectionName == "PlayerBaseInfo")
-                {
-                    JsonSortDefinition<ComponentWithId> sorts = new JsonSortDefinition<ComponentWithId>(this.Json);
-
-                    components = await dbComponent.GetCollection(this.CollectionName).Find(filterDefinition).Limit(150).ToListAsync();
-                }
                 this.Tcs.SetResult(components);
 			}
 			catch (Exception e)

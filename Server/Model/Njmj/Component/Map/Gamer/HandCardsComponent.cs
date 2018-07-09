@@ -23,6 +23,9 @@ namespace ETModel
         //碰后杠
         public readonly List<MahjongInfo> PengGangCards = new List<MahjongInfo>();
 
+        //碰或杠的牌
+        public readonly List<PengOrBar> PengOrBars = new List<PengOrBar>();
+
         //抓的牌
         public MahjongInfo GrabCard;
 
@@ -54,6 +57,7 @@ namespace ETModel
             PengCards.Clear();
             GangCards.Clear();
             PengGangCards.Clear();
+            PengOrBars.Clear();
             IsTrusteeship = false;
             IsBanker = false;
             GrabCard = null;

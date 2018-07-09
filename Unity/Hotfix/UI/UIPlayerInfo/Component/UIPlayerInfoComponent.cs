@@ -224,7 +224,7 @@ namespace ETHotfix
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
         }
 
-        public async void onClickChangeAccount()
+        public static async void onClickChangeAccount()
         {
             SessionWrap sessionWrap = null;
             try
@@ -242,6 +242,8 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+                //给android发送切换账号回调
+                PlatformHelper.setLogoutCallback("", "", "");
 
                 HeartBeat.getInstance().stopHeartBeat();
             }
