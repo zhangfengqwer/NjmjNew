@@ -16,6 +16,10 @@ namespace ETHotfix
     {
         private static List<WealthRank> rankDataList = new List<WealthRank>();
         private static List<GameRank> gameRankList = new List<GameRank>();
+
+        private static List<WealthRank> fRankDataList = new List<WealthRank>();
+        private static List<GameRank> fGameRankList = new List<GameRank>();
+
         public static void Awake(this RankDataComponent component)
         {
             // 全局定时器
@@ -27,45 +31,47 @@ namespace ETHotfix
         private static async void InitWealthRankInfo()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
+            List<Log_Rank> logRanklist = new List<Log_Rank>();
             List<WealthRank> rankList = new List<WealthRank>();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonPlayerInfo());
-            for (int i = 0; i < playerBaseInfoList.Count; ++i)
+            logRanklist.AddRange(await proxyComponent.QueryJsonRank(1));
+            for (int i = 0; i < logRanklist.Count; ++i)
             {
+                PlayerBaseInfo info = await DBCommonUtil.getPlayerBaseInfo(logRanklist[i].UId);
                 WealthRank rank = new WealthRank();
-                rank.PlayerName = playerBaseInfoList[i].Name;
-                rank.GoldNum = playerBaseInfoList[i].GoldNum;
-                rank.Icon = playerBaseInfoList[i].Icon;
-                rank.UId = playerBaseInfoList[i].Id;
+                rank.PlayerName = info.Name;
+                rank.GoldNum = logRanklist[i].Wealth;
+                rank.Icon = info.Icon;
+                rank.UId = info.Id;
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetWealthRankData(rankList);
-            playerBaseInfoList = null;
+            logRanklist = null;
             rankList = null;
         }
 
         private static async void InitGameRankInfo()
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            List<PlayerBaseInfo> playerBaseInfoList = new List<PlayerBaseInfo>();
+            List<Log_Rank> logRankList = new List<Log_Rank>();
             List<GameRank> rankList = new List<GameRank>();
-            playerBaseInfoList.AddRange(await proxyComponent.QueryJsonGamePlayer());
-            for (int i = 0; i < playerBaseInfoList.Count; ++i)
+            logRankList.AddRange(await proxyComponent.QueryJsonRank(2));
+            for (int i = 0; i < logRankList.Count; ++i)
             {
+                PlayerBaseInfo info = await DBCommonUtil.getPlayerBaseInfo(logRankList[i].UId);
                 GameRank rank = new GameRank();
-                rank.PlayerName = playerBaseInfoList[i].Name;
-                rank.WinCount = playerBaseInfoList[i].WinGameCount;
-                rank.TotalCount = playerBaseInfoList[i].TotalGameCount;
-                rank.Icon = playerBaseInfoList[i].Icon;
-                rank.UId = playerBaseInfoList[i].Id;
+                rank.PlayerName = info.Name;
+                rank.WinCount = logRankList[i].WinGameCount;
+                rank.TotalCount = info.TotalGameCount;
+                rank.Icon = info.Icon;
+                rank.UId = info.Id;
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(rankList);
-            playerBaseInfoList = null;
+            logRankList = null;
             rankList = null;
         }
 
-        public static void SetWealthRankData(this RankDataComponent component,List<WealthRank> rankList)
+        public static void SetWealthRankData(this RankDataComponent component, List<WealthRank> rankList)
         {
             rankDataList = rankList;
         }
@@ -75,7 +81,7 @@ namespace ETHotfix
             return rankDataList;
         }
 
-        public static void SetGameRankData(this RankDataComponent component,List<GameRank> gmRankList)
+        public static void SetGameRankData(this RankDataComponent component, List<GameRank> gmRankList)
         {
             gameRankList = gmRankList;
         }
@@ -84,5 +90,32 @@ namespace ETHotfix
         {
             return gameRankList;
         }
+
+        //设置前一周的记录
+        public static async void SetFRankData(this RankDataComponent component)
+        {
+            fRankDataList.Clear();
+            fGameRankList.Clear();
+            fRankDataList.AddRange(rankDataList);
+            fGameRankList.AddRange(gameRankList);
+            //结算后数据清零
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            await proxyComponent.DeleteAll<Log_Rank>();
+            await proxyComponent.DeleteAll<WeekRank>();
+            rankDataList.Clear();
+            gameRankList.Clear();
+        }
+
+        public static List<WealthRank> GetFWealthRankData(this RankDataComponent component)
+        {
+            return fRankDataList;
+        }
+
+        public static List<GameRank> GetFGameRankData(this RankDataComponent component)
+        {
+            return fGameRankList;
+        }
+
+
     }
 }

@@ -29,6 +29,12 @@ namespace ETModel
             return DateTime.Now.ToString("yyyy-MM-dd");
         }
 
+        //判断是否是周一
+        public static bool IsMonday()
+        {
+            return DateTime.Now.DayOfWeek.ToString().Equals("Monday");
+        }
+
         public static string timeAddDays(string time, int days)
         {
             return Convert.ToDateTime(time).AddDays(days).ToString("yyyy-MM-dd HH:mm:ss");
