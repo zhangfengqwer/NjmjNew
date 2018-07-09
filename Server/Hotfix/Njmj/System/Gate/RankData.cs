@@ -92,10 +92,18 @@ namespace ETHotfix
         }
 
         //设置前一周的记录
-        public static void SetFRankData(this RankDataComponent component)
+        public static async void SetFRankData(this RankDataComponent component)
         {
-            fRankDataList = rankDataList;
-            fGameRankList = gameRankList;
+            fRankDataList.Clear();
+            fGameRankList.Clear();
+            fRankDataList.AddRange(rankDataList);
+            fGameRankList.AddRange(gameRankList);
+            //结算后数据清零
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            await proxyComponent.DeleteAll<Log_Rank>();
+            await proxyComponent.DeleteAll<WeekRank>();
+            rankDataList.Clear();
+            gameRankList.Clear();
         }
 
         public static List<WealthRank> GetFWealthRankData(this RankDataComponent component)

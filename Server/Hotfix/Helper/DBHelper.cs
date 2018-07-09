@@ -61,13 +61,13 @@ namespace ETHotfix
             gamePlayerList.AddRange(await proxyComponent.QueryJsonRank(2));
             for (int i = 0; i < gamePlayerList.Count; ++i)
             {
-                PlayerBaseInfo info = await DBCommonUtil.getPlayerBaseInfo(gamePlayerList[i].UId);
+                List<PlayerBaseInfo> info = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{gamePlayerList[i].UId}}}");
                 GameRank rank = new GameRank();
-                rank.PlayerName = info.Name;
+                rank.PlayerName = info[0].Name;
                 rank.WinCount = gamePlayerList[i].WinGameCount;
-                rank.TotalCount = info.TotalGameCount;
-                rank.Icon = info.Icon;
-                rank.UId = info.Id;
+                rank.TotalCount = info[0].TotalGameCount;
+                rank.Icon = info[0].Icon;
+                rank.UId = info[0].Id;
                 gameRankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetGameRankData(gameRankList);
@@ -80,18 +80,16 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             rankList.Clear();
             playerBaseInfoList.Clear();
-            System.Diagnostics.Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             playerBaseInfoList.AddRange(await proxyComponent.QueryJsonRank(1));
             List<WealthRank> wealthList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
             for (int i = 0; i < playerBaseInfoList.Count; ++i)
             {
-                PlayerBaseInfo info = await DBCommonUtil.getPlayerBaseInfo(gamePlayerList[i].UId);
+                List<PlayerBaseInfo> info = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{playerBaseInfoList[i].UId}}}");
                 WealthRank rank = new WealthRank();
-                rank.PlayerName = info.Name;
+                rank.PlayerName = info[0].Name;
                 rank.GoldNum = playerBaseInfoList[i].Wealth;
-                rank.Icon = info.Icon;
-                rank.UId = info.Id;
+                rank.Icon = info[0].Icon;
+                rank.UId = info[0].Id;
                 rankList.Add(rank);
             }
             Game.Scene.GetComponent<RankDataComponent>().SetWealthRankData(rankList);

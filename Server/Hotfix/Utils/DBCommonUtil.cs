@@ -91,7 +91,6 @@ namespace ETHotfix
                 }
             }
 
-//            Log.Debug("UpdateTask111111111111");
         }
 
         /// <summary>
@@ -150,7 +149,7 @@ namespace ETHotfix
             try
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<Log_Rank> logs = await proxyComponent.QueryJson<Log_Rank>($"{{_id:{uid}}}");
+                List<Log_Rank> logs = await proxyComponent.QueryJson<Log_Rank>($"{{UId:{uid}}}");
                 if(logs.Count <= 0)
                 {
                     Log_Rank info = ComponentFactory.CreateWithId<Log_Rank>(IdGenerater.GenerateId());
@@ -161,7 +160,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    logs[0].WinGameCount += 1;
+                    logs[0].WinGameCount += count;
                     logs[0].Wealth += wealth;
                     await proxyComponent.Save(logs[0]);
                 }
@@ -925,14 +924,10 @@ namespace ETHotfix
             }
         }
 
-        public static async Task AccountWeekData()
+        public static void AccountWeekData()
         {
             //结算是否上榜
             Game.Scene.GetComponent<RankDataComponent>().SetFRankData();
-
-            //结算后数据清零
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            await proxyComponent.DeleteAll<Log_Rank>();
         }
     }
 }

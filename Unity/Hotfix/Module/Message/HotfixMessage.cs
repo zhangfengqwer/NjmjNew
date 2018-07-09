@@ -390,10 +390,10 @@ namespace ETHotfix
 		public bool IsSign;
 
 		[ProtoMember(16, IsRequired = true)]
-		public bool IsGetWealthReward;
+		public bool IsGetGoldRank;
 
 		[ProtoMember(17, IsRequired = true)]
-		public bool IsGetGameReward;
+		public bool IsGetGameRank;
 
 	}
 
@@ -2784,6 +2784,75 @@ namespace ETHotfix
 
 		[ProtoMember(8, IsRequired = true)]
 		public string LogData;
+
+	}
+
+	[Message(HotfixOpcode.C2G_WeekRank)]
+	[ProtoContract]
+	public partial class C2G_WeekRank: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_WeekRank)]
+	[ProtoContract]
+	public partial class G2C_WeekRank: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public bool IsGetGameRank;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsGetGoldRank;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int WealthIndex;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int GameIndex;
+
+	}
+
+	[Message(HotfixOpcode.C2G_GetWeekReward)]
+	[ProtoContract]
+	public partial class C2G_GetWeekReward: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int type;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetWeekReward)]
+	[ProtoContract]
+	public partial class G2C_GetWeekReward: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
 
 	}
 

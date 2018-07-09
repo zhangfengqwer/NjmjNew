@@ -73,7 +73,8 @@ namespace ETHotfix
                     {
                         DBHelper.RefreshWealthRank();
                     }
-                    await DBCommonUtil.AccountWeekData();
+
+                    DBCommonUtil.AccountWeekData();
                 }
             }
             #endregion

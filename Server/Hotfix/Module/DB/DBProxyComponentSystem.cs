@@ -145,11 +145,11 @@ namespace ETHotfix
             List<Log_Rank> components = new List<Log_Rank>();
             if (type == 1)
             {
-                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.Wealth > 0).Limit(50).ToListAsync();
+                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.Wealth).Limit(50).ToListAsync();
             }
-            else
+            else if (type == 2)
             {
-                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount > 0).Limit(50).ToListAsync();
+                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(50).ToListAsync();
             }
             return components;
         }
