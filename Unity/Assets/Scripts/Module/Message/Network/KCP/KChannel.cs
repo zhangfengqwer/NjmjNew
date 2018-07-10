@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -34,11 +33,11 @@ namespace ETModel
 
 		private uint lastRecvTime;
 
+		private readonly byte[] cacheBytes = new byte[ushort.MaxValue];
+
 		public uint Conn;
 
 		public uint RemoteConn;
-		
-		public Packet packet = new Packet(ushort.MaxValue);
 
 		// accept
 		public KChannel(uint conn, uint remoteConn, Socket socket, IPEndPoint remoteEndPoint, KService kService) : base(kService, ChannelType.Accept)
@@ -51,8 +50,6 @@ namespace ETModel
 			kcp = new KCP(this.RemoteConn, this);
 			kcp.SetOutput(this.Output);
 			kcp.NoDelay(1, 10, 2, 1);  //fast
-			kcp.SetMTU(470);
-			kcp.WndSize(256, 256);
 			this.isConnected = true;
 
 			this.lastRecvTime = kService.TimeNow;
@@ -103,8 +100,7 @@ namespace ETModel
 			this.kcp = new KCP(responseConn, this);
 			kcp.SetOutput(this.Output);
 			kcp.NoDelay(1, 10, 2, 1);  //fast
-			kcp.SetMTU(470);
-			kcp.WndSize(256, 256);
+
 			this.lastRecvTime = this.GetService().TimeNow;
 
 			HandleSend();
@@ -112,10 +108,10 @@ namespace ETModel
 
 		public void HandleAccept(uint requestConn)
 		{
-			packet.Bytes.WriteTo(0, KcpProtocalType.ACK);
-			packet.Bytes.WriteTo(4, requestConn);
-			packet.Bytes.WriteTo(8, this.Conn);
-			this.socket.SendTo(packet.Bytes, 0, 12, SocketFlags.None, remoteEndPoint);
+			cacheBytes.WriteTo(0, KcpProtocalType.ACK);
+			cacheBytes.WriteTo(4, requestConn);
+			cacheBytes.WriteTo(8, this.Conn);
+			this.socket.SendTo(cacheBytes, 0, 12, SocketFlags.None, remoteEndPoint);
 		}
 
 		/// <summary>
@@ -123,9 +119,9 @@ namespace ETModel
 		/// </summary>
 		private void Connect(uint timeNow)
 		{
-			packet.Bytes.WriteTo(0, KcpProtocalType.SYN);
-			packet.Bytes.WriteTo(4, this.Conn);
-			this.socket.SendTo(packet.Bytes, 0, 8, SocketFlags.None, remoteEndPoint);
+			cacheBytes.WriteTo(0, KcpProtocalType.SYN);
+			cacheBytes.WriteTo(4, this.Conn);
+			this.socket.SendTo(cacheBytes, 0, 8, SocketFlags.None, remoteEndPoint);
 
 			// 200毫秒后再次update发送connect请求
 			this.GetService().AddToNextTimeUpdate(timeNow + 200, this.Id);
@@ -133,11 +129,11 @@ namespace ETModel
 
 		private void DisConnect()
 		{
-			packet.Bytes.WriteTo(0, KcpProtocalType.FIN);
-			packet.Bytes.WriteTo(4, this.Conn);
-			packet.Bytes.WriteTo(8, this.RemoteConn);
+			cacheBytes.WriteTo(0, KcpProtocalType.FIN);
+			cacheBytes.WriteTo(4, this.Conn);
+			cacheBytes.WriteTo(8, this.RemoteConn);
 			//Log.Debug($"client disconnect: {this.Conn}");
-			this.socket.SendTo(packet.Bytes, 0, 12, SocketFlags.None, remoteEndPoint);
+			this.socket.SendTo(cacheBytes, 0, 12, SocketFlags.None, remoteEndPoint);
 		}
 
 		public void Update(uint timeNow)
@@ -148,7 +144,7 @@ namespace ETModel
 				// 5秒连接不上，报错
 				if (timeNow - this.lastRecvTime > 5 * 1000)
 				{
-					this.OnError(ErrorCode.ERR_KcpConnectFail);
+					this.OnError((int)SocketError.ConnectionRefused);
 					return;
 				}
 				Connect(timeNow);
@@ -156,9 +152,9 @@ namespace ETModel
 			}
 			
 			// 超时断开连接
-			if (timeNow - this.lastRecvTime > 40 * 1000)
+			if (timeNow - this.lastRecvTime > 20 * 1000)
 			{
-				this.OnError(ErrorCode.ERR_KcpTimeout);
+				this.OnError((int)SocketError.Disconnecting);
 				return;
 			}
 			this.kcp.Update(timeNow);
@@ -193,8 +189,7 @@ namespace ETModel
 					this.OnError((int)SocketError.NetworkReset);
 					return;
 				}
-				this.packet.Stream.SetLength(ushort.MaxValue);
-				int count = this.kcp.Recv(this.packet.Bytes, 0, ushort.MaxValue);
+				int count = this.kcp.Recv(this.cacheBytes, 0, this.cacheBytes.Length);
 				if (count <= 0)
 				{
 					return;
@@ -202,14 +197,17 @@ namespace ETModel
 
 				lastRecvTime = timeNow;
 
-				this.packet.Flag = this.packet.Bytes[0];
-				this.packet.Opcode = BitConverter.ToUInt16(this.packet.Bytes, 1);
-				this.packet.Stream.SetLength(count);
-				this.packet.Stream.Seek(Packet.Index, SeekOrigin.Begin);
+				this.packet.Flag = this.cacheBytes[0];
+				this.packet.Opcode = BitConverter.ToUInt16(this.cacheBytes, 1);
+				this.packet.Bytes = this.cacheBytes;
+				this.packet.Offset = Packet.Index;
+				this.packet.Length = (ushort) (count - Packet.Index);
 				this.OnRead(packet);
 			}
 		}
 		
+		public Packet packet = new Packet();
+
 		public void Output(byte[] bytes, int count, object user)
 		{
 			this.socket.SendTo(bytes, 0, count, SocketFlags.None, this.remoteEndPoint);
@@ -242,7 +240,7 @@ namespace ETModel
 			byte[] bytes;
 			if (this.isConnected)
 			{
-				bytes = this.packet.Bytes;
+				bytes = this.cacheBytes;
 			}
 			else
 			{

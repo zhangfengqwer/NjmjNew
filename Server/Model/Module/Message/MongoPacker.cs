@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace ETModel
 {
@@ -23,11 +22,6 @@ namespace ETModel
 		public object DeserializeFrom(Type type, byte[] bytes)
 		{
 			return MongoHelper.FromBson(type, bytes);
-		}
-
-		public object DeserializeFrom(Type type, Stream stream)
-		{
-			return MongoHelper.FromStream(type, stream);
 		}
 
 		public object DeserializeFrom(Type type, byte[] bytes, int index, int count)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace ETModel
 {
@@ -16,30 +15,30 @@ namespace ETModel
 		public const int FlagIndex = 0;
 		public const int OpcodeIndex = 1;
 		public const int Index = 3;
-
+		
 		/// <summary>
 		/// 只读，不允许修改
 		/// </summary>
-		public byte[] Bytes
-		{
-			get
-			{
-				return this.Stream.GetBuffer();
-			}
-		}
-		
+		public byte[] Bytes { get; set; }
+		public ushort Offset { get; set; }
+		public ushort Length { get; set; }
 		public byte Flag { get; set; }
 		public ushort Opcode { get; set; }
-		public MemoryStream Stream { get; }
+
+		public Packet()
+		{
+		}
 
 		public Packet(int length)
 		{
-			this.Stream = new MemoryStream(length);
+			this.Length = 0;
+			this.Bytes = new byte[length];
 		}
 
 		public Packet(byte[] bytes)
 		{
-			this.Stream = new MemoryStream(bytes);
+			this.Bytes = bytes;
+			this.Length = (ushort)bytes.Length;
 		}
 	}
 
@@ -96,10 +95,9 @@ namespace ETModel
 							this.packet.Flag = this.cache[0];
 							this.buffer.Read(this.cache, 0, 2);
 							this.packet.Opcode = BitConverter.ToUInt16(this.cache, 0);
-							
-							this.packet.Stream.Seek(0, SeekOrigin.Begin);
-							this.packet.Stream.SetLength(this.packetSize - Packet.Index);
-							this.buffer.Read(this.packet.Stream.GetBuffer(), 0, this.packetSize - Packet.Index);
+							this.buffer.Read(this.packet.Bytes, 0, this.packetSize - Packet.Index);
+							this.packet.Length = (ushort) (this.packetSize - Packet.Index);
+							this.packet.Offset = 0;
 							
 							this.isOK = true;
 							this.state = ParserState.PacketSize;
