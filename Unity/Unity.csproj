@@ -528,8 +528,6 @@
     <Compile Include="Assets\Scripts\Utils\SensitiveWordUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\ToastScript.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\CLRBindings.cs" />
-    <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_ShortcutExtensions46_Binding.cs" />
-    <Compile Include="Assets\ThirdParty\ILRuntime\Generated\DG_Tweening_TweenSettingsExtensions_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\System_Array_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\System_Collections_Generic_List_1_ILTypeInstance_Binding.cs" />
     <Compile Include="Assets\ThirdParty\ILRuntime\Generated\System_Int32_Binding.cs" />
