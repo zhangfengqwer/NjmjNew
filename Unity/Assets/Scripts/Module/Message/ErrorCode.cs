@@ -4,11 +4,11 @@ namespace ETModel
 	{
 		public const int ERR_Success = 0;
 		
-		// 100000 以上，避免跟SocketError冲突
+		// 100000 浠ヤ笂锛岄伩鍏嶈窡SocketError鍐茬獊
 		public const int ERR_MyErrorCode = 100000;
 		
 
-		// 小于这个Rpc会抛异常
+		// 灏忎簬杩欎釜Rpc浼氭姏寮傚父
 		public const int ERR_Exception = 200000;
 		
 		public const int ERR_NotFoundActor = 200002;

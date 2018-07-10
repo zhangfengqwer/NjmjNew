@@ -12,10 +12,11 @@ namespace ETHotfix
 			DBQueryJsonResponse response = new DBQueryJsonResponse();
 			try
 			{
-				DBCacheComponent dbCacheComponent = Game.Scene.GetComponent<DBCacheComponent>();
-				List<ComponentWithId> components = await dbCacheComponent.GetJson(message.CollectionName, message.Json);
+			    Log.Info("33333");
+                DBCacheComponent dbCacheComponent = Game.Scene.GetComponent<DBCacheComponent>();
+			    Log.Info("33333");
+                List<ComponentWithId> components = await dbCacheComponent.GetJson(message.CollectionName, message.Json);
 				response.Components = components;
-
 				reply(response);
 			}
 			catch (Exception e)

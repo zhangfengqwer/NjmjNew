@@ -10,11 +10,6 @@ namespace ETModel
 			return ProtobufHelper.ToBytes(obj);
 		}
 
-		public void SerializeToStream(object obj, Stream stream)
-		{
-			ProtobufHelper.ToStream(obj, stream);
-		}
-
 		public string SerializeToText(object obj)
 		{
 			return JsonHelper.ToJson(obj);

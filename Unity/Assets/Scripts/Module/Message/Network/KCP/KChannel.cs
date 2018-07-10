@@ -221,11 +221,6 @@ namespace ETModel
 			this.GetService().AddToUpdate(this.Id);
 		}
 
-		public override Packet GetPacket()
-		{
-			return this.packet;
-		}
-
 		public override void Start()
 		{
 		}
@@ -241,19 +236,24 @@ namespace ETModel
 			this.sendBuffer.Enqueue(new WaitSendBuffer(buffer, index, length));
 		}
 
-		public override void Send(MemoryStream stream)
+		public override void Send(List<byte[]> buffers)
 		{
-			ushort size = (ushort)stream.Length;
-			
+			ushort size = (ushort)buffers.Select(b => b.Length).Sum();
 			byte[] bytes;
 			if (this.isConnected)
 			{
-				bytes = stream.GetBuffer();
+				bytes = this.packet.Bytes;
 			}
 			else
 			{
 				bytes = new byte[size];
-				Array.Copy(stream.GetBuffer(), 0, bytes, 0, stream.Length);
+			}
+
+			int index = 0;
+			foreach (byte[] buffer in buffers)
+			{
+				Array.Copy(buffer, 0, bytes, index, buffer.Length);
+				index += buffer.Length;
 			}
 
 			Send(bytes, 0, size);

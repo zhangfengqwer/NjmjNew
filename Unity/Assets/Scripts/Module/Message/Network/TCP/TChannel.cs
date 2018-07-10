@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -70,11 +69,6 @@ namespace ETModel
 			this.socket = null;
 		}
 
-		public override Packet GetPacket()
-		{
-			return this.parser.packet;
-		}
-
 		public override void Start()
 		{
 			if (!this.isConnected)
@@ -103,17 +97,19 @@ namespace ETModel
 			}
 		}
 
-		public override void Send(MemoryStream stream)
+		public override void Send(List<byte[]> buffers)
 		{
 			if (this.IsDisposed)
 			{
 				throw new Exception("TChannel已经被Dispose, 不能发送消息");
 			}
-
-			ushort size = (ushort)stream.Length;
+			ushort size = (ushort)buffers.Select(b => b.Length).Sum();
 			byte[] sizeBuffer = BitConverter.GetBytes(size);
 			this.sendBuffer.Write(sizeBuffer, 0, sizeBuffer.Length);
-			this.sendBuffer.ReadFrom(stream);
+			foreach (byte[] buffer in buffers)
+			{
+				this.sendBuffer.Write(buffer, 0, buffer.Length);
+			}
 
 			if(!this.isSending)
 			{

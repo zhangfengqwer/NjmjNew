@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 
 namespace ETModel
@@ -20,6 +19,11 @@ namespace ETModel
 		Accept,
 	}
 
+	public class UserTokenInfo
+	{
+		public long InstanceId;
+	}
+
 	public abstract class AChannel: ComponentWithId
 	{
 		public ChannelType ChannelType { get; }
@@ -27,8 +31,6 @@ namespace ETModel
 		protected AService service;
 
 		public IPEndPoint RemoteAddress { get; protected set; }
-
-		public abstract Packet GetPacket();
 
 		private Action<AChannel, int> errorCallback;
 
@@ -82,7 +84,7 @@ namespace ETModel
 		/// </summary>
 		public abstract void Send(byte[] buffer, int index, int length);
 
-		public abstract void Send(MemoryStream stream);
+		public abstract void Send(List<byte[]> buffers);
 		
 		public override void Dispose()
 		{
