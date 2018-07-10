@@ -51,6 +51,7 @@ namespace ETHotfix
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 			            if (handCardsComponent == null)
 			            {
+			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
 			                room.Remove(_gamer.UserID);
 			                return;
 			            }

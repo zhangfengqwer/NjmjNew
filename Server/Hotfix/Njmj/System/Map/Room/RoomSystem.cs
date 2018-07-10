@@ -360,6 +360,11 @@ namespace ETHotfix
                 {
                     if (_gamer.UserID == orderController.CurrentAuthority)
                     {
+                        if (_gamer == null || _gamer.isOffline)
+                        {
+                            continue;
+                        }
+
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 
                         //判断小胡,4个花以上才能胡
