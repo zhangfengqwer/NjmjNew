@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using ETModel;
+using UnityEngine;
+using static ETHotfix.Consts;
 
 namespace ETHotfix
 {
@@ -7,7 +12,7 @@ namespace ETHotfix
 	{
 		public static void Start()
 		{
-			try
+            try
 			{
 				Game.Scene.ModelScene = ETModel.Game.Scene;
 
@@ -20,21 +25,38 @@ namespace ETHotfix
 				Game.Scene.AddComponent<OpcodeTypeComponent>();
 				Game.Scene.AddComponent<MessageDispatherComponent>();
 
-				// 加载热更配置
-				ETModel.Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");
+				Game.Scene.AddComponent<PlayerInfoComponent>();
+                Game.Scene.AddComponent<UIIconComponent>();
+                Game.Scene.AddComponent<SessionComponent>();
+
+                //第三方退出
+                Game.Scene.AddComponent<ThirdSDKQuitComponent>();
+
+                // 加载热更配置
+                ETModel.Game.Scene.GetComponent<ResourcesComponent>().LoadBundle("config.unity3d");
 				Game.Scene.AddComponent<ConfigComponent>();
 				ETModel.Game.Scene.GetComponent<ResourcesComponent>().UnloadBundle("config.unity3d");
 
-				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
-				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
+                //				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
+                //				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
-				Game.EventSystem.Run(EventIdType.InitSceneStart);
+			    Log.Info("111");
+
+                Game.EventSystem.Run(EventIdType.InitSceneStart);
+
+			    Log.Info("222");
+                Application.targetFrameRate = 30;
+			    // 永不息屏
+			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+			    if (NetConfig.getInstance().isFormal)
+			        GameObject.Destroy(GameObject.Find("Reporter"));
 			}
-			catch (Exception e)
+            catch (Exception e)
 			{
 				Log.Error(e);
 			}
-		}
+        }
 
 		public static void Update()
 		{

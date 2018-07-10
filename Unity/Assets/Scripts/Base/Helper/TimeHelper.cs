@@ -27,5 +27,15 @@ namespace ETModel
 		{
 			return ClientNow();
 		}
+
+	    public static string GetCurrentDay(this DateTime dateTime)
+	    {
+	        return DateTime.Now.ToString("yyyy-MM-dd");
+        }
+
+	    public static string GetCurrentTime(this DateTime dateTime)
+	    {
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
     }
 }

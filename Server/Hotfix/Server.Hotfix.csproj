@@ -25,5 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\Http\" />
+    <Folder Include="Njmj\Entity\DB\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 </Project>

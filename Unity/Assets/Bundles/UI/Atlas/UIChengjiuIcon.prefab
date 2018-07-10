@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1402704297378234}
+  m_IsPrefabParent: 1
+--- !u!1 &1402704297378234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224549057257767922}
+  - component: {fileID: 114295598623987460}
+  m_Layer: 5
+  m_Name: UIChengjiuIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114295598623987460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402704297378234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: chengjiu1_101
+    gameObject: {fileID: 21300000, guid: 05d14a8c41adea147962ba25296cf86e, type: 3}
+  - key: chengjiu1_102
+    gameObject: {fileID: 21300000, guid: 48a1665cbc8edc64ca8fa40fc9cd29aa, type: 3}
+  - key: chengjiu1_103
+    gameObject: {fileID: 21300000, guid: 477d417ca02543346b7bd65b8ba564e7, type: 3}
+  - key: chengjiu1_104
+    gameObject: {fileID: 21300000, guid: 1b33d54e30b984f42bcd55d0a0beca64, type: 3}
+  - key: chengjiu1_105
+    gameObject: {fileID: 21300000, guid: 4fb7fb852d2562742b5fdddac46d9a49, type: 3}
+  - key: chengjiu1_106
+    gameObject: {fileID: 21300000, guid: d339e361383388b42b26c6a11f4ad62f, type: 3}
+  - key: chengjiu1_107
+    gameObject: {fileID: 21300000, guid: 8e5584df7301d52488f6b3340bf9256e, type: 3}
+  - key: chengjiu1_108
+    gameObject: {fileID: 21300000, guid: 14b1d00bdca555d4793c1c695f868097, type: 3}
+  - key: chengjiu1_109
+    gameObject: {fileID: 21300000, guid: 66c04d384dfdfff44ae6b7846ed55430, type: 3}
+  - key: chengjiu1_110
+    gameObject: {fileID: 21300000, guid: bc64594542fe8d245a91d6d6c0ed5788, type: 3}
+  - key: chengjiu1_111
+    gameObject: {fileID: 21300000, guid: 29889daa9c1f029479e5b1eacb0bdb87, type: 3}
+  - key: chengjiu1_112
+    gameObject: {fileID: 21300000, guid: 8fe78e588a6fca044a0df1b637d105a2, type: 3}
+  - key: chengjiu_101
+    gameObject: {fileID: 21300000, guid: a6841138094c42e47baf36d56ff98c45, type: 3}
+  - key: chengjiu_102
+    gameObject: {fileID: 21300000, guid: f47e1f613ea05a041a98f7f47679da25, type: 3}
+  - key: chengjiu_103
+    gameObject: {fileID: 21300000, guid: b674966c5a16c5448bfa2231e2721584, type: 3}
+  - key: chengjiu_104
+    gameObject: {fileID: 21300000, guid: 96a25dcc4396bba4c9b5b2b413c525d6, type: 3}
+  - key: chengjiu_105
+    gameObject: {fileID: 21300000, guid: 2a8b1f59f62aa0341afde552b53e2978, type: 3}
+  - key: chengjiu_106
+    gameObject: {fileID: 21300000, guid: 7b2885a35f42a3d46bce46e6e5e79d11, type: 3}
+  - key: chengjiu_107
+    gameObject: {fileID: 21300000, guid: 62f6c4003875b5c40b21cd693fe0d36f, type: 3}
+  - key: chengjiu_108
+    gameObject: {fileID: 21300000, guid: 717dc255242db4540b85e0a953f1330d, type: 3}
+  - key: chengjiu_110
+    gameObject: {fileID: 21300000, guid: 14cc9666f8558384aa326bb18660154d, type: 3}
+  - key: chengjiu_111
+    gameObject: {fileID: 21300000, guid: 530edfcb72891eb4b95caf9859e34200, type: 3}
+  - key: chengjiu_112
+    gameObject: {fileID: 21300000, guid: 0f2d33d45386d724c8c1e9a44fdb6a02, type: 3}
+  - key: chengjiu_109
+    gameObject: {fileID: 21300000, guid: 152e6a95c11495240ad7b86054a4f158, type: 3}
+--- !u!224 &224549057257767922
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402704297378234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}

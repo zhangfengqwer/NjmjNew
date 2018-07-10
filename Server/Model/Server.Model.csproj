@@ -104,9 +104,13 @@
     <Compile Include="..\..\Unity\Assets\Scripts\Module\Numeric\NumericWatcherAttribute.cs" Link="Module\Numeric\NumericWatcherAttribute.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Module\Numeric\NumericWatcherComponent.cs" Link="Module\Numeric\NumericWatcherComponent.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Other\AppType.cs" Link="Other\AppType.cs" />
+    <Compile Include="..\..\Unity\Hotfix\HP_Logic\Common_Random.cs" Link="Njmj\Common_Random.cs" />
+    <Compile Include="..\..\Unity\Hotfix\HP_Logic\Consts.cs" Link="Njmj\Consts.cs" />
+    <Compile Include="..\..\Unity\Hotfix\HP_Logic\Logic_NJMJ.cs" Link="Njmj\Logic_NJMJ.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.4" />
     <PackageReference Include="protobuf-net" Version="2.3.8-alpha1" />
     <PackageReference Include="SharpZipLib" Version="1.0.0-alpha2" />

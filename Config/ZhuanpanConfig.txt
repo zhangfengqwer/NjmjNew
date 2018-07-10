@@ -1,0 +1,10 @@
+{"_id":1,"itemId":1,"propId":3,"PropNum":10,"Probability":100}
+{"_id":2,"itemId":2,"propId":1,"PropNum":1000,"Probability":250}
+{"_id":3,"itemId":3,"propId":1,"PropNum":2000,"Probability":200}
+{"_id":4,"itemId":4,"propId":3,"PropNum":15,"Probability":50}
+{"_id":5,"itemId":5,"propId":1,"PropNum":5000,"Probability":130}
+{"_id":6,"itemId":6,"propId":3,"PropNum":100,"Probability":1}
+{"_id":7,"itemId":7,"propId":1,"PropNum":10000,"Probability":30}
+{"_id":8,"itemId":8,"propId":1,"PropNum":8000,"Probability":80}
+{"_id":9,"itemId":9,"propId":3,"PropNum":20,"Probability":20}
+{"_id":10,"itemId":10,"propId":1,"PropNum":3000,"Probability":139}

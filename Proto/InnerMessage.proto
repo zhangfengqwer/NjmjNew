@@ -152,7 +152,7 @@
 
 	message R2G_GetLoginKey // IRequest
 	{
-		required string Account = 1;
+		required int64 UserId = 1;
 	}
 
 	message G2R_GetLoginKey // IResponse
@@ -174,5 +174,17 @@
 
 	message G2M_SessionDisconnect // IActorMessage
 	{
+	}
+
+	message G2M_GetRoomInfo // IRequest
+	{
+	}
+
+	message M2G_GetRoomInfo // IResponse
+	{
+		required int NewRoomCount = 1;
+		required int NewTotalPlayerInGameCount = 2;
+		required int JingRoomCount = 3;
+		required int JingTotalPlayerInGameCount = 4;
 	}
 }

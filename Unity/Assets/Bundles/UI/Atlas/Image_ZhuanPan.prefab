@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1641673367769236}
+  m_IsPrefabParent: 1
+--- !u!1 &1641673367769236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224710408087413350}
+  - component: {fileID: 114896225346400250}
+  m_Layer: 5
+  m_Name: Image_ZhuanPan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114896225346400250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641673367769236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: bg
+    gameObject: {fileID: 21300000, guid: 254805f579f025940b3637ec9dd7bc1d, type: 3}
+  - key: btn_close
+    gameObject: {fileID: 21300000, guid: 1ab9bc10ad0d9c74eaafcf10b8b109a7, type: 3}
+  - key: icon_gold
+    gameObject: {fileID: 21300000, guid: 5dfe4977f735f6347b1c05fd23add486, type: 3}
+  - key: icon_huafei
+    gameObject: {fileID: 21300000, guid: ca18f96f36ca1484abba065f8f6f6061, type: 3}
+  - key: item_heitiao
+    gameObject: {fileID: 21300000, guid: 1f394a7125af8364bb13c29a5864b0c8, type: 3}
+  - key: item_weixuanzhong
+    gameObject: {fileID: 21300000, guid: 27e3fc05ce868b04988144b4cd35c605, type: 3}
+  - key: item_xuanzhong
+    gameObject: {fileID: 21300000, guid: 816e3633b8a82794bac66bafcd6d7b56, type: 3}
+  - key: wenhao
+    gameObject: {fileID: 21300000, guid: 4342111f9584a4941b9743978d424904, type: 3}
+--- !u!224 &224710408087413350
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641673367769236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}

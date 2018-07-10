@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using ETModel;
+using MongoDB.Bson.Serialization;
 using NLog;
 
 namespace App
@@ -11,7 +14,8 @@ namespace App
 		private static void Main(string[] args)
 		{
 			// 异步方法全部会回掉到主线程
-			SynchronizationContext.SetSynchronizationContext(OneThreadSynchronizationContext.Instance);
+			OneThreadSynchronizationContext contex = new OneThreadSynchronizationContext();
+			SynchronizationContext.SetSynchronizationContext(contex);
 			
 			try
 			{
@@ -50,6 +54,7 @@ namespace App
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<NetOuterComponent, IPEndPoint>(outerConfig.IPEndPoint);
 						Game.Scene.AddComponent<AppManagerComponent>();
+						Game.Scene.AddComponent<ActorManagerComponent>();
 						break;
 					case AppType.Realm:
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
@@ -57,7 +62,10 @@ namespace App
 						Game.Scene.AddComponent<NetOuterComponent, IPEndPoint>(outerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationProxyComponent>();
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
-						break;
+						Game.Scene.AddComponent<ActorManagerComponent>();
+					    Game.Scene.AddComponent<DBProxyComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
+                        break;
 					case AppType.Gate:
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
@@ -66,11 +74,28 @@ namespace App
 						Game.Scene.AddComponent<LocationProxyComponent>();
 						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
-						break;
+						Game.Scene.AddComponent<ActorManagerComponent>();
+
+                        //GateGlobalComponent
+					    Game.Scene.AddComponent<DBComponent>();
+					    Game.Scene.AddComponent<ConfigComponent>();
+                        Game.Scene.AddComponent<DBProxyComponent>();
+                        Game.Scene.AddComponent<RankDataComponent>();
+					    Game.Scene.AddComponent<HttpComponent>();
+					    Game.Scene.AddComponent<UserComponent>();
+					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
+                        break;
 					case AppType.Location:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationComponent>();
+						Game.Scene.AddComponent<ActorManagerComponent>();
 						break;
+					case AppType.DB:
+						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
+					    Game.Scene.AddComponent<DBComponent>();
+					    Game.Scene.AddComponent<DBProxyComponent>();
+					    Game.Scene.AddComponent<DBCacheComponent>();
+                        break;
 					case AppType.Map:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<UnitComponent>();
@@ -78,7 +103,13 @@ namespace App
 						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
-						break;
+						Game.Scene.AddComponent<ActorManagerComponent>();
+                        //MapGlobalCoponent
+                        Game.Scene.AddComponent<DBProxyComponent>();
+					    Game.Scene.AddComponent<DBComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
+                        Game.Scene.AddComponent<RoomComponent>();
+                        break;
 					case AppType.AllServer:
 						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<PlayerComponent>();
@@ -96,8 +127,19 @@ namespace App
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						Game.Scene.AddComponent<ConfigComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
-						// Game.Scene.AddComponent<HttpComponent>();
-						break;
+						Game.Scene.AddComponent<ActorManagerComponent>();
+                        //Game.Scene.AddComponent<DBOperatorComponet>();
+
+                        //GateGlobalComponent
+					    Game.Scene.AddComponent<RankDataComponent>();
+					    Game.Scene.AddComponent<HttpComponent>();
+                        Game.Scene.AddComponent<UserComponent>();
+					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
+
+                        //MapGlobalCoponent
+                        Game.Scene.AddComponent<RoomComponent>();
+
+                        break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();
 						Game.Scene.AddComponent<BenchmarkComponent, IPEndPoint>(clientConfig.IPEndPoint);
@@ -106,12 +148,12 @@ namespace App
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
 
-				while (true)
+                while (true)
 				{
 					try
 					{
 						Thread.Sleep(1);
-						OneThreadSynchronizationContext.Instance.Update();
+						contex.Update();
 						Game.EventSystem.Update();
 					}
 					catch (Exception e)

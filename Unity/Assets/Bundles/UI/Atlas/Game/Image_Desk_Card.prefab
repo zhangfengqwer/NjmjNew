@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1839316734991100}
+  m_IsPrefabParent: 1
+--- !u!1 &1839316734991100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4035671902400046}
+  - component: {fileID: 114761480457409332}
+  m_Layer: 0
+  m_Name: Image_Desk_Card
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4035671902400046
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839316734991100}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.056717, y: 0.3969643, z: 99.879616}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114761480457409332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839316734991100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: desk_bei
+    gameObject: {fileID: 21300000, guid: 7f18c76e3824b1143939b51532427f18, type: 3}
+  - key: desk_dong
+    gameObject: {fileID: 21300000, guid: 882afc4ca12f86140922dbd45771efb2, type: 3}
+  - key: desk_nan
+    gameObject: {fileID: 21300000, guid: ec74ab456aec3c24fb116ac0ac75836c, type: 3}
+  - key: desk_xi
+    gameObject: {fileID: 21300000, guid: 8e5311e084232b14fa7fffc36ed6a283, type: 3}
+  - key: time_0
+    gameObject: {fileID: 21300000, guid: ffce0bee9348990489891c28ea3e998f, type: 3}
+  - key: time_1
+    gameObject: {fileID: 21300000, guid: 2fcea2dff3c16fe4886a5e8fff54b3d6, type: 3}
+  - key: time_2
+    gameObject: {fileID: 21300000, guid: c849a39b19ec97c40a1d5eb3df6922ae, type: 3}
+  - key: time_3
+    gameObject: {fileID: 21300000, guid: 8b27dd9dee813384cb62bc9df9773727, type: 3}
+  - key: time_4
+    gameObject: {fileID: 21300000, guid: 078bb5bd4bacb7a4883013ae19061fec, type: 3}
+  - key: time_5
+    gameObject: {fileID: 21300000, guid: a74a5fda1899c284bae62b5d0b8d2986, type: 3}
+  - key: time_6
+    gameObject: {fileID: 21300000, guid: ab64fe1ea0fe921479c18ec993033bf8, type: 3}
+  - key: time_7
+    gameObject: {fileID: 21300000, guid: d45eec19c7e225945887a32b737932b1, type: 3}
+  - key: time_8
+    gameObject: {fileID: 21300000, guid: 53299dbf83db31f41b7e182369415ca1, type: 3}
+  - key: time_9
+    gameObject: {fileID: 21300000, guid: 58e300b5f2e23b34596b124dca31dc5e, type: 3}
+  - key: icon_default
+    gameObject: {fileID: 21300000, guid: a15cbe027304afe47bbbbd03945ef47a, type: 3}
+  - key: Treasure_Close
+    gameObject: {fileID: 21300000, guid: cdbf9dbef8ad5f542b1c995dc05c3d78, type: 3}
+  - key: Treasure_Open
+    gameObject: {fileID: 21300000, guid: 70193e2b86ff89f4bacd324bd594eedf, type: 3}
+  - key: RoomMask
+    gameObject: {fileID: 1374606894052620, guid: 414f94d57ec8cbf43ad7f4d5f595fa9c,
+      type: 2}
+  - key: foursame_tip
+    gameObject: {fileID: 21300000, guid: 8c607766ba5361b44a948503a8b0d965, type: 3}
+  - key: lianxu_tip
+    gameObject: {fileID: 21300000, guid: c7d109f5fa902b44895430e76cd1f5d8, type: 3}
+  - key: menqing_tip
+    gameObject: {fileID: 21300000, guid: 1bc2bcd2af5dd3640b7299f8ee480330, type: 3}
+  - key: shangji_tip
+    gameObject: {fileID: 21300000, guid: 6a4643aa16117c0438d59f6977ca753b, type: 3}
+  - key: tuoguan_icon
+    gameObject: {fileID: 21300000, guid: ee6912770eb1cad4d8115878db05ea89, type: 3}

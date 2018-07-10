@@ -36,22 +36,65 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DOTween, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\DOTween\DOTween50.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Temp\UnityVS_bin\Debug\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Temp\UnityVS_bin\Debug\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Temp\UnityVS_bin\Debug\UnityEngine.PhysicsModule.dll</HintPath>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Unity-2017\Editor\Data\Managed\UnityEngine\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Unity-2017\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Unity\Unity2017.4.1\Editor\Data\Managed\UnityEngine\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Server\Hotfix\Njmj\Help\ConfigHelp.cs">
+      <Link>Njmj\Helper\ConfigHelp.cs</Link>
+    </Compile>
     <Compile Include="Base\Event\EventIdType.cs" />
     <Compile Include="Base\Event\IEvent.cs" />
     <Compile Include="Base\Helper\ArrayHelper.cs" />
@@ -64,6 +107,50 @@
     <Compile Include="Base\Object\IComponentSerialize.cs" />
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
+    <Compile Include="Entity\Config\ChatConfig.cs" />
+    <Compile Include="Entity\Config\ActivityConfig.cs" />
+    <Compile Include="Entity\Config\NoticeConfig.cs" />
+    <Compile Include="Entity\Config\OtherData.cs" />
+    <Compile Include="Entity\Config\OtherConfig.cs" />
+    <Compile Include="Entity\Config\TipsConfig.cs" />
+    <Compile Include="Entity\Config\RoomConfig.cs" />
+    <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
+    <Compile Include="Entity\Config\PropConfig.cs" />
+    <Compile Include="Module\Message\Session.cs" />
+    <Compile Include="Module\Message\SessionComponent.cs" />
+    <Compile Include="Njmj\Component\ThirdSDKQuitComponent.cs" />
+    <Compile Include="Njmj\Component\GamerComponent.cs" />
+    <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
+    <Compile Include="Njmj\Entity\Constants.cs" />
+    <Compile Include="Njmj\Entity\Type.cs" />
+    <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_CheatHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_ForceOfflineHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GameFlowHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerChangeGoldHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerReadyTimeOutHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerBuHuaHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerCanOperateHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerJionRoomHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerGrabCardHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerTrusteeshipCancelHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerTrusteeshipHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerReconnectHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerHuPaiHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerOperateHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerPlayCardHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_OldUser.cs" />
+    <Compile Include="Njmj\Handler\Actor_RankUpdate.cs" />
+    <Compile Include="Njmj\Handler\Actor_LaBa.cs" />
+    <Compile Include="Njmj\Handler\Actor_StartGameHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerReadyHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerExitRoomHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerEnterRoomHandler.cs" />
+    <Compile Include="HP_Logic\Common_Random.cs" />
+    <Compile Include="HP_Logic\Consts.cs" />
+    <Compile Include="HP_Logic\Logic_NJMJ.cs" />
     <Compile Include="Module\FrameSync\OperaComponent.cs" />
     <Compile Include="Entity\Config\UnitConfig.cs" />
     <Compile Include="Module\FrameSync\TestHotfixSubscribMonoEvent_LogString.cs" />
@@ -92,8 +179,6 @@
     <Compile Include="Base\Object\Object.cs" />
     <Compile Include="Base\Object\EventSystem.cs" />
     <Compile Include="Base\Object\ObjectPool.cs" />
-    <Compile Include="Module\Message\SessionComponent.cs" />
-    <Compile Include="Module\Message\Session.cs" />
     <Compile Include="Module\UI\IUIFactory.cs" />
     <Compile Include="Module\Message\MessageDispatherComponent.cs" />
     <Compile Include="Module\Message\OpcodeTypeComponent.cs" />
@@ -105,14 +190,119 @@
     <Compile Include="Init.cs" />
     <Compile Include="Module\Message\HotfixOpcode.cs" />
     <Compile Include="Module\UI\UIType.cs" />
+    <Compile Include="Njmj\Component\GamerUIComponent.cs" />
+    <Compile Include="Njmj\Entity\Gamer.cs" />
+    <Compile Include="Njmj\Factory\GamerFactory.cs" />
+    <Compile Include="Njmj\Helper\GameHelp.cs" />
+    <Compile Include="Njmj\Helper\SoundsHelp.cs" />
+    <Compile Include="Njmj\UI\Game\UIReady\Component\UIReadyComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIReady\Factory\UIRoomFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Component\UIChatItemComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Component\UIExpressionComponent.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Platform\ChannelHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Component\PlayerInfoComponent.cs" />
+    <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
+    <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuTreasureComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuRewardItemComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuTreasureItemComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityItemComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Component\UIDuanwuActivityComponent.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuTreasureFactory.cs" />
+    <Compile Include="UI\UIDuanwuActivity\Factory\UIDuanwuActivityFactory.cs" />
+    <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
+    <Compile Include="UI\UINetError\Component\UINetErrorComponent.cs" />
+    <Compile Include="UI\UINetError\Factory\UINetErrorFactory.cs" />
+    <Compile Include="UI\UINetLoading\Component\UINetLoadingComponent.cs" />
+    <Compile Include="UI\UINetLoading\Factory\UINetLoadingFactory.cs" />
+    <Compile Include="UI\UICommonPanel\Component\UICommonPanelComponent.cs" />
+    <Compile Include="UI\UICommonPanel\Factory\UICommonPanelFactory.cs" />
+    <Compile Include="UI\UIActivity\Component\UIActivity101Component.cs" />
+    <Compile Include="UI\UIActivity\Component\UIActivityComponent.cs" />
+    <Compile Include="UI\UIActivity\Component\UIActivityItemComponent.cs" />
+    <Compile Include="UI\UIActivity\Component\UINoticeItemComponent.cs" />
+    <Compile Include="UI\UIActivity\Factory\UIActivityFactory.cs" />
+    <Compile Include="UI\UIBag\Component\UIBagComponent.cs" />
+    <Compile Include="UI\UIBag\Component\UIBagItemComponent.cs" />
+    <Compile Include="UI\UIBag\Factory\UIBagFactory.cs" />
+    <Compile Include="UI\UIChat\Component\UIChatComponent.cs" />
+    <Compile Include="UI\UIChat\Factory\UIChatFactory.cs" />
+    <Compile Include="UI\UIChengjiu\Component\UIChengjiuComponent.cs" />
+    <Compile Include="UI\UIChengjiu\Component\UIChengjiuItemComponent.cs" />
+    <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
+    <Compile Include="UI\UIPlayerInfo\Event\ChangeAccount.cs" />
+    <Compile Include="UI\UISet\Component\UISetComponent.cs" />
+    <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
+    <Compile Include="UI\UIAccountBind\Component\UIAccountBindComponent.cs" />
+    <Compile Include="UI\UIAccountBind\Factory\UIAccountBindFactory.cs" />
+    <Compile Include="UI\UIZhuanPan\Component\UIZhuanPanComponent.cs" />
+    <Compile Include="UI\UIZhuanPan\Event\WeChatShare.cs" />
+    <Compile Include="UI\UIZhuanPan\Factory\UIZhuanPanFactory.cs" />
+    <Compile Include="UI\UIUseLaBa\Component\UIUseLaBaComponent.cs" />
+    <Compile Include="UI\UIUseLaBa\Factory\UIUseLaBaFactory.cs" />
+    <Compile Include="UI\UIChangeName\Component\UIChangeNameComponent.cs" />
+    <Compile Include="UI\UIChangeName\Factory\UIChangeNameFactory.cs" />
+    <Compile Include="UI\UIMain\Component\UIRankItemComponent.cs" />
+    <Compile Include="Njmj\Component\HandCardsComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Event\GamerPlayCard.cs" />
+    <Compile Include="UI\UIUseHuaFei\Component\UIUseHuaFeiComponent.cs" />
+    <Compile Include="UI\UIUseHuaFei\Factory\UIUseHuaFeiFactory.cs" />
+    <Compile Include="UI\UIRealName\Component\UIRealNameComponent.cs" />
+    <Compile Include="UI\UIRealName\Factory\UIRealNameFactory.cs" />
+    <Compile Include="UI\UIGameResult\Component\UIGameResultComponent.cs" />
+    <Compile Include="UI\UIGameResult\Factory\UIGameResultFactory.cs" />
+    <Compile Include="UI\UIEmail\Component\UIEmailComponent.cs" />
+    <Compile Include="UI\UIEmail\Component\UIEmailItemComponent.cs" />
+    <Compile Include="UI\UIEmail\Component\UIRewardItemComponent.cs" />
+    <Compile Include="UI\UIEmail\Factory\UIEmailFactory.cs" />
+    <Compile Include="UI\UIDaily\Component\UIDailyComponent.cs" />
+    <Compile Include="UI\UIDaily\Factory\UIDailyFactory.cs" />
+    <Compile Include="UI\UIHelp\Component\UIHelpComponent.cs" />
+    <Compile Include="UI\UIHelp\Factory\UIHelpFactory.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Component\UIJiaZhangJianHu.cs" />
+    <Compile Include="UI\UIJiaZhangJianHu\Factory\UIJiaZhangJianHu.cs" />
     <Compile Include="UI\UILobby\Component\UILobbyComponent.cs" />
     <Compile Include="UI\UILobby\Factory\UILobbyFactory.cs" />
+    <Compile Include="UI\UIBindPhone\Component\UIBindPhoneComponent.cs" />
+    <Compile Include="UI\UIBindPhone\Factory\UIBindPhoneFactory.cs" />
+    <Compile Include="UI\UIMain\Component\UIIconComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Component\UIPlayerIconItemComponent.cs" />
+    <Compile Include="UI\UIPlayerIcon\Factory\UIPlayerIconFactory.cs" />
+    <Compile Include="UI\UIPlayerInfo\Component\UIPlayerInfoComponent.cs" />
+    <Compile Include="UI\UIPlayerInfo\Factory\UIPlayerInfoFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Component\UIRoomComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Factory\UIRoomFactory.cs" />
     <Compile Include="UI\UILogin\Component\UILoginComponent.cs" />
     <Compile Include="UI\UILogin\Event\InitSceneStart_CreateLoginUI.cs" />
     <Compile Include="UI\UILogin\Factory\UILoginFactory.cs" />
+    <Compile Include="UI\UIMain\Component\UIMainComponent.cs" />
+    <Compile Include="UI\UIMain\Factory\UIMainFactory.cs" />
+    <Compile Include="UI\UIShop\Component\UIItemComponent.cs" />
+    <Compile Include="UI\UIShop\Component\UIShopComponent.cs" />
+    <Compile Include="UI\UIShop\Factory\UIShopFactory.cs" />
+    <Compile Include="UI\UITask\Component\UITaskComponent.cs" />
+    <Compile Include="UI\UITask\Component\UITaskItemComponent.cs" />
+    <Compile Include="UI\UITask\Factory\UITaskFactory.cs" />
+    <Compile Include="UI\UIVIP\Component\UIVIPComponent.cs" />
+    <Compile Include="UI\UIVIP\Factory\UIVIPFactory.cs" />
+    <Compile Include="Utils\CommonUtil.cs" />
+    <Compile Include="Utils\FrameAnimation.cs" />
+    <Compile Include="Utils\GameUtil.cs" />
+    <Compile Include="Utils\HeartBeat.cs" />
+    <Compile Include="Utils\HttpReqUtil.cs" />
+    <Compile Include="Utils\HeadManager.cs" />
+    <Compile Include="Utils\VerifyRuleUtil.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Njmj\UI\Game\UIReady\Event\" />
+    <Folder Include="UI\UIMain\Event\" />
+    <Folder Include="UI\UIRoom\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Unity.csproj">
       <Project>{cf118143-7e37-744f-be45-3f55345fec40}</Project>
@@ -122,6 +312,9 @@
       <Project>{d1fdb199-0fb7-099d-3771-c6a942e4e326}</Project>
       <Name>Unity.Plugins</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Release\Assembly-CSharp-Hotfix.csproj.CoreCompileInputs.cache" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

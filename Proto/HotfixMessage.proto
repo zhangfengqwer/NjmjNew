@@ -1,3 +1,64 @@
+message C2R_PhoneLogin // IRequest
+{
+	required string	Phone	 = 1;	// 手机号
+	required string	Code = 2;		// 验证码
+	required string	Token = 3;
+	required string	MachineId = 4;
+	required string	ChannelName = 5;
+	required string	ClientVersion = 6;
+}
+
+message R2C_PhoneLogin // IResponse
+{
+	required string Address = 1;
+	required int64 	Key	    = 2;
+	required string Token	= 3;
+}
+
+message C2R_ThirdLogin // IRequest
+{
+	required string	Third_Id	 = 1;
+	required string	MachineId = 2;
+	required string	ChannelName = 3;
+	required string	ClientVersion = 4;
+	required string	Name = 5;
+	required string	Head = 6;
+}
+
+message R2C_ThirdLogin // IResponse
+{
+	required string Address = 1;
+	required int64 	Key	    = 2;
+}
+
+message C2R_ChangeAccount // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message R2C_ChangeAccount // IResponse
+{
+}
+
+message Actor_ForceOffline // IActorMessage
+{
+	required string Reason = 1;
+}
+
+message Actor_EmergencyNotice // IActorMessage
+{
+	required string Content = 1;
+}
+
+message C2R_SendSms // IRequest
+{
+	required string	Phone	 = 1;	// 手机号
+}
+
+message R2C_SendSms // IResponse
+{
+}
+
 message C2R_Login // IRequest
 {
 	required string	Account	 = 1;	// 帐号
@@ -10,6 +71,16 @@ message R2C_Login // IResponse
 	required int64 	Key	    = 2;
 }
 
+message C2R_Register // IRequest
+{
+	required string	Account	 = 1;	// 帐号
+	required string	Password = 2;	// 密码
+}
+
+message R2C_Register // IResponse
+{
+}
+
 message C2G_LoginGate // IRequest
 {
 	required int64 Key = 1;	// 帐号
@@ -18,6 +89,11 @@ message C2G_LoginGate // IRequest
 message G2C_LoginGate // IResponse
 {
 	required int64 PlayerId = 1;
+	required int64 Uid = 2;//用户ID
+	repeated ShopInfo ShopInfoList = 3;//商店商品
+	repeated TaskInfo TaskInfoList = 4;//任务列表
+	repeated Bag BagList = 5;//背包列表
+	required string ownIcon = 6;//玩家头像
 }
 
 message G2C_TestHotfixMessage // IMessage
@@ -37,13 +113,860 @@ message M2C_TestActorResponse // IActorResponse
 
 message PlayerInfo // IMessage
 {
+	required string Name = 1;//用户名称
+	required int64 GoldNum = 2;//金币数量
+	required int64 WingNum  = 3;//元宝数量
+	required string Icon = 4;//用户头像
+	required bool IsRealName = 5;//是否已经实名认证
+	required string Phone = 6; //
+	required int RestChangeNameCount = 7;//是否已经改过一次名字
+	required int TotalGameCount = 8;//总局数
+	required int WinGameCount = 9;//胜局数
+	required int PlayerSound = 10;//
+	required string VipTime = 11; //
+	required int HuaFeiNum  = 12;//话费数量
+	required string EmogiTime = 13;//
+	required int MaxHua = 14;//
+	required bool IsSign = 15;//
+}
+
+message PlayerIcon //IMessage
+{
+	required string Icon = 1;
+}
+
+message ShopInfo //IMessage
+{
+	required long Id = 1;//物品ID
+	required int ShopType = 2;//商品类型
+	required string Name = 3;//商品名称
+	required string Desc = 4;//商品介绍
+	required int Price = 5;//商品单价
+	required int CurrencyType = 6;//
+	required string Items = 7;
+	required string Icon = 8;
+	required int VipPrice = 9;
+}
+
+message GetItemInfo //IMessage
+{
+	required int ItemID = 1;
+	required int Count = 2;
+}
+
+message C2G_BuyItem //IRequest
+{
+	required long UId = 1;	
+	required GetItemInfo Info = 2;
+	required int CurrencyType = 3;
+	required int Cost = 4;
+}
+
+message Actor_UpDateData //IActorMessage
+{
+	required PlayerInfo playerInfo = 1;
+}
+
+message G2C_BuyItem //IResponse
+{
+	required long Count = 1;
+	required long Wealth = 2;
+	required int CurrencyType = 3;
+}
+
+message C2G_GetTaskReward //IRequest
+{
+	required long UId = 1;
+	required TaskInfo TaskInfo = 2;
+	required int GetType = 3;//获取奖励类型 1，任务 2，成就
+}
+
+message G2C_GetTaskReward //IResponse
+{
+
+}
+
+message C2G_Task //IRequest
+{
+	required long uid = 1;
+}
+
+message G2C_Task //IResponse
+{
+	repeated TaskInfo TaskProgressList = 1;
+}
+
+message C2G_Chengjiu //IRequest
+{
+	required long Uid = 1;
+}
+
+message G2C_Chengjiu //IResponse
+{
+	repeated TaskInfo ChengjiuList = 1;
+}
+
+message TaskInfo //IMessage
+{
+	required int Id = 1;//任务ID
+	required string TaskName = 2;//任务名称
+	required string Desc = 3;//任务描述
+	required int Reward = 4;//任务达到之后的奖励
+	required int Target = 5;//任务完成目标
+	required int Progress = 6;//当前进度
+	required bool IsComplete = 7;//是否已经完成
+	required bool IsGet = 8;//是否获取
 }
 
 message C2G_PlayerInfo // IRequest
 {
+	required long uid = 1;//用户ID
 }
 
 message G2C_PlayerInfo // IResponse
 {
-	repeated PlayerInfo PlayerInfos = 1;
+	required PlayerInfo PlayerInfo = 1;
+	required string OwnIcon = 2;
 }
+
+message Activity //IMessage
+{
+	required long UId = 1;
+	required int ActivityId = 2;
+	required string Title = 3;
+}
+
+message C2G_Activity //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_Activity //IResponse
+{
+	repeated Activity activityList = 1;
+}
+
+message G2C_UseItem //IResponse
+{
+	required int result = 1;//0,使用失败 1.使用成功
+	required string time = 2;
+	required string reward = 3;
+}
+
+message C2G_UseItem //IRequest
+{
+	required long UId = 1;
+	required int ItemId = 2;
+}
+
+message C2G_ChangeWealth //IRequest
+{
+	required long UId = 1;
+	required int propId = 2;
+	required int propNum = 3;
+}
+
+message G2C_ChangeWealth //IResponse
+{
+}
+
+message C2G_EnterRoom //IRequest
+{
+	required int RoomType = 1;
+}
+
+message G2C_EnterRoom //IResponse
+{
+	
+}
+
+#region Map-Client
+
+message GamerInfo //IMessage
+{
+ 	required int64 UserID = 1;
+    required bool IsReady = 2;
+    required int  SeatIndex = 3;
+    required PlayerInfo playerInfo = 4;
+}
+
+message G2M_PlayerEnterRoom //IRequest
+{
+	required int64 UserId = 1;
+	required int64 SessionId = 2;
+	required int64 PlayerId = 3;
+	required int RoomType = 4;
+}
+
+message M2G_PlayerEnterRoom //IResponse
+{
+	required int64 GameId = 1;
+}
+
+message Actor_GamerEnterRoom // IActorMessage
+{
+    repeated GamerInfo Gamers = 1;
+    required int RoomType = 2;
+}
+
+message Actor_GamerJionRoom // IActorMessage
+{
+    required GamerInfo Gamer = 1;
+}
+
+message Actor_GamerBuyYuanBao // IActorMessage
+{
+     required int goodsId = 1;
+}
+
+message G2M_PlayerExitRoom //IRequest
+{
+	required int64 UserId = 1;
+	required int64 GameId = 2;
+}
+
+message M2G_PlayerExitRoom //IResponse
+{
+	required int64 GameId = 1;
+}
+
+message C2G_UpdatePlayerInfo //IRequest
+{
+	required long Uid = 1;
+	required PlayerInfo playerInfo = 2;
+}
+
+message G2C_UpdatePlayerInfo //IResponse
+{
+	required PlayerInfo playerInfo = 1;
+}
+
+message C2G_UpdateChengjiu //IRequest
+{
+	required long UId = 1;
+	required TaskInfo TaskPrg = 2;
+}
+
+message G2C_UpdateChengjiu //IResponse
+{
+	required TaskInfo TaskPrg = 1;
+}
+
+message C2M_ActorGamerEnterRoom // IActorRequest
+{
+	required string Info = 1;
+}
+
+message M2C_ActorGamerGetTreasure // IActorResponse
+{
+	required int RestSeconds = 1;
+	required int Reward = 2;
+}	
+
+message C2M_ActorGamerGetTreasure // IActorRequest
+{
+	
+}
+
+message M2C_ActorGamerEnterRoom // IActorResponse
+{
+	required string Info = 1;
+}
+
+
+message Actor_GamerExitRoom // IActorMessage
+{
+    required long Uid = 1;
+    required bool IsFromClient = 2;
+}
+
+message Actor_GamerChangeGold // IActorMessage
+{
+    required long Uid = 1;
+    required int GoldAmount = 2;
+}
+
+message Actor_GamerCheat // IActorMessage
+{
+    required long Uid = 1;
+    required string Info = 2;
+    repeated MahjongInfo handCards = 3;
+}
+
+message Actor_GameFlow // IActorMessage
+{
+}
+
+message Actor_GamerContinueGame // IActorMessage
+{
+
+}
+
+message M2G_Actor_GamerExitRoom // IActorMessage
+{
+   
+}
+
+message Actor_GamerReady // IActorMessage
+{
+    required long Uid = 1;
+}
+
+message Actor_GamerReadyTimeOut // IActorMessage
+{
+    required long Uid = 1;
+    required string Message = 2;
+}
+
+message Actor_StartGame // IActorMessage
+{
+    repeated GamerData GamerDatas = 1;
+    required int restCount = 2;
+    required int RoomType = 3;
+}
+
+message GamerData //IMessage
+{
+ 	required int64 UserID = 1;
+    required int SeatIndex = 2;
+ 	repeated MahjongInfo handCards = 3;
+	repeated MahjongInfo faceCards = 4;
+	repeated MahjongInfo playCards = 5;
+	repeated MahjongInfo pengCards = 6;
+	repeated MahjongInfo gangCards = 7;
+	required bool IsBanker = 8;
+	required int OnlineSeconds = 9;
+	required PlayerInfo playerInfo = 10;
+}
+
+message Actor_ChangeTable // IActorMessage
+{
+    optional long Uid = 1;
+    required int RoomType = 2;
+}
+
+message Actor_GamerPlayCard // IActorMessage
+{
+    required int weight = 1;
+    optional long Uid = 2;
+    required int index = 3;
+}
+
+message Actor_GamerGrabCard // IActorMessage
+{
+ 	required int weight = 1;
+    required long Uid = 2;
+}
+
+message Actor_GamerBuHua // IActorMessage
+{
+    required int weight = 1;
+    required long Uid = 2;
+}
+
+message Actor_GamerOperation // IActorMessage
+{
+   	optional long Uid = 1;
+   	optional int OperationType = 2;
+   	optional int weight = 3;
+}
+
+message Actor_GamerCanOperation // IActorMessage
+{
+   	optional long Uid = 1;
+   	optional int OperationType = 2;
+}
+
+message Actor_GamerHuPai // IActorMessage
+{
+   required long Uid = 1;
+   required bool IsZiMo = 2;
+   repeated GamerData GamerDatas = 3;
+   required int YingHuaCount = 4;
+   required int RuanHuaCount = 5;
+   repeated int HuPaiTypes = 6;
+   optional long FangPaoUid = 7;
+   required int BixiaHuCount = 8;
+}
+
+message Actor_GamerReconnet // IActorMessage
+{
+   	repeated GamerData Gamers = 1;
+	required int RestCount = 2;
+	required int RoomType = 3;
+}
+
+message Actor_GamerTrusteeship // IActorMessage
+{
+   required long Uid = 1;
+}
+
+message Actor_GamerCancelTrusteeship // IActorMessage
+{
+   required long Uid = 1;
+}
+
+message Email //IMessage
+{
+	required string EmailTitle = 1;//邮件标题
+	required string Content = 2;//邮件内容
+	required string Date = 3;//邮件日期
+	required int State = 4 [default = 0];//邮件状态 1 已读，2 删除
+	required string RewardItem = 5;//奖励物品
+	required int EId = 6;//邮箱ID
+}
+
+message C2G_EmailOperate //IRequest
+{
+	required long Uid = 1;
+	required int EmailId = 2;
+	required int state = 3;
+}
+
+message G2C_EmailOperate //IResponse
+{
+
+}
+
+message C2G_GetItem //IRequest
+{
+	required long UId = 1;
+	repeated GetItemInfo InfoList = 2;
+	required long MailId = 3; 
+}
+
+message G2C_GetItem //IResponse
+{
+	required bool Result = 1;
+}
+
+message C2G_Email //IRequest
+{
+	required long Uid = 1;//用户ID
+}
+
+message G2C_Email //IResponse
+{
+	repeated Email EmailInfoList = 1;//邮件列表
+}
+
+message Bag //IMessage
+{
+	required int ItemId = 1;//物品ID
+	required int Count = 2;//拥有数量
+}
+
+message C2G_BagOperation //IRequest
+{
+	required long UId  = 1;//用户ID
+}
+
+message G2C_BagOperation //IResponse
+{
+	repeated Bag ItemList = 1;//物品列表
+}
+
+message C2G_UpdateEmail //IRequest
+{
+	required long EId = 1;
+	required bool IsRead = 2;
+}
+
+
+message G2C_UpdateEmail //IResponse
+{
+	required long EId = 1; 
+}
+
+message WealthRank // IMessage
+{
+	required string PlayerName = 1;
+	required long GoldNum = 2;
+	required long GoldTicket = 3;
+	required string Icon = 4;
+	required long UId = 5;
+}
+
+message GameRank // IMessage
+{
+	required string PlayerName = 1;
+	required int WinCount = 2;
+	required int TotalCount = 3;
+	required string Icon = 4;
+	required long UId = 5;
+}
+
+message C2G_Rank //IRequest
+{
+	required long Uid = 1;
+	required int RankType = 2 [default = 0];
+}
+
+message G2C_Rank //IResponse
+{
+	repeated WealthRank RankList = 1;
+	repeated GameRank GameRankList = 2;
+	required GameRank OwnGameRank = 3;
+	required WealthRank OwnWealthRank = 4;
+}
+
+message C2G_DailySign // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_DailySign // IResponse
+{
+	required string Reward = 1;
+	required string TomorrowReward = 2;
+}
+
+message C2G_DailySignState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_DailySignState // IResponse
+{
+	required bool TodayIsSign = 1;
+	required string TodayReward = 2;
+	required string TomorrowReward = 3;
+}
+
+message C2G_RealName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+	required string	IDNumber	 = 3;
+}
+
+message G2C_RealName // IResponse
+{
+}
+
+message C2G_BindPhone // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+	required string	Code = 3;		// 验证码
+}
+
+message G2C_BindPhone // IResponse
+{
+
+}
+
+message C2G_SendSms // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Phone	 = 2;	// 手机号
+}
+
+message G2C_SendSms // IResponse
+{
+}
+
+message C2G_ChangeName // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Name	 = 2;
+}
+
+message G2C_ChangeName // IResponse
+{
+}
+
+message C2G_UseHuaFei // IRequest
+{
+	required long	Uid	 = 1;
+	required int	HuaFei	 = 2;
+	required string	Phone	 = 3;
+}
+
+message G2C_UseHuaFei // IResponse
+{
+}
+
+message C2G_UseHuaFeiState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_UseHuaFeiState // IResponse
+{
+	required int	HuaFei_1_RestCount	 = 1;
+	required int	HuaFei_5_RestCount	 = 2;
+	required int	HuaFei_10_RestCount	 = 3;
+	required int	HuaFei_20_RestCount	 = 4;
+}
+
+message C2G_SetPlayerSound // IRequest
+{
+	required long	Uid	 = 1;
+	required int	PlayerSound	 = 2;
+}
+
+message G2C_SetPlayerSound // IResponse
+{
+}
+
+message C2G_UseLaBa // IRequest
+{
+	required long	Uid	 = 1;
+	required string	Content	 = 2;
+}
+
+message G2C_UseLaBa // IResponse
+{
+}
+
+message Actor_LaBa // IActorMessage
+{
+    required string LaBaContent = 1;
+}
+
+message Actor_OldUser // IActorMessage
+{
+	required string OldAccount = 1;
+}
+
+message Actor_Chat // IActorMessage
+{
+	required int ChatType = 1;
+	required string Value = 2;
+	required long UId = 3;
+}
+
+message C2G_UseZhuanPan // IRequest
+{
+	required long Uid = 1;
+	required int State = 2;
+	required bool IsState = 3;
+}
+
+message G2C_UseZhuanPan // IResponse
+{
+	required string	reward	 = 1;
+	required int	itemId	 = 2;
+}
+
+message C2G_GetZhuanPanState // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_GetZhuanPanState // IResponse
+{
+	required int	ZhuanPanCount	 = 1;
+	required int	LuckyValue	 = 2;
+}
+
+message C2G_Share // IRequest
+{
+	required long	Uid	 = 1;
+}
+
+message G2C_Share // IResponse
+{
+}
+
+message C2G_HeartBeat //IRequest
+{
+}
+
+message G2C_HeartBeat // IResponse
+{
+}
+
+//端午活动
+message TreasureInfo // IMessage
+{
+	required int TreasureId = 1;
+	required string Reward = 2;
+	required int Price = 3;
+	required int LimitCount = 4;
+	required string Name = 5;
+}
+
+message C2G_DuanwuTreasure // IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_DuanwuTreasure // IResponse
+{
+	repeated TreasureInfo TreasureInfoList = 1;
+}
+
+message DuanwuActivity //IMessage
+{
+	required string Desc = 1;
+	required int Reward = 2;
+	required int TaskId = 3;
+	required int CurProgress = 4;
+	required int Target = 5;
+	required bool IsComplete = 6;
+	required bool IsGet = 7;
+}
+
+message C2G_DuanwuActivity // IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_DuanwuActivity // IResponse
+{
+	repeated DuanwuActivity DuanwuActivityList = 1;
+}
+
+message C2G_RefreshDuanwuActivity //IRequest
+{
+	required long UId = 1;
+	required long GoldCost = 2;
+	required string ActivityType = 3;
+}
+
+message G2C_RefreshDuanwuActivity //IResponse
+{
+	repeated DuanwuActivity DuanwuActivityList = 1;
+	required DuanwuData DuanwuData = 2;
+	required long GoldNum = 3;
+	required bool isOpen = 4;
+}
+
+message C2G_BuyDuanwuTreasure // IRequest
+{
+	required long UId = 1;
+	required int TreasureId = 2;
+	required string Reward = 3;
+	required int Price = 4;
+	required int LimitCount = 5;
+}
+
+message G2C_BuyDuanwuTreasure // IResponse
+{
+	required DuanwuTreasureLogInfo Info = 1;
+	required int ZongZiCount = 2;
+}
+
+message DuanwuData // IMessage
+{
+	required int ZongziCount = 1;
+	required string ActivityType = 2;
+	required int RefreshCount = 3;
+	required string StartTime = 4;
+	required string EndTime = 5;
+	required int CompleteCount = 6;
+}
+
+message C2G_DuanwuDataBase // IRequest
+{
+	required long UId = 1;
+	required string ActivityType = 2;
+	required int ZongZiCount = 3;
+	required int Type = 4;//更新还是请求数据
+}
+
+message G2C_DuanwuDataBase // IResponse
+{
+	required DuanwuData DuanwuData = 1;
+}
+
+message C2G_UpdateServer // IRequest
+{
+}
+
+message G2C_UpdateServer // IResponse
+{
+}
+
+message C2G_GetDuanwuReward //IRequest
+{
+	required long UId = 1;
+	required int TaskId = 2;
+	required int Reward = 3;
+}
+
+message G2C_GetDuanwuReward //IResponse
+{
+	required int ZongziCount = 1;
+	required bool IsGet = 2;
+	required bool IsComplete = 3;
+}
+
+message DuanwuTreasureLogInfo //IMessage
+{
+	required int TreasureId = 1;
+	required int buyCount = 2;
+}
+
+message C2G_GetDuanwuTreasureInfo //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_GetDuanwuTreasureInfo //IResponse
+{
+	repeated DuanwuTreasureLogInfo Treasures = 1;
+}
+
+message C2G_Tip //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_Tip //IResponse
+{
+	required bool IsTaskComplete = 1;
+	required bool IsChengjiuComplete = 2;
+	required bool IsInActivity = 3;
+	required bool IsZhuanpan = 4;
+	required bool IsEmail = 5;
+	required int TaskCompleteCount = 6;
+	required int ChengjiuCompleteCount = 7;
+	required int ActivityCompleteCount = 8;
+	required int ZhuanpanCount = 9;
+	required int EmailCount = 10;
+}
+
+
+message C2G_GM // IRequest
+{
+	required long UId = 1;
+	required int Type = 2;// 1,刷新所有配置表 2,发送邮件 3,解散房间 4,增减黑名单 5,生成报表 6,查看用户信息 7,强制离线 8,修改用户信息 9,查看游戏内信息 10,通知
+	required string Title = 3;
+	required string Content = 4;
+	required string Reward = 5;
+	required string IP = 6;
+    required string Date = 7;
+    required string AdAddress = 8;
+    required string EndTime = 9;
+    required string Reason = 10;
+    required string Name = 11;
+    required string CreateBaobiaoTime = 12;
+    required int RestChangeNameCount = 13;
+    required string Prop = 14;
+    required string Icon = 15;
+}
+
+//房间信息
+message RoomInfo //IMessage
+{
+	required int NewRoomCount = 1;
+	required int NewTotalPlayerInGameCount = 2;
+	required int JingRoomCount = 3;
+	required int JingTotalPlayerInGameCount = 4;
+}
+
+message G2C_GM // IResponse
+{
+	required PlayerInfo Info = 1;
+	required string RegisterTime = 2;
+	required string LastOnlineTime = 3;
+	required string Ip = 4;
+	required long UId = 5;
+	required string Channel = 6;
+	required RoomInfo Room = 7;
+	required string LogData = 8;
+}
+#endregion

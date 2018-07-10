@@ -5,7 +5,7 @@ namespace ETHotfix
 {
 	[BsonIgnoreExtraElements]
 	public abstract class Component : Object, IDisposable, IComponentSerialize
-	{
+    {
 		[BsonIgnore]
 		public long InstanceId { get; protected set; }
 

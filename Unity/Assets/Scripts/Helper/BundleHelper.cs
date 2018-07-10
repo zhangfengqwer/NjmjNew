@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,12 +9,16 @@ namespace ETModel
 	{
 		public static async Task DownloadBundle()
 		{
-			Game.EventSystem.Run(EventIdType.LoadingBegin);
-			await StartDownLoadResources();
-			Game.EventSystem.Run(EventIdType.LoadingFinish);
-		}
-		
-		public static async Task StartDownLoadResources()
+		    Game.EventSystem.Run(EventIdType.LoadingBegin);
+		    Log.Debug("等待之前");
+		    await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
+		    PlatformHelper.SetIsFormal(NetConfig.getInstance().isFormal ? "0" : "1");
+		    Log.Debug("等待之后");
+            await StartDownLoadResources();
+            Game.EventSystem.Run(EventIdType.LoadRes);
+        }
+
+        public static async Task StartDownLoadResources()
 		{
 			if (Define.IsAsync)
 			{
@@ -21,17 +26,17 @@ namespace ETModel
 				{
 					using (BundleDownloaderComponent bundleDownloaderComponent = Game.Scene.AddComponent<BundleDownloaderComponent>())
 					{
-						await bundleDownloaderComponent.StartAsync();
-					}
+					  
+                        await bundleDownloaderComponent.StartAsync();
+                    }
 					Game.Scene.GetComponent<ResourcesComponent>().LoadOneBundle("StreamingAssets");
 					ResourcesComponent.AssetBundleManifestObject = (AssetBundleManifest)Game.Scene.GetComponent<ResourcesComponent>().GetAsset("StreamingAssets", "AssetBundleManifest");
-				}
+                }
 				catch (Exception e)
 				{
 					Log.Error(e);
 				}
-
 			}
 		}
-	}
+    }
 }

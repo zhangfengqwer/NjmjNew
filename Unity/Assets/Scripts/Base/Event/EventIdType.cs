@@ -22,5 +22,14 @@
 		public const string LoadingFinish = "LoadingFinish";
 		public const string TestHotfixSubscribMonoEvent = "TestHotfixSubscribMonoEvent";
 		public const string MaxModelEvent = "MaxModelEvent";
-	}
+
+        #region njmj
+	    public const string LoadRes = "LoadRes";
+	    public const string GamerPlayCard = "GamerPlayCard";
+	    public const string WeChatLogin = "WeChatLogin";
+	    public const string WeChatShare = "WeChatShare";
+	    public const string ChangeAccount = "ChangeAccount";
+        #endregion
+
+    }
 }

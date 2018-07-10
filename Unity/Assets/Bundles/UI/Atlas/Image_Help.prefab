@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1391107824656756}
+  m_IsPrefabParent: 1
+--- !u!1 &1391107824656756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4240635669861390}
+  - component: {fileID: 114229965548892968}
+  m_Layer: 0
+  m_Name: Image_Help
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4240635669861390
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1391107824656756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.92733234, y: -0.77636975, z: 99.90276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114229965548892968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1391107824656756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: btn_guanyu
+    gameObject: {fileID: 21300000, guid: 947422e141d7a404c87f33c346252b34, type: 3}
+  - key: btn_guanyu_pressed
+    gameObject: {fileID: 21300000, guid: 681c685cee3d4cc4e8903b6602c1a026, type: 3}
+  - key: btn_jiazhangjianhu
+    gameObject: {fileID: 21300000, guid: c4542e07dc52b8b43ad0e355f2ce6cc5, type: 3}
+  - key: btn_kefu
+    gameObject: {fileID: 21300000, guid: b4d437a803f83664896c86c8f6580a39, type: 3}
+  - key: btn_kefu_pressed
+    gameObject: {fileID: 21300000, guid: 49d5316ef1c073e48a17d3030479e3a5, type: 3}
+  - key: btn_yxgz
+    gameObject: {fileID: 21300000, guid: 1f1c5de327d248b44a0a857b2db15739, type: 3}
+  - key: btn_yxgz_pressed
+    gameObject: {fileID: 21300000, guid: c7bc800b70484e940b23939aa86a5533, type: 3}

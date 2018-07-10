@@ -146,5 +146,10 @@ namespace ETModel
 
 			return tcs.Task;
 		}
+
+	    public Task<List<PlayerBaseInfo>> GetPlayerBaseInfoJson(string messageCollectionName, string messageJson)
+	    {
+	        throw new NotImplementedException();
+	    }
 	}
 }

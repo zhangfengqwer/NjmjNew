@@ -11,7 +11,7 @@ namespace ETModel
 		
 		private AService Service;
 
-		private readonly Dictionary<long, Session> sessions = new Dictionary<long, Session>();
+		public readonly Dictionary<long, Session> sessions = new Dictionary<long, Session>();
 
 		public IMessagePacker MessagePacker { get; set; }
 
