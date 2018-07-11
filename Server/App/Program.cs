@@ -132,7 +132,7 @@ namespace App
 
                         //GateGlobalComponent
 					    Game.Scene.AddComponent<RankDataComponent>();
-					    Game.Scene.AddComponent<HttpComponent>();
+//					    Game.Scene.AddComponent<HttpComponent>();
                         Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
 

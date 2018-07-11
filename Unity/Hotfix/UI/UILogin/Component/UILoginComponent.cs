@@ -425,15 +425,20 @@ namespace ETHotfix
                 UINetLoadingComponent.showNetLoading();
 
 
-                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                // IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
 
                 name = name.Replace("'","*");
-
-                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
+                Log.Info($"{session.RemoteAddress}");
+                // R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
+                R2C_Login r2CLogin = (R2C_Login)await sessionWrap.Call(new C2R_Login()
+                {
+                    Account = "111111",
+                    Password = "111111"
+                });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
@@ -443,7 +448,7 @@ namespace ETHotfix
                     ToastScript.createToast(r2CLogin.Message);
                     return;
                 }
-
+               
                 UINetLoadingComponent.showNetLoading();
 
                // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);

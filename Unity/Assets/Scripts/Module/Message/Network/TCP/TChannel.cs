@@ -103,7 +103,9 @@ namespace ETModel
             {
                 throw new Exception("TChannel已经被Dispose, 不能发送消息");
             }
+
             ushort size = (ushort)buffers.Select(b => b.Length).Sum();
+            Log.Info("发送消息的长度：" + size);
             byte[] sizeBuffer = BitConverter.GetBytes(size);
             this.sendBuffer.Write(sizeBuffer, 0, sizeBuffer.Length);
             foreach (byte[] buffer in buffers)
@@ -257,8 +259,11 @@ namespace ETModel
         {
             if (!this.isConnected)
             {
+                Log.Info("没有连接");
                 return;
             }
+
+            Log.Info("1111");
 
             this.isSending = true;
 
@@ -267,7 +272,7 @@ namespace ETModel
             {
                 sendSize = (int)this.sendBuffer.Length;
             }
-
+            Log.Info("222");
             this.SendAsync(this.sendBuffer.First, this.sendBuffer.FirstIndex, sendSize);
         }
 

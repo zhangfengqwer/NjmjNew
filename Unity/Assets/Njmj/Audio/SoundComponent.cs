@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ETModel
 {
@@ -216,11 +217,20 @@ namespace ETModel
         //加载声音
         private async Task<SoundData> LoadSound(string soundName)
         {
-            ResourcesComponent resourcesComponent = Game.Scene.GetComponent<ResourcesComponent>();
+            // ResourcesComponent resourcesComponent = Game.Scene.GetComponent<ResourcesComponent>();
             if (!abSounds.ContainsKey(soundName) || abSounds[soundName] == null)
             {
 //                await resourcesComponent.LoadBundleAsync($"Sounds{soundName}.unity3d");
-                abSounds.Add(soundName, GameObject.Instantiate((GameObject)resourcesComponent.GetAsset($"Sounds{soundName}.unity3d", $"Sounds{soundName}")).GetComponent<SoundData>());
+                AudioClip audioClip = Resources.Load<AudioClip>(soundName);
+
+                GameObject gameObject = new GameObject();
+                gameObject.transform.SetParent(root);
+                AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+                SoundData soundData = gameObject.AddComponent<SoundData>();
+                audioSource.clip = audioClip;
+                soundData.audio = audioSource;
+                abSounds.Add(soundName, soundData);
+                // abSounds.Add(soundName, GameObject.Instantiate((GameObject)resourcesComponent.GetAsset($"Sounds{soundName}.unity3d", $"Sounds{soundName}")).GetComponent<SoundData>());
 //                resourcesComponent.UnloadBundle($"Sounds{soundName}.unity3d");
             }
             return abSounds[soundName];
