@@ -995,4 +995,15 @@ message G2C_GetWeekReward //IResponse
 {
 
 }
+
+message C2G_IsCanRecharge //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_IsCanRecharge //IResponse
+{
+
+}
+
 #endregion
