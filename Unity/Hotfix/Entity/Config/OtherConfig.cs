@@ -24,66 +24,79 @@ namespace Hotfix
         
         public void init(string jsonData)
         {
-            JsonData jd = JsonMapper.ToObject(jsonData);
-
-            // 分享开关
+            try
             {
-                string data = jd["shieldShare"].ToString();
-                List<string> list = new List<string>();
-                CommonUtil.splitStr(data, list,';');
-                for (int i = 0; i < list.Count; i++)
+                JsonData jd = JsonMapper.ToObject(jsonData);
+
+                // 分享开关
                 {
-                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                    string data = jd["shieldShare"].ToString();
+                    List<string> list = new List<string>();
+                    CommonUtil.splitStr(data, list, ';');
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        OtherData.isShiedShare = true;
-                        break;
+                        if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                        {
+                            OtherData.isShiedShare = true;
+                            break;
+                        }
                     }
+                }
+
+                // 实名开关
+                {
+                    string data = jd["shieldRealName"].ToString();
+                    List<string> list = new List<string>();
+                    CommonUtil.splitStr(data, list, ';');
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                        {
+                            OtherData.isShiedRealName = true;
+                            break;
+                        }
+                    }
+                }
+
+                // 绑定手机开关
+                {
+                    string data = jd["shieldBindPhone"].ToString();
+                    List<string> list = new List<string>();
+                    CommonUtil.splitStr(data, list, ';');
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                        {
+                            OtherData.isShiedBindPhone = true;
+                            break;
+                        }
+                    }
+                }
+
+                // 手机登录开关
+                {
+                    string data = jd["shieldPhoneLogin"].ToString();
+                    List<string> list = new List<string>();
+                    CommonUtil.splitStr(data, list, ';');
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                        {
+                            OtherData.isShiedPhoneLogin = true;
+                            break;
+                        }
+                    }
+                }
+
+                // 分享地址
+                {
+                    string data = jd["ShareUrl"].ToString();
+                    OtherData.ShareUrl = data;
                 }
             }
-
-            // 实名开关
+            catch (Exception ex)
             {
-                string data = jd["shieldRealName"].ToString();
-                List<string> list = new List<string>();
-                CommonUtil.splitStr(data, list, ';');
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
-                    {
-                        OtherData.isShiedRealName = true;
-                        break;
-                    }
-                }
-            }
-
-            // 绑定手机开关
-            {
-                string data = jd["shieldBindPhone"].ToString();
-                List<string> list = new List<string>();
-                CommonUtil.splitStr(data, list, ';');
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
-                    {
-                        OtherData.isShiedBindPhone = true;
-                        break;
-                    }
-                }
-            }
-
-            // 手机登录开关
-            {
-                string data = jd["shieldPhoneLogin"].ToString();
-                List<string> list = new List<string>();
-                CommonUtil.splitStr(data, list, ';');
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
-                    {
-                        OtherData.isShiedPhoneLogin = true;
-                        break;
-                    }
-                }
+                Log.Debug(ex.ToString());
             }
         }
     }
