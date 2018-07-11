@@ -15,6 +15,8 @@ namespace Hotfix
         public static bool isShiedBindPhone = false;
         public static bool isShiedPhoneLogin = false;
 
+        public static string ShareUrl = "";
+
         public static bool getIsShiedShare()
         {
             return isShiedShare;
