@@ -325,7 +325,7 @@ namespace ETHotfix
         private async void GetWeekReward()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_GetWeekReward g2cWR = (G2C_GetWeekReward)await Game.Scene.GetComponent<SessionWrapComponent>()
+            G2C_GetWeekReward g2cWR = (G2C_GetWeekReward)await Game.Scene.GetComponent<SessionComponent>()
                 .Session.Call(new C2G_GetWeekReward { UId = PlayerInfoComponent.Instance.uid, type = curType });
             UINetLoadingComponent.closeNetLoading();
 
@@ -372,7 +372,7 @@ namespace ETHotfix
         private async void WeekRankReq()
         {
             UINetLoadingComponent.showNetLoading();
-            g2cWeek = (G2C_WeekRank)await Game.Scene.GetComponent<SessionWrapComponent>()
+            g2cWeek = (G2C_WeekRank)await Game.Scene.GetComponent<SessionComponent>()
                 .Session.Call(new C2G_WeekRank { UId = PlayerInfoComponent.Instance.uid});
             UINetLoadingComponent.closeNetLoading();
         }
@@ -382,7 +382,7 @@ namespace ETHotfix
         /// </summary>
         private async void SetRedTip()
         {
-            G2C_Tip g2c = (G2C_Tip)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_Tip
+            G2C_Tip g2c = (G2C_Tip)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_Tip
             {
                 UId = PlayerInfoComponent.Instance.uid
             });
@@ -542,7 +542,7 @@ namespace ETHotfix
 		public async void GetRankInfo()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionWrapComponent>()
+            G2C_Rank g2cRank = (G2C_Rank)await Game.Scene.GetComponent<SessionComponent>()
                 .Session.Call(new C2G_Rank { Uid = PlayerInfoComponent.Instance.uid,RankType = 0 });
             UINetLoadingComponent.closeNetLoading();
 
@@ -724,7 +724,7 @@ namespace ETHotfix
                     UINetLoadingComponent.closeNetLoading();
                     return;
                 }
-                G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(
+                G2C_EnterRoom enterRoom = (G2C_EnterRoom)await Game.Scene.GetComponent<SessionComponent>().Session.Call(
                                                                                                                             new C2G_EnterRoom() { RoomType = i });
                 UINetLoadingComponent.closeNetLoading();
 
@@ -744,7 +744,7 @@ namespace ETHotfix
         {
             long uid = PlayerInfoComponent.Instance.uid;
 
-            G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+            G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo) await SessionComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
 
             if (g2CPlayerInfo == null)
             {
