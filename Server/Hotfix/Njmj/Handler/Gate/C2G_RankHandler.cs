@@ -16,20 +16,27 @@ namespace ETHotfix
                 List<PlayerBaseInfo> mys = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.Uid}}}");
                 if (mys.Count > 0)
                 {
+                    List<Log_Rank> ranks = await proxyComponent.QueryJson<Log_Rank>($"{{UId:{message.Uid}}}");
                     response.RankList = new List<WealthRank>();
                     response.GameRankList = new List<GameRank>();
                     WealthRank wealthRank = new WealthRank();
                     GameRank gameRank = new GameRank();
                     wealthRank.Icon = mys[0].Icon;
                     wealthRank.PlayerName = mys[0].Name;
-                    wealthRank.GoldNum = mys[0].GoldNum;
+                    if (ranks.Count > 0)
+                    {
+                        wealthRank.GoldNum = ranks[0].Wealth;
+                        gameRank.WinCount = ranks[0].WinGameCount;
+                    }
+                    else
+                    {
+                        wealthRank.GoldNum = 0;
+                        gameRank.WinCount = 0;
+                    }
                     wealthRank.UId = mys[0].Id;
-
                     gameRank.PlayerName = mys[0].Name;
                     gameRank.Icon = mys[0].Icon;
-                    gameRank.TotalCount = mys[0].TotalGameCount;
                     gameRank.UId = mys[0].Id;
-
 
                     if (message.RankType == 1)
                     {
@@ -53,7 +60,7 @@ namespace ETHotfix
                 {
                     Log.Error($"玩家{message.Uid}playerbaseinfo为空");
                 }
-
+                
                 reply(response);
             }
             catch(Exception e)
@@ -64,25 +71,23 @@ namespace ETHotfix
 
         protected void GetWealthRank(G2C_Rank response, WealthRank wealthRank)
         {
-            if (Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData().Count <= 0)
+            for(int i = 0;i< Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData().Count; ++i)
             {
-                response.RankList.Add(wealthRank);
-            }
-            else
-            {
-                response.RankList = Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData();
+                if(Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData()[i].GoldNum > 0)
+                {
+                    response.RankList.Add(Game.Scene.GetComponent<RankDataComponent>().GetWealthRankData()[i]);
+                }
             }
         }
 
         protected void GetGameRank(G2C_Rank response,GameRank gameRank)
         {
-            if (Game.Scene.GetComponent<RankDataComponent>().GetGameRankData().Count <= 0)
+            for (int i = 0; i < Game.Scene.GetComponent<RankDataComponent>().GetGameRankData().Count; ++i)
             {
-                response.GameRankList.Add(gameRank);
-            }
-            else
-            {
-                response.GameRankList = Game.Scene.GetComponent<RankDataComponent>().GetGameRankData();
+                if (Game.Scene.GetComponent<RankDataComponent>().GetGameRankData()[i].WinCount > 0)
+                {
+                    response.GameRankList.Add(Game.Scene.GetComponent<RankDataComponent>().GetGameRankData()[i]);
+                }
             }
         }
     }

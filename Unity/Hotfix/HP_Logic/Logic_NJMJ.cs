@@ -1108,7 +1108,7 @@ namespace ETHotfix
 
             // 海底捞月
             {
-                if ((huPaiNeedData.restMahjongCount <= (8 * 4)) && huPaiNeedData.isSelfZhuaPai)
+                if ((huPaiNeedData.restMahjongCount <= (8 * 2)) && huPaiNeedData.isSelfZhuaPai)
                 {
                     type_list.Add(HuPaiType.HaiDiLaoYue);
                 }

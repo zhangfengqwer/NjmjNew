@@ -40,6 +40,7 @@ namespace ETHotfix
         private Button DuihuanBtn;
         private GameObject PlayerFrame;
         private Text VipTimeTxt;
+        private Text WinGameTxt;
 
         public async void Awake()
         {
@@ -51,6 +52,7 @@ namespace ETHotfix
             noBindPhoneTxt = rc.Get<GameObject>("NoBindPhoneTxt").GetComponent<Text>();
             HuafeiNumTxt = rc.Get<GameObject>("HuafeiNumTxt").GetComponent<Text>();
             AlPlayTxt = rc.Get<GameObject>("AlPlayTxt").GetComponent<Text>();
+            WinGameTxt  = rc.Get<GameObject>("WinGameTxt").GetComponent<Text>();
             SuccessRateTxt = rc.Get<GameObject>("SuccessRateTxt").GetComponent<Text>();
             MaxSuccessTxt = rc.Get<GameObject>("MaxSuccessTxt").GetComponent<Text>();
             VipTimeTxt = rc.Get<GameObject>("VipTimeTxt").GetComponent<Text>();
@@ -127,6 +129,7 @@ namespace ETHotfix
             else
                 SuccessRateTxt.text = $"胜       率：{winRate}%";
             MaxSuccessTxt.text = $"最大赢取：{playerInfo.MaxHua}";
+            WinGameTxt.text = $"获胜局数：{ playerInfo.WinGameCount}";
 
             if (playerInfo.IsRealName)
                 realNameTxt.text = "已实名";

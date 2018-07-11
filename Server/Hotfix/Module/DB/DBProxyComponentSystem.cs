@@ -164,29 +164,36 @@ namespace ETHotfix
 	        return list;
 	    }
 
-	    /// <summary>
-	    /// todo 
-	    /// </summary>
-	    /// <param name="self"></param>
-	    /// <returns></returns>
-        public static async Task<List<PlayerBaseInfo>> QueryJsonPlayerInfo(this DBProxyComponent self)
-	    {
-             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-             FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-             List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(30).ToListAsync();
-             return components;
-	    }
+        //刷新周排行榜 1,周财富榜，2，周战绩榜
+        public static async Task<List<Log_Rank>> QueryJsonRank(this DBProxyComponent self, int type)
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            FilterDefinition<Log_Rank> filterDefinition = new JsonFilterDefinition<Log_Rank>($"{{}}");
+            List<Log_Rank> components = new List<Log_Rank>();
+            if (type == 1)
+            {
+                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.Wealth).Limit(50).ToListAsync();
+            }
+            else if (type == 2)
+            {
+                components = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(50).ToListAsync();
+            }
+            return components;
+        }
 
-        /// <summary>
-        /// todo 
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
 	    public static async Task<List<PlayerBaseInfo>> QueryJsonGamePlayer(this DBProxyComponent self)
-	    {
+        {
 	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
 	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(30).ToListAsync();
+	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(50).ToListAsync();
+	        return components;
+        }
+
+	    public static async Task<List<PlayerBaseInfo>> QueryJsonPlayerInfo(this DBProxyComponent self)
+        {
+	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
+	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(50).ToListAsync();
 	        return components;
         }
 
@@ -237,13 +244,13 @@ namespace ETHotfix
         }
 
         public static async Task DeleteAll<T>(this DBProxyComponent self)
-	    {
-	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-	        var filter = Builders<ComponentWithId>.Filter.Empty;
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            var filter = Builders<ComponentWithId>.Filter.Empty;
             await dbComponent.GetCollection(typeof(T).Name).DeleteManyAsync(filter);
         }
 
-	    public static long QueryJsonCount<T>(this DBProxyComponent self, string json)
+        public static long QueryJsonCount<T>(this DBProxyComponent self, string json)
 	    {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
 	        FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>(json);

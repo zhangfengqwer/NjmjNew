@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace ETModel
 {
@@ -8,5 +10,6 @@ namespace ETModel
 	public class DBProxyComponent: Component
 	{
 		public IPEndPoint dbAddress;
+
 	}
 }

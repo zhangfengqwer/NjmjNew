@@ -49,6 +49,7 @@ namespace ETHotfix
         private Text RankTxt;
         private Image Icon;
         private GameObject RankImg;
+        private Button RewardBtn;
         #endregion
 
         private List<WealthRank> wealthRankList = new List<WealthRank>();
@@ -91,6 +92,7 @@ namespace ETHotfix
             RankTxt = rc.Get<GameObject>("RankTxt").GetComponent<Text>();
             Icon = rc.Get<GameObject>("Icon").GetComponent<Image>();
             RankImg = rc.Get<GameObject>("RankImg");
+            RewardBtn = rc.Get<GameObject>("RewardBtn").GetComponent<Button>();
 
             // 转盘
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
@@ -191,7 +193,8 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
+                /*ToastScript.createToast("暂未开放：比赛场");*/
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
             });
 
             // 休闲场返回按钮
@@ -243,18 +246,30 @@ namespace ETHotfix
             
             Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
             {
+                curType = 1;
                 ShowGoldRank();
                 SetMyRank();
+                RewardBtn.gameObject.SetActive(g2cWeek.IsGetGoldRank);
             });
 
             Rank.transform.Find("Btn_game").GetComponent<Button>().onClick.Add(() =>
             {
+                curType = 2;
                 ShowGameRank();
                 SetMyGameRank();
+                RewardBtn.gameObject.SetActive(g2cWeek.IsGetGameRank);
+            });
+
+            //可以领取周排行榜奖励
+            RewardBtn.onClick.Add(() =>
+            {
+                GetWeekReward();
             });
 
             //PlayerPrefs.DeleteAll();
             ShowNotice();
+
+            WeekRankReq();
 
             //向服务器发送消息请求玩家信息，然后设置玩家基本信息
             await SetPlayerInfo();
@@ -298,6 +313,32 @@ namespace ETHotfix
             }
         }
 
+        private int curType = 2;
+        private async void GetWeekReward()
+        {
+            UINetLoadingComponent.showNetLoading();
+            G2C_GetWeekReward g2c = (G2C_GetWeekReward)await Game.Scene.GetComponent<SessionComponent>()
+                .Session.Call(new C2G_GetWeekReward { UId = PlayerInfoComponent.Instance.uid, type = curType });
+            UINetLoadingComponent.closeNetLoading();
+            if(g2c.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(g2c.Message);
+                return;
+            }
+            RewardBtn.gameObject.SetActive(false);
+            
+            if(curType == 1)
+            {
+                g2cWeek.IsGetGoldRank = false;
+            }
+            else if(curType == 2)
+            {
+                g2cWeek.IsGetGameRank = false;
+            }
+
+            ToastScript.createToast("领取成功");
+        }
+
         private void ShowNotice()
         {
             for (int i = 0; i < NoticeConfig.getInstance().getDataList().Count; i++)
@@ -324,6 +365,15 @@ namespace ETHotfix
                     break;
                 }
             }
+        }
+
+        private G2C_WeekRank g2cWeek;
+        private async void WeekRankReq()
+        {
+            UINetLoadingComponent.showNetLoading();
+            g2cWeek = (G2C_WeekRank)await Game.Scene.GetComponent<SessionComponent>()
+                .Session.Call(new C2G_WeekRank { UId = PlayerInfoComponent.Instance.uid});
+            UINetLoadingComponent.closeNetLoading();
         }
 
         /// <summary>
@@ -504,10 +554,10 @@ namespace ETHotfix
 
             ownRank = GetWealthIndext(PlayerInfoComponent.Instance.uid);
             ownGame = GetGameIndext(PlayerInfoComponent.Instance.uid);
-            ShowGoldRank();
+            ShowGameRank();
             ownWealthRank = g2cRank.OwnWealthRank;
             ownGameRank = g2cRank.OwnGameRank;
-            SetMyRank();
+            SetMyGameRank();
         }
 
         /// <summary>
@@ -551,6 +601,7 @@ namespace ETHotfix
         /// <returns></returns>
         private int GetGameIndext(long uid)
         {
+            if (gameRankList.Count <= 0) return 0;
             for (int i = 0; i < gameRankList.Count; ++i)
             {
                 if (gameRankList[i].UId == uid)
@@ -560,7 +611,7 @@ namespace ETHotfix
                 }
                    
             }
-            return 30;
+            return 50;
         }
 
         /// <summary>
@@ -570,6 +621,7 @@ namespace ETHotfix
         /// <returns></returns>
         private int GetWealthIndext(long uid)
         {
+            if (wealthRankList.Count <= 0) return 0;
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (wealthRankList[i].UId == uid)
@@ -578,7 +630,7 @@ namespace ETHotfix
                     return i;
                 }
             }
-            return 30;
+            return 50;
         }
 
         /// <summary>
@@ -592,10 +644,7 @@ namespace ETHotfix
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                if (IsDelayWealthRank() && (wealthRankList.Count + 1) <= 30)
-                    str = (wealthRankList.Count + 1).ToString();
-                else
-                    str = "未上榜";
+                str = "未上榜";
             }
             else
             {
@@ -616,32 +665,12 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownWealthRank.PlayerName;
+            Log.Info(ownWealthRank.GoldNum + "Gold");
             GoldTxt.text = new StringBuilder().Append("金币:")
-                                              .Append(PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum)
+                                              .Append(ownWealthRank.GoldNum)
                                               .ToString();
+            RewardBtn.gameObject.SetActive(g2cWeek.IsGetGoldRank);
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
-        }
-
-        /// <summary>
-        /// 判断是否因为新建号排行榜数据还没有刷新
-        /// </summary>
-        /// <returns></returns>
-        private bool IsDelayWealthRank()
-        {
-            if (wealthRankList.Count <= 30)
-                return true;
-            return false;
-        }
-
-        /// <summary>
-        /// 判断是否因为新建号排行榜数据还没有刷新
-        /// </summary>
-        /// <returns></returns>
-        private bool IsDelayGameRank()
-        {
-            if (gameRankList.Count <= 30)
-                return true;
-            return false;
         }
 
         /// <summary>
@@ -654,10 +683,7 @@ namespace ETHotfix
             {
                 RankTxt.gameObject.SetActive(true);
                 RankImg.SetActive(false);
-                if (IsDelayWealthRank() && (gameRankList.Count + 1) <= 30)
-                    str = (gameRankList.Count + 1).ToString();
-                else
-                    str = "未上榜";
+                str = "未上榜";
             }
             else
             {
@@ -679,8 +705,9 @@ namespace ETHotfix
             RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
             GoldTxt.text = new StringBuilder().Append("获胜局数:")
-                                              .Append(PlayerInfoComponent.Instance.GetPlayerInfo().WinGameCount)
+                                              .Append(ownGameRank.WinCount)
                                               .ToString();
+            RewardBtn.gameObject.SetActive(g2cWeek.IsGetGameRank);
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
 

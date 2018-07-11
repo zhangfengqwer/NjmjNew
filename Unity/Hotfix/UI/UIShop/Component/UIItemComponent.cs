@@ -34,7 +34,7 @@ namespace ETHotfix
             priceTxt = rc.Get<GameObject>("PriceTxt").GetComponent<Text>();
             buyBtn = rc.Get<GameObject>("BuyBtn").GetComponent<Button>();
 
-            buyBtn.onClick.Add(() =>
+            buyBtn.onClick.Add(async () =>
             {
                 if(shopInfo.CurrencyType == 2)
                 {
@@ -58,6 +58,23 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIShop);
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRealName);
                         return;
+                    }
+
+                    {
+                        UINetLoadingComponent.showNetLoading();
+                        G2C_IsCanRecharge g2cIsCanRecharge = (G2C_IsCanRecharge)await SessionComponent.Instance.Session.Call(new C2G_IsCanRecharge { UId = PlayerInfoComponent.Instance.uid });
+                        UINetLoadingComponent.closeNetLoading();
+
+                        if (g2cIsCanRecharge.Error != ErrorCode.ERR_Success)
+                        {
+                            ToastScript.createToast(g2cIsCanRecharge.Message);
+
+                            return;
+                        }
+                        else
+                        {
+                            ToastScript.createToast("可以充值");
+                        }
                     }
 
                     //接购买SDK

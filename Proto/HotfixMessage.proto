@@ -128,6 +128,8 @@ message PlayerInfo // IMessage
 	required string EmogiTime = 13;//
 	required int MaxHua = 14;//
 	required bool IsSign = 15;//
+	required bool IsGetGoldRank = 16;//是否领取周财富榜上榜奖励
+	required bool IsGetGameRank = 17;//是否领取周战绩帮奖励
 }
 
 message PlayerIcon //IMessage
@@ -969,4 +971,39 @@ message G2C_GM // IResponse
 	required RoomInfo Room = 7;
 	required string LogData = 8;
 }
+
+message C2G_WeekRank //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_WeekRank //IResponse
+{
+	required bool IsGetGameRank = 1;
+	required bool IsGetGoldRank = 2;
+	required int WealthIndex = 3;
+	required int GameIndex = 4;
+}
+
+message C2G_GetWeekReward //IRequest
+{
+	required long UId = 1;
+	required int type = 2;
+}
+
+message G2C_GetWeekReward //IResponse
+{
+
+}
+
+message C2G_IsCanRecharge //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_IsCanRecharge //IResponse
+{
+
+}
+
 #endregion

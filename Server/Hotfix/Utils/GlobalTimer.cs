@@ -58,6 +58,17 @@ namespace ETHotfix
             }
             #endregion
 
+            #region 每周一刷新周排行榜数据
+            if (CommonUtil.IsMonday())
+            {
+                //周一零点刷新数据
+                if ((hour == 0) && (min == 0) && (sec == 10))
+                {
+                    DBCommonUtil.AccountWeekData();
+                }
+            }
+            #endregion
+
             //// 每日报表
             //if (sec == 0)
             ////if ((min == 10) && (sec == 0))

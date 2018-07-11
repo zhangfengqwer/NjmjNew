@@ -20,7 +20,6 @@ namespace ETModel
         public int ZhuanPanCount { get; set; }
         public int LuckyValue { get; set; }
         public int MaxHua { get; set; }
-
         public PlayerBaseInfo() : base()
         {
             GoldNum = 30000;

@@ -154,5 +154,11 @@ namespace ETHotfix
 		 public const ushort C2G_GM = 10150;
 		 public const ushort RoomInfo = 10151;
 		 public const ushort G2C_GM = 10152;
+		 public const ushort C2G_WeekRank = 10153;
+		 public const ushort G2C_WeekRank = 10154;
+		 public const ushort C2G_GetWeekReward = 10155;
+		 public const ushort G2C_GetWeekReward = 10156;
+		 public const ushort C2G_IsCanRecharge = 10157;
+		 public const ushort G2C_IsCanRecharge = 10158;
 	}
 }
