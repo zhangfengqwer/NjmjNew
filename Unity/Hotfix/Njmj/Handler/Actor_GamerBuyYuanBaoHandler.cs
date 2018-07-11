@@ -7,12 +7,12 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerBuyYuanBaoHandler : AMHandler<Actor_GamerBuyYuanBao>
     {
-        protected override async void Run(Session session, Actor_GamerBuyYuanBao message)
+        protected override async void Run(ETModel.Session session, Actor_GamerBuyYuanBao message)
         {
             try
             {
                 ToastScript.createToast("支付成功");
-                G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = PlayerInfoComponent.Instance.uid });
+                G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = PlayerInfoComponent.Instance.uid });
 
                 if (g2CPlayerInfo == null)
                 {

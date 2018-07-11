@@ -7,11 +7,11 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_ChatHandler : AMHandler<Actor_Chat>
     {
-        protected override void Run(Session session, Actor_Chat message)
+        protected override void Run(ETModel.Session session, Actor_Chat message)
         {
             try
             {
-                Log.Info("收到表情：" );
+                Log.Info("" + "收到表情：" );
 
 //                ToastScript.createToast(message.Value);
 

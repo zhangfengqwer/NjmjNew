@@ -71,7 +71,7 @@ namespace ETHotfix
         private async void DeleteMail()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionComponent.Instance
                 .Session.Call(new C2G_EmailOperate
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
@@ -95,7 +95,7 @@ namespace ETHotfix
             }
             Log.Debug(JsonHelper.ToJson(itemList));
             UINetLoadingComponent.showNetLoading();
-            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+            G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionComponent.Instance
                 .Session.Call(new C2G_EmailOperate
                 {
                     Uid = PlayerInfoComponent.Instance.uid,

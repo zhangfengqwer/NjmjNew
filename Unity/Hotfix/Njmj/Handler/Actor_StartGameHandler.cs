@@ -12,7 +12,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_StartGameHandler: AMHandler<Actor_StartGame>
     {
-        protected override async void Run(Session session, Actor_StartGame message)
+        protected override async void Run(ETModel.Session session, Actor_StartGame message)
         {
             StartGame(message,false);
         }

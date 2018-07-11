@@ -39,9 +39,9 @@ namespace ETHotfix
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)
 	                {
-	                    ActorProxyComponent proxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
-	                    ActorProxy actorProxy = proxyComponent.Get(gamer.PlayerID);
-	                    actorProxy.Send(new M2G_Actor_GamerExitRoom());
+	                    ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+	                    ActorMessageSender actorMessageSender = actorMessageSenderComponent.Get(gamer.PlayerID);
+	                    actorMessageSender.Send(new M2G_Actor_GamerExitRoom());
 
 	                    //消息广播给其他人
 	                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });

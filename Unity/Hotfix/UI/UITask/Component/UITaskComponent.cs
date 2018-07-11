@@ -45,7 +45,7 @@ namespace ETHotfix
         private async void GetTaskInfoList()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_Task g2cTask = (G2C_Task)await SessionWrapComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
+            G2C_Task g2cTask = (G2C_Task)await SessionComponent.Instance.Session.Call(new C2G_Task { uid = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
             taskProgressList = g2cTask.TaskProgressList;
             progressTxt.text = new StringBuilder().Append("<color=#E8DBAAFF>完成数量:</color>")

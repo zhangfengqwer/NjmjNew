@@ -12,22 +12,24 @@ namespace ETHotfix
         public static void BroadCast(this UserComponent self, IActorMessage message)
         {
             User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
             foreach (var _user in users)
             {
-                ActorProxy actorProxy = _user.GetComponent<UnitGateComponent>().GetActorProxy();
-                actorProxy.Send(message);
+                UnitGateComponent unitGateComponent = _user.GetComponent<UnitGateComponent>();
+                actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
             }
         }
 
         public static void BroadCastToSingle(this UserComponent self, IActorMessage message,long uid)
         {
             User[] users = Game.Scene.GetComponent<UserComponent>().GetAll();
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
             foreach (var _user in users)
             {
                 if (uid == _user.UserID)
                 {
-                    ActorProxy actorProxy = _user.GetComponent<UnitGateComponent>().GetActorProxy();
-                    actorProxy.Send(message);
+                    UnitGateComponent unitGateComponent = _user.GetComponent<UnitGateComponent>();
+                    actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
                 }
             }
         }

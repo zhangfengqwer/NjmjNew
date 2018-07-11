@@ -416,20 +416,20 @@ namespace ETHotfix
             return Game.Scene.GetComponent<UIComponent>().Create(type);
         }
 
-        //static public Sprite GetByte(string url)
-        //{
-        //    byte[] bytes = System.Text.Encoding.ASCII.GetBytes(url);
-        //    int width = 100;
-        //    int height = 100;
-        //    Texture2D texture = new Texture2D(width, height);
-        //    texture.LoadRawTextureData(bytes);
-        //    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        //    return sprite;
-        //}
+        static public Sprite GetByte(string url)
+        {
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(url);
+            int width = 100;
+            int height = 100;
+            Texture2D texture = new Texture2D(width, height);
+            texture.LoadRawTextureData(bytes);
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            return sprite;
+        }
 
         static async public Task<Sprite> GetTextureFromUrl(string url)
         {
-            Log.Debug("url" + url);
+            // Log.Debug("url" + url);
             TaskCompletionSource<Sprite> tcs = new TaskCompletionSource<Sprite>();
             using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
             {

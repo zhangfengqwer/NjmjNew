@@ -7,89 +7,144 @@ using System.Threading.Tasks;
 
 namespace ETModel
 {
-	public sealed class TService: AService
-	{
-		private TcpListener acceptor;
+    public sealed class TService : AService
+    {
+        private readonly Dictionary<long, TChannel> idChannels = new Dictionary<long, TChannel>();
 
-		private readonly Dictionary<long, TChannel> idChannels = new Dictionary<long, TChannel>();
-		
-		/// <summary>
-		/// 即可做client也可做server
-		/// </summary>
-		public TService(IPEndPoint ipEndPoint)
-		{
-			this.acceptor = new TcpListener(ipEndPoint);
-			this.acceptor.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-			this.acceptor.Server.NoDelay = true;
-			this.acceptor.Start();
-		}
+        private readonly SocketAsyncEventArgs innArgs = new SocketAsyncEventArgs();
+        private Socket acceptor;
 
-		public TService()
-		{
-		}
+        /// <summary>
+        /// 即可做client也可做server
+        /// </summary>
+        public TService(IPEndPoint ipEndPoint)
+        {
+            this.acceptor = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.acceptor.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            this.innArgs.Completed += this.OnComplete;
 
-		public override void Dispose()
-		{
-			if (this.acceptor == null)
-			{
-				return;
-			}
+            this.acceptor.Bind(ipEndPoint);
+            this.acceptor.Listen(1000);
+        }
 
-			foreach (long id in this.idChannels.Keys.ToArray())
-			{
-				TChannel channel = this.idChannels[id];
-				channel.Dispose();
-			}
-			this.acceptor.Stop();
-			this.acceptor = null;
-		}
-		
-		public override AChannel GetChannel(long id)
-		{
-			TChannel channel = null;
-			this.idChannels.TryGetValue(id, out channel);
-			return channel;
-		}
+        public TService()
+        {
+        }
 
-		public override async Task<AChannel> AcceptChannel()
-		{
-			if (this.acceptor == null)
-			{
-				throw new Exception("service construct must use host and port param");
-			}
-			TcpClient tcpClient = await this.acceptor.AcceptTcpClientAsync();
-			TChannel channel = new TChannel(tcpClient, this);
-			this.idChannels[channel.Id] = channel;
-			return channel;
-		}
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
 
-		public override AChannel ConnectChannel(IPEndPoint ipEndPoint)
-		{
-			TcpClient tcpClient = new TcpClient();
-			TChannel channel = new TChannel(tcpClient, ipEndPoint, this);
-			this.idChannels[channel.Id] = channel;
+            base.Dispose();
 
-			return channel;
-		}
+            foreach (long id in this.idChannels.Keys.ToArray())
+            {
+                TChannel channel = this.idChannels[id];
+                channel.Dispose();
+            }
+            this.acceptor?.Close();
+            this.acceptor = null;
+            this.innArgs.Dispose();
+        }
 
+        public override void Start()
+        {
+            if (this.acceptor != null)
+            {
+                this.AcceptAsync();
+            }
+        }
 
-		public override void Remove(long id)
-		{
-			TChannel channel;
-			if (!this.idChannels.TryGetValue(id, out channel))
-			{
-				return;
-			}
-			if (channel == null)
-			{
-				return;
-			}
-			this.idChannels.Remove(id);
-			channel.Dispose();
-		}
+        private void OnComplete(object sender, SocketAsyncEventArgs e)
+        {
+            switch (e.LastOperation)
+            {
+                case SocketAsyncOperation.Accept:
+                    OneThreadSynchronizationContext.Instance.Post(this.OnAcceptComplete, e);
+                    break;
+                default:
+                    throw new Exception($"socket error: {e.LastOperation}");
+            }
+        }
 
-		public override void Update()
-		{
-		}
-	}
+        public void AcceptAsync()
+        {
+            this.innArgs.AcceptSocket = null;
+            if (this.acceptor.AcceptAsync(this.innArgs))
+            {
+                return;
+            }
+            OnAcceptComplete(this.innArgs);
+        }
+
+        private void OnAcceptComplete(object o)
+        {
+            if (this.acceptor == null)
+            {
+                return;
+            }
+            SocketAsyncEventArgs e = (SocketAsyncEventArgs)o;
+
+            if (e.SocketError != SocketError.Success)
+            {
+                Log.Error($"accept error {e.SocketError}");
+                return;
+            }
+            TChannel channel = new TChannel(e.AcceptSocket, this);
+            this.idChannels[channel.Id] = channel;
+
+            try
+            {
+                this.OnAccept(channel);
+            }
+            catch (Exception exception)
+            {
+                Log.Error(exception);
+            }
+
+            if (this.acceptor == null)
+            {
+                return;
+            }
+
+            this.AcceptAsync();
+        }
+
+        public override AChannel GetChannel(long id)
+        {
+            TChannel channel = null;
+            this.idChannels.TryGetValue(id, out channel);
+            return channel;
+        }
+
+        public override AChannel ConnectChannel(IPEndPoint ipEndPoint)
+        {
+            TChannel channel = new TChannel(ipEndPoint, this);
+            this.idChannels[channel.Id] = channel;
+
+            return channel;
+        }
+
+        public override void Remove(long id)
+        {
+            TChannel channel;
+            if (!this.idChannels.TryGetValue(id, out channel))
+            {
+                return;
+            }
+            if (channel == null)
+            {
+                return;
+            }
+            this.idChannels.Remove(id);
+            channel.Dispose();
+        }
+
+        public override void Update()
+        {
+        }
+    }
 }

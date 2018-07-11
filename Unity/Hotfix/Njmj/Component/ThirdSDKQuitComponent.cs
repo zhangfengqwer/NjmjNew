@@ -5,32 +5,33 @@ using UnityEngine;
 
 namespace ETHotfix
 {
+
+    [ObjectSystem]
+    public class ThirdSDKQuitComponentAwakeSystem : AwakeSystem<ThirdSDKQuitComponent>
+    {
+        public override void Awake(ThirdSDKQuitComponent self)
+        {
+            self.Awake();
+        }
+    }
+
+    [ObjectSystem]
+    public class ThirdSDKQuitComponentUpdateSystem : UpdateSystem<ThirdSDKQuitComponent>
+    {
+        public override void Update(ThirdSDKQuitComponent self)
+        {
+            self.Update();
+        }
+    }
+
     public class ThirdSDKQuitComponent : Component
     {
-        [ObjectSystem]
-        public class ThirdSDKQuitComponentAwakeSystem : AwakeSystem<ThirdSDKQuitComponent>
-        {
-            public override void Awake(ThirdSDKQuitComponent self)
-            {
-                self.Awake();
-            }
-        }
-
-        [ObjectSystem]
-        public class ThirdSDKQuitComponentUpdateSystem : UpdateSystem<ThirdSDKQuitComponent>
-        {
-            public override void Update(ThirdSDKQuitComponent self)
-            {
-                self.Update();
-            }
-        }
-
-        private void Awake()
+        public void Awake()
         {
             
         }
 
-        private void Update()
+        public void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {

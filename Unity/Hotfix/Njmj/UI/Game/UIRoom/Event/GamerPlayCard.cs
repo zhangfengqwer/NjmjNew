@@ -27,7 +27,7 @@ namespace ETHotfix
                         return;
                     }
                     gamerComponent.IsPlayed = true;
-                    SessionWrapComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
+                    SessionComponent.Instance.Session.Send(new Actor_GamerPlayCard() { weight = weight, index = index });
                 }
             }
             catch (Exception e)

@@ -10,7 +10,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_EmergencyNoticeHandler : AMHandler<Actor_EmergencyNotice>
     {
-        protected override async void Run(Session session, Actor_EmergencyNotice message)
+        protected override void Run(ETModel.Session session, Actor_EmergencyNotice message)
         {
             try
             {

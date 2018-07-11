@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ETModel
 {
 	[ObjectSystem]
-	public class SessionAwakeSystem : AwakeSystem<Session, NetworkComponent, AChannel>
+	public class SessionAwakeSystem : AwakeSystem<Session, AChannel>
 	{
-		public override void Awake(Session self, NetworkComponent a, AChannel b)
+		public override void Awake(Session self, AChannel b)
 		{
-			self.Awake(a, b);
-		}
-	}
-
-	[ObjectSystem]
-	public class SessionStartSystem : StartSystem<Session>
-	{
-		public override void Start(Session self)
-		{
-			self.Start();
+			self.Awake(b);
 		}
 	}
 
@@ -29,6 +21,7 @@ namespace ETModel
 	{
 		private static int RpcId { get; set; }
 		private AChannel channel;
+		public int Error;
 
 		private readonly Dictionary<int, Action<IResponse>> requestCallback = new Dictionary<int, Action<IResponse>>();
 		private readonly List<byte[]> byteses = new List<byte[]>() { new byte[1], new byte[0], new byte[0]};
@@ -41,17 +34,21 @@ namespace ETModel
 			}
 		}
 
-		public void Awake(NetworkComponent net, AChannel c)
+		public void Awake(AChannel aChannel)
 		{
-			this.channel = c;
+			this.Error = 0;
+			this.channel = aChannel;
 			this.requestCallback.Clear();
+			long id = this.Id;
+			channel.ErrorCallback += (c, e) =>
+			{
+				this.Error = e;
+				this.Network.Remove(id); 
+			};
+			channel.ReadCallback += this.OnRead;
+			
+			this.channel.Start();
 		}
-
-		public void Start()
-		{
-			this.StartRecv();
-		}
-
 		public override void Dispose()
 		{
 			if (this.IsDisposed)
@@ -62,12 +59,13 @@ namespace ETModel
 			long id = this.Id;
 
 			base.Dispose();
-
+			
 			foreach (Action<IResponse> action in this.requestCallback.Values.ToArray())
 			{
-				action.Invoke(new ResponseMessage { Error = ErrorCode.ERR_SocketDisconnected });
+				action.Invoke(new ResponseMessage { Error = this.Error });
 			}
-
+			
+			this.Error = 0;
 			this.channel.Dispose();
 			this.Network.Remove(id);
 			this.requestCallback.Clear();
@@ -89,54 +87,23 @@ namespace ETModel
 			}
 		}
 
-		private async void StartRecv()
+		public void OnRead(Packet packet)
 		{
-			while (true)
+			try
 			{
-				if (this.IsDisposed)
-				{
-					return;
-				}
-
-				Packet packet;
-				try
-				{
-					packet = await this.channel.Recv();
-					
-					if (this.IsDisposed)
-					{
-						return;
-					}
-				}
-				catch (Exception e)
-				{
-					Log.Error(e);
-					continue;
-				}
-				
-				try
-				{
-					this.Run(packet);
-				}
-				catch (Exception e)
-				{
-					Log.Error(e);
-				}
+				this.Run(packet);
+			}
+			catch (Exception e)
+			{
+				Log.Error(e);
 			}
 		}
 
 		private void Run(Packet packet)
 		{
-			if (packet.Length < Packet.MinSize)
-			{
-				Log.Error($"message error length < {Packet.MinSize}, ip: {this.RemoteAddress}");
-				this.Network.Remove(this.Id);
-				return;
-			}
-
-			byte flag = packet.Flag();
-			ushort opcode = packet.Opcode();
-
+			byte flag = packet.Flag;
+			ushort opcode = packet.Opcode;
+			
 #if !SERVER
 			if (OpcodeHelper.IsClientHotfixMessage(opcode))
 			{
@@ -151,12 +118,24 @@ namespace ETModel
 				this.Network.MessageDispatcher.Dispatch(this, packet);
 				return;
 			}
-			
-			OpcodeTypeComponent opcodeTypeComponent = this.Network.Entity.GetComponent<OpcodeTypeComponent>();
-			Type responseType = opcodeTypeComponent.GetType(opcode);
-			object message = this.Network.MessagePacker.DeserializeFrom(responseType, packet.Bytes, Packet.Index, packet.Length - Packet.Index);
-			//Log.Debug($"recv: {JsonHelper.ToJson(message)}");
 
+			object message;
+			try
+			{
+				OpcodeTypeComponent opcodeTypeComponent = this.Network.Entity.GetComponent<OpcodeTypeComponent>();
+				Type responseType = opcodeTypeComponent.GetType(opcode);
+				message = this.Network.MessagePacker.DeserializeFrom(responseType, packet.Bytes, packet.Offset, packet.Length);
+				//Log.Debug($"recv: {JsonHelper.ToJson(message)}");
+			}
+			catch (Exception e)
+			{
+				// 出现任何消息解析异常都要断开Session，防止客户端伪造消息
+				Log.Error($"opcode: {opcode} {this.Network.Count} {e} ");
+				this.Error = ErrorCode.ERR_PacketParserError;
+				this.Network.Remove(this.Id);
+				return;
+			}
+				
 			IResponse response = message as IResponse;
 			if (response == null)
 			{
@@ -181,7 +160,7 @@ namespace ETModel
 			{
 				try
 				{
-					if (response.Error > ErrorCode.ERR_Exception)
+					if (ErrorCode.IsRpcNeedThrowException(response.Error))
 					{
 						throw new RpcException(response.Error, response.Message);
 					}
@@ -208,7 +187,7 @@ namespace ETModel
 			{
 				try
 				{
-					if (response.Error > ErrorCode.ERR_Exception)
+					if (ErrorCode.IsRpcNeedThrowException(response.Error))
 					{
 						throw new RpcException(response.Error, response.Message);
 					}
@@ -267,25 +246,21 @@ namespace ETModel
 			if (this.Network.AppType == AppType.AllServer)
 			{
 				Session session = this.Network.Entity.GetComponent<NetInnerComponent>().Get(this.RemoteAddress);
-				this.pkt.Length = 0;
-				ushort index = 0;
-				foreach (var byts in byteses)
-				{
-					Array.Copy(byts, 0, this.pkt.Bytes, index, byts.Length);
-					index += (ushort)byts.Length;
-				}
 
-				this.pkt.Length = index;
-				session.Run(this.pkt);
+				Packet packet = ((TChannel)this.channel).parser.packet;
+
+				Array.Copy(bytes, 0, packet.Bytes, 0, bytes.Length);
+
+				packet.Offset = 0;
+				packet.Length = (ushort)bytes.Length;
+				packet.Flag = flag;
+				packet.Opcode = opcode;
+				session.Run(packet);
 				return;
 			}
 #endif
 
 			channel.Send(this.byteses);
 		}
-
-#if SERVER
-		private Packet pkt = new Packet(ushort.MaxValue);
-#endif
 	}
 }

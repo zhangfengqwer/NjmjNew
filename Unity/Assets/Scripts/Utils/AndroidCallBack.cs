@@ -174,14 +174,15 @@ public class AndroidCallBack : MonoBehaviour {
 
     public void Back2Login(string data)
     {
-//        // 优先使用热更新的代码
-//        if (ILRuntimeUtil.getInstance().checkDllClassHasFunc("AndroidCallBack_hotfix", "Back2Login"))
-//        {
-//            ILRuntimeUtil.getInstance().getAppDomain().Invoke("HotFix_Project.AndroidCallBack_hotfix", "Back2Login", null, data);
-//            return;
-//        }
-//
-//        SetScript.Instance.OnClickChangeAccount();
+        //        // 优先使用热更新的代码
+        //        if (ILRuntimeUtil.getInstance().checkDllClassHasFunc("AndroidCallBack_hotfix", "Back2Login"))
+        //        {
+        //            ILRuntimeUtil.getInstance().getAppDomain().Invoke("HotFix_Project.AndroidCallBack_hotfix", "Back2Login", null, data);
+        //            return;
+        //        }
+        //
+        //        SetScript.Instance.OnClickChangeAccount();
+        Game.EventSystem.Run(EventIdType.ChangeAccount);
     }
 
     public void OnIOSPaySuccess(string data)

@@ -11,7 +11,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerChangeGoldHandler : AMHandler<Actor_GamerChangeGold>
     {
-        protected override async void Run(Session session, Actor_GamerChangeGold message)
+        protected override async void Run(ETModel.Session session, Actor_GamerChangeGold message)
         {
             try
             {

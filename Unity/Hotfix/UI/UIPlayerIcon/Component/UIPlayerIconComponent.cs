@@ -100,7 +100,7 @@ namespace ETHotfix
             Game.Scene.GetComponent<PlayerInfoComponent>().GetPlayerInfo().Icon = curIcon.sprite.name.ToString();
 
             UINetLoadingComponent.showNetLoading();
-            G2C_UpdatePlayerInfo g2CPlayerInfo = (G2C_UpdatePlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo()
+            G2C_UpdatePlayerInfo g2CPlayerInfo = (G2C_UpdatePlayerInfo)await SessionComponent.Instance.Session.Call(new C2G_UpdatePlayerInfo()
             {
                 Uid = PlayerInfoComponent.Instance.uid,
                 playerInfo = PlayerInfoComponent.Instance.GetPlayerInfo()

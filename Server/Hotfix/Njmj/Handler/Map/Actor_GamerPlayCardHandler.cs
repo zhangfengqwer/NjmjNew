@@ -18,7 +18,7 @@ namespace ETHotfix
 	    {
 	        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	        Room room = roomComponent.Get(gamer.RoomID);
-	        if (room == null) return;
+	        if (room == null || room.IsGameOver) return;
 
             try
             {
@@ -28,6 +28,7 @@ namespace ETHotfix
 	                m_weight = (Consts.MahjongWeight) message.weight
 	            };
 
+                //加锁
 	            if (room.IsPlayingCard)
 	            {
 	                Log.Warning("当前正在出牌，不能再出牌了");
@@ -108,7 +109,7 @@ namespace ETHotfix
                             _gamer.IsCanPeng = true;
                             isNeedWait = true;
                             canOperation.OperationType = 0;
-	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
+	                        //Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 
@@ -121,7 +122,7 @@ namespace ETHotfix
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
-	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
+	                        //Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 

@@ -227,17 +227,17 @@ namespace ETHotfix
             GoldNumTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum.ToString();
         }
 
-        public async void onClickChangeAccount()
+        public static async void onClickChangeAccount()
         {
-            SessionWrap sessionWrap = null;
+            Session sessionWrap = null;
             try
             {
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
                 IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
-                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                sessionWrap = new SessionWrap(session);
-                R2C_ChangeAccount r2CData = (R2C_ChangeAccount)await SessionWrapComponent.Instance.Session.Call(new C2R_ChangeAccount() { Uid = PlayerInfoComponent.Instance.uid });
+                ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
+                R2C_ChangeAccount r2CData = (R2C_ChangeAccount)await SessionComponent.Instance.Session.Call(new C2R_ChangeAccount() { Uid = PlayerInfoComponent.Instance.uid });
                 sessionWrap.Dispose();
 
                 PlayerPrefs.SetString("Phone", "");
@@ -245,6 +245,8 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
+                //给android发送切换账号回调
+                PlatformHelper.setLogoutCallback("", "", "");
 
                 HeartBeat.getInstance().stopHeartBeat();
             }

@@ -104,6 +104,7 @@
     <Compile Include="Base\Helper\Log.cs" />
     <Compile Include="Base\Object\ComponentWithId.cs" />
     <Compile Include="Base\Object\IChangeSystem.cs" />
+    <Compile Include="Base\Object\IComponentSerialize.cs" />
     <Compile Include="Base\Object\IDestroySystem.cs" />
     <Compile Include="Base\Object\IStartSystem.cs" />
     <Compile Include="Entity\Config\ChatConfig.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Entity\Config\RoomConfig.cs" />
     <Compile Include="Entity\Config\ZhuanPanConfig.cs" />
     <Compile Include="Entity\Config\PropConfig.cs" />
+    <Compile Include="Module\Message\Session.cs" />
+    <Compile Include="Module\Message\SessionComponent.cs" />
     <Compile Include="Njmj\Component\ThirdSDKQuitComponent.cs" />
     <Compile Include="Njmj\Component\GamerComponent.cs" />
     <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
@@ -176,8 +179,6 @@
     <Compile Include="Base\Object\Object.cs" />
     <Compile Include="Base\Object\EventSystem.cs" />
     <Compile Include="Base\Object\ObjectPool.cs" />
-    <Compile Include="Module\Message\SessionWrapComponent.cs" />
-    <Compile Include="Module\Message\SessionWrap.cs" />
     <Compile Include="Module\UI\IUIFactory.cs" />
     <Compile Include="Module\Message\MessageDispatherComponent.cs" />
     <Compile Include="Module\Message\OpcodeTypeComponent.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="UI\UIChengjiu\Component\UIChengjiuComponent.cs" />
     <Compile Include="UI\UIChengjiu\Component\UIChengjiuItemComponent.cs" />
     <Compile Include="UI\UIChengjiu\Factory\UIChengjiuFactory.cs" />
+    <Compile Include="UI\UIPlayerInfo\Event\ChangeAccount.cs" />
     <Compile Include="UI\UISet\Component\UISetComponent.cs" />
     <Compile Include="UI\UISet\Factory\UISetFactory.cs" />
     <Compile Include="UI\UIAccountBind\Component\UIAccountBindComponent.cs" />

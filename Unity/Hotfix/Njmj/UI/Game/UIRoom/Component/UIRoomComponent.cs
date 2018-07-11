@@ -118,7 +118,7 @@ namespace ETHotfix
             trustship.SetActive(false);
             trustship.GetComponent<Button>().onClick.Add(() =>
             {
-                SessionWrapComponent.Instance.Session.Send(new Actor_GamerCancelTrusteeship());
+                SessionComponent.Instance.Session.Send(new Actor_GamerCancelTrusteeship());
                 trustship.SetActive(false);
             });
             #endregion
@@ -141,7 +141,7 @@ namespace ETHotfix
 
             sendButton.onClick.Add(() =>
             {
-                SessionWrapComponent.Instance.Session.Call(new Actor_GamerCheat() { Info = this.cheatInput.text });
+                SessionComponent.Instance.Session.Call(new Actor_GamerCheat() { Info = this.cheatInput.text });
                 sendButton.gameObject.SetActive(false);
                 cheatInput.gameObject.SetActive(false);
             });
@@ -213,14 +213,14 @@ namespace ETHotfix
 
         private async void OnReady()
         {
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerReady() { Uid = PlayerInfoComponent.Instance.uid });
+            SessionComponent.Instance.Session.Send(new Actor_GamerReady() { Uid = PlayerInfoComponent.Instance.uid });
         }
 
         private async void OnExit()
         {
             try
             {
-                SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
                 if (ISGaming)
                 {
                     Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
@@ -414,7 +414,7 @@ namespace ETHotfix
                     break;
             }
 
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerOperation() { OperationType = i });
+            SessionComponent.Instance.Session.Send(new Actor_GamerOperation() { OperationType = i });
 
             this.ClosePropmtBtn();
         }
@@ -562,7 +562,7 @@ namespace ETHotfix
         private async void OnGetTreasure()
         {
             Log.Debug("领取宝箱");
-            M2C_ActorGamerGetTreasure gamerGetTreasure = (M2C_ActorGamerGetTreasure)await SessionWrapComponent.Instance.Session.Call(new C2M_ActorGamerGetTreasure());
+            M2C_ActorGamerGetTreasure gamerGetTreasure = (M2C_ActorGamerGetTreasure)await SessionComponent.Instance.Session.Call(new C2M_ActorGamerGetTreasure());
             if (gamerGetTreasure.Error == ErrorCode.ERR_Success)
             {
                 SetTreasureTime(gamerGetTreasure.RestSeconds);

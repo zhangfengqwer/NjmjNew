@@ -94,7 +94,7 @@ namespace ETHotfix
         private async void RequestUseLaBa()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_UseLaBa g2cUseLaBa = (G2C_UseLaBa)await SessionWrapComponent.Instance.Session.Call(new C2G_UseLaBa { Uid = PlayerInfoComponent.Instance.uid , Content = InputField_content.text});
+            G2C_UseLaBa g2cUseLaBa = (G2C_UseLaBa)await SessionComponent.Instance.Session.Call(new C2G_UseLaBa { Uid = PlayerInfoComponent.Instance.uid , Content = InputField_content.text});
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cUseLaBa.Error != ErrorCode.ERR_Success)
@@ -124,7 +124,7 @@ namespace ETHotfix
             UINetLoadingComponent.showNetLoading();
             IPEndPoint manager = UILoginComponent.ToIPEndPointWithYuMing(10000);
 
-            Session managerSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(manager);
+            ETModel.Session managerSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(manager);
 
             M2C_Reload g2cUpdateServer = (M2C_Reload)await managerSession.Call(new C2M_Reload() {AppType = AppType.Map});
             UINetLoadingComponent.closeNetLoading();

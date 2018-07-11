@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ETModel;
 
-namespace ETModel
+namespace ETHotfix
 {
 	[ObjectSystem]
 	public class MessageDispatherComponentAwakeSystem : AwakeSystem<MessageDispatherComponent>
@@ -28,50 +29,42 @@ namespace ETModel
 	{
 		public static void Load(this MessageDispatherComponent self)
 		{
-		    try
-		    {
-		        self.Handlers.Clear();
+			self.Handlers.Clear();
 
-		        AppType appType = Game.Scene.GetComponent<StartConfigComponent>().StartConfig.AppType;
+			AppType appType = Game.Scene.GetComponent<StartConfigComponent>().StartConfig.AppType;
 
-		        Type[] types = DllHelper.GetMonoTypes();
+			List<Type> types = Game.EventSystem.GetTypes();
 
-		        foreach (Type type in types)
-		        {
-		            object[] attrs = type.GetCustomAttributes(typeof(MessageHandlerAttribute), false);
-		            if (attrs.Length == 0)
-		            {
-		                continue;
-		            }
+			foreach (Type type in types)
+			{
+				object[] attrs = type.GetCustomAttributes(typeof(MessageHandlerAttribute), false);
+				if (attrs.Length == 0)
+				{
+					continue;
+				}
 
-		            MessageHandlerAttribute messageHandlerAttribute = attrs[0] as MessageHandlerAttribute;
-		            if (!messageHandlerAttribute.Type.Is(appType))
-		            {
-		                continue;
-		            }
+				MessageHandlerAttribute messageHandlerAttribute = attrs[0] as MessageHandlerAttribute;
+				if (!messageHandlerAttribute.Type.Is(appType))
+				{
+					continue;
+				}
 
-		            IMHandler iMHandler = Activator.CreateInstance(type) as IMHandler;
-		            if (iMHandler == null)
-		            {
-		                Log.Error($"message handle {type.Name} 需要继承 IMHandler");
-		                continue;
-		            }
+				IMHandler iMHandler = Activator.CreateInstance(type) as IMHandler;
+				if (iMHandler == null)
+				{
+					Log.Error($"message handle {type.Name} 需要继承 IMHandler");
+					continue;
+				}
 
-		            Type messageType = iMHandler.GetMessageType();
-		            ushort opcode = Game.Scene.GetComponent<OpcodeTypeComponent>().GetOpcode(messageType);
-		            if (opcode == 0)
-		            {
-		                Log.Error($"消息opcode为0: {messageType.Name}");
-		                continue;
-		            }
-
-		            self.RegisterHandler(opcode, iMHandler);
-		        }
-		    }
-		    catch (Exception e)
-		    {
-		        Log.Error(e);
-		    }
+				Type messageType = iMHandler.GetMessageType();
+				ushort opcode = Game.Scene.GetComponent<OpcodeTypeComponent>().GetOpcode(messageType);
+				if (opcode == 0)
+				{
+					Log.Error($"消息opcode为0: {messageType.Name}");
+					continue;
+				}
+				self.RegisterHandler(opcode, iMHandler);
+			}
 		}
 
 		public static void RegisterHandler(this MessageDispatherComponent self, ushort opcode, IMHandler handler)
@@ -88,7 +81,7 @@ namespace ETModel
 			List<IMHandler> actions;
 			if (!self.Handlers.TryGetValue(messageInfo.Opcode, out actions))
 			{
-				Log.Error($"消息没有处理: {messageInfo.Opcode} {JsonHelper.ToJson(messageInfo.Message)} {session.RemoteAddress}");
+				Log.Error($"消息没有处理: {messageInfo.Opcode} {JsonHelper.ToJson(messageInfo.Message)}");
 				return;
 			}
 			

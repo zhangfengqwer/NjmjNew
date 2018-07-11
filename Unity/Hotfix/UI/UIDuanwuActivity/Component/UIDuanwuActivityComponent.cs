@@ -125,7 +125,7 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
             //type = 1 则为单纯请求数据
-            G2C_DuanwuDataBase g2cDuanwu = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 1 });
+            G2C_DuanwuDataBase g2cDuanwu = (G2C_DuanwuDataBase)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_DuanwuDataBase { UId = PlayerInfoComponent.Instance.uid, Type = 1 });
             UINetLoadingComponent.closeNetLoading();
             try
             {
@@ -198,7 +198,7 @@ namespace ETHotfix
                 {
                     activityType = GetRandomIndex();
                     //type = 3 刷新活动
-                    G2C_RefreshDuanwuActivity g2cDuanwu = (G2C_RefreshDuanwuActivity)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_RefreshDuanwuActivity { UId = PlayerInfoComponent.Instance.uid, ActivityType = activityType, GoldCost = goldCost });
+                    G2C_RefreshDuanwuActivity g2cDuanwu = (G2C_RefreshDuanwuActivity)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_RefreshDuanwuActivity { UId = PlayerInfoComponent.Instance.uid, ActivityType = activityType, GoldCost = goldCost });
 
                     if(g2cDuanwu.Error != ErrorCode.ERR_Success)
                     {
@@ -241,7 +241,7 @@ namespace ETHotfix
         private async void GetDuanwuTaskInfoList()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_DuanwuActivity g2cduanwu = (G2C_DuanwuActivity)await SessionWrapComponent.Instance.Session.Call(new C2G_DuanwuActivity() { UId = PlayerInfoComponent.Instance.uid });
+            G2C_DuanwuActivity g2cduanwu = (G2C_DuanwuActivity)await SessionComponent.Instance.Session.Call(new C2G_DuanwuActivity() { UId = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cduanwu.Error != ErrorCode.ERR_Success)

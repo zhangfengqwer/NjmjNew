@@ -230,7 +230,7 @@ namespace ETHotfix
 
         private void onClick_Back()
         {
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+            SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
 //            CommonUtil.ShowUI(UIType.UIMain);
 //            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
 //            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
@@ -253,7 +253,7 @@ namespace ETHotfix
 //            UI uiReady = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIReady);
 
             //重新请求数据
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerContinueGame());
+            SessionComponent.Instance.Session.Send(new Actor_GamerContinueGame());
 
         }
 

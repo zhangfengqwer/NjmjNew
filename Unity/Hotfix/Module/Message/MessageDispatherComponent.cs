@@ -41,7 +41,7 @@ namespace ETHotfix
 			ETModel.MessageDispatherComponent messageDispatherComponent = ETModel.Game.Scene.GetComponent<ETModel.MessageDispatherComponent>();
 			ETModel.OpcodeTypeComponent opcodeTypeComponent = ETModel.Game.Scene.GetComponent<ETModel.OpcodeTypeComponent>();
 
-			Type[] types = ETModel.Game.Hotfix.GetHotfixTypes();
+			List<Type> types = ETModel.Game.Hotfix.GetHotfixTypes();
 
 			foreach (Type type in types)
 			{
@@ -89,7 +89,7 @@ namespace ETHotfix
 			this.handlers[opcode].Add(handler);
 		}
 
-		public void Handle(Session session, MessageInfo messageInfo)
+		public void Handle(ETModel.Session session, MessageInfo messageInfo)
 		{
 			List<IMHandler> actions;
 			if (!this.handlers.TryGetValue(messageInfo.Opcode, out actions))

@@ -11,7 +11,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_LaBaHandler: AMHandler<Actor_LaBa>
     {
-        protected override async void Run(Session session, Actor_LaBa message)
+        protected override async void Run(ETModel.Session session, Actor_LaBa message)
         {
             try
             {

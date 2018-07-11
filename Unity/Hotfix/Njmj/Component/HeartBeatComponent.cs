@@ -36,7 +36,7 @@ namespace ETHotfix
             // 开始发包
             try
             {
-                G2C_HeartBeat g2cHeartBeat = (G2C_HeartBeat) await SessionWrapComponent.Instance.Session.Call(new C2G_HeartBeat { });
+                G2C_HeartBeat g2cHeartBeat = (G2C_HeartBeat) await SessionComponent.Instance.Session.Call(new C2G_HeartBeat { });
             }
             catch
             {

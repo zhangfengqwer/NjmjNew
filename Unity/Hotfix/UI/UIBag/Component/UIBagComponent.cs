@@ -91,7 +91,7 @@ namespace ETHotfix
         {
             long uid = PlayerInfoComponent.Instance.uid;
             UINetLoadingComponent.showNetLoading();
-            G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionWrapComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
+            G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionComponent.Instance.Session.Call(new C2G_BagOperation() { UId = uid });
             UINetLoadingComponent.closeNetLoading();
 
             bagList = g2cBag.ItemList;
@@ -189,7 +189,7 @@ namespace ETHotfix
                     default:
                     {
                             UINetLoadingComponent.showNetLoading();
-                            G2C_UseItem g2cBag = (G2C_UseItem)await SessionWrapComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
+                            G2C_UseItem g2cBag = (G2C_UseItem)await SessionComponent.Instance.Session.Call(new C2G_UseItem() { UId = PlayerInfoComponent.Instance.uid, ItemId = (int)item.ItemId });
                             UINetLoadingComponent.closeNetLoading();
 
                             if (g2cBag.result == 1)

@@ -32,6 +32,9 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public long InstanceId;
+
 	}
 
 	[Message(InnerOpcode.M2A_Reload)]
@@ -55,42 +58,6 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
-
-	}
-
-	[Message(InnerOpcode.G2M_GetRoomInfo)]
-	[ProtoContract]
-	public partial class G2M_GetRoomInfo: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-	}
-
-	[Message(InnerOpcode.M2G_GetRoomInfo)]
-	[ProtoContract]
-	public partial class M2G_GetRoomInfo: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public int NewRoomCount;
-
-		[ProtoMember(2, IsRequired = true)]
-		public int NewTotalPlayerInGameCount;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int JingRoomCount;
-
-		[ProtoMember(4, IsRequired = true)]
-		public int JingTotalPlayerInGameCount;
 
 	}
 
@@ -307,21 +274,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(InnerOpcode.DBQueryJsonPlayerInfoRequest)]
-	[ProtoContract]
-	public partial class DBQueryJsonPlayerInfoRequest: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public string CollectionName;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Json;
-
-	}
-
 	[Message(InnerOpcode.DBQueryJsonResponse)]
 	[ProtoContract]
 	public partial class DBQueryJsonResponse: IResponse
@@ -340,57 +292,6 @@ namespace ETHotfix
 
 	}
 
-	[Message(InnerOpcode.DBQueryJsonGamePlayerRequest)]
-	[ProtoContract]
-	public partial class DBQueryJsonGamePlayerRequest: IRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public string CollectionName;
-
-		[ProtoMember(2, IsRequired = true)]
-		public string Json;
-
-	}
-
-	[Message(InnerOpcode.DBQueryJsonPlayerInfoResponse)]
-	[ProtoContract]
-	public partial class DBQueryJsonPlayerInfoResponse: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1)]
-		public List<PlayerBaseInfo> Components = new List<PlayerBaseInfo>();
-
-	}
-
-	[Message(InnerOpcode.DBQueryJsonGamePlayerResponse)]
-	[ProtoContract]
-	public partial class DBQueryJsonGamePlayerResponse: IResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1)]
-		public List<PlayerBaseInfo> Components = new List<PlayerBaseInfo>();
-
-	}
-
 	[Message(InnerOpcode.ObjectAddRequest)]
 	[ProtoContract]
 	public partial class ObjectAddRequest: IRequest
@@ -402,7 +303,7 @@ namespace ETHotfix
 		public long Key;
 
 		[ProtoMember(2, IsRequired = true)]
-		public int AppId;
+		public long InstanceId;
 
 	}
 
@@ -459,7 +360,7 @@ namespace ETHotfix
 		public long Key;
 
 		[ProtoMember(2, IsRequired = true)]
-		public int LockAppId;
+		public long InstanceId;
 
 		[ProtoMember(3, IsRequired = true)]
 		public int Time;
@@ -492,10 +393,10 @@ namespace ETHotfix
 		public long Key;
 
 		[ProtoMember(2, IsRequired = true)]
-		public int UnLockAppId;
+		public long OldInstanceId;
 
 		[ProtoMember(3, IsRequired = true)]
-		public int AppId;
+		public long InstanceId;
 
 	}
 
@@ -540,7 +441,7 @@ namespace ETHotfix
 		public string Message { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public int AppId;
+		public long InstanceId;
 
 	}
 
@@ -607,6 +508,54 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public int Count;
+
+	}
+
+	[Message(InnerOpcode.G2M_SessionDisconnect)]
+	[ProtoContract]
+	public partial class G2M_SessionDisconnect: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
+	[Message(InnerOpcode.G2M_GetRoomInfo)]
+	[ProtoContract]
+	public partial class G2M_GetRoomInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(InnerOpcode.M2G_GetRoomInfo)]
+	[ProtoContract]
+	public partial class M2G_GetRoomInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int NewRoomCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int NewTotalPlayerInGameCount;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int JingRoomCount;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int JingTotalPlayerInGameCount;
 
 	}
 

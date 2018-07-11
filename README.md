@@ -2,6 +2,14 @@
 
 __讨论QQ群 : 474643097__
 
+# ET 3.3发布! 
+1.增加了原生actor实现，知道actor的InstanceId即可直接发送Actor消息，不需要注册跟查询location  
+2.修复了组件反序列化后注册到EventSystem中的bug  
+3.修复ResourceComponent中异步加载资源使用了同步调用的bug  
+4.加载ab包的时候先判断热更里面有没有，有则加载热更的，没有则加载StreamingAssets里面的  
+5.优化了定时器实现  
+6.修复其它一系列小bug  
+
 # ET 3.2发布! 3.2变化不大修复了一些bug，进一步完善了ET
 1.增加了ChangeSystem，可以订阅组件改变事件  
 2.修复dbcache中查询数据库一定会cache的bug  
@@ -102,5 +110,8 @@ ET框架的服务端是一个强大灵活的分布式服务端架构，完全可
 视频教程：  
 [肉饼老师主讲](http://www.taikr.com/my/course/972)   
 [ET新手教程-初见主讲](https://pan.baidu.com/s/1JDDGvzRYDUGBAmCZhYhQlQ) 密码: 7k7a  
+  
+相关网站:  
+[ET框架问题讨论](http://www.etframework.cn/)  
   
 __讨论QQ群 : 474643097__

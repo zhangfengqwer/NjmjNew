@@ -256,7 +256,7 @@ namespace ETHotfix
 //            {
 //                Gamer gamer = this.GetParent<Gamer>();
 //                Log.Debug("请求gamer信息:" + gamer.UserID);
-//                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID }, tokenSource.Token);
+//                G2C_PlayerInfo playerInfo = (G2C_PlayerInfo)await SessionComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = gamer.UserID }, tokenSource.Token);
 //                gamer.PlayerInfo = playerInfo.PlayerInfo;
 //            }
 //            catch (Exception e)

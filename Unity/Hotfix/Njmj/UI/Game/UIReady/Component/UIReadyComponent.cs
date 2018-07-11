@@ -81,7 +81,7 @@ namespace ETHotfix
 
         private async void OnReady()
         {
-            SessionWrapComponent.Instance.Session.Send(new Actor_GamerReady() { Uid = PlayerInfoComponent.Instance.uid });
+            SessionComponent.Instance.Session.Send(new Actor_GamerReady() { Uid = PlayerInfoComponent.Instance.uid });
         }
 
         private async void OnChangeTable()
@@ -89,7 +89,7 @@ namespace ETHotfix
             UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
             Log.Debug("换桌:" + roomComponent.RoomType);
-            SessionWrapComponent.Instance.Session.Send(new Actor_ChangeTable(){RoomType = PlayerInfoComponent.Instance.RoomType});
+            SessionComponent.Instance.Session.Send(new Actor_ChangeTable(){RoomType = PlayerInfoComponent.Instance.RoomType});
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
         }
 

@@ -57,7 +57,7 @@ namespace ETHotfix
 
             long uid = PlayerInfoComponent.Instance.uid;
             UINetLoadingComponent.showNetLoading();
-            G2C_Email g2cEmail = (G2C_Email)await SessionWrapComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
+            G2C_Email g2cEmail = (G2C_Email)await SessionComponent.Instance.Session.Call(new C2G_Email() { Uid = uid });
             UINetLoadingComponent.closeNetLoading();
 
             emailList = g2cEmail.EmailInfoList;
@@ -215,7 +215,7 @@ namespace ETHotfix
                 //设置当前未读文本邮件为已读
                 if (string.IsNullOrEmpty(emailList[i].RewardItem))
                 {
-                    G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionWrapComponent.Instance
+                    G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionComponent.Instance
                 .Session.Call(new C2G_EmailOperate
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
@@ -232,15 +232,15 @@ namespace ETHotfix
             emailList.Clear();
             Instance = null;
 
-            using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
-            {
-                string versionUrl = GlobalConfigComponent.Instance.GlobalProto.GetUrl() + "StreamingAssets/" + "Version.txt";
-                //Log.Debug(versionUrl);
-                await webRequestAsync.DownloadAsync(versionUrl);
-
-                string test = webRequestAsync.Request.downloadHandler.text;
-                //Log.Debug(JsonHelper.ToJson(this.VersionConfig));
-            }
+            // using (UnityWebRequestAsync webRequestAsync = ETModel.ComponentFactory.Create<UnityWebRequestAsync>())
+            // {
+            //     string versionUrl = GlobalConfigComponent.Instance.GlobalProto.GetUrl() + "StreamingAssets/" + "Version.txt";
+            //     //Log.Debug(versionUrl);
+            //     await webRequestAsync.DownloadAsync(versionUrl);
+            //
+            //     string test = webRequestAsync.Request.downloadHandler.text;
+            //     //Log.Debug(JsonHelper.ToJson(this.VersionConfig));
+            // }
         }
     }
 }
