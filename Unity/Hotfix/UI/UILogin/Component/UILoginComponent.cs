@@ -57,7 +57,6 @@ namespace ETHotfix
         private Button btn_third;
         public static UILoginComponent Instance { get; set; }
         private bool isLogining;
-        private Toggle toggle;
 
         public async void Awake()
         {
