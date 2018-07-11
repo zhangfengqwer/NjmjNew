@@ -41,14 +41,10 @@ _ReSharper.CSharp/
 /Release
 .idea/
 /Unity/Logs
+/Unity/Assets/StreamingAssets/
 /netcoreapp2.0
+/Unity/Assets/StreamingAssets.meta
 .DS_Store
 Server/.DS_Store
 /Server/.vscode/
-/Unity/Assets/Res/Code/Hotfix.dll.bytes.meta
-/Unity/Assets/Res/Code/Hotfix.mdb.bytes
-/Unity/Assets/Res/Code/Hotfix.mdb.bytes.meta
-/Unity/Assets/Res/Code/Hotfix.pdb.bytes
-/Unity/Assets/Res/Code/Hotfix.pdb.bytes.meta
-/Unity/Assets/Res/Code/Hotfix.dll.bytes
-/Unity/Assets/StreamingAssets/build_info.txt
+/Unity/Assets/Res/Code

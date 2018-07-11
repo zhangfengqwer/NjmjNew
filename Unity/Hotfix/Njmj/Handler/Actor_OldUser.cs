@@ -11,7 +11,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_OldUserHandler : AMHandler<Actor_OldUser>
     {
-        protected override async void Run(Session session, Actor_OldUser message)
+        protected override async void Run(ETModel.Session session, Actor_OldUser message)
         {
             try
             {

@@ -117,7 +117,7 @@ namespace ETHotfix
 
         private async void BuyTreasure()
         {
-            G2C_BuyDuanwuTreasure g2c = (G2C_BuyDuanwuTreasure)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_BuyDuanwuTreasure
+            G2C_BuyDuanwuTreasure g2c = (G2C_BuyDuanwuTreasure)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_BuyDuanwuTreasure
             {
                 UId = PlayerInfoComponent.Instance.uid,
                 Reward = curTreasureInfo.Reward,
@@ -146,7 +146,7 @@ namespace ETHotfix
         {
             long uid = PlayerInfoComponent.Instance.uid;
 
-            G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionWrapComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
+            G2C_PlayerInfo g2CPlayerInfo = (G2C_PlayerInfo)await SessionComponent.Instance.Session.Call(new C2G_PlayerInfo() { uid = uid });
             if(g2CPlayerInfo == null)
             {
                 Log.Debug("用户信息错误");
@@ -159,7 +159,7 @@ namespace ETHotfix
 
         private async void GetTreasureLogInfo()
         {
-            G2C_GetDuanwuTreasureInfo g2ctreasure = (G2C_GetDuanwuTreasureInfo)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GetDuanwuTreasureInfo { UId = PlayerInfoComponent.Instance.uid });
+            G2C_GetDuanwuTreasureInfo g2ctreasure = (G2C_GetDuanwuTreasureInfo)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_GetDuanwuTreasureInfo { UId = PlayerInfoComponent.Instance.uid });
             duanwuTreasureLogInfoList = g2ctreasure.Treasures;
             CreateTreasureList();
         }
@@ -189,7 +189,7 @@ namespace ETHotfix
         private async void GetTreasureData()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_DuanwuTreasure g2ctreasure = (G2C_DuanwuTreasure)await SessionWrapComponent.Instance.Session.Call(new C2G_DuanwuTreasure {  UId = PlayerInfoComponent.Instance.uid});
+            G2C_DuanwuTreasure g2ctreasure = (G2C_DuanwuTreasure)await SessionComponent.Instance.Session.Call(new C2G_DuanwuTreasure {  UId = PlayerInfoComponent.Instance.uid});
             UINetLoadingComponent.closeNetLoading();
             treasureInfoList = g2ctreasure.TreasureInfoList;
             GetTreasureLogInfo();

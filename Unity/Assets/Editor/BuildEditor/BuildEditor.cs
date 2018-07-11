@@ -15,8 +15,8 @@ namespace ETEditor
 
 	public enum PlatformType
 	{
-	    Android,
-        None,
+		None,
+		Android,
 		IOS,
 		PC,
 	}
@@ -68,7 +68,7 @@ namespace ETEditor
 
 		private void SetPackingTagAndAssetBundle()
 		{
-			//ClearPackingTagAndAssetBundle();
+			ClearPackingTagAndAssetBundle();
 
 			SetIndependentBundleAndAtlas("Assets/Bundles/Independent");
 

@@ -8,7 +8,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_CheatHandler : AMHandler<Actor_GamerCheat>
     {
-        protected override void Run(Session session, Actor_GamerCheat message)
+        protected override void Run(ETModel.Session session, Actor_GamerCheat message)
         {
             try
             {

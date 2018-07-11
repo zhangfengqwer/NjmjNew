@@ -62,7 +62,7 @@ namespace ETHotfix
 
                     {
                         UINetLoadingComponent.showNetLoading();
-                        G2C_IsCanRecharge g2cIsCanRecharge = (G2C_IsCanRecharge)await SessionWrapComponent.Instance.Session.Call(new C2G_IsCanRecharge { UId = PlayerInfoComponent.Instance.uid });
+                        G2C_IsCanRecharge g2cIsCanRecharge = (G2C_IsCanRecharge)await SessionComponent.Instance.Session.Call(new C2G_IsCanRecharge { UId = PlayerInfoComponent.Instance.uid });
                         UINetLoadingComponent.closeNetLoading();
 
                         if (g2cIsCanRecharge.Error != ErrorCode.ERR_Success)

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Networking;
 
 namespace ETModel
 {
@@ -42,9 +40,9 @@ namespace ETModel
 			using (UnityWebRequestAsync webRequestAsync = ComponentFactory.Create<UnityWebRequestAsync>())
 			{
 				string versionUrl = GlobalConfigComponent.Instance.GlobalProto.GetUrl() + "StreamingAssets/" + "Version.txt";
-                //Log.Debug(versionUrl);
-                await webRequestAsync.DownloadAsync(versionUrl);
-			    this.VersionConfig = JsonHelper.FromJson<VersionConfig>(webRequestAsync.Request.downloadHandler.text);
+				//Log.Debug(versionUrl);
+				await webRequestAsync.DownloadAsync(versionUrl);
+				this.VersionConfig = JsonHelper.FromJson<VersionConfig>(webRequestAsync.Request.downloadHandler.text);
 				//Log.Debug(JsonHelper.ToJson(this.VersionConfig));
 			}
 
@@ -58,7 +56,7 @@ namespace ETModel
 			}
 			else
 			{
-				versionPath = Path.Combine(PathHelper.AppResPath, "Version.txt");
+				versionPath = Path.Combine(PathHelper.AppResPath4Web, "Version.txt");
 				using (UnityWebRequestAsync request = ComponentFactory.Create<UnityWebRequestAsync>())
 				{
 					await request.DownloadAsync(versionPath);

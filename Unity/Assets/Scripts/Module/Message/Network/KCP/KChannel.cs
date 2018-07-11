@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace ETModel
 {
@@ -21,20 +20,16 @@ namespace ETModel
 		}
 	}
 
-	public class KChannel: AChannel
+	public class KChannel : AChannel
 	{
-		private UdpClient socket;
+		private Socket socket;
 
-		private Kcp kcp;
+		private KCP kcp;
 
-		private readonly CircularBuffer recvBuffer = new CircularBuffer();
 		private readonly Queue<WaitSendBuffer> sendBuffer = new Queue<WaitSendBuffer>();
 
-		private readonly PacketParser parser;
 		private bool isConnected;
 		private readonly IPEndPoint remoteEndPoint;
-
-		private TaskCompletionSource<Packet> recvTcs;
 
 		private uint lastRecvTime;
 
@@ -45,27 +40,27 @@ namespace ETModel
 		public uint RemoteConn;
 
 		// accept
-		public KChannel(uint conn, uint remoteConn, UdpClient socket, IPEndPoint remoteEndPoint, KService kService): base(kService, ChannelType.Accept)
+		public KChannel(uint conn, uint remoteConn, Socket socket, IPEndPoint remoteEndPoint, KService kService) : base(kService, ChannelType.Accept)
 		{
 			this.Id = conn;
 			this.Conn = conn;
 			this.RemoteConn = remoteConn;
 			this.remoteEndPoint = remoteEndPoint;
 			this.socket = socket;
-			kcp = new Kcp(this.RemoteConn, this.Output);
-			kcp.SetMtu(512);
+			kcp = new KCP(this.RemoteConn, this);
+			kcp.SetOutput(this.Output);
 			kcp.NoDelay(1, 10, 2, 1);  //fast
 			this.isConnected = true;
+
 			this.lastRecvTime = kService.TimeNow;
 		}
 
 		// connect
-		public KChannel(uint conn, UdpClient socket, IPEndPoint remoteEndPoint, KService kService): base(kService, ChannelType.Connect)
+		public KChannel(uint conn, Socket socket, IPEndPoint remoteEndPoint, KService kService) : base(kService, ChannelType.Connect)
 		{
 			this.Id = conn;
 			this.Conn = conn;
 			this.socket = socket;
-			this.parser = new PacketParser(this.recvBuffer);
 
 			this.remoteEndPoint = remoteEndPoint;
 			this.lastRecvTime = kService.TimeNow;
@@ -101,11 +96,12 @@ namespace ETModel
 				return;
 			}
 			this.isConnected = true;
-
 			this.RemoteConn = responseConn;
-			this.kcp = new Kcp(responseConn, this.Output);
-			kcp.SetMtu(512);
+			this.kcp = new KCP(responseConn, this);
+			kcp.SetOutput(this.Output);
 			kcp.NoDelay(1, 10, 2, 1);  //fast
+
+			this.lastRecvTime = this.GetService().TimeNow;
 
 			HandleSend();
 		}
@@ -115,7 +111,7 @@ namespace ETModel
 			cacheBytes.WriteTo(0, KcpProtocalType.ACK);
 			cacheBytes.WriteTo(4, requestConn);
 			cacheBytes.WriteTo(8, this.Conn);
-			this.socket.Send(cacheBytes, 12, remoteEndPoint);
+			this.socket.SendTo(cacheBytes, 0, 12, SocketFlags.None, remoteEndPoint);
 		}
 
 		/// <summary>
@@ -125,8 +121,7 @@ namespace ETModel
 		{
 			cacheBytes.WriteTo(0, KcpProtocalType.SYN);
 			cacheBytes.WriteTo(4, this.Conn);
-			//Log.Debug($"client connect: {this.Conn}");
-			this.socket.Send(cacheBytes, 8, remoteEndPoint);
+			this.socket.SendTo(cacheBytes, 0, 8, SocketFlags.None, remoteEndPoint);
 
 			// 200毫秒后再次update发送connect请求
 			this.GetService().AddToNextTimeUpdate(timeNow + 200, this.Id);
@@ -138,7 +133,7 @@ namespace ETModel
 			cacheBytes.WriteTo(4, this.Conn);
 			cacheBytes.WriteTo(8, this.RemoteConn);
 			//Log.Debug($"client disconnect: {this.Conn}");
-			this.socket.Send(cacheBytes, 12, remoteEndPoint);
+			this.socket.SendTo(cacheBytes, 0, 12, SocketFlags.None, remoteEndPoint);
 		}
 
 		public void Update(uint timeNow)
@@ -146,17 +141,24 @@ namespace ETModel
 			// 如果还没连接上，发送连接请求
 			if (!this.isConnected)
 			{
+				// 5秒连接不上，报错
+				if (timeNow - this.lastRecvTime > 5 * 1000)
+				{
+					this.OnError((int)SocketError.ConnectionRefused);
+					return;
+				}
 				Connect(timeNow);
 				return;
 			}
-
+			
 			// 超时断开连接
 			if (timeNow - this.lastRecvTime > 20 * 1000)
 			{
-				this.OnError(SocketError.Disconnecting);
+				this.OnError((int)SocketError.Disconnecting);
 				return;
 			}
 			this.kcp.Update(timeNow);
+
 			uint nextUpdateTime = this.kcp.Check(timeNow);
 			this.GetService().AddToNextTimeUpdate(nextUpdateTime, this.Id);
 		}
@@ -174,10 +176,9 @@ namespace ETModel
 			}
 		}
 
-		public void HandleRecv(byte[] date, uint timeNow)
+		public void HandleRecv(byte[] date, int length, uint timeNow)
 		{
-			this.kcp.Input(date);
-			// 加入update队列
+			this.kcp.Input(date, 0, length);
 			this.GetService().AddToUpdate(this.Id);
 
 			while (true)
@@ -185,10 +186,10 @@ namespace ETModel
 				int n = kcp.PeekSize();
 				if (n == 0)
 				{
-					this.OnError(SocketError.NetworkReset);
+					this.OnError((int)SocketError.NetworkReset);
 					return;
 				}
-				int count = this.kcp.Recv(this.cacheBytes);
+				int count = this.kcp.Recv(this.cacheBytes, 0, this.cacheBytes.Length);
 				if (count <= 0)
 				{
 					return;
@@ -196,34 +197,30 @@ namespace ETModel
 
 				lastRecvTime = timeNow;
 
-				// 收到的数据放入缓冲区
-				byte[] sizeBuffer = BitConverter.GetBytes((ushort)count);
-				this.recvBuffer.Write(sizeBuffer, 0, sizeBuffer.Length);
-				this.recvBuffer.Write(cacheBytes, 0, count);
-
-				if (this.recvTcs != null)
-				{
-					bool isOK = this.parser.Parse();
-					if (isOK)
-					{
-						Packet pkt = this.parser.GetPacket();
-						var tcs = this.recvTcs;
-						this.recvTcs = null;
-						tcs.SetResult(pkt);
-					}
-				}
+				this.packet.Flag = this.cacheBytes[0];
+				this.packet.Opcode = BitConverter.ToUInt16(this.cacheBytes, 1);
+				this.packet.Bytes = this.cacheBytes;
+				this.packet.Offset = Packet.Index;
+				this.packet.Length = (ushort) (count - Packet.Index);
+				this.OnRead(packet);
 			}
 		}
+		
+		public Packet packet = new Packet();
 
-		public void Output(byte[] bytes, int count)
+		public void Output(byte[] bytes, int count, object user)
 		{
-			this.socket.Send(bytes, count, this.remoteEndPoint);
+			this.socket.SendTo(bytes, 0, count, SocketFlags.None, this.remoteEndPoint);
 		}
 
 		private void KcpSend(byte[] buffers, int index, int length)
 		{
 			this.kcp.Send(buffers, index, length);
 			this.GetService().AddToUpdate(this.Id);
+		}
+
+		public override void Start()
+		{
 		}
 
 		public override void Send(byte[] buffer, int index, int length)
@@ -233,6 +230,7 @@ namespace ETModel
 				this.KcpSend(buffer, index, length);
 				return;
 			}
+			
 			this.sendBuffer.Enqueue(new WaitSendBuffer(buffer, index, length));
 		}
 
@@ -240,7 +238,7 @@ namespace ETModel
 		{
 			ushort size = (ushort)buffers.Select(b => b.Length).Sum();
 			byte[] bytes;
-			if (!this.isConnected)
+			if (this.isConnected)
 			{
 				bytes = this.cacheBytes;
 			}
@@ -257,24 +255,6 @@ namespace ETModel
 			}
 
 			Send(bytes, 0, size);
-		}
-
-		public override Task<Packet> Recv()
-		{
-			if (this.IsDisposed)
-			{
-				throw new Exception("KChannel已经被Dispose, 不能接收消息");
-			}
-
-			bool isOK = this.parser.Parse();
-			if (isOK)
-			{
-				Packet packet = this.parser.GetPacket();
-				return Task.FromResult(packet);
-			}
-
-			recvTcs = new TaskCompletionSource<Packet>();
-			return recvTcs.Task;
 		}
 	}
 }

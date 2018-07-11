@@ -202,7 +202,7 @@ namespace ETHotfix
         private async void RequestSetPlayerSound(int PlayerSound)
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_SetPlayerSound g2cSetPlayerSound = (G2C_SetPlayerSound)await SessionWrapComponent.Instance.Session.Call(new C2G_SetPlayerSound { Uid = PlayerInfoComponent.Instance.uid, PlayerSound = PlayerSound });
+            G2C_SetPlayerSound g2cSetPlayerSound = (G2C_SetPlayerSound)await SessionComponent.Instance.Session.Call(new C2G_SetPlayerSound { Uid = PlayerInfoComponent.Instance.uid, PlayerSound = PlayerSound });
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cSetPlayerSound.Error != ErrorCode.ERR_Success)

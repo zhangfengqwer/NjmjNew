@@ -30,9 +30,10 @@ namespace ETHotfix
             {
                 Log.Info($"session释放,玩家MapId：{self.User.ActorID}");
 
-                ActorProxyComponent actorProxyComponent = Game.Scene.GetComponent<ActorProxyComponent>();
-                ActorProxy actorProxy = actorProxyComponent.Get(self.User.ActorID);
-                actorProxy.Send(new Actor_GamerExitRoom()
+                ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+                ActorMessageSender actorMessageSender = actorMessageSenderComponent.Get(self.User.ActorID);
+
+                actorMessageSender.Send(new Actor_GamerExitRoom()
                 {
                     IsFromClient = false,
                 });

@@ -7,7 +7,7 @@
 
 		public string GetUrl()
 		{
-			string url = NetConfig.getInstance().getWebUrl() + "AssetBundle/";
+			string url = this.AssetBundleServerUrl;
 #if UNITY_ANDROID
 			url += "Android/";
 #elif UNITY_IOS
@@ -17,6 +17,7 @@
 #else
 			url += "PC/";
 #endif
+			Log.Debug(url);
 			return url;
 		}
 	}

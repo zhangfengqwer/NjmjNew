@@ -10,7 +10,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerEnterRoomHandler : AMHandler<Actor_GamerEnterRoom>
     {
-        protected override async void Run(Session session, Actor_GamerEnterRoom message)
+        protected override async void Run(ETModel.Session session, Actor_GamerEnterRoom message)
         {
             GamerEnterRoom(message);
         }

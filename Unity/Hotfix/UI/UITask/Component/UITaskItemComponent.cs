@@ -48,7 +48,7 @@ namespace ETHotfix
         {
 
             UINetLoadingComponent.showNetLoading();
-            G2C_UpdatePlayerInfo g2c =(G2C_UpdatePlayerInfo) await SessionWrapComponent.Instance.Session
+            G2C_UpdatePlayerInfo g2c =(G2C_UpdatePlayerInfo) await SessionComponent.Instance.Session
                 .Call(new C2G_UpdatePlayerInfo
                 {
                     Uid = PlayerInfoComponent.Instance.uid,
@@ -60,7 +60,7 @@ namespace ETHotfix
         private async void GetReward()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionWrapComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskInfo = taskProgress, GetType = 1 });
+            G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskInfo = taskProgress, GetType = 1 });
             UINetLoadingComponent.closeNetLoading();
 
             GameUtil.changeData(1, taskProgress.Reward);

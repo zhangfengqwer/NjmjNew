@@ -11,6 +11,5 @@ namespace ETModel
 	{
 		public IPEndPoint dbAddress;
 
-	   
 	}
 }

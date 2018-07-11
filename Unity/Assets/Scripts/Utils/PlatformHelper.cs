@@ -199,6 +199,7 @@ public class PlatformHelper
     /// <param name="data"></param>
     public static void setLogoutCallback(string callObj, string callFunc, string data)
     {
+
     }
 
 

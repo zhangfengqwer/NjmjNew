@@ -36,7 +36,7 @@ namespace ETHotfix
 
                     //重新更新actor
 			        gamer.PlayerID = message.PlayerId;
-			        gamer.GetComponent<UnitGateComponent>().GateSessionId = message.SessionId;
+			        gamer.GetComponent<UnitGateComponent>().GateSessionActorId = message.SessionId;
 
                     //短线重连
 			        Actor_GamerReconnet reconnet = new Actor_GamerReconnet();
@@ -51,6 +51,7 @@ namespace ETHotfix
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 			            if (handCardsComponent == null)
 			            {
+			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
 			                room.Remove(_gamer.UserID);
 			                return;
 			            }
@@ -102,7 +103,7 @@ namespace ETHotfix
                 else
 			    {
 			        gamer = GamerFactory.Create(message.PlayerId, message.UserId);
-			        await gamer.AddComponent<ActorComponent>().AddLocation();
+			        await gamer.AddComponent<MailBoxComponent>().AddLocation();
 			        gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
 			        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();

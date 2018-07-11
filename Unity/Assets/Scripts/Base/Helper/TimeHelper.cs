@@ -28,24 +28,14 @@ namespace ETModel
 			return ClientNow();
 		}
 
-	    /// <summary>
-	    /// 得到当天的日期 格式：yyyy-MM-dd
-	    /// </summary>
-	    /// <param name="dateTime"></param>
-	    /// <returns></returns>
 	    public static string GetCurrentDay(this DateTime dateTime)
 	    {
-	        return dateTime.ToString("yyyy-MM-dd");
-	    }
+	        return DateTime.Now.ToString("yyyy-MM-dd");
+        }
 
-	    /// <summary>
-	    /// 得到现在的时间 格式：yyyy-MM-dd HH:mm:ss
-	    /// </summary>
-	    /// <param name="dateTime"></param>
-	    /// <returns></returns>
 	    public static string GetCurrentTime(this DateTime dateTime)
 	    {
-	        return dateTime.ToString("yyyy-MM-dd HH:mm:ss");
-	    }
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
     }
 }

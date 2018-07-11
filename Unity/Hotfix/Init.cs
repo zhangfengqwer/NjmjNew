@@ -27,7 +27,7 @@ namespace ETHotfix
 
 				Game.Scene.AddComponent<PlayerInfoComponent>();
                 Game.Scene.AddComponent<UIIconComponent>();
-                Game.Scene.AddComponent<SessionWrapComponent>();
+                Game.Scene.AddComponent<SessionComponent>();
 
                 //第三方退出
                 Game.Scene.AddComponent<ThirdSDKQuitComponent>();
@@ -37,12 +37,13 @@ namespace ETHotfix
 				Game.Scene.AddComponent<ConfigComponent>();
 				ETModel.Game.Scene.GetComponent<ResourcesComponent>().UnloadBundle("config.unity3d");
 
-//				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
-//				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
+                //				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
+                //				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
-				Game.EventSystem.Run(EventIdType.InitSceneStart);
 
-			    Application.targetFrameRate = 30;
+                Game.EventSystem.Run(EventIdType.InitSceneStart);
+
+                Application.targetFrameRate = 30;
 			    // 永不息屏
 			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
 

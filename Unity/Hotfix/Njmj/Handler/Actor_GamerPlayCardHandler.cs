@@ -10,7 +10,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerPlayCardHandler : AMHandler<Actor_GamerPlayCard>
     {
-        protected override async void Run(Session session, Actor_GamerPlayCard message)
+        protected override async void Run(ETModel.Session session, Actor_GamerPlayCard message)
         {
             PlayCard(message);
         }

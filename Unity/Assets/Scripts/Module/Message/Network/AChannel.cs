@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace ETModel
 {
@@ -21,6 +19,11 @@ namespace ETModel
 		Accept,
 	}
 
+	public class UserTokenInfo
+	{
+		public long InstanceId;
+	}
+
 	public abstract class AChannel: ComponentWithId
 	{
 		public ChannelType ChannelType { get; }
@@ -29,9 +32,9 @@ namespace ETModel
 
 		public IPEndPoint RemoteAddress { get; protected set; }
 
-		private Action<AChannel, SocketError> errorCallback;
+		private Action<AChannel, int> errorCallback;
 
-		public event Action<AChannel, SocketError> ErrorCallback
+		public event Action<AChannel, int> ErrorCallback
 		{
 			add
 			{
@@ -42,35 +45,47 @@ namespace ETModel
 				this.errorCallback -= value;
 			}
 		}
+		
+		private Action<Packet> readCallback;
 
-		protected void OnError(SocketError e)
+		public event Action<Packet> ReadCallback
 		{
-			if (this.IsDisposed)
+			add
 			{
-				return;
+				this.readCallback += value;
 			}
+			remove
+			{
+				this.readCallback -= value;
+			}
+		}
+		
+		protected void OnRead(Packet packet)
+		{
+			this.readCallback.Invoke(packet);
+		}
+
+		protected void OnError(int e)
+		{
 			this.errorCallback?.Invoke(this, e);
 		}
 
-
 		protected AChannel(AService service, ChannelType channelType)
 		{
+			this.Id = IdGenerater.GenerateId();
 			this.ChannelType = channelType;
 			this.service = service;
 		}
-		
+
+		public abstract void Start();
+
 		/// <summary>
 		/// 发送消息
 		/// </summary>
 		public abstract void Send(byte[] buffer, int index, int length);
 
 		public abstract void Send(List<byte[]> buffers);
-
-		/// <summary>
-		/// 接收消息
-		/// </summary>
-		public abstract Task<Packet> Recv();
-
+		
 		public override void Dispose()
 		{
 			if (this.IsDisposed)

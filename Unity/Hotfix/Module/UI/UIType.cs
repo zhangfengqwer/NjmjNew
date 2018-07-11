@@ -9,6 +9,7 @@ namespace ETHotfix
         public const string UILogin = "UILogin";
         public const string UILobby = "UILobby";
         public const string UIMain = "UIMain"; //main主界面
+        public const string UIWeekRank = "UIWeekRank"; //main周排行
         public const string UIRoom = "UIRoom";
         public const string UIReady = "UIReady";
         public const string UIPlayerIcon = "PlayerIcon"; //用户头像   

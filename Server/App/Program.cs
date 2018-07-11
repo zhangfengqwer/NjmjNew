@@ -13,11 +13,10 @@ namespace App
 	{
 		private static void Main(string[] args)
 		{
-			// 异步方法全部会回掉到主线程
-			OneThreadSynchronizationContext contex = new OneThreadSynchronizationContext();
-			SynchronizationContext.SetSynchronizationContext(contex);
-			
-			try
+		    // 异步方法全部会回掉到主线程
+		    SynchronizationContext.SetSynchronizationContext(OneThreadSynchronizationContext.Instance);
+
+            try
 			{
 				Game.EventSystem.Add(DLLType.Model, typeof(Game).Assembly);
 				Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
@@ -64,7 +63,7 @@ namespace App
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
 					    Game.Scene.AddComponent<DBProxyComponent>();
-					    Game.Scene.AddComponent<ConfigComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
                         break;
 					case AppType.Gate:
 						Game.Scene.AddComponent<PlayerComponent>();
@@ -72,7 +71,7 @@ namespace App
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<NetOuterComponent, IPEndPoint>(outerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationProxyComponent>();
-						Game.Scene.AddComponent<ActorProxyComponent>();
+						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
 
@@ -100,17 +99,18 @@ namespace App
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<UnitComponent>();
 						Game.Scene.AddComponent<LocationProxyComponent>();
-						Game.Scene.AddComponent<ActorProxyComponent>();
+						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatherComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						Game.Scene.AddComponent<ActorManagerComponent>();
                         //MapGlobalCoponent
                         Game.Scene.AddComponent<DBProxyComponent>();
-					    Game.Scene.AddComponent<ConfigComponent>();
+					    Game.Scene.AddComponent<DBComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
                         Game.Scene.AddComponent<RoomComponent>();
                         break;
 					case AppType.AllServer:
-						Game.Scene.AddComponent<ActorProxyComponent>();
+						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<UnitComponent>();
 						Game.Scene.AddComponent<DBComponent>();
@@ -131,7 +131,7 @@ namespace App
 
                         //GateGlobalComponent
 					    Game.Scene.AddComponent<RankDataComponent>();
-					    Game.Scene.AddComponent<HttpComponent>();
+//					    Game.Scene.AddComponent<HttpComponent>();
                         Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
 
@@ -151,10 +151,10 @@ namespace App
 				{
 					try
 					{
-						Thread.Sleep(1);
-						contex.Update();
-						Game.EventSystem.Update();
-					}
+					    Thread.Sleep(1);
+					    OneThreadSynchronizationContext.Instance.Update();
+					    Game.EventSystem.Update();
+                    }
 					catch (Exception e)
 					{
 						Log.Error(e);

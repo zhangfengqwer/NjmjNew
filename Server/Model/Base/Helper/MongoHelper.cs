@@ -52,6 +52,16 @@ namespace ETModel
 		{
 			return obj.ToBson();
 		}
+		
+		public static void ToStream(object obj, Stream stream)
+		{
+			using (BsonBinaryWriter bsonWriter = new BsonBinaryWriter(stream, BsonBinaryWriterSettings.Defaults))
+			{
+				BsonSerializationContext context = BsonSerializationContext.CreateRoot(bsonWriter);
+				IBsonSerializer serializer = BsonSerializer.LookupSerializer(obj.GetType());
+				serializer.Serialize(context, default(BsonSerializationArgs), obj);
+			}
+		}
 
 		public static object FromBson(Type type, byte[] bytes)
 		{

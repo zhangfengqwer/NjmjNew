@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ETModel
@@ -134,7 +136,7 @@ namespace ETModel
 
 			return tcs.Task;
 		}
-
+		
 		public Task<List<ComponentWithId>> GetJson(string collectionName, string json)
 		{
 			TaskCompletionSource<List<ComponentWithId>> tcs = new TaskCompletionSource<List<ComponentWithId>>();
@@ -145,20 +147,9 @@ namespace ETModel
 			return tcs.Task;
 		}
 
-        public Task<List<PlayerBaseInfo>> GetPlayerBaseInfoJson(string collectionName,string json)
-        {
-            TaskCompletionSource<List<PlayerBaseInfo>> tcs = new TaskCompletionSource<List<PlayerBaseInfo>>();
-            DBQueryPlayerInfoJsonTask dbQueryPlayerInfoJsonTask = ComponentFactory.Create<DBQueryPlayerInfoJsonTask, string, string, TaskCompletionSource<List<PlayerBaseInfo>>>(collectionName, json, tcs);
-            this.tasks[(int)((ulong)dbQueryPlayerInfoJsonTask.Id % taskCount)].Add(dbQueryPlayerInfoJsonTask);
-            return tcs.Task;
-        }
-
-        public Task<List<PlayerBaseInfo>> GetGamePlayerJson(string collectionName, string json)
-        {
-            TaskCompletionSource<List<PlayerBaseInfo>> tcs = new TaskCompletionSource<List<PlayerBaseInfo>>();
-            DBQueryGamePlayerTask dbQueryGameJsonTask = ComponentFactory.Create<DBQueryGamePlayerTask, string, string, TaskCompletionSource<List<PlayerBaseInfo>>>(collectionName, json, tcs);
-            this.tasks[(int)((ulong)dbQueryGameJsonTask.Id % taskCount)].Add(dbQueryGameJsonTask);
-            return tcs.Task;
-        }
-    }
+	    public Task<List<PlayerBaseInfo>> GetPlayerBaseInfoJson(string messageCollectionName, string messageJson)
+	    {
+	        throw new NotImplementedException();
+	    }
+	}
 }

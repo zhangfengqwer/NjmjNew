@@ -359,6 +359,7 @@ namespace ETHotfix
                     }
 
                     await proxyComponent.Save(playerBaseInfos[0]);
+                    await RecordWeekRankLog(uid, propNum, 0);
                 }
                 break;
 

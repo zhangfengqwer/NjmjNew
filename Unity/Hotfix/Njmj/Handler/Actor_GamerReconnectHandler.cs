@@ -11,7 +11,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerReconnectHandler : AMHandler<Actor_GamerReconnet>
     {
-        protected override async void Run(Session session, Actor_GamerReconnet message)
+        protected override async void Run(ETModel.Session session, Actor_GamerReconnet message)
         {
             try
             {

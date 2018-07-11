@@ -18,14 +18,11 @@ namespace ETHotfix
 	        try
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-
-	            List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
-                
+                List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)
                 {
                     AccountInfo accountInfo = accountInfos[0];
-
                     // 黑名单检测
                     if (await DBCommonUtil.CheckIsInBlackList(accountInfo.Id, session))
                     {
@@ -34,7 +31,6 @@ namespace ETHotfix
                         reply(response);
                         return;
                     }
-
                     // 随机分配一个Gate
                     StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
                     IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
@@ -42,7 +38,6 @@ namespace ETHotfix
 
                     // 向gate请求一个key,客户端可以拿着这个key连接gate
                     G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await gateSession.Call(new R2G_GetLoginKey() { UserId = accountInfo.Id });
-
                     string outerAddress = config.GetComponent<OuterConfig>().IPEndPoint2.ToString();
 
 //                    Log.Warning("Gate的ip:" + outerAddress);

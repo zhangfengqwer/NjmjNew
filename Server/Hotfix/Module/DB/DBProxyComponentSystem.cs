@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace ETHotfix
@@ -74,6 +77,7 @@ namespace ETHotfix
 		{
 			List<T> list = new List<T>();
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+
 			DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
 			foreach (ComponentWithId component in dbQueryJsonResponse.Components)
 			{
@@ -82,7 +86,38 @@ namespace ETHotfix
 			return list;
 		}
 
-	    public static async Task<List<T>> QueryJsonCurrentDay<T>(this DBProxyComponent self) where T : ComponentWithId
+	    /// <summary>
+	    /// 根据查询表达式查询
+	    /// </summary>
+	    /// <param name="self"></param>
+	    /// <param name="exp"></param>
+	    /// <typeparam name="T"></typeparam>
+	    /// <returns></returns>
+	    public static async Task<List<ComponentWithId>> Query<T>(this DBProxyComponent self, Expression<Func<T, bool>> exp) where T : ComponentWithId
+	    {
+	        ExpressionFilterDefinition<T> filter = new ExpressionFilterDefinition<T>(exp);
+	        IBsonSerializerRegistry serializerRegistry = BsonSerializer.SerializerRegistry;
+	        IBsonSerializer<T> documentSerializer = serializerRegistry.GetSerializer<T>();
+	        string json = filter.Render(documentSerializer, serializerRegistry).ToJson();
+	        return await self.Query<T>(json);
+	    }
+
+	    /// <summary>
+	    /// 根据json查询条件查询
+	    /// </summary>
+	    /// <param name="self"></param>
+	    /// <param name="json"></param>
+	    /// <typeparam name="T"></typeparam>
+	    /// <returns></returns>
+	    public static async Task<List<ComponentWithId>> Query<T>(this DBProxyComponent self, string json) where T : ComponentWithId
+	    {
+	        Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+	        DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
+	        return dbQueryJsonResponse.Components;
+	    }
+
+
+        public static async Task<List<T>> QueryJsonCurrentDay<T>(this DBProxyComponent self) where T : ComponentWithId
         {
 	        List<T> list = new List<T>();
 	        string json = $"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}";
@@ -129,14 +164,6 @@ namespace ETHotfix
 	        return list;
 	    }
 
-        public static async Task<List<PlayerBaseInfo>> QueryJsonPlayerInfo(this DBProxyComponent self)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-            List<PlayerBaseInfo> components = await dbComponent.GetPlayerBaseInfoCollection(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(30).ToListAsync();
-            return components;
-        }
-
         //刷新周排行榜 1,周财富榜，2，周战绩榜
         public static async Task<List<Log_Rank>> QueryJsonRank(this DBProxyComponent self, int type)
         {
@@ -154,21 +181,29 @@ namespace ETHotfix
             return components;
         }
 
-        public static async Task<List<PlayerBaseInfo>> QueryJsonGamePlayer(this DBProxyComponent self)
-	    {
+	    public static async Task<List<PlayerBaseInfo>> QueryJsonGamePlayer(this DBProxyComponent self)
+        {
 	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
 	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-	        List<PlayerBaseInfo> components = await dbComponent.GetPlayerBaseInfoCollection(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(30).ToListAsync();
+	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(50).ToListAsync();
 	        return components;
-	    }
+        }
 
-        //public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
-        //{
-        //    DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-        //    FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
-        //    List<AccountInfo> components = await dbComponent.GetAccountInfoCollection(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-        //    return components;
-        //}
+	    public static async Task<List<PlayerBaseInfo>> QueryJsonPlayerInfo(this DBProxyComponent self)
+        {
+	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
+	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(50).ToListAsync();
+	        return components;
+        }
+
+        public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
+        {
+            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
+            FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
+            List<AccountInfo> components = await dbComponent.GetDBDataCollection<AccountInfo>(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
+            return components;
+        }
 
 		public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self)
         {
@@ -200,6 +235,7 @@ namespace ETHotfix
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
             List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition).Result.ToListAsync();
             return components;
+
         }
         public static async Task Delete<T>(this DBProxyComponent self, long id)
 	    {
@@ -214,7 +250,6 @@ namespace ETHotfix
             await dbComponent.GetCollection(typeof(T).Name).DeleteManyAsync(filter);
         }
 
-
         public static long QueryJsonCount<T>(this DBProxyComponent self, string json)
 	    {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
@@ -222,29 +257,6 @@ namespace ETHotfix
             long count = dbComponent.GetCollection(typeof(T).Name).Count(filterDefinition);
 	        return count;
 	    }
-
-        //        public static async Task<List<T>> QueryJsonPlayerInfo<T>(this DBProxyComponent self, string json) where T : PlayerBaseInfo
-        //        {
-        //            List<T> list = new List<T>();
-        //            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-        //            DBQueryJsonPlayerInfoResponse dbQueryJsonResponse = (DBQueryJsonPlayerInfoResponse)await session.Call(new DBQueryJsonPlayerInfoRequest { CollectionName = typeof(T).Name, Json = json });
-        //            foreach (PlayerBaseInfo component in dbQueryJsonResponse.Components)
-        //            {
-        //                list.Add((T)component);
-        //            }
-        //            return list;
-        //        }
-        //
-        //public static async Task<List<T>> QueryJsonGamePlayer<T>(this DBProxyComponent self, string json)
-        //{
-        //    List<T> list = new List<T>();
-        //    Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-        //    DBQueryJsonGamePlayerResponse dbQueryJsonResponse = (DBQueryJsonGamePlayerResponse)await session.Call(new DBQueryJsonGamePlayerRequest { CollectionName = typeof(T).Name, Json = json });
-        //    foreach (PlayerBaseInfo component in dbQueryJsonResponse.Components)
-        //    {
-        //        list.Add((T)component);
-        //    }
-        //    return list;
-        //}
+     
     }
 }

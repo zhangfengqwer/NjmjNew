@@ -12,7 +12,7 @@ namespace ETHotfix
         public static void Broadcast(this Room self, IActorMessage message)
         {
             if (self == null) return;
-
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
             foreach (Gamer gamer in self.gamers)
             {
                 if (gamer == null || gamer.isOffline)
@@ -20,8 +20,8 @@ namespace ETHotfix
                     continue;
                 }
 
-                ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
-                actorProxy?.Send(message);
+                UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
+                actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
             }
         }
 
@@ -31,9 +31,9 @@ namespace ETHotfix
             {
                 return;
             }
-
-            ActorProxy actorProxy = gamer?.GetComponent<UnitGateComponent>()?.GetActorProxy();
-            actorProxy?.Send(message);
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+            UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
+            actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
         }
 
         public static void GamerReconnect(this Room self, Gamer gamer, IActorMessage message)
@@ -43,8 +43,9 @@ namespace ETHotfix
                 return;
             }
 
-            ActorProxy actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorProxy();
-            actorProxy.Send(message);
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+            UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
+            actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
         }
 
         public static async void BroadGamerEnter(this Room self,int roomType)
@@ -170,9 +171,8 @@ namespace ETHotfix
                     gamer.IsCanGang = false;
                     gamer.IsCanHu = false;
                 }
-
                 self.GamerGrabCard();
-//                Log.Debug("OperateTime超时");
+                //                Log.Debug("OperateTime超时");
             }
             else
             {
@@ -324,14 +324,16 @@ namespace ETHotfix
                 Logic_NJMJ.getInstance().SortMahjong(cardsComponent.GetAll());
 
                 //发送抓牌消息
+                //
+                ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+             
                 foreach (Gamer _gamer in room.gamers)
                 {
                     if (_gamer == null || _gamer.isOffline)
                     {
                         continue;
                     }
-
-                    ActorProxy actorProxy = _gamer.GetComponent<UnitGateComponent>().GetActorProxy();
+                    UnitGateComponent unitGateComponent = _gamer?.GetComponent<UnitGateComponent>();
                     Actor_GamerGrabCard actorGamerGrabCard;
                     if (_gamer.UserID == orderController.CurrentAuthority)
                     {
@@ -352,8 +354,7 @@ namespace ETHotfix
 
                         room.reconnectList.Add(actorGamerGrabCard);
                     }
-
-                    actorProxy.Send(actorGamerGrabCard);
+                    actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(actorGamerGrabCard);
                 }
 
                 //发完牌判断是否胡牌
@@ -361,6 +362,11 @@ namespace ETHotfix
                 {
                     if (_gamer.UserID == orderController.CurrentAuthority)
                     {
+                        if (_gamer == null || _gamer.isOffline)
+                        {
+                            continue;
+                        }
+
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 
                         //判断小胡,4个花以上才能胡

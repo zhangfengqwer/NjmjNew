@@ -6,7 +6,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_GamerTrusteeshipHandler : AMHandler<Actor_GamerTrusteeship>
     {
-        protected override async void Run(Session session, Actor_GamerTrusteeship message)
+        protected override async void Run(ETModel.Session session, Actor_GamerTrusteeship message)
         {
             try
             {

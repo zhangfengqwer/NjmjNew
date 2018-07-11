@@ -44,7 +44,7 @@ namespace ETHotfix
             string aniStr = new StringBuilder().Append("Expression_")
                                              .Append(index).ToString();
            // UINetLoadingComponent.showNetLoading();
-            Game.Scene.GetComponent<SessionWrapComponent>().Session.Send(new Actor_Chat { UId = PlayerInfoComponent.Instance.uid,ChatType = 1, Value = aniStr });
+            Game.Scene.GetComponent<SessionComponent>().Session.Send(new Actor_Chat { UId = PlayerInfoComponent.Instance.uid,ChatType = 1, Value = aniStr });
             //UINetLoadingComponent.closeNetLoading();
         }
 

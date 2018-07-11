@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -48,7 +47,7 @@ namespace ETModel
 
 			base.Dispose();
 
-			//Log.Debug($"destroy assetbundle: {this.Name}");
+			//Log.Debug($"desdroy assetbundle: {this.Name}");
 
 			this.AssetBundle?.Unload(true);
 		}
@@ -200,7 +199,6 @@ namespace ETModel
 				{
 					string assetName = Path.GetFileNameWithoutExtension(s);
 					string path = $"{assetBundleName}/{assetName}".ToLower();
-
 					UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
 					this.resourceCache[path] = resource;
 				}
@@ -251,7 +249,7 @@ namespace ETModel
 			assetBundleName = assetBundleName.ToLower();
 			string[] dependencies = ResourcesHelper.GetSortedDependencies(assetBundleName);
 
-			//Log.Debug($"-----------dep load {assetBundleName} dep: {dependencies.ToList().ListToString()}");
+			// Log.Debug($"-----------dep load {assetBundleName} dep: {dependencies.ToList().ListToString()}");
 			foreach (string dependency in dependencies)
 			{
 				if (string.IsNullOrEmpty(dependency))
@@ -303,14 +301,14 @@ namespace ETModel
 
 			string p = Path.Combine(PathHelper.AppHotfixResPath, assetBundleName);
 			AssetBundle assetBundle = null;
-			if (File.Exists(p))
-			{
-				assetBundle = AssetBundle.LoadFromFile(p);
-			}
-			else
+			if (!File.Exists(p))
 			{
 				p = Path.Combine(PathHelper.AppResPath, assetBundleName);
-				assetBundle = AssetBundle.LoadFromFile(p);
+			}
+			
+			using (AssetsBundleLoaderAsync assetsBundleLoaderAsync = ComponentFactory.Create<AssetsBundleLoaderAsync>())
+			{
+				assetBundle = await assetsBundleLoaderAsync.LoadAsync(p);
 			}
 
 			if (assetBundle == null)

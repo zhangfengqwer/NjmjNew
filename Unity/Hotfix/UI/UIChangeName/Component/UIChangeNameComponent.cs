@@ -80,7 +80,7 @@ namespace ETHotfix
         private async void RequestChangeName()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_ChangeName g2cChangeName = (G2C_ChangeName)await SessionWrapComponent.Instance.Session.Call(new C2G_ChangeName { Uid = PlayerInfoComponent.Instance.uid , Name = InputField_name .text});
+            G2C_ChangeName g2cChangeName = (G2C_ChangeName)await SessionComponent.Instance.Session.Call(new C2G_ChangeName { Uid = PlayerInfoComponent.Instance.uid , Name = InputField_name .text});
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cChangeName.Error != ErrorCode.ERR_Success)

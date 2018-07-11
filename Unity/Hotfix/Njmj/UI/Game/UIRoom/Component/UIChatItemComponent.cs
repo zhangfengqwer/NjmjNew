@@ -37,7 +37,7 @@ namespace ETHotfix
         private void RequestChat()
         {
             //UINetLoadingComponent.showNetLoading();
-            Game.Scene.GetComponent<SessionWrapComponent>()
+            Game.Scene.GetComponent<SessionComponent>()
                 .Session.Send(new Actor_Chat { ChatType = 2, Value = ChatTxt.text, UId = PlayerInfoComponent.Instance.uid });
             //UINetLoadingComponent.closeNetLoading();
         }

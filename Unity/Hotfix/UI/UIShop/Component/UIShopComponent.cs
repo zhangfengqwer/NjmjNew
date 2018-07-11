@@ -246,7 +246,7 @@ namespace ETHotfix
             else
                 price = shopInfo.Price;
             UINetLoadingComponent.showNetLoading();
-            G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionWrapComponent.Instance.
+            G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionComponent.Instance.
                 Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price , CurrencyType = 2});
             UINetLoadingComponent.closeNetLoading();
 

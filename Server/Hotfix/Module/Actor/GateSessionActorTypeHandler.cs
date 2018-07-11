@@ -21,7 +21,6 @@ namespace ETHotfix
 				// 发送给客户端
 				Session clientSession = entity as Session;
 				actorMessage.ActorId = 0;
-
 				clientSession.Send(actorMessage);
 
 				session.Reply(actorResponse);

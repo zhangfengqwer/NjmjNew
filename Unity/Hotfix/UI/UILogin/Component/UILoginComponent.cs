@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
 using Hotfix;
@@ -55,6 +56,7 @@ namespace ETHotfix
         bool isLoginSuccess = false;
         private Button btn_third;
         public static UILoginComponent Instance { get; set; }
+        private bool isLogining;
 
         public async void Awake()
         {
@@ -63,16 +65,15 @@ namespace ETHotfix
             ToastScript.clear();
             Instance = this;
             initData();
+            CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
         }
-
-        public async void initData()
+     
+        public void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             panel_start = rc.Get<GameObject>("Start");
             panel_phoneLogin = rc.Get<GameObject>("PhoneLogin");
-
-            CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
 
             btn_phone = rc.Get<GameObject>("Button_phone").GetComponent<Button>();
             btn_wechat = rc.Get<GameObject>("Button_wechat").GetComponent<Button>();
@@ -94,7 +95,6 @@ namespace ETHotfix
             btn_login.onClick.Add(onClickPhoneCodeLogin);
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
-
 
             #region 登录按钮设置
             {
@@ -202,6 +202,8 @@ namespace ETHotfix
         public async void onClickGuestLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
+
+            // await OnThirdLogin(Third_Id, "", "");
             await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
         }
 
@@ -264,14 +266,16 @@ namespace ETHotfix
 
             UINetLoadingComponent.showNetLoading();
 
-            SessionWrap sessionWrap = null;
+            Session sessionWrap = null;
             try
             {
 
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
                 IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
-                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                sessionWrap = new SessionWrap(session);
+                ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+
+                sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
+
                 R2C_SendSms r2CData = (R2C_SendSms)await sessionWrap.Call(new C2R_SendSms() { Phone = inputField_Phone.text });
 
                 UINetLoadingComponent.closeNetLoading();
@@ -317,17 +321,18 @@ namespace ETHotfix
 
         public async Task OnLoginPhone(string phone, string code, string token)
         {
-            SessionWrap sessionWrap = null;
+
+            Session sessionWrap = null;
+         
             try
             {
                 UINetLoadingComponent.showNetLoading();
 
-
                 //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
 
                 IPEndPoint connetEndPoint = ToIPEndPointWithYuMing(NetConfig.getInstance().getServerPort());
-                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                sessionWrap = new SessionWrap(session);
+                ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
                 R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName() });
                 //R2C_PhoneLogin r2CLogin = (R2C_PhoneLogin)await sessionWrap.Call(new C2R_PhoneLogin() { Phone = phone, Code = code, Token = token, MachineId = "1234", ChannelName = "jav", ClientVersion = "1.1.0" });
                 sessionWrap.Dispose();
@@ -361,16 +366,16 @@ namespace ETHotfix
                 //connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 string[] temp = r2CLogin.Address.Split(':');
                 connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
-                Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
-                ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
+                ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(session);
+                ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;
 
-                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
                 UINetLoadingComponent.closeNetLoading();
 
                 ToastScript.createToast("登录成功");
                 //挂心跳包
-                Game.Scene.GetComponent<SessionWrapComponent>().Session.AddComponent<HeartBeatComponent>();
+                Game.Scene.GetComponent<SessionComponent>().Session.AddComponent<HeartBeatComponent>();
                 UINetLoadingComponent.closeNetLoading();
                 await getAllData();
 
@@ -407,21 +412,32 @@ namespace ETHotfix
 
         public async Task OnThirdLogin(string third_id,string name,string head)
         {
-            SessionWrap sessionWrap = null;
+            //加锁
+            if (isLogining)
+            {
+                return;
+            }
+            isLogining = true;
+
+            Session sessionWrap = null;
             try
             {
                 UINetLoadingComponent.showNetLoading();
 
 
-                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                // IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
                 IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
-                Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                sessionWrap = new SessionWrap(session);
+                ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
 
                 name = name.Replace("'","*");
-
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
+                // R2C_Login r2CLogin = (R2C_Login)await sessionWrap.Call(new C2R_Login()
+                // {
+                //     Account = "111111",
+                //     Password = "111111"
+                // });
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
@@ -429,26 +445,25 @@ namespace ETHotfix
                 if (r2CLogin.Error != ErrorCode.ERR_Success)
                 {
                     ToastScript.createToast(r2CLogin.Message);
-
                     return;
                 }
-
+               
                 UINetLoadingComponent.showNetLoading();
 
                // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
 //                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 string[] temp = r2CLogin.Address.Split(':');
                 connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
-                Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
-                Game.Scene.GetComponent<SessionWrapComponent>().Session = new SessionWrap(gateSession);
-                ETModel.Game.Scene.GetComponent<SessionComponent>().Session = gateSession;
+                ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+                Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(session);
+                ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;
 
-                Log.Info("gateSession:"+ connetEndPoint.ToString());
-                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionWrapComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
+                // Log.Info("gateSession:"+ connetEndPoint.ToString());
+                G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 ToastScript.createToast("登录成功");
                 //挂心跳包
-                Game.Scene.GetComponent<SessionWrapComponent>().Session.AddComponent<HeartBeatComponent>();
+                Game.Scene.GetComponent<SessionComponent>().Session.AddComponent<HeartBeatComponent>();
                 UINetLoadingComponent.closeNetLoading();
 
                 await getAllData();
@@ -463,11 +478,13 @@ namespace ETHotfix
 
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UILogin);
+                isLogining = false;
             }
             catch (Exception e)
             {
                 sessionWrap?.Dispose();
                 Log.Error("OnThirdLogin:" + e);
+                isLogining = false;
             }
         }
 

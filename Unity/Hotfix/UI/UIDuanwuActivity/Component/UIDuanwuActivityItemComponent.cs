@@ -85,7 +85,7 @@ namespace ETHotfix
         private async void GetReward()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_GetDuanwuReward g2cDuanwu = (G2C_GetDuanwuReward)await Game.Scene.GetComponent<SessionWrapComponent>().Session.Call(new C2G_GetDuanwuReward { UId = PlayerInfoComponent.Instance.uid, Reward = info.Reward, TaskId = info.TaskId });
+            G2C_GetDuanwuReward g2cDuanwu = (G2C_GetDuanwuReward)await Game.Scene.GetComponent<SessionComponent>().Session.Call(new C2G_GetDuanwuReward { UId = PlayerInfoComponent.Instance.uid, Reward = info.Reward, TaskId = info.TaskId });
             UINetLoadingComponent.closeNetLoading();
 
             IsComplete.SetActive(false);

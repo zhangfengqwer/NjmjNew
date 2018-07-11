@@ -8,6 +8,7 @@
 	
 	message M2M_TrasferUnitResponse // IResponse
 	{
+		required int64 InstanceId = 1;
 	}
 	
 	message M2A_Reload // IRequest
@@ -16,18 +17,6 @@
 
 	message A2M_Reload // IResponse
 	{
-	}
-
-	message G2M_GetRoomInfo // IRequest
-	{
-	}
-
-	message M2G_GetRoomInfo // IResponse
-	{
-		required int NewRoomCount = 1;
-		required int NewTotalPlayerInGameCount = 2;
-		required int JingRoomCount = 3;
-		required int JingTotalPlayerInGameCount = 4;
 	}
 
 	message G2G_LockRequest // IRequest
@@ -105,37 +94,15 @@
 		required string Json = 2;
 	}
 
-	message DBQueryJsonPlayerInfoRequest // IRequest
-	{
-		required string CollectionName = 1;
-		required string Json = 2;
-	}
-
 	message DBQueryJsonResponse // IResponse
 	{
 		repeated ComponentWithId Components = 1;
 	}
 
-	message DBQueryJsonGamePlayerRequest // IRequest
-	{
-		required string CollectionName = 1;
-		required string Json = 2;
-	}
-
-	message DBQueryJsonPlayerInfoResponse // IResponse
-	{
-		repeated PlayerBaseInfo Components = 1;
-	}
-
-	message DBQueryJsonGamePlayerResponse // IResponse
-	{
-		repeated PlayerBaseInfo Components = 1;
-	}
-
 	message ObjectAddRequest // IRequest
 	{
 		required int64 Key = 1;
-		required int AppId = 2;
+		required int64 InstanceId = 2;
 	}
 
 	message ObjectAddResponse // IResponse
@@ -154,7 +121,7 @@
 	message ObjectLockRequest // IRequest
 	{
 		required int64 Key = 1;
-		required int LockAppId = 2;
+		required int64 InstanceId = 2;
 		required int Time = 3;
 	}
 
@@ -165,8 +132,8 @@
 	message ObjectUnLockRequest // IRequest
 	{
 		required int64 Key = 1;
-		required int UnLockAppId = 2;
-		required int AppId = 3;
+		required int64 OldInstanceId = 2;
+		required int64 InstanceId = 3;
 	}
 
 	message ObjectUnLockResponse // IResponse
@@ -180,7 +147,7 @@
 
 	message ObjectGetResponse // IResponse
 	{
-		required int AppId = 1;
+		required int64 InstanceId = 1;
 	}
 
 	message R2G_GetLoginKey // IRequest
@@ -203,5 +170,21 @@
 	{
 		required int64 UnitId = 1;
 		required int Count = 2;
+	}
+
+	message G2M_SessionDisconnect // IActorMessage
+	{
+	}
+
+	message G2M_GetRoomInfo // IRequest
+	{
+	}
+
+	message M2G_GetRoomInfo // IResponse
+	{
+		required int NewRoomCount = 1;
+		required int NewTotalPlayerInGameCount = 2;
+		required int JingRoomCount = 3;
+		required int JingTotalPlayerInGameCount = 4;
 	}
 }

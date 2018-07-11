@@ -28,7 +28,7 @@ namespace ETHotfix
 
                 //创建User对象
                 User user = UserFactory.Create(userId, session);
-			    await user.AddComponent<ActorComponent>().AddLocation();
+			    await user.AddComponent<MailBoxComponent>().AddLocation();
 
                 //添加心跳包
 			    session.AddComponent<HeartBeatComponent>().CurrentTime = TimeHelper.ClientNowSeconds();
@@ -36,7 +36,7 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
 
 			    //添加消息转发组件
-			    await session.AddComponent<ActorComponent, string>(ActorType.GateSession).AddLocation();
+			    await session.AddComponent<MailBoxComponent, string>(ActorType.GateSession).AddLocation();
 
 			    response.PlayerId = user.Id;
 			    response.Uid = userId;

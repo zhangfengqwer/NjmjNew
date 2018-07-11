@@ -25,6 +25,8 @@ namespace ETModel
 			
 			foreach (StartConfig startConfig in startConfigs)
 			{
+				Game.Scene.GetComponent<TimerComponent>().WaitAsync(100);
+				
 				if (!ips.Contains(startConfig.ServerIP) && startConfig.ServerIP != "*")
 				{
 					continue;
@@ -74,17 +76,18 @@ namespace ETModel
 		/// </summary>
 		private async void WatchProcessAsync()
 		{
+			long instanceId = this.InstanceId;
+			
 			while (true)
 			{
 				await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
-//			    Log.Info("1111");
 
-				if (this.IsDisposed)
+				if (this.InstanceId != instanceId)
 				{
 					return;
 				}
-//			    Log.Info("2222");
-                foreach (int appId in this.processes.Keys.ToArray())
+
+				foreach (int appId in this.processes.Keys.ToArray())
 				{
 					Process process = this.processes[appId];
 					if (!process.HasExited)

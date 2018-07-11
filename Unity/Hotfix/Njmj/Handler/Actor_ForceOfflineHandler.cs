@@ -10,7 +10,7 @@ namespace ETHotfix
     [MessageHandler]
     public class Actor_ForceOfflineHandler : AMHandler<Actor_ForceOffline>
     {
-        protected override async void Run(Session session, Actor_ForceOffline message)
+        protected override async void Run(ETModel.Session session, Actor_ForceOffline message)
         {
             try
             {

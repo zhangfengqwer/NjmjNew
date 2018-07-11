@@ -31,7 +31,8 @@ namespace ETModel
             {
                 // 执行查询数据库任务
                 FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>(this.Json);
-                List<PlayerBaseInfo> components = await dbComponent.GetPlayerBaseInfoCollection(this.CollectionName).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(30).ToListAsync();
+                //                List<PlayerBaseInfo> components = await dbComponent.GetPlayerBaseInfoCollection(this.CollectionName).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(30).ToListAsync();
+                List<PlayerBaseInfo> components = new List<PlayerBaseInfo>();
                 this.Tcs.SetResult(components);
             }
             catch (Exception e)

@@ -64,7 +64,7 @@ namespace ETHotfix
         {
             UINetLoadingComponent.showNetLoading();
             G2C_Chengjiu g2cChengjiu =
-                    (G2C_Chengjiu) await SessionWrapComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
+                    (G2C_Chengjiu) await SessionComponent.Instance.Session.Call(new C2G_Chengjiu { Uid = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
 
             CreateItems(g2cChengjiu.ChengjiuList);
