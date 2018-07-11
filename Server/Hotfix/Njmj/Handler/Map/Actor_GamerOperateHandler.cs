@@ -108,7 +108,11 @@ namespace ETHotfix
 //                    }
 
                     //游戏结束
-                    if (room.IsGameOver) return;
+                    if (room.IsGameOver)
+                    {
+                        Log.Warning("游戏结束不能碰刚");
+                        return;
+                    }
 
                     // 碰
                     if (message.OperationType == 0)
@@ -137,6 +141,10 @@ namespace ETHotfix
 
                             handCards.PengOrBars.Add(pengOrBar);
                         }
+
+                        //碰完当前玩家出牌
+                        orderController.CurrentAuthority = gamer.UserID;
+                        room.StartTime();
                     }
                     // 杠
                     else
@@ -217,8 +225,7 @@ namespace ETHotfix
 
                         }
                         //碰杠
-                        else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards,
-                            handCardsComponent.GetAll(), out var weight1))
+                        else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(), out var weight1))
                         {
                             isSuccess = true;
                             gamerOperation.weight = weight1;
@@ -271,13 +278,6 @@ namespace ETHotfix
                                     GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
                                 }
                             }
-
-                            //                            PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
-                            //                            pengOrBar.OperateType = OperateType.Bar;
-                            //                            pengOrBar.Weight = (int)weight1;
-                            //                            pengOrBar.UserId = 0;
-                            //                            pengOrBar.BarType = BarType.PengBar;
-                            //                            handCards.PengOrBars.Add(pengOrBar);
                         }
 
                         if (isSuccess)
@@ -333,10 +333,6 @@ namespace ETHotfix
                             Log.Debug("不能杠");
                         }
                     }
-
-                    //碰完当前玩家出牌
-                    orderController.CurrentAuthority = gamer.UserID;
-                    room.StartTime();
                 }
             }
             catch (Exception e)

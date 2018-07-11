@@ -7,6 +7,9 @@ namespace ETModel
     public class PengOrBar : ComponentWithId
     {
         public int Weight { get; set; }
+        /// <summary>
+        /// 杠的那个人的Uid
+        /// </summary>
         public long UserId { get; set; }
         public BarType BarType { get; set; }
         public OperateType OperateType { get; set; }

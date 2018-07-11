@@ -165,7 +165,7 @@ namespace ETHotfix
 
 	                if (isNeedWait)
 	                {
-	                    await room.StartOperateTime();
+	                    room.StartOperateTime();
                     }
                     //没人可以操作就直接发牌
 	                else
