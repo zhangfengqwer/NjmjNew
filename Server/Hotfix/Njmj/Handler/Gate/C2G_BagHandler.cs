@@ -27,10 +27,16 @@ namespace ETHotfix
                     itemList.Add(item);
                 }
 
-                Bag keyItem = new Bag();
-                keyItem.ItemId = 112;
-                keyItem.Count = await DBCommonUtil.GetUserFriendKeyNum(message.UId);
-                itemList.Add(keyItem);
+                
+                int fKeyCount = await DBCommonUtil.GetUserFriendKeyNum(message.UId);
+                if(fKeyCount > 0)
+                {
+                    Bag keyItem = new Bag();
+                    keyItem.ItemId = 112;
+                    keyItem.Count = fKeyCount;
+                    itemList.Add(keyItem);
+                }
+                
                 response.ItemList = itemList;
                 reply(response);
             }

@@ -993,7 +993,8 @@ message C2G_GetWeekReward //IRequest
 
 message G2C_GetWeekReward //IResponse
 {
-
+	required bool IsGetGoldRank = 1;
+	required bool IsGetGameRank = 2;
 }
 
 message C2G_IsCanRecharge //IRequest

@@ -2854,6 +2854,12 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public bool IsGetGoldRank;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsGetGameRank;
+
 	}
 
 	[Message(HotfixOpcode.C2G_IsCanRecharge)]
