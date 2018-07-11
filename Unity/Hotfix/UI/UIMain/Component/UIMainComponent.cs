@@ -673,7 +673,6 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownWealthRank.PlayerName;
-            Log.Info(ownWealthRank.GoldNum + "Gold");
             GoldTxt.text = new StringBuilder().Append("金币:")
                                               .Append(ownWealthRank.GoldNum)
                                               .ToString();

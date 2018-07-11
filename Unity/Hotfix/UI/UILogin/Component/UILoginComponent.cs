@@ -24,15 +24,6 @@ namespace ETHotfix
         }
     }
 
-    [ObjectSystem]
-    public class UiLoginComponentStartSystem : StartSystem<UILoginComponent>
-    {
-        public override void Start(UILoginComponent self)
-        {
-            self.Start();
-        }
-    }
-
     public class ThirdLoginData
     {
         public string channel_name = "";
@@ -75,14 +66,10 @@ namespace ETHotfix
             ToastScript.clear();
             Instance = this;
             initData();
-        }
-
-        public void Start()
-        {
             CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
         }
-
-        public async void initData()
+     
+        public void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
@@ -217,8 +204,8 @@ namespace ETHotfix
         {
             string Third_Id = CommonUtil.getCurTime();
 
-            await OnThirdLogin(Third_Id, "", "");
-            // await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
+            // await OnThirdLogin(Third_Id, "", "");
+            await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)

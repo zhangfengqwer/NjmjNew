@@ -26,7 +26,7 @@ namespace ETModel
 			appDomain.DelegateManager.RegisterMethodDelegate<Session>();
 			appDomain.DelegateManager.RegisterMethodDelegate<ILTypeInstance>();
 
-			CLRBindings.Initialize(appDomain);
+            CLRBindings.Initialize(appDomain);
 
 			// 注册适配器
 			Assembly assembly = typeof(Init).Assembly;
@@ -49,9 +49,42 @@ namespace ETModel
 			// 初始化ILRuntime的protobuf
 			InitializeILRuntimeProtobuf(appDomain);
 			LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appDomain);
-		}
 
-		public static void InitializeILRuntimeProtobuf(ILRuntime.Runtime.Enviorment.AppDomain appDomain)
+            #region 注册南京麻将事件
+		    {
+		        appDomain.DelegateManager.RegisterDelegateConvertor<DG.Tweening.TweenCallback>((act) =>
+		        {
+		            return new DG.Tweening.TweenCallback(() =>
+		            {
+		                ((Action)act)();
+		            });
+		        });
+		    }
+
+		    {
+		        appDomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
+		        {
+		            return new UnityEngine.Events.UnityAction(() =>
+		            {
+		                ((Action)act)();
+		            });
+		        });
+		    }
+
+		    appDomain.DelegateManager.RegisterMethodDelegate<System.Boolean>();
+		    appDomain.DelegateManager.RegisterFunctionDelegate<System.Int32, System.Int32, System.Int32>();
+		    appDomain.DelegateManager.RegisterDelegateConvertor<System.Comparison<System.Int32>>((act) =>
+		    {
+		        return new System.Comparison<System.Int32>((x, y) =>
+		        {
+		            return ((Func<System.Int32, System.Int32, System.Int32>)act)(x, y);
+		        });
+		    });
+
+            #endregion
+        }
+
+        public static void InitializeILRuntimeProtobuf(ILRuntime.Runtime.Enviorment.AppDomain appDomain)
 		{
 			ProtoBuf.PType.RegisterFunctionCreateInstance((typeName)=>PType_CreateInstance(appDomain, typeName));
 			ProtoBuf.PType.RegisterFunctionGetRealType(PType_GetRealType);

@@ -9,5 +9,10 @@ namespace ETModel
 		{
 			buttonClickedEvent.AddListener(()=> { action(); });
 		}
+
+	    public static void Add(this Toggle.ToggleEvent buttonClickedEvent, Action<bool> action)
+		{
+			buttonClickedEvent.AddListener((b)=> { action(b); });
+		}
 	}
 }
