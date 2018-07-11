@@ -72,6 +72,8 @@ namespace ETHotfix
             panel_start = rc.Get<GameObject>("Start");
             panel_phoneLogin = rc.Get<GameObject>("PhoneLogin");
 
+            CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
+
             btn_phone = rc.Get<GameObject>("Button_phone").GetComponent<Button>();
             btn_wechat = rc.Get<GameObject>("Button_wechat").GetComponent<Button>();
             btn_guest = rc.Get<GameObject>("Button_guest").GetComponent<Button>();

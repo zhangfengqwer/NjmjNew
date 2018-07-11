@@ -441,5 +441,20 @@ namespace ETHotfix
             }
             return await tcs.Task;
         }
+
+        static public void SetTextFont(GameObject parent)
+        {
+            Text[] list = parent.transform.GetComponentsInChildren<Text>();
+            foreach (Text text in list)
+            {
+                text.font = Resources.Load("Fonts/Defult/ZZGF") as Font;
+            }
+
+            Text temp = parent.GetComponent<Text>();
+            if (temp != null)
+            {
+                temp.font = Resources.Load("Fonts/Defult/ZZGF") as Font;
+            }
+        }
     }
 }
