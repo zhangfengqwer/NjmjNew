@@ -62,18 +62,8 @@ namespace ETHotfix
             if (CommonUtil.IsMonday())
             {
                 //周一零点刷新数据
-                if ((hour == 0) && (min == 0) && (sec == 0))
+                if ((hour == 0) && (min == 0) && (sec == 10))
                 {
-                    if ((sec == 0))
-                    {
-                        DBHelper.RefreshGameRank();
-                        //Game.Scene.AddComponent<DBOperatorComponet>();
-                    }
-                    if ((sec == 30))
-                    {
-                        DBHelper.RefreshWealthRank();
-                    }
-
                     DBCommonUtil.AccountWeekData();
                 }
             }

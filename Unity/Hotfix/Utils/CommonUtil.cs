@@ -327,7 +327,7 @@ namespace ETHotfix
         static public string getTextFileByBundle(string bundleName, string fileName)
         {
             ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            //resourcesComponent.LoadBundle($"{bundleName}.unity3d");
+            resourcesComponent.LoadBundle($"{bundleName}.unity3d");
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset($"{bundleName}.unity3d", $"{bundleName}");
 
             TextAsset go = bundleGameObject.Get<TextAsset>($"{fileName}");

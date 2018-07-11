@@ -107,7 +107,8 @@ namespace ETModel
                 }
             }
             
-            await LoadRes();
+            // 取消预加载
+            // await LoadRes();
 
             ToastScript.createToast("加载完毕");
 
