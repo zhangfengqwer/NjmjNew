@@ -42,7 +42,8 @@ namespace ETHotfix
         private GameObject Btn_GoldSelect;
         private GameObject Btn_GameSelect;
         private GameObject Grid;
-       
+        private Button DetailBtn;
+
         #region myRank
         public Text GoldTxt;
         private Text NameTxt;
@@ -93,6 +94,13 @@ namespace ETHotfix
             Icon = rc.Get<GameObject>("Icon").GetComponent<Image>();
             RankImg = rc.Get<GameObject>("RankImg");
             RewardBtn = rc.Get<GameObject>("RewardBtn").GetComponent<Button>();
+            DetailBtn = rc.Get<GameObject>("DetailBtn").GetComponent<Button>();
+
+            //周排行规则以及奖励明细
+            DetailBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIWeekRank);
+            });
 
             // 转盘
             BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Button>().onClick.Add(() =>
@@ -193,8 +201,8 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                /*ToastScript.createToast("暂未开放：比赛场");*/
-                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
+                ToastScript.createToast("暂未开放：比赛场");
+                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
             });
 
             // 休闲场返回按钮
