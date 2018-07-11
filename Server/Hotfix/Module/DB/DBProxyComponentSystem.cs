@@ -77,7 +77,6 @@ namespace ETHotfix
 		{
 			List<T> list = new List<T>();
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-		    Log.Info("22222:"+ self.dbAddress);
 
 			DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
 			foreach (ComponentWithId component in dbQueryJsonResponse.Components)

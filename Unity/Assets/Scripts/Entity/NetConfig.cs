@@ -109,8 +109,8 @@ namespace ETModel
 //            {
 //                serverPort = Convert.ToInt32(address.Split(':')[1]);
 //            }
-            Log.Debug("serverUrl:" + serverUrl);
-            Log.Debug("serverPort:" + serverPort);
+            // Log.Debug("serverUrl:" + serverUrl);
+            // Log.Debug("serverPort:" + serverPort);
             IPAddress ip;
             IPHostEntry IPinfo = Dns.GetHostEntry(serverUrl);
             if (IPinfo.AddressList.Length <= 0)

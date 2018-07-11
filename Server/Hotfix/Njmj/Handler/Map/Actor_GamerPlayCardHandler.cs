@@ -109,7 +109,7 @@ namespace ETHotfix
                             _gamer.IsCanPeng = true;
                             isNeedWait = true;
                             canOperation.OperationType = 0;
-	                        Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
+	                        //Log.Info($"{_gamer.UserID}可碰:"+JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 
@@ -122,7 +122,7 @@ namespace ETHotfix
                             _gamer.IsCanGang = true;
 	                        isNeedWait = true;
                             canOperation.OperationType = 1;
-	                        Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
+	                        //Log.Info($"{_gamer.UserID}可杠" + JsonHelper.ToJson(canOperation));
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 

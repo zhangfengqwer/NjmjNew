@@ -80,7 +80,6 @@ namespace ETHotfix
                     gamer.IsCanHu = false;
                     gamer.IsCanPeng = false;
                     gamer.IsCanGang = false;
-
                     if (orderController.CurrentAuthority == gamer.UserID)
                     {
                         //room.tokenSource.Cancel();

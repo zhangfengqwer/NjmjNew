@@ -13,11 +13,10 @@ namespace App
 	{
 		private static void Main(string[] args)
 		{
-			// 异步方法全部会回掉到主线程
-			OneThreadSynchronizationContext contex = new OneThreadSynchronizationContext();
-			SynchronizationContext.SetSynchronizationContext(contex);
-			
-			try
+		    // 异步方法全部会回掉到主线程
+		    SynchronizationContext.SetSynchronizationContext(OneThreadSynchronizationContext.Instance);
+
+            try
 			{
 				Game.EventSystem.Add(DLLType.Model, typeof(Game).Assembly);
 				Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
@@ -152,10 +151,10 @@ namespace App
 				{
 					try
 					{
-						Thread.Sleep(1);
-						contex.Update();
-						Game.EventSystem.Update();
-					}
+					    Thread.Sleep(1);
+					    OneThreadSynchronizationContext.Instance.Update();
+					    Game.EventSystem.Update();
+                    }
 					catch (Exception e)
 					{
 						Log.Error(e);

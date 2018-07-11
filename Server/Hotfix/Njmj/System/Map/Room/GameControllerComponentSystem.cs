@@ -133,6 +133,7 @@ namespace ETHotfix
                     //离线踢出
                     if (gamer.isOffline)
                     {
+                        Log.Info("玩家结束游戏后离线踢出");
                         room.Remove(gamer.UserID);
                         gamer.isOffline = !gamer.isOffline;
                     }
@@ -160,6 +161,7 @@ namespace ETHotfix
         {
             foreach (var gamer in room.GetAll())
             {
+                if (gamer == null) continue;
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {
@@ -244,6 +246,7 @@ namespace ETHotfix
 //            Log.Debug("更新成就:房间ID为:" + room.Id);
             foreach (var gamer in room.GetAll())
             {
+                if (gamer == null) continue;
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {

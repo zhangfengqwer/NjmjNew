@@ -18,9 +18,7 @@ namespace ETHotfix
 	        try
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-	            Log.Info($"000");
                 List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
-	            Log.Info($"111:{JsonHelper.ToJson(accountInfos)}");
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)
                 {

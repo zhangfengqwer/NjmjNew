@@ -40,11 +40,9 @@ namespace ETHotfix
                 //				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
                 //				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
-			    Log.Info("111");
 
                 Game.EventSystem.Run(EventIdType.InitSceneStart);
 
-			    Log.Info("222");
                 Application.targetFrameRate = 30;
 			    // 永不息屏
 			    Screen.sleepTimeout = SleepTimeout.NeverSleep;
