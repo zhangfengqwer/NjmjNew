@@ -325,25 +325,18 @@ namespace ETHotfix
         private async void GetWeekReward()
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_GetWeekReward g2c = (G2C_GetWeekReward)await Game.Scene.GetComponent<SessionComponent>()
+            G2C_GetWeekReward g2cWR = (G2C_GetWeekReward)await Game.Scene.GetComponent<SessionComponent>()
                 .Session.Call(new C2G_GetWeekReward { UId = PlayerInfoComponent.Instance.uid, type = curType });
             UINetLoadingComponent.closeNetLoading();
-            if(g2c.Error != ErrorCode.ERR_Success)
+
+            if (g2cWR.Error != ErrorCode.ERR_Success)
             {
-                ToastScript.createToast(g2c.Message);
+                ToastScript.createToast(g2cWR.Message);
                 return;
             }
             RewardBtn.gameObject.SetActive(false);
-            
-            if(curType == 1)
-            {
-                g2cWeek.IsGetGoldRank = false;
-            }
-            else if(curType == 2)
-            {
-                g2cWeek.IsGetGameRank = false;
-            }
-
+            g2cWeek.IsGetGameRank = g2cWR.IsGetGameRank;
+            g2cWeek.IsGetGoldRank = g2cWR.IsGetGoldRank;
             ToastScript.createToast("领取成功");
         }
 

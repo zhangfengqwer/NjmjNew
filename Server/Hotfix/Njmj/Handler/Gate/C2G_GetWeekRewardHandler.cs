@@ -40,6 +40,10 @@ namespace ETHotfix
                     response.Error = ErrorCode.ERR_Exception;
                     response.Message = "该用户不存在weekRank记录，请检查";
                 }
+
+                response.IsGetGameRank = weeks[0].IsGetGameRank;
+                response.IsGetGoldRank = weeks[0].IsGetGoldRank;
+
                 reply(response);
             }
             catch(Exception e)

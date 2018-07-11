@@ -29,7 +29,7 @@ namespace ETHotfix
                 else
                 {
                     response.IsGetGameRank = weekRank[0].IsGetGameRank;
-                    response.IsGetGoldRank = weekRank[0].IsGetGameRank;
+                    response.IsGetGoldRank = weekRank[0].IsGetGoldRank;
                     response.GameIndex = weekRank[0].GameIndex;
                     response.WealthIndex = weekRank[0].GoldIndex;
                     reply(response);
@@ -74,12 +74,6 @@ namespace ETHotfix
                         }
                         
                     }
-
-                    response.IsGetGameRank = weekRank[0].IsGetGameRank;
-                    response.IsGetGoldRank = weekRank[0].IsGetGoldRank;
-                    response.GameIndex = weekRank[0].GameIndex;
-                    response.WealthIndex = weekRank[0].GoldIndex;
-
                 }
                 else
                 {
@@ -88,7 +82,14 @@ namespace ETHotfix
                     weekRank[0].GameIndex = -1;
                     weekRank[0].GoldIndex = -1;
                     await proxyComponent.Save(weekRank[0]);
+
+
                 }
+
+                response.IsGetGameRank = weekRank[0].IsGetGameRank;
+                response.IsGetGoldRank = weekRank[0].IsGetGoldRank;
+                response.GameIndex = weekRank[0].GameIndex;
+                response.WealthIndex = weekRank[0].GoldIndex;
 
                 reply(response);
             }
