@@ -14,6 +14,7 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId}}}");
+
                 response.ItemList = new List<Bag>();
                 List<Bag> itemList = new List<Bag>();
                 for(int i = 0;i< bagInfoList.Count; ++i)
@@ -25,6 +26,11 @@ namespace ETHotfix
                     item.Count = bagInfoList[i].Count;
                     itemList.Add(item);
                 }
+
+                Bag keyItem = new Bag();
+                keyItem.ItemId = 112;
+                keyItem.Count = await DBCommonUtil.GetUserFriendKeyNum(message.UId);
+                itemList.Add(keyItem);
                 response.ItemList = itemList;
                 reply(response);
             }

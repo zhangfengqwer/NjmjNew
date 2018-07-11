@@ -98,6 +98,8 @@ namespace ETHotfix
             fGameRankList.Clear();
             fRankDataList.AddRange(rankDataList);
             fGameRankList.AddRange(gameRankList);
+            Log.Debug("==============================================================rankDataList\r\n" + JsonHelper.ToJson(rankDataList) + "\r\n=========================================================");
+            Log.Debug("==============================================================gameRankList\r\n" + JsonHelper.ToJson(gameRankList) + "\r\n=========================================================");
             //结算后数据清零
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             await proxyComponent.DeleteAll<Log_Rank>();

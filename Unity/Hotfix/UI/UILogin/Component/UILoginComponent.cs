@@ -24,6 +24,15 @@ namespace ETHotfix
         }
     }
 
+    [ObjectSystem]
+    public class UiLoginComponentStartSystem : StartSystem<UILoginComponent>
+    {
+        public override void Start(UILoginComponent self)
+        {
+            self.Start();
+        }
+    }
+
     public class ThirdLoginData
     {
         public string channel_name = "";
@@ -68,14 +77,17 @@ namespace ETHotfix
             initData();
         }
 
+        public void Start()
+        {
+            CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
+        }
+
         public async void initData()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             panel_start = rc.Get<GameObject>("Start");
             panel_phoneLogin = rc.Get<GameObject>("PhoneLogin");
-
-            CommonUtil.SetTextFont(panel_start.transform.parent.gameObject);
 
             btn_phone = rc.Get<GameObject>("Button_phone").GetComponent<Button>();
             btn_wechat = rc.Get<GameObject>("Button_wechat").GetComponent<Button>();
