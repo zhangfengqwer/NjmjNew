@@ -642,9 +642,9 @@ namespace ETHotfix
             UpdateCards();
             //显示碰
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
-            for (int i = 0; i < 2; i++)
+            for (int i = 1; i < 3; i++)
             {
-                gameObject.transform.GetChild(i).GetComponent<Image>().sprite =
+                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = 
                         CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
             }
 
