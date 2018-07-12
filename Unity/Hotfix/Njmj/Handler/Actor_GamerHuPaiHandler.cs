@@ -44,13 +44,16 @@ namespace ETHotfix
                     handCardsComponent.ShowOperateAnimAsync((int)GamerOpearteType.Hu);
                 }
 
+                uiRoomComponent.exitBtn.gameObject.SetActive(false);
+
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
+                uiRoomComponent.exitBtn.gameObject.SetActive(true);
+                if (gamerComponent.GetGamerCount() < 4) return;
 
                 UIGameResultComponent gameResultComponent =
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
 
                 RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
-
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;
                 uiRoomComponent.ClosePropmtBtn();

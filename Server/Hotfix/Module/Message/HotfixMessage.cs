@@ -1358,6 +1358,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = false)]
 		public int weight;
 
+		[ProtoMember(4, IsRequired = false)]
+		public long OperatedUid;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerCanOperation)]

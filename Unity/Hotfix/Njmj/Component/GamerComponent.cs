@@ -80,6 +80,15 @@ namespace ETHotfix
             }
 
             return null;
+        } 
+        
+        /// <summary>
+        /// 返回玩家人数
+        /// </summary>
+        /// <returns></returns>
+        public int GetGamerCount()
+        {
+            return seats.Count;
         }
 
         public override void Dispose()

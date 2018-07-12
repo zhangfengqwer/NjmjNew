@@ -133,6 +133,7 @@ namespace ETHotfix
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
 
                             //添加碰的人
+                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Peng;
                             pengOrBar.Weight = deskComponent.CurrentCard.weight;
@@ -174,10 +175,11 @@ namespace ETHotfix
                             GameHelp.ChangeGamerGold(room, currentGamer, -20 * gameController.RoomConfig.Multiples);
 
                             //添加明杠
+                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.Weight = deskComponent.CurrentCard.weight;
-                            pengOrBar.UserId = 0;
+                            pengOrBar.UserId = deskComponent.CurrentAuthority;
                             pengOrBar.BarType = BarType.LightBar;
                             handCards.PengOrBars.Add(pengOrBar);
 
@@ -216,6 +218,7 @@ namespace ETHotfix
                             }
 
                             //添加暗杠
+                            gamerOperation.OperatedUid = 0;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.Weight = (int) weight;
@@ -249,6 +252,7 @@ namespace ETHotfix
                             handCards.PengGangCards.Add(info);
 
                             //添加碰杠
+
                             PengOrBar pengOrBar = null;
                             foreach (var item in handCardsComponent.PengOrBars)
                             {
@@ -265,7 +269,7 @@ namespace ETHotfix
                             }
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.BarType = BarType.PengBar;
-
+                            gamerOperation.OperatedUid = pengOrBar.UserId;
                             //杠扣钱
                             foreach (var _gamer in room.GetAll())
                             {
