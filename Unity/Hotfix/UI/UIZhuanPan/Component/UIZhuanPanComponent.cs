@@ -103,8 +103,8 @@ namespace ETHotfix
 
         public void onClickShare()
         {
-            //PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
-            PlatformHelper.WXShareFriends("AndroidCallBack", "OnWxShareFriends", OtherData.ShareUrl + "|" + "我是标题" + "|" + "我是内容");
+            PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
+            //PlatformHelper.WXShareFriends("AndroidCallBack", "OnWxShareFriends", OtherData.ShareUrl + "|" + "我是标题" + "|" + "我是内容");
         }
 
         public void onClick_ChouJiang()
