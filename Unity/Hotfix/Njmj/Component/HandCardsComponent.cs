@@ -450,8 +450,8 @@ namespace ETHotfix
         {
             GameObject cardSprite = this.CreateCardSprite($"{Direction}_" + mahjong.weight, postionX, postionY);
             //更换玩家牌的点击事件
-            UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
-            ui.AddComponent<ItemCardComponent>();
+            // UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
+            // ui.AddComponent<ItemCardComponent>();
 
             ItemCards.Add(cardSprite);
 
