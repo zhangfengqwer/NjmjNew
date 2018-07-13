@@ -50,24 +50,7 @@ namespace ETHotfix
                     }
                     response.ChengjiuCompleteCount = count;
                 }
-                {
-                    //活动
-                    List<DuanwuActivityInfo> activitys = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{message.UId}}}");
-                    response.IsInActivity = false;
-                    int count = 0;
-                    if (activitys.Count > 0)
-                    {
-                        for(int i = 0;i< activitys.Count; ++i)
-                        {
-                            if(activitys[i].IsComplete && !activitys[i].IsGet)
-                            {
-                                count++;
-                                response.IsInActivity = true;
-                            }
-                        }
-                    }
-                    response.ActivityCompleteCount = count;
-                }
+
                 {
                     //转盘
                     List<PlayerBaseInfo> playerInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
