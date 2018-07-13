@@ -44,6 +44,20 @@ namespace ETHotfix
         private GameObject Grid;
         private Button DetailBtn;
 
+        #region 好友房
+        private GameObject FriendRoom;
+        private GameObject FriendGrid;
+        private GameObject NoRoomTipTxt;
+        private Button JoinRoomBtn;
+        private Button CreateRoomBtn;
+        private Button CloseFrRoomBtn;
+
+        private List<TestRoomInfo> roomInfos = new List<TestRoomInfo>();
+        private List<GameObject> roomItems = new List<GameObject>();
+        private List<UI> uiFList = new List<UI>();
+        private GameObject roomItem = null;
+        #endregion
+
         #region myRank
         public Text GoldTxt;
         private Text NameTxt;
@@ -95,6 +109,39 @@ namespace ETHotfix
             RankImg = rc.Get<GameObject>("RankImg");
             RewardBtn = rc.Get<GameObject>("RewardBtn").GetComponent<Button>();
             DetailBtn = rc.Get<GameObject>("DetailBtn").GetComponent<Button>();
+
+            #region 好友房
+            FriendGrid = rc.Get<GameObject>("FriendGrid");
+            FriendRoom  = rc.Get<GameObject>("FriendRoom");
+            NoRoomTipTxt = rc.Get<GameObject>("NoRoomTipTxt");
+            JoinRoomBtn = rc.Get<GameObject>("JoinRoomBtn").GetComponent<Button>();
+            CreateRoomBtn = rc.Get<GameObject>("CreateRoomBtn").GetComponent<Button>();
+            CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
+
+            roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
+            #endregion
+
+            #region 加入房间
+            //打开加入房间
+            JoinRoomBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIJoinRoom);
+            });
+
+            //关闭好友房界面
+            CloseFrRoomBtn.onClick.Add(() =>
+            {
+                SetFriendRoom(false);
+                SetRank(true);
+            });
+
+            ////打开创建房间UI
+            CreateRoomBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UICreateFriendRoom);
+            });
+
+            #endregion
 
             //周排行规则以及奖励明细
             DetailBtn.onClick.Add(() =>
@@ -202,8 +249,9 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 //ToastScript.createToast("暂未开放：比赛场");
-                //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
-                //SetRank(false);
+                SetFriendRoom(true);
+                SetRank(false);
+                GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -321,6 +369,72 @@ namespace ETHotfix
                 Log.Debug(ex.ToString());
             }
         }
+
+        #region 好友房
+        private /*async*/ void GetRoomInfoReq()
+        {
+            roomInfos.Clear();
+
+            TestRoomInfo info = new TestRoomInfo();
+            info.roomId = 123560;
+            info.hua = "1000";
+            info.ju = "8";
+            info.icons = new List<string>() { "f_icon1", "f_icon2" };
+            roomInfos.Add(info);
+            info = new TestRoomInfo();
+            info.roomId = 987345;
+            info.hua = "100";
+            info.ju = "4";
+            info.icons = new List<string>() { "m_icon1" };
+            roomInfos.Add(info);
+            info = new TestRoomInfo();
+            info.roomId = 435465;
+            info.hua = "1000";
+            info.ju = "8";
+            info.icons = new List<string>() { "m_icon3" };
+            roomInfos.Add(info);
+            if (roomInfos.Count < 0)
+            {
+                NoRoomTipTxt.SetActive(true);
+            }
+            else
+            {
+                NoRoomTipTxt.SetActive(false);
+                CreateRoomItemss();
+            }
+        }
+
+        /// <summary>
+        /// 创建房间Item
+        /// </summary>
+        private void CreateRoomItemss()
+        {
+            GameObject obj = null;
+            for (int i = 0; i < roomInfos.Count; ++i)
+            {
+                if (i < roomItems.Count)
+                {
+                    obj = roomItems[i];
+                }
+                else
+                {
+                    obj = GameObject.Instantiate(roomItem, FriendGrid.transform);
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localPosition = Vector3.zero;
+                    roomItems.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIFriendRoomItemComponent>();
+                    uiFList.Add(ui);
+                }
+                uiFList[i].GetComponent<UIFriendRoomItemComponent>().SetItemInfo(roomInfos[i]);
+            }
+        }
+
+        private void SetFriendRoom(bool isShow)
+        {
+            FriendRoom.SetActive(isShow);
+        }
+        #endregion
 
         public void SetRank(bool isShow)
         {
@@ -451,6 +565,9 @@ namespace ETHotfix
             gameItemList.Clear();
             uiList.Clear();
             gameUiList.Clear();
+            uiList.Clear();
+            roomItems.Clear();
+            roomInfos.Clear();
         }
 
         /// <summary>

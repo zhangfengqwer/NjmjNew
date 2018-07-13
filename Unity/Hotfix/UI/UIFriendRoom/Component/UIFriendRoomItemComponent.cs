@@ -71,6 +71,7 @@ namespace ETHotfix
                 else
                 {
                     obj = GameObject.Instantiate(icon,FriendGrid.transform);
+                    icons.Add(obj);
                 }
                 HeadManager.setHeadSprite(obj.GetComponent<Image>(), iconNames[i]);
             }
@@ -84,6 +85,7 @@ namespace ETHotfix
                 else
                 {
                     obj = obj = GameObject.Instantiate(icon, FriendGrid.transform);
+                    icons.Add(obj);
                 }
                 HeadManager.setHeadSprite(obj.GetComponent<Image>(), "None");
             }

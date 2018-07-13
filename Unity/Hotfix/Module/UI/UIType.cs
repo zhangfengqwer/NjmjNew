@@ -58,8 +58,9 @@ namespace ETHotfix
         public const string UINetLoading = "UINetLoading";
         public const string UIChatShow = "UIChatShow";
         public const string UINetError = "UINetError";
-        public const string UIFriendRoom = "UIFriendRoom";
+        public const string UICreateFriendRoom = "UICreateFriendRoom";
         public const string UIFriendRoomItem = "UIFriendRoomItem";
         public const string UIFriendIcon = "UIFriendIconItem";
+        public const string UIJoinRoom = "UIJoinRoom";
     }
 }
