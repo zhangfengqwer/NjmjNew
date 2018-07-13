@@ -232,7 +232,7 @@ namespace ETHotfix
                     }
                 }
 
-			    {
+                {
 			        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{userId}}}");
 			        if (duanwuDataBases.Count <= 0)
 			        {

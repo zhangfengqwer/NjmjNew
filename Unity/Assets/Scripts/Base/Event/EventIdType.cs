@@ -29,7 +29,8 @@
 	    public const string WeChatLogin = "WeChatLogin";
 	    public const string WeChatShare = "WeChatShare";
 	    public const string ChangeAccount = "ChangeAccount";
-        #endregion
+	    public const string RecordCurSelectCard = "RecordCurSelectCard";
+	    #endregion
 
-    }
+	}
 }

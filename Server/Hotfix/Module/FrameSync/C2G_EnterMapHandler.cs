@@ -10,6 +10,8 @@ namespace ETHotfix
 		protected override async void Run(Session session, C2G_EnterMap message, Action<G2C_EnterMap> reply)
 		{
 			G2C_EnterMap response = new G2C_EnterMap();
+		    Log.Error("客户端篡改消息");
+		    return;
 			try
 			{
 				Player player = session.GetComponent<SessionPlayerComponent>().Player;

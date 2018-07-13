@@ -70,20 +70,20 @@ namespace ETHotfix
 
                     {
                         //端午节活动是否结束
-                        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{user.UserID}}}");
-                        string curTime = CommonUtil.getCurTimeNormalFormat();
-                        if (string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) >= 0)
-                        {
-                            long goldNum = 0;
-                            if (duanwuDataBases[0].ZongziCount > 0)
-                            {
-                                goldNum = duanwuDataBases[0].ZongziCount * 100;
-                                duanwuDataBases[0].ZongziCount = 0;
-                                //添加邮件
-                                await DBCommonUtil.SendMail(user.UserID, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
-                                await proxyComponent.Save(duanwuDataBases[0]);
-                            }
-                        }
+//                        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{user.UserID}}}");
+//                        string curTime = CommonUtil.getCurTimeNormalFormat();
+//                        if (string.CompareOrdinal(curTime, duanwuDataBases[0].EndTime) >= 0)
+//                        {
+//                            long goldNum = 0;
+//                            if (duanwuDataBases[0].ZongziCount > 0)
+//                            {
+//                                goldNum = duanwuDataBases[0].ZongziCount * 100;
+//                                duanwuDataBases[0].ZongziCount = 0;
+//                                //添加邮件
+//                                await DBCommonUtil.SendMail(user.UserID, "端午粽香", $"端午活动已结束，剩余粽子已转换为金币存入您的账号，兑换比例：一个粽子=100金币，您获得{goldNum}金币", $"1:{goldNum}");
+//                                await proxyComponent.Save(duanwuDataBases[0]);
+//                            }
+//                        }
                     }
 
                     reply(response);
