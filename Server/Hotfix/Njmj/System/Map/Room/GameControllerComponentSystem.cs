@@ -349,27 +349,6 @@ namespace ETHotfix
             // 112 富豪克星 单局赢取一亿金币满 100局
             if (amount >= 100000000)
                 await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-
-            {
-                var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<DuanwuDataBase> databases =
-                    await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
-//                Log.Debug(databases.Count + "========");
-                List<string> str_list = new List<string>();
-                CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
-
-//                Log.Debug("str_list:" + JsonHelper.ToJson(str_list));
-                for (int i = 0; i < str_list.Count; ++i)
-                {
-                    int id = 100 + int.Parse(str_list[i]) + 1;
-//                    Log.Debug(id + "任务ID");
-                    if (id == 109 || id == 110 || id == 111 || id == 112)
-                    {
-                        await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, amount);
-                    }
-                }
-            }
-
         }
     }
 }
