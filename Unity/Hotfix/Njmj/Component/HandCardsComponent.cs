@@ -33,6 +33,8 @@ namespace ETHotfix
         public int grabPostionX = 0;
         public int grabPostionY = 0;
 
+        public int curSelectIndex = -1;
+
         private List<MahjongInfo> handCards = new List<MahjongInfo>();
         private List<MahjongInfo> playCards = new List<MahjongInfo>();
         private List<GameObject> ItemCards = new List<GameObject>();
@@ -447,6 +449,9 @@ namespace ETHotfix
         private void AddCard(MahjongInfo mahjong, int postionX, int postionY, int index)
         {
             GameObject cardSprite = this.CreateCardSprite($"{Direction}_" + mahjong.weight, postionX, postionY);
+            //更换玩家牌的点击事件
+            UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
+            ui.AddComponent<ItemCardComponent>();
 
             ItemCards.Add(cardSprite);
 
