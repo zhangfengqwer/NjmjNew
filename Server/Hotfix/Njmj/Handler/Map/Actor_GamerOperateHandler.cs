@@ -108,7 +108,11 @@ namespace ETHotfix
 //                    }
 
                     //游戏结束
-                    if (room.IsGameOver) return;
+                    if (room.IsGameOver)
+                    {
+                        Log.Warning("游戏结束不能碰刚");
+                        return;
+                    }
 
                     // 碰
                     if (message.OperationType == 0)
@@ -129,6 +133,7 @@ namespace ETHotfix
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
 
                             //添加碰的人
+                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Peng;
                             pengOrBar.Weight = deskComponent.CurrentCard.weight;
@@ -137,6 +142,10 @@ namespace ETHotfix
 
                             handCards.PengOrBars.Add(pengOrBar);
                         }
+
+                        //碰完当前玩家出牌
+                        orderController.CurrentAuthority = gamer.UserID;
+                        room.StartTime();
                     }
                     // 杠
                     else
@@ -166,10 +175,11 @@ namespace ETHotfix
                             GameHelp.ChangeGamerGold(room, currentGamer, -20 * gameController.RoomConfig.Multiples);
 
                             //添加明杠
+                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.Weight = deskComponent.CurrentCard.weight;
-                            pengOrBar.UserId = 0;
+                            pengOrBar.UserId = deskComponent.CurrentAuthority;
                             pengOrBar.BarType = BarType.LightBar;
                             handCards.PengOrBars.Add(pengOrBar);
 
@@ -208,6 +218,7 @@ namespace ETHotfix
                             }
 
                             //添加暗杠
+                            gamerOperation.OperatedUid = 0;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.Weight = (int) weight;
@@ -217,8 +228,7 @@ namespace ETHotfix
 
                         }
                         //碰杠
-                        else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards,
-                            handCardsComponent.GetAll(), out var weight1))
+                        else if (Logic_NJMJ.getInstance().IsPengGang(handCardsComponent.PengCards, handCardsComponent.GetAll(), out var weight1))
                         {
                             isSuccess = true;
                             gamerOperation.weight = weight1;
@@ -242,6 +252,7 @@ namespace ETHotfix
                             handCards.PengGangCards.Add(info);
 
                             //添加碰杠
+
                             PengOrBar pengOrBar = null;
                             foreach (var item in handCardsComponent.PengOrBars)
                             {
@@ -258,7 +269,7 @@ namespace ETHotfix
                             }
                             pengOrBar.OperateType = OperateType.Bar;
                             pengOrBar.BarType = BarType.PengBar;
-
+                            gamerOperation.OperatedUid = pengOrBar.UserId;
                             //杠扣钱
                             foreach (var _gamer in room.GetAll())
                             {
@@ -271,13 +282,6 @@ namespace ETHotfix
                                     GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
                                 }
                             }
-
-                            //                            PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
-                            //                            pengOrBar.OperateType = OperateType.Bar;
-                            //                            pengOrBar.Weight = (int)weight1;
-                            //                            pengOrBar.UserId = 0;
-                            //                            pengOrBar.BarType = BarType.PengBar;
-                            //                            handCards.PengOrBars.Add(pengOrBar);
                         }
 
                         if (isSuccess)
@@ -333,10 +337,6 @@ namespace ETHotfix
                             Log.Debug("不能杠");
                         }
                     }
-
-                    //碰完当前玩家出牌
-                    orderController.CurrentAuthority = gamer.UserID;
-                    room.StartTime();
                 }
             }
             catch (Exception e)

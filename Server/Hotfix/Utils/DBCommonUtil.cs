@@ -105,11 +105,13 @@ namespace ETHotfix
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             List<ChengjiuInfo> chengjiuInfoList =
                 await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
-
+//            Log.Debug("UId:" + UId + " " + "更新成就" + taskId);
+//            Log.Debug("用户:" + UId + "成就" + "taskId" + JsonHelper.ToJson(chengjiuInfoList));
             if(chengjiuInfoList.Count <= 0)
             {
+//                Log.Debug("成就写入数据库");
                 ChengjiuInfo info = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
-                ChengjiuConfig config = ChengjiuData.getInstance().GetDataByChengjiuId(taskId);
+                ChengjiuConfig config = ConfigHelp.Get<ChengjiuConfig>(taskId);
                 info.IsGet = false;
                 info.UId = UId; 
                 if(config != null)
@@ -121,14 +123,20 @@ namespace ETHotfix
                     info.Reward = config.Reward;
                     info.Desc = config.Desc;
                     info.CurProgress = 0;
-                    await proxyComponent.Save(info);
                 }
+                else
+                {
+                    Log.Warning("config：" + taskId + "数据为空");
+                }
+                await proxyComponent.Save(info);
 
                 chengjiuInfoList =
                await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{UId},TaskId:{taskId}}}");
+                //Log.Debug("用户:" + UId + "成就" + "taskId" + JsonHelper.ToJson(chengjiuInfoList));
             }
             if (chengjiuInfoList.Count > 0)
             {
+                //Log.Debug("增加成就");
                 chengjiuInfoList[0].CurProgress += progress;
                 if (chengjiuInfoList[0].CurProgress >= chengjiuInfoList[0].Target)
                 {

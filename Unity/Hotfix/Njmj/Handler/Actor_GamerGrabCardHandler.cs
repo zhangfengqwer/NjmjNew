@@ -48,8 +48,6 @@ namespace ETHotfix
 
                 uiRoomComponent.CurrentMahjong = mahjongInfo;
 
-
-
                 Gamer currentGamer = gamerComponent.Get(PlayerInfoComponent.Instance.uid);
                 HandCardsComponent currentGamerCard = currentGamer.GetComponent<HandCardsComponent>();
                 currentGamerCard.CloseHandCardCanPeng();

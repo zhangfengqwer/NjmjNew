@@ -471,6 +471,7 @@ message Actor_GamerOperation // IActorMessage
    	optional long Uid = 1;
    	optional int OperationType = 2;
    	optional int weight = 3;
+   	optional long OperatedUid = 4;
 }
 
 message Actor_GamerCanOperation // IActorMessage

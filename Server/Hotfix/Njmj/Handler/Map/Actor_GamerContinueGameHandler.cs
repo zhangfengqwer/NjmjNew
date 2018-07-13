@@ -17,6 +17,10 @@ namespace ETHotfix
 
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
+                if (room == null)
+                {
+                    return;
+                }
                 GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
                 OrderControllerComponent orderControllerComponent = room.GetComponent<OrderControllerComponent>();
 

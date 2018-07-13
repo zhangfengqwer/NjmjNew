@@ -9,7 +9,7 @@ namespace ETModel
 
 	    public EntityDB()
 	    {
-	        CreateTime = CommonUtil.getCurDataNormalFormat();
+	        CreateTime = DateTime.Now.GetCurrentTime();
 	    }
 	}
 }

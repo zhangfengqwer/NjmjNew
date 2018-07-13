@@ -150,7 +150,7 @@ namespace ETHotfix
             }
         }
 
-        public static async Task StartOperateTime(this Room self)
+        public static async void StartOperateTime(this Room self)
         {
             if (self.tokenSource != null)
             {
@@ -360,12 +360,14 @@ namespace ETHotfix
                 //发完牌判断是否胡牌
                 foreach (Gamer _gamer in room.gamers)
                 {
+                    if (_gamer == null || _gamer.isOffline)
+                    {
+                        continue;
+                    }
+
                     if (_gamer.UserID == orderController.CurrentAuthority)
                     {
-                        if (_gamer == null || _gamer.isOffline)
-                        {
-                            continue;
-                        }
+                       
 
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 

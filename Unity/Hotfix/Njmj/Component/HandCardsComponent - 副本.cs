@@ -62,6 +62,7 @@ namespace ETHotfix
         //当前抓牌的索引
         private int grabIndex;
         private int num = 0;
+        private int SeatIndex = 0;
         private GameObject faceCard;
 
 
@@ -72,6 +73,7 @@ namespace ETHotfix
         {
             this.Panel = panel;
             this.Index = index;
+            SeatIndex = seatIndex;
             this.CardBottom = panel.Get<GameObject>("CardBottom");
             this.cardBottonPosition = this.CardBottom.transform.localPosition;
             this.showCard = panel.Get<GameObject>("ShowCard");
@@ -594,7 +596,7 @@ namespace ETHotfix
             bg.SetActive(false);
         }
 
-        public void SetPeng(int type, MahjongInfo mahjong)
+        public void SetPeng(int type, MahjongInfo mahjong, long operatedUid)
         {
             GameObject obj = null;
             if (type == 0)
@@ -640,12 +642,50 @@ namespace ETHotfix
             }
 
             UpdateCards();
+
+            //设置谁碰刚
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            Log.Info("operatedUid:" + operatedUid);
+            int gamerSeat = gamerComponent.Get(operatedUid).GetComponent<HandCardsComponent>().SeatIndex;
+            int mySeat = SeatIndex;
+
+            int offset = gamerSeat - mySeat;
+            if (offset < 0) offset += 4;
+            if (offset == 1) offset = 3;
+            else if (offset == 3) offset = 1;
+         
+            Log.Info("offset:" + offset);
+
             //显示碰
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
-            for (int i = 1; i < 3; i++)
+
+            for (int i = 1; i < 4; i++)
             {
-                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = 
-                        CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                Image image = gameObject.transform.Find("Item_" + i).GetComponent<Image>();
+                //暗杠显示
+                if (type == 4)
+                {
+                    if (i == 2)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_back");
+                    }
+                }
+                else
+                {
+                    if (i == offset)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_back");
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                    }
+                }
             }
 
             if (type == 0)

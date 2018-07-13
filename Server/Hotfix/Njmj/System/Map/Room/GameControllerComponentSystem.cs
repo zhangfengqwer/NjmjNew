@@ -198,13 +198,13 @@ namespace ETHotfix
                     
                     if (controllerComponent.RoomName == RoomName.ChuJi)
                     {
-                        Log.Debug("新手场SHENGLI");
+//                        Log.Debug("新手场SHENGLI");
                         //	102	新手场	在新手场赢得10场胜利	1000	10
                         await DBCommonUtil.UpdateTask(gamer.UserID, 102, 1);
                     }
                     else if (controllerComponent.RoomName == RoomName.JingYing)
                     {
-                        Log.Debug("精英场SHENGLI");
+//                        Log.Debug("精英场SHENGLI");
                         //	103	精英场	在精英场赢得30场胜利	100000	30
                         await DBCommonUtil.UpdateTask(gamer.UserID, 103, 1);
                     }
@@ -251,7 +251,12 @@ namespace ETHotfix
 //            Log.Debug("更新成就:房间ID为:" + room.Id);
             foreach (var gamer in room.GetAll())
             {
-                if (gamer == null) continue;
+                if (gamer == null)
+                {
+                    Log.Error("更新成就的时候game为null");
+                    continue;
+                }
+
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
                 {

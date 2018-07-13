@@ -108,7 +108,6 @@ namespace ETHotfix
             huaCount += 20;
             //砸2
             huaCount *= 2;
-
             //设置胡牌的人
             for (int i = 0; i < gamers.Length; i++)
             {

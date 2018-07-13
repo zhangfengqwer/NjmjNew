@@ -7,9 +7,9 @@
 
 		public string GetUrl()
 		{
-			string url = this.AssetBundleServerUrl;
+		    string url = NetConfig.getInstance().getWebUrl() + "/AssetBundle/" + PlatformHelper.GetVersionName() + "/";
 #if UNITY_ANDROID
-			url += "Android/";
+            url += "Android/";
 #elif UNITY_IOS
 			url += "IOS/";
 #elif UNITY_WEBGL
@@ -17,7 +17,7 @@
 #else
 			url += "PC/";
 #endif
-			Log.Debug(url);
+
 			return url;
 		}
 	}
