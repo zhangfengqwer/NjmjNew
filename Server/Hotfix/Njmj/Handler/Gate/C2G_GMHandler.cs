@@ -220,7 +220,7 @@ namespace ETHotfix
                             IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
                             Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
 
-//                            M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_r());
+                            M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GMInfo(){Type = 3,Uid = message.UId});
                         }
                         break;
                     case 4:
