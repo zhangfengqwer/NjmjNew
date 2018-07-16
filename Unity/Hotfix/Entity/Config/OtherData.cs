@@ -14,6 +14,7 @@ namespace Hotfix
         public static bool isShiedRealName = false;
         public static bool isShiedBindPhone = false;
         public static bool isShiedPhoneLogin = false;
+        public static bool isShiedWeChatLogin = false;
 
         public static string ShareUrl = "";
 
@@ -35,6 +36,11 @@ namespace Hotfix
         public static bool getIsShiedPhoneLogin()
         {
             return isShiedPhoneLogin;
+        }
+
+        public static bool getIsShiedWeChatLogin()
+        {
+            return isShiedWeChatLogin;
         }
     }
 }

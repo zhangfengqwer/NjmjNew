@@ -8,5 +8,6 @@ namespace ETModel
 	{
         public long Uid { set; get; }
         public string ip { set; get; }
+        public string clientVersion { set; get; }
     }
 }
