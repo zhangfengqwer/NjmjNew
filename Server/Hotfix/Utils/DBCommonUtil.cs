@@ -246,97 +246,131 @@ namespace ETHotfix
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
 
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            switch (propId)
+            try
             {
-                // 金币
-                case 1:
+                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+                switch (propId)
                 {
-                    List<PlayerBaseInfo> playerBaseInfos =
-                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                    playerBaseInfos[0].GoldNum += propNum;
-                    if (playerBaseInfos[0].GoldNum < 0)
-                    {
-                        playerBaseInfos[0].GoldNum = 0;
-                    }
-
-                    // 救济金
-                    if (playerBaseInfos[0].GoldNum < 2000)
-                    {
-                        List<Log_ReliefGold> log_reliefGolds = await proxyComponent.QueryJson<Log_ReliefGold>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
-                        if (log_reliefGolds.Count < 3)
+                    // 金币
+                    case 1:
                         {
-                            int gold = 20000;
-                            playerBaseInfos[0].GoldNum += gold;
-                            Log_ReliefGold log_ReliefGold = ComponentFactory.CreateWithId<Log_ReliefGold>(IdGenerater.GenerateId());
-                            log_ReliefGold.Uid = uid;
-                            log_ReliefGold.reward = "1:" + gold;
-                            await proxyComponent.Save(log_ReliefGold);
+                            List<PlayerBaseInfo> playerBaseInfos =
+                                await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                            playerBaseInfos[0].GoldNum += propNum;
+                            if (playerBaseInfos[0].GoldNum < 0)
+                            {
+                                playerBaseInfos[0].GoldNum = 0;
+                            }
+
+                            bool isSendReliefGold = false;
+
+                            // 救济金
+                            if (playerBaseInfos[0].GoldNum < 2000)
+                            {
+                                List<Log_ReliefGold> log_reliefGolds = await proxyComponent.QueryJson<Log_ReliefGold>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
+                                if (log_reliefGolds.Count < 3)
+                                {
+                                    isSendReliefGold = true;
+
+                                    int gold = 20000;
+                                    playerBaseInfos[0].GoldNum += gold;
+                                    Log_ReliefGold log_ReliefGold = ComponentFactory.CreateWithId<Log_ReliefGold>(IdGenerater.GenerateId());
+                                    log_ReliefGold.Uid = uid;
+                                    log_ReliefGold.reward = "1:" + gold;
+                                    await proxyComponent.Save(log_ReliefGold);
+
+                                    // 通知玩家
+                                    {
+                                        Actor_ReliefGold actor = new Actor_ReliefGold();
+                                        if (log_reliefGolds.Count == 0)
+                                        {
+                                            actor.Reward = "今日第一次赠送金币："+ gold;
+                                        }
+                                        else if (log_reliefGolds.Count == 1)
+                                        {
+                                            actor.Reward = "今日第二次赠送金币：" + gold;
+                                        }
+                                        else if (log_reliefGolds.Count == 2)
+                                        {
+                                            actor.Reward = "今日最后一次赠送金币：" + gold;
+                                        }
+
+                                        Game.Scene.GetComponent<UserComponent>().Get(uid).session.Send(actor);
+                                    }
+                                }
+                            }
+
+                            await proxyComponent.Save(playerBaseInfos[0]);
+
+                            if (!isSendReliefGold)
+                            {
+                                await RecordWeekRankLog(uid, propNum, 0);
+                            }
                         }
-                    }
+                        break;
 
-                    await proxyComponent.Save(playerBaseInfos[0]);
-                    await RecordWeekRankLog(uid, propNum, 0);
-                }
-                break;
-
-                // 元宝
-                case 2:
-                {
-                    List<PlayerBaseInfo> playerBaseInfos =
-                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                    playerBaseInfos[0].WingNum += propNum;
-                    if (playerBaseInfos[0].WingNum < 0)
-                    {
-                        playerBaseInfos[0].WingNum = 0;
-                    }
-
-                    await proxyComponent.Save(playerBaseInfos[0]);
-                }
-                    break;
-
-                // 话费
-                case 3:
-                {
-                    List<PlayerBaseInfo> playerBaseInfos =
-                        await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
-                    playerBaseInfos[0].HuaFeiNum += propNum;
-                    if (playerBaseInfos[0].HuaFeiNum < 0)
-                    {
-                        playerBaseInfos[0].HuaFeiNum = 0;
-                    }
-
-                    await proxyComponent.Save(playerBaseInfos[0]);
-                }
-                    break;
-
-                // 其他道具
-                default:
-                {
-                    List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
-                    if (userBags.Count == 0)
-                    {
-                        UserBag itemInfo = new UserBag();
-                        itemInfo.BagId = propId;
-                        itemInfo.UId = uid;
-                        itemInfo.Count = propNum;
-                        DBHelper.AddItemToDB(itemInfo);
-                    }
-                    else
-                    {
-                        userBags[0].Count += propNum;
-                        if (userBags[0].Count < 0)
+                    // 元宝
+                    case 2:
                         {
-                            userBags[0].Count = 0;
-                        }
+                            List<PlayerBaseInfo> playerBaseInfos =
+                                await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                            playerBaseInfos[0].WingNum += propNum;
+                            if (playerBaseInfos[0].WingNum < 0)
+                            {
+                                playerBaseInfos[0].WingNum = 0;
+                            }
 
-                        await proxyComponent.Save(userBags[0]);
-                    }
+                            await proxyComponent.Save(playerBaseInfos[0]);
+                        }
+                        break;
+
+                    // 话费
+                    case 3:
+                        {
+                            List<PlayerBaseInfo> playerBaseInfos =
+                                await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                            playerBaseInfos[0].HuaFeiNum += propNum;
+                            if (playerBaseInfos[0].HuaFeiNum < 0)
+                            {
+                                playerBaseInfos[0].HuaFeiNum = 0;
+                            }
+
+                            await proxyComponent.Save(playerBaseInfos[0]);
+                        }
+                        break;
+
+                    // 其他道具
+                    default:
+                        {
+                            List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
+                            if (userBags.Count == 0)
+                            {
+                                UserBag itemInfo = new UserBag();
+                                itemInfo.BagId = propId;
+                                itemInfo.UId = uid;
+                                itemInfo.Count = propNum;
+                                DBHelper.AddItemToDB(itemInfo);
+                            }
+                            else
+                            {
+                                userBags[0].Count += propNum;
+                                if (userBags[0].Count < 0)
+                                {
+                                    userBags[0].Count = 0;
+                                }
+
+                                await proxyComponent.Save(userBags[0]);
+                            }
+                        }
+                        break;
                 }
-                    break;
+
+                await Log_ChangeWealth(uid, propId, propNum, reason);
             }
-
-            await Log_ChangeWealth(uid, propId, propNum, reason);
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
         }
 
         public static async Task Log_Login(long uid, Session session,string clientVersion)
