@@ -58,12 +58,8 @@ namespace ETHotfix
         public const string UINetLoading = "UINetLoading";
         public const string UIChatShow = "UIChatShow";
         public const string UINetError = "UINetError";
-        public const string UIDuanwu = "UIActivity_102";
-        public const string UIDuanwuItem = "UIDuanwuItem";
-        public const string UIDuanwuTreasure = "UIDuanwuTreasure";
-        public const string UITreasure = "UITreasure";
-        public const string UIDuanwuRewardItem = "UIDuanwuRewardItem";
         public const string UIFriendRoom = "UIFriendRoom";
         public const string UIFriendRoomItem = "UIFriendRoomItem";
+        public const string UIFriendIcon = "UIFriendIconItem";
     }
 }

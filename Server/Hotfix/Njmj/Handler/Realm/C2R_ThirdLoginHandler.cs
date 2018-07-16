@@ -12,12 +12,13 @@ namespace ETHotfix
 	{
 	    protected override async void Run(Session session, C2R_ThirdLogin message, Action<R2C_ThirdLogin> reply)
 	    {
-	        Log.Debug("收到第三方登录");
+	        Log.Info("收到第三方登录");
 
-            R2C_ThirdLogin response = new R2C_ThirdLogin();
+	        R2C_ThirdLogin response = new R2C_ThirdLogin();
 	        try
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+
                 List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)

@@ -229,7 +229,7 @@ namespace ETHotfix
             return components;
         }
 
-        public static async Task<List<T>> QueryJsonDB<T>(this DBProxyComponent self, string json)
+        public static async Task<List<T>> QueryJsonDB<T>(this DBProxyComponent self, string json) where T : ComponentWithId
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);

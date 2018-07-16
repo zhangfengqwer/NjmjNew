@@ -61,7 +61,6 @@ namespace ETHotfix
                 returnBtn.onClick.Add(() =>
                 {
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIActivity);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIDuanwu);
                 });
 
                 //点击显示通知栏

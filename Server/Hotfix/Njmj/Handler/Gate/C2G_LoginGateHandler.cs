@@ -107,26 +107,6 @@ namespace ETHotfix
                     }
                 }
 
-                List<DuanwuActivityInfo> infos = await proxyComponent.QueryJson<DuanwuActivityInfo>($"{{UId:{userId}}}");
-			    //
-			    if (infos.Count <= 0)
-			    {
-			        for (int j = 0; j < configCom.GetAll(typeof(DuanwuActivityConfig)).Length; ++j)
-			        {
-			            int id = 100 + j + 1;
-			            DuanwuActivityConfig config =
-			                (DuanwuActivityConfig)configCom.Get(typeof(DuanwuActivityConfig), id);
-			            DuanwuActivityInfo info =
-			                ComponentFactory.CreateWithId<DuanwuActivityInfo>(IdGenerater.GenerateId());
-			            info.UId = userId;
-			            info.TaskId = (int)config.Id;
-			            info.Target = config.Target;
-			            info.Reward = config.Reward;
-			            info.Desc = config.Desc;
-			            await proxyComponent.Save(info);
-			        }
-			    }
-
                 List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{userId}}}");
                 response.BagList = new List<Bag>();
                 List<Bag> bagList = new List<Bag>();
@@ -230,19 +210,6 @@ namespace ETHotfix
                     {
                         Log.Error("检测是否是老用户出错:" + ex);
                     }
-                }
-
-			    {
-			        List<DuanwuDataBase> duanwuDataBases = await proxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{userId}}}");
-			        if (duanwuDataBases.Count <= 0)
-			        {
-			            //新建一个数据库的表
-			            DuanwuDataBase duanwu = ComponentFactory.CreateWithId<DuanwuDataBase>(IdGenerater.GenerateId());
-			            duanwu.UId = userId;
-			            string type = GetRandomIndex();
-			            duanwu.ActivityType = type;
-			            await proxyComponent.Save(duanwu);
-			        }
                 }
 
                 #region 用户活动所获得的头像数据

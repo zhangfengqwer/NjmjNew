@@ -201,8 +201,9 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
+                //ToastScript.createToast("暂未开放：比赛场");
                 //Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoom);
+                //SetRank(false);
             });
 
             // 休闲场返回按钮
@@ -319,6 +320,11 @@ namespace ETHotfix
             {
                 Log.Debug(ex.ToString());
             }
+        }
+
+        public void SetRank(bool isShow)
+        {
+            Rank.SetActive(isShow);
         }
 
         private int curType = 2;

@@ -187,10 +187,6 @@ namespace ETHotfix
             foreach (var gamer in room.GetAll())
             {
                 if (gamer == null) continue;
-                List<DuanwuDataBase> databases =
-                    await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
-                List<string> str_list = new List<string>();
-                CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
 //                Log.Debug(str_list.Count + "");
                 //胜利
                 if (gamer.UserID == room.huPaiUid)
@@ -213,16 +209,6 @@ namespace ETHotfix
                     //	104	游戏高手	连赢5场	10000	5
                     await DBCommonUtil.UpdateTask(gamer.UserID, 104, 1);
 
-                    //端午任务
-                    for (int i = 0; i < str_list.Count; ++i)
-                    {
-                        int id = 100 + int.Parse(str_list[i]) + 1;
-//                        Log.Debug(id + "");
-                        if (id == 105 || id == 106 || id == 107 || id == 108)
-                        {
-                            await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, 1);
-                        }
-                    }
                 }
                 //输了
                 else
@@ -235,14 +221,6 @@ namespace ETHotfix
                 //101  新的征程	完成一局游戏	100	1
                 await DBCommonUtil.UpdateTask(gamer.UserID, 101, 1);
 
-                for (int i = 0; i < str_list.Count; ++i)
-                {
-                    int id = 100 + int.Parse(str_list[i]) + 1;
-                    if (id == 101 || id == 102 || id == 103 || id == 104)
-                    {
-                        await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, 1);
-                    }
-                }
             }
         }
 
@@ -349,27 +327,6 @@ namespace ETHotfix
             // 112 富豪克星 单局赢取一亿金币满 100局
             if (amount >= 100000000)
                 await DBCommonUtil.UpdateChengjiu(gamer.UserID, 112, 1);
-
-            {
-                var dbProxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<DuanwuDataBase> databases =
-                    await dbProxyComponent.QueryJson<DuanwuDataBase>($"{{UId:{gamer.UserID}}}");
-//                Log.Debug(databases.Count + "========");
-                List<string> str_list = new List<string>();
-                CommonUtil.splitStr(databases[0].ActivityType, str_list, ';');
-
-//                Log.Debug("str_list:" + JsonHelper.ToJson(str_list));
-                for (int i = 0; i < str_list.Count; ++i)
-                {
-                    int id = 100 + int.Parse(str_list[i]) + 1;
-//                    Log.Debug(id + "任务ID");
-                    if (id == 109 || id == 110 || id == 111 || id == 112)
-                    {
-                        await DBCommonUtil.UpdateDuanwuActivity(gamer.UserID, id, amount);
-                    }
-                }
-            }
-
         }
     }
 }
