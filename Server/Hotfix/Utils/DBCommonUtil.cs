@@ -242,7 +242,7 @@ namespace ETHotfix
             }
         }
 
-        public static async Task ChangeWealth(long uid, int propId, int propNum, string reason)
+        public static async Task ChangeWealth(long uid, int propId, int propNum, string reason,Room room = null)
         {
             //Log.Debug("ChangeWealth: uid = " + uid + "  propId = " + propId + "propNum = " + propNum);
 
@@ -294,8 +294,11 @@ namespace ETHotfix
                                         {
                                             actor.Reward = "今日最后一次赠送金币：" + gold;
                                         }
-
-                                        Game.Scene.GetComponent<UserComponent>().Get(uid).session.Send(actor);
+                                        if(room != null)
+                                        {
+                                            Gamer gamer =  room.Get(uid);
+                                            room.GamerBroadcast(gamer, actor);
+                                        }
                                     }
                                 }
                             }
