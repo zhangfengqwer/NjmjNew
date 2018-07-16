@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using Hotfix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,9 +52,12 @@ namespace ETHotfix
         private string curJuValue;
         
 
-        public void Start()
+        public async void Start()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+
+            await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/friendRoomConfig.json", FriendRoomConfig.getInstance().init);
+
 
             #region CreateRoom
             SureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
@@ -181,20 +185,64 @@ namespace ETHotfix
 
         private void Init()
         {
-            SetLabel(HuaType1Btn.gameObject, "100");
-            SetLabel(HuaType2Btn.gameObject, "1000");
-            SetLabel(HuaType3Btn.gameObject, "10000");
-            SetLabel(JuType1Btn.gameObject, "4局/     3");
-            SetLabel(JuType2Btn.gameObject, "8局/     4");
-            SetLabel(JuType3Btn.gameObject, "16局/     6");
-            curHuaValue = "100";
-            curJuValue = "4局/     3";
+            for(int i = 0;i< FriendRoomConfig.getInstance().beilvList.Count; ++i)
+            {
+                SetLabel(huaTypes[i].go, FriendRoomConfig.getInstance().beilvList[i].ToString());
+            }
+
+            for(int i = 0;i< FriendRoomConfig.getInstance().juShuList.Count; ++i)
+            {
+                string txt = $"{FriendRoomConfig.getInstance().juShuList[i].m_jushu}局/     {FriendRoomConfig.getInstance().juShuList[i].m_yaoshi}";
+                SetLabel(juTypes[i].go, txt);
+            }
+
+            curHuaValue = FriendRoomConfig.getInstance().beilvList[0].ToString();
+
+            curJuValue = $"{FriendRoomConfig.getInstance().juShuList[0].m_jushu}局/     {FriendRoomConfig.getInstance().juShuList[0].m_yaoshi}";
+
             curHuaType = 1;
             curJuType = 1;
-            if(PlayerInfoComponent.Instance.GetBagById(112) != null)
+
+            if (PlayerInfoComponent.Instance.GetBagById(112) != null)
             {
                 OwnKeyTxt.text = PlayerInfoComponent.Instance.GetBagById(112).Count.ToString();
             }
+        }
+
+        private void SetActive(int index)
+        {
+            for(int i = index; i< FriendRoomConfig.getInstance().typeList.Count; ++i)
+            {
+                //完善
+            }
+        }
+
+        private GameObject GetHuaObj(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    return HuaType1Btn.gameObject;
+                case 2:
+                    return HuaType2Btn.gameObject;
+                case 3:
+                    return HuaType3Btn.gameObject;
+            }
+            return null;
+        }
+
+        private GameObject GetJuObj (int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    return JuType1Btn.gameObject;
+                case 2:
+                    return JuType2Btn.gameObject;
+                case 3:
+                    return JuType3Btn.gameObject;
+            }
+            return null;
         }
 
         /// <summary>

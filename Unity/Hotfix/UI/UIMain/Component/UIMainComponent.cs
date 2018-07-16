@@ -249,16 +249,17 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 ToastScript.createToast("暂未开放：比赛场");
-                
+                return;
+
                 //今天沒有贈送好友房钥匙
                 //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
                 //{
                 //    //显示赠送界面
 
                 //}
-                //SetFriendRoom(true);
-                //SetRank(false);
-                //GetRoomInfoReq();
+                SetFriendRoom(true);
+                SetRank(false);
+                GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -381,12 +382,8 @@ namespace ETHotfix
         private async void GetRoomInfoReq()
         {
             #region 向服务器请求信息
-            //UINetLoadingComponent.showNetLoading();
-            //G2C_FriendRoomInfo g2cFriend = (G2C_FriendRoomInfo)await Game.Scene.GetComponent<SessionComponent>().Session.Call(
-            //    new C2G_FriendRoomInfo
-            //    {
-            //        UId = PlayerInfoComponent.Instance.uid
-            //    });
+            // UINetLoadingComponent.showNetLoading();
+            // M2C_FriendRoomInfo m2cFriend = (M2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2M_FriendRoomInfo());
 
             ////请求完了之后，设置今天赠送钥匙状态为已赠送
             //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)

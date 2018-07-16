@@ -66,7 +66,7 @@ namespace ETHotfix
         private int grabIndex;
         private int num = 0;
         private GameObject faceCard;
-        private GameObject clickedCard;
+        public GameObject clickedCard;
 
 
         public int Index { get; set; }
@@ -419,9 +419,9 @@ namespace ETHotfix
         /// <param name="cardSprite"></param>
         private void AddCardListener(GameObject cardSprite)
         {
-            UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
-            ui.AddComponent<ItemCardComponent, GameObject>(clickedCard);
-            uis.Add(cardSprite, ui);
+            // UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
+            // ui.AddComponent<ItemCardComponent>();
+            // uis.Add(cardSprite, ui);
         }
 
         /// <summary>
