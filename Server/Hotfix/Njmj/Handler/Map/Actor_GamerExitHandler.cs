@@ -46,12 +46,14 @@ namespace ETHotfix
 	                    //消息广播给其他人
 	                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 	                    //房间移除玩家
-	                    room.Remove(gamer.UserID);
+	                    Log.Info($"{gamer.UserID}主动退出，移除玩家");
+                        room.Remove(gamer.UserID);
 	                }
 	                else //游戏崩溃
 	                {
-	                    //房间移除玩家
-	                    room.Remove(gamer.UserID);
+                        //房间移除玩家
+	                    Log.Info($"{gamer.UserID}崩溃退出，移除玩家");
+                        room.Remove(gamer.UserID);
 	                    //消息广播给其他人
 	                    room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });
 	                }

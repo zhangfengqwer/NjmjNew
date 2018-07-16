@@ -65,6 +65,7 @@ namespace ETHotfix
         private int grabIndex;
         private int num = 0;
         private GameObject faceCard;
+        private GameObject clickedCard;
 
 
         public int Index { get; set; }
@@ -375,8 +376,8 @@ namespace ETHotfix
             cardSprite.GetComponent<ItemCardScipt>().index = index;
 
             //添加点击事件
-            Button cardBtn = cardSprite.GetComponent<Button>();
-            cardBtn.onClick.RemoveAllListeners();
+            AddCardListener(cardSprite);
+          
 //            cardBtn.onClick.Add(() =>
 //            {
 //                if (IsSelect)
@@ -409,6 +410,16 @@ namespace ETHotfix
                 }
                 uiRoomComponent?.tip?.SetActive(false);
             }
+        }
+
+        /// <summary>
+        /// 给手牌重新添加点击事件
+        /// </summary>
+        /// <param name="cardSprite"></param>
+        private void AddCardListener(GameObject cardSprite)
+        {
+            UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
+            ui.AddComponent<ItemCardComponent, GameObject>(clickedCard);
         }
 
         /// <summary>
@@ -458,6 +469,7 @@ namespace ETHotfix
             //设置item
             cardSprite.GetComponent<ItemCardScipt>().weight = mahjong.weight;
             cardSprite.GetComponent<ItemCardScipt>().index = index;
+            AddCardListener(cardSprite);
         }
 
         private GameObject CreateCardSprite(string cardName, int postionX, int postionY)

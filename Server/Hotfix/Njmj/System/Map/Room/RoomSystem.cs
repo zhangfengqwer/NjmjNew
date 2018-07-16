@@ -20,7 +20,7 @@ namespace ETHotfix
                     continue;
                 }
 
-                UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
+                UnitGateComponent unitGateComponent = gamer.GetComponent<UnitGateComponent>();
                 actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
             }
         }
@@ -162,6 +162,10 @@ namespace ETHotfix
 
             if (!self.tokenSource.IsCancellationRequested)
             {
+                if (self.IsDisposed)
+                {
+                    return;
+                }
                 self.IsTimeOut = true;
                 //没有人碰刚
                 self.IsOperate = false;
@@ -171,6 +175,7 @@ namespace ETHotfix
                     gamer.IsCanGang = false;
                     gamer.IsCanHu = false;
                 }
+                Log.Info($"碰刚超时，发牌");
                 self.GamerGrabCard();
                 //                Log.Debug("OperateTime超时");
             }

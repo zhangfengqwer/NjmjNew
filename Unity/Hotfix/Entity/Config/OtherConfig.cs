@@ -88,6 +88,21 @@ namespace Hotfix
                     }
                 }
 
+                // 微信登录开关
+                {
+                    string data = jd["shieldWeChatLogin"].ToString();
+                    List<string> list = new List<string>();
+                    CommonUtil.splitStr(data, list, ';');
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i].CompareTo(PlatformHelper.GetChannelName()) == 0)
+                        {
+                            OtherData.isShiedWeChatLogin = true;
+                            break;
+                        }
+                    }
+                }
+
                 // 分享地址
                 {
                     string data = jd["ShareUrl"].ToString();

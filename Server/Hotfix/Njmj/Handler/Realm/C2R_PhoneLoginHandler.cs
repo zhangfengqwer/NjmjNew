@@ -65,7 +65,7 @@ namespace ETHotfix
                         response.Token = accountInfo.Token;
                         reply(response);
                         // 登录日志
-                        await DBCommonUtil.Log_Login(accountInfo.Id, session);
+                        await DBCommonUtil.Log_Login(accountInfo.Id, session, message.ClientVersion);
                     }
                     // 用户不存在，走注册流程
                     else
@@ -97,7 +97,7 @@ namespace ETHotfix
                         response.Token = accountInfo.Token;
                         reply(response);
                         // 登录日志
-                        await DBCommonUtil.Log_Login(accountInfo.Id, session);
+                        await DBCommonUtil.Log_Login(accountInfo.Id, session,message.ClientVersion);
                     }
                 }
                 // 用Token登录
@@ -134,7 +134,7 @@ namespace ETHotfix
                             reply(response);
 
                             // 登录日志
-                            await DBCommonUtil.Log_Login(accountInfo.Id, session);
+                            await DBCommonUtil.Log_Login(accountInfo.Id, session, message.ClientVersion);
                         }
                         else
                         {

@@ -53,7 +53,13 @@ namespace ETHotfix
 			            {
 			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
 			                room.Remove(_gamer.UserID);
-			                return;
+			                //房间没人就释放
+			                if (room.seats.Count == 0)
+			                {
+                                roomCompnent.RemoveRoom(room);
+			                    room.Dispose();
+			                }
+                            return;
 			            }
 			            List<MahjongInfo> handCards = handCardsComponent.GetAll();
 

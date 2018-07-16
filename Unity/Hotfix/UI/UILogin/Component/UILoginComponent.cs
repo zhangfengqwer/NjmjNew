@@ -60,7 +60,11 @@ namespace ETHotfix
 
         public async void Awake()
         {
-            await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/otherConfig.json", OtherConfig.getInstance().init);
+            // 获取配置文件
+            {
+                string fileName = "otherConfig-" + PlatformHelper.GetVersionName() + ".json";
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/" + fileName, OtherConfig.getInstance().init);
+            }
 
             ToastScript.clear();
             Instance = this;
@@ -117,6 +121,10 @@ namespace ETHotfix
                     if (OtherData.getIsShiedPhoneLogin())
                     {
                         btn_phone.transform.localScale = Vector3.zero;
+                    }
+                    else if (OtherData.getIsShiedWeChatLogin())
+                    {
+                        btn_wechat.transform.localScale = Vector3.zero;
                     }
                 }
             }
@@ -203,8 +211,8 @@ namespace ETHotfix
         {
             string Third_Id = CommonUtil.getCurTime();
 
-            await OnThirdLogin("123", "", "");
-            //await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
+            // await OnThirdLogin(Third_Id, "", "");
+            await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
@@ -424,20 +432,15 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-
-                // IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                // IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
 
                 name = name.Replace("'","*");
                 R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
-                // R2C_Login r2CLogin = (R2C_Login)await sessionWrap.Call(new C2R_Login()
-                // {
-                //     Account = "111111",
-                //     Password = "111111"
-                // });
+             
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
@@ -454,6 +457,8 @@ namespace ETHotfix
 //                connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
                 string[] temp = r2CLogin.Address.Split(':');
                 connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
+
+                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(session);
                 ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;

@@ -32,39 +32,46 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void Turn(this OrderControllerComponent self)
         {
-            Room room = self.GetParent<Room>();
-            Gamer[] gamers = room.GetAll();
-
             int index = -1;
-            for (int i = 0; i < gamers.Length; i++)
+            try
             {
-                Gamer gamer = gamers[i];
-                if (gamer == null)
+                Room room = self.GetParent<Room>();
+                Gamer[] gamers = room.GetAll();
+
+                for (int i = 0; i < gamers.Length; i++)
                 {
-                    Log.Error("在轮转的时候玩家为null:" + room.State);
-                    continue;
+                    Gamer gamer = gamers[i];
+                    if (gamer == null)
+                    {
+                        Log.Error("在轮转的时候玩家为null:" + room.State);
+                        continue;
+                    }
+
+                    if (self.CurrentAuthority == gamer.UserID)
+                    {
+                        index = i;
+                        break;
+                    }
                 }
 
-                if (self.CurrentAuthority == gamer.UserID)
+                if (index < 0)
                 {
-                    index = i;
-                    break;
+                    Log.Error("玩家轮转的时候room的玩家都是null");
+                    return;
                 }
-            }
 
-            if (index < 0)
+                index++;
+                if (index == gamers.Length)
+                {
+                    index = 0;
+                }
+
+                self.CurrentAuthority = gamers[index].UserID;
+            }
+            catch (Exception e)
             {
-                Log.Error("玩家轮转的时候room的玩家都是null");
-                return;
+                Log.Error($"角标越界{index}:"+e);
             }
-
-            index++;
-            if (index == gamers.Length)
-            {
-                index = 0;
-            }
-
-            self.CurrentAuthority = gamers[index].UserID;
         }
     }
 }

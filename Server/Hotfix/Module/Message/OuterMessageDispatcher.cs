@@ -29,7 +29,7 @@ namespace ETHotfix
 			{
 				case IFrameMessage iFrameMessage: // 如果是帧消息，构造成OneFrameMessage发给对应的unit
 				{
-					long unitId = session.GetComponent<SessionPlayerComponent>().Player.UnitId;
+					long unitId = session.GetComponent<SessionUserComponent>().User.ActorID;
 					ActorMessageSender actorMessageSender = Game.Scene.GetComponent<ActorMessageSenderComponent>().Get(unitId);
 	
 					// 这里设置了帧消息的id，防止客户端伪造

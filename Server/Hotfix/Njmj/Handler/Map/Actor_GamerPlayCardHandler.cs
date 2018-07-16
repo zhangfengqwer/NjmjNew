@@ -170,8 +170,9 @@ namespace ETHotfix
                     //没人可以操作就直接发牌
 	                else
 	                {
-	                    //发牌
-	                    room.GamerGrabCard();
+                        //发牌
+	                    Log.Info($"{gamer.UserID}打完牌，发牌");
+                        room.GamerGrabCard();
                     }
                 }
 	            else
