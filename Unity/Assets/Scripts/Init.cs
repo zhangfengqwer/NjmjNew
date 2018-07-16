@@ -40,9 +40,9 @@ namespace ETModel
 
 	            //新增Component
 	            Game.Scene.AddComponent<SoundComponent>();
-
-	            // 获取网络配置表
+	                // 获取网络配置表
 	            await NetConfig.getInstance().Req("http://fwdown.hy51v.com/njmj/online/files/netconfig.json");
+
 	            // 下载ab包
 	            await BundleHelper.DownloadBundle();
 	         
