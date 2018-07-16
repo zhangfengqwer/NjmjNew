@@ -249,6 +249,13 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 //ToastScript.createToast("暂未开放：比赛场");
+                
+                //今天沒有贈送好友房钥匙
+                if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
+                {
+                    //显示赠送界面
+
+                }
                 SetFriendRoom(true);
                 SetRank(false);
                 GetRoomInfoReq();
@@ -373,6 +380,8 @@ namespace ETHotfix
         #region 好友房
         private /*async*/ void GetRoomInfoReq()
         {
+            //向服务器请求信息
+
             roomInfos.Clear();
 
             TestRoomInfo info = new TestRoomInfo();

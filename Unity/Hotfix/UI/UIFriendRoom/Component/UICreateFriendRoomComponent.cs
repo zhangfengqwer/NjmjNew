@@ -145,8 +145,29 @@ namespace ETHotfix
             //确定创建房间
             SureBtn.onClick.Add(() =>
             {
-                //确定创建房间：向服务器发送消息
-                //if(int.Parse(OwnKeyTxt.text)
+                int curmeihua = 100;
+                int curjushu = 4;
+                int curKeyCost = 3;
+                
+                {
+                    string[] sps = curJuValue.Split('/');
+                    int index = sps[0].IndexOf('局');
+                    curjushu = int.Parse(sps[0].Substring(0, index));
+                    curKeyCost = int.Parse(sps[1].TrimStart());
+                    curmeihua = int.Parse(curHuaValue);
+                }
+
+                int myFriendKey = PlayerInfoComponent.Instance.GetBagById(112).Count;
+                if(myFriendKey < curKeyCost)
+                {
+                    ToastScript.createToast("钥匙不够！");
+                    return;
+                }
+
+                {
+                    //确定创建房间：向服务器发送消息
+                }
+
             });
 
             //关闭创建房间UI
@@ -154,9 +175,6 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
             });
-
-            //判断今日有没有赠送房间钥匙
-            /**/
 
             Init();
         }

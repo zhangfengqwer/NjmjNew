@@ -390,10 +390,7 @@ namespace ETHotfix
 		public bool IsSign;
 
 		[ProtoMember(16, IsRequired = true)]
-		public bool IsGetGoldRank;
-
-		[ProtoMember(17, IsRequired = true)]
-		public bool IsGetGameRank;
+		public bool IsGiveFriendKey;
 
 	}
 
@@ -2543,6 +2540,55 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+	}
+
+//好友房
+	[Message(HotfixOpcode.FriendRoomInfo)]
+	[ProtoContract]
+	public partial class FriendRoomInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long RoomId;
+
+		[ProtoMember(2)]
+		public List<string> Icons = new List<string>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Ju;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int Hua;
+
+	}
+
+	[Message(HotfixOpcode.C2G_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class C2G_FriendRoomInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class G2C_FriendRoomInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public FriendRoomInfo Info;
 
 	}
 
