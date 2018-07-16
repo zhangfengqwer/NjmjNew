@@ -351,9 +351,6 @@ namespace ETHotfix
                             playerBaseInfos[0].ZhuanPanCount = 1;
                         }
 
-                        //重置赠送好友房钥匙
-                        playerBaseInfos[0].IsGiveFriendKey = false;
-
                         await proxyComponent.Save(playerBaseInfos[0]);
                     }
                     else
