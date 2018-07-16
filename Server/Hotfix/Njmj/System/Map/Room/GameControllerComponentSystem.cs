@@ -137,7 +137,7 @@ namespace ETHotfix
                     //离线踢出
                     if (gamer.isOffline)
                     {
-                        Log.Info("玩家结束游戏后离线踢出");
+                        Log.Info("玩家结束游戏后离线踢出,移除玩家");
                         room.Remove(gamer.UserID);
                         gamer.isOffline = !gamer.isOffline;
                     }
