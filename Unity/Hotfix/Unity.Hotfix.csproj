@@ -109,6 +109,7 @@
     <Compile Include="Entity\Config\ChatConfig.cs" />
     <Compile Include="Entity\Config\ActivityConfig.cs" />
     <Compile Include="Entity\Config\NoticeConfig.cs" />
+    <Compile Include="Entity\Config\FriendRoomConfig.cs" />
     <Compile Include="Entity\Config\OtherData.cs" />
     <Compile Include="Entity\Config\OtherConfig.cs" />
     <Compile Include="Entity\Config\TipsConfig.cs" />
