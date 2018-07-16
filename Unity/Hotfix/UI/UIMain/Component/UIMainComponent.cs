@@ -248,17 +248,17 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                //ToastScript.createToast("暂未开放：比赛场");
+                ToastScript.createToast("暂未开放：比赛场");
                 
                 //今天沒有贈送好友房钥匙
-                if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
-                {
-                    //显示赠送界面
+                //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
+                //{
+                //    //显示赠送界面
 
-                }
-                SetFriendRoom(true);
-                SetRank(false);
-                GetRoomInfoReq();
+                //}
+                //SetFriendRoom(true);
+                //SetRank(false);
+                //GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -378,9 +378,29 @@ namespace ETHotfix
         }
 
         #region 好友房
-        private /*async*/ void GetRoomInfoReq()
+        private async void GetRoomInfoReq()
         {
-            //向服务器请求信息
+            #region 向服务器请求信息
+            //UINetLoadingComponent.showNetLoading();
+            //G2C_FriendRoomInfo g2cFriend = (G2C_FriendRoomInfo)await Game.Scene.GetComponent<SessionComponent>().Session.Call(
+            //    new C2G_FriendRoomInfo
+            //    {
+            //        UId = PlayerInfoComponent.Instance.uid
+            //    });
+
+            ////请求完了之后，设置今天赠送钥匙状态为已赠送
+            //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
+            //{
+            //    PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey = g2cFriend.IsGiveFriendKey;
+            //    //刷新背包数据
+            //    {
+            //        UINetLoadingComponent.showNetLoading();
+            //        G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionComponent.Instance.Session.Call(new C2G_BagOperation() { UId = PlayerInfoComponent.Instance.uid });
+            //        UINetLoadingComponent.closeNetLoading();
+            //        PlayerInfoComponent.Instance.SetBagInfoList(g2cBag.ItemList);
+            //    }
+            //}
+            #endregion
 
             roomInfos.Clear();
 

@@ -298,5 +298,6 @@ namespace ETHotfix
         public List<string> icons;
         public string ju;
         public string hua;
+        public bool isPublic;
     }
 }
