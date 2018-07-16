@@ -25,7 +25,8 @@ namespace ETModel
 			string connectionString = config.ConnectionString;
 			mongoClient = new MongoClient(connectionString);
 			this.database = this.mongoClient.GetDatabase(config.DBName);
-		}
+
+        }
 
 		public IMongoCollection<ComponentWithId> GetCollection(string name)
 		{

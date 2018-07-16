@@ -87,6 +87,7 @@ namespace ETHotfix
                     else
                     {
                         room.tokenSource.Cancel();
+                        Log.Info($"{gamer.UserID}取消，发牌");
                         room.GamerGrabCard();
                     }
                 }

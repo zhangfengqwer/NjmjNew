@@ -233,7 +233,7 @@ namespace ETHotfix
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
-            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition).Result.ToListAsync();
+            List <T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition).Result.ToListAsync();
             return components;
 
         }

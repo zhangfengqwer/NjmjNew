@@ -44,9 +44,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assets\DOTween\DOTween43.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween46, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Assets\DOTween\DOTween46.dll</HintPath>
+    <Reference Include="DOTween46">
+      <HintPath>..\Assets\Plugins\DOTween\DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -197,6 +196,7 @@
     <Compile Include="Njmj\Helper\SoundsHelp.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Component\UIReadyComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Factory\UIRoomFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoom\Component\ItemCardComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIRoom\Component\UIChatItemComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIRoom\Component\UIExpressionComponent.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
