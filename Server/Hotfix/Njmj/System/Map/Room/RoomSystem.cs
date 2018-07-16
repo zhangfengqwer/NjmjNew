@@ -7,8 +7,23 @@ using ETModel;
 
 namespace ETHotfix
 {
+    [ObjectSystem]
+    public class RoomSystemEx : AwakeSystem<Room>
+    {
+        public override void Awake(Room self)
+        {
+            self.Awake();
+        }
+    }
+
+
+
     public static class RoomSystem
     {
+        public static async void Awake(this Room self)
+        {
+        }
+
         public static void Broadcast(this Room self, IActorMessage message)
         {
             if (self == null) return;
