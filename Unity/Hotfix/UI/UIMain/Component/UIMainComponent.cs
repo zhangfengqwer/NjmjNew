@@ -248,17 +248,17 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
-                
+                //ToastScript.createToast("暂未开放：比赛场");
+
                 //今天沒有贈送好友房钥匙
                 //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
                 //{
                 //    //显示赠送界面
 
                 //}
-                //SetFriendRoom(true);
-                //SetRank(false);
-                //GetRoomInfoReq();
+                SetFriendRoom(true);
+                SetRank(false);
+                GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
