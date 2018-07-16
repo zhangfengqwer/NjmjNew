@@ -20,7 +20,7 @@ namespace ETHotfix
                     {
                         if (weeks[0].IsGetGoldRank)
                         {
-                            await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(1, weeks[0].GoldIndex), "领取周财富榜奖励");
+                            await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(1, weeks[0].GoldIndex), "领取周财富榜奖励" + GetReward(1, weeks[0].GoldIndex));
                             weeks[0].IsGetGoldRank = false;
                             await proxyComponent.Save(weeks[0]);
                         }
@@ -29,7 +29,7 @@ namespace ETHotfix
                     {
                         if (weeks[0].IsGetGameRank)
                         {
-                            await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(2, weeks[0].GameIndex), "领取周财富榜奖励");
+                            await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(2, weeks[0].GameIndex), "领取周战绩榜奖励" + GetReward(2, weeks[0].GameIndex));
                             weeks[0].IsGetGameRank = false;
                             await proxyComponent.Save(weeks[0]);
                         }

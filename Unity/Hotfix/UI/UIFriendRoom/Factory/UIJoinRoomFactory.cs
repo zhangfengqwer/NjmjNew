@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace ETHotfix
 {
-    [UIFactory(UIType.UIFriendRoom)]
-    public class UIFriendRoomFactory : IUIFactory
+    [UIFactory(UIType.UIJoinRoom)]
+    public class UIJoinRoomFactory : IUIFactory
     {
         public UI Create(Scene scene, string type, GameObject gameobject)
         {
@@ -17,7 +17,7 @@ namespace ETHotfix
                 GameObject go = UnityEngine.Object.Instantiate(bundleGameObject);
                 go.layer = LayerMask.NameToLayer(LayerNames.UI);
                 UI ui = ComponentFactory.Create<UI, GameObject>(go);
-                ui.AddComponent<UIFriendRoomComponent>();
+                ui.AddComponent<UIJoinRoomComponent>();
                 return ui;
             }
             catch (Exception e)

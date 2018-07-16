@@ -337,10 +337,12 @@ namespace ETHotfix
                 // 今天第一天登录，做一些处理
                 Log.Debug("今天第一天登录");
 
+
                 // 重置转盘次数
                 {
                     List<PlayerBaseInfo> playerBaseInfos =
                         await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+
                     if (playerBaseInfos.Count > 0)
                     {
                         playerBaseInfos[0].ZhuanPanCount = 0;
@@ -348,6 +350,9 @@ namespace ETHotfix
                         {
                             playerBaseInfos[0].ZhuanPanCount = 1;
                         }
+
+                        //重置赠送好友房钥匙
+                        playerBaseInfos[0].IsGiveFriendKey = false;
 
                         await proxyComponent.Save(playerBaseInfos[0]);
                     }

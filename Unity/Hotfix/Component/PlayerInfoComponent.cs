@@ -69,6 +69,18 @@ namespace ETHotfix
             return bagInfoList;
         }
 
+        public Bag GetBagById(int id)
+        {
+            for(int i = 0;i< bagInfoList.Count; ++i)
+            {
+                if(bagInfoList[i].ItemId == id)
+                {
+                    return bagInfoList[i];
+                }
+            }
+            return null;
+        }
+
         public void SetChengjiuList(List<TaskInfo> chengjiuList)
         {
             this.chengjiuList = chengjiuList;
