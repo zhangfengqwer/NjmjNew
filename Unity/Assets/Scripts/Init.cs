@@ -45,8 +45,7 @@ namespace ETModel
 	            await NetConfig.getInstance().Req("http://fwdown.hy51v.com/njmj/online/files/netconfig.json");
 	            // 下载ab包
 	            await BundleHelper.DownloadBundle();
-	            string url = NetConfig.getInstance().getServerUrl() + "/AssetBundle/" + PlatformHelper.GetVersionName() + "/";
-	            Log.Info(url);
+	         
                 Game.Hotfix.LoadHotfixAssembly();
 
 	            // 加载配置
