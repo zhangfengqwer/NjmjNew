@@ -11,11 +11,11 @@ namespace ETHotfix
 {
 
     [ObjectSystem]
-    public class ItemCardComponentSystem : AwakeSystem<ItemCardComponent,GameObject>
+    public class ItemCardComponentSystem : AwakeSystem<ItemCardComponent>
     {
-        public override void Awake(ItemCardComponent self, GameObject obj)
+        public override void Awake(ItemCardComponent self)
         {
-            self.Awake(obj);
+            self.Awake();
         }
     }
 
@@ -23,16 +23,21 @@ namespace ETHotfix
     {
         private GameObject ItemCard;
         private bool IsSelect;
+        private HandCardsComponent handCardsComponent;
 
-        public void Awake(GameObject obj)
+        public void Awake()
         {
             this.ItemCard = this.GetParent<UI>().GameObject;
             Button button = this.ItemCard.GetComponent<Button>();
+
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            this.handCardsComponent = gamerComponent.LocalGamer.GetComponent<HandCardsComponent>();
             button.onClick.RemoveAllListeners();
-            button.onClick.Add(() => { OnClick(obj); });
+            button.onClick.Add(() => { OnClick(); });
         }
 
-        public void OnClick(GameObject obj)
+        public void OnClick()
         {
             float move = 40.0f;
             if (IsSelect)
@@ -41,13 +46,13 @@ namespace ETHotfix
             }
             else
             {
-                if(obj != null)
+                if(handCardsComponent.clickedCard != null)
                 {
-                    Log.Info(obj.name);
+                    Log.Info(handCardsComponent.clickedCard.name);
 
-                    obj.GetComponent<Button>().onClick.Invoke();
+                    handCardsComponent.clickedCard.GetComponent<Button>().onClick.Invoke();
                 }
-                obj = ItemCard;
+                handCardsComponent.clickedCard = ItemCard;
             }
     
             RectTransform rectTransform = ItemCard.GetComponent<RectTransform>();
