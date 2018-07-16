@@ -324,7 +324,7 @@ namespace ETHotfix
             await Log_ChangeWealth(uid, propId, propNum, reason);
         }
 
-        public static async Task Log_Login(long uid, Session session)
+        public static async Task Log_Login(long uid, Session session,string clientVersion)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
@@ -403,6 +403,7 @@ namespace ETHotfix
             Log_Login log_Login = ComponentFactory.CreateWithId<Log_Login>(IdGenerater.GenerateId());
             log_Login.Uid = uid;
             log_Login.ip = session.RemoteAddress.ToString();
+            log_Login.clientVersion = clientVersion;
             await proxyComponent.Save(log_Login);
         }
 

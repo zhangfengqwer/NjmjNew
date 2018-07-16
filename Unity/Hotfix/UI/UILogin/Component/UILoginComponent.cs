@@ -60,7 +60,11 @@ namespace ETHotfix
 
         public async void Awake()
         {
-            await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/otherConfig.json", OtherConfig.getInstance().init);
+            // 获取配置文件
+            {
+                string fileName = "otherConfig-" + PlatformHelper.GetVersionName() + ".json";
+                await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/" + fileName, OtherConfig.getInstance().init);
+            }
 
             ToastScript.clear();
             Instance = this;
@@ -117,6 +121,10 @@ namespace ETHotfix
                     if (OtherData.getIsShiedPhoneLogin())
                     {
                         btn_phone.transform.localScale = Vector3.zero;
+                    }
+                    else if (OtherData.getIsShiedWeChatLogin())
+                    {
+                        btn_wechat.transform.localScale = Vector3.zero;
                     }
                 }
             }
