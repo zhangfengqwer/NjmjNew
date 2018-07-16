@@ -851,6 +851,7 @@ message G2C_GM // IResponse
 	required string Channel = 6;
 	required RoomInfo Room = 7;
 	required string LogData = 8;
+	required int IsInGame = 9;
 }
 
 message C2G_WeekRank //IRequest
@@ -876,6 +877,8 @@ message G2C_GetWeekReward //IResponse
 {
 	required bool IsGetGoldRank = 1;
 	required bool IsGetGameRank = 2;
+	required int GoldReward = 3;
+	required int GameReward = 4;
 }
 
 message C2G_IsCanRecharge //IRequest
