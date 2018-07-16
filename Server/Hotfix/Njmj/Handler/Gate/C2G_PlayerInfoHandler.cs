@@ -44,7 +44,6 @@ namespace ETHotfix
                     response.PlayerInfo.EmogiTime = playerInfo[0].EmogiTime;
                     response.PlayerInfo.MaxHua = playerInfo[0].MaxHua;
                     response.PlayerInfo.WinGameCount = playerInfo[0].WinGameCount;
-                    response.PlayerInfo.IsGiveFriendKey = playerInfo[0].IsGiveFriendKey;
                     List<ChengjiuInfo> infos =
                         await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{user.UserID},TaskId:{102}}}");
                     if (infos.Count > 0)
