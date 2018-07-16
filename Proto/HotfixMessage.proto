@@ -45,6 +45,11 @@ message Actor_ForceOffline // IActorMessage
 	required string Reason = 1;
 }
 
+message Actor_ReliefGold // IActorMessage
+{
+	required string Reward = 1;
+}
+
 message Actor_EmergencyNotice // IActorMessage
 {
 	required string Content = 1;
