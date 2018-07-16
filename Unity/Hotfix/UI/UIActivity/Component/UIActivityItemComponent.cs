@@ -44,14 +44,7 @@ namespace ETHotfix
             if (id == 101)
             {
                 ui.AddComponent<UIActivity101Component>();
-            }
-            if (id == 102)
-            {
-                ui.AddComponent<UIDuanwuActivityComponent>();
-                if (Game.Scene.GetComponent<UIComponent>() == null)
-                    Game.Scene.GetComponent<UIComponent>().Add(UIType.UIDuanwu, ui);
-            }
-                
+            }   
         }
 
         public void SetInfo(ActivityInfo info)

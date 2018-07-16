@@ -159,6 +159,7 @@ namespace ETHotfix
             CloseFrRoomBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoom);
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRank(true);
             });
 
             //选择房主开房还是AA制
@@ -245,12 +246,21 @@ namespace ETHotfix
         {
             TestRoomInfo info = new TestRoomInfo();
             info.roomId = 123560;
+            info.hua = "1000";
+            info.ju = "8";
+            info.icons = new List<string>() { "f_icon1","f_icon2"};
             roomInfos.Add(info);
             info = new TestRoomInfo();
             info.roomId = 987345;
+            info.hua = "100";
+            info.ju = "4";
+            info.icons = new List<string>() { "m_icon1" };
             roomInfos.Add(info);
             info = new TestRoomInfo();
             info.roomId = 435465;
+            info.hua = "1000";
+            info.ju = "8";
+            info.icons = new List<string>() { "m_icon3" };
             roomInfos.Add(info);
             if(roomInfos.Count < 0)
             {
@@ -430,5 +440,8 @@ namespace ETHotfix
     public class TestRoomInfo
     {
         public int roomId;
+        public List<string> icons;
+        public string ju;
+        public string hua;
     }
 }

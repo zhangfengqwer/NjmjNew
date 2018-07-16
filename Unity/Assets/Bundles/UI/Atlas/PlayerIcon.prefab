@@ -71,6 +71,8 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 3430ab315ecac2c4d9f10fecd6a24b42, type: 3}
   - key: actIcon6
     gameObject: {fileID: 21300000, guid: 950da42beb814884d998dbfa84d44b93, type: 3}
+  - key: None
+    gameObject: {fileID: 21300000, guid: 90f04e108d591ce4e8cc4b792cd52821, type: 3}
 --- !u!224 &224580704893454692
 RectTransform:
   m_ObjectHideFlags: 1
