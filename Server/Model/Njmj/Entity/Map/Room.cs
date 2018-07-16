@@ -38,6 +38,7 @@ namespace ETModel
         public bool IsOperate = false;
 
         public CancellationTokenSource tokenSource;
+        public CancellationTokenSource roomTokenSource;
 
         //房间状态
         public RoomState State { get; set; } = RoomState.Idle;
@@ -209,7 +210,7 @@ namespace ETModel
 
             State = RoomState.Idle;
             reconnectList.Clear();
-
+            roomTokenSource.Cancel();
             IsGameOver = false;
             NextGrabCard = null;
             IsLianZhuang = false;

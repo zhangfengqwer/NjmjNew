@@ -54,8 +54,9 @@ namespace ETHotfix
 	            {
 	                room.State = RoomState.Game;
 	                room.IsGameOver = false;
+	                room.RoomDispose();
 
-	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
+                    if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
 	                {
 	                    roomComponent.gameRooms.Remove(room.Id);
 	                }

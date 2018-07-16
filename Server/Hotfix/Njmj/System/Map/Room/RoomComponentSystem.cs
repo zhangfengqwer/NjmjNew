@@ -79,12 +79,16 @@ namespace ETHotfix
             }
         }
 
-        public static void RemoveRoom(this RoomComponent self,Room room)
+        public static void RemoveRoom(this RoomComponent self,Room room,bool isTimeout = false)
         {
             self.rooms.Remove(room.Id);
             Log.Info("self.rooms:" + self.rooms.Count);
             self.idleRooms.Remove(room.Id);
             Log.Info("idleRooms:" + self.idleRooms.Count);
+            if (isTimeout)
+            {
+                self.gameRooms.Remove(room.Id);
+            }
             Log.Info("gameRooms:" + self.gameRooms.Count);
         }
 
