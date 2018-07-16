@@ -260,6 +260,21 @@ namespace ETHotfix
                         playerBaseInfos[0].GoldNum = 0;
                     }
 
+                    // 救济金
+                    if (playerBaseInfos[0].GoldNum < 2000)
+                    {
+                        List<Log_ReliefGold> log_reliefGolds = await proxyComponent.QueryJson<Log_ReliefGold>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{uid}}}");
+                        if (log_reliefGolds.Count < 3)
+                        {
+                            int gold = 20000;
+                            playerBaseInfos[0].GoldNum += gold;
+                            Log_ReliefGold log_ReliefGold = ComponentFactory.CreateWithId<Log_ReliefGold>(IdGenerater.GenerateId());
+                            log_ReliefGold.Uid = uid;
+                            log_ReliefGold.reward = "1:" + gold;
+                            await proxyComponent.Save(log_ReliefGold);
+                        }
+                    }
+
                     await proxyComponent.Save(playerBaseInfos[0]);
                     await RecordWeekRankLog(uid, propNum, 0);
                 }
