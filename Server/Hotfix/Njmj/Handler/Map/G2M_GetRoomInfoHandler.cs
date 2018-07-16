@@ -20,6 +20,10 @@ namespace ETHotfix
                 foreach (var gameRoom in roomComponent.gameRooms.Values)
                 {
                     GameControllerComponent gameControllerComponent = gameRoom.GetComponent<GameControllerComponent>();
+                    if (gameControllerComponent == null)
+                    {
+                        continue;
+                    }
                     RoomConfig roomConfig = gameControllerComponent.RoomConfig;
                     if (roomConfig.Id == 1)
                     {
@@ -36,6 +40,10 @@ namespace ETHotfix
                 foreach (var gameRoom in roomComponent.idleRooms.Values)
                 {
                     GameControllerComponent gameControllerComponent = gameRoom.GetComponent<GameControllerComponent>();
+                    if (gameControllerComponent == null)
+                    {
+                        continue;
+                    }
                     RoomConfig roomConfig = gameControllerComponent.RoomConfig;
                     if (roomConfig.Id == 1)
                     {

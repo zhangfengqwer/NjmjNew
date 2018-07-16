@@ -2565,19 +2565,19 @@ namespace ETHotfix
 
 	[Message(HotfixOpcode.C2M_FriendRoomInfo)]
 	[ProtoContract]
-	public partial class C2M_FriendRoomInfo: IRequest
+	public partial class C2M_FriendRoomInfo: IActorRequest
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
-		[ProtoMember(1, IsRequired = true)]
-		public long UId;
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 	}
 
 	[Message(HotfixOpcode.M2C_FriendRoomInfo)]
 	[ProtoContract]
-	public partial class M2C_FriendRoomInfo: IResponse
+	public partial class M2C_FriendRoomInfo: IActorResponse
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }

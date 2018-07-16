@@ -893,12 +893,11 @@ message FriendRoomInfo //IMessage
 	required bool IsPublic = 5;//是否为公开房间
 }
 
-message C2M_FriendRoomInfo //IRequest
+message C2M_FriendRoomInfo //IActorRequest
 {
-	required long UId = 1;
 }
 
-message M2C_FriendRoomInfo //IResponse
+message M2C_FriendRoomInfo //IActorResponse
 {
 	required FriendRoomInfo Info = 1;
 	required bool IsGiveFriendKey = 2;
