@@ -432,15 +432,15 @@ namespace ETHotfix
             {
                 UINetLoadingComponent.showNetLoading();
 
-                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
-                // IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
+                // IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
 
                 ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
 
                 name = name.Replace("'","*");
-                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head });
-             
+                R2C_ThirdLogin r2CLogin = (R2C_ThirdLogin)await sessionWrap.Call(new C2R_ThirdLogin() { Third_Id = third_id, MachineId = PlatformHelper.GetMacId(), ChannelName = PlatformHelper.GetChannelName(), ClientVersion = PlatformHelper.GetVersionName(),Name = name,Head = head});
+
                 sessionWrap.Dispose();
 
                 UINetLoadingComponent.closeNetLoading();
@@ -458,7 +458,7 @@ namespace ETHotfix
                 string[] temp = r2CLogin.Address.Split(':');
                 connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
 
-                connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+                // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(session);
                 ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;

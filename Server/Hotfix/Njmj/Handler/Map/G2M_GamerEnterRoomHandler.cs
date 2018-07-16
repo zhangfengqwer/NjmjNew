@@ -52,7 +52,8 @@ namespace ETHotfix
 			            if (handCardsComponent == null)
 			            {
 			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
-			                room.Remove(_gamer.UserID);
+			               
+                            room.Remove(_gamer.UserID);
 			                //房间没人就释放
 			                if (room.seats.Count == 0)
 			                {

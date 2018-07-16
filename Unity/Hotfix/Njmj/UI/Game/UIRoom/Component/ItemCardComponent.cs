@@ -22,19 +22,17 @@ namespace ETHotfix
     public class ItemCardComponent : Component
     {
         private GameObject ItemCard;
-        private GameObject ClickedCard;
         private bool IsSelect;
 
         public void Awake(GameObject obj)
         {
             this.ItemCard = this.GetParent<UI>().GameObject;
-            ClickedCard = obj;
             Button button = this.ItemCard.GetComponent<Button>();
             button.onClick.RemoveAllListeners();
-            button.onClick.Add(OnClick);
+            button.onClick.Add(() => { OnClick(obj); });
         }
 
-        public void OnClick()
+        public void OnClick(GameObject obj)
         {
             float move = 40.0f;
             if (IsSelect)
@@ -43,13 +41,13 @@ namespace ETHotfix
             }
             else
             {
-                if(ClickedCard != null)
+                if(obj != null)
                 {
-                    Log.Info(ClickedCard.name);
+                    Log.Info(obj.name);
 
-                    ClickedCard.GetComponent<Button>().onClick.Invoke();
+                    obj.GetComponent<Button>().onClick.Invoke();
                 }
-                ClickedCard = ItemCard;
+                obj = ItemCard;
             }
     
             RectTransform rectTransform = ItemCard.GetComponent<RectTransform>();

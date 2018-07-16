@@ -9,6 +9,7 @@ namespace ETHotfix
 {
     public class Consts
     {
+        [ProtoContract]
         public enum MahjongType
         {
             Wan,

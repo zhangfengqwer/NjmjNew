@@ -40,7 +40,8 @@ namespace ETHotfix
         private List<GameObject> ItemCards = new List<GameObject>();
         public List<GameObject> cardDisplayObjs = new List<GameObject>();
         private List<MahjongInfo> faceCards = new List<MahjongInfo>();
-
+        //卡牌item
+        private Dictionary<GameObject, UI> uis = new Dictionary<GameObject, UI>();
         //碰对应的obj
         private Dictionary<int, GameObject> pengDic = new Dictionary<int, GameObject>();
         public GameObject CardBottom;
@@ -180,7 +181,7 @@ namespace ETHotfix
             ItemCards.Clear();
             faceCards.Clear();
             cardDisplayObjs.Clear();
-
+            uis.Clear();
             DeleteAllItem(CardBottom);
             DeleteAllItem(cardDisplay);
             DeleteAllItem(pengObj);
@@ -420,6 +421,7 @@ namespace ETHotfix
         {
             UI ui = ComponentFactory.Create<UI, GameObject>(cardSprite);
             ui.AddComponent<ItemCardComponent, GameObject>(clickedCard);
+            uis.Add(cardSprite, ui);
         }
 
         /// <summary>
@@ -469,6 +471,7 @@ namespace ETHotfix
             //设置item
             cardSprite.GetComponent<ItemCardScipt>().weight = mahjong.weight;
             cardSprite.GetComponent<ItemCardScipt>().index = index;
+            //更换玩家牌的点击事件
             AddCardListener(cardSprite);
         }
 

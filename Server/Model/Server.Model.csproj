@@ -16,6 +16,7 @@
     <OutputPath>..\..\Bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\Unity\Assets\Njmj\TestEnum.cs" Link="Njmj\TestEnum.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Base\DoubleMap.cs" Link="Base\DoubleMap.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Base\Event\Env.cs" Link="Base\Event\Env.cs" />
     <Compile Include="..\..\Unity\Assets\Scripts\Base\Event\EnvKey.cs" Link="Base\Event\EnvKey.cs" />

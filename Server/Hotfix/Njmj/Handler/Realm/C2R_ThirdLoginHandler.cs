@@ -15,7 +15,8 @@ namespace ETHotfix
 	        Log.Info("收到第三方登录");
 
 	        R2C_ThirdLogin response = new R2C_ThirdLogin();
-	        try
+
+            try
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
