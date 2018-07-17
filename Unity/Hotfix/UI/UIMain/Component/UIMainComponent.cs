@@ -257,9 +257,9 @@ namespace ETHotfix
                 //    //显示赠送界面
 
                 //}
-                SetFriendRoom(true);
-                SetRank(false);
-                GetRoomInfoReq();
+                //SetFriendRoom(true);
+                //SetRank(false);
+                //GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -483,7 +483,15 @@ namespace ETHotfix
             RewardBtn.gameObject.SetActive(false);
             g2cWeek.IsGetGameRank = g2cWR.IsGetGameRank;
             g2cWeek.IsGetGoldRank = g2cWR.IsGetGoldRank;
-            ToastScript.createToast("领取成功");
+            if(curType == 1)
+            {
+                ToastScript.createToast($"领取成功,获得元宝{g2cWR.GoldReward}");
+            }
+            else if(curType == 2)
+            {
+                ToastScript.createToast($"领取成功,获得话费礼包{g2cWR.GameReward}");
+            }
+            
         }
 
         private void ShowNotice()
