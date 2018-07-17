@@ -44,7 +44,7 @@ namespace ETHotfix
                 room.IsFriendRoom = true;
 
                 FriendComponent friendComponent = room.AddComponent<FriendComponent>();
-                friendComponent.FriendRoomId = 123423;
+                friendComponent.FriendRoomId = RandomHelper.RandomNumber(10000,100000);
                 friendComponent.JuCount = friendRoomInfo.Ju;
                 friendComponent.Multiples = friendRoomInfo.Hua;
                 friendComponent.MinThreshold = 500;
