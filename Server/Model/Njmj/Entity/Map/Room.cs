@@ -210,7 +210,7 @@ namespace ETModel
 
             State = RoomState.Idle;
             reconnectList.Clear();
-            roomTokenSource.Cancel();
+            roomTokenSource?.Cancel();
             IsGameOver = false;
             NextGrabCard = null;
             IsLianZhuang = false;

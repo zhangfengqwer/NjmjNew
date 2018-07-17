@@ -22,7 +22,10 @@ namespace ETHotfix
                 }
                 Game.Scene.AddComponent<ConfigComponent>();
                 ConfigComponent configCom = Game.Scene.GetComponent<ConfigComponent>();
-                
+                StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
+                IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
+                Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
+
                 switch (message.Type)                                                                          
                 {
                     case 1:
@@ -216,11 +219,10 @@ namespace ETHotfix
                     case 3:
                         {
                             //解散房间
-                            StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
-                            IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                            Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
-
-//                            M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_r());
+                            
+                            M2G_GMInfo m2G_GMInfo = (M2G_GMInfo)await mapSession.Call(new G2M_GMInfo(){Type = 3,Uid = message.UId});
+                            response.Error = m2G_GMInfo.Error;
+                            response.Message = m2G_GMInfo.Message;
                         }
                         break;
                     case 4:
@@ -297,7 +299,9 @@ namespace ETHotfix
                             info.TotalGameCount = infos[0].TotalGameCount;
                             info.WinGameCount = infos[0].WinGameCount;
                             response.UId = infos[0].Id;
-                            if(logLogins.Count > 0)
+                            M2G_GMInfo m2G_GMInfo = (M2G_GMInfo)await mapSession.Call(new G2M_GMInfo() { Type = 6, Uid = message.UId });
+                            response.IsInGame = m2G_GMInfo.Type;
+                            if (logLogins.Count > 0)
                             {
                                 response.LastOnlineTime = logLogins[logLogins.Count - 1].CreateTime;
                             }
@@ -354,11 +358,6 @@ namespace ETHotfix
                     case 9:
                         {
                             //查看游戏内信息
-
-                            StartConfigComponent _config = Game.Scene.GetComponent<StartConfigComponent>();
-                            IPEndPoint mapIPEndPoint = _config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                            Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
-
                             M2G_GetRoomInfo getRoomInfo = (M2G_GetRoomInfo)await mapSession.Call(new G2M_GetRoomInfo());
                             response.Room = new RoomInfo();
                             response.Room.NewRoomCount = getRoomInfo.NewRoomCount;

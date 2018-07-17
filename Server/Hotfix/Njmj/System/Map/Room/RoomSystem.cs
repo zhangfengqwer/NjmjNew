@@ -22,7 +22,7 @@ namespace ETHotfix
     {
         public static async void Awake(this Room self)
         {
-            RoomDispose(self);
+//            RoomDispose(self);
         }
 
         public static async void RoomDispose(this Room self)
@@ -33,8 +33,8 @@ namespace ETHotfix
             }
 
             self.roomTokenSource = new CancellationTokenSource();
-            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1 * 60, self.roomTokenSource.Token);
-            Log.Warning("房间超时释放");
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(30 * 60 * 1000, self.roomTokenSource.Token);
+            Log.Warning("房间卡死，超时释放");
             Game.Scene.GetComponent<RoomComponent>().RemoveRoom(self,true);
             self.Broadcast(new Actor_GamerReadyTimeOut()
             {

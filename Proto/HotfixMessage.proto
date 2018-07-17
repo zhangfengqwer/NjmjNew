@@ -276,6 +276,7 @@ message G2C_ChangeWealth //IResponse
 {
 }
 
+
 message C2G_EnterRoom //IRequest
 {
 	required int RoomType = 1;
@@ -909,6 +910,17 @@ message M2C_FriendRoomInfo //IActorResponse
 {
 	required FriendRoomInfo Info = 1;
 	required bool IsGiveFriendKey = 2;
+}
+
+message G2M_GMInfo //IRequest
+{
+	required int Type = 1;
+	required long Uid = 1;
+}
+
+message M2G_GMInfo //IResponse
+{
+	required int Type = 1;
 }
 
 #endregion
