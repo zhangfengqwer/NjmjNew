@@ -63,11 +63,14 @@ namespace ETHotfix
 
 	                roomComponent.gameRooms.Add(room.Id, room);
 	                roomComponent.idleRooms.Remove(room.Id);
-
+                    //添加用户
+	                room.UserIds.Clear();
                     //初始玩家开始状态
                     foreach (var _gamer in gamers)
 	                {
-	                    if (_gamer.GetComponent<HandCardsComponent>() == null)
+	                    room.UserIds.Add(_gamer.UserID);
+
+                        if (_gamer.GetComponent<HandCardsComponent>() == null)
 	                    {
 	                        _gamer.AddComponent<HandCardsComponent>();
 	                    }

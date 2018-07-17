@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using ETModel;
 using MongoDB.Bson.Serialization;
 using NLog;
@@ -130,7 +131,7 @@ namespace App
 
                         //GateGlobalComponent
 					    Game.Scene.AddComponent<RankDataComponent>();
-					    Game.Scene.AddComponent<HttpComponent>();
+//					    Game.Scene.AddComponent<HttpComponent>();
                         Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>(); 
 
@@ -165,5 +166,5 @@ namespace App
 				Log.Error(e);
 			}
 		}
-	}
+    }
 }

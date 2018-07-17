@@ -21,6 +21,7 @@ namespace ETModel
     public sealed class Room : Entity
     {
         public readonly Dictionary<long, int> seats = new Dictionary<long, int>();
+        public readonly List<long> UserIds = new List<long>();
         public readonly Gamer[] gamers = new Gamer[4];
         public readonly List<IActorMessage> reconnectList = new List<IActorMessage>();
         //是否超时
@@ -43,6 +44,8 @@ namespace ETModel
         //房间状态
         public RoomState State { get; set; } = RoomState.Idle;
 
+        //是否是好友房
+        public bool IsFriendRoom { get; set; }
         //房间玩家数量
         public int Count
         {

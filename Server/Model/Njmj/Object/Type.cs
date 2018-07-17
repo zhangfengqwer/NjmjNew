@@ -11,6 +11,7 @@ namespace ETModel
     {
         None,
         ChuJi,
-        JingYing
+        JingYing,
+        Friend
     }
 }

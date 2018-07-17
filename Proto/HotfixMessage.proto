@@ -280,6 +280,7 @@ message G2C_ChangeWealth //IResponse
 message C2G_EnterRoom //IRequest
 {
 	required int RoomType = 1;
+	required int RoomId = 2;
 }
 
 message G2C_EnterRoom //IResponse
@@ -303,6 +304,7 @@ message G2M_PlayerEnterRoom //IRequest
 	required int64 SessionId = 2;
 	required int64 PlayerId = 3;
 	required int RoomType = 4;
+	required int RoomId = 5;
 }
 
 message M2G_PlayerEnterRoom //IResponse
@@ -919,7 +921,7 @@ message C2G_FriendRoomInfo //IRequest
 
 message G2C_FriendRoomInfo //IResponse
 {
-	required FriendRoomInfo Info = 1;
+	repeated FriendRoomInfo Info = 1;
 	required bool IsGiveFriendKey = 2;
 }
 
@@ -930,5 +932,28 @@ message G2M_FriendRoomInfo //IRequest
 
 message M2G_FriendRoomInfo //IResponse
 {
-	required FriendRoomInfo Info = 1;
+	repeated FriendRoomInfo Info = 1;
+}
+
+
+message C2G_CreateFriendRoom //IRequest
+{
+	required FriendRoomInfo FriendRoomInfo = 1;
+	required long UserId = 2;
+}
+
+message G2C_CreateFriendRoom //IResponse
+{
+	required long RoomId = 1;//房间ID
+}
+
+message G2M_CreateFriendRoom //IRequest
+{
+	required FriendRoomInfo FriendRoomInfo = 1;
+	required long UserId = 2;
+}
+
+message M2G_CreateFriendRoom //IResponse
+{
+	required long RoomId = 1;//房间ID
 }

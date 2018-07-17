@@ -150,5 +150,9 @@ namespace ETHotfix
 		 public const ushort G2C_FriendRoomInfo = 10146;
 		 public const ushort G2M_FriendRoomInfo = 10147;
 		 public const ushort M2G_FriendRoomInfo = 10148;
+		 public const ushort C2G_CreateFriendRoom = 10149;
+		 public const ushort G2C_CreateFriendRoom = 10150;
+		 public const ushort G2M_CreateFriendRoom = 10151;
+		 public const ushort M2G_CreateFriendRoom = 10152;
 	}
 }

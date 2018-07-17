@@ -804,6 +804,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public int RoomType;
 
+		[ProtoMember(2, IsRequired = true)]
+		public int RoomId;
+
 	}
 
 	[Message(HotfixOpcode.G2C_EnterRoom)]
@@ -857,6 +860,9 @@ namespace ETHotfix
 
 		[ProtoMember(4, IsRequired = true)]
 		public int RoomType;
+
+		[ProtoMember(5, IsRequired = true)]
+		public int RoomId;
 
 	}
 
@@ -2642,8 +2648,8 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
-		[ProtoMember(1, IsRequired = true)]
-		public FriendRoomInfo Info;
+		[ProtoMember(1, TypeName = "ETHotfix.FriendRoomInfo")]
+		public List<FriendRoomInfo> Info = new List<FriendRoomInfo>();
 
 		[ProtoMember(2, IsRequired = true)]
 		public bool IsGiveFriendKey;
@@ -2672,8 +2678,74 @@ namespace ETHotfix
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
 
+		[ProtoMember(1, TypeName = "ETHotfix.FriendRoomInfo")]
+		public List<FriendRoomInfo> Info = new List<FriendRoomInfo>();
+
+	}
+
+	[Message(HotfixOpcode.C2G_CreateFriendRoom)]
+	[ProtoContract]
+	public partial class C2G_CreateFriendRoom: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
 		[ProtoMember(1, IsRequired = true)]
-		public FriendRoomInfo Info;
+		public FriendRoomInfo FriendRoomInfo;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long UserId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_CreateFriendRoom)]
+	[ProtoContract]
+	public partial class G2C_CreateFriendRoom: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long RoomId;
+
+	}
+
+	[Message(HotfixOpcode.G2M_CreateFriendRoom)]
+	[ProtoContract]
+	public partial class G2M_CreateFriendRoom: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public FriendRoomInfo FriendRoomInfo;
+
+		[ProtoMember(2, IsRequired = true)]
+		public long UserId;
+
+	}
+
+	[Message(HotfixOpcode.M2G_CreateFriendRoom)]
+	[ProtoContract]
+	public partial class M2G_CreateFriendRoom: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long RoomId;
 
 	}
 

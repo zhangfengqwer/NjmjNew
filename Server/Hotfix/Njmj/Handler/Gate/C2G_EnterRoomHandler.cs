@@ -32,6 +32,7 @@ namespace ETHotfix
 			        UserId = user.UserID,
 			        SessionId = session.Id,
 			        PlayerId = user.Id,
+                    RoomId = message.RoomId
 			    });
 
 			    Log.Info(JsonHelper.ToJson(m2GPlayerEnterRoom));

@@ -33,7 +33,7 @@ namespace ETHotfix
             }
 
             self.roomTokenSource = new CancellationTokenSource();
-            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(30 * 60 * 1000, self.roomTokenSource.Token);
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10 * 60 * 1000, self.roomTokenSource.Token);
             Log.Warning("房间卡死，超时释放");
             Game.Scene.GetComponent<RoomComponent>().RemoveRoom(self,true);
             self.Broadcast(new Actor_GamerReadyTimeOut()
@@ -254,7 +254,8 @@ namespace ETHotfix
             {
                 if (gamer == null)
                 {
-                    Log.Warning("发牌的时候gamer为null:"+JsonHelper.ToJson(room.GetAll()));
+                    Log.Warning("发牌的时候gamer为null:"+JsonHelper.ToJson(room.UserIds)+"\n------："+JsonHelper.ToJson(room.GetAll()));
+                    
                     continue;
                 }
                 gamer.isGangFaWanPai = false;
