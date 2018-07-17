@@ -26,6 +26,10 @@ namespace ETHotfix
                             if (gamer != null)
                             {
                                 Log.Info("找到房间:" + _room.Id);
+                                room.Broadcast(new Actor_ForceOffline()
+                                {
+                                    Reason = "房间解散，被踢出"
+                                });
                                 roomComponent.RemoveRoom(room, true);
                                 room.Dispose();
                                 break;
@@ -38,6 +42,7 @@ namespace ETHotfix
                         }
                         else
                         {
+                            response.Error = ErrorCode.ERR_Common;
                             response.Message = "未找到房间";
                         }
                         break;
@@ -47,7 +52,7 @@ namespace ETHotfix
                             gamer = gameRoom.Get(message.Uid);
                             if (gamer != null)
                             {
-                                response.Type = 2;
+                                response.Type = 1;
                                 break;
                             }
                         }
@@ -57,14 +62,14 @@ namespace ETHotfix
                             gamer = gameRoom.Get(message.Uid);
                             if (gamer != null)
                             {
-                                response.Type = 1;
+                                response.Type = 2;
                                 break;
                             }
                         }
 
                         if (gamer == null)
                         {
-                            response.Type = 0;
+                            response.Type = 3;
                         }
 
                         break;

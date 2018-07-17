@@ -2452,6 +2452,9 @@ namespace ETHotfix
 		[ProtoMember(8, IsRequired = true)]
 		public string LogData;
 
+		[ProtoMember(9, IsRequired = true)]
+		public int IsInGame;
+
 	}
 
 	[Message(HotfixOpcode.C2G_WeekRank)]
@@ -2526,6 +2529,12 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public bool IsGetGameRank;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int GoldReward;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int GameReward;
 
 	}
 
