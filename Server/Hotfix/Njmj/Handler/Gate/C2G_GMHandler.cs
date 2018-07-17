@@ -285,7 +285,7 @@ namespace ETHotfix
                             }
                         }
 
-                        if(infos.Count > 0)
+                        if (infos.Count > 0)
                         {
                             PlayerInfo info = new PlayerInfo();
                             info.Name = infos[0].Name;
@@ -300,6 +300,7 @@ namespace ETHotfix
                             info.WinGameCount = infos[0].WinGameCount;
                             response.UId = infos[0].Id;
                             M2G_GMInfo m2G_GMInfo = (M2G_GMInfo)await mapSession.Call(new G2M_GMInfo() { Type = 6, Uid = message.UId });
+                            Log.Debug(m2G_GMInfo.Type + "");
                             response.IsInGame = m2G_GMInfo.Type;
                             if (logLogins.Count > 0)
                             {

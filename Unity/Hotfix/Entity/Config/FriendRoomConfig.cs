@@ -13,7 +13,7 @@ namespace Hotfix
         public static FriendRoomConfig s_instance = null;
 
         public List<int> beilvList = new List<int>();
-        public List<int> typeList = new List<int>();
+        public List<FriendRoomType> typeList = new List<FriendRoomType>();
         public List<FriendRoomJuShu> juShuList = new List<FriendRoomJuShu>();
         
         public static FriendRoomConfig getInstance()
@@ -59,7 +59,7 @@ namespace Hotfix
                 {
                     for (int i = 0; i < jd["RoomType"].Count; i++)
                     {
-                        typeList.Add((int)jd["RoomType"][i]["type"]);
+                        typeList.Add(new FriendRoomType((int)jd["RoomType"][i]["type"], (string)jd["RoomType"][i]["content"]));
                     }
                 }
             }
@@ -79,6 +79,17 @@ namespace Hotfix
         {
             m_jushu = jushu;
             m_yaoshi = yaoshi;
+        }
+    }
+
+    public class FriendRoomType
+    {
+        public int m_type;
+        public string m_content;
+        public FriendRoomType(int type,string content)
+        {
+            m_type = type;
+            m_content = content;
         }
     }
 }

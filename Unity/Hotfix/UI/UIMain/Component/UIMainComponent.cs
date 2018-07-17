@@ -249,7 +249,7 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 ToastScript.createToast("暂未开放：比赛场");
-                return;
+                //return;
 
                 //今天沒有贈送好友房钥匙
                 //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
@@ -257,9 +257,9 @@ namespace ETHotfix
                 //    //显示赠送界面
 
                 //}
-                //SetFriendRoom(true);
-                //SetRank(false);
-                //GetRoomInfoReq();
+                SetFriendRoom(true);
+                SetRank(false);
+                GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -599,7 +599,7 @@ namespace ETHotfix
             gameItemList.Clear();
             uiList.Clear();
             gameUiList.Clear();
-            uiList.Clear();
+            uiFList.Clear();
             roomItems.Clear();
             roomInfos.Clear();
         }
