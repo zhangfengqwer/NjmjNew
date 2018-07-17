@@ -62,5 +62,8 @@ namespace ETHotfix
         public const string UIFriendRoomItem = "UIFriendRoomItem";
         public const string UIFriendIcon = "UIFriendIconItem";
         public const string UIJoinRoom = "UIJoinRoom";
+        public const string UIHuaTypeToggle = "UIHuaTypeToggle";
+        public const string UIJuTypeToggle = "UIJuTypeToggle";
+        public const string UITypeToggle = "UITypeToggle";
     }
 }

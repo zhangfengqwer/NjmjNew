@@ -48,8 +48,7 @@ namespace ETHotfix
                 friendComponent.JuCount = friendRoomInfo.Ju;
                 friendComponent.Multiples = friendRoomInfo.Hua;
                 friendComponent.MinThreshold = 500;
-                friendComponent.IsPublic = friendRoomInfo.IsPublic;
-
+                friendComponent.IsPublic = friendRoomInfo.IsPublic == 1 ? true : false;
                 friendComponent.MasterUserId = message.UserId;
 
 
