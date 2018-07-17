@@ -2565,61 +2565,6 @@ namespace ETHotfix
 
 	}
 
-//好友房
-	[Message(HotfixOpcode.FriendRoomInfo)]
-	[ProtoContract]
-	public partial class FriendRoomInfo: IMessage
-	{
-		[ProtoMember(1, IsRequired = true)]
-		public long RoomId;
-
-		[ProtoMember(2, TypeName = "ETHotfix.string")]
-		public List<string> Icons = new List<string>();
-
-		[ProtoMember(3, IsRequired = true)]
-		public int Ju;
-
-		[ProtoMember(4, IsRequired = true)]
-		public int Hua;
-
-		[ProtoMember(5, IsRequired = true)]
-		public bool IsPublic;
-
-	}
-
-	[Message(HotfixOpcode.C2M_FriendRoomInfo)]
-	[ProtoContract]
-	public partial class C2M_FriendRoomInfo: IActorRequest
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(93, IsRequired = true)]
-		public long ActorId { get; set; }
-
-	}
-
-	[Message(HotfixOpcode.M2C_FriendRoomInfo)]
-	[ProtoContract]
-	public partial class M2C_FriendRoomInfo: IActorResponse
-	{
-		[ProtoMember(90, IsRequired = true)]
-		public int RpcId { get; set; }
-
-		[ProtoMember(91, IsRequired = true)]
-		public int Error { get; set; }
-
-		[ProtoMember(92, IsRequired = true)]
-		public string Message { get; set; }
-
-		[ProtoMember(1, IsRequired = true)]
-		public FriendRoomInfo Info;
-
-		[ProtoMember(2, IsRequired = true)]
-		public bool IsGiveFriendKey;
-
-	}
-
 	[Message(HotfixOpcode.G2M_GMInfo)]
 	[ProtoContract]
 	public partial class G2M_GMInfo: IRequest
@@ -2650,6 +2595,85 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public int Type;
+
+	}
+
+//好友房
+	[Message(HotfixOpcode.FriendRoomInfo)]
+	[ProtoContract]
+	public partial class FriendRoomInfo: IMessage
+	{
+		[ProtoMember(1, IsRequired = true)]
+		public long RoomId;
+
+		[ProtoMember(2, TypeName = "ETHotfix.string")]
+		public List<string> Icons = new List<string>();
+
+		[ProtoMember(3, IsRequired = true)]
+		public int Ju;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int Hua;
+
+		[ProtoMember(5, IsRequired = true)]
+		public bool IsPublic;
+
+	}
+
+	[Message(HotfixOpcode.C2G_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class C2G_FriendRoomInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.G2C_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class G2C_FriendRoomInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public FriendRoomInfo Info;
+
+		[ProtoMember(2, IsRequired = true)]
+		public bool IsGiveFriendKey;
+
+	}
+
+	[Message(HotfixOpcode.G2M_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class G2M_FriendRoomInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.M2G_FriendRoomInfo)]
+	[ProtoContract]
+	public partial class M2G_FriendRoomInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public FriendRoomInfo Info;
 
 	}
 

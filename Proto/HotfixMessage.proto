@@ -892,26 +892,6 @@ message G2C_IsCanRecharge //IResponse
 
 }
 
-//好友房
-message FriendRoomInfo //IMessage
-{
-	required long RoomId = 1;//房间ID
-	repeated string Icons = 2;//房间里面玩家的头像
-	required int Ju = 3;//局数
-	required int Hua = 4;//每花多少
-	required bool IsPublic = 5;//是否为公开房间
-}
-
-message C2M_FriendRoomInfo //IActorRequest
-{
-}
-
-message M2C_FriendRoomInfo //IActorResponse
-{
-	required FriendRoomInfo Info = 1;
-	required bool IsGiveFriendKey = 2;
-}
-
 message G2M_GMInfo //IRequest
 {
 	required int Type = 1;
@@ -923,4 +903,32 @@ message M2G_GMInfo //IResponse
 	required int Type = 1;
 }
 
-#endregion
+//好友房
+message FriendRoomInfo //IMessage
+{
+	required long RoomId = 1;//房间ID
+	repeated string Icons = 2;//房间里面玩家的头像
+	required int Ju = 3;//局数
+	required int Hua = 4;//每花多少
+	required bool IsPublic = 5;//是否为公开房间
+}
+
+message C2G_FriendRoomInfo //IRequest
+{
+}
+
+message G2C_FriendRoomInfo //IResponse
+{
+	required FriendRoomInfo Info = 1;
+	required bool IsGiveFriendKey = 2;
+}
+
+message G2M_FriendRoomInfo //IRequest
+{
+
+}
+
+message M2G_FriendRoomInfo //IResponse
+{
+	required FriendRoomInfo Info = 1;
+}
