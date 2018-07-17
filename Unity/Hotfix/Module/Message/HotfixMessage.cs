@@ -2622,7 +2622,7 @@ namespace ETHotfix
 		public int Hua;
 
 		[ProtoMember(5, IsRequired = true)]
-		public bool IsPublic;
+		public int IsPublic;
 
 	}
 

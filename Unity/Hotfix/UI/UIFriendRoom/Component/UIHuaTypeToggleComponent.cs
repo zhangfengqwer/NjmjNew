@@ -36,7 +36,8 @@ namespace ETHotfix
                 if (isOn)
                 {
                     //选择类型
-                    Log.Debug("===" + beilv + "===");
+                    //Log.Debug("===" + beilv + "===");
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UICreateFriendRoom).GetComponent<UICreateFriendRoomComponent>().SetCurHua(beilv);
                 }
             });
         }

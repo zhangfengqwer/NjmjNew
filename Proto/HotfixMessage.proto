@@ -912,7 +912,7 @@ message FriendRoomInfo //IMessage
 	repeated string Icons = 2;//房间里面玩家的头像
 	required int Ju = 3;//局数
 	required int Hua = 4;//每花多少
-	required bool IsPublic = 5;//是否为公开房间
+	required int IsPublic = 5;//是否为公开房间
 }
 
 message C2G_FriendRoomInfo //IRequest

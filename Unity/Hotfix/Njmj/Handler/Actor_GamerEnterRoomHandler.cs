@@ -31,6 +31,7 @@ namespace ETHotfix
                 {
                     CommonUtil.ShowUI(UIType.UIRoom);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
                 }
 
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady) == null)

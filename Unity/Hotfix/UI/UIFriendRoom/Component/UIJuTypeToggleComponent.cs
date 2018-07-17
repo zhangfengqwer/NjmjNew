@@ -39,8 +39,9 @@ namespace ETHotfix
                 if (isOn)
                 {
                     //选择类型
-                    Log.Debug("===" + info.m_yaoshi + "===");
-                    Log.Debug("---" + info.m_jushu + "---");
+                    //Log.Debug("===" + info.m_yaoshi + "===");
+                    //Log.Debug("---" + info.m_jushu + "---");
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UICreateFriendRoom).GetComponent<UICreateFriendRoomComponent>().SetCurJu(info.m_jushu);
                 }
             });
         }

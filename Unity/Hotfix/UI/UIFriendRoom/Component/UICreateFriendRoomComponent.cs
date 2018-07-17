@@ -77,6 +77,7 @@ namespace ETHotfix
             { 
                 {
                     //确定创建房间：向服务器发送消息
+                    CreateRoom();
                 }
 
             });
@@ -88,6 +89,42 @@ namespace ETHotfix
             });
 
             Init();
+        }
+
+        int curHua = 100;
+        int curJu = 4;
+        int curType = 1;
+        public void SetCurHua(int curHua)
+        {
+            this.curHua = curHua;
+        }
+
+        public void SetCurJu(int curJu)
+        {
+            this.curJu = curJu;
+        }
+
+        public void SetCurType(int curType)
+        {
+            this.curType = curType;
+        }
+
+        private async void CreateRoom()
+        {
+            FriendRoomInfo info = new FriendRoomInfo();
+            info.Hua = curHua;
+            info.Ju = curJu;
+            info.IsPublic = curType;
+            UINetLoadingComponent.showNetLoading();
+            G2C_CreateFriendRoom c2gCreate = (G2C_CreateFriendRoom) await SessionComponent.Instance.Session.Call(new C2G_CreateFriendRoom
+            {
+                  FriendRoomInfo = info,
+                  UserId = PlayerInfoComponent.Instance.uid
+            });
+            Log.Debug("===" + c2gCreate.RoomId + "===");
+            UINetLoadingComponent.closeNetLoading();
+            await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
+
         }
 
         private void Init()
