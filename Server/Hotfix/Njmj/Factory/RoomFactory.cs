@@ -44,13 +44,12 @@ namespace ETHotfix
                 room.IsFriendRoom = true;
 
                 FriendComponent friendComponent = room.AddComponent<FriendComponent>();
-                friendComponent.FriendRoomId = RandomHelper.RandomNumber(10000,100000);
+                friendComponent.FriendRoomId = RandomHelper.RandomNumber(100000,1000000);
                 friendComponent.JuCount = friendRoomInfo.Ju;
                 friendComponent.Multiples = friendRoomInfo.Hua;
                 friendComponent.MinThreshold = 500;
-                friendComponent.IsPublic = friendRoomInfo.IsPublic == 1 ? true : false;
+                friendComponent.IsPublic = friendRoomInfo.IsPublic == 1;
                 friendComponent.MasterUserId = message.UserId;
-
 
                 return room;
             }

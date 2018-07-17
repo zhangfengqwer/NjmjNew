@@ -122,8 +122,8 @@ namespace ETHotfix
                   UserId = PlayerInfoComponent.Instance.uid
             });
             Log.Debug("===" + c2gCreate.RoomId + "===");
-            UINetLoadingComponent.closeNetLoading();
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
+            UINetLoadingComponent.closeNetLoading();
 
         }
 

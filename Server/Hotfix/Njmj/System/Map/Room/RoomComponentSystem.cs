@@ -60,15 +60,18 @@ namespace ETHotfix
             {
                 foreach (var room in self.idleRooms.Values)
                 {
-                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
-                    if (controllerComponent == null)
+                    if (!room.IsFriendRoom)
                     {
-                        Log.Warning("room的GameControllerComponent为null");
-                        continue;
-                    }
-                    if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
-                    {
-                        return room;
+                        GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+                        if (controllerComponent == null)
+                        {
+                            Log.Warning("room的GameControllerComponent为null");
+                            continue;
+                        }
+                        if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
+                        {
+                            return room;
+                        }
                     }
                 }
                 return null;
@@ -131,6 +134,9 @@ namespace ETHotfix
                     List<Room> rooms = self.idleRooms.Values.ToList();
                     foreach (var room in rooms)
                     {
+                        //好友房不提出
+
+                        if (room.IsFriendRoom) continue;
                         foreach (var gamer in room.GetAll())
                         {
                             if (gamer == null)
