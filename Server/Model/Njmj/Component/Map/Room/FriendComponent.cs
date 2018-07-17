@@ -31,6 +31,11 @@ namespace ETModel
         /// 最低门槛
         /// </summary>
         public int MinThreshold { get; set; }
+        
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public bool IsPublic { get; set; }
 
         public override void Dispose()
         {

@@ -44,6 +44,8 @@ namespace ETModel
         //房间状态
         public RoomState State { get; set; } = RoomState.Idle;
 
+        //是否是好友房
+        public bool IsFriendRoom { get; set; }
         //房间玩家数量
         public int Count
         {
@@ -211,7 +213,7 @@ namespace ETModel
 
             State = RoomState.Idle;
             reconnectList.Clear();
-            roomTokenSource.Cancel();
+            roomTokenSource?.Cancel();
             IsGameOver = false;
             NextGrabCard = null;
             IsLianZhuang = false;

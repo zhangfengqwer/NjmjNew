@@ -79,6 +79,30 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 根据房间号获得房间
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        public static Room GetFriendRoomById(this RoomComponent self, int roomId)
+        {
+            foreach (var room in self.rooms.Values)
+            {
+                FriendComponent friendComponent = room.GetComponent<FriendComponent>();
+                if (friendComponent == null)
+                {
+                    continue;
+                }
+
+                if (friendComponent.FriendRoomId == roomId)
+                {
+                    return room;
+                }
+            }
+            return null;
+        }
+
         public static void RemoveRoom(this RoomComponent self,Room room,bool isTimeout = false)
         {
             self.rooms.Remove(room.Id);

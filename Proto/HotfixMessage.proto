@@ -280,6 +280,7 @@ message G2C_ChangeWealth //IResponse
 message C2G_EnterRoom //IRequest
 {
 	required int RoomType = 1;
+	required int RoomId = 2;
 }
 
 message G2C_EnterRoom //IResponse
@@ -303,6 +304,7 @@ message G2M_PlayerEnterRoom //IRequest
 	required int64 SessionId = 2;
 	required int64 PlayerId = 3;
 	required int RoomType = 4;
+	required int RoomId = 5;
 }
 
 message M2G_PlayerEnterRoom //IResponse

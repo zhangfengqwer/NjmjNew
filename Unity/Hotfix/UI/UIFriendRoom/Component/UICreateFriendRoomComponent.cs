@@ -186,6 +186,7 @@ namespace ETHotfix
                             UserId = PlayerInfoComponent.Instance.uid
                     });
             Log.Info("======" + g2cCreate.RoomId + "======");
+            await UIJoinRoomComponent.EnterFriendRoom(g2cCreate.RoomId.ToString());
         }
 
         private void Init()

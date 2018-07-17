@@ -114,13 +114,28 @@ namespace ETHotfix
 			        gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
 			        RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
-			        //获得空闲的房间
-			        Room idleRoom = roomComponent.GetIdleRoomById(message.RoomType);
-			        if (idleRoom == null)
+                    //获得空闲的房间
+			        Room idleRoom;
+
+                    if (message.RoomType == 3)
 			        {
-			            idleRoom = RoomFactory.Create(message.RoomType);
-			            roomComponent.Add(idleRoom);
-			        }
+			            idleRoom = roomComponent.GetFriendRoomById(message.RoomId);
+			            if (idleRoom == null)
+			            {
+			                response.Error = ErrorCode.ERR_Common;
+			                response.Message = "房间号不存在";
+			                return;
+			            }
+                    }
+			        else
+			        {
+			            idleRoom = roomComponent.GetIdleRoomById(message.RoomType);
+			            if (idleRoom == null)
+			            {
+			                idleRoom = RoomFactory.Create(message.RoomType);
+			                roomComponent.Add(idleRoom);
+			            }
+                    }
 
 			        idleRoom.Add(gamer);
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
