@@ -31,6 +31,8 @@ namespace ETHotfix
         private List<Button> clickBtns = new List<Button>();
         private string curEnterValue = "";
 
+        private static long curRoomId = 0;
+
         public void Start()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
@@ -105,14 +107,19 @@ namespace ETHotfix
             {
                 //向服务器发送消息
                 ToastScript.createToast("房间号已经输入完成");
-                //return;
+                curEnterValue = curEnterValue.Replace(" ", "");
+                await EnterFriendRoom(curEnterValue);
+                return;
             }
             #endregion
 
             curEnterValue = builder.Append(value).Append("    ").ToString();
             EnterTxt.text = curEnterValue;
-            curEnterValue = curEnterValue.Replace(" ", "");
-            await EnterFriendRoom(curEnterValue);
+        }
+
+        public void SetCurRoomId(long roomId)
+        {
+            curRoomId = roomId;
         }
 
         public static async Task EnterFriendRoom(string curEnterValue)
@@ -121,14 +128,17 @@ namespace ETHotfix
             {
                 //向服务器发送消息
                 ToastScript.createToast(curEnterValue);
-
                 G2C_EnterRoom g2CEnterRoom =
                         (G2C_EnterRoom) await SessionComponent.Instance.Session.Call(new C2G_EnterRoom()
                         {
                                 RoomType = 3,
                                 RoomId = Convert.ToInt32(curEnterValue)
                         });
-                Log.Info(g2CEnterRoom.Message);
+                if(g2CEnterRoom.Error != ErrorCode.ERR_Success)
+                {
+                    ToastScript.createToast(g2CEnterRoom.Message);
+                    return;
+                }
             }
         }
 
