@@ -553,7 +553,7 @@ namespace ETHotfix
         /// 设置红点提示状态 1,任务 2,成就 3,活动 4,转盘 5,邮件
         /// </summary>
         /// <param name="state"></param>
-        public void SetRedTip(int state, bool isHide,int count = 0)
+        public void SetRedTip(int state, bool isHide, int count = 0)
         {
             switch (state)
             {
@@ -577,6 +577,27 @@ namespace ETHotfix
                     BtnList_Up.transform.Find("Btn_Mail/Tip").gameObject.SetActive(isHide);
                     BtnList_Up.transform.Find("Btn_Mail/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
+            }
+
+            if (int.Parse(BtnList_Down.transform.Find("Grid/Btn_Task/Tip/Count").GetComponent<Text>().text) > 0)
+            {
+                FingerAnimation.Show(BtnList_Down.transform.Find("Grid/Btn_Task").gameObject);
+            }
+            else if (int.Parse(BtnList_Down.transform.Find("Grid/Btn_ChengJiu/Tip/Count").GetComponent<Text>().text) > 0)
+            {
+                FingerAnimation.Show(BtnList_Down.transform.Find("Grid/Btn_ChengJiu").gameObject);
+            }
+            else if (int.Parse(BtnList_Down.transform.Find("Grid/Btn_ZhuanPan/Tip/Count").GetComponent<Text>().text) > 0)
+            {
+                FingerAnimation.Show(BtnList_Down.transform.Find("Grid/Btn_ZhuanPan").gameObject);
+            }
+            else if (int.Parse(BtnList_Up.transform.Find("Btn_Mail/Tip/Count").GetComponent<Text>().text) > 0)
+            {
+                FingerAnimation.Show(BtnList_Up.transform.Find("Btn_Mail").gameObject);
+            }
+            else
+            {
+                FingerAnimation.Hide();
             }
         }
 
