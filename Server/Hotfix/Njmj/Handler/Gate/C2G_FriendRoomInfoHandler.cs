@@ -15,14 +15,15 @@ namespace ETHotfix
             {
                 //获取房间信息
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                List<PlayerBaseInfo> playerInfoList = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{gamer.UserID}}}");
+                User user = session.GetComponent<SessionUserComponent>().User;
+                List<PlayerBaseInfo> playerInfoList = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{user.UserID}}}");
 
                 if (playerInfoList.Count > 0)
                 {
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
                         //每天赠送好友房钥匙
-                        List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{gamer.UserID},BagId:{112}}}");
+                        List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{user.UserID},BagId:{112}}}");
                         if (bagInfoList.Count >= 0)
                         {
                             bagInfoList[0].Count += 3;

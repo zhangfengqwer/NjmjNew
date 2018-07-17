@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    class UICreateFriendRoomSystem : StartSystem<UICreateFriendRoomComponent>
+    class UICreateFriendRoomSystem: StartSystem<UICreateFriendRoomComponent>
     {
         public override void Start(UICreateFriendRoomComponent self)
         {
@@ -18,7 +18,7 @@ namespace ETHotfix
         }
     }
 
-    public class UICreateFriendRoomComponent : Component
+    public class UICreateFriendRoomComponent: Component
     {
         private Button SureBtn;
         private Button Type1Btn;
@@ -33,8 +33,11 @@ namespace ETHotfix
         private Text OwnKeyTxt;
 
         #region toggle选择
+
         private bool isRoomPublic;
+
         #endregion
+
         private Button CloseCreateRoom;
 
         private const int huaTypeCount = 3;
@@ -50,7 +53,6 @@ namespace ETHotfix
 
         private string curHuaValue;
         private string curJuValue;
-        
 
         public async void Start()
         {
@@ -58,8 +60,8 @@ namespace ETHotfix
 
             await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/friendRoomConfig.json", FriendRoomConfig.getInstance().init);
 
-
             #region CreateRoom
+
             SureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             JuType3Btn = rc.Get<GameObject>("JuType3Btn").GetComponent<Button>();
             JuType2Btn = rc.Get<GameObject>("JuType2Btn").GetComponent<Button>();
@@ -68,9 +70,11 @@ namespace ETHotfix
             HuaType3Btn = rc.Get<GameObject>("HuaType3Btn").GetComponent<Button>();
             HuaType2Btn = rc.Get<GameObject>("HuaType2Btn").GetComponent<Button>();
             HuaType1Btn = rc.Get<GameObject>("HuaType1Btn").GetComponent<Button>();
-            Type1Btn  = rc.Get<GameObject>("Type1Btn").GetComponent<Button>();
+            Type1Btn = rc.Get<GameObject>("Type1Btn").GetComponent<Button>();
             Type2Btn = rc.Get<GameObject>("Type2Btn").GetComponent<Button>();
+
             #endregion
+
             OwnKeyTxt = rc.Get<GameObject>("OwnKeyTxt").GetComponent<Text>();
 
             CloseCreateRoom = rc.Get<GameObject>("CloseCreateRoom").GetComponent<Button>();
@@ -80,40 +84,27 @@ namespace ETHotfix
             AddDiffToggleStruct(typeCount, rc, "Type", typeBtns);
 
             #region 选择局数
-            JuType1Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate(JuType1Btn.gameObject, juTypes, 2);
-            });
 
-            JuType2Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate( JuType2Btn.gameObject, juTypes, 2);
-            });
+            JuType1Btn.onClick.Add(() => { SetCheckMarKSate(JuType1Btn.gameObject, juTypes, 2); });
 
-            JuType3Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate(JuType3Btn.gameObject, juTypes, 2);
-            });
+            JuType2Btn.onClick.Add(() => { SetCheckMarKSate(JuType2Btn.gameObject, juTypes, 2); });
+
+            JuType3Btn.onClick.Add(() => { SetCheckMarKSate(JuType3Btn.gameObject, juTypes, 2); });
+
             #endregion
 
             #region 选择每花
-            HuaType1Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate( HuaType1Btn.gameObject, huaTypes, 1);
-            });
 
-            HuaType2Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate( HuaType2Btn.gameObject, huaTypes, 1);
-            });
+            HuaType1Btn.onClick.Add(() => { SetCheckMarKSate(HuaType1Btn.gameObject, huaTypes, 1); });
 
-            HuaType3Btn.onClick.Add(() =>
-            {
-                SetCheckMarKSate(HuaType3Btn.gameObject, huaTypes, 1);
-            });
+            HuaType2Btn.onClick.Add(() => { SetCheckMarKSate(HuaType2Btn.gameObject, huaTypes, 1); });
+
+            HuaType3Btn.onClick.Add(() => { SetCheckMarKSate(HuaType3Btn.gameObject, huaTypes, 1); });
+
             #endregion
 
             #region 选择类型
+
             //设置房间类型（开放 or 不开放）
             Type1Btn.onClick.Add(() =>
             {
@@ -127,12 +118,14 @@ namespace ETHotfix
                 isRoomPublic = false;
                 SetCheckMarKSate(Type2Btn.gameObject);
             });
+
             #endregion
 
             if (huaTypes.Count > 0)
             {
                 SetCheckMarKSate(huaTypes[0].go, huaTypes, 1);
             }
+
             if (juTypes.Count > 0)
             {
                 SetCheckMarKSate(juTypes[0].go, juTypes, 2);
@@ -152,7 +145,7 @@ namespace ETHotfix
                 int curmeihua = 100;
                 int curjushu = 4;
                 int curKeyCost = 3;
-                
+
                 {
                     string[] sps = curJuValue.Split('/');
                     int index = sps[0].IndexOf('局');
@@ -161,36 +154,48 @@ namespace ETHotfix
                     curmeihua = int.Parse(curHuaValue);
                 }
 
-                int myFriendKey = PlayerInfoComponent.Instance.GetBagById(112).Count;
-                if(myFriendKey < curKeyCost)
-                {
-                    ToastScript.createToast("钥匙不够！");
-                    return;
-                }
-
-                {
-                    //确定创建房间：向服务器发送消息
-                }
-
+                // int myFriendKey = PlayerInfoComponent.Instance.GetBagById(112).Count;
+                // if (myFriendKey < curKeyCost)
+                // {
+                //     ToastScript.createToast("钥匙不够！");
+                //     return;
+                // }
+                //
+                // {
+                //     //确定创建房间：向服务器发送消息
+                // }
+                CreateFriendRoom();
             });
 
             //关闭创建房间UI
-            CloseCreateRoom.onClick.Add(() =>
-            {
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
-            });
+            CloseCreateRoom.onClick.Add(() => { Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom); });
 
             Init();
         }
 
+        private async void CreateFriendRoom()
+        {
+            FriendRoomInfo info = new FriendRoomInfo();
+            info.Ju = FriendRoomConfig.getInstance().juShuList[curJuType - 1].m_jushu;
+            info.Hua = FriendRoomConfig.getInstance().beilvList[curJuType - 1];
+            info.IsPublic = true;
+            G2C_CreateFriendRoom g2cCreate =
+                    (G2C_CreateFriendRoom) await SessionComponent.Instance.Session.Call(new C2G_CreateFriendRoom
+                    {
+                            FriendRoomInfo = info,
+                            UserId = PlayerInfoComponent.Instance.uid
+                    });
+            Log.Info("======" + g2cCreate.RoomId + "======");
+        }
+
         private void Init()
         {
-            for(int i = 0;i< FriendRoomConfig.getInstance().beilvList.Count; ++i)
+            for (int i = 0; i < FriendRoomConfig.getInstance().beilvList.Count; ++i)
             {
                 SetLabel(huaTypes[i].go, FriendRoomConfig.getInstance().beilvList[i].ToString());
             }
 
-            for(int i = 0;i< FriendRoomConfig.getInstance().juShuList.Count; ++i)
+            for (int i = 0; i < FriendRoomConfig.getInstance().juShuList.Count; ++i)
             {
                 string txt = $"{FriendRoomConfig.getInstance().juShuList[i].m_jushu}局/     {FriendRoomConfig.getInstance().juShuList[i].m_yaoshi}";
                 SetLabel(juTypes[i].go, txt);
@@ -211,7 +216,7 @@ namespace ETHotfix
 
         private void SetActive(int index)
         {
-            for(int i = index; i< FriendRoomConfig.getInstance().typeList.Count; ++i)
+            for (int i = index; i < FriendRoomConfig.getInstance().typeList.Count; ++i)
             {
                 //完善
             }
@@ -228,10 +233,11 @@ namespace ETHotfix
                 case 3:
                     return HuaType3Btn.gameObject;
             }
+
             return null;
         }
 
-        private GameObject GetJuObj (int i)
+        private GameObject GetJuObj(int i)
         {
             switch (i)
             {
@@ -242,6 +248,7 @@ namespace ETHotfix
                 case 3:
                     return JuType3Btn.gameObject;
             }
+
             return null;
         }
 
@@ -252,21 +259,21 @@ namespace ETHotfix
         /// <param name="rc"></param>
         /// <param name="Objname"></param>
         /// <param name="list"></param>
-        private void AddDiffToggleStruct(int typeCount,ReferenceCollector rc,string Objname,List<ToggleTypeStruct> list)
+        private void AddDiffToggleStruct(int typeCount, ReferenceCollector rc, string Objname, List<ToggleTypeStruct> list)
         {
             for (int i = 0; i < typeCount; ++i)
             {
                 GameObject go = rc.Get<GameObject>($"{Objname}{i + 1}Btn");
                 ToggleTypeStruct tog = new ToggleTypeStruct();
                 tog.go = go;
-                tog.isSelect = i == 0 ? true : false;
+                tog.isSelect = i == 0? true : false;
                 list.Add(tog);
             }
 
             list.Distinct();
         }
 
-        private void SetLabel(GameObject go,string value)
+        private void SetLabel(GameObject go, string value)
         {
             go.transform.Find("Label").GetComponent<Text>().text = value;
         }
@@ -299,6 +306,7 @@ namespace ETHotfix
                         curJuType = i + 1;
                         /*Log.Debug("局 类型：" + curJuType);*/
                     }
+
                     list[i].go.transform.Find("Checkmark").gameObject.SetActive(true);
                     list[i].isSelect = true;
                 }
@@ -307,9 +315,9 @@ namespace ETHotfix
 
         private void SetCheckMarKSate(GameObject go)
         {
-            for(int i = 0;i< typeBtns.Count; ++i)
+            for (int i = 0; i < typeBtns.Count; ++i)
             {
-                if(typeBtns[i].go.Equals(go))
+                if (typeBtns[i].go.Equals(go))
                 {
                     typeBtns[i].go.transform.Find("Checkmark").gameObject.SetActive(true);
                     typeBtns[i].isSelect = true;

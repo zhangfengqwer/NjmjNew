@@ -21,6 +21,7 @@ namespace ETModel
     public sealed class Room : Entity
     {
         public readonly Dictionary<long, int> seats = new Dictionary<long, int>();
+        public readonly List<long> UserIds = new List<long>();
         public readonly Gamer[] gamers = new Gamer[4];
         public readonly List<IActorMessage> reconnectList = new List<IActorMessage>();
         //是否超时
@@ -210,7 +211,7 @@ namespace ETModel
 
             State = RoomState.Idle;
             reconnectList.Clear();
-            roomTokenSource?.Cancel();
+            roomTokenSource.Cancel();
             IsGameOver = false;
             NextGrabCard = null;
             IsLianZhuang = false;

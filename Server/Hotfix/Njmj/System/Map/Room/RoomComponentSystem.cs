@@ -124,7 +124,7 @@ namespace ETHotfix
                                     });
 
                                     //房间移除玩家
-                                    Log.Info("超时,移除玩家");
+                                    Log.Info($"{gamer.UserID}超时,移除玩家");
                                     room.Remove(gamer.UserID);
                                     //消息广播给其他人
                                     room.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });

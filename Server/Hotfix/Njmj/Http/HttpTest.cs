@@ -19,7 +19,7 @@ namespace ETHotfix
         [Get("t")] // url-> /t
         public int Test()
         {
-            System.Console.WriteLine("");
+            Log.Info("");
             return 1;
         }
 
