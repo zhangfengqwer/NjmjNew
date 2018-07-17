@@ -53,14 +53,14 @@ namespace ETHotfix
 			            {
 			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
 			               
-                            room.Remove(_gamer.UserID);
-			                //房间没人就释放
-			                if (room.seats.Count == 0)
-			                {
-                                roomCompnent.RemoveRoom(room);
-			                    room.Dispose();
-			                }
-                            return;
+//                            room.Remove(_gamer.UserID);
+//			                //房间没人就释放
+//			                if (room.seats.Count == 0)
+//			                {
+//                                roomCompnent.RemoveRoom(room);
+//			                    room.Dispose();
+//			                }
+//                            return;
 			            }
 			            List<MahjongInfo> handCards = handCardsComponent.GetAll();
 
@@ -123,21 +123,8 @@ namespace ETHotfix
 			        }
 
 			        idleRoom.Add(gamer);
-
-			        //人满了
-//			        if (idleRoom.seats.Count == 4)
-//			        {
-//			            if (roomComponent.readyRooms.TryGetValue(idleRoom.Id, out var _room))
-//			            {
-//			                roomComponent.readyRooms.Remove(idleRoom.Id);
-//                        }
-//
-//                        roomComponent.readyRooms.Add(idleRoom.Id, idleRoom);
-//                        roomComponent.idleRooms.Remove(idleRoom.Id);
-//                        //有key重复添加的问题
-//			        }
-
 			        List<GamerInfo> Gamers = new List<GamerInfo>();
+
                     GamerInfo currentInfo = null;
 			        for (int i = 0; i < idleRoom.GetAll().Length; i++)
 			        {
@@ -149,29 +136,15 @@ namespace ETHotfix
 			            gamerInfo.IsReady = _gamer.IsReady;
 
 			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
-
-			            PlayerInfo playerInfo = new PlayerInfo();
-			            playerInfo.Icon = playerBaseInfo.Icon;
-			            playerInfo.Name = playerBaseInfo.Name;
-			            playerInfo.GoldNum = playerBaseInfo.GoldNum;
-			            playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
-			            playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
-			            playerInfo.VipTime = playerBaseInfo.VipTime;
-			            playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
-			            playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
-			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
-			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
-
+			            PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
 			            gamerInfo.playerInfo = playerInfo;
 
 			            if (gamerInfo.UserID == message.UserId)
 			            {
 			                currentInfo = gamerInfo;
-
 			            }
 
 			            Gamers.Add(gamerInfo);
-
                     }
 
                     foreach (var _gamer in idleRoom.GetAll())

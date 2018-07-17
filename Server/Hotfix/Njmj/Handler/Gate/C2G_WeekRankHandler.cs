@@ -72,7 +72,6 @@ namespace ETHotfix
                             weekRank[0].GameIndex = -1;
                             await proxyComponent.Save(weekRank[0]);
                         }
-                        
                     }
                 }
                 else

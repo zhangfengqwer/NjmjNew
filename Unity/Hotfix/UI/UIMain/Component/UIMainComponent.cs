@@ -249,7 +249,7 @@ namespace ETHotfix
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 ToastScript.createToast("暂未开放：比赛场");
-                return;
+                        //return;
 
                 //今天沒有贈送好友房钥匙
                 //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
@@ -483,7 +483,15 @@ namespace ETHotfix
             RewardBtn.gameObject.SetActive(false);
             g2cWeek.IsGetGameRank = g2cWR.IsGetGameRank;
             g2cWeek.IsGetGoldRank = g2cWR.IsGetGoldRank;
-            ToastScript.createToast("领取成功");
+            if(curType == 1)
+            {
+                ToastScript.createToast($"领取成功,获得元宝{g2cWR.GoldReward}");
+            }
+            else if(curType == 2)
+            {
+                ToastScript.createToast($"领取成功,获得话费礼包{g2cWR.GameReward}");
+            }
+            
         }
 
         private void ShowNotice()

@@ -276,6 +276,7 @@ message G2C_ChangeWealth //IResponse
 {
 }
 
+
 message C2G_EnterRoom //IRequest
 {
 	required int RoomType = 1;
@@ -851,6 +852,7 @@ message G2C_GM // IResponse
 	required string Channel = 6;
 	required RoomInfo Room = 7;
 	required string LogData = 8;
+	required int IsInGame = 9;
 }
 
 message C2G_WeekRank //IRequest
@@ -876,6 +878,8 @@ message G2C_GetWeekReward //IResponse
 {
 	required bool IsGetGoldRank = 1;
 	required bool IsGetGameRank = 2;
+	required int GoldReward = 3;
+	required int GameReward = 4;
 }
 
 message C2G_IsCanRecharge //IRequest
@@ -888,6 +892,17 @@ message G2C_IsCanRecharge //IResponse
 
 }
 
+message G2M_GMInfo //IRequest
+{
+	required int Type = 1;
+	required long Uid = 1;
+}
+
+message M2G_GMInfo //IResponse
+{
+	required int Type = 1;
+}
+
 //好友房
 message FriendRoomInfo //IMessage
 {
@@ -898,14 +913,45 @@ message FriendRoomInfo //IMessage
 	required bool IsPublic = 5;//是否为公开房间
 }
 
-message C2M_FriendRoomInfo //IActorRequest
+message C2G_FriendRoomInfo //IRequest
 {
 }
 
-message M2C_FriendRoomInfo //IActorResponse
+message G2C_FriendRoomInfo //IResponse
 {
-	required FriendRoomInfo Info = 1;
+	repeated FriendRoomInfo Info = 1;
 	required bool IsGiveFriendKey = 2;
 }
 
-#endregion
+message G2M_FriendRoomInfo //IRequest
+{
+
+}
+
+message M2G_FriendRoomInfo //IResponse
+{
+	repeated FriendRoomInfo Info = 1;
+}
+
+
+message C2G_CreateFriendRoom //IRequest
+{
+	required FriendRoomInfo FriendRoomInfo = 1;
+	required long UserId = 2;
+}
+
+message G2C_CreateFriendRoom //IResponse
+{
+	required long RoomId = 1;//房间ID
+}
+
+message G2M_CreateFriendRoom //IRequest
+{
+	required FriendRoomInfo FriendRoomInfo = 1;
+	required long UserId = 2;
+}
+
+message M2G_CreateFriendRoom //IResponse
+{
+	required long RoomId = 1;//房间ID
+}

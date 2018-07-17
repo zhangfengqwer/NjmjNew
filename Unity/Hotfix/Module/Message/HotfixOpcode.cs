@@ -143,8 +143,16 @@ namespace ETHotfix
 		 public const ushort G2C_GetWeekReward = 10139;
 		 public const ushort C2G_IsCanRecharge = 10140;
 		 public const ushort G2C_IsCanRecharge = 10141;
-		 public const ushort FriendRoomInfo = 10142;
-		 public const ushort C2M_FriendRoomInfo = 10143;
-		 public const ushort M2C_FriendRoomInfo = 10144;
+		 public const ushort G2M_GMInfo = 10142;
+		 public const ushort M2G_GMInfo = 10143;
+		 public const ushort FriendRoomInfo = 10144;
+		 public const ushort C2G_FriendRoomInfo = 10145;
+		 public const ushort G2C_FriendRoomInfo = 10146;
+		 public const ushort G2M_FriendRoomInfo = 10147;
+		 public const ushort M2G_FriendRoomInfo = 10148;
+		 public const ushort C2G_CreateFriendRoom = 10149;
+		 public const ushort G2C_CreateFriendRoom = 10150;
+		 public const ushort G2M_CreateFriendRoom = 10151;
+		 public const ushort M2G_CreateFriendRoom = 10152;
 	}
 }

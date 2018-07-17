@@ -22,6 +22,7 @@ namespace ETHotfix
                         {
                             await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(1, weeks[0].GoldIndex), "领取周财富榜奖励" + GetReward(1, weeks[0].GoldIndex));
                             weeks[0].IsGetGoldRank = false;
+                            response.GoldReward = int.Parse(GetReward(1, weeks[0].GoldIndex).Split(':')[1]);
                             await proxyComponent.Save(weeks[0]);
                         }
                     }
@@ -31,6 +32,7 @@ namespace ETHotfix
                         {
                             await DBCommonUtil.changeWealthWithStr(message.UId, GetReward(2, weeks[0].GameIndex), "领取周战绩榜奖励" + GetReward(2, weeks[0].GameIndex));
                             weeks[0].IsGetGameRank = false;
+                            response.GameReward = int.Parse(GetReward(2, weeks[0].GameIndex).Split(':')[1]);
                             await proxyComponent.Save(weeks[0]);
                         }
                     }

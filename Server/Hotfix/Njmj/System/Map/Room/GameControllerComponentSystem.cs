@@ -137,7 +137,7 @@ namespace ETHotfix
                     //离线踢出
                     if (gamer.isOffline)
                     {
-                        Log.Info("玩家结束游戏后离线踢出,移除玩家");
+                        Log.Info($"玩家{gamer.UserID}结束游戏后离线踢出,移除玩家");
                         room.Remove(gamer.UserID);
                         gamer.isOffline = !gamer.isOffline;
                     }
@@ -158,7 +158,6 @@ namespace ETHotfix
                 roomComponent?.gameRooms.Remove(room.Id);
                 roomComponent?.idleRooms.Add(room.Id, room);
             }
-           
         }
 
         private static async Task UpdatePlayerInfo(Room room, int huaCount)
