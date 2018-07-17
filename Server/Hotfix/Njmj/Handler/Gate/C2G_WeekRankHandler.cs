@@ -25,20 +25,9 @@ namespace ETHotfix
                     weekInfo.GameIndex = -1;
                     weekInfo.GoldIndex = -1;
                     await proxyComponent.Save(weekInfo);
-
-
                 }
                 else
                 {
-                    if (!CommonUtil.IsMonday())
-                    {
-                        weekRank[0].IsGetGameRank = false;
-                        weekRank[0].IsGetGoldRank = false;
-                        weekRank[0].GameIndex = -1;
-                        weekRank[0].GoldIndex = -1;
-                        await proxyComponent.Save(weekRank[0]);
-                    }
-
                     response.IsGetGameRank = weekRank[0].IsGetGameRank;
                     response.IsGetGoldRank = weekRank[0].IsGetGoldRank;
                     response.GameIndex = weekRank[0].GameIndex;
@@ -83,8 +72,17 @@ namespace ETHotfix
                             weekRank[0].GameIndex = -1;
                             await proxyComponent.Save(weekRank[0]);
                         }
-                        
                     }
+                }
+                else
+                {
+                    weekRank[0].IsGetGameRank = false;
+                    weekRank[0].IsGetGoldRank = false;
+                    weekRank[0].GameIndex = -1;
+                    weekRank[0].GoldIndex = -1;
+                    await proxyComponent.Save(weekRank[0]);
+
+
                 }
 
                 response.IsGetGameRank = weekRank[0].IsGetGameRank;
