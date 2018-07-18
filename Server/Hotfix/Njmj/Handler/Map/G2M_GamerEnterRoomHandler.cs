@@ -175,15 +175,16 @@ namespace ETHotfix
                             {
                                 RoomType = message.RoomType,
                                 Gamers = Gamers,
+
                             };
 
                             if (message.RoomType == 3)
                             {
                                 FriendComponent friendComponent = idleRoom.GetComponent<FriendComponent>();
                                 actorGamerEnterRoom.RoomId = friendComponent.FriendRoomId;
+                                actorGamerEnterRoom.MasterUserId = friendComponent.MasterUserId;
                             }
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
-
                             idleRoom.reconnectList.Add(actorGamerEnterRoom);
                         }
                         //有人加入

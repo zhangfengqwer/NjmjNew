@@ -317,6 +317,7 @@ message Actor_GamerEnterRoom // IActorMessage
     repeated GamerInfo Gamers = 1;
     required int RoomType = 2;
  	required int RoomId = 3;
+ 	required long MasterUserId = 4;
 }
 
 message Actor_GamerJionRoom // IActorMessage
@@ -958,4 +959,9 @@ message G2M_CreateFriendRoom //IRequest
 message M2G_CreateFriendRoom //IResponse
 {
 	required long RoomId = 1;//房间ID
+}
+
+message Actor_GamerApplyRoomDismiss // IActorMessage
+{
+   
 }
