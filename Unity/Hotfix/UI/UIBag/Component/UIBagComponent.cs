@@ -55,6 +55,9 @@ namespace ETHotfix
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
             useTxt = rc.Get<GameObject>("UseTxt").GetComponent<Text>();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);

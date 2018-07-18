@@ -39,6 +39,8 @@ namespace ETHotfix
             emailCountTxt = rc.Get<GameObject>("EmailCountTxt").GetComponent<Text>();
             NoEmailTip = rc.Get<GameObject>("NoEmailTip").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIEmail);

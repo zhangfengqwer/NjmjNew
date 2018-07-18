@@ -48,6 +48,9 @@ namespace ETHotfix
             RewardTxt = rc.Get<GameObject>("RewardTxt").GetComponent<Text>();
             item = CommonUtil.getGameObjByBundle(UIType.UIChengjiuItem);
             AlGet = rc.Get<GameObject>("AlGet");
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             //返回
             ReturnBtn.onClick.Add(() => { Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChengjiu); });
 

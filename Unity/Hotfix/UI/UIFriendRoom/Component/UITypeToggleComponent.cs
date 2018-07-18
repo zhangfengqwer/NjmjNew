@@ -31,6 +31,8 @@ namespace ETHotfix
             TypeToggle = rc.Get<GameObject>("TypeToggle").GetComponent<Toggle>();
             ValueTxt =  rc.Get<GameObject>("ValueTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             TypeToggle.onValueChanged.Add((isOn) =>
             {
                 if (isOn)

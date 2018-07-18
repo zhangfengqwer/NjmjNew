@@ -41,6 +41,8 @@ namespace ETHotfix
             huaTxt = rc.Get<GameObject>("huaTxt").GetComponent<Text>();
             FriendGrid = rc.Get<GameObject>("FriendGrid");
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             icon = CommonUtil.getGameObjByBundle(UIType.UIFriendIcon);
 
             EnterBtn.onClick.Add(() =>

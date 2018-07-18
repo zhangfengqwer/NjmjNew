@@ -35,6 +35,7 @@ namespace ETHotfix
                     keyItem.ItemId = 112;
                     keyItem.Count = fKeyCount;
                     itemList.Add(keyItem);
+                    Log.Debug("===" + JsonHelper.ToJson(keyItem) + "===");
                 }
                 
                 response.ItemList = itemList;

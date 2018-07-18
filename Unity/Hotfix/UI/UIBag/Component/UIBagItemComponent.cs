@@ -29,6 +29,8 @@ namespace ETHotfix
             uiBagBgL = rc.Get<GameObject>("UIBagBgL");
             uiBagIcon = rc.Get<GameObject>("UIBagIcon").GetComponent<Image>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             uiBagItem.GetComponent<Button>().onClick.Add(() =>
             {
                 //显示物品信息

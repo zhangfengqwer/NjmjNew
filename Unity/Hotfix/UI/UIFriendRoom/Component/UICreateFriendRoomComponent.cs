@@ -88,6 +88,8 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
             });
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             Init();
         }
 

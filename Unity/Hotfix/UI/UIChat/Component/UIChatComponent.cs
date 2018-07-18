@@ -45,6 +45,8 @@ namespace ETHotfix
 
             ExpressionBtn.onClick.Add(() => { CreatExpressions(); });
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             Mask.onClick.Add(() =>
             {
                 CloseOrOpenChatUI(false);

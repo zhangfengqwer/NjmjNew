@@ -28,6 +28,9 @@ namespace ETHotfix
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             UIChatItem = rc.Get<GameObject>("UIChatItem").GetComponent<Button>();
             ChatTxt = rc.Get<GameObject>("ChatTxt").GetComponent<Text>();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             UIChatItem.GetComponent<Button>().onClick.Add(() =>
             {
                 RequestChat();

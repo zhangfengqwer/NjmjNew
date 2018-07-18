@@ -31,6 +31,8 @@ namespace ETHotfix
             chatObjArr[1] = rc.Get<GameObject>("ChatR");
             chatObjArr[2] = rc.Get<GameObject>("ChatT");
             chatObjArr[3] = rc.Get<GameObject>("ChatL");
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         /// <summary>

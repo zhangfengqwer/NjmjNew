@@ -76,6 +76,8 @@ namespace ETHotfix
             {
                 ClearText();
             });
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         private void AddClick()

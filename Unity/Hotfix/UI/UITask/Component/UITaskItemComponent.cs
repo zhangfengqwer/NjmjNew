@@ -38,6 +38,9 @@ namespace ETHotfix
             taskIcon = rc.Get<GameObject>("TaskIcon").GetComponent<Image>();
             taskNameTxt = rc.Get<GameObject>("TaskNameTxt").GetComponent<Text>();
             getBtn = rc.Get<GameObject>("GetBtn").GetComponent<Button>();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             getBtn.onClick.Add(() =>
             {
                 GetReward();

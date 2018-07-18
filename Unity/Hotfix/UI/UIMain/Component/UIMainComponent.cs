@@ -121,6 +121,8 @@ namespace ETHotfix
             roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
             #endregion
 
+            CommonUtil.SetTextFont(FriendRoom);
+
             #region 加入房间
             //打开加入房间
             JoinRoomBtn.onClick.Add(() =>
@@ -378,7 +380,7 @@ namespace ETHotfix
             #region 向服务器请求信息
             UINetLoadingComponent.showNetLoading();
             G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
-            Log.Debug(m2cFriend.Info.Count + "====");
+
             UINetLoadingComponent.closeNetLoading();
 
             //今天沒有贈送好友房钥匙

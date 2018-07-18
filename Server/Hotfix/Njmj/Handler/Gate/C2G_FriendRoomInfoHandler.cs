@@ -20,9 +20,6 @@ namespace ETHotfix
 
                 if (playerInfoList.Count > 0)
                 {
-                    Log.Debug("===" + playerInfoList[0].Id + "===");
-                    Log.Debug("===" + user.UserID + "---");
-
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
                         string curTime = CommonUtil.getCurTimeNormalFormat();
@@ -31,6 +28,7 @@ namespace ETHotfix
 
                         playerInfoList[0].IsGiveFriendKey = true;
                         response.IsGiveFriendKey = true;
+                        Log.Debug(response.IsGiveFriendKey + "bool");
                         await proxyComponent.Save(playerInfoList[0]);
                     }
                     else

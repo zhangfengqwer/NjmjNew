@@ -102,6 +102,8 @@ namespace ETHotfix
             shopInfoList = playerInfoCom.GetShopInfoList();
             #endregion
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             #region AddButton
             buttonDic.Add(ShopType.Wing, Wing);
             buttonDic.Add(ShopType.Gold, Gold);

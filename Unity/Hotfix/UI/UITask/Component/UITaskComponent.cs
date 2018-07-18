@@ -33,6 +33,8 @@ namespace ETHotfix
             grid = rc.Get<GameObject>("Grid");
             progressTxt = rc.Get<GameObject>("ProgressTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             returnBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UITask);

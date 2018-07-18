@@ -50,6 +50,9 @@ namespace ETHotfix
             Delete = rc.Get<GameObject>("Delete").GetComponent<Button>();
             readBtn = rc.Get<GameObject>("ReadBtn").GetComponent<Button>();
             rewardItem = CommonUtil.getGameObjByBundle(UIType.UIRewardItem);
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             readBtn.onClick.Add(() =>
             {
                 //ReadEmail();

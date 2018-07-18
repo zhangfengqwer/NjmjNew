@@ -31,6 +31,8 @@ namespace ETHotfix
             HuaTypeToggle = rc.Get<GameObject>("HuaTypeToggle").GetComponent<Toggle>();
             ValueTxt =  rc.Get<GameObject>("ValueTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             HuaTypeToggle.onValueChanged.Add((isOn) =>
             {
                 if (isOn)

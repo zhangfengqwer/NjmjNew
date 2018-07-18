@@ -444,7 +444,7 @@ namespace ETHotfix
 
         static public void SetTextFont(GameObject parent)
         {
-            Text[] list = parent.transform.GetComponentsInChildren<Text>();
+            Text[] list = parent.transform.GetComponentsInChildren<Text>(true);
             foreach (Text text in list)
             {
                 text.font = Resources.Load("Fonts/Defult/ZZGF") as Font;

@@ -27,6 +27,8 @@ namespace ETHotfix
             ChengjiuItemBtn = rc.Get<GameObject>("ChengjiuItemBtn");
             Complete = rc.Get<GameObject>("Complete");
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             ChengjiuItemBtn.GetComponent<Button>().onClick.Add(() =>
             {
                 if (info.IsComplete)

@@ -34,6 +34,8 @@ namespace ETHotfix
             priceTxt = rc.Get<GameObject>("PriceTxt").GetComponent<Text>();
             buyBtn = rc.Get<GameObject>("BuyBtn").GetComponent<Button>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             buyBtn.onClick.Add(async () =>
             {
                 if(shopInfo.CurrencyType == 2)

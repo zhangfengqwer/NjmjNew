@@ -34,6 +34,8 @@ namespace ETHotfix
             ValueTxt =  rc.Get<GameObject>("ValueTxt").GetComponent<Text>();
             KeyValueTxt =  rc.Get<GameObject>("KeyValueTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             JuTypeToggle.onValueChanged.Add((isOn) =>
             {
                 if (isOn)
