@@ -60,15 +60,18 @@ namespace ETHotfix
             {
                 foreach (var room in self.idleRooms.Values)
                 {
-                    GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
-                    if (controllerComponent == null)
+                    if (!room.IsFriendRoom)
                     {
-                        Log.Warning("room的GameControllerComponent为null");
-                        continue;
-                    }
-                    if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
-                    {
-                        return room;
+                        GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+                        if (controllerComponent == null)
+                        {
+                            Log.Warning("room的GameControllerComponent为null");
+                            continue;
+                        }
+                        if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
+                        {
+                            return room;
+                        }
                     }
                 }
                 return null;
@@ -77,6 +80,30 @@ namespace ETHotfix
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 根据房间号获得房间
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="roomId"></param>
+        /// <returns></returns>
+        public static Room GetFriendRoomById(this RoomComponent self, int roomId)
+        {
+            foreach (var room in self.rooms.Values)
+            {
+                FriendComponent friendComponent = room.GetComponent<FriendComponent>();
+                if (friendComponent == null)
+                {
+                    continue;
+                }
+
+                if (friendComponent.FriendRoomId == roomId)
+                {
+                    return room;
+                }
+            }
+            return null;
         }
 
         public static void RemoveRoom(this RoomComponent self,Room room,bool isTimeout = false)
@@ -107,6 +134,9 @@ namespace ETHotfix
                     List<Room> rooms = self.idleRooms.Values.ToList();
                     foreach (var room in rooms)
                     {
+                        //好友房不提出
+
+                        if (room.IsFriendRoom) continue;
                         foreach (var gamer in room.GetAll())
                         {
                             if (gamer == null)

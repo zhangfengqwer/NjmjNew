@@ -804,6 +804,9 @@ namespace ETHotfix
 		[ProtoMember(1, IsRequired = true)]
 		public int RoomType;
 
+		[ProtoMember(2, IsRequired = true)]
+		public int RoomId;
+
 	}
 
 	[Message(HotfixOpcode.G2C_EnterRoom)]
@@ -858,6 +861,9 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public int RoomType;
 
+		[ProtoMember(5, IsRequired = true)]
+		public int RoomId;
+
 	}
 
 	[Message(HotfixOpcode.M2G_PlayerEnterRoom)]
@@ -893,6 +899,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public int RoomType;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int RoomId;
 
 	}
 
@@ -2616,7 +2625,7 @@ namespace ETHotfix
 		public int Hua;
 
 		[ProtoMember(5, IsRequired = true)]
-		public bool IsPublic;
+		public int IsPublic;
 
 	}
 

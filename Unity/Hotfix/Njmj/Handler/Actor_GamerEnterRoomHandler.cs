@@ -31,6 +31,7 @@ namespace ETHotfix
                 {
                     CommonUtil.ShowUI(UIType.UIRoom);
                     Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIMain);
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
                 }
 
                 if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady) == null)
@@ -113,6 +114,12 @@ namespace ETHotfix
                 }
 
                 SoundsHelp.Instance.playSound_JinRu();
+
+                //好友房处理
+                if (message.RoomType == 3)
+                {
+                    uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                }
             }
             catch (Exception e)
             {

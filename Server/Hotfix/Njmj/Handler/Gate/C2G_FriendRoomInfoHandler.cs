@@ -24,7 +24,7 @@ namespace ETHotfix
                     {
                         //每天赠送好友房钥匙
                         List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{user.UserID},BagId:{112}}}");
-                        if (bagInfoList.Count >= 0)
+                        if (bagInfoList.Count > 0)
                         {
                             bagInfoList[0].Count += 3;
                             await proxyComponent.Save(bagInfoList[0]);

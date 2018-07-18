@@ -17,6 +17,7 @@ namespace ETHotfix
                 Room idleRoom = ComponentFactory.Create<Room>();
                 idleRoom.AddComponent<DeskComponent>();
                 idleRoom.AddComponent<OrderControllerComponent>();
+                idleRoom.IsFriendRoom = false;
                 GameControllerComponent controllerComponent = idleRoom.AddComponent<GameControllerComponent>();
                 controllerComponent.RoomConfig = ConfigHelp.Get<RoomConfig>(roomType);
                 controllerComponent.RoomName = (RoomName)roomType;
@@ -40,15 +41,15 @@ namespace ETHotfix
                 room.AddComponent<DeskComponent>();
                 room.AddComponent<OrderControllerComponent>();
                 room.AddComponent<GameControllerComponent>();
+                room.IsFriendRoom = true;
 
                 FriendComponent friendComponent = room.AddComponent<FriendComponent>();
-                friendComponent.FriendRoomId = 12343;
+                friendComponent.FriendRoomId = RandomHelper.RandomNumber(100000,1000000);
                 friendComponent.JuCount = friendRoomInfo.Ju;
                 friendComponent.Multiples = friendRoomInfo.Hua;
                 friendComponent.MinThreshold = 500;
-
+                friendComponent.IsPublic = friendRoomInfo.IsPublic == 1;
                 friendComponent.MasterUserId = message.UserId;
-
 
                 return room;
             }

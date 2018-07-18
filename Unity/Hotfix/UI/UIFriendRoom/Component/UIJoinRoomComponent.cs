@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,8 @@ namespace ETHotfix
         StringBuilder builder = new StringBuilder();
         private List<Button> clickBtns = new List<Button>();
         private string curEnterValue = "";
+
+        private static long curRoomId = 0;
 
         public void Start()
         {
@@ -97,23 +100,45 @@ namespace ETHotfix
         }
 
 
-        private void BtnClick(string value)
+        private async void BtnClick(string value)
         {
             #region test
             if (curEnterValue.Replace(" ", "").Length >= 6)
             {
                 //向服务器发送消息
                 ToastScript.createToast("房间号已经输入完成");
+                curEnterValue = curEnterValue.Replace(" ", "");
+                await EnterFriendRoom(curEnterValue);
                 return;
             }
             #endregion
 
             curEnterValue = builder.Append(value).Append("    ").ToString();
             EnterTxt.text = curEnterValue;
-            if (curEnterValue.Replace(" ", "").Length >= 6)
+        }
+
+        public void SetCurRoomId(long roomId)
+        {
+            curRoomId = roomId;
+        }
+
+        public static async Task EnterFriendRoom(string curEnterValue)
+        {
+            if (curEnterValue.Length >= 6)
             {
                 //向服务器发送消息
-                ToastScript.createToast("房间号已经输入完成");
+                ToastScript.createToast(curEnterValue);
+                G2C_EnterRoom g2CEnterRoom =
+                        (G2C_EnterRoom) await SessionComponent.Instance.Session.Call(new C2G_EnterRoom()
+                        {
+                                RoomType = 3,
+                                RoomId = Convert.ToInt32(curEnterValue)
+                        });
+                if(g2CEnterRoom.Error != ErrorCode.ERR_Success)
+                {
+                    ToastScript.createToast(g2CEnterRoom.Message);
+                    return;
+                }
             }
         }
 
