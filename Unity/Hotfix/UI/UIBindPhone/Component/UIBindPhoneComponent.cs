@@ -67,6 +67,8 @@ namespace ETHotfix
             Button_OK.onClick.Add(onClickBindPhone);
             Button_YanZhengMa.onClick.Add(onClickGetPhoneCode);
             Button_back.onClick.Add(onClickBack);
+
+            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
         }
         
         public void onClickBindPhone()

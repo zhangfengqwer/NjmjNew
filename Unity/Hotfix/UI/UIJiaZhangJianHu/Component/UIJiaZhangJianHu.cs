@@ -34,6 +34,8 @@ namespace ETHotfix
             btn_close = rc.Get<GameObject>("Button_close").GetComponent<Button>();
 
             btn_close.onClick.Add(onClick_Close);
+
+            CommonUtil.SetTextFont(btn_close.transform.parent.gameObject);
         }
 
         public void onClick_Close()

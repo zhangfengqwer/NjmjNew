@@ -66,6 +66,8 @@ namespace ETHotfix
             Button_close.onClick.Add(onClick_close);
             Button_back.onClick.Add(onClick_Back);
             Button_jixu.onClick.Add(onClick_jixu);
+
+            CommonUtil.SetTextFont(Button_close.transform.parent.gameObject);
         }
 
 
