@@ -382,10 +382,11 @@ namespace ETHotfix
         private async void GetRoomInfoReq()
         {
             #region 向服务器请求信息
-            // UINetLoadingComponent.showNetLoading();
-            // M2C_FriendRoomInfo m2cFriend = (M2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2M_FriendRoomInfo());
-
-            ////请求完了之后，设置今天赠送钥匙状态为已赠送
+            UINetLoadingComponent.showNetLoading();
+            G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { });
+            Log.Debug(m2cFriend.Info.Count + "====");
+            UINetLoadingComponent.closeNetLoading();
+            //请求完了之后，设置今天赠送钥匙状态为已赠送
             //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
             //{
             //    PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey = g2cFriend.IsGiveFriendKey;
@@ -399,41 +400,21 @@ namespace ETHotfix
             //}
             #endregion
 
-            roomInfos.Clear();
-
-            TestRoomInfo info = new TestRoomInfo();
-            info.roomId = 123560;
-            info.hua = "1000";
-            info.ju = "8";
-            info.icons = new List<string>() { "f_icon1", "f_icon2" };
-            roomInfos.Add(info);
-            info = new TestRoomInfo();
-            info.roomId = 987345;
-            info.hua = "100";
-            info.ju = "4";
-            info.icons = new List<string>() { "m_icon1" };
-            roomInfos.Add(info);
-            info = new TestRoomInfo();
-            info.roomId = 435465;
-            info.hua = "1000";
-            info.ju = "8";
-            info.icons = new List<string>() { "m_icon3" };
-            roomInfos.Add(info);
-            if (roomInfos.Count < 0)
+            if (m2cFriend.Info.Count <= 0)
             {
                 NoRoomTipTxt.SetActive(true);
             }
             else
             {
                 NoRoomTipTxt.SetActive(false);
-                CreateRoomItemss();
+                CreateRoomItemss(m2cFriend.Info);
             }
         }
 
         /// <summary>
         /// 创建房间Item
         /// </summary>
-        private void CreateRoomItemss()
+        private void CreateRoomItemss(List<FriendRoomInfo> roomInfos)
         {
             GameObject obj = null;
             for (int i = 0; i < roomInfos.Count; ++i)

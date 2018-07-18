@@ -35,10 +35,15 @@ namespace ETHotfix
                     RoomId = message.RoomId
 			    });
 
+                
+
 			    Log.Info(JsonHelper.ToJson(m2GPlayerEnterRoom));
 
-			    session.GetComponent<SessionUserComponent>().User.ActorID = m2GPlayerEnterRoom.GameId;
+                response.Error = m2GPlayerEnterRoom.Error;
+                response.Message = m2GPlayerEnterRoom.Message;
 
+                session.GetComponent<SessionUserComponent>().User.ActorID = m2GPlayerEnterRoom.GameId;
+                
                 reply(response);
 			}
 			catch (Exception e)

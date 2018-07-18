@@ -124,6 +124,7 @@ namespace ETHotfix
 			            {
 			                response.Error = ErrorCode.ERR_Common;
 			                response.Message = "房间号不存在";
+                            reply(response);
 			                return;
 			            }
                     }

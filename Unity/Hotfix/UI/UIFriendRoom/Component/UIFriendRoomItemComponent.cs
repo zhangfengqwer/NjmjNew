@@ -25,7 +25,7 @@ namespace ETHotfix
         private Text huaTxt;
         private GameObject FriendGrid;
 
-        private TestRoomInfo info;
+        private FriendRoomInfo info;
         private List<GameObject> icons = new List<GameObject>();
         private GameObject icon = null;
         private List<UI> uis = null;
@@ -46,17 +46,38 @@ namespace ETHotfix
             EnterBtn.onClick.Add(() =>
             {
                 //向服务器发送消息
-
+                if (info.IsPublic == 1)
+                {
+                    //公开房间
+                    JoinRoom();
+                }
+                else if (info.IsPublic == 2)
+                {
+                    //私密房间
+                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIJoinRoom);
+                }
             });
         }
 
-        public void SetItemInfo(TestRoomInfo info)
+        private async void JoinRoom()
+        {
+            await UIJoinRoomComponent.EnterFriendRoom(info.RoomId.ToString());
+        }
+
+        public void SetItemInfo(FriendRoomInfo info)
         {
             this.info = info;
-            RoomIdTxt.text = "房间号：" + info.roomId;
-            juTxt.text = info.ju + "局";
-            huaTxt.text = "每花" + info.hua;
-            CreateItems(info.icons);
+            if(info.IsPublic == 1)
+            {
+                RoomIdTxt.text = "房间号：" + info.RoomId;
+            }
+            else if(info.IsPublic == 2)
+            {
+                RoomIdTxt.text = "私密房间";
+            }
+            juTxt.text = info.Ju + "局";
+            huaTxt.text = "每花" + info.Hua;
+            CreateItems(info.Icons);
         }
 
         private void CreateItems(List<string> iconNames)
