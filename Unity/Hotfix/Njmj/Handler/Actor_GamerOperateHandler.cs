@@ -50,13 +50,13 @@ namespace ETHotfix
                     //碰刚
                     if (message.OperationType == 5)
                     {
-                        handCardsComponent.SetPengGang(message.OperationType, mahjongInfo);
+                        handCardsComponent.SetPengGang(message.OperationType, mahjongInfo,message.OperatedUid);
                     }
                     else
                     {
-                        handCardsComponent.SetPeng(message.OperationType, mahjongInfo);
+                        handCardsComponent.SetPeng(message.OperationType, mahjongInfo, message.OperatedUid);
                     }
-                    //隐藏碰刚
+                    //隐藏碰杠
                     handCardsComponent.CloseHandCardCanPeng();
                 }
                 else
@@ -64,11 +64,11 @@ namespace ETHotfix
                     //碰刚
                     if (message.OperationType == 5)
                     {
-                        handCardsComponent.SetOtherPengGang(message.OperationType, mahjongInfo);
+                        handCardsComponent.SetOtherPengGang(message.OperationType, mahjongInfo, message.OperatedUid, message.Uid);
                     }
                     else
                     {
-                        handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo);
+                        handCardsComponent.SetOtherPeng(message.OperationType, mahjongInfo,message.OperatedUid, message.Uid);
                     }
                 }
                 //显示碰刚动画

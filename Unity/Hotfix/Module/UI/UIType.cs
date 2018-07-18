@@ -65,5 +65,6 @@ namespace ETHotfix
         public const string UIHuaTypeToggle = "UIHuaTypeToggle";
         public const string UIJuTypeToggle = "UIJuTypeToggle";
         public const string UITypeToggle = "UITypeToggle";
+        public const string UIFriendRoomCommonTip = "UIFriendRoomCommonTip";
     }
 }

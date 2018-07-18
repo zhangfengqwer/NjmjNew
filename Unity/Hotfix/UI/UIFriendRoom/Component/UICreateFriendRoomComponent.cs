@@ -121,10 +121,8 @@ namespace ETHotfix
                   FriendRoomInfo = info,
                   UserId = PlayerInfoComponent.Instance.uid
             });
-            Log.Debug("===" + c2gCreate.RoomId + "===");
-            await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
             UINetLoadingComponent.closeNetLoading();
-
+            await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
         }
 
         private void Init()
@@ -146,8 +144,9 @@ namespace ETHotfix
                 }
                 huaUIList[i].GetComponent<UIHuaTypeToggleComponent>().SetToggleInfo(FriendRoomConfig.getInstance().beilvList[i],HuaGrid,i);
             }
+           /* SetActiveFalse(FriendRoomConfig.getInstance().beilvList.Count, huaTypeToggles);*/
 
-            for(int i = 0;i< FriendRoomConfig.getInstance().juShuList.Count; ++i)
+            for (int i = 0;i< FriendRoomConfig.getInstance().juShuList.Count; ++i)
             {
                 if(i < juTypeToggles.Count)
                 {
@@ -188,11 +187,12 @@ namespace ETHotfix
             }
         }
 
-        private void SetActive(int index)
+        private void SetActiveFalse(int index,List<GameObject> objList)
         {
-            for(int i = index; i< FriendRoomConfig.getInstance().typeList.Count; ++i)
+            for(int i = index; i< objList.Count; ++i)
             {
                 //完善
+                objList[i].SetActive(false);
             }
         }
 

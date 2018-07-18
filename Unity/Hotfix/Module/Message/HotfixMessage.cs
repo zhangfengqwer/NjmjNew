@@ -404,7 +404,9 @@ namespace ETHotfix
 		[ProtoMember(15, IsRequired = true)]
 		public bool IsSign;
 
-//required bool IsGiveFriendKey = 16;//判断今日是否已经赠送好友房钥匙
+		[ProtoMember(16, IsRequired = true)]
+		public bool IsGiveFriendKey;
+
 	}
 
 	[Message(HotfixOpcode.PlayerIcon)]
@@ -902,6 +904,9 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public int RoomId;
+
+		[ProtoMember(4, IsRequired = true)]
+		public long MasterUserId;
 
 	}
 
@@ -2636,6 +2641,9 @@ namespace ETHotfix
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
 	}
 
 	[Message(HotfixOpcode.G2C_FriendRoomInfo)]
@@ -2749,6 +2757,18 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long RoomId;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerApplyRoomDismiss)]
+	[ProtoContract]
+	public partial class Actor_GamerApplyRoomDismiss: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 	}
 

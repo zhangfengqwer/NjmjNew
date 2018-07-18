@@ -101,7 +101,6 @@ namespace ETHotfix
                     //设置准备
                     if (uiReadyComponent != null)
                     {
-//                        await gamerUiComponent.GetPlayerInfo();
                         if (gamer?.PlayerInfo != null)
                         {
                             gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
@@ -119,6 +118,8 @@ namespace ETHotfix
                 if (message.RoomType == 3)
                 {
                     uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                    uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
+                    roomComponent.SetFriendSetting(message.MasterUserId);
                 }
             }
             catch (Exception e)

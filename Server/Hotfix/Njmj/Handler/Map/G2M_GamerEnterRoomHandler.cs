@@ -52,7 +52,7 @@ namespace ETHotfix
 			            if (handCardsComponent == null)
 			            {
 			                Log.Error($"{_gamer.UserID}断线重连后玩家的手牌为空,移除玩家");
-			               
+			                continue;
 //                            room.Remove(_gamer.UserID);
 //			                //房间没人就释放
 //			                if (room.seats.Count == 0)
@@ -175,15 +175,16 @@ namespace ETHotfix
                             {
                                 RoomType = message.RoomType,
                                 Gamers = Gamers,
+
                             };
 
                             if (message.RoomType == 3)
                             {
                                 FriendComponent friendComponent = idleRoom.GetComponent<FriendComponent>();
                                 actorGamerEnterRoom.RoomId = friendComponent.FriendRoomId;
+                                actorGamerEnterRoom.MasterUserId = friendComponent.MasterUserId;
                             }
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
-
                             idleRoom.reconnectList.Add(actorGamerEnterRoom);
                         }
                         //有人加入

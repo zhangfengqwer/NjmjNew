@@ -133,7 +133,7 @@ message PlayerInfo // IMessage
 	required string EmogiTime = 13;//
 	required int MaxHua = 14;//
 	required bool IsSign = 15;//
-	//required bool IsGiveFriendKey = 16;//判断今日是否已经赠送好友房钥匙
+	required bool IsGiveFriendKey = 16;//判断今日是否已经赠送好友房钥匙
 }
 
 message PlayerIcon //IMessage
@@ -317,6 +317,7 @@ message Actor_GamerEnterRoom // IActorMessage
     repeated GamerInfo Gamers = 1;
     required int RoomType = 2;
  	required int RoomId = 3;
+ 	required long MasterUserId = 4;
 }
 
 message Actor_GamerJionRoom // IActorMessage
@@ -918,6 +919,7 @@ message FriendRoomInfo //IMessage
 
 message C2G_FriendRoomInfo //IRequest
 {
+	required long UId = 1;
 }
 
 message G2C_FriendRoomInfo //IResponse
@@ -957,4 +959,9 @@ message G2M_CreateFriendRoom //IRequest
 message M2G_CreateFriendRoom //IResponse
 {
 	required long RoomId = 1;//房间ID
+}
+
+message Actor_GamerApplyRoomDismiss // IActorMessage
+{
+   
 }

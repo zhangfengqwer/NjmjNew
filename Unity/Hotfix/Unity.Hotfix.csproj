@@ -124,6 +124,7 @@
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Entity\Type.cs" />
     <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerApplyRoomDismissHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ReliefGoldHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />
@@ -210,11 +211,13 @@
     <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
     <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UICreateFriendRoomComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomCommonTipComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomItemComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UITypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIJuTypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIHuaTypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIJoinRoomComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Factory\UIFriendRoomCommonTipFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Factory\UIJoinRoomFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Factory\UICreateFriendRoomFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />
