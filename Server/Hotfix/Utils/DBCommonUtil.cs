@@ -839,6 +839,10 @@ namespace ETHotfix
                         {
                             ++count;
                         }
+                        else
+                        {
+                            await proxyComponent.Delete<FriendKey>(listData[i].Id);
+                        }
                     }
                 }
 

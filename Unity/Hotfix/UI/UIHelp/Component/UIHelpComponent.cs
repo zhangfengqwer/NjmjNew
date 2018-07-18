@@ -57,6 +57,7 @@ namespace ETHotfix
 
             panel_guanyu.transform.Find("Text_banben").GetComponent<Text>().text = "版本：" + PlatformHelper.GetVersionName();
 
+            CommonUtil.SetTextFont(btn_back.transform.parent.gameObject);
         }
 
         public void onClick_back()

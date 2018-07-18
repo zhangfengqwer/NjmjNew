@@ -41,6 +41,8 @@ namespace ETHotfix
 
             Button_OK.onClick.Add(onClick_huafei5);
             Button_cancel.onClick.Add(onClick_close);
+
+            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
         }
 
         public void onClick_close()

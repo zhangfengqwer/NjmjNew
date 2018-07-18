@@ -47,6 +47,8 @@ namespace ETHotfix
 
             Button_OK.onClick.Add(onClickOK);
             Button_close.onClick.Add(onClickClose);
+
+            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
         }
         
         public void onClickClose()

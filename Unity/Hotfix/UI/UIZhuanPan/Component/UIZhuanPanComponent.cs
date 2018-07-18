@@ -94,6 +94,8 @@ namespace ETHotfix
             {
                 Image_bg.transform.Find("Text_tip1").localScale = Vector3.zero;
             }
+
+            CommonUtil.SetTextFont(Button_close.transform.parent.gameObject);
         }
 
         public void onClickClose()

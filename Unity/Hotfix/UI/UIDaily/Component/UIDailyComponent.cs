@@ -53,6 +53,8 @@ namespace ETHotfix
             Item4.transform.Find("Button").GetComponent<Button>().onClick.Add(onClick_item4);
             Item5.transform.Find("Button").GetComponent<Button>().onClick.Add(onClick_item5);
             Button_close.onClick.Add(onClick_close);
+
+            CommonUtil.SetTextFont(Image_bg.transform.gameObject);
         }
 
         public void onClick_close()
