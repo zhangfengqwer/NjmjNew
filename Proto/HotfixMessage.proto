@@ -918,6 +918,7 @@ message FriendRoomInfo //IMessage
 
 message C2G_FriendRoomInfo //IRequest
 {
+	required long UId = 1;
 }
 
 message G2C_FriendRoomInfo //IResponse

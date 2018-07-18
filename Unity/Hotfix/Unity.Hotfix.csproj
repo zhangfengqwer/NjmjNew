@@ -210,11 +210,13 @@
     <Compile Include="UI\UIChat\Component\UIChatShowComponent.cs" />
     <Compile Include="UI\UIChat\Factory\UIChatShowFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UICreateFriendRoomComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomCommonTipComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomItemComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UITypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIJuTypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIHuaTypeToggleComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIJoinRoomComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Factory\UIFriendRoomCommonTipFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Factory\UIJoinRoomFactory.cs" />
     <Compile Include="UI\UIFriendRoom\Factory\UICreateFriendRoomFactory.cs" />
     <Compile Include="UI\UILogin\Event\WeChatLogin.cs" />

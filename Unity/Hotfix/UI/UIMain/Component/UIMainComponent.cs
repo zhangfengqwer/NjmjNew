@@ -377,7 +377,7 @@ namespace ETHotfix
         {
             #region 向服务器请求信息
             UINetLoadingComponent.showNetLoading();
-            G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { });
+            G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
             Log.Debug(m2cFriend.Info.Count + "====");
             UINetLoadingComponent.closeNetLoading();
 

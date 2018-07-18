@@ -174,5 +174,24 @@ namespace ETHotfix
 
             return "";
         }
+
+        static string contentStr;
+        public static void SetTipString(string content)
+        {
+            contentStr = content;
+        }
+
+        public static string GetTip()
+        {
+            return contentStr;
+        }
+
+        public static void ShowFriendCommonTip(string content)
+        {
+            SetTipString(content);
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomCommonTip);
+            contentStr = "";
+        }
+
     }
 }

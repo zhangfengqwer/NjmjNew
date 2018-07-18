@@ -2638,6 +2638,9 @@ namespace ETHotfix
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
 	}
 
 	[Message(HotfixOpcode.G2C_FriendRoomInfo)]

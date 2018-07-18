@@ -16,26 +16,18 @@ namespace ETHotfix
                 //获取房间信息
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 User user = session.GetComponent<SessionUserComponent>().User;
-                List<PlayerBaseInfo> playerInfoList = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{user.UserID}}}");
-                Log.Debug("======" + JsonHelper.ToJson(playerInfoList) + "======");
+                List<PlayerBaseInfo> playerInfoList = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
+
                 if (playerInfoList.Count > 0)
                 {
+                    Log.Debug("===" + playerInfoList[0].Id + "===");
+                    Log.Debug("===" + user.UserID + "---");
+
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
+                        string curTime = CommonUtil.getCurTimeNormalFormat();
                         //每天赠送好友房钥匙
-                        List<UserBag> bagInfoList = await proxyComponent.QueryJson<UserBag>($"{{UId:{user.UserID},BagId:{112}}}");
-                        if (bagInfoList.Count > 0)
-                        {
-                            bagInfoList[0].Count += 3;
-                            await proxyComponent.Save(bagInfoList[0]);
-                        }
-                        else
-                        {
-                            UserBag info = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
-                            info.BagId = 112;
-                            info.Count = 3;
-                            await proxyComponent.Save(info);
-                        }
+                        await DBCommonUtil.AddFriendKey(message.UId, 3, curTime, "每天赠送3把好友房钥匙");
 
                         playerInfoList[0].IsGiveFriendKey = true;
                         response.IsGiveFriendKey = true;
