@@ -122,6 +122,7 @@ namespace ETHotfix
             #endregion
 
             CommonUtil.SetTextFont(FriendRoom);
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
 
             #region 加入房间
             //打开加入房间

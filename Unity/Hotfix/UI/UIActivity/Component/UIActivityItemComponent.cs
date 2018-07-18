@@ -27,6 +27,7 @@ namespace ETHotfix
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             UIActivityTitle = rc.Get<GameObject>("UIActivityTitle").GetComponent<Button>();
             TitleTxt = rc.Get<GameObject>("TitleTxt").GetComponent<Text>();
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
             UIActivityTitle.onClick.Add(() =>
             {
                 OnClick(info.id);

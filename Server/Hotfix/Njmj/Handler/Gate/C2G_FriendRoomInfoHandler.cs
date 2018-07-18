@@ -23,7 +23,7 @@ namespace ETHotfix
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
                         string endTime = CommonUtil.timeAddDays(CommonUtil.getCurDataNormalFormat(), 1);
-                        //endTime.Substring(endTime.StartsWith())
+
                         //每天赠送好友房钥匙
                         await DBCommonUtil.AddFriendKey(message.UId, 3, endTime, "每天赠送3把好友房钥匙");
 
