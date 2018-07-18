@@ -211,7 +211,7 @@ namespace ETHotfix
         {
             string Third_Id = CommonUtil.getCurTime();
 
-             await OnThirdLogin("zhang", "", "");
+             await OnThirdLogin("yu", "", "");
             //await OnThirdLogin(PlatformHelper.GetMacId(), "", "");
         }
 
