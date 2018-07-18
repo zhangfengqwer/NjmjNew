@@ -195,7 +195,7 @@ namespace ETHotfix
         public static void ShowFriendCommonTip(string content)
         {
             SetTipString(content);
-            if(GetComponentByType<UIFriendRoomCommonTipComponent>(UIType.UIFriendRoomCommonTip) != null)
+            if(GetComponentByType<UIFriendRoomCommonTipComponent>(UIType.UIFriendRoomCommonTip) == null)
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomCommonTip);
             }
