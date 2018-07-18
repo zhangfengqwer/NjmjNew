@@ -200,6 +200,7 @@ namespace ETHotfix
             #region 提示
             this.tip = rc.Get<GameObject>("Tip");
             #endregion
+
         }
 
         /// <summary>
@@ -604,5 +605,30 @@ namespace ETHotfix
             trustship.SetActive(true);
         }
 
+        /// <summary>
+        /// 好友房设置
+        /// </summary>
+        public void SetFriendSetting(long masterUserId)
+        {
+            settingBtn.GetComponentInChildren<Text>().text = "设 置";
+            if (masterUserId == PlayerInfoComponent.Instance.uid)
+            {
+                exitBtn.GetComponentInChildren<Text>().text = "解 散";
+                exitBtn.onClick.RemoveAllListeners();
+                exitBtn.onClick.Add(OnRoomDismiss);
+            }
+            else
+            {
+                exitBtn.GetComponentInChildren<Text>().text = "退 出";
+            }
+          
+        }
+        /// <summary>
+        /// 解散房间事件
+        /// </summary>
+        private void OnRoomDismiss()
+        {
+            SessionComponent.Instance.Session.Send(new Actor_GamerApplyRoomDismiss());
+        }
     }
 }

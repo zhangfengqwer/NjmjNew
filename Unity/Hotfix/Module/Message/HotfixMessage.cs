@@ -903,6 +903,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int RoomId;
 
+		[ProtoMember(4, IsRequired = true)]
+		public long MasterUserId;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerJionRoom)]
@@ -2749,6 +2752,18 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public long RoomId;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerApplyRoomDismiss)]
+	[ProtoContract]
+	public partial class Actor_GamerApplyRoomDismiss: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
 
 	}
 

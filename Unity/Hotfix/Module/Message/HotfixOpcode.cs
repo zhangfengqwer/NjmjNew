@@ -154,5 +154,6 @@ namespace ETHotfix
 		 public const ushort G2C_CreateFriendRoom = 10150;
 		 public const ushort G2M_CreateFriendRoom = 10151;
 		 public const ushort M2G_CreateFriendRoom = 10152;
+		 public const ushort Actor_GamerApplyRoomDismiss = 10153;
 	}
 }
