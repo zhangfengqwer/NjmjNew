@@ -92,13 +92,9 @@ namespace ETHotfix
         {
             foreach (var room in self.rooms.Values)
             {
-                FriendComponent friendComponent = room.GetComponent<FriendComponent>();
-                if (friendComponent == null)
-                {
-                    continue;
-                }
-
-                if (friendComponent.FriendRoomId == roomId)
+                if (!room.IsFriendRoom) continue;
+                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+                if (gameControllerComponent.RoomConfig.FriendRoomId == roomId)
                 {
                     return room;
                 }

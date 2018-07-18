@@ -21,13 +21,14 @@ namespace ETHotfix
                     RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                     foreach (var room in roomComponent.rooms.Values)
                     {
-                        FriendComponent friendComponent = room.GetComponent<FriendComponent>();
-                        if (friendComponent == null) continue;
+                        if (!room.IsFriendRoom) continue;
+
+                        GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
                         FriendRoomInfo friendRoomInfo = new FriendRoomInfo();
-                        friendRoomInfo.Hua = friendComponent.Multiples;
-                        friendRoomInfo.Ju = friendComponent.JuCount;
-                        friendRoomInfo.RoomId = friendComponent.FriendRoomId;
-                        friendRoomInfo.IsPublic = friendComponent.IsPublic ? 1 : 2;
+                        friendRoomInfo.Hua = gameControllerComponent.RoomConfig.Multiples;
+                        friendRoomInfo.Ju = gameControllerComponent.RoomConfig.JuCount;
+                        friendRoomInfo.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
+                        friendRoomInfo.IsPublic = gameControllerComponent.RoomConfig.IsPublic ? 1 : 2;
                         //设置头像
                         foreach (var gamer in room.GetAll())
                         {

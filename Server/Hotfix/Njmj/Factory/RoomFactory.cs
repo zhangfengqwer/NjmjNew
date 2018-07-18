@@ -43,13 +43,17 @@ namespace ETHotfix
                 room.AddComponent<GameControllerComponent>();
                 room.IsFriendRoom = true;
 
-                FriendComponent friendComponent = room.AddComponent<FriendComponent>();
-                friendComponent.FriendRoomId = RandomHelper.RandomNumber(100000,1000000);
-                friendComponent.JuCount = friendRoomInfo.Ju;
-                friendComponent.Multiples = friendRoomInfo.Hua;
-                friendComponent.MinThreshold = 500;
-                friendComponent.IsPublic = friendRoomInfo.IsPublic == 1;
-                friendComponent.MasterUserId = message.UserId;
+                GameControllerComponent controllerComponent = room.AddComponent<GameControllerComponent>();
+                RoomConfig roomConfig = new RoomConfig();
+                roomConfig.FriendRoomId = RandomHelper.RandomNumber(100000,1000000);
+                roomConfig.JuCount = friendRoomInfo.Ju;
+                roomConfig.Multiples = friendRoomInfo.Hua;
+                roomConfig.MinThreshold = 500;
+                roomConfig.IsPublic = friendRoomInfo.IsPublic == 1;
+                roomConfig.MasterUserId = message.UserId;
+                roomConfig.Id = 3;
+                controllerComponent.RoomConfig = roomConfig;
+                controllerComponent.RoomName = RoomName.Friend;
 
                 return room;
             }
