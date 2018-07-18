@@ -588,7 +588,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="roomType"></param>
         /// <param name="messageJuCount"></param>
-        public void SetRoomType(int roomType, int juCount)
+        public void SetRoomType(int roomType, int multiples)
         {
             this.RoomType = roomType;
 
@@ -602,7 +602,7 @@ namespace ETHotfix
             }
             else
             {
-                roomConfigText.text = $"{juCount}/花";
+                roomConfigText.text = $"{multiples}/花";
             }
         }
 
