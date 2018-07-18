@@ -129,7 +129,7 @@ namespace ETHotfix
 
                 uiRoomComponent.StartGame(message.restCount);
                 uiRoomComponent.exitBtn.interactable = true;
-                uiRoomComponent.SetRoomType(message.RoomType);
+                // uiRoomComponent.SetRoomType(message.RoomType);
 
                 foreach (var gameData in message.GamerDatas)
                 {

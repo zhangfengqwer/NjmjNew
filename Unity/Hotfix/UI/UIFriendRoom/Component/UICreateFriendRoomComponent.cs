@@ -123,8 +123,8 @@ namespace ETHotfix
                   FriendRoomInfo = info,
                   UserId = PlayerInfoComponent.Instance.uid
             });
-            UINetLoadingComponent.closeNetLoading();
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
+            UINetLoadingComponent.closeNetLoading();
         }
 
         private void Init()

@@ -914,6 +914,12 @@ namespace ETHotfix
 		[ProtoMember(4, IsRequired = true)]
 		public long MasterUserId;
 
+		[ProtoMember(5, IsRequired = true)]
+		public int JuCount;
+
+		[ProtoMember(6, IsRequired = true)]
+		public int Multiples;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerJionRoom)]

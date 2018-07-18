@@ -20,7 +20,7 @@ namespace ETHotfix
     public class UIRoomComponent: Component
     {
         public bool ISGaming = false;
-
+        public RoomConfig RoomConfig = new RoomConfig();
         public readonly GameObject[] GamersPanel = new GameObject[4];
         public readonly GameObject[] HeadPanel = new GameObject[4];
         public readonly GameObject[] FacePanel = new GameObject[4];
@@ -582,11 +582,13 @@ namespace ETHotfix
                 ToastScript.createToast(gamerGetTreasure.Message);
             }
         }
+
         /// <summary>
         /// 设置房间类型
         /// </summary>
         /// <param name="roomType"></param>
-        public void SetRoomType(int roomType)
+        /// <param name="messageJuCount"></param>
+        public void SetRoomType(int roomType, int juCount)
         {
             this.RoomType = roomType;
 
@@ -594,9 +596,13 @@ namespace ETHotfix
             {
                 roomConfigText.text = "100/花";
             }
-            else
+            else if(roomType == 2)
             {
                 roomConfigText.text = "500/花";
+            }
+            else
+            {
+                roomConfigText.text = $"{juCount}/花";
             }
         }
 

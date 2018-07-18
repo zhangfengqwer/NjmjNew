@@ -17,7 +17,7 @@ namespace ETHotfix
                 //获取房间信息
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 {
-                    //获取所有房间接口
+                    //获取所有空闲房间接口
                     RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                     foreach (var room in roomComponent.rooms.Values)
                     {
