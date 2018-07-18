@@ -35,8 +35,6 @@ namespace ETHotfix
                     RoomId = message.RoomId
 			    });
 
-                
-
 			    Log.Info(JsonHelper.ToJson(m2GPlayerEnterRoom));
 
                 response.Error = m2GPlayerEnterRoom.Error;

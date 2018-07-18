@@ -44,6 +44,7 @@ namespace ETHotfix
             InputCountGrid = rc.Get<GameObject>("InputCountGrid");
             EnterTxt = rc.Get<GameObject>("EnterTxt").GetComponent<Text>();
 
+            curRoomId = 0;
             for (int i = 0; i < 10; ++i)
             {
                 string name = "inputCount" + i;
@@ -128,6 +129,16 @@ namespace ETHotfix
             {
                 //向服务器发送消息
                 ToastScript.createToast(curEnterValue);
+                //如果curRoomId不为0，则是点击私密房间
+                if (curRoomId != 0)
+                {
+                    if(curRoomId != Convert.ToInt64(curEnterValue))
+                    {
+                        ToastScript.createToast("房间号输入错误，请重新输入！");
+                        return;
+                    }
+                }
+
                 G2C_EnterRoom g2CEnterRoom =
                         (G2C_EnterRoom) await SessionComponent.Instance.Session.Call(new C2G_EnterRoom()
                         {
