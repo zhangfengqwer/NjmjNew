@@ -21,6 +21,8 @@ namespace ETModel
         public int LuckyValue { get; set; }
         public int MaxHua { get; set; }
         public bool IsGiveFriendKey { get; set; }
+        public int FriendKeyCount { get; set; }
+        public int Sore { get; set; }
         public PlayerBaseInfo() : base()
         {
             GoldNum = 30000;

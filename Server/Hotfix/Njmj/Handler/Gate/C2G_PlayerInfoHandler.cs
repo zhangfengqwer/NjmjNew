@@ -27,6 +27,7 @@ namespace ETHotfix
                 List<PlayerBaseInfo> playerInfo = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{user.UserID}}}");
                 List<OtherData> otherDatas = await proxyComponent.QueryJson<OtherData>($"{{UId:{user.UserID}}}");
                 response.PlayerInfo = new PlayerInfo();
+                int fKeyCount = await DBCommonUtil.GetUserFriendKeyNum(user.UserID);
                 if (playerInfo != null)
                 {
                     response.Message = "数据库里已存在玩家的基本信息，返回玩家信息";
@@ -45,6 +46,7 @@ namespace ETHotfix
                     response.PlayerInfo.MaxHua = playerInfo[0].MaxHua;
                     response.PlayerInfo.WinGameCount = playerInfo[0].WinGameCount;
                     response.PlayerInfo.IsGiveFriendKey = playerInfo[0].IsGiveFriendKey;
+                    response.PlayerInfo.FriendKeyCount = fKeyCount;
                     List<ChengjiuInfo> infos =
                         await proxyComponent.QueryJson<ChengjiuInfo>($"{{UId:{user.UserID},TaskId:{102}}}");
                     if (infos.Count > 0)

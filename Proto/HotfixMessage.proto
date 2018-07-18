@@ -134,6 +134,8 @@ message PlayerInfo // IMessage
 	required int MaxHua = 14;//
 	required bool IsSign = 15;//
 	required bool IsGiveFriendKey = 16;//判断今日是否已经赠送好友房钥匙
+	required int FriendKeyCount = 17;//好友房钥匙个数
+	required int Sore = 18;//积分
 }
 
 message PlayerIcon //IMessage
@@ -926,6 +928,7 @@ message G2C_FriendRoomInfo //IResponse
 {
 	repeated FriendRoomInfo Info = 1;
 	required bool IsGiveFriendKey = 2;
+	required int KeyCount = 3;
 }
 
 message G2M_FriendRoomInfo //IRequest

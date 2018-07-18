@@ -407,6 +407,12 @@ namespace ETHotfix
 		[ProtoMember(16, IsRequired = true)]
 		public bool IsGiveFriendKey;
 
+		[ProtoMember(17, IsRequired = true)]
+		public int FriendKeyCount;
+
+		[ProtoMember(18, IsRequired = true)]
+		public int Sore;
+
 	}
 
 	[Message(HotfixOpcode.PlayerIcon)]
@@ -2664,6 +2670,9 @@ namespace ETHotfix
 
 		[ProtoMember(2, IsRequired = true)]
 		public bool IsGiveFriendKey;
+
+		[ProtoMember(3, IsRequired = true)]
+		public int KeyCount;
 
 	}
 

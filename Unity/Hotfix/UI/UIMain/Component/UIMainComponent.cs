@@ -391,6 +391,7 @@ namespace ETHotfix
                 PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey = m2cFriend.IsGiveFriendKey;
             }
 
+            PlayerInfoComponent.Instance.GetPlayerInfo().FriendKeyCount = m2cFriend.KeyCount;
             //请求完了之后，设置今天赠送钥匙状态为已赠送
             //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
             //{
