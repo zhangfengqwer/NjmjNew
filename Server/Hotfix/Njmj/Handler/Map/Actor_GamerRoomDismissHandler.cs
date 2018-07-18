@@ -19,12 +19,12 @@ namespace ETHotfix
                 if (room == null) return;
                 if (!room.IsFriendRoom) return;
 
-                FriendComponent friendComponent = room.GetComponent<FriendComponent>();
+                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
                 if (room.State == RoomState.Idle)
                 {
-                    if (gamer.UserID != friendComponent.MasterUserId)
+                    if (gamer.UserID != gameControllerComponent.RoomConfig.MasterUserId)
                     {
-                        Log.Warning($"准备阶段只有房主才能解散，房主:{friendComponent.MasterUserId},gamer：{gamer.UserID}");
+                        Log.Warning($"准备阶段只有房主才能解散，房主:{gameControllerComponent.RoomConfig.MasterUserId},gamer：{gamer.UserID}");
                         return;
                     }
                     else

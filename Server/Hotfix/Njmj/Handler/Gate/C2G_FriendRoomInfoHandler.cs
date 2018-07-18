@@ -22,9 +22,10 @@ namespace ETHotfix
                 {
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
-                        string curTime = CommonUtil.getCurTimeNormalFormat();
+                        string endTime = CommonUtil.timeAddDays(CommonUtil.getCurDataNormalFormat(), 1);
+
                         //每天赠送好友房钥匙
-                        await DBCommonUtil.AddFriendKey(message.UId, 3, curTime, "每天赠送3把好友房钥匙");
+                        await DBCommonUtil.AddFriendKey(message.UId, 3, endTime, "每天赠送3把好友房钥匙");
 
                         playerInfoList[0].IsGiveFriendKey = true;
                         response.IsGiveFriendKey = true;
@@ -46,7 +47,11 @@ namespace ETHotfix
 
                     M2G_FriendRoomInfo m2GFriendRoomInfo = (M2G_FriendRoomInfo)await mapSession.Call(new G2M_FriendRoomInfo() { });
                     response.Info = m2GFriendRoomInfo.Info;
+
+                    int keyCount = await DBCommonUtil.GetUserFriendKeyNum(message.UId);
+                    response.KeyCount = keyCount;
                 }
+
                 reply(response);
             }
             catch(Exception e)
