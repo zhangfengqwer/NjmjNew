@@ -144,7 +144,7 @@ namespace ETHotfix
                 {
                     if(curRoomId != Convert.ToInt64(curEnterValue))
                     {
-                        ToastScript.createToast("房间号输入错误，请重新输入！");
+                        GameUtil.ShowFriendCommonTip("房间号输入错误，请重新输入！");
                         return;
                     }
                 }
