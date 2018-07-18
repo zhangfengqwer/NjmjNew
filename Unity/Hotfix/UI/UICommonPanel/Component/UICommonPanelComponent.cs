@@ -80,6 +80,8 @@ namespace ETHotfix
 
             Text_title.text = title;
             Text_content.text = content;
+
+            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
         }
 
         public void onClickClose()

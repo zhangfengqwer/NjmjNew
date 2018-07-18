@@ -68,6 +68,8 @@ namespace ETHotfix
             }
 
             setYinSe(PlayerInfoComponent.Instance.GetPlayerInfo().PlayerSound);
+
+            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
         }
 
         public void onClick_close()
