@@ -614,7 +614,7 @@ namespace ETHotfix
             bg.SetActive(false);
         }
 
-        public void SetPeng(int type, MahjongInfo mahjong)
+        public void SetPeng(int type, MahjongInfo mahjong, long operatedUid)
         {
             GameObject obj = null;
             if (type == 0)
@@ -660,12 +660,49 @@ namespace ETHotfix
             }
 
             UpdateCards();
+
+            //设置谁碰刚
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            int gamerSeat = gamerComponent.GetGamerSeat(operatedUid);
+            int mySeat = gamerComponent.GetGamerSeat(PlayerInfoComponent.Instance.uid);
+        
+            int offset = gamerSeat - mySeat;
+
+            Log.Debug($"{operatedUid}:" + gamerSeat);
+            Log.Debug($"{PlayerInfoComponent.Instance.uid}:" + mySeat);
+            if (offset < 0) offset += 4;
+            if (offset == 1) offset = 3;
+            else if (offset == 3) offset = 1;
+
             //显示碰
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
-            for (int i = 1; i < 3; i++)
+            for (int i = 1; i < 4; i++)
             {
-                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = 
-                        CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                Image image = gameObject.transform.Find("Item_" + i).GetComponent<Image>();
+                //暗杠显示
+                if (type == 4)
+                {
+                    if (i == 2)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_back");
+                    }
+                }
+                else
+                {
+                    if (i == offset)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_back");
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                    }
+                }
             }
 
             if (type == 0)
@@ -683,7 +720,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="messageOperationType"></param>
         /// <param name="mahjong"></param>
-        public void SetPengGang(int messageOperationType, MahjongInfo mahjong)
+        public void SetPengGang(int messageOperationType, MahjongInfo mahjong, long operatedUid)
         {
             Log.Debug("显示碰后杠");
             GameObject obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
@@ -691,13 +728,39 @@ namespace ETHotfix
             this.RemoveCard(index);
             UpdateCards();
 
+            //设置谁碰刚
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            int gamerSeat = gamerComponent.GetGamerSeat(operatedUid);
+            int mySeat = gamerComponent.GetGamerSeat(PlayerInfoComponent.Instance.uid);
+
+            int offset = gamerSeat - mySeat;
+            if (offset < 0) offset += 4;
+            if (offset == 1) offset = 3;
+            else if (offset == 3) offset = 1;
+
             //显示碰
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
-            for (int i = 0; i < 2; i++)
+
+            for (int i = 1; i < 4; i++)
             {
-                gameObject.transform.GetChild(i).GetComponent<Image>().sprite =
-                        CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                Image image = gameObject.transform.Find("Item_" + i).GetComponent<Image>();
+                if (i == offset)
+                {
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_back");
+                }
+                else
+                {
+                    image.sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+                }
+
             }
+
+            // for (int i = 0; i < 2; i++)
+            // {
+            //     gameObject.transform.GetChild(i).GetComponent<Image>().sprite =
+            //             CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + mahjong.weight);
+            // }
 
             GameObject lastPengObj = null;
             if (pengDic.TryGetValue(mahjong.weight, out lastPengObj))
@@ -709,7 +772,7 @@ namespace ETHotfix
             }
         }
 
-        public void SetOtherPengGang(int messageOperationType, MahjongInfo mahjong)
+        public void SetOtherPengGang(int messageOperationType, MahjongInfo mahjong, long operatedUid, long uid)
         {
             GameObject obj = null;
             if (Index == 2)
@@ -733,32 +796,66 @@ namespace ETHotfix
                 pengDic.Remove(mahjong.weight);
             }
 
+           
             //显示出牌
             string item1 = null;
             string item2 = null;
             string item3 = null;
+            string itemBack = null;
             if (Index == 1)
             {
                 item1 = "Item_Horizontal_Card";
                 item2 = "Image_Right_Card";
                 item3 = "right_" + mahjong.weight;
+                itemBack = "right_back";
             }
             else if (Index == 2)
             {
                 item1 = "Item_Vertical_Card";
                 item2 = "Image_Top_Card";
                 item3 = "card_" + mahjong.weight;
+                itemBack = "card_back";
             }
             else if (Index == 3)
             {
                 item1 = "Item_Horizontal_Card";
                 item2 = "Image_Left_Card";
                 item3 = "left_" + mahjong.weight;
+                itemBack = "left_back";
             }
 
-            for (int i = 1; i < 3; i++)
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            int gamerSeat = gamerComponent.GetGamerSeat(operatedUid);
+            int mySeat = gamerComponent.GetGamerSeat(uid);
+
+            int offset = gamerSeat - mySeat;
+            if (offset < 0) offset += 4;
+            if (Index == 1)
             {
-                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle(item2, item3);
+                if (offset == 1) offset = 3;
+                else if (offset == 3) offset = 1;
+            }
+            else if (Index == 2)
+            {
+
+            }
+            else if (Index == 3)
+            {
+
+            }
+            for (int i = 1; i < 4; i++)
+            {
+                Image image = gameObject.transform.Find("Item_" + i).GetComponent<Image>();
+
+                if (i == offset)
+                {
+                    image.sprite = CommonUtil.getSpriteByBundle(item2, itemBack);
+                }
+                else
+                {
+                    image.sprite = CommonUtil.getSpriteByBundle(item2, item3);
+                }
             }
 
             if (Index == 3)
@@ -784,13 +881,15 @@ namespace ETHotfix
             }
         }
 
-     
         /// <summary>
         /// 其他人碰刚
         /// </summary>
         /// <param name="type"></param>
         /// <param name="mahjongInfo"></param>
-        public void SetOtherPeng(int type, MahjongInfo mahjongInfo)
+        /// <param name="operatedUid"></param>
+        /// <param name="messageUid"></param>
+        /// <param name="messageOperatedUid"></param>
+        public void SetOtherPeng(int type, MahjongInfo mahjongInfo, long operatedUid, long uid)
         {
           
             GameObject obj = null;
@@ -837,6 +936,28 @@ namespace ETHotfix
                 temp = 4;
             }
 
+            //设置谁碰刚
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+            int gamerSeat = gamerComponent.GetGamerSeat(operatedUid);
+            int mySeat = gamerComponent.GetGamerSeat(uid);
+
+            int offset = gamerSeat - mySeat;
+            if (offset < 0) offset += 4;
+            if (Index == 1)
+            {
+                if (offset == 1) offset = 3;
+                else if (offset == 3) offset = 1;
+            }
+            else if (Index == 2)
+            {
+
+            }else if(Index == 3)
+            {
+
+            }
+           
+
             //设置碰杠位置
             GameObject gameObject = GameObject.Instantiate(obj, this.pengObj.transform);
             int count = this.pengObj.transform.childCount;
@@ -862,28 +983,55 @@ namespace ETHotfix
             string item1 = null;
             string item2 = null;
             string item3 = null;
+            string itemBack = null;
             if (Index == 1)
             {
                 item1 = "Item_Horizontal_Card";
                 item2 = "Image_Right_Card";
                 item3 = "right_" + mahjongInfo.weight;
+                itemBack = "right_back";
             }
             else if (Index == 2)
             {
                 item1 = "Item_Vertical_Card";
                 item2 = "Image_Top_Card";
                 item3 = "card_" + mahjongInfo.weight;
+                itemBack = "card_back";
             }
             else if (Index == 3)
             {
                 item1 = "Item_Horizontal_Card";
                 item2 = "Image_Left_Card";
                 item3 = "left_" + mahjongInfo.weight;
+                itemBack = "left_back";
             }
 
-            for (int i = 1; i < 3; i++)
+            for (int i = 1; i < 4; i++)
             {
-                gameObject.transform.Find("Item_" + i).GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle(item2, item3);
+                Image image = gameObject.transform.Find("Item_" + i).GetComponent<Image>();
+                //暗杠显示
+                if (type == 4)
+                {
+                    if (i == 2)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle(item2, item3);
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle(item2, itemBack);
+                    }
+                }
+                else
+                {
+                    if (i == offset)
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle(item2, itemBack);
+                    }
+                    else
+                    {
+                        image.sprite = CommonUtil.getSpriteByBundle(item2, item3);
+                    }
+                }
             }
 
             num++;

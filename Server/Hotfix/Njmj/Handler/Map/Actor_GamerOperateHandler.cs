@@ -121,6 +121,7 @@ namespace ETHotfix
                         if (Logic_NJMJ.getInstance().isCanPeng(deskComponent.CurrentCard, mahjongInfos))
                         {
                             gamerOperation.OperationType = 0;
+                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             room.Broadcast(gamerOperation);
 
                             //更新手牌
@@ -134,7 +135,6 @@ namespace ETHotfix
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
 
                             //添加碰的人
-                            gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             PengOrBar pengOrBar = ComponentFactory.Create<PengOrBar>();
                             pengOrBar.OperateType = OperateType.Peng;
                             pengOrBar.Weight = deskComponent.CurrentCard.weight;
