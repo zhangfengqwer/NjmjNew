@@ -135,7 +135,13 @@ namespace ETHotfix
                 readyTimeout.SetActive(false);
             }
         }
-    
+
+        public void ClosePropt()
+        {
+            readyBtn.gameObject.SetActive(false);
+            readyTimeout.gameObject.SetActive(false);
+            changeTableBtn.gameObject.SetActive(false);
+        }
 
         public override void Dispose()
         {
@@ -147,5 +153,6 @@ namespace ETHotfix
             tokenSource.Cancel();
             timeOut = 20;
         }
+
     }
 }

@@ -173,8 +173,14 @@ namespace ETHotfix
                             Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
                             {
                                 RoomType = message.RoomType,
-                                Gamers = Gamers
+                                Gamers = Gamers,
                             };
+
+                            if (message.RoomType == 3)
+                            {
+                                FriendComponent friendComponent = idleRoom.GetComponent<FriendComponent>();
+                                actorGamerEnterRoom.RoomId = friendComponent.FriendRoomId;
+                            }
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
 
                             idleRoom.reconnectList.Add(actorGamerEnterRoom);

@@ -114,6 +114,12 @@ namespace ETHotfix
                 }
 
                 SoundsHelp.Instance.playSound_JinRu();
+
+                //好友房处理
+                if (message.RoomType == 3)
+                {
+                    uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                }
             }
             catch (Exception e)
             {
