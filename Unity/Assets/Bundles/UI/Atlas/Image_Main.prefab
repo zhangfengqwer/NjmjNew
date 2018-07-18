@@ -124,3 +124,5 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 785332ffc15af5a46b6f54344f797e1a, type: 3}
   - key: Rank_3
     gameObject: {fileID: 21300000, guid: dd6372ae6ed0211469cc19c89e8468b8, type: 3}
+  - key: finger
+    gameObject: {fileID: 21300000, guid: c6364c4dca30c4940aa197391f547b88, type: 3}

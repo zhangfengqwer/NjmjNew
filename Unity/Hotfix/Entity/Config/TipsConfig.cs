@@ -28,7 +28,6 @@ namespace Hotfix
         public void init(string jsonData)
         {
             m_dataList.Clear();
-
             JsonData jd = JsonMapper.ToObject(jsonData);
 
             for (int i = 0; i < jd.Count; i++)
