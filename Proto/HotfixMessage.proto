@@ -965,3 +965,8 @@ message Actor_GamerApplyRoomDismiss // IActorMessage
 {
    
 }
+
+message Actor_GamerRoomDismiss // IActorMessage
+{
+   
+}

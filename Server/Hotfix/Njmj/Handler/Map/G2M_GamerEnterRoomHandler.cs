@@ -175,7 +175,6 @@ namespace ETHotfix
                             {
                                 RoomType = message.RoomType,
                                 Gamers = Gamers,
-
                             };
 
                             if (message.RoomType == 3)
@@ -200,7 +199,6 @@ namespace ETHotfix
                             idleRoom.reconnectList.Add(actorGamerJionRoom);
                         }
                     }
-
 			        Log.Info($"玩家{message.UserId}进入房间:{idleRoom.Id}");
                 }
 			    response.GameId = gamer.Id;

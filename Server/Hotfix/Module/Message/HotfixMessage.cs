@@ -2772,4 +2772,16 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerRoomDismiss)]
+	[ProtoContract]
+	public partial class Actor_GamerRoomDismiss: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+	}
+
 }

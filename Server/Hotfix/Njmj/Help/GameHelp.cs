@@ -39,5 +39,12 @@ namespace ETHotfix
                 GoldAmount = amount
             });
         }
+
+        public static void RoomDispose(Room room)
+        {
+            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
+            roomComponent.RemoveRoom(room);
+            room?.Dispose();
+        }
     }
 }
