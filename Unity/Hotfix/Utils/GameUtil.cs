@@ -188,8 +188,12 @@ namespace ETHotfix
 
         public static T GetComponentByType<T>(string type) where T : Component
         {
-            Component component = Game.Scene.GetComponent<UIComponent>().Get(type).GetComponent<T>();
-            return (T)component;
+            if(Game.Scene.GetComponent<UIComponent>().Get(type) != null)
+            {
+                Component component = Game.Scene.GetComponent<UIComponent>().Get(type).GetComponent<T>();
+                return (T)component;
+            }
+            return null;
         }
 
         public static void ShowFriendCommonTip(string content)
