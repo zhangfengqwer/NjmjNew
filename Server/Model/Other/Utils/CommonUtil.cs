@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ETHotfix;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -441,6 +442,19 @@ namespace ETModel
             }
 
             return dic;
+        }
+
+        public static int GeneratRandomCount(int digit)
+        {
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            while(i < digit)
+            {
+                int random = Common_Random.getRandom(0, 9);
+                sb.Append(random);
+                ++i;
+            }
+            return Convert.ToInt32(sb.ToString());
         }
     }
 }
