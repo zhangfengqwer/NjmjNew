@@ -9,7 +9,6 @@ namespace ETHotfix
 	[ActorMessageHandler(AppType.Map)]
 	public class Actor_GamerApplyRoomDismissHandler : AMActorHandler<Gamer, Actor_GamerApplyRoomDismiss>
 	{
-
 	    protected override async Task Run(Gamer gamer, Actor_GamerApplyRoomDismiss message)
 	    {
             try
@@ -26,6 +25,15 @@ namespace ETHotfix
                     if (gamer.UserID != friendComponent.MasterUserId)
                     {
                         Log.Warning($"准备阶段只有房主才能解散，房主:{friendComponent.MasterUserId},gamer：{gamer.UserID}");
+                        return;
+                    }
+                    else
+                    {
+                        room.Broadcast(new Actor_GamerReadyTimeOut()
+                        {
+                            Message = "房主解散房间"
+                        });
+                        GameHelp.RoomDispose(room);
                         return;
                     }
                 }

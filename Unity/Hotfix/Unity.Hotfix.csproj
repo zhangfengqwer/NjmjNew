@@ -199,6 +199,8 @@
     <Compile Include="Njmj\Helper\SoundsHelp.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Component\UIReadyComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIReady\Factory\UIRoomFactory.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoomDismiss\Component\UIRoomDismissComponent.cs" />
+    <Compile Include="Njmj\UI\Game\UIRoomDismiss\Factory\UIRoomDismissFactory.cs" />
     <Compile Include="Njmj\UI\Game\UIRoom\Component\ItemCardComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIRoom\Component\UIChatItemComponent.cs" />
     <Compile Include="Njmj\UI\Game\UIRoom\Component\UIExpressionComponent.cs" />
@@ -309,6 +311,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Njmj\UI\Game\UIReady\Event\" />
+    <Folder Include="Njmj\UI\Game\UIRoomDismiss\Event\" />
     <Folder Include="UI\UIMain\Event\" />
     <Folder Include="UI\UIRoom\" />
   </ItemGroup>
