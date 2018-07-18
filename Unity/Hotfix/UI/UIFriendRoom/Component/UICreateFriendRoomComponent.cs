@@ -183,10 +183,7 @@ namespace ETHotfix
                 typeUIList[i].GetComponent<UITypeToggleComponent>().SetToggleInfo(FriendRoomConfig.getInstance().typeList[i], RoomTypeGrid, i);
             }
 
-            if (PlayerInfoComponent.Instance.GetBagById(112) != null)
-            {
-                OwnKeyTxt.text = PlayerInfoComponent.Instance.GetBagById(112).Count.ToString();
-            }
+            OwnKeyTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().FriendKeyCount.ToString();
         }
 
         private void SetActiveFalse(int index,List<GameObject> objList)
