@@ -32,8 +32,9 @@ namespace ETHotfix
                 {
                     Room friendRoom = RoomFactory.CreateFriendRoom(message);
                     roomComponent.Add(friendRoom);
-                    FriendComponent friendComponent = friendRoom.GetComponent<FriendComponent>();
-                    response.RoomId = friendComponent.FriendRoomId;
+
+                    GameControllerComponent gameControllerComponent = friendRoom.GetComponent<GameControllerComponent>();
+                    response.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
                 }
                 else
                 {

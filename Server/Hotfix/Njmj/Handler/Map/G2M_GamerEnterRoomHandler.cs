@@ -179,9 +179,9 @@ namespace ETHotfix
 
                             if (message.RoomType == 3)
                             {
-                                FriendComponent friendComponent = idleRoom.GetComponent<FriendComponent>();
-                                actorGamerEnterRoom.RoomId = friendComponent.FriendRoomId;
-                                actorGamerEnterRoom.MasterUserId = friendComponent.MasterUserId;
+                                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+                                actorGamerEnterRoom.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
+                                actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
                             }
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
                             idleRoom.reconnectList.Add(actorGamerEnterRoom);

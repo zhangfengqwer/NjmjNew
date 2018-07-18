@@ -174,9 +174,18 @@ namespace ETHotfix
 	                }
 
 	                actorStartGame.restCount = deskComponent.RestLibrary.Count;
-	                actorStartGame.RoomType = (int) room.GetComponent<GameControllerComponent>().RoomConfig.Id;
-	                //发送消息
-	                room.Broadcast(actorStartGame);
+	                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+	               
+	                if (room.IsFriendRoom)
+	                {
+	                    actorStartGame.RoomType = 3;
+	                }
+	                else
+	                {
+	                    actorStartGame.RoomType = (int)gameControllerComponent.RoomConfig.Id;
+                    }
+                    //发送消息
+                    room.Broadcast(actorStartGame);
 //	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
 
 	                room.reconnectList.Add(actorStartGame);
