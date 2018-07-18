@@ -55,6 +55,8 @@ namespace ETHotfix
                 activityItem = CommonUtil.getGameObjByBundle(UIType.UIActivityItem);
                 Grid = rc.Get<GameObject>("Grid");
 
+                CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
                 GetActivityItemList();
 
                 //返回

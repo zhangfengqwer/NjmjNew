@@ -835,10 +835,7 @@ namespace ETHotfix
                     }
                     else
                     {
-                        string date = listData[i].endTime.Substring(0, (listData[i].endTime.LastIndexOf(':') - 5));
-
-                        if ((date.CompareTo(CommonUtil.getCurDataNormalFormat()) >= 0)
-                            && String.CompareOrdinal(listData[i].endTime, CommonUtil.getCurTimeNormalFormat()) < 0)
+                        if (listData[i].endTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
                         {
                             ++count;
                         }

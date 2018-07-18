@@ -186,10 +186,19 @@ namespace ETHotfix
             return contentStr;
         }
 
+        public static T GetComponentByType<T>(string type) where T : Component
+        {
+            Component component = Game.Scene.GetComponent<UIComponent>().Get(type).GetComponent<T>();
+            return (T)component;
+        }
+
         public static void ShowFriendCommonTip(string content)
         {
             SetTipString(content);
-            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomCommonTip);
+            if(GetComponentByType<UIFriendRoomCommonTipComponent>(UIType.UIFriendRoomCommonTip) != null)
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomCommonTip);
+            }
             contentStr = "";
         }
 
