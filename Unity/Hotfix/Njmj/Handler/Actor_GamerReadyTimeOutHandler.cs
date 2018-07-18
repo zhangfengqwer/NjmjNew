@@ -16,13 +16,9 @@ namespace ETHotfix
             {
                 Log.Info($"收到准备超时:{message.Message}");
                 CommonUtil.ShowUI(UIType.UIMain);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
-                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+                GameUtil.Back2Main();
 
-                ToastScript.createToast(message.Message);
+                GameUtil.ShowFriendCommonTip(message.Message);
             }
             catch (Exception e)
             {
