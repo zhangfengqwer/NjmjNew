@@ -46,6 +46,8 @@ namespace ETHotfix
             CancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
             TipTxt = rc.Get<GameObject>("TipTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             TipTxt.text = content;
         }
 
