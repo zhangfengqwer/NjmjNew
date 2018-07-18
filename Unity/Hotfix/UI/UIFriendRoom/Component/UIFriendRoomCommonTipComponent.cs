@@ -64,10 +64,8 @@ namespace ETHotfix
                 {
                     OnCancelComplete();
                 }
-                else
-                {
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoomCommonTip);
-                }
+
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoomCommonTip);
             });
 
             SureBtn.onClick.Add(() =>
@@ -76,10 +74,8 @@ namespace ETHotfix
                 {
                     OnOkComplete();
                 }
-                else
-                {
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoomCommonTip);
-                }
+
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoomCommonTip);
             });
         }
 

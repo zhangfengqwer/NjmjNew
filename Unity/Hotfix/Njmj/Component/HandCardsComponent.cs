@@ -921,7 +921,7 @@ namespace ETHotfix
                 temp = 3;
             }
             //暗杆
-            //            else if (type == 4)
+            //else if (type == 4)
             else
             {
                 if (Index == 2)
