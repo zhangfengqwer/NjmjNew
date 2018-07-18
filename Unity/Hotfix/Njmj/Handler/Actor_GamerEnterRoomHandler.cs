@@ -119,6 +119,7 @@ namespace ETHotfix
                 if (message.RoomType == 3)
                 {
                     uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                    uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
                 }
             }
             catch (Exception e)
