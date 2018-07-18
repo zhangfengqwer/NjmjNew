@@ -33,7 +33,8 @@ namespace ETHotfix
         private Text timeText;
         private CancellationTokenSource tokenSource;
         private int timeOut = 20;
-
+        private Button weChatBtn;
+        private Text roomIdText;
 
         public void Awake()
         {
@@ -41,6 +42,8 @@ namespace ETHotfix
 
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
             this.readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
+            this.weChatBtn = rc.Get<GameObject>("WeChat").GetComponent<Button>();
+            this.roomIdText = rc.Get<GameObject>("RoomId").GetComponent<Text>();
 
             this.head = rc.Get<GameObject>("Head");
             this.readyTimeout = rc.Get<GameObject>("ReadyTimeout");
@@ -53,9 +56,15 @@ namespace ETHotfix
 
             this.changeTableBtn.onClick.Add(OnChangeTable);
             this.readyBtn.onClick.Add(OnReady);
+            weChatBtn.onClick.Add(OnInviteWeChat);
 
             timeOut = 20;
             SetTimeOut();
+        }
+
+        private void OnInviteWeChat()
+        {
+            PlatformHelper.WXShareFriends("", "", "");
         }
 
         /// <summary>
@@ -143,6 +152,12 @@ namespace ETHotfix
             changeTableBtn.gameObject.SetActive(false);
         }
 
+        public void ShowWeChat(string roomId)
+        {
+            roomIdText.text = $"房间号：{roomId}";
+            weChatBtn.gameObject.SetActive(true);
+        }
+
         public override void Dispose()
         {
             if (IsDisposed)
@@ -154,5 +169,6 @@ namespace ETHotfix
             timeOut = 20;
         }
 
+       
     }
 }
