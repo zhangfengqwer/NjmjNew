@@ -17,7 +17,7 @@ namespace ETHotfix
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 User user = session.GetComponent<SessionUserComponent>().User;
                 List<PlayerBaseInfo> playerInfoList = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{user.UserID}}}");
-
+                Log.Debug("======" + JsonHelper.ToJson(playerInfoList) + "======");
                 if (playerInfoList.Count > 0)
                 {
                     if (!playerInfoList[0].IsGiveFriendKey)

@@ -404,7 +404,9 @@ namespace ETHotfix
 		[ProtoMember(15, IsRequired = true)]
 		public bool IsSign;
 
-//required bool IsGiveFriendKey = 16;//判断今日是否已经赠送好友房钥匙
+		[ProtoMember(16, IsRequired = true)]
+		public bool IsGiveFriendKey;
+
 	}
 
 	[Message(HotfixOpcode.PlayerIcon)]

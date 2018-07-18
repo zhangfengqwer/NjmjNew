@@ -104,18 +104,26 @@ namespace ETHotfix
         private async void BtnClick(string value)
         {
             #region test
-            if (curEnterValue.Replace(" ", "").Length >= 6)
+            if (curEnterValue.Replace(" ", "").Length >= 5)
             {
+                if(curEnterValue.Replace(" ", "").Length < 6)
+                {
+                    curEnterValue = builder.Append(value).Append("    ").ToString();
+                    EnterTxt.text = curEnterValue;
+                }
+                
                 //向服务器发送消息
                 ToastScript.createToast("房间号已经输入完成");
                 curEnterValue = curEnterValue.Replace(" ", "");
                 await EnterFriendRoom(curEnterValue);
                 return;
             }
+            else
+            {
+                curEnterValue = builder.Append(value).Append("    ").ToString();
+                EnterTxt.text = curEnterValue;
+            }
             #endregion
-
-            curEnterValue = builder.Append(value).Append("    ").ToString();
-            EnterTxt.text = curEnterValue;
         }
 
         public void SetCurRoomId(long roomId)

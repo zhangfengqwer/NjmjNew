@@ -423,24 +423,9 @@ namespace ETHotfix
                     {
                         for (int i = 0; i < progressList.Count; ++i)
                         {
-                            int id = 100 + i + 1;
-                            for (int j = 0; j < configCom.GetAll(typeof(TaskConfig)).Length; ++j)
-                            {
-                                if (progressList[i].TaskId == id)
-                                {
-                                    TaskConfig config = (TaskConfig) configCom.Get(typeof(TaskConfig), id);
-                                    progressList[i].IsGet = false;
-                                    progressList[i].Name = config.Name;
-                                    progressList[i].TaskId = (int) config.Id;
-                                    progressList[i].IsComplete = false;
-                                    progressList[i].Target = config.Target;
-                                    progressList[i].Reward = config.Reward;
-                                    progressList[i].Desc = config.Desc;
-                                    progressList[i].CurProgress = 0;
-                                    break;
-                                }
-                            }
-
+                            progressList[i].IsGet = false;
+                            progressList[i].IsComplete = false;
+                            progressList[i].CurProgress = 0;
                             await proxyComponent.Save(progressList[i]);
                         }
                     }
