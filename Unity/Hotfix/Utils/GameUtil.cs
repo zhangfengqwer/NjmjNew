@@ -193,5 +193,17 @@ namespace ETHotfix
             contentStr = "";
         }
 
+        /// <summary>
+        /// 从游戏界面返回到主界面
+        /// </summary>
+        public static void Back2Main()
+        {
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoomDismiss);
+        }
     }
 }

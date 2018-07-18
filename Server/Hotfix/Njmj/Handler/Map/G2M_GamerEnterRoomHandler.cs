@@ -203,6 +203,11 @@ namespace ETHotfix
                 }
 			    response.GameId = gamer.Id;
 			    reply(response);
+
+			    if (message.RoomType == 3)
+			    {
+			        Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
+			    }
             }
 			catch (Exception e)
 			{
