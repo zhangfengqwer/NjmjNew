@@ -46,7 +46,11 @@ namespace ETHotfix
 
                     M2G_FriendRoomInfo m2GFriendRoomInfo = (M2G_FriendRoomInfo)await mapSession.Call(new G2M_FriendRoomInfo() { });
                     response.Info = m2GFriendRoomInfo.Info;
+
+                    int keyCount = await DBCommonUtil.GetUserFriendKeyNum(message.UId);
+                    response.KeyCount = keyCount;
                 }
+
                 reply(response);
             }
             catch(Exception e)
