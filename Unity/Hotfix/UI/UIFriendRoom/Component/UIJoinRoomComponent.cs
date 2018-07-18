@@ -157,7 +157,7 @@ namespace ETHotfix
                         });
                 if(g2CEnterRoom.Error != ErrorCode.ERR_Success)
                 {
-                    ToastScript.createToast(g2CEnterRoom.Message);
+                    GameUtil.ShowFriendCommonTip(g2CEnterRoom.Message);
                     return;
                 }
             }
