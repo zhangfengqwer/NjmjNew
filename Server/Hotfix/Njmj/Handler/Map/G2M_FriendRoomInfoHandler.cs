@@ -27,7 +27,7 @@ namespace ETHotfix
                         friendRoomInfo.Hua = friendComponent.Multiples;
                         friendRoomInfo.Ju = friendComponent.JuCount;
                         friendRoomInfo.RoomId = friendComponent.FriendRoomId;
-                        friendRoomInfo.IsPublic = friendComponent.IsPublic == true ? 1 : 2;
+                        friendRoomInfo.IsPublic = friendComponent.IsPublic ? 1 : 2;
                         //设置头像
                         foreach (var gamer in room.GetAll())
                         {
