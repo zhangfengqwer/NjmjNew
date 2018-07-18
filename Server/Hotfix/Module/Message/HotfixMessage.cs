@@ -902,6 +902,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int RoomType;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int RoomId;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerJionRoom)]

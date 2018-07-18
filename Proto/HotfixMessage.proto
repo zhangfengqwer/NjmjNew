@@ -316,6 +316,7 @@ message Actor_GamerEnterRoom // IActorMessage
 {
     repeated GamerInfo Gamers = 1;
     required int RoomType = 2;
+ 	required int RoomId = 3;
 }
 
 message Actor_GamerJionRoom // IActorMessage
