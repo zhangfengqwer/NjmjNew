@@ -53,6 +53,7 @@ namespace ETHotfix
             Button_close.onClick.Add(onClickClose);
 
             CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
+            UIAnimation.ShowLayer(Button_OK.transform.parent.gameObject);
         }
         
         public void onClickClose()
@@ -101,11 +102,14 @@ namespace ETHotfix
 
                 return;
             }
-
-            ToastScript.createToast("认证成功");
+            
             PlayerInfoComponent.Instance.GetPlayerInfo().IsRealName = true;
 
             GameUtil.changeData(1,3000);
+
+            ShowRewardUtil.Show("1:3000");
+
+            ToastScript.createToast("认证成功");
 
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIPlayerInfo).GetComponent<UIPlayerInfoComponent>().Update();
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRealName);
