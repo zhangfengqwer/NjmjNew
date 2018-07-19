@@ -300,6 +300,7 @@
     <Compile Include="UI\UITask\Factory\UITaskFactory.cs" />
     <Compile Include="UI\UIVIP\Component\UIVIPComponent.cs" />
     <Compile Include="UI\UIVIP\Factory\UIVIPFactory.cs" />
+    <Compile Include="Utils\UIAnimation.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
     <Compile Include="Utils\FingerAnimation.cs" />
     <Compile Include="Utils\FrameAnimation.cs" />

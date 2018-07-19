@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -20,14 +21,18 @@ namespace ETHotfix
                     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", message.Reason);
                     script.setOnClickOkEvent(() =>
                     {
-                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                        CommonUtil.ShowUI(UIType.UILogin);
+                        //Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        //CommonUtil.ShowUI(UIType.UILogin);
+
+                        Application.Quit();
                     });
 
                     script.setOnClickCloseEvent(() =>
                     {
-                        Game.Scene.GetComponent<UIComponent>().RemoveAll();
-                        CommonUtil.ShowUI(UIType.UILogin);
+                        //Game.Scene.GetComponent<UIComponent>().RemoveAll();
+                        //CommonUtil.ShowUI(UIType.UILogin);
+
+                        Application.Quit();
                     });
                 }
             }

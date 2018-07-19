@@ -55,6 +55,7 @@ namespace ETHotfix
             Button_close.onClick.Add(onClick_close);
 
             CommonUtil.SetTextFont(Image_bg.transform.gameObject);
+            UIAnimation.ShowLayer(Image_bg.transform.parent.gameObject);
         }
 
         public void onClick_close()

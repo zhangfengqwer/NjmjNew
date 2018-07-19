@@ -99,6 +99,7 @@ namespace ETHotfix
             }
 
             CommonUtil.SetTextFont(Button_close.transform.parent.gameObject);
+            UIAnimation.ShowLayer(Button_close.transform.parent.gameObject);
         }
 
         public void onClickClose()
