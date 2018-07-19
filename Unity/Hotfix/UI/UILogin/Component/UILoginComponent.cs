@@ -100,6 +100,14 @@ namespace ETHotfix
             btn_yanzhengma.onClick.Add(onClickGetPhoneCode);
             btn_backToStart.onClick.Add(onClickBackStart);
 
+            // 四个UI层级画布
+            {
+                OtherData.s_loginCanvas = panel_start.transform.parent.parent.parent.Find("LoginCanvas").gameObject;
+                OtherData.s_mainCanvas = panel_start.transform.parent.parent.parent.Find("MainCanvas").gameObject;
+                OtherData.s_roomCanvas = panel_start.transform.parent.parent.parent.Find("RoomCanvas").gameObject;
+                OtherData.s_commonCanvas = panel_start.transform.parent.parent.parent.Find("CommonCanvas").gameObject;
+            }
+
             #region 登录按钮设置
             {
                 // 测试服开启游客登录按钮

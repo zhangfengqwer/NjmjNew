@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Hotfix
 {
@@ -15,6 +16,11 @@ namespace Hotfix
         public static bool isShiedBindPhone = false;
         public static bool isShiedPhoneLogin = false;
         public static bool isShiedWeChatLogin = false;
+
+        public static GameObject s_loginCanvas = null;
+        public static GameObject s_mainCanvas = null;
+        public static GameObject s_roomCanvas = null;
+        public static GameObject s_commonCanvas = null;
 
         public static string ShareUrl = "";
 

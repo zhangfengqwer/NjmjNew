@@ -143,7 +143,8 @@ namespace ETHotfix
 
             string reward = g2cDailySign.Reward;
             GameUtil.changeDataWithStr(reward);
-            ToastScript.createToast("领取成功");
+
+            ShowRewardUtil.Show(reward);
 
             PlayerInfoComponent.Instance.GetPlayerInfo().IsSign = true;
 
