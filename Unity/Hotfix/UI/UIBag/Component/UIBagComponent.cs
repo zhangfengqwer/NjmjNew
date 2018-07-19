@@ -30,6 +30,7 @@ namespace ETHotfix
         private GameObject useBg;
         private Button sureBtn;
         private Button cancelBtn;
+        private GameObject BagBgR;
         private Text useTxt;
         private GameObject bagItem = null;
         private List<GameObject> bagItemList = new List<GameObject>();
@@ -49,6 +50,7 @@ namespace ETHotfix
             descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
             uiItemIcon = rc.Get<GameObject>("UIItemIcon").GetComponent<Image>();
             grid = rc.Get<GameObject>("Grid");
+            BagBgR = rc.Get<GameObject>("BagBgR");
             bgGrid = rc.Get<GameObject>("BgGrid");
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             useBg = rc.Get<GameObject>("UseBg");
@@ -103,7 +105,15 @@ namespace ETHotfix
             {
                 useBg.SetActive(false);
             }
-            CreateItemList(g2cBag.ItemList);
+            if(g2cBag.ItemList.Count <= 0)
+            {
+                BagBgR.SetActive(false);
+            }
+            else
+            {
+                BagBgR.SetActive(true);
+                CreateItemList(g2cBag.ItemList);
+            }
         }
 
         private bool IsCurPropUseUp()
