@@ -33,6 +33,9 @@ namespace ETHotfix
         int ZhuanPanCount = 0;
         int LuckyValue = 0;
 
+        string m_curReward;
+        bool m_canClick = true;
+
         public void Awake()
         {
             Instance = this;
@@ -100,17 +103,32 @@ namespace ETHotfix
 
         public void onClickClose()
         {
+            if (!m_canClick)
+            {
+                return;
+            }
+
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIZhuanPan);
         }
 
         public void onClickShare()
         {
+            if (!m_canClick)
+            {
+                return;
+            }
+
             PlatformHelper.WXShareFriendsCircle("AndroidCallBack", "OnWxShareFriends", "");
             //PlatformHelper.WXShareFriends("AndroidCallBack", "OnWxShareFriends", OtherData.ShareUrl + "|" + "我是标题" + "|" + "我是内容");
         }
 
         public void onClick_ChouJiang()
         {
+            if (!m_canClick)
+            {
+                return;
+            }
+
             if (ZhuanPanCount <= 0)
             {
                 ToastScript.createToast("您的抽奖次数不足");
@@ -186,6 +204,8 @@ namespace ETHotfix
                 return;
             }
 
+            m_canClick = false;
+            m_curReward = g2cUseZhuanPan.reward;
             GameUtil.changeDataWithStr(g2cUseZhuanPan.reward);
             {
                 --ZhuanPanCount;
@@ -232,7 +252,9 @@ namespace ETHotfix
 
                     if ((m == 5) && (zhuanpanInfo.itemId == itemId))
                     {
-                        ToastScript.createToast("恭喜您获得" + item.transform.Find("Text_reward").GetComponent<Text>().text);
+                        //ToastScript.createToast("恭喜您获得" + item.transform.Find("Text_reward").GetComponent<Text>().text);
+                        m_canClick = true;
+                        ShowRewardUtil.Show(m_curReward);
                         return;
                     }
 
