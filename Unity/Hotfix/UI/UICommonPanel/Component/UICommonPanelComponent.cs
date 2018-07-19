@@ -55,6 +55,11 @@ namespace ETHotfix
             return null;
         }
 
+        public Text getTextObj()
+        {
+            return Text_content;
+        }
+
         public void setOnClickOkEvent(OnClickOkEvent onClickOkEvent)
         {
             onCallBack_ok = onClickOkEvent;

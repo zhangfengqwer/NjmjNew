@@ -43,10 +43,27 @@ namespace ETHotfix
                 }
                 else
                 {
-//                    if (exitGameObject == null)
-//                    {
-//                        exitGameObject = ExitGamePanelScript.create();
-//                    }
+                    // 不在游戏内，退出整个游戏
+                    if (true)
+                    {
+                        UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出游戏？");
+                        script.setOnClickOkEvent(() =>
+                        {
+                            Application.Quit();
+                        });
+
+                        script.setOnClickCloseEvent(() =>
+                        {
+                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                        });
+
+                        script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                    }
+                    // 在游戏内，退回到主界面
+                    else
+                    {
+
+                    }
                 }
             }
         }
