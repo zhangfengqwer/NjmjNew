@@ -68,6 +68,7 @@ namespace ETHotfix
             Button_jixu.onClick.Add(onClick_jixu);
 
             CommonUtil.SetTextFont(Button_close.transform.parent.gameObject);
+            UIAnimation.ShowLayer(Button_close.transform.parent.gameObject);
         }
 
 
