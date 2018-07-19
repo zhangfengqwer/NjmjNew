@@ -438,6 +438,7 @@ message Actor_StartGame // IActorMessage
     repeated GamerData GamerDatas = 1;
     required int restCount = 2;
     required int RoomType = 3;
+ 	required int CurrentJuCount = 4;
 }
 
 message GamerData //IMessage
@@ -448,7 +449,9 @@ message GamerData //IMessage
 	repeated MahjongInfo faceCards = 4;
 	repeated MahjongInfo playCards = 5;
 	repeated MahjongInfo pengCards = 6;
+	repeated long OperatedPengUserIds = 11;
 	repeated MahjongInfo gangCards = 7;
+	repeated long OperatedGangUserIds = 12;
 	required bool IsBanker = 8;
 	required int OnlineSeconds = 9;
 	required PlayerInfo playerInfo = 10;
@@ -510,6 +513,11 @@ message Actor_GamerReconnet // IActorMessage
    	repeated GamerData Gamers = 1;
 	required int RestCount = 2;
 	required int RoomType = 3;
+ 	required int RoomId = 4;
+ 	required long MasterUserId = 5;
+ 	required int JuCount = 6;
+ 	required int Multiples = 7;
+	required int CurrentJuCount = 8;
 }
 
 message Actor_GamerTrusteeship // IActorMessage
@@ -969,6 +977,16 @@ message M2G_CreateFriendRoom //IResponse
 message Actor_GamerApplyRoomDismiss // IActorMessage
 {
    
+}
+
+message Actor_GamerAgreeRoomDismiss // IActorMessage
+{
+   	optional long UserId = 1;
+}
+
+message Actor_GamerCancelRoomDismiss // IActorMessage
+{
+   	optional long UserId = 1;
 }
 
 message Actor_GamerRoomDismiss // IActorMessage

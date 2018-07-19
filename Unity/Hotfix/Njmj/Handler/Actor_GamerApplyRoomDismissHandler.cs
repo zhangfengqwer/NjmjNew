@@ -15,15 +15,10 @@ namespace ETHotfix
             try
             {
                 Log.Info($"收到申请解散");
-                GameUtil.ShowFriendCommonTip("解散房间");
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIFriendRoomCommonTip).GetComponent<UIFriendRoomCommonTipComponent>().SetSure(() =>
-                {
-                    ToastScript.createToast("确认");
-                });
-                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIFriendRoomCommonTip).GetComponent<UIFriendRoomCommonTipComponent>().SetCancel(() =>
-                {
-                    ToastScript.createToast("取消");
-                });
+                UI ui = GameUtil.CreateUI(UIType.UIRoomDismiss);
+                UIRoomDismissComponent uiRoomDismissComponent = ui.GetComponent<UIRoomDismissComponent>();
+
+
             }
             catch (Exception e)
             {

@@ -253,15 +253,29 @@ namespace ETHotfix
         {
             try
             {
-                MahjongInfo info = handCards[index];
-                if (info.weight == mahjong.weight)
+                for (int i = 0; i < handCards.Count; i++)
                 {
-                    GameObject gameObject = this.GetSprite(index);
-                    GameObject.Destroy(gameObject);
-                    handCards.RemoveAt(index);
-                    playCards.Add(info);
-                    ItemCards.RemoveAt(index);
+                    if(handCards[i].weight == mahjong.weight)
+                    {
+                        GameObject gameObject = this.GetSprite(i);
+                        GameObject.Destroy(gameObject);
+                        handCards.RemoveAt(i);
+                        playCards.Add(mahjong);
+                        ItemCards.RemoveAt(i);
+                        break;
+                    }
                 }
+
+                // MahjongInfo info = handCards[index];
+                //
+                // if (info.weight == mahjong.weight)
+                // {
+                //     GameObject gameObject = this.GetSprite(index);
+                //     GameObject.Destroy(gameObject);
+                //     handCards.RemoveAt(index);
+                //     playCards.Add(info);
+                //     ItemCards.RemoveAt(index);
+                // }
 
                 UpdateCards();
 
@@ -281,7 +295,7 @@ namespace ETHotfix
                 int playCount = 0;
                 foreach (var card in playCards)
                 {
-                    if (card.weight == info.weight)
+                    if (card.weight == mahjong.weight)
                     {
                         playCount++;
                     }
@@ -614,7 +628,7 @@ namespace ETHotfix
             bg.SetActive(false);
         }
 
-        public void SetPeng(int type, MahjongInfo mahjong, long operatedUid)
+        public void SetPeng(int type, MahjongInfo mahjong, long operatedUid, bool isReconnect)
         {
             GameObject obj = null;
             if (type == 0)
@@ -642,7 +656,16 @@ namespace ETHotfix
             else if (type == 4)
             {
                 obj = CommonUtil.getGameObjByBundle("Item_Gang_Card");
-                for (int i = 0; i < 4; i++)
+                int temp;
+                if (isReconnect)
+                {
+                    temp = 3;
+                }
+                else
+                {
+                    temp = 4;
+                }
+                for (int i = 0; i < temp; i++)
                 {
                     int index = Logic_NJMJ.getInstance().GetIndex(this.handCards, mahjong);
                     this.RemoveCard(index);
@@ -907,7 +930,7 @@ namespace ETHotfix
 
                 temp = 3;
             }
-            else if (type == 1)
+            else if (type == 1 || type == 4)
             {
                 if (Index == 2)
                 {
@@ -920,8 +943,7 @@ namespace ETHotfix
 
                 temp = 3;
             }
-            //暗杆
-            //else if (type == 4)
+          
             else
             {
                 if (Index == 2)

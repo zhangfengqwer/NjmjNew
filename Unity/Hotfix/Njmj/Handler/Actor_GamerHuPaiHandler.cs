@@ -57,10 +57,13 @@ namespace ETHotfix
                 if (uiRoomComponent.RoomType == 3)
                 {
                     roomConfig = uiRoomComponent.RoomConfig;
+                    gameResultComponent.SetFriendRoom();
+                    gameResultComponent.startTimer(5);
                 }
                 else
                 {
                     roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
+                    gameResultComponent.startTimer(20);
                 }
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;

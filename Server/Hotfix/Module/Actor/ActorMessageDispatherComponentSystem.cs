@@ -114,7 +114,7 @@ namespace ETHotfix
 		/// </summary>
 		public static async Task Handle(this ActorMessageDispatherComponent self, Session session, Entity entity, IActorMessage actorRequest)
 		{
-			if (!self.ActorMessageHandlers.TryGetValue(actorRequest.GetType(), out IMActorHandler handler))
+            if (!self.ActorMessageHandlers.TryGetValue(actorRequest.GetType(), out IMActorHandler handler))
 			{
 				throw new Exception($"not found message handler: {MongoHelper.ToJson(actorRequest)}");
 			}

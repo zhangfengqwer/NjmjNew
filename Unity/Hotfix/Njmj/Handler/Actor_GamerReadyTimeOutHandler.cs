@@ -17,8 +17,19 @@ namespace ETHotfix
                 Log.Info($"收到准备超时:{message.Message}");
                 CommonUtil.ShowUI(UIType.UIMain);
                 GameUtil.Back2Main();
+                
+                {
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", message.Message);
+                    script.setOnClickOkEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                    });
 
-                GameUtil.ShowFriendCommonTip(message.Message);
+                    script.setOnClickCloseEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                    });
+                }
             }
             catch (Exception e)
             {

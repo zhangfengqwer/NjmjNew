@@ -14,4 +14,11 @@ namespace ETModel
         JingYing,
         Friend
     }
+
+    public enum DismissState : byte
+    {
+        None,
+        Agree,
+        Cancel
+    }
 }

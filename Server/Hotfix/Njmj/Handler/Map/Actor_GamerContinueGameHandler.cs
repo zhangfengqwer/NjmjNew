@@ -65,11 +65,24 @@ namespace ETHotfix
                     Gamers.Add(gamerInfo);
                 }
 
-                room.Broadcast(new Actor_GamerEnterRoom()
+                Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
                 {
                     RoomType = (int) gameControllerComponent.RoomConfig.Id,
                     Gamers = Gamers
-                });
+                };
+                if (room.IsFriendRoom)
+                {
+                    actorGamerEnterRoom.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
+                    actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
+                    actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
+                    actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
+                }
+                room.Broadcast(actorGamerEnterRoom);
+
+                if (room.IsFriendRoom)
+                {
+                    Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
+                }
             }
             catch (Exception e)
             {

@@ -62,11 +62,10 @@ namespace ETHotfix
 	            }
 
 	            if (index >= 0)
-	            {
+                {
 	                //停止倒计时
                     room?.tokenSource?.Cancel();
-	                gamer.IsTrusteeship = false;
-                    //Log.Info($"玩家{gamer.UserID}出牌:" + message.weight);
+                    Log.Info($"玩家{gamer.UserID}出牌:" + mahjongInfo.m_weight);
                     //当前出的牌
 	                deskComponent.CurrentCard = mahjongInfo;
 	                deskComponent.CurrentAuthority = gamer.UserID;
@@ -165,22 +164,25 @@ namespace ETHotfix
 
 	                if (isNeedWait)
 	                {
-	                    room.StartOperateTime();
+	                    room.IsNeedWaitOperate = true;
+                        room.StartOperateTime();
                     }
                     //没人可以操作就直接发牌
 	                else
 	                {
+	                    room.IsNeedWaitOperate = false;
                         //发牌
-	                    Log.Info($"{gamer.UserID}打完牌，发牌");
                         room.GamerGrabCard();
+	                    room.IsPlayingCard = false;
+
                     }
                 }
 	            else
 	            {
 	                Log.Warning("玩家出牌不存在:" + message.weight);
-	            }
+	                room.IsPlayingCard = false;
 
-	            room.IsPlayingCard = false;
+                }
             }
 	        catch (Exception e)
 	        {

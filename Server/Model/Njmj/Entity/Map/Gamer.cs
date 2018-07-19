@@ -28,6 +28,9 @@ namespace ETModel
         //是否准备
         public bool IsReady { get; set; }
 
+        //是否准备
+        public DismissState DismissState = DismissState.None;
+
         //是否赢
         public bool IsWinner { get; set; }
 
@@ -84,6 +87,7 @@ namespace ETModel
             this.PlayerID = 0;
             this.RoomID = 0;
             this.IsReady = false;
+            this.DismissState = DismissState.None;
             this.isOffline = false;
             this.ReadyTimeOut = 0;
             IsTrusteeship = false;

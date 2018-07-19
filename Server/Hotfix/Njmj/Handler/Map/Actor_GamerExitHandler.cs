@@ -36,6 +36,10 @@ namespace ETHotfix
                 }
                 else
 	            {
+	                if (room.IsFriendRoom)
+	                {
+	                    return;
+	                }
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)
 	                {

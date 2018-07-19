@@ -60,9 +60,13 @@ namespace ETHotfix
         public GameObject dice;
         public GameObject tip;
         private GameObject baoxiang;
+        private Text currentJuCountText;
+
         public int RoomType { get; set; }
         //当前出牌或者抓牌
         public MahjongInfo CurrentMahjong { get; set; }
+        public bool IsFriendRoom { get; set; }
+        public int JuCount { get; set; }
 
         public void Awake()
         {
@@ -91,6 +95,7 @@ namespace ETHotfix
 
             this.restText = rc.Get<GameObject>("RestText").GetComponent<Text>();
             this.roomConfigText = rc.Get<GameObject>("RoomConfigText").GetComponent<Text>();
+            this.currentJuCountText = rc.Get<GameObject>("CurrentJuCountText").GetComponent<Text>();
 
             this.settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
@@ -635,6 +640,15 @@ namespace ETHotfix
         private void OnRoomDismiss()
         {
             SessionComponent.Instance.Session.Send(new Actor_GamerApplyRoomDismiss());
+        }
+
+        /// <summary>
+        /// 设置当前局数
+        /// </summary>
+        /// <param name="currentJuCount"></param>
+        public void SetCurrentJuCount(int currentJuCount)
+        {
+            currentJuCountText.text = $"{currentJuCount}/{JuCount}局";
         }
     }
 }

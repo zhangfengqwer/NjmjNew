@@ -1262,6 +1262,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int RoomType;
 
+		[ProtoMember(4, IsRequired = true)]
+		public int CurrentJuCount;
+
 	}
 
 	[Message(HotfixOpcode.GamerData)]
@@ -1286,8 +1289,14 @@ namespace ETHotfix
 		[ProtoMember(6, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
 
+		[ProtoMember(11, TypeName = "ETHotfix.long")]
+		public List<long> OperatedPengUserIds = new List<long>();
+
 		[ProtoMember(7, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
+
+		[ProtoMember(12, TypeName = "ETHotfix.long")]
+		public List<long> OperatedGangUserIds = new List<long>();
 
 		[ProtoMember(8, IsRequired = true)]
 		public bool IsBanker;
@@ -1471,6 +1480,21 @@ namespace ETHotfix
 
 		[ProtoMember(3, IsRequired = true)]
 		public int RoomType;
+
+		[ProtoMember(4, IsRequired = true)]
+		public int RoomId;
+
+		[ProtoMember(5, IsRequired = true)]
+		public long MasterUserId;
+
+		[ProtoMember(6, IsRequired = true)]
+		public int JuCount;
+
+		[ProtoMember(7, IsRequired = true)]
+		public int Multiples;
+
+		[ProtoMember(8, IsRequired = true)]
+		public int CurrentJuCount;
 
 	}
 
@@ -2784,6 +2808,36 @@ namespace ETHotfix
 
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerAgreeRoomDismiss)]
+	[ProtoContract]
+	public partial class Actor_GamerAgreeRoomDismiss: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long UserId;
+
+	}
+
+	[Message(HotfixOpcode.Actor_GamerCancelRoomDismiss)]
+	[ProtoContract]
+	public partial class Actor_GamerCancelRoomDismiss: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long UserId;
 
 	}
 

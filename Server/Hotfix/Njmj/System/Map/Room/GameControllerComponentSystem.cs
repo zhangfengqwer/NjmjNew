@@ -135,7 +135,7 @@ namespace ETHotfix
                     gamer.IsWinner = false;
                     gamer.IsTrusteeship = false;
                     //离线踢出
-                    if (gamer.isOffline)
+                    if (gamer.isOffline || !room.IsFriendRoom)
                     {
                         Log.Info($"玩家{gamer.UserID}结束游戏后离线踢出,移除玩家");
                         room.Remove(gamer.UserID);

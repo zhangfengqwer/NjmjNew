@@ -54,7 +54,7 @@ namespace ETHotfix
                     }
                     else
                     {
-                        handCardsComponent.SetPeng(message.OperationType, mahjongInfo, message.OperatedUid);
+                        handCardsComponent.SetPeng(message.OperationType, mahjongInfo, message.OperatedUid, isReconnect);
                     }
                     //隐藏碰杠
                     handCardsComponent.CloseHandCardCanPeng();
