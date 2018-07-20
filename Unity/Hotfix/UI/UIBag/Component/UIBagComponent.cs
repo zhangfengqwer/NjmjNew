@@ -31,6 +31,7 @@ namespace ETHotfix
         private Button sureBtn;
         private Button cancelBtn;
         private GameObject BagBgR;
+        private GameObject UseBgS;
         private Text useTxt;
         private GameObject bagItem = null;
         private List<GameObject> bagItemList = new List<GameObject>();
@@ -57,6 +58,7 @@ namespace ETHotfix
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
             useTxt = rc.Get<GameObject>("UseTxt").GetComponent<Text>();
+            UseBgS  = rc.Get<GameObject>("UseBgS");
 
             CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
 
@@ -76,6 +78,7 @@ namespace ETHotfix
                     return;
                 }
                 useBg.SetActive(true);
+                UIAnimation.ShowLayer(UseBgS);
                 useTxt.text = new StringBuilder().Append("是否使用道具")
                                                  .Append("\"")
                                                  .Append(propInfo.prop_name)

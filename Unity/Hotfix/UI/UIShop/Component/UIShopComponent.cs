@@ -41,6 +41,7 @@ namespace ETHotfix
         private GameObject propGrid;
         private GameObject vipGrid;
         private GameObject buyTip;
+        private GameObject BuyTipS;
         private Button sureBtn;
         private Button cancelBtn;
         private Text buyTxt;
@@ -94,6 +95,7 @@ namespace ETHotfix
             cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
             maskClick = rc.Get<GameObject>("maskClick").GetComponent<Button>();
             buyTxt = rc.Get<GameObject>("BuyTxt").GetComponent<Text>();
+            BuyTipS = rc.Get<GameObject>("BuyTipS");
 
             WeipayBtn = rc.Get<GameObject>("WeipayBtn").GetComponent<Button>();
             AlipayBtn = rc.Get<GameObject>("AlipayBtn").GetComponent<Button>();
@@ -227,6 +229,7 @@ namespace ETHotfix
         public void BuyTip(ShopInfo info,string tip,bool isCanBuy)
         {
             buyTip.SetActive(true);
+            UIAnimation.ShowLayer(BuyTipS);
             shopInfo = info;
             buyTxt.text = tip;
             this.isCanBuy = isCanBuy;

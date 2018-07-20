@@ -31,6 +31,7 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIWeekRank);
             });
+            UIAnimation.ShowLayer(GetParent<UI>().GameObject.transform.GetChild(0).gameObject);
         }
     }
 }

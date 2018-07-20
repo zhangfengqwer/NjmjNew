@@ -30,6 +30,7 @@ namespace ETHotfix
         StringBuilder builder = new StringBuilder();
         private List<Button> clickBtns = new List<Button>();
         private string curEnterValue = "";
+        string space = "    ";
 
         private static long curRoomId = 0;
 
@@ -66,7 +67,8 @@ namespace ETHotfix
             {
                 if (curEnterValue.Length > 0)
                 {
-                    builder.Remove(curEnterValue.Length - 5, 5);
+                    int index = builder.ToString().LastIndexOf(space);
+                    builder.Remove(index - 1, 5);
                     curEnterValue = builder.ToString();
                     EnterTxt.text = curEnterValue;
                 }
@@ -110,7 +112,7 @@ namespace ETHotfix
             {
                 if(curEnterValue.Replace(" ", "").Length < 6)
                 {
-                    curEnterValue = builder.Append(value).Append("    ").ToString();
+                    curEnterValue = builder.Append(value).Append(space).ToString();
                     EnterTxt.text = curEnterValue;
                 }
                 
@@ -122,7 +124,7 @@ namespace ETHotfix
             }
             else
             {
-                curEnterValue = builder.Append(value).Append("    ").ToString();
+                curEnterValue = builder.Append(value).Append(space).ToString();
                 EnterTxt.text = curEnterValue;
             }
             #endregion
