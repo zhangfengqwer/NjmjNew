@@ -1289,23 +1289,26 @@ namespace ETHotfix
 		[ProtoMember(6)]
 		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
 
-		[ProtoMember(11)]
+		[ProtoMember(7)]
 		public List<long> OperatedPengUserIds = new List<long>();
 
-		[ProtoMember(7)]
+		[ProtoMember(8)]
 		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
 
-		[ProtoMember(12)]
+		[ProtoMember(9)]
 		public List<long> OperatedGangUserIds = new List<long>();
 
-		[ProtoMember(8, IsRequired = true)]
+		[ProtoMember(10, IsRequired = true)]
 		public bool IsBanker;
 
-		[ProtoMember(9, IsRequired = true)]
+		[ProtoMember(11, IsRequired = true)]
 		public int OnlineSeconds;
 
-		[ProtoMember(10, IsRequired = true)]
+		[ProtoMember(12, IsRequired = true)]
 		public PlayerInfo playerInfo;
+
+		[ProtoMember(13, IsRequired = true)]
+		public bool IsTrusteeship;
 
 	}
 

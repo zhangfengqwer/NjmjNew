@@ -449,12 +449,13 @@ message GamerData //IMessage
 	repeated MahjongInfo faceCards = 4;
 	repeated MahjongInfo playCards = 5;
 	repeated MahjongInfo pengCards = 6;
-	repeated long OperatedPengUserIds = 11;
-	repeated MahjongInfo gangCards = 7;
-	repeated long OperatedGangUserIds = 12;
-	required bool IsBanker = 8;
-	required int OnlineSeconds = 9;
-	required PlayerInfo playerInfo = 10;
+	repeated long OperatedPengUserIds = 7;
+	repeated MahjongInfo gangCards = 8;
+	repeated long OperatedGangUserIds = 9;
+	required bool IsBanker = 10;
+	required int OnlineSeconds = 11;
+	required PlayerInfo playerInfo = 12;
+	required bool IsTrusteeship = 13;
 }
 
 message Actor_ChangeTable // IActorMessage

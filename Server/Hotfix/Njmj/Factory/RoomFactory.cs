@@ -51,6 +51,7 @@ namespace ETHotfix
                 roomConfig.IsPublic = friendRoomInfo.IsPublic == 1;
                 roomConfig.MasterUserId = message.UserId;
                 roomConfig.Id = 3;
+                roomConfig.Name = "好友房";
                 controllerComponent.RoomConfig = roomConfig;
                 controllerComponent.RoomName = RoomName.Friend;
 

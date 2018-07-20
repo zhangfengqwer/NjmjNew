@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using ETModel;
 using MongoDB.Driver;
@@ -20,7 +21,9 @@ namespace ETHotfix
 	        {
 	            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
+	            bool any = (await proxyComponent.Query<AccountInfo>(a => a.Third_Id == message.Third_Id && a.Token == "")).Any();
+
+	            List<AccountInfo> accountInfos = await proxyComponent.QueryJson<AccountInfo>($"{{Third_Id:'{message.Third_Id}'}}");
                 // 用户已存在，走登录流程
                 if (accountInfos.Count > 0)
                 {

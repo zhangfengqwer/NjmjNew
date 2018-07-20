@@ -37,7 +37,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{message.Info.ItemID}}}");
+                    //List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{message.Info.ItemID}}}");
                     await DBCommonUtil.ChangeWealth(message.UId, message.Info.ItemID, message.Info.Count, $"商城购买道具{message.Info.ItemID}");
                     response.Count = message.Info.Count;
                     reply(response);

@@ -23,7 +23,6 @@ namespace ETModel
         public readonly Dictionary<long, int> seats = new Dictionary<long, int>();
         public readonly List<long> UserIds = new List<long>();
         public readonly Gamer[] gamers = new Gamer[4];
-        public readonly List<IActorMessage> reconnectList = new List<IActorMessage>();
         //是否超时
         public bool IsTimeOut = false;
 
@@ -41,6 +40,7 @@ namespace ETModel
         public CancellationTokenSource tokenSource;
         public CancellationTokenSource roomTokenSource;
         public CancellationTokenSource roomDismissTokenSource;
+        public CancellationTokenSource StartReadySource;
 
         //房间状态
         public RoomState State { get; set; } = RoomState.Idle;
@@ -84,6 +84,7 @@ namespace ETModel
         /// 是否需要等待碰刚操作
         /// </summary>
         public bool IsNeedWaitOperate { get; set; }
+
 
         /// <summary>
         /// 添加玩家
@@ -219,9 +220,9 @@ namespace ETModel
             }
 
             State = RoomState.Idle;
-            reconnectList.Clear();
             roomTokenSource?.Cancel();
             roomDismissTokenSource?.Cancel();
+            StartReadySource?.Cancel();
             IsGameOver = false;
             NextGrabCard = null;
             IsLianZhuang = false;
@@ -231,6 +232,5 @@ namespace ETModel
             CurrentJuCount = 0;
         }
 
-      
     }
 }
