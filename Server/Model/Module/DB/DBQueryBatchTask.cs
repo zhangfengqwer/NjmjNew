@@ -39,8 +39,9 @@ namespace ETModel
 					ComponentWithId component = dbCacheComponent.GetFromCache(this.CollectionName, id);
 					if (component == null)
 					{
-						component = await dbComponent.GetCollection(this.CollectionName).FindAsync((s) => s.Id == id).Result.FirstOrDefaultAsync();
-					}
+					    IAsyncCursor<ComponentWithId> cursor = await dbComponent.GetCollection(this.CollectionName).FindAsync((s) => s.Id == this.Id);
+					    component = await cursor.FirstOrDefaultAsync();
+                    }
 					
 					if (component == null)
 					{

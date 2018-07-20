@@ -181,30 +181,6 @@ namespace ETHotfix
             return components;
         }
 
-	    public static async Task<List<PlayerBaseInfo>> QueryJsonGamePlayer(this DBProxyComponent self)
-        {
-	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.WinGameCount).Limit(50).ToListAsync();
-	        return components;
-        }
-
-	    public static async Task<List<PlayerBaseInfo>> QueryJsonPlayerInfo(this DBProxyComponent self)
-        {
-	        DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-	        FilterDefinition<PlayerBaseInfo> filterDefinition = new JsonFilterDefinition<PlayerBaseInfo>($"{{}}");
-	        List<PlayerBaseInfo> components = await dbComponent.GetDBDataCollection<PlayerBaseInfo>(typeof(PlayerBaseInfo).Name).Find(filterDefinition).SortByDescending(a => a.GoldNum).Limit(50).ToListAsync();
-	        return components;
-        }
-
-        public static async Task<List<AccountInfo>> QueryJsonAccounts(this DBProxyComponent self, string time)
-        {
-            DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
-            FilterDefinition<AccountInfo> filterDefinition = new JsonFilterDefinition<AccountInfo>($"{{CreateTime:/^{time}/}}");
-            List<AccountInfo> components = await dbComponent.GetDBDataCollection<AccountInfo>(typeof(AccountInfo).Name).Find(filterDefinition).SortByDescending(a => a.CreateTime).ToListAsync();
-            return components;
-        }
-
 		public static async Task<List<T>> QueryJsonDBInfos<T>(this DBProxyComponent self)
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
@@ -231,11 +207,12 @@ namespace ETHotfix
 
         public static async Task<List<T>> QueryJsonDB<T>(this DBProxyComponent self, string json) where T : ComponentWithId
         {
+
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>(json);
-            List <T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition).Result.ToListAsync();
+            IAsyncCursor<T> cursor = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition);
+            List<T> components = await cursor.ToListAsync();
             return components;
-
         }
         public static async Task Delete<T>(this DBProxyComponent self, long id)
 	    {
