@@ -17,8 +17,14 @@ namespace ETHotfix
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
                 gamer.IsTrusteeship = false;
-                room.StartTime();
-
+                //在自己出牌的时候取消托管
+                OrderControllerComponent orderControllerComponent = room.GetComponent<OrderControllerComponent>();
+                //当前出牌是自己，并且外面没有碰刚
+                Log.Info($"IsNeedWaitOperate:{room.IsNeedWaitOperate}");
+                if (orderControllerComponent.CurrentAuthority == gamer.UserID && !room.IsNeedWaitOperate)
+                {
+                    room.StartTime(8);
+                }
                 room.Broadcast(new Actor_GamerCancelTrusteeship()
                 {
                     Uid = gamer.UserID

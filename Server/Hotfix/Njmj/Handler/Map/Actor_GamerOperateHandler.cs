@@ -24,6 +24,7 @@ namespace ETHotfix
                 Room room = roomComponent.Get(gamer.RoomID);
                 room.IsOperate = true;
                 room.IsPlayingCard = false;
+                room.IsNeedWaitOperate = false;
                 if (room.IsGameOver) return;
 
                 DeskComponent deskComponent = room.GetComponent<DeskComponent>();

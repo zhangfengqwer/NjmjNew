@@ -125,7 +125,7 @@ namespace ETHotfix
         /// 超时10s自动出牌
         /// </summary>
         /// <param name="self"></param>
-        public static async void StartTime(this Room self)
+        public static async void StartTime(this Room self,int time = 10)
         {
             if (self.tokenSource != null)
             {
@@ -145,7 +145,7 @@ namespace ETHotfix
             }
             else
             {
-                self.TimeOut = 10;
+                self.TimeOut = time;
             }
 
             if (gamer.IsTrusteeship)
@@ -154,7 +154,7 @@ namespace ETHotfix
             }
             else
             {
-                self.TimeOut = 10;
+                self.TimeOut = time;
             }
 
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(self.TimeOut * 1000, self.tokenSource.Token);
@@ -187,10 +187,7 @@ namespace ETHotfix
 
         public static async void StartOperateTime(this Room self)
         {
-            if (self.tokenSource != null)
-            {
-                self.tokenSource.Cancel();
-            }
+            self.tokenSource?.Cancel();
 
             self.tokenSource = new CancellationTokenSource();
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(self.OperationTimeOut * 1000, self.tokenSource.Token);
@@ -204,6 +201,8 @@ namespace ETHotfix
                 self.IsTimeOut = true;
                 //没有人碰刚
                 self.IsOperate = false;
+                self.IsPlayingCard = false;
+                self.IsNeedWaitOperate = false;
                 foreach (var gamer in self.GetAll())
                 {
                     gamer.IsCanGang = false;
@@ -290,7 +289,7 @@ namespace ETHotfix
                 room.reconnectList.Add(actorGamerBuHua);
 
                 //从手牌中删除花牌
-                Log.Info("补花");
+                Log.Info($"{currentGamer.UserID}补花");
 //                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
                 cardsComponent.FaceCards.Add(grabMahjong);
 
@@ -348,7 +347,7 @@ namespace ETHotfix
                     grabMahjong = deskComponent.RestLibrary[number];
                     deskComponent.RestLibrary.RemoveAt(number);
 
-//                    Log.Info("发牌："+ grabMahjong.m_weight);
+                    Log.Info($"{currentGamer.UserID}发牌："+ grabMahjong.m_weight);
                 }
 
                 //花牌返回
@@ -466,6 +465,21 @@ namespace ETHotfix
             {
                 Log.Error(e);
                 return null;
+            }
+        }
+
+        public static async void WaitDismiss(this Room self, int time)
+        {
+            self.roomDismissTokenSource?.Cancel();
+            self.roomDismissTokenSource = new CancellationTokenSource();
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(time * 1000, self.roomDismissTokenSource.Token);
+
+            foreach (var gamer in self.GetAll())
+            {
+                if (gamer.DismissState == DismissState.None)
+                {
+                    await Actor_GamerAgreeRoomDismissHandler.GamerAgreeRoomDismiss(gamer);
+                }
             }
         }
     }

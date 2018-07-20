@@ -41,7 +41,8 @@ namespace ETHotfix
 	            if (room.Count == 4 && gamers.Where(g => g.IsReady).Count() == 4)
 	            {
 	                room.State = RoomState.Game;
-	                room.IsGameOver = false;
+	                room.CurrentJuCount++;
+                    room.IsGameOver = false;
 	                room.RoomDispose();
 
 	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
@@ -179,6 +180,7 @@ namespace ETHotfix
 	                if (room.IsFriendRoom)
 	                {
 	                    actorStartGame.RoomType = 3;
+	                    actorStartGame.CurrentJuCount = room.CurrentJuCount;
 	                }
 	                else
 	                {
@@ -235,9 +237,9 @@ namespace ETHotfix
 	                }
 
 	                //等客户端掷骰子
-	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
+	                //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
 	                //是否超时
-	                room.StartTime();
+	                room.StartTime(20);
 	                //扣服务费
 //	                GameHelp.CostServiceCharge(room);
 	            }

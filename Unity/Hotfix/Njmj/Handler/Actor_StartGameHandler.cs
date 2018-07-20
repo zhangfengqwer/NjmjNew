@@ -128,8 +128,14 @@ namespace ETHotfix
                 }
 
                 uiRoomComponent.StartGame(message.restCount);
+                //将退出变成解散
+                if (uiRoomComponent.IsFriendRoom)
+                {
+                    uiRoomComponent.SetFriendSetting(PlayerInfoComponent.Instance.uid);
+                    uiRoomComponent.SetCurrentJuCount(message.CurrentJuCount);
+                }
                 uiRoomComponent.exitBtn.interactable = true;
-                uiRoomComponent.SetRoomType(message.RoomType);
+                // uiRoomComponent.SetRoomType(message.RoomType);
 
                 foreach (var gameData in message.GamerDatas)
                 {
@@ -202,12 +208,16 @@ namespace ETHotfix
                 uiRoom.GameObject.SetActive(true);
                 uiRoomComponent.ISGaming = true;
 
-           
+              
+
                 uiRoomComponent.tip.SetActive(true);
                 uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "shangji_tip");
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                
                 uiRoomComponent?.tip?.SetActive(false);
+
+             
+                
             }
             catch (Exception e)
             {

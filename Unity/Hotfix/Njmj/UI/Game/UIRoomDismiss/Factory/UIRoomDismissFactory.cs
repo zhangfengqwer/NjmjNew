@@ -18,7 +18,7 @@ namespace ETHotfix
 	            room.layer = LayerMask.NameToLayer(LayerNames.UI);
 		        UI ui = ComponentFactory.Create<UI, GameObject>(room);
 
-				ui.AddComponent<UIRoomComponent>();
+				ui.AddComponent<UIRoomDismissComponent>();
 				return ui;
 	        }
 	        catch (Exception e)

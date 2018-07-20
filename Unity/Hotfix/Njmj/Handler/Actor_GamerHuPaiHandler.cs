@@ -53,7 +53,18 @@ namespace ETHotfix
                 UIGameResultComponent gameResultComponent =
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
 
-                RoomConfig roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
+                RoomConfig roomConfig;
+                if (uiRoomComponent.RoomType == 3)
+                {
+                    roomConfig = uiRoomComponent.RoomConfig;
+                    gameResultComponent.SetFriendRoom();
+                    gameResultComponent.startTimer(5);
+                }
+                else
+                {
+                    roomConfig = ConfigHelp.Get<RoomConfig>(uiRoomComponent.RoomType);
+                    gameResultComponent.startTimer(20);
+                }
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
                 uiRoomComponent.ISGaming = false;
                 uiRoomComponent.ClosePropmtBtn();

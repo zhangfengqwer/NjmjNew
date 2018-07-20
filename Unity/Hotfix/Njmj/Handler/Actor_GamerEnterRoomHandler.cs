@@ -44,7 +44,7 @@ namespace ETHotfix
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 roomComponent.enterRoomMsg = message;
-                roomComponent.SetRoomType(message.RoomType);
+                roomComponent.SetRoomType(message.RoomType, message.Multiples);
                 Gamer[] gamers = gamerComponent.GetAll();
 
                 //清空座位
@@ -117,9 +117,17 @@ namespace ETHotfix
                 //好友房处理
                 if (message.RoomType == 3)
                 {
+                    roomComponent.IsFriendRoom = true;
+                    roomComponent.JuCount = message.JuCount;
                     uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
                     uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
+                    roomComponent.RoomConfig.Multiples = message.Multiples;
                     roomComponent.SetFriendSetting(message.MasterUserId);
+                    
+                }
+                else
+                {
+                    roomComponent.IsFriendRoom = false;
                 }
             }
             catch (Exception e)

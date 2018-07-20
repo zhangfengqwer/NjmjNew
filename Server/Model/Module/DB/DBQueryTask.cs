@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
@@ -33,8 +34,9 @@ namespace ETModel
 			}
 			try
 			{
-				// 执行查询数据库任务
-				component = await dbComponent.GetCollection(this.CollectionName).FindAsync((s) => s.Id == this.Id).Result.FirstOrDefaultAsync();
+                // 执行查询数据库任务
+			    IAsyncCursor<ComponentWithId> cursor = await dbComponent.GetCollection(this.CollectionName).FindAsync((s) => s.Id == this.Id);
+			    component = await cursor.FirstOrDefaultAsync();
 				this.Tcs.SetResult(component);
 			}
 			catch (Exception e)

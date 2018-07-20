@@ -29,11 +29,12 @@ namespace ETModel
 			DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
 			try
 			{
-				// 执行查询数据库任务
-				FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>(this.Json);
-				List<ComponentWithId> components = await dbComponent.GetCollection(this.CollectionName).FindAsync(filterDefinition).Result.ToListAsync();
-				this.Tcs.SetResult(components);
-			}
+			    // 执行查询数据库任务
+			    FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>(this.Json);
+			    IAsyncCursor<ComponentWithId> cursor = await dbComponent.GetCollection(this.CollectionName).FindAsync(filterDefinition);
+			    List<ComponentWithId> components = await cursor.ToListAsync();
+			    this.Tcs.SetResult(components);
+            }
 			catch (Exception e)
 			{
 				this.Tcs.SetException(new Exception($"查询数据库异常! {CollectionName} {this.Json}", e));

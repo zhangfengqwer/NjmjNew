@@ -108,10 +108,7 @@ namespace ETHotfix
             Log.Info("self.rooms:" + self.rooms.Count);
             self.idleRooms.Remove(room.Id);
             Log.Info("idleRooms:" + self.idleRooms.Count);
-            if (isTimeout)
-            {
-                self.gameRooms.Remove(room.Id);
-            }
+            self.gameRooms.Remove(room.Id);
             Log.Info("gameRooms:" + self.gameRooms.Count);
         }
 
@@ -131,7 +128,6 @@ namespace ETHotfix
                     foreach (var room in rooms)
                     {
                         //好友房不提出
-
                         if (room.IsFriendRoom) continue;
                         foreach (var gamer in room.GetAll())
                         {

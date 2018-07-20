@@ -52,34 +52,60 @@ namespace ETHotfix
                     Log.Info($"{item.UserID} 手牌：{item.handCards.Count}");
                 }
 
-                await Actor_GamerEnterRoomHandler.GamerEnterRoom(new Actor_GamerEnterRoom() { Gamers = Gamers });
+                Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
+                {
+                        Gamers = Gamers,
+                        RoomType = message.RoomType,
+                };
+                if (message.RoomType == 3)
+                {
+                    actorGamerEnterRoom.RoomId = message.RoomId;
+                    actorGamerEnterRoom.MasterUserId = message.MasterUserId;
+                    actorGamerEnterRoom.JuCount = message.JuCount;
+                    actorGamerEnterRoom.Multiples = message.Multiples;
+                }
+                await Actor_GamerEnterRoomHandler.GamerEnterRoom(actorGamerEnterRoom);
 
                 //开始游戏
                 var actorStartGame = new Actor_StartGame();
                 actorStartGame.GamerDatas = message.Gamers;
                 actorStartGame.restCount = message.RestCount;
                 actorStartGame.RoomType = message.RoomType;
+                if (actorStartGame.RoomType == 3)
+                {
+                    actorStartGame.CurrentJuCount = message.CurrentJuCount;
+                }
+
                 Actor_StartGameHandler.StartGame(actorStartGame, true);
 
                 //碰刚
                 foreach (var item in message.Gamers)
                 {
-                    foreach (var card in item.pengCards)
+                    for (int i = 0; i < item.pengCards.Count; i++)
                     {
+                        MahjongInfo card = item.pengCards[i];
                         Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
                         gamerOperation.Uid = item.UserID;
                         gamerOperation.weight = card.weight;
                         gamerOperation.OperationType = 0;
+                        gamerOperation.OperatedUid = item.OperatedPengUserIds[i];
                         Actor_GamerOperateHandler.GamerOperation(gamerOperation, true);
-
                     }
 
-                    foreach (var card in item.gangCards)
+                    for (int i = 0; i < item.gangCards.Count; i++)
                     {
+                        MahjongInfo card = item.gangCards[i];
+                        long operatedGangUserIds = item.OperatedGangUserIds[i];
                         Actor_GamerOperation gamerOperation = new Actor_GamerOperation();
                         gamerOperation.Uid = item.UserID;
                         gamerOperation.weight = card.weight;
                         gamerOperation.OperationType = 1;
+                        gamerOperation.OperatedUid = operatedGangUserIds;
+
+                        if (operatedGangUserIds == 0)
+                        {
+                            gamerOperation.OperationType = 4;
+                        }
                         Actor_GamerOperateHandler.GamerOperation(gamerOperation, true);
                     }
                 }

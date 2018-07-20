@@ -40,7 +40,6 @@ namespace ETHotfix
                 Room room = ComponentFactory.Create<Room>();
                 room.AddComponent<DeskComponent>();
                 room.AddComponent<OrderControllerComponent>();
-                room.AddComponent<GameControllerComponent>();
                 room.IsFriendRoom = true;
 
                 GameControllerComponent controllerComponent = room.AddComponent<GameControllerComponent>();

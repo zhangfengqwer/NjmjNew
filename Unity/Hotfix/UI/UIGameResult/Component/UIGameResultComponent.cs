@@ -38,7 +38,6 @@ namespace ETHotfix
             ToastScript.clear();
 
             initData();
-            startTimer();
         }
 
         public void initData()
@@ -120,7 +119,7 @@ namespace ETHotfix
                 Text nameText = gameObject.transform.Find("name").GetComponent<Text>();
                 Text goldText = gameObject.transform.Find("Text_gold").GetComponent<Text>();
 
-                //                headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
+                //headImage.sprite = CommonUtil.getSpriteByBundle("playericon", gamer.PlayerInfo.Icon);
                 HeadManager.setHeadSprite(headImage, gamer.PlayerInfo.Icon);
                 nameText.text = gamer.PlayerInfo.Name + "";
                 //胡牌的ui
@@ -259,9 +258,9 @@ namespace ETHotfix
 
         }
 
-        public async void startTimer()
+        public async void startTimer(int time = 20)
         {
-            int time = 20;
+            Text_daojishi.text = ("准备倒计时 " + time.ToString());
             while (time >= 0)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
@@ -318,6 +317,19 @@ namespace ETHotfix
 
             winPlayer.transform.Find("hupaiType").GetComponent<Image>().sprite =
                     CommonUtil.getSpriteByBundle("image_gameresult", "gameresult_liuju");
+        }
+
+        public async void SetFriendRoom()
+        {
+            Button_back.gameObject.SetActive(false);
+            Button_close.gameObject.SetActive(false);
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+            if (IsDisposed)
+            {
+                return;
+            }
+
+            onClick_jixu();
         }
     }
 }

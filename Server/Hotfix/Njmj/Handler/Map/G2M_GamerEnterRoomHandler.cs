@@ -67,8 +67,24 @@ namespace ETHotfix
 			            gamerData.handCards = handCards;
 			            gamerData.faceCards = handCardsComponent.FaceCards;
 			            gamerData.playCards = handCardsComponent.PlayCards;
-			            gamerData.pengCards = handCardsComponent.PengCards;
-			            gamerData.gangCards = handCardsComponent.GangCards;
+
+                        //添加碰刚的uid
+			            foreach (var pengOrBar in handCardsComponent.PengOrBars)
+			            {
+                            //碰
+			                if (pengOrBar.OperateType == OperateType.Peng)
+			                {
+			                    gamerData.pengCards.Add(new MahjongInfo() {weight = (byte) pengOrBar.Weight});
+			                    gamerData.OperatedPengUserIds.Add(pengOrBar.UserId);
+                            }
+                            //杠
+			                else
+			                {
+			                    gamerData.gangCards.Add(new MahjongInfo() { weight = (byte)pengOrBar.Weight });
+			                    gamerData.OperatedGangUserIds.Add(pengOrBar.UserId);
+                            }
+			            }
+			          
 			            gamerData.IsBanker = handCardsComponent.IsBanker;
 			            gamerData.UserID = _gamer.UserID;
 			            gamerData.SeatIndex = room.GetGamerSeat(_gamer.UserID);
@@ -95,10 +111,19 @@ namespace ETHotfix
 
 			        reconnet.RestCount = deskComponent.RestLibrary.Count;
 			        reconnet.RoomType = (int)room.GetComponent<GameControllerComponent>().RoomConfig.Id;
+			        if (room.IsFriendRoom)
+			        {
+			            GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+			            reconnet.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
+			            reconnet.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
+			            reconnet.JuCount = gameControllerComponent.RoomConfig.JuCount;
+			            reconnet.Multiples = gameControllerComponent.RoomConfig.Multiples;
+			            reconnet.CurrentJuCount = room.CurrentJuCount;
+			        }
                     room.GamerReconnect(gamer, reconnet);
 
                     //等待客户端重连
-			        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+                    await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
 
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
@@ -179,9 +204,11 @@ namespace ETHotfix
 
                             if (message.RoomType == 3)
                             {
-                                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+                                GameControllerComponent gameControllerComponent = idleRoom.GetComponent<GameControllerComponent>();
                                 actorGamerEnterRoom.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
                                 actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
+                                actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
+                                actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
                             }
                             idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
                             idleRoom.reconnectList.Add(actorGamerEnterRoom);

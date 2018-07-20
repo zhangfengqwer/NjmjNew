@@ -23,6 +23,11 @@ namespace ETHotfix
                 UIGameResultComponent gameResultComponent =
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIGameResult).GetComponent<UIGameResultComponent>();
 
+                if (uiRoomComponent.RoomType == 3)
+                {
+                    gameResultComponent.SetFriendRoom();
+                    gameResultComponent.startTimer(5);
+                }
                 gameResultComponent.SetFlowGame(message, gamerComponent);
                 uiRoomComponent.ISGaming = false;
 

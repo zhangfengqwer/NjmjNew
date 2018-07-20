@@ -125,6 +125,8 @@
     <Compile Include="Njmj\Entity\Type.cs" />
     <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerApplyRoomDismissHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerAgreeRoomDismissHandler.cs" />
+    <Compile Include="Njmj\Handler\Actor_GamerCancelRoomDismissHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ReliefGoldHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerBuyYuanBaoHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_ChatHandler.cs" />

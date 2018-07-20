@@ -199,6 +199,7 @@ namespace ETHotfix
         public static void ShowFriendCommonTip(string content)
         {
             SetTipString(content);
+
             if(GetComponentByType<UIFriendRoomCommonTipComponent>(UIType.UIFriendRoomCommonTip) == null)
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomCommonTip);
@@ -217,6 +218,17 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoomDismiss);
+        }
+
+        public static UI CreateUI(string type)
+        {
+            UI ui = Game.Scene.GetComponent<UIComponent>().Get(type);
+            if (ui == null)
+            {
+                ui = Game.Scene.GetComponent<UIComponent>().Create(type);
+            }
+
+            return ui;
         }
     }
 }
