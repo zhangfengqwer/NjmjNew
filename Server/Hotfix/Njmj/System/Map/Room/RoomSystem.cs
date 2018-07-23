@@ -47,8 +47,7 @@ namespace ETHotfix
         public static void Broadcast(this Room self, IActorMessage message)
         {
             if (self == null) return;
-            ActorMessageSenderComponent actorMessageSenderComponent =
-                Game.Scene.GetComponent<ActorMessageSenderComponent>();
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
             foreach (Gamer gamer in self.gamers)
             {
                 if (gamer == null || gamer.isOffline)
@@ -68,8 +67,7 @@ namespace ETHotfix
                 return;
             }
 
-            ActorMessageSenderComponent actorMessageSenderComponent =
-                Game.Scene.GetComponent<ActorMessageSenderComponent>();
+            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
             UnitGateComponent unitGateComponent = gamer.GetComponent<UnitGateComponent>();
             actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
         }
@@ -308,7 +306,7 @@ namespace ETHotfix
             {
                 if (gamer == null)
                 {
-                    Log.Warning("发牌的时候gamer为null:"+JsonHelper.ToJson(room.UserIds)+"\n------："+JsonHelper.ToJson(room.GetAll()));
+                    Log.Error("发牌的时候gamer为null:"+JsonHelper.ToJson(room.UserIds)+"\n------："+JsonHelper.ToJson(room.GetAll()));
                     
                     continue;
                 }
