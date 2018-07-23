@@ -96,7 +96,7 @@ namespace ETHotfix
                 itemInfo.Count = rewardList[i].rewardNum;
                 itemList.Add(itemInfo);
             }
-            Log.Debug(JsonHelper.ToJson(itemList));
+
             UINetLoadingComponent.showNetLoading();
             G2C_EmailOperate g2cGetItem = (G2C_EmailOperate)await SessionComponent.Instance
                 .Session.Call(new C2G_EmailOperate
@@ -106,9 +106,10 @@ namespace ETHotfix
                     state = 1
                 });
             UINetLoadingComponent.closeNetLoading();
-            ToastScript.createToast("领取成功");
+
             get.gameObject.SetActive(false);
             GameUtil.changeDataWithStr(email.RewardItem);
+            ShowRewardUtil.Show(email.RewardItem);
             flag.SetActive(false);
             Delete.gameObject.SetActive(true);
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIEmail).GetComponent<UIEmailComponent>().RefreshMailUI();

@@ -429,7 +429,7 @@ namespace ETHotfix
 	public partial class ShopInfo: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public long Id;
+		public int Id;
 
 		[ProtoMember(2, IsRequired = true)]
 		public int ShopType;
@@ -480,13 +480,7 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public GetItemInfo Info;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int CurrencyType;
-
-		[ProtoMember(4, IsRequired = true)]
-		public int Cost;
+		public int ShopId;
 
 	}
 

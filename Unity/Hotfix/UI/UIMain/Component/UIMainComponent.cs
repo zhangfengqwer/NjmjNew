@@ -51,8 +51,8 @@ namespace ETHotfix
         private Button JoinRoomBtn;
         private Button CreateRoomBtn;
         private Button CloseFrRoomBtn;
+        private Button RefreshBtn;
 
-        private List<TestRoomInfo> roomInfos = new List<TestRoomInfo>();
         private List<GameObject> roomItems = new List<GameObject>();
         private List<UI> uiFList = new List<UI>();
         private GameObject roomItem = null;
@@ -117,6 +117,7 @@ namespace ETHotfix
             JoinRoomBtn = rc.Get<GameObject>("JoinRoomBtn").GetComponent<Button>();
             CreateRoomBtn = rc.Get<GameObject>("CreateRoomBtn").GetComponent<Button>();
             CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
+            RefreshBtn = rc.Get<GameObject>("RefreshBtn").GetComponent<Button>();
 
             roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
             #endregion
@@ -134,8 +135,7 @@ namespace ETHotfix
             //关闭好友房界面
             CloseFrRoomBtn.onClick.Add(() =>
             {
-                SetFriendRoom(false);
-                SetRank(true);
+                SetUIShow(true);
             });
 
             ////打开创建房间UI
@@ -214,7 +214,7 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIBag);
             });
-
+            
             // 转盘
             BtnList_Down.transform.Find("Grid/Btn_ZhuanPan").GetComponent<Button>().onClick.Add(() =>
             {
@@ -251,11 +251,14 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
+                //ToastScript.createToast("暂未开放：比赛场");
                 //return
+                ShowFriendRoom();
+            });
 
-                SetFriendRoom(true);
-                SetRank(false);
+            //点击刷新好友房
+            RefreshBtn.onClick.Add(() =>
+            {
                 GetRoomInfoReq();
             });
 
@@ -368,11 +371,32 @@ namespace ETHotfix
                             .Append(RealNameTip.GetComponent<RectTransform>().DOAnchorPos(new Vector2(117.3f, 97.1f), 0.8f, false)).SetLoops(-1).Play();
                     }
                 }
+
+                GameObject obj = CommonUtil.getGameObjByBundle("test1");
+                GameObject.Instantiate(obj, BtnList_Down.transform.Find("Grid/Btn_Shop").transform);
             }
             catch (Exception ex)
             {
                 Log.Debug(ex.ToString());
             }
+        }
+
+        /// <summary>
+        /// 打开好友房时需要隐藏大厅一些东西
+        /// </summary>
+        /// <param name="isActive"></param>
+        public void SetUIShow(bool isActive)
+        {
+            LaBa.SetActive(isActive);
+            ChoiceRoomType.SetActive(isActive);
+            Rank.SetActive(isActive);
+            FriendRoom.SetActive(!isActive);
+        }
+
+        public void ShowFriendRoom()
+        {
+            SetUIShow(false);
+            GetRoomInfoReq();
         }
 
         #region 好友房
@@ -393,18 +417,6 @@ namespace ETHotfix
             }
 
             PlayerInfoComponent.Instance.GetPlayerInfo().FriendKeyCount = m2cFriend.KeyCount;
-            //请求完了之后，设置今天赠送钥匙状态为已赠送
-            //if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)
-            //{
-            //    PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey = g2cFriend.IsGiveFriendKey;
-            //    //刷新背包数据
-            //    {
-            //        UINetLoadingComponent.showNetLoading();
-            //        G2C_BagOperation g2cBag = (G2C_BagOperation)await SessionComponent.Instance.Session.Call(new C2G_BagOperation() { UId = PlayerInfoComponent.Instance.uid });
-            //        UINetLoadingComponent.closeNetLoading();
-            //        PlayerInfoComponent.Instance.SetBagInfoList(g2cBag.ItemList);
-            //    }
-            //}
             #endregion
 
             if (m2cFriend.Info.Count <= 0)
@@ -443,17 +455,7 @@ namespace ETHotfix
                 uiFList[i].GetComponent<UIFriendRoomItemComponent>().SetItemInfo(roomInfos[i]);
             }
         }
-
-        private void SetFriendRoom(bool isShow)
-        {
-            FriendRoom.SetActive(isShow);
-        }
         #endregion
-
-        public void SetRank(bool isShow)
-        {
-            Rank.SetActive(isShow);
-        }
 
         private int curType = 2;
         private async void GetWeekReward()
@@ -471,15 +473,19 @@ namespace ETHotfix
             RewardBtn.gameObject.SetActive(false);
             g2cWeek.IsGetGameRank = g2cWR.IsGetGameRank;
             g2cWeek.IsGetGoldRank = g2cWR.IsGetGoldRank;
-            if(curType == 1)
+            string str = "";
+            if (curType == 1)
             {
-                ToastScript.createToast($"领取成功,获得元宝{g2cWR.GoldReward}");
+                str = "2:" + g2cWR.GoldReward;
+                //ToastScript.createToast($"领取成功,获得元宝{g2cWR.GoldReward}");
             }
             else if(curType == 2)
             {
-                ToastScript.createToast($"领取成功,获得话费礼包{g2cWR.GameReward}");
+                str = "111:" + g2cWR.GameReward;
+               /* ToastScript.createToast($"领取成功,获得话费礼包{g2cWR.GameReward}");*/
             }
-            
+            ShowRewardUtil.Show(str);
+
         }
 
         private void ShowNotice()
@@ -610,7 +616,6 @@ namespace ETHotfix
             gameUiList.Clear();
             uiFList.Clear();
             roomItems.Clear();
-            roomInfos.Clear();
         }
 
         /// <summary>

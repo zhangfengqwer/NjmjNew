@@ -19,8 +19,7 @@ namespace ETHotfix
                 List<Bag> itemList = new List<Bag>();
                 for(int i = 0;i< bagInfoList.Count; ++i)
                 {
-                    if (bagInfoList[i].Count <= 0)
-                        continue;
+                    if (bagInfoList[i].Count <= 0) continue;
                     Bag item = new Bag();
                     item.ItemId = bagInfoList[i].BagId;
                     item.Count = bagInfoList[i].Count;
@@ -35,7 +34,6 @@ namespace ETHotfix
                     keyItem.ItemId = 112;
                     keyItem.Count = fKeyCount;
                     itemList.Add(keyItem);
-                    Log.Debug("===" + JsonHelper.ToJson(keyItem) + "===");
                 }
                 
                 response.ItemList = itemList;

@@ -71,7 +71,7 @@ namespace ETHotfix
             this.info = info;
             if(info.IsPublic == 1)
             {
-                RoomIdTxt.text = "房间号：" + info.RoomId;
+                RoomIdTxt.text = "房间号:" + info.RoomId;
             }
             else if(info.IsPublic == 2)
             {

@@ -353,7 +353,6 @@ namespace ETHotfix
                                 itemInfo.UId = uid;
                                 itemInfo.Count = propNum;
                                 await proxyComponent.Save(itemInfo);
-                                DBHelper.AddItemToDB(itemInfo);
                             }
                             else
                             {
@@ -375,6 +374,24 @@ namespace ETHotfix
             {
                 Log.Error(ex);
             }
+        }
+
+        public static async Task<bool> IsVIP(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> infos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            if(infos.Count > 0)
+            {
+                if (infos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                Log.Error("用户:" + uid + "playerbaseInfo数据不存在");
+            }
+            return false;
         }
 
         public static async Task Log_Login(long uid, Session session,string clientVersion)
@@ -453,7 +470,7 @@ namespace ETHotfix
 
         // 游戏日志
         public static async Task Log_Game(string RoomName, long Player1_uid, long Player2_uid, long Player3_uid,
-            long Player4_uid, long winner_uid)
+            long Player4_uid, long winner_uid,string Player1_info = "", string Player2_info = "", string Player3_info = "", string Player4_info = "")
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
             Log_Game log = ComponentFactory.CreateWithId<Log_Game>(IdGenerater.GenerateId());
@@ -463,6 +480,10 @@ namespace ETHotfix
             log.Player3_uid = Player3_uid;
             log.Player4_uid = Player4_uid;
             log.Winner_uid = winner_uid;
+            log.Player1_info = Player1_info;
+            log.Player2_info = Player2_info;
+            log.Player3_info = Player3_info;
+            log.Player4_info = Player4_info;
             await proxyComponent.Save(log);
         }
 

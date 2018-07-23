@@ -8,47 +8,12 @@ namespace ETHotfix
 {
     public class DBHelper
     {
-        /// <summary>
-        /// 添加DB信息
-        /// </summary>
-        public static async void AddEmailInfoToDB(EmailInfo info)
-        {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            EmailInfo emailInfo = ComponentFactory.CreateWithId<EmailInfo>(IdGenerater.GenerateId());
-            emailInfo = info;
-            await proxyComponent.Save(emailInfo);
-        }
-
-        public static async void AddTaskProgressInfoToDB( TaskProgressInfo info)
-        {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            TaskProgressInfo taskInfo = ComponentFactory.CreateWithId<TaskProgressInfo>(IdGenerater.GenerateId());
-            taskInfo = info;
-            await proxyComponent.Save(taskInfo);
-        }
-
-        public static async void AddChengjiuInfoToDB(long uid,ChengjiuInfo info)
-        {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            ChengjiuInfo chengjiuInfo = ComponentFactory.CreateWithId<ChengjiuInfo>(IdGenerater.GenerateId());
-            chengjiuInfo = info;
-            await proxyComponent.Save(chengjiuInfo);
-        }
-
         public static async void RefreshRankFromDB()
         {
             RefreshWealthRank();
             RefreshGameRank();
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
             //Game.Scene.GetComponent<DBOperatorComponet>().IsStop = true;
-        }
-
-        public static async void AddItemToDB(UserBag info)
-        {
-            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-            UserBag itemInfo = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
-            itemInfo = info;
-            await proxyComponent.Save(itemInfo);
         }
 
         private static List<Log_Rank> gamePlayerList = new List<Log_Rank>();

@@ -15,8 +15,22 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 List<EmailInfo> emailInfoList = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.Uid},EmailId:{message.EmailId}}}");
+
                 if (emailInfoList.Count > 0)
                 {
+
+                    #region 防止出现两个或以上的相同的邮件ID
+                    if (emailInfoList.Count > 1)
+                    {
+                        for(int i = 1;i< emailInfoList.Count; ++i)
+                        {
+                            await proxyComponent.Delete<EmailInfo>(emailInfoList[i].Id);
+                        }
+                       
+                        emailInfoList = await proxyComponent.QueryJson<EmailInfo>($"{{UId:{message.Uid},EmailId:{message.EmailId}}}");
+                    }
+                    #endregion
+
                     if (message.state == 1)
                     {
                         //领取奖励
