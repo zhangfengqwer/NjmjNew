@@ -819,7 +819,7 @@ namespace ETHotfix
                  * *************************************************
                 */
                 {
-                    long curAllCount = proxyComponent.QueryJsonCount<EmailInfo>("{}");
+                    long curAllCount = await proxyComponent.QueryJsonCount<EmailInfo>("{}");
                     emailInfo.EmailId = (int) ++curAllCount;
                 }
 
