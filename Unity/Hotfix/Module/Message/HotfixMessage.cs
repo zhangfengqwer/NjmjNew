@@ -2856,4 +2856,19 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.Actor_GamerKickOff)]
+	[ProtoContract]
+	public partial class Actor_GamerKickOff: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long KickedUserId;
+
+	}
+
 }

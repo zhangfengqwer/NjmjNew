@@ -36,10 +36,12 @@ namespace ETHotfix
                 }
                 else
 	            {
-	                if (room.IsFriendRoom)
-	                {
-	                    return;
-	                }
+//	                if (room.IsFriendRoom)
+//	                {
+//	                    long masterUserId = room.GetComponent<GameControllerComponent>().RoomConfig.MasterUserId;
+//
+//	                    return;
+//	                }
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)
 	                {

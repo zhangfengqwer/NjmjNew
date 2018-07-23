@@ -79,6 +79,21 @@ namespace ETHotfix
 
                 roomComponent.localGamer = localGamer;
 
+                //好友房处理
+                if (message.RoomType == 3)
+                {
+                    roomComponent.IsFriendRoom = true;
+                    roomComponent.JuCount = message.JuCount;
+                    uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                    uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
+                    roomComponent.RoomConfig.Multiples = message.Multiples;
+                    roomComponent.SetFriendSetting(message.MasterUserId);
+                }
+                else
+                {
+                    roomComponent.IsFriendRoom = false;
+                }
+
                 for (int i = 0; i < message.Gamers.Count; i++)
                 {
                     GamerInfo gamerInfo = message.Gamers[i];
@@ -104,7 +119,7 @@ namespace ETHotfix
                     {
                         if (gamer?.PlayerInfo != null)
                         {
-                            gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index]);
+                            gamerUiComponent?.SetHeadPanel(uiReadyComponent.HeadPanel[index],index);
                             gamerUiComponent?.SetFace(roomComponent.FacePanel[index]);
                             uiReady?.GetComponent<UIReadyComponent>()?.SetPanel(gamer, index);
                             //根据座位的indax添加玩家
@@ -114,22 +129,6 @@ namespace ETHotfix
                 }
 
                 SoundsHelp.Instance.playSound_JinRu();
-
-                //好友房处理
-                if (message.RoomType == 3)
-                {
-                    roomComponent.IsFriendRoom = true;
-                    roomComponent.JuCount = message.JuCount;
-                    uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
-                    uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
-                    roomComponent.RoomConfig.Multiples = message.Multiples;
-                    roomComponent.SetFriendSetting(message.MasterUserId);
-                    
-                }
-                else
-                {
-                    roomComponent.IsFriendRoom = false;
-                }
             }
             catch (Exception e)
             {

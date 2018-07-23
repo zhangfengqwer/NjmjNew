@@ -994,3 +994,8 @@ message Actor_GamerRoomDismiss // IActorMessage
 {
    
 }
+
+message Actor_GamerKickOff // IActorMessage
+{
+   	optional long KickedUserId = 1;
+}
