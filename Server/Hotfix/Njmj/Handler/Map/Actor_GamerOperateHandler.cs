@@ -13,15 +13,9 @@ namespace ETHotfix
         {
             try
             {
-              
-                MahjongInfo mahjongInfo = new MahjongInfo()
-                {
-                    weight = (byte) message.weight,
-                    m_weight = (Consts.MahjongWeight) message.weight
-                };
-
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room room = roomComponent.Get(gamer.RoomID);
+
                 room.IsOperate = true;
                 room.IsPlayingCard = false;
                 room.IsNeedWaitOperate = false;
@@ -36,7 +30,7 @@ namespace ETHotfix
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 if (handCards == null) return;
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
-                Log.Debug("有人碰或刚,当前出牌" + JsonHelper.ToJson(deskComponent.CurrentCard));
+                Log.Info($"玩家{gamer.UserID}碰或刚{message.OperationType},当前出牌");
 
                 //胡牌
                 int huaCount = 0;
@@ -313,8 +307,6 @@ namespace ETHotfix
                                     weight = grabMahjong.weight
                                 };
                                 room.Broadcast(actorGamerBuHua);
-
-                                room.reconnectList.Add(actorGamerBuHua);
 
                                 //从手牌中删除花牌
                                 Log.Info("补花");

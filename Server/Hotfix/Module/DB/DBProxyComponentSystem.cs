@@ -99,6 +99,7 @@ namespace ETHotfix
 	        IBsonSerializerRegistry serializerRegistry = BsonSerializer.SerializerRegistry;
 	        IBsonSerializer<T> documentSerializer = serializerRegistry.GetSerializer<T>();
 	        string json = filter.Render(documentSerializer, serializerRegistry).ToJson();
+
 	        return await self.Query<T>(json);
 	    }
 
@@ -169,6 +170,14 @@ namespace ETHotfix
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<Log_Rank> filterDefinition = new JsonFilterDefinition<Log_Rank>($"{{}}");
+
+            FilterDefinition<Log_Rank> filterEmpty = Builders<Log_Rank>.Filter.Empty;
+            SortDefinition<Log_Rank> sortDefinition = Builders<Log_Rank>.Sort.Descending("");
+
+            IAsyncCursor<Log_Rank> asyncCursor = await dbComponent.GetDBDataCollection<Log_Rank>(typeof(Log_Rank).Name).FindAsync(filterDefinition);
+
+
+
             List<Log_Rank> components = new List<Log_Rank>();
             if (type == 1)
             {
@@ -185,7 +194,8 @@ namespace ETHotfix
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{}}");
-            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            IAsyncCursor<T> cursor = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition);
+            List<T> components = await cursor.ToListAsync();
             return components;
         }
 
@@ -193,7 +203,8 @@ namespace ETHotfix
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{CreateTime:/^{time}/}}");
-            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            IAsyncCursor<T> cursor = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition);
+            List<T> components = await cursor.ToListAsync();
             return components;
         }
 
@@ -201,7 +212,8 @@ namespace ETHotfix
         {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
             FilterDefinition<T> filterDefinition = new JsonFilterDefinition<T>($"{{CreateTime:/^{time}/,Uid:{uid}}}");
-            List<T> components = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).Find(filterDefinition).ToListAsync();
+            IAsyncCursor<T> cursor = await dbComponent.GetDBDataCollection<T>(typeof(T).Name).FindAsync(filterDefinition);
+            List<T> components = await cursor.ToListAsync();
             return components;
         }
 
@@ -227,11 +239,11 @@ namespace ETHotfix
             await dbComponent.GetCollection(typeof(T).Name).DeleteManyAsync(filter);
         }
 
-        public static long QueryJsonCount<T>(this DBProxyComponent self, string json)
+        public static async Task<long> QueryJsonCount<T>(this DBProxyComponent self, string json)
 	    {
             DBComponent dbComponent = Game.Scene.GetComponent<DBComponent>();
 	        FilterDefinition<ComponentWithId> filterDefinition = new JsonFilterDefinition<ComponentWithId>(json);
-            long count = dbComponent.GetCollection(typeof(T).Name).Count(filterDefinition);
+            long count = await dbComponent.GetCollection(typeof(T).Name).CountAsync(filterDefinition);
 	        return count;
 	    }
      

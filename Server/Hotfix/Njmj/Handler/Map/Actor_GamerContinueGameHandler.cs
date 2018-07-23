@@ -11,6 +11,11 @@ namespace ETHotfix
     {
         protected override async Task Run(Gamer gamer, Actor_GamerContinueGame message)
         {
+            await GamerContinue(gamer);
+        }
+
+        public static async Task GamerContinue(Gamer gamer)
+        {
             try
             {
                 Log.Info($"玩家{gamer.UserID}继续游戏");
@@ -21,11 +26,11 @@ namespace ETHotfix
                 {
                     return;
                 }
+
                 GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
                 OrderControllerComponent orderControllerComponent = room.GetComponent<OrderControllerComponent>();
 
                 gamer.ReadyTimeOut = 0;
-//                gamer.IsReady = true;
                 List<GamerInfo> Gamers = new List<GamerInfo>();
                 for (int i = 0; i < room.GetAll().Length; i++)
                 {
@@ -48,18 +53,7 @@ namespace ETHotfix
 //                        continue;
 //                    }
 
-                    PlayerInfo playerInfo = new PlayerInfo();
-                    playerInfo.Icon = playerBaseInfo.Icon;
-                    playerInfo.Name = playerBaseInfo.Name;
-                    playerInfo.GoldNum = playerBaseInfo.GoldNum;
-                    playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
-                    playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
-                    playerInfo.VipTime = playerBaseInfo.VipTime;
-                    playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
-                    playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
-                    playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
-                    playerInfo.MaxHua = playerBaseInfo.MaxHua;
-
+                    PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
                     gamerInfo.playerInfo = playerInfo;
 
                     Gamers.Add(gamerInfo);
@@ -77,12 +71,13 @@ namespace ETHotfix
                     actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
                     actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
                 }
+
                 room.Broadcast(actorGamerEnterRoom);
 
-                if (room.IsFriendRoom)
-                {
-                    Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
-                }
+//                if (room.IsFriendRoom)
+//                {
+                await Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
+//                }
             }
             catch (Exception e)
             {

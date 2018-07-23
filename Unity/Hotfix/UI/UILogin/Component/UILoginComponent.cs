@@ -442,7 +442,9 @@ namespace ETHotfix
 
                 // IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
                 IPEndPoint connetEndPoint = NetConfig.getInstance().ToIPEndPointWithYuMing();
-
+#if Localhost
+                connetEndPoint = NetworkHelper.ToIPEndPoint("10.224.5.74:10002");
+#endif
                 ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
 
@@ -467,6 +469,11 @@ namespace ETHotfix
                 connetEndPoint = ToIPEndPointWithYuMing(Convert.ToInt32(temp[1]));
 
                 // connetEndPoint = NetworkHelper.ToIPEndPoint(r2CLogin.Address);
+
+#if Localhost
+                connetEndPoint = NetworkHelper.ToIPEndPoint("10.224.5.74:10002");
+#endif
+
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
                 Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(session);
                 ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;
