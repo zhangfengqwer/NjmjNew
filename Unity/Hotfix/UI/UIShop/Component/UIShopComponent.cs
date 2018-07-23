@@ -247,9 +247,13 @@ namespace ETHotfix
             info.Count = count;
             int price = 0;
             if (GameUtil.isVIP())
+            {
                 price = shopInfo.VipPrice;
+            }
             else
+            {
                 price = shopInfo.Price;
+            }
             UINetLoadingComponent.showNetLoading();
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionComponent.Instance.
                 Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price , CurrencyType = 2});

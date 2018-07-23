@@ -348,11 +348,11 @@ namespace ETHotfix
                             List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
                             if (userBags.Count == 0)
                             {
-                                UserBag itemInfo = new UserBag();
+                                UserBag itemInfo = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
                                 itemInfo.BagId = propId;
                                 itemInfo.UId = uid;
                                 itemInfo.Count = propNum;
-                                DBHelper.AddItemToDB(itemInfo);
+                                await proxyComponent.Save(itemInfo);
                             }
                             else
                             {

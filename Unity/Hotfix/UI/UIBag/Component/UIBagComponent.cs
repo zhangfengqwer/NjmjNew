@@ -175,7 +175,9 @@ namespace ETHotfix
         private void SetMoreHide(int index)
         {
             for (int i = index; i < bagItemList.Count; ++i)
+            {
                 bagItemList[i].SetActive(false);
+            }
         }
 
         public void SetItemInfo(Bag item)
@@ -183,7 +185,9 @@ namespace ETHotfix
             this.item = item;
             propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
             if (propInfo == null)
+            {
                 Debug.LogError("道具信息错误");
+            }
             useBtn.gameObject.SetActive(propInfo.type == 1);
             uiItemIcon.sprite = CommonUtil.getSpriteByBundle("image_shop", propInfo.prop_id.ToString());
             descTxt.text = propInfo.desc;
@@ -201,6 +205,12 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa);
                     }
                     break;
+                    case 112:
+                        {
+                            GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).ShowFriendRoom();
+                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);
+                        }
+                        break;
 
                     default:
                     {

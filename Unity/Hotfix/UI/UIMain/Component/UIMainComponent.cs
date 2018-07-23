@@ -51,8 +51,8 @@ namespace ETHotfix
         private Button JoinRoomBtn;
         private Button CreateRoomBtn;
         private Button CloseFrRoomBtn;
+        private Button RefreshBtn;
 
-        private List<TestRoomInfo> roomInfos = new List<TestRoomInfo>();
         private List<GameObject> roomItems = new List<GameObject>();
         private List<UI> uiFList = new List<UI>();
         private GameObject roomItem = null;
@@ -117,6 +117,7 @@ namespace ETHotfix
             JoinRoomBtn = rc.Get<GameObject>("JoinRoomBtn").GetComponent<Button>();
             CreateRoomBtn = rc.Get<GameObject>("CreateRoomBtn").GetComponent<Button>();
             CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
+            RefreshBtn = rc.Get<GameObject>("RefreshBtn").GetComponent<Button>();
 
             roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
             #endregion
@@ -250,9 +251,14 @@ namespace ETHotfix
             // 比赛场
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
-                ToastScript.createToast("暂未开放：比赛场");
+                //ToastScript.createToast("暂未开放：比赛场");
                 //return
-                SetUIShow(false);
+                ShowFriendRoom();
+            });
+
+            //点击刷新好友房
+            RefreshBtn.onClick.Add(() =>
+            {
                 GetRoomInfoReq();
             });
 
@@ -379,12 +385,18 @@ namespace ETHotfix
         /// 打开好友房时需要隐藏大厅一些东西
         /// </summary>
         /// <param name="isActive"></param>
-        private void SetUIShow(bool isActive)
+        public void SetUIShow(bool isActive)
         {
             LaBa.SetActive(isActive);
             ChoiceRoomType.SetActive(isActive);
             Rank.SetActive(isActive);
             FriendRoom.SetActive(!isActive);
+        }
+
+        public void ShowFriendRoom()
+        {
+            SetUIShow(false);
+            GetRoomInfoReq();
         }
 
         #region 好友房
@@ -604,7 +616,6 @@ namespace ETHotfix
             gameUiList.Clear();
             uiFList.Clear();
             roomItems.Clear();
-            roomInfos.Clear();
         }
 
         /// <summary>

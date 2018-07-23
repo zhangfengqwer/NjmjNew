@@ -146,7 +146,7 @@ namespace ETHotfix
                 {
                     if(curRoomId != Convert.ToInt64(curEnterValue))
                     {
-                        GameUtil.ShowFriendCommonTip("房间号输入错误，请重新输入！");
+                        UICommonPanelComponent.showCommonPanel("提示","房间号输入错误，请重新输入！");
                         return;
                     }
                 }
@@ -159,7 +159,7 @@ namespace ETHotfix
                         });
                 if(g2CEnterRoom.Error != ErrorCode.ERR_Success)
                 {
-                    GameUtil.ShowFriendCommonTip(g2CEnterRoom.Message);
+                    UICommonPanelComponent.showCommonPanel("提示", g2CEnterRoom.Message);
                     return;
                 }
             }
