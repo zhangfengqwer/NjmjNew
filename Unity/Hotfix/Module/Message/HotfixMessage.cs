@@ -411,7 +411,7 @@ namespace ETHotfix
 		public int FriendKeyCount;
 
 		[ProtoMember(18, IsRequired = true)]
-		public int Sore;
+		public int Score;
 
 	}
 

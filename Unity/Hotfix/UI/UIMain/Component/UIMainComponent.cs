@@ -52,6 +52,7 @@ namespace ETHotfix
         private Button CreateRoomBtn;
         private Button CloseFrRoomBtn;
         private Button RefreshBtn;
+        private Text ScoreTxt;
 
         private List<GameObject> roomItems = new List<GameObject>();
         private List<UI> uiFList = new List<UI>();
@@ -118,6 +119,7 @@ namespace ETHotfix
             CreateRoomBtn = rc.Get<GameObject>("CreateRoomBtn").GetComponent<Button>();
             CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
             RefreshBtn = rc.Get<GameObject>("RefreshBtn").GetComponent<Button>();
+            ScoreTxt = rc.Get<GameObject>("ScoreTxt").GetComponent<Text>();
 
             roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
             #endregion
@@ -402,6 +404,7 @@ namespace ETHotfix
         #region 好友房
         private async void GetRoomInfoReq()
         {
+            ScoreTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Score.ToString();
             #region 向服务器请求信息
             UINetLoadingComponent.showNetLoading();
             G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
@@ -952,6 +955,7 @@ namespace ETHotfix
             goldNumTxt.text = info.GoldNum.ToString();
             wingNumTxt.text = info.WingNum.ToString();
             HuaFeiNumTxt.text = (info.HuaFeiNum / 100.0f).ToString();
+            ScoreTxt.text = info.Score.ToString();
 
             if (GameUtil.isVIP())
             {

@@ -3161,6 +3161,8 @@ MonoBehaviour:
     gameObject: {fileID: 1143090122663756}
   - key: RefreshBtn
     gameObject: {fileID: 1364442021405454}
+  - key: ScoreTxt
+    gameObject: {fileID: 1802408547398878}
 --- !u!114 &114300843134441312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4490,7 +4492,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 090909
 --- !u!114 &114644231839031264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7828,7 +7830,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0, y: 0.23014909}
-  m_SizeDelta: {x: 0, y: 27}
+  m_SizeDelta: {x: 78, y: 27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224721595910707814
 RectTransform:
