@@ -39,9 +39,7 @@ namespace ETHotfix
                 }
 
                 room.Broadcast(new Actor_GamerApplyRoomDismiss());
-
                 room.WaitDismiss(60);
-
             }
 	        catch (Exception e)
 	        {

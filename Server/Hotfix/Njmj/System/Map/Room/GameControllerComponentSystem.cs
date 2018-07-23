@@ -81,6 +81,8 @@ namespace ETHotfix
                     room.fangPaoUid = 0;
                     room.LiangZhuangCount = 0;
                     room.Broadcast(new Actor_GameFlow());
+                    //流局
+                    room.LastBiXiaHu = true;
                 }
 
                 await ChangeWeath(self, huaCount, room);

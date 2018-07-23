@@ -85,7 +85,8 @@ namespace ETModel
         /// </summary>
         public bool IsNeedWaitOperate { get; set; }
 
-
+        public bool LastBiXiaHu { get; set; }
+        public bool IsBiXiaHu { get; set; }
         /// <summary>
         /// 添加玩家
         /// </summary>
@@ -160,6 +161,7 @@ namespace ETModel
                 gamer.RoomID = 0;
                 this.IsLianZhuang = false;
                 this.LiangZhuangCount = 0;
+                this.LastBiXiaHu = false;
                 return gamer;
             }
 
@@ -230,7 +232,8 @@ namespace ETModel
             IsPlayingCard = false;
             IsZimo = false;
             CurrentJuCount = 0;
+            IsBiXiaHu = false;
+            LastBiXiaHu = false;
         }
-
     }
 }

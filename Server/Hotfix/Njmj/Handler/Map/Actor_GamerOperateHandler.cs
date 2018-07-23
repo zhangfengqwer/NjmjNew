@@ -67,6 +67,10 @@ namespace ETHotfix
                         //游戏结束结算
                         await gameController.GameOver(huaCount);
                     }
+
+                    gamer.IsCanHu = false;
+                    gamer.IsCanPeng = false;
+                    gamer.IsCanGang = false;
                 }
                 //放弃
                 else if (message.OperationType == 3)
@@ -93,15 +97,14 @@ namespace ETHotfix
                     gamerOperation.weight = deskComponent.CurrentCard.weight;
 
                     //有没有人胡牌
-//                    while (true)
-//                    {
-//                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
-//
-//                        if (!GetCanHu(room))
-//                        {
-//                            break;
-//                        }
-//                    }
+                    while (true)
+                    {
+                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+                        if (!GetCanHu(room))
+                        {
+                            break;
+                        }
+                    }
 
                     //游戏结束
                     if (room.IsGameOver)
@@ -205,11 +208,11 @@ namespace ETHotfix
                             {
                                 if (_gamer.UserID == gamer.UserID)
                                 {
-                                    GameHelp.ChangeGamerGold(room, _gamer, 20 * gameController.RoomConfig.Multiples * 3);
+                                    GameHelp.ChangeGamerGold(room, _gamer, 10 * gameController.RoomConfig.Multiples * 3);
                                 }
                                 else
                                 {
-                                    GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
+                                    GameHelp.ChangeGamerGold(room, _gamer, -10 * gameController.RoomConfig.Multiples);
                                 }
                             }
 
@@ -413,6 +416,14 @@ namespace ETHotfix
             }
            
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
+
+            foreach (var huPaiType in huPaiTypes)
+            {
+                if (huPaiType != Consts.HuPaiType.Normal)
+                {
+                    room.LastBiXiaHu = true;
+                }
+            }
 
             //自摸
             actorGamerHuPai.IsZiMo = isZimo;

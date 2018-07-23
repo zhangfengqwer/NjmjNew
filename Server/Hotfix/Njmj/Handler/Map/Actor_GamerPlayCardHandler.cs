@@ -36,6 +36,7 @@ namespace ETHotfix
 	            }
                 room.IsPlayingCard = true;
 
+                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 	            OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	            DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
@@ -85,9 +86,38 @@ namespace ETHotfix
 	                gamer.IsCanPeng = false;
 	                gamer.IsCanGang = false;
 
-                    //等待客户端有没有人碰
-	                bool isNeedWait = false;
+                    #region 一个人出4张一样的牌
+                    //4个人出一样的牌
+                    int temp = 0;
+                    foreach (var playCard in handCardsComponent.PlayCards)
+                    {
+                        if (playCard.m_weight == mahjongInfo.m_weight)
+                        {
+                            temp++;
+                        }
+                    }
+                    if (temp == 4)
+                    {
+                        //罚分
+                        foreach (var _gamer in room.GetAll())
+                        {
+                            if (_gamer.UserID == gamer.UserID)
+                            {
+                                GameHelp.ChangeGamerGold(room, _gamer, - 10 * gameController.RoomConfig.Multiples * 3);
+                            }
+                            else
+                            {
+                                GameHelp.ChangeGamerGold(room, _gamer, 10 * gameController.RoomConfig.Multiples);
+                            }
+                        }
 
+                        room.LastBiXiaHu = true;
+                    }
+                    #endregion
+
+                    #region 等待客户端有没有人碰杠胡   
+                    //等待客户端有没有人碰
+                    bool isNeedWait = false;
 	                foreach (var _gamer in room.GetAll())
 	                {
 	                    if (_gamer == null)
@@ -160,8 +190,10 @@ namespace ETHotfix
                             }
 	                    }
 	                }
+                    #endregion
 
-	                if (isNeedWait)
+
+                    if (isNeedWait)
 	                {
 	                    room.IsNeedWaitOperate = true;
                         room.StartOperateTime();

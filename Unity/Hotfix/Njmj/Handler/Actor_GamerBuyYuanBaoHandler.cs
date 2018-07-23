@@ -16,7 +16,7 @@ namespace ETHotfix
 
                 if (g2CPlayerInfo == null)
                 {
-                    Log.Debug("用户信息错误");
+                    Log.Error("用户信息错误");
                     return;
                 }
                 PlayerInfoComponent.Instance.SetPlayerInfo(g2CPlayerInfo.PlayerInfo);
