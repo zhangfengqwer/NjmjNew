@@ -406,13 +406,17 @@ namespace ETHotfix
             huPaiNeedData.other3_pengList = temp[2];
 
             //比下胡
-            if (room.IsLianZhuang)
+//            if (room.IsLianZhuang)
+//            {
+//                if (room.BankerGamer.UserID == room.huPaiUid)
+//                {
+//                    room.LiangZhuangCount++;
+//                    actorGamerHuPai.BixiaHuCount = room.LiangZhuangCount * 10;
+//                }
+//            }
+            if (room.IsBiXiaHu)
             {
-                if (room.BankerGamer.UserID == room.huPaiUid)
-                {
-                    room.LiangZhuangCount++;
-                    actorGamerHuPai.BixiaHuCount = room.LiangZhuangCount * 10;
-                }
+                actorGamerHuPai.BixiaHuCount = 20;
             }
            
             List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(mahjongInfos, huPaiNeedData);
