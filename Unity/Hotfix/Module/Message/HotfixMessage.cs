@@ -429,7 +429,7 @@ namespace ETHotfix
 	public partial class ShopInfo: IMessage
 	{
 		[ProtoMember(1, IsRequired = true)]
-		public long Id;
+		public int Id;
 
 		[ProtoMember(2, IsRequired = true)]
 		public int ShopType;
@@ -480,13 +480,7 @@ namespace ETHotfix
 		public long UId;
 
 		[ProtoMember(2, IsRequired = true)]
-		public GetItemInfo Info;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int CurrencyType;
-
-		[ProtoMember(4, IsRequired = true)]
-		public int Cost;
+		public int ShopId;
 
 	}
 
@@ -1289,23 +1283,26 @@ namespace ETHotfix
 		[ProtoMember(6, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> pengCards = new List<MahjongInfo>();
 
-		[ProtoMember(11, TypeName = "ETHotfix.long")]
+		[ProtoMember(7, TypeName = "ETHotfix.long")]
 		public List<long> OperatedPengUserIds = new List<long>();
 
-		[ProtoMember(7, TypeName = "ETHotfix.MahjongInfo")]
+		[ProtoMember(8, TypeName = "ETHotfix.MahjongInfo")]
 		public List<MahjongInfo> gangCards = new List<MahjongInfo>();
 
-		[ProtoMember(12, TypeName = "ETHotfix.long")]
+		[ProtoMember(9, TypeName = "ETHotfix.long")]
 		public List<long> OperatedGangUserIds = new List<long>();
 
-		[ProtoMember(8, IsRequired = true)]
+		[ProtoMember(10, IsRequired = true)]
 		public bool IsBanker;
 
-		[ProtoMember(9, IsRequired = true)]
+		[ProtoMember(11, IsRequired = true)]
 		public int OnlineSeconds;
 
-		[ProtoMember(10, IsRequired = true)]
+		[ProtoMember(12, IsRequired = true)]
 		public PlayerInfo playerInfo;
+
+		[ProtoMember(13, IsRequired = true)]
+		public bool IsTrusteeship;
 
 	}
 

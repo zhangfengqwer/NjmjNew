@@ -145,7 +145,7 @@ message PlayerIcon //IMessage
 
 message ShopInfo //IMessage
 {
-	required long Id = 1;//物品ID
+	required int Id = 1;//物品ID
 	required int ShopType = 2;//商品类型
 	required string Name = 3;//商品名称
 	required string Desc = 4;//商品介绍
@@ -165,9 +165,7 @@ message GetItemInfo //IMessage
 message C2G_BuyItem //IRequest
 {
 	required long UId = 1;	
-	required GetItemInfo Info = 2;
-	required int CurrencyType = 3;
-	required int Cost = 4;
+	required int ShopId = 2;
 }
 
 message Actor_UpDateData //IActorMessage
@@ -449,12 +447,13 @@ message GamerData //IMessage
 	repeated MahjongInfo faceCards = 4;
 	repeated MahjongInfo playCards = 5;
 	repeated MahjongInfo pengCards = 6;
-	repeated long OperatedPengUserIds = 11;
-	repeated MahjongInfo gangCards = 7;
-	repeated long OperatedGangUserIds = 12;
-	required bool IsBanker = 8;
-	required int OnlineSeconds = 9;
-	required PlayerInfo playerInfo = 10;
+	repeated long OperatedPengUserIds = 7;
+	repeated MahjongInfo gangCards = 8;
+	repeated long OperatedGangUserIds = 9;
+	required bool IsBanker = 10;
+	required int OnlineSeconds = 11;
+	required PlayerInfo playerInfo = 12;
+	required bool IsTrusteeship = 13;
 }
 
 message Actor_ChangeTable // IActorMessage

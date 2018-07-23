@@ -30,6 +30,8 @@ namespace ETHotfix
         private GameObject useBg;
         private Button sureBtn;
         private Button cancelBtn;
+        private GameObject BagBgR;
+        private GameObject UseBgS;
         private Text useTxt;
         private GameObject bagItem = null;
         private List<GameObject> bagItemList = new List<GameObject>();
@@ -49,12 +51,14 @@ namespace ETHotfix
             descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
             uiItemIcon = rc.Get<GameObject>("UIItemIcon").GetComponent<Image>();
             grid = rc.Get<GameObject>("Grid");
+            BagBgR = rc.Get<GameObject>("BagBgR");
             bgGrid = rc.Get<GameObject>("BgGrid");
             returnBtn = rc.Get<GameObject>("ReturnBtn").GetComponent<Button>();
             useBg = rc.Get<GameObject>("UseBg");
             sureBtn = rc.Get<GameObject>("SureBtn").GetComponent<Button>();
             cancelBtn = rc.Get<GameObject>("CancelBtn").GetComponent<Button>();
             useTxt = rc.Get<GameObject>("UseTxt").GetComponent<Text>();
+            UseBgS  = rc.Get<GameObject>("UseBgS");
 
             CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
 
@@ -74,6 +78,7 @@ namespace ETHotfix
                     return;
                 }
                 useBg.SetActive(true);
+                UIAnimation.ShowLayer(UseBgS);
                 useTxt.text = new StringBuilder().Append("是否使用道具")
                                                  .Append("\"")
                                                  .Append(propInfo.prop_name)
@@ -103,6 +108,14 @@ namespace ETHotfix
             {
                 useBg.SetActive(false);
             }
+            if(g2cBag.ItemList.Count <= 0)
+            {
+                BagBgR.SetActive(false);
+            }
+            else
+            {
+                BagBgR.SetActive(true);
+            }
             CreateItemList(g2cBag.ItemList);
         }
 
@@ -124,6 +137,11 @@ namespace ETHotfix
         private void CreateItemList(List<Bag> itemList)
         {
             GameObject obj = null;
+            if(itemList.Count <= 0)
+            {
+                SetMoreHide(0);
+            }
+
             for (int i = 0; i < itemList.Count; ++i)
             {
                 if (i < bagItemList.Count)
@@ -162,7 +180,9 @@ namespace ETHotfix
         private void SetMoreHide(int index)
         {
             for (int i = index; i < bagItemList.Count; ++i)
+            {
                 bagItemList[i].SetActive(false);
+            }
         }
 
         public void SetItemInfo(Bag item)
@@ -170,7 +190,9 @@ namespace ETHotfix
             this.item = item;
             propInfo = PropConfig.getInstance().getPropInfoById((int)item.ItemId);
             if (propInfo == null)
+            {
                 Debug.LogError("道具信息错误");
+            }
             useBtn.gameObject.SetActive(propInfo.type == 1);
             uiItemIcon.sprite = CommonUtil.getSpriteByBundle("image_shop", propInfo.prop_id.ToString());
             descTxt.text = propInfo.desc;
@@ -188,6 +210,12 @@ namespace ETHotfix
                         Game.Scene.GetComponent<UIComponent>().Create(UIType.UIUseLaBa);
                     }
                     break;
+                    case 112:
+                        {
+                            GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).ShowFriendRoom();
+                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);
+                        }
+                        break;
 
                     default:
                     {

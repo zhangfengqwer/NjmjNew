@@ -66,14 +66,16 @@ namespace ETHotfix
             G2C_GetTaskReward g2cGetItem = (G2C_GetTaskReward)await SessionComponent.Instance.Session.Call(new C2G_GetTaskReward { UId = PlayerInfoComponent.Instance.uid, TaskInfo = taskProgress, GetType = 1 });
             UINetLoadingComponent.closeNetLoading();
 
-            GameUtil.changeData(1, taskProgress.Reward);
-            if(g2cGetItem.Error != ErrorCode.ERR_Success)
+            if (g2cGetItem.Error != ErrorCode.ERR_Success)
             {
                 ToastScript.createToast(g2cGetItem.Message);
             }
             else
             {
+                GameUtil.changeData(1, taskProgress.Reward);
                 RefreshUI(true);
+                string str = "1:" + taskProgress.Reward;
+                ShowRewardUtil.Show(str);
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UITask).GetComponent<UITaskComponent>().DeCount();
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain)
                     .GetComponent<UIMainComponent>().refreshUI();

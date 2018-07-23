@@ -348,11 +348,11 @@ namespace ETHotfix
                             List<UserBag> userBags = await proxyComponent.QueryJson<UserBag>($"{{UId:{uid},BagId:{propId}}}");
                             if (userBags.Count == 0)
                             {
-                                UserBag itemInfo = new UserBag();
+                                UserBag itemInfo = ComponentFactory.CreateWithId<UserBag>(IdGenerater.GenerateId());
                                 itemInfo.BagId = propId;
                                 itemInfo.UId = uid;
                                 itemInfo.Count = propNum;
-                                DBHelper.AddItemToDB(itemInfo);
+                                await proxyComponent.Save(itemInfo);
                             }
                             else
                             {
@@ -374,6 +374,24 @@ namespace ETHotfix
             {
                 Log.Error(ex);
             }
+        }
+
+        public static async Task<bool> IsVIP(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> infos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            if(infos.Count > 0)
+            {
+                if (infos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                Log.Error("用户:" + uid + "playerbaseInfo数据不存在");
+            }
+            return false;
         }
 
         public static async Task Log_Login(long uid, Session session,string clientVersion)
@@ -805,7 +823,7 @@ namespace ETHotfix
                  * *************************************************
                 */
                 {
-                    long curAllCount = proxyComponent.QueryJsonCount<EmailInfo>("{}");
+                    long curAllCount = await proxyComponent.QueryJsonCount<EmailInfo>("{}");
                     emailInfo.EmailId = (int) ++curAllCount;
                 }
 

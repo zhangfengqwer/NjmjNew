@@ -64,7 +64,7 @@ namespace ETHotfix
                     {
                         ShopConfig config = ShopData.getInstance().getDataList()[i];
                         ShopInfo info = new ShopInfo();
-                        info.Id = config.Id;
+                        info.Id = (int)config.Id;
                         info.Name = config.Name;
                         info.Price = config.Price;
                         info.ShopType = config.shopType;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
@@ -89,13 +90,23 @@ namespace ETHotfix
                 }
 
                 //更新任务
-                await UpdateTask(room);
-                await UpdateChengjiu(room);
-                await UpdatePlayerInfo(room, huaCount);
+                List<Task> tasks = new List<Task>();
+                Task updateTask = UpdateTask(room);
+                Task updateChengjiu = UpdateChengjiu(room);
+                Task updatePlayerInfo = UpdatePlayerInfo(room, huaCount);
                 //记录对局
-                await DBCommonUtil.Log_Game(controllerComponent.RoomConfig.Name, room.GetAll()[0].UserID,
+                Task logGame = DBCommonUtil.Log_Game(
+                    controllerComponent.RoomConfig.Name, 
+                    room.GetAll()[0].UserID,
                     room.GetAll()[1].UserID,
-                    room.GetAll()[2].UserID, room.GetAll()[3].UserID, room.huPaiUid);
+                    room.GetAll()[2].UserID, 
+                    room.GetAll()[3].UserID, 
+                    room.huPaiUid);
+                tasks.Add(updateTask);
+                tasks.Add(updateChengjiu);
+                tasks.Add(updatePlayerInfo);
+                tasks.Add(logGame);
+                await Task.WhenAll(tasks);
 
                 //设置在线时长
                 foreach (var gamer in room.GetAll())
@@ -110,13 +121,6 @@ namespace ETHotfix
                         await DBCommonUtil.RecordGamerInfo(gamer.UserID, totalSeconds);
                     }
                 }
-            
-                room.State = RoomState.Idle;
-                room.IsLianZhuang = true;
-                
-                //游戏房间进入准备房间
-                roomComponent.gameRooms.Remove(room.Id);
-                roomComponent.idleRooms.Add(room.Id, room);
 
                 foreach (var gamer in room.GetAll())
                 {
@@ -143,6 +147,37 @@ namespace ETHotfix
                     }
                 }
 
+                #region 好友房设置
+
+                if (room.IsFriendRoom)
+                {
+                    //打完啦。可以解散了
+                    if (room.CurrentJuCount == self.RoomConfig.JuCount)
+                    {
+                        //等待结算界面结束
+                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+                        Log.Debug("好友房间打完了");
+                        room.Broadcast(new Actor_GamerReadyTimeOut() {Message = "房间解散"});
+                        GameHelp.RoomDispose(room);
+                        return;
+                    }
+                    else
+                    {
+                        Log.Debug("还没打完");
+                        room.StartReady();
+                    }
+                }
+
+                #endregion
+
+
+                room.State = RoomState.Idle;
+                room.IsLianZhuang = true;
+
+                //游戏房间进入准备房间
+                roomComponent.gameRooms.Remove(room.Id);
+                roomComponent.idleRooms.Add(room.Id, room);
+
                 //房间没人就释放
                 if (room.seats.Count == 0)
                 {
@@ -150,6 +185,8 @@ namespace ETHotfix
                     roomComponent.RemoveRoom(room);
                     room?.Dispose();
                 }
+
+               
             }
             catch (Exception e)
             {

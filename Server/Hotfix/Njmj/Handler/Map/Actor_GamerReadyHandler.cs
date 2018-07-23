@@ -18,11 +18,11 @@ namespace ETHotfix
 	    {
 	        try
 	        {
-	            Log.Debug("收到玩家准备：" + JsonHelper.ToJson(message));
+	            Log.Info($"收到玩家{gamer.UserID}准备");
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 
-	            if (gamer.IsReady)
+	            if (gamer.IsReady || room.State == RoomState.Game)
 	            {
 	                return;
 	            }
@@ -190,8 +190,6 @@ namespace ETHotfix
                     room.Broadcast(actorStartGame);
 //	                Log.Debug("发送开始：" + JsonHelper.ToJson(actorStartGame));
 
-	                room.reconnectList.Add(actorStartGame);
-
 	                //排序
 	                var startTime = DateTime.Now;
 	                foreach (var _gamer in gamers)
@@ -237,11 +235,10 @@ namespace ETHotfix
 	                }
 
 	                //等客户端掷骰子
-	                //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10000);
 	                //是否超时
 	                room.StartTime(20);
 	                //扣服务费
-//	                GameHelp.CostServiceCharge(room);
+	                GameHelp.CostServiceCharge(room);
 	            }
 	        }
 	        catch (Exception e)

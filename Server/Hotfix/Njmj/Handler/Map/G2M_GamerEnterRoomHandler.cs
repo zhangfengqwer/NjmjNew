@@ -11,7 +11,6 @@ namespace ETHotfix
 		protected override async void Run(Session session, G2M_PlayerEnterRoom message, Action<M2G_PlayerEnterRoom> reply)
 		{
 		    M2G_PlayerEnterRoom response = new M2G_PlayerEnterRoom();
-		    Log.Debug("G2M_PlayerEnterRoom:" + JsonHelper.ToJson(message));
             try
 			{
 			    RoomComponent roomCompnent = Game.Scene.GetComponent<RoomComponent>();
@@ -44,7 +43,8 @@ namespace ETHotfix
 			        {
 			            if (_gamer == null)
 			            {
-			                continue;
+			                Log.Error($"断线重连后玩家为空");
+                            continue;
 			            }
 			            GamerData gamerData = new GamerData();
 
@@ -89,20 +89,10 @@ namespace ETHotfix
 			            gamerData.UserID = _gamer.UserID;
 			            gamerData.SeatIndex = room.GetGamerSeat(_gamer.UserID);
 			            gamerData.OnlineSeconds = await DBCommonUtil.GetRestOnlineSeconds(_gamer.UserID);
+			            gamerData.IsTrusteeship = gamer.IsTrusteeship;
+                        PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(_gamer.UserID);
 
-			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(_gamer.UserID);
-
-			            PlayerInfo playerInfo = new PlayerInfo();
-			            playerInfo.Icon = playerBaseInfo.Icon;
-			            playerInfo.Name = playerBaseInfo.Name;
-			            playerInfo.GoldNum = playerBaseInfo.GoldNum;
-			            playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
-			            playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
-			            playerInfo.VipTime = playerBaseInfo.VipTime;
-			            playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
-			            playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
-			            playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
-			            playerInfo.MaxHua = playerBaseInfo.MaxHua;
+			            PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
 
 			            gamerData.playerInfo = playerInfo;
 
@@ -123,7 +113,7 @@ namespace ETHotfix
                     room.GamerReconnect(gamer, reconnet);
 
                     //等待客户端重连
-                    await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+                    //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
 
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
@@ -134,7 +124,9 @@ namespace ETHotfix
                 }
                 else
 			    {
-			        gamer = GamerFactory.Create(message.PlayerId, message.UserId);
+			        Log.Info($"{message.UserId}进入房间");
+
+                    gamer = GamerFactory.Create(message.PlayerId, message.UserId);
 			        await gamer.AddComponent<MailBoxComponent>().AddLocation();
 			        gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 
@@ -162,78 +154,16 @@ namespace ETHotfix
 			                roomComponent.Add(idleRoom);
 			            }
                     }
-
 			        idleRoom.Add(gamer);
-			        List<GamerInfo> Gamers = new List<GamerInfo>();
 
-                    GamerInfo currentInfo = null;
-			        for (int i = 0; i < idleRoom.GetAll().Length; i++)
-			        {
-			            Gamer _gamer = idleRoom.GetAll()[i];
-			            if (_gamer == null) continue;
-			            GamerInfo gamerInfo = new GamerInfo();
-			            gamerInfo.UserID = _gamer.UserID;
-			            gamerInfo.SeatIndex = idleRoom.GetGamerSeat(_gamer.UserID);
-			            gamerInfo.IsReady = _gamer.IsReady;
-
-			            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
-			            PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
-			            gamerInfo.playerInfo = playerInfo;
-
-			            if (gamerInfo.UserID == message.UserId)
-			            {
-			                currentInfo = gamerInfo;
-			            }
-
-			            Gamers.Add(gamerInfo);
-                    }
-
-                    foreach (var _gamer in idleRoom.GetAll())
-                    {
-                        if (_gamer == null || _gamer.isOffline)
-                            continue;
-
-                        //第一次进入
-                        if (_gamer.UserID == message.UserId)
-                        {
-                            Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
-                            {
-                                RoomType = message.RoomType,
-                                Gamers = Gamers,
-                            };
-
-                            if (message.RoomType == 3)
-                            {
-                                GameControllerComponent gameControllerComponent = idleRoom.GetComponent<GameControllerComponent>();
-                                actorGamerEnterRoom.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
-                                actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
-                                actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
-                                actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
-                            }
-                            idleRoom.GamerBroadcast(_gamer, actorGamerEnterRoom);
-                            idleRoom.reconnectList.Add(actorGamerEnterRoom);
-                        }
-                        //有人加入
-                        else
-                        {
-                            Actor_GamerJionRoom actorGamerJionRoom = new Actor_GamerJionRoom()
-                            {
-                                Gamer = currentInfo
-                            };
-
-                            idleRoom.GamerBroadcast(_gamer, actorGamerJionRoom);
-
-                            idleRoom.reconnectList.Add(actorGamerJionRoom);
-                        }
-                    }
-			        Log.Info($"玩家{message.UserId}进入房间:{idleRoom.Id}");
+			        idleRoom.BroadGamerEnter(gamer.UserID);
                 }
 			    response.GameId = gamer.Id;
 			    reply(response);
 
 			    if (message.RoomType == 3)
 			    {
-			        Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
+			        await Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
 			    }
             }
 			catch (Exception e)

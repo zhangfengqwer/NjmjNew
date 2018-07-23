@@ -38,11 +38,12 @@ namespace ETHotfix
                 {
                     CommonUtil.ShowUI(UIType.UIReady);
                 }
-
+                UINetLoadingComponent.closeNetLoading();
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                 UI uiReady = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIReady);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                roomComponent.ContinueGamer();
                 roomComponent.enterRoomMsg = message;
                 roomComponent.SetRoomType(message.RoomType, message.Multiples);
                 Gamer[] gamers = gamerComponent.GetAll();

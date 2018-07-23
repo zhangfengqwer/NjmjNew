@@ -128,6 +128,26 @@ namespace ETHotfix
                     }
                 }
 
+                //托管恢复
+                UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
+                UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                foreach (var item in message.Gamers)
+                {
+                    if (item.IsTrusteeship )
+                    {
+                        if (item.UserID == PlayerInfoComponent.Instance.uid)
+                        {
+                            uiRoomComponent.ShowTrustship();
+                        }
+                        else
+                        {
+                            GamerUIComponent gamerUIComponent = gamerComponent.Get(item.UserID).GetComponent<GamerUIComponent>();
+                            gamerUIComponent.ShowTrust();
+                        }
+                    }
+                }
+
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                 bool b = PlayerPrefs.GetInt("isOpenSound", 0) == 0;
                 SoundsHelp.Instance.SoundMute(b);

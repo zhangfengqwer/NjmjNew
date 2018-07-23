@@ -42,9 +42,13 @@ namespace ETHotfix
         {
             this.item = item;
             if (index % 3 == 1)
+            {
                 uiBagBgL.SetActive(true);
+            }
             else
+            {
                 uiBagBgL.SetActive(false);
+            }
             uiBagIcon.sprite = CommonUtil.getSpriteByBundle("image_shop", item.ItemId.ToString());
             countTxt.text = item.Count.ToString();
         }

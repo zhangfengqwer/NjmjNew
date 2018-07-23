@@ -35,7 +35,7 @@ namespace ETHotfix
             self.roomTokenSource = new CancellationTokenSource();
             await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10 * 60 * 1000, self.roomTokenSource.Token);
             Log.Warning("房间卡死，超时释放");
-            Game.Scene.GetComponent<RoomComponent>().RemoveRoom(self,true);
+            Game.Scene.GetComponent<RoomComponent>().RemoveRoom(self, true);
             self.Broadcast(new Actor_GamerReadyTimeOut()
             {
                 Message = "房间解散，被踢出"
@@ -66,8 +66,9 @@ namespace ETHotfix
             {
                 return;
             }
+
             ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
-            UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
+            UnitGateComponent unitGateComponent = gamer.GetComponent<UnitGateComponent>();
             actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
         }
 
@@ -78,15 +79,22 @@ namespace ETHotfix
                 return;
             }
 
-            ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
+            ActorMessageSenderComponent actorMessageSenderComponent =
+                Game.Scene.GetComponent<ActorMessageSenderComponent>();
             UnitGateComponent unitGateComponent = gamer?.GetComponent<UnitGateComponent>();
             actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(message);
         }
 
-        public static async void BroadGamerEnter(this Room self,int roomType)
+        /// <summary>
+        /// 加入房间Actor
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="userId"></param>
+        public static async void BroadGamerEnter(this Room self, long userId)
         {
-            List<GamerInfo> Gamers = new List<GamerInfo>();
-
+            List<GamerInfo> gamerInfos = new List<GamerInfo>();
+            long roomType = self.GetComponent<GameControllerComponent>().RoomConfig.Id;
+            GamerInfo currentInfo = null;
             for (int i = 0; i < self.GetAll().Length; i++)
             {
                 Gamer _gamer = self.GetAll()[i];
@@ -97,35 +105,60 @@ namespace ETHotfix
                 gamerInfo.IsReady = _gamer.IsReady;
 
                 PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
-
-                PlayerInfo playerInfo = new PlayerInfo();
-                playerInfo.Icon = playerBaseInfo.Icon;
-                playerInfo.Name = playerBaseInfo.Name;
-                playerInfo.GoldNum = playerBaseInfo.GoldNum;
-                playerInfo.WinGameCount = playerBaseInfo.WinGameCount;
-                playerInfo.TotalGameCount = playerBaseInfo.TotalGameCount;
-                playerInfo.VipTime = playerBaseInfo.VipTime;
-                playerInfo.PlayerSound = playerBaseInfo.PlayerSound;
-                playerInfo.RestChangeNameCount = playerBaseInfo.RestChangeNameCount;
-                playerInfo.EmogiTime = playerBaseInfo.EmogiTime;
-                playerInfo.MaxHua = playerBaseInfo.MaxHua;
-
+                PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
                 gamerInfo.playerInfo = playerInfo;
 
-                Gamers.Add(gamerInfo);
+                if (gamerInfo.UserID == userId)
+                {
+                    currentInfo = gamerInfo;
+                }
+
+                gamerInfos.Add(gamerInfo);
             }
-            self.Broadcast(new Actor_GamerEnterRoom()
+
+            foreach (var _gamer in self.GetAll())
             {
-                RoomType = roomType,
-                Gamers = Gamers
-            });
+                if (_gamer == null || _gamer.isOffline)
+                    continue;
+
+                //第一次进入
+                if (_gamer.UserID == userId)
+                {
+                    Actor_GamerEnterRoom actorGamerEnterRoom = new Actor_GamerEnterRoom()
+                    {
+                        RoomType = (int) roomType,
+                        Gamers = gamerInfos,
+                    };
+
+                    if (roomType == 3)
+                    {
+                        GameControllerComponent gameControllerComponent = self.GetComponent<GameControllerComponent>();
+                        actorGamerEnterRoom.RoomId = gameControllerComponent.RoomConfig.FriendRoomId;
+                        actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
+                        actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
+                        actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
+                    }
+
+                    self.GamerBroadcast(_gamer, actorGamerEnterRoom);
+                }
+                //有人加入
+                else
+                {
+                    Actor_GamerJionRoom actorGamerJionRoom = new Actor_GamerJionRoom()
+                    {
+                        Gamer = currentInfo
+                    };
+
+                    self.GamerBroadcast(_gamer, actorGamerJionRoom);
+                }
+            }
         }
 
         /// <summary>
         /// 超时10s自动出牌
         /// </summary>
         /// <param name="self"></param>
-        public static async void StartTime(this Room self,int time = 10)
+        public static async void StartTime(this Room self, int time = 10)
         {
             if (self.tokenSource != null)
             {
@@ -139,6 +172,7 @@ namespace ETHotfix
             {
                 return;
             }
+
             if (gamer.isOffline)
             {
                 self.TimeOut = 2;
@@ -182,6 +216,25 @@ namespace ETHotfix
             {
                 self.IsTimeOut = false;
                 Log.Debug("没有超时");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="self"></param>
+        public static async void StartReady(this Room self)
+        {
+            self.StartReadySource?.Cancel();
+            self.StartReadySource = new CancellationTokenSource();
+            await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5 * 1000, self.StartReadySource.Token);
+
+            foreach (var gamer in self.GetAll())
+            {
+                if (gamer.isOffline)
+                {
+                    await Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
+                }
             }
         }
 
@@ -253,7 +306,7 @@ namespace ETHotfix
             {
                 if (gamer == null)
                 {
-                    Log.Warning("发牌的时候gamer为null:"+JsonHelper.ToJson(room.UserIds)+"\n------："+JsonHelper.ToJson(room.GetAll()));
+                    Log.Error("发牌的时候gamer为null:"+JsonHelper.ToJson(room.UserIds)+"\n------："+JsonHelper.ToJson(room.GetAll()));
                     
                     continue;
                 }
@@ -285,8 +338,6 @@ namespace ETHotfix
                     weight = grabMahjong.weight
                 };
                 room.Broadcast(actorGamerBuHua);
-
-                room.reconnectList.Add(actorGamerBuHua);
 
                 //从手牌中删除花牌
                 Log.Info($"{currentGamer.UserID}补花");
@@ -383,7 +434,6 @@ namespace ETHotfix
                             weight = (int) grabMahjong.m_weight
                         };
 
-                        room.reconnectList.Add(actorGamerGrabCard);
                     }
                     else
                     {
@@ -392,7 +442,6 @@ namespace ETHotfix
                             Uid = currentGamer.UserID,
                         };
 
-                        room.reconnectList.Add(actorGamerGrabCard);
                     }
                     actorMessageSenderComponent.GetWithActorId(unitGateComponent.GateSessionActorId).Send(actorGamerGrabCard);
                 }

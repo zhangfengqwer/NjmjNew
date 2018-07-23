@@ -80,7 +80,6 @@ namespace ETHotfix
 	                };
 
                     room.Broadcast(actorGamerPlayCard);
-	                room.reconnectList.Add(actorGamerPlayCard);
 
                     gamer.IsCanHu = false;
 	                gamer.IsCanPeng = false;
