@@ -53,7 +53,6 @@ namespace ETHotfix
         public async void Start()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
-
             await HttpReqUtil.Req(NetConfig.getInstance().getWebUrl() + "files/friendRoomConfig.json", FriendRoomConfig.getInstance().init);
 
             #region CreateRoom
@@ -117,6 +116,7 @@ namespace ETHotfix
             info.Hua = curHua;
             info.Ju = curJu;
             info.IsPublic = curType;
+
             UINetLoadingComponent.showNetLoading();
             G2C_CreateFriendRoom c2gCreate = (G2C_CreateFriendRoom) await SessionComponent.Instance.Session.Call(new C2G_CreateFriendRoom
             {
@@ -205,14 +205,5 @@ namespace ETHotfix
             typeToggles.Clear();
             typeUIList.Clear();
         }
-    }
-
-    public class TestRoomInfo
-    {
-        public int roomId;
-        public List<string> icons;
-        public string ju;
-        public string hua;
-        public int isPublic;
     }
 }

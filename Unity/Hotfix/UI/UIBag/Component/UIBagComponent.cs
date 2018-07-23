@@ -115,8 +115,8 @@ namespace ETHotfix
             else
             {
                 BagBgR.SetActive(true);
-                CreateItemList(g2cBag.ItemList);
             }
+            CreateItemList(g2cBag.ItemList);
         }
 
         private bool IsCurPropUseUp()
@@ -137,6 +137,11 @@ namespace ETHotfix
         private void CreateItemList(List<Bag> itemList)
         {
             GameObject obj = null;
+            if(itemList.Count <= 0)
+            {
+                SetMoreHide(0);
+            }
+
             for (int i = 0; i < itemList.Count; ++i)
             {
                 if (i < bagItemList.Count)

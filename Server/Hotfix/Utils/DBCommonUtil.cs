@@ -376,6 +376,24 @@ namespace ETHotfix
             }
         }
 
+        public static async Task<bool> IsVIP(long uid)
+        {
+            DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
+            List<PlayerBaseInfo> infos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+            if(infos.Count > 0)
+            {
+                if (infos[0].VipTime.CompareTo(CommonUtil.getCurTimeNormalFormat()) > 0)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                Log.Error("用户:" + uid + "playerbaseInfo数据不存在");
+            }
+            return false;
+        }
+
         public static async Task Log_Login(long uid, Session session,string clientVersion)
         {
             DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();

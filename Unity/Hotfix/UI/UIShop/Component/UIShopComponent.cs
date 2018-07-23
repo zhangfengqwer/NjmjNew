@@ -243,28 +243,22 @@ namespace ETHotfix
             GetItemInfo info = new GetItemInfo();
             int shopId = CommonUtil.splitStr_Start(shopInfo.Items.ToString(), ':');
             int count = CommonUtil.splitStr_End(shopInfo.Items.ToString(), ':');
-            info.ItemID = shopId;
-            info.Count = count;
-            int price = 0;
-            if (GameUtil.isVIP())
-            {
-                price = shopInfo.VipPrice;
-            }
-            else
-            {
-                price = shopInfo.Price;
-            }
+            
             UINetLoadingComponent.showNetLoading();
             G2C_BuyItem g2cBuyItem = (G2C_BuyItem)await SessionComponent.Instance.
-                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid, Info = info,Cost = (int)price , CurrencyType = 2});
+                Session.Call(new C2G_BuyItem { UId = PlayerInfoComponent.Instance.uid,ShopId = shopInfo.Id});
             UINetLoadingComponent.closeNetLoading();
 
             ToastScript.createToast("购买成功");
             GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
             if (g2cBuyItem.CurrencyType == 1)
+            {
                 PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum = g2cBuyItem.Wealth;
+            }
             if (g2cBuyItem.CurrencyType == 2)
+            {
                 PlayerInfoComponent.Instance.GetPlayerInfo().WingNum = g2cBuyItem.Wealth;
+            }
             Log.Debug("==" + g2cBuyItem.Wealth);
             Log.Debug("--" + PlayerInfoComponent.Instance.GetPlayerInfo().WingNum);
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>

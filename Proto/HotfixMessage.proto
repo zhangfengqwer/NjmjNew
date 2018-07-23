@@ -145,7 +145,7 @@ message PlayerIcon //IMessage
 
 message ShopInfo //IMessage
 {
-	required long Id = 1;//物品ID
+	required int Id = 1;//物品ID
 	required int ShopType = 2;//商品类型
 	required string Name = 3;//商品名称
 	required string Desc = 4;//商品介绍
@@ -165,9 +165,7 @@ message GetItemInfo //IMessage
 message C2G_BuyItem //IRequest
 {
 	required long UId = 1;	
-	required GetItemInfo Info = 2;
-	required int CurrencyType = 3;
-	required int Cost = 4;
+	required int ShopId = 2;
 }
 
 message Actor_UpDateData //IActorMessage
