@@ -99,11 +99,11 @@ namespace ETHotfix
                     //有没有人胡牌
                     while (true)
                     {
-                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                         if (!GetCanHu(room))
                         {
                             break;
                         }
+                        await Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
                     }
 
                     //游戏结束
@@ -328,6 +328,17 @@ namespace ETHotfix
                                 }
                             }
                             room.StartTime();
+
+                            #region 比下胡 累计2个暗杠或3个明杠（同一个玩家）
+
+                            int lightCount = handCards.PengOrBars.Count(c => c.BarType == BarType.LightBar);
+                            int darkCount = handCards.PengOrBars.Count(c => c.BarType == BarType.DarkBar);
+                            if (lightCount >= 3 || darkCount >= 2)
+                            {
+                                room.LastBiXiaHu = true;
+                            }
+
+                            #endregion
                         }
                         else
                         {
@@ -446,16 +457,48 @@ namespace ETHotfix
             //硬花
             huaCount += handCards.FaceCards.Count;
             //软花
-            foreach (var card in handCards.GangCards)
+            foreach (var pengorbar in handCards.PengOrBars)
             {
-                if (card.m_weight >= Consts.MahjongWeight.Feng_Dong)
+                //东南西北风 碰牌
+                if (pengorbar.OperateType == OperateType.Peng)
                 {
-                    actorGamerHuPai.RuanHuaCount += 2;
-                    //软花
-                    huaCount += 2;
+                    if (pengorbar.Weight >= 31 && pengorbar.Weight <= 37)
+                    {
+                        actorGamerHuPai.RuanHuaCount += 1;
+                    }
+                }
+                else
+                {
+                    if (pengorbar.BarType == BarType.DarkBar)
+                    {
+                        //风牌暗杠
+                        if (pengorbar.Weight >= 31 && pengorbar.Weight <= 37)
+                        {
+                            actorGamerHuPai.RuanHuaCount += 3;
+                        }
+                        //万条筒暗杠
+                        else
+                        {
+                            actorGamerHuPai.RuanHuaCount += 2;
+                        }
+                    }
+                    else
+                    {
+                        //风牌明杠
+                        if (pengorbar.Weight >= 31 && pengorbar.Weight <= 37)
+                        {
+                            actorGamerHuPai.RuanHuaCount += 2;
+                        }
+                        //万条筒明杠
+                        else
+                        {
+                            actorGamerHuPai.RuanHuaCount += 1;
+                        }
+                    }
                 }
             }
 
+            huaCount += actorGamerHuPai.RuanHuaCount;
             //胡牌类型
             foreach (var type in huPaiTypes)
             {

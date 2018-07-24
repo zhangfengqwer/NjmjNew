@@ -11,16 +11,17 @@ namespace ETHotfix
     {
         protected override async Task Run(Gamer gamer, Actor_ChangeTable message)
         {
-            await ChangeTable(gamer, message);
+            await ChangeTable(gamer);
         }
 
-        private static async Task ChangeTable(Gamer gamer, Actor_ChangeTable message)
+        private static async Task ChangeTable(Gamer gamer)
         {
             try
             {
 //                Log.Info("收到换桌:" + JsonHelper.ToJson(message));
                 RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
                 Room gamerRoom = roomComponent.Get(gamer.RoomID);
+                if (gamerRoom == null || gamerRoom.IsFriendRoom) return;
                 if (gamerRoom.State == RoomState.Game)
                 {
                     Log.Warning($"玩家{gamer.UserID}打牌过程中不能换桌");

@@ -1,4 +1,5 @@
 ﻿using System;
+using ETHotfix;
 
 namespace ETModel
 {
@@ -68,10 +69,15 @@ namespace ETModel
         //游戏离线结束的时间
         public DateTime EndTime { get; set; }
         public bool IsTrusteeship { get; set; }
+        public int ChangeGold { get; set; }
+
+        public HuPaiNeedData huPaiNeedData;
+        public PlayerBaseInfo playerBaseInfo;
 
         public void Awake(long id)
         {
             this.UserID = id;
+            huPaiNeedData = new HuPaiNeedData();
         }
 
         public override void Dispose()
@@ -101,6 +107,8 @@ namespace ETModel
             IsCanPeng = false;
             IsCanGang = false;
             IsCanHu = false;
+            playerBaseInfo = null;
+            ChangeGold = 0;
         }
     }
 }

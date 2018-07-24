@@ -358,7 +358,7 @@ namespace ETHotfix
                         kickOffImage.gameObject.SetActive(false);
                     }
 
-                    kickOffImage.gameObject.AddComponent<Button>().onClick.Add(() =>
+                    kickOffImage.gameObject.GetComponent<Button>().onClick.Add(() =>
                     {
                         SessionComponent.Instance.Session.Send(new Actor_GamerKickOff()
                         {
@@ -407,7 +407,5 @@ namespace ETHotfix
 
             HeadManager.setHeadSprite(head, playerInfo.Icon);
         }
-
-      
     }
 }
