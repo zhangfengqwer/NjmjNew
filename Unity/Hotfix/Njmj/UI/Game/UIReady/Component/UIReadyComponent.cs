@@ -71,7 +71,7 @@ namespace ETHotfix
         private void OnInviteWeChat()
         {
             PlatformHelper.WXShareFriends("", "", $"{OtherData.ShareUrl}|南京麻将好友房,房间号:{roomId},局数:{uiRoomComponent.JuCount}" + 
-                                                  $"|玩法:南京麻将好友房,房主开发");
+                                                  $"|玩法:南京麻将好友房,房主开房");
         }
 
         /// <summary>
