@@ -132,7 +132,6 @@ namespace ETHotfix
                             room.LastBiXiaHu = true;
                         }
                     }
-
                     #endregion
 
                     #region 一个人出4张一样的牌

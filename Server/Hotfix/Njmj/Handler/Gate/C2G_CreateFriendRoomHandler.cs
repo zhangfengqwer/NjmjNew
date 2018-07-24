@@ -14,6 +14,10 @@ namespace ETHotfix
 		    G2C_CreateFriendRoom response = new G2C_CreateFriendRoom();
             try
             {
+                User user = session.GetComponent<SessionUserComponent>().User;
+
+                int keyNum = await DBCommonUtil.GetUserFriendKeyNum(user.UserID);
+
                 //向map服务器发送请求
                 StartConfigComponent config = Game.Scene.GetComponent<StartConfigComponent>();
                 IPEndPoint mapIPEndPoint = config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;

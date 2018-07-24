@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
+using Hotfix;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,8 @@ namespace ETHotfix
         private int timeOut = 20;
         private Button weChatBtn;
         private Text roomIdText;
+        private string roomId;
+        private UIRoomComponent uiRoomComponent;
 
         public void Awake()
         {
@@ -60,11 +63,15 @@ namespace ETHotfix
 
             timeOut = 20;
             SetTimeOut();
+
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            this.uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
         }
 
         private void OnInviteWeChat()
         {
-            PlatformHelper.WXShareFriends("", "", "");
+            PlatformHelper.WXShareFriends("", "", $"{OtherData.ShareUrl}|南京麻将好友房,房间号:{roomId},局数:{uiRoomComponent.JuCount}" + 
+                                                  $"|玩法:南京麻将好友房,房主开发");
         }
 
         /// <summary>
@@ -154,6 +161,7 @@ namespace ETHotfix
 
         public void ShowWeChat(string roomId)
         {
+            this.roomId = roomId;
             roomIdText.text = $"房间号：{roomId}";
             weChatBtn.gameObject.SetActive(true);
         }

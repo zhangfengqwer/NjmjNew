@@ -218,6 +218,7 @@ namespace ETHotfix
         public async void onClickGuestLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
+            await OnThirdLogin("zf", "", "");
 
         }
 

@@ -44,8 +44,17 @@ namespace ETHotfix
 	                room.CurrentJuCount++;
                     room.IsGameOver = false;
 	                room.RoomDispose();
+
+	                #region 好友房扣钥匙
+
+	                if (room.IsFriendRoom && room.CurrentJuCount == 1)
+	                {
+
+	                }
+
+	                #endregion
                     //设置比下胡
-	                if (room.LastBiXiaHu)
+                    if (room.LastBiXiaHu)
 	                {
                         room.IsBiXiaHu = true;
                     }
