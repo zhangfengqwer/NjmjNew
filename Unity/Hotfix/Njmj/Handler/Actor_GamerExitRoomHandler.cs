@@ -28,11 +28,7 @@ namespace ETHotfix
                 if (gamerComponent.LocalGamer.UserID == message.Uid)
                 {
                     CommonUtil.ShowUI(UIType.UIMain);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
+                    GameUtil.Back2Main();
                 }
                 else
                 {

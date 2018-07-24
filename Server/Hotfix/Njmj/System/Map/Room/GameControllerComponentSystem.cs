@@ -98,12 +98,18 @@ namespace ETHotfix
                 Task updatePlayerInfo = UpdatePlayerInfo(room, huaCount);
                 //记录对局
                 Task logGame = DBCommonUtil.Log_Game(
-                    controllerComponent.RoomConfig.Name, 
+                    controllerComponent.RoomConfig.Name,
                     room.GetAll()[0].UserID,
                     room.GetAll()[1].UserID,
-                    room.GetAll()[2].UserID, 
-                    room.GetAll()[3].UserID, 
-                    room.huPaiUid);
+                    room.GetAll()[2].UserID,
+                    room.GetAll()[3].UserID,
+                    room.huPaiUid,
+                    self.RoomConfig.FriendRoomId,
+                    room.GetAll()[0].UserID + ";"+ room.GetAll()[0].playerBaseInfo.Name + ";" + room.GetAll()[0].ChangeGold,
+                    room.GetAll()[1].UserID + ";"+ room.GetAll()[1].playerBaseInfo.Name + ";" + room.GetAll()[1].ChangeGold,
+                    room.GetAll()[2].UserID + ";"+ room.GetAll()[2].playerBaseInfo.Name + ";" + room.GetAll()[2].ChangeGold,
+                    room.GetAll()[3].UserID + ";"+ room.GetAll()[3].playerBaseInfo.Name + ";" + room.GetAll()[3].ChangeGold
+                );
                 tasks.Add(updateTask);
                 tasks.Add(updateChengjiu);
                 tasks.Add(updatePlayerInfo);

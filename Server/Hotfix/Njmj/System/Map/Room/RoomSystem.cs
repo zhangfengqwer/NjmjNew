@@ -104,8 +104,12 @@ namespace ETHotfix
                 gamerInfo.SeatIndex = self.GetGamerSeat(_gamer.UserID);
                 gamerInfo.IsReady = _gamer.IsReady;
 
-                PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
-                PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
+                if (_gamer.playerBaseInfo == null)
+                {
+                    _gamer.playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
+                }
+
+                PlayerInfo playerInfo = PlayerInfoFactory.Create(_gamer.playerBaseInfo);
                 gamerInfo.playerInfo = playerInfo;
 
                 if (gamerInfo.UserID == userId)
@@ -484,16 +488,57 @@ namespace ETHotfix
 
                     if (_gamer.UserID == orderController.CurrentAuthority)
                     {
-                       
-
                         HandCardsComponent handCardsComponent = _gamer.GetComponent<HandCardsComponent>();
 
-                        //判断小胡,4个花以上才能胡
-                        if (handCardsComponent.PengGangCards.Count > 0 || handCardsComponent.PengCards.Count > 0)
+                        //判断胡牌
+                        if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
                         {
-                            if (handCardsComponent.FaceCards.Count >= 4)
+                            _gamer.huPaiNeedData.my_lastMahjong = room.my_lastMahjong;
+                            _gamer.huPaiNeedData.restMahjongCount = deskComponent.RestLibrary.Count;
+                            _gamer.huPaiNeedData.isSelfZhuaPai = orderController.CurrentAuthority == _gamer.UserID;
+                            _gamer.huPaiNeedData.isZhuangJia = handCardsComponent.IsBanker;
+                            _gamer.huPaiNeedData.isGetYingHuaBuPai = _gamer.isGetYingHuaBuPai;
+                            _gamer.huPaiNeedData.isGangEndBuPai = _gamer.isGangEndBuPai;
+                            _gamer.huPaiNeedData.isGangFaWanPai = _gamer.isGangFaWanPai;
+                            _gamer.huPaiNeedData.isFaWanPaiTingPai = _gamer.isFaWanPaiTingPai;
+                            _gamer.huPaiNeedData.my_yingHuaList = handCardsComponent.FaceCards;
+                            _gamer.huPaiNeedData.my_gangList = handCardsComponent.GangCards;
+                            _gamer.huPaiNeedData.my_pengList = handCardsComponent.PengCards;
+                            List<List<MahjongInfo>> tempList = new List<List<MahjongInfo>>();
+                            for (int i = 0; i < room.GetAll().Length; i++)
                             {
-                                if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
+                                if (_gamer.UserID == room.GetAll()[i].UserID)
+                                    continue;
+                                tempList.Add(room.GetAll()[i].GetComponent<HandCardsComponent>().PengCards);
+                            }
+
+                            _gamer.huPaiNeedData.other1_pengList = tempList[0];
+                            _gamer.huPaiNeedData.other2_pengList = tempList[1];
+                            _gamer.huPaiNeedData.other3_pengList = tempList[2];
+
+                            List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(handCardsComponent.GetAll(), 
+                                                                                            _gamer.huPaiNeedData);
+                            Log.Info(JsonHelper.ToJson(_gamer.huPaiNeedData));
+                            Log.Info(JsonHelper.ToJson(huPaiTypes));
+
+                            if (huPaiTypes.Count > 0)
+                            {
+                                //判断小胡,4个花以上才能胡
+                                if (huPaiTypes[0] == Consts.HuPaiType.Normal)
+                                {
+                                    if (handCardsComponent.PengGangCards.Count > 0 || handCardsComponent.PengCards.Count > 0)
+                                    {
+                                        if (handCardsComponent.FaceCards.Count >= 4)
+                                        {
+                                            _gamer.IsCanHu = true;
+                                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                                            canOperation.Uid = _gamer.UserID;
+                                            canOperation.OperationType = 2;
+                                            room.GamerBroadcast(_gamer, canOperation);
+                                        }
+                                    }
+                                }
+                                else
                                 {
                                     _gamer.IsCanHu = true;
                                     Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
@@ -501,17 +546,6 @@ namespace ETHotfix
                                     canOperation.OperationType = 2;
                                     room.GamerBroadcast(_gamer, canOperation);
                                 }
-                            }
-                        }
-                        else
-                        {
-                            if (Logic_NJMJ.getInstance().isHuPai(handCardsComponent.GetAll()))
-                            {
-                                _gamer.IsCanHu = true;
-                                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
-                                canOperation.Uid = _gamer.UserID;
-                                canOperation.OperationType = 2;
-                                room.GamerBroadcast(_gamer, canOperation);
                             }
                         }
 
