@@ -111,7 +111,7 @@ namespace ETHotfix
             {
                 Button btn = Item2.transform.Find("Button").GetComponent<Button>();
                 btn.interactable = false;
-                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_daily", "DayDo_tomorrow");
+                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "DayDo_tomorrow");
 
                 string TomorrowReward = g2cDailySignState.TomorrowReward;
                 int prop_id = CommonUtil.splitStr_Start(TomorrowReward, ':');
@@ -152,7 +152,7 @@ namespace ETHotfix
             {
                 Button btn = Item2.transform.Find("Button").GetComponent<Button>();
                 btn.interactable = false;
-                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_daily", "DayDo_tomorrow");
+                btn.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "DayDo_tomorrow");
 
                 string TomorrowReward = g2cDailySign.TomorrowReward;
                 int prop_id = CommonUtil.splitStr_Start(TomorrowReward, ':');
