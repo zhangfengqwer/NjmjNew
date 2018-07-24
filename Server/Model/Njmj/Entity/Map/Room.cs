@@ -222,6 +222,7 @@ namespace ETModel
             }
 
             State = RoomState.Idle;
+            tokenSource?.Cancel();
             roomTokenSource?.Cancel();
             roomDismissTokenSource?.Cancel();
             StartReadySource?.Cancel();

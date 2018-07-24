@@ -144,6 +144,14 @@ namespace ETHotfix
                             reply(response);
 			                return;
 			            }
+
+			            if (idleRoom.Count == 4)
+			            {
+			                response.Error = ErrorCode.ERR_Common;
+			                response.Message = "房间人数已满";
+			                reply(response);
+			                return;
+                        }
                     }
 			        else
 			        {

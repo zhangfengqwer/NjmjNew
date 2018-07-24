@@ -28,8 +28,9 @@ namespace ETHotfix
         /// <param name="room"></param>
         /// <param name="gamer"></param>
         /// <param name="amount"></param>
+        /// <param name="isFriendRoom"></param>
         /// <param name="msg"></param>
-        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, string msg = "游戏内改变金币")
+        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, bool isFriendRoom, string msg = "游戏内改变金币")
         {
             if (amount == 0) return;
 

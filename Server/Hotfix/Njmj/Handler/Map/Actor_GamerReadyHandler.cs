@@ -22,7 +22,7 @@ namespace ETHotfix
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 
-	            if (gamer.IsReady || room.State == RoomState.Game)
+	            if (gamer == null || gamer.IsReady || room.State == RoomState.Game)
 	            {
 	                return;
 	            }
