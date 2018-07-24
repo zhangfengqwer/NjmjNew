@@ -89,9 +89,48 @@ namespace ETHotfix
 
                     #region 4个人连续出同样的牌，第一个出牌的人立即支付其他三人
 
+                    List<MahjongInfo> list = new List<MahjongInfo>();
                     foreach (var _gamer in room.GetAll())
                     {
-                        
+                        HandCardsComponent cardsComponent = _gamer.GetComponent<HandCardsComponent>();
+
+                        if (cardsComponent.PlayCards.Count > 0)
+                        {
+                            list.Add(cardsComponent.PlayCards[cardsComponent.PlayCards.Count - 1]);
+                        }
+                    }
+
+                    if (list.Count == 4)
+                    {
+                        bool flag = true; 
+
+                        for (int i = 1; i < list.Count; i++)
+                        {
+                            if (list[0].m_weight != list[i].m_weight)
+                            {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag)
+                        {
+                            Gamer nextGamer = orderController.FindNextGamer(gamer.UserID);
+
+                            //罚分
+                            foreach (var _gamer in room.GetAll())
+                            {
+                                if (_gamer.UserID == nextGamer.UserID)
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, -10 * gameController.RoomConfig.Multiples * 3);
+                                }
+                                else
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, 10 * gameController.RoomConfig.Multiples);
+                                }
+                            }
+                            room.LastBiXiaHu = true;
+                        }
                     }
 
                     #endregion

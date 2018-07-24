@@ -73,5 +73,23 @@ namespace ETHotfix
                 Log.Error($"角标越界{index}:"+e);
             }
         }
+
+        /// <summary>
+        /// 找到下一个玩家
+        /// </summary>
+        /// <param name="self"></param>
+        public static Gamer FindNextGamer(this OrderControllerComponent self, long userId)
+        {
+            Room room = self.GetParent<Room>();
+            Gamer[] gamers = room.GetAll();
+
+            int index = room.GetGamerSeat(userId);
+            index++;
+            if (index == gamers.Length)
+            {
+                index = 0;
+            }
+            return gamers[index];
+        }
     }
 }
