@@ -411,7 +411,7 @@ namespace ETHotfix
 		public int FriendKeyCount;
 
 		[ProtoMember(18, IsRequired = true)]
-		public int Sore;
+		public int Score;
 
 	}
 
@@ -2701,6 +2701,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public int KeyCount;
 
+		[ProtoMember(4, IsRequired = true)]
+		public int Score;
+
 	}
 
 	[Message(HotfixOpcode.G2M_FriendRoomInfo)]
@@ -2850,18 +2853,47 @@ namespace ETHotfix
 
 	}
 
+<<<<<<< HEAD
+	[Message(HotfixOpcode.C2G_MyFriendRank)]
+	[ProtoContract]
+	public partial class C2G_MyFriendRank: IRequest
+=======
 	[Message(HotfixOpcode.Actor_GamerKickOff)]
 	[ProtoContract]
 	public partial class Actor_GamerKickOff: IActorMessage
+>>>>>>> b3b9f267f9498b89bfc8c4ad9976a0e4e1ba5730
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
+<<<<<<< HEAD
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_MyFriendRank)]
+	[ProtoContract]
+	public partial class G2C_MyFriendRank: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Data;
+=======
 		[ProtoMember(93, IsRequired = true)]
 		public long ActorId { get; set; }
 
 		[ProtoMember(1, IsRequired = false)]
 		public long KickedUserId;
+>>>>>>> b3b9f267f9498b89bfc8c4ad9976a0e4e1ba5730
 
 	}
 

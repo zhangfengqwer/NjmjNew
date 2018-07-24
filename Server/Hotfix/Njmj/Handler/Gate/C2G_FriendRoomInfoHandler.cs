@@ -20,6 +20,7 @@ namespace ETHotfix
 
                 if (playerInfoList.Count > 0)
                 {
+                    response.Score = playerInfoList[0].Score;
                     if (!playerInfoList[0].IsGiveFriendKey)
                     {
                         string endTime = CommonUtil.timeAddDays(CommonUtil.getCurDataNormalFormat(), 1);

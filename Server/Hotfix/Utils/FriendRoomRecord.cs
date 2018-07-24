@@ -27,8 +27,8 @@ namespace ETHotfix
             // 一个对象代表一小局
             public class ResultDetails
             {
-                public List<string> nameList;
-                public List<int> scoreList;
+                public List<string> nameList = new List<string>();
+                public List<int> scoreList = new List<int>();
                 public string time;
 
                 public ResultDetails(List<string> _gameInfoList, string _time)
@@ -68,7 +68,7 @@ namespace ETHotfix
             var filter1 = (Builders<Log_Game>.Filter.Gt("CreateTime", time) & Builders<Log_Game>.Filter.Eq("RoomName", "好友房")) & (Builders<Log_Game>.Filter.Eq("Player1_uid", uid) | Builders<Log_Game>.Filter.Eq("Player2_uid", uid)
                      | Builders<Log_Game>.Filter.Eq("Player3_uid", uid) | Builders<Log_Game>.Filter.Eq("Player4_uid", uid));
             List<Log_Game> list = await dbComponent.GetDBDataCollection<Log_Game>(typeof(Log_Game).Name).Find(filter1).ToListAsync();
-
+            Log.Debug(JsonHelper.ToJson(list) + "=====");
             int roomNum = -1;
             FriendRoomRecordInfo FriendRoomRecordInfo = null;
             for (int i = list.Count - 1; i >= 0 ; i--)
@@ -76,6 +76,7 @@ namespace ETHotfix
                 // 如果房间号跟之前的不一样，说明这是另一局的
                 if (list[i].RoomNum != roomNum)
                 {
+                    roomNum = list[i].RoomNum;
                     FriendRoomRecordInfo = new FriendRoomRecordInfo();
                     listData.Add(FriendRoomRecordInfo);
 

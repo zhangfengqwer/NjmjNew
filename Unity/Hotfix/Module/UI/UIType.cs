@@ -67,5 +67,10 @@ namespace ETHotfix
         public const string UITypeToggle = "UITypeToggle";
         public const string UIFriendRoomCommonTip = "UIFriendRoomCommonTip";
         public const string UIRoomDismiss = "UIRoomDismiss";
+        public const string UIFriendRoomRank = "UIFriendRoomRank";
+        public const string UIMyRankItem = "UIMyRankItem";
+        public const string UIFriendRoomTxt = "UIFriendRoomTxt";
+        public const string UIFriendRoomDetail = "UIFriendRoomDetail";
+        public const string UIFriendDetail = "UIFriendDetail";
     }
 }
