@@ -64,7 +64,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    textList[i].text = "-" + result.scoreList[i];
+                    textList[i].text = result.scoreList[i].ToString();
                 }
             }
         }

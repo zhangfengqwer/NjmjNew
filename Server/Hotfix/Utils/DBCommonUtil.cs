@@ -341,6 +341,7 @@ namespace ETHotfix
                             await proxyComponent.Save(playerBaseInfos[0]);
                         }
                         break;
+
                     //积分
                     case 4:
                         {

@@ -68,7 +68,10 @@ namespace ETHotfix
         {
             for (int i = 0;i< info.gameList.Count; ++i)
             {
-                textList[i].text = info.gameList[i].nameList[i];
+                for(int j = 0;j< info.gameList[i].nameList.Count; ++j)
+                {
+                    textList[j].text = info.gameList[i].nameList[j];
+                }
             }
         }
 
