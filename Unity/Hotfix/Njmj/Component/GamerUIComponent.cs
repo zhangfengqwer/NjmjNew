@@ -45,7 +45,7 @@ namespace ETHotfix
         private GameObject zhuang;
         private CancellationTokenSource tokenSource;
         private GameObject buHua;
-
+        private GameObject headReadyInfo;
 
         public int Index { get; set; }
 
@@ -171,6 +171,8 @@ namespace ETHotfix
             readyHead.sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "icon_default");
             readyText.text = "";
             vip.transform.localScale = Vector3.zero;
+            headReadyInfo.gameObject.SetActive(false);
+            this.headReadyInfo.GetComponentInParent<Button>().onClick.RemoveAllListeners();
         }
 
         /// <summary>
@@ -270,7 +272,7 @@ namespace ETHotfix
         /// 设置准备界面
         /// </summary>
         /// <param name="gameObject"></param>
-        public void SetHeadPanel(GameObject gameObject)
+        public void SetHeadPanel(GameObject gameObject, int index)
         {
             try
             {
@@ -278,6 +280,8 @@ namespace ETHotfix
                 {
                     return;
                 }
+
+                Index = index;
                 Gamer gamer = this.GetParent<Gamer>();
                 this.readyHead = gameObject.Get<GameObject>("Image").GetComponent<Image>();
                 this.readyName = gameObject.Get<GameObject>("Name").GetComponent<Text>();
@@ -306,6 +310,67 @@ namespace ETHotfix
                 {
                     vip.transform.localScale = Vector3.zero;
                 }
+
+                #region 准备界面信息框
+                // if(Index != 0)
+                {
+                    this.headReadyInfo = gameObject.Get<GameObject>("HeadInfo");
+                    Image kickOffImage = this.headReadyInfo.Get<GameObject>("KickOffImage").GetComponent<Image>();
+                    Text uidReadyText = this.headReadyInfo.Get<GameObject>("Uid").GetComponent<Text>();
+                    Text shenglvReadyText = this.headReadyInfo.Get<GameObject>("Shenglv").GetComponent<Text>();
+                    Text jinbiReadyText = this.headReadyInfo.Get<GameObject>("Jinbi").GetComponent<Text>();
+                    this.headReadyInfo.SetActive(false);
+                    this.headReadyInfo.GetComponentInParent<Button>().onClick.RemoveAllListeners();
+                    this.headReadyInfo.GetComponentInParent<Button>().onClick.Add(() =>
+                    {
+                        if (this.headReadyInfo.activeSelf)
+                        {
+                            this.headReadyInfo.SetActive(false);
+                        }
+                        else
+                        {
+                            this.headReadyInfo.SetActive(true);
+                        }
+                    });
+                    uidReadyText.text = playerInfo.Name;
+                    shenglvReadyText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+
+                    float i;
+                    if (playerInfo.TotalGameCount == 0)
+                    {
+                        i = 0;
+                    }
+                    else
+                    {
+                        i = GameUtil.GetWinRate(playerInfo.TotalGameCount, playerInfo.WinGameCount);
+                    }
+                    jinbiReadyText.text = $"胜 率:<color=#FFF089FF>{i}%</color>";
+
+                    //踢人
+                    UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+                    UIRoomComponent roomComponent = uiRoom.GetComponent<UIRoomComponent>();
+                    if (roomComponent.masterUserId != 0 && roomComponent.masterUserId == PlayerInfoComponent.Instance.uid && Index != 0)
+                    {
+                        kickOffImage.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        kickOffImage.gameObject.SetActive(false);
+                    }
+
+                    kickOffImage.gameObject.AddComponent<Button>().onClick.Add(() =>
+                    {
+                        SessionComponent.Instance.Session.Send(new Actor_GamerKickOff()
+                        {
+                            KickedUserId = gamer.UserID
+                        });
+                    });
+
+                }
+
+                
+
+                #endregion
             }
             catch (Exception e)
             {

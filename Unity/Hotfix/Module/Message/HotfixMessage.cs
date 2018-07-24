@@ -2853,13 +2853,20 @@ namespace ETHotfix
 
 	}
 
+<<<<<<< HEAD
 	[Message(HotfixOpcode.C2G_MyFriendRank)]
 	[ProtoContract]
 	public partial class C2G_MyFriendRank: IRequest
+=======
+	[Message(HotfixOpcode.Actor_GamerKickOff)]
+	[ProtoContract]
+	public partial class Actor_GamerKickOff: IActorMessage
+>>>>>>> b3b9f267f9498b89bfc8c4ad9976a0e4e1ba5730
 	{
 		[ProtoMember(90, IsRequired = true)]
 		public int RpcId { get; set; }
 
+<<<<<<< HEAD
 		[ProtoMember(1, IsRequired = true)]
 		public long UId;
 
@@ -2880,6 +2887,13 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public string Data;
+=======
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = false)]
+		public long KickedUserId;
+>>>>>>> b3b9f267f9498b89bfc8c4ad9976a0e4e1ba5730
 
 	}
 

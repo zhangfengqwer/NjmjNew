@@ -344,8 +344,36 @@ namespace ETHotfix
 //                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
                 cardsComponent.FaceCards.Add(grabMahjong);
 
+                #region 花杠
+                int temp = 0;
+                foreach (var faceCard in cardsComponent.FaceCards)
+                {
+                    if (faceCard.m_weight == grabMahjong.m_weight)
+                    {
+                        temp++;
+                    }
+                }
+                if (temp == 4)
+                {
+                    foreach (var _gamer in room.GetAll())
+                    {
+                        if (_gamer.UserID == currentGamer.UserID)
+                        {
+                            GameHelp.ChangeGamerGold(room, _gamer, 20 * gameController.RoomConfig.Multiples * 3);
+                        }
+                        else
+                        {
+                            GameHelp.ChangeGamerGold(room, _gamer, -20 * gameController.RoomConfig.Multiples);
+                        }
+                    }
+
+                    room.LastBiXiaHu = true;
+                }
+
+                #endregion
+
                 //等待客户端显示
-//                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
+                //                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
                 grabMahjong = GrabMahjong(room);
@@ -517,6 +545,11 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 等待房间解散操作
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="time"></param>
         public static async void WaitDismiss(this Room self, int time)
         {
             self.roomDismissTokenSource?.Cancel();

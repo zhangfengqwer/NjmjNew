@@ -44,8 +44,19 @@ namespace ETHotfix
 	                room.CurrentJuCount++;
                     room.IsGameOver = false;
 	                room.RoomDispose();
+                    //设置比下胡
+	                if (room.LastBiXiaHu)
+	                {
+                        room.IsBiXiaHu = true;
+                    }
+	                else
+	                {
+	                    room.IsBiXiaHu = false;
+                    }
+	                room.LastBiXiaHu = false;
 
-	                if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
+
+                    if (roomComponent.gameRooms.TryGetValue(room.Id, out var itemRoom))
 	                {
 	                    roomComponent.gameRooms.Remove(room.Id);
 	                }
@@ -81,7 +92,9 @@ namespace ETHotfix
 	                        bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
 	                        bankerHandCards.IsBanker = true;
 	                        room.BankerGamer = bankerGamer;
-	                    }
+                            //连庄
+                            room.LastBiXiaHu = true;
+                        }
 	                    else
 	                    {
 	                        int gamerSeat = room.GetGamerSeat(room.BankerGamer.UserID);
@@ -103,14 +116,23 @@ namespace ETHotfix
 	                }
 	                else
 	                {
-	                    //随机庄家
-	                    int number = RandomHelper.RandomNumber(0, 12);
-	                    int i = number % 4;
-	                    bankerGamer = room.gamers[i];
+	                    if (room.IsFriendRoom)
+	                    {
+	                        GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
+	                        long masterUserId = controllerComponent.RoomConfig.MasterUserId;
+	                        bankerGamer = room.Get(masterUserId);
+                        }
+	                    else
+	                    {
+	                        //随机庄家
+	                        int number = RandomHelper.RandomNumber(0, 12);
+	                        int i = number % 4;
+	                        bankerGamer = room.gamers[i];
+                        }
 	                    bankerHandCards = bankerGamer.GetComponent<HandCardsComponent>();
 	                    bankerHandCards.IsBanker = true;
 	                    room.BankerGamer = bankerGamer;
-	                }
+                    }
 
 	                //发牌
 	                gameController.DealCards();

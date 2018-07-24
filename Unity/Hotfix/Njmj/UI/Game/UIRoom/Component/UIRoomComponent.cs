@@ -61,6 +61,7 @@ namespace ETHotfix
         public GameObject tip;
         private GameObject baoxiang;
         private Text currentJuCountText;
+        public long masterUserId; //房主uid
 
         public int RoomType { get; set; }
         //当前出牌或者抓牌
@@ -621,6 +622,7 @@ namespace ETHotfix
         /// </summary>
         public void SetFriendSetting(long masterUserId)
         {
+            this.masterUserId = masterUserId;
             settingBtn.GetComponentInChildren<Text>().text = "设 置";
             if (masterUserId == PlayerInfoComponent.Instance.uid)
             {
