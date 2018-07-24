@@ -411,7 +411,7 @@ namespace ETHotfix
 		public int FriendKeyCount;
 
 		[ProtoMember(18, IsRequired = true)]
-		public int Score;
+		public long Score;
 
 	}
 
@@ -2705,7 +2705,7 @@ namespace ETHotfix
 		public int KeyCount;
 
 		[ProtoMember(4, IsRequired = true)]
-		public int Score;
+		public long Score;
 
 	}
 
