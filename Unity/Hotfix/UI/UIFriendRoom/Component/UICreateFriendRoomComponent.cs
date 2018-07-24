@@ -95,14 +95,16 @@ namespace ETHotfix
         int curHua = 100;
         int curJu = 4;
         int curType = 1;
+        int curKey = 3;
         public void SetCurHua(int curHua)
         {
             this.curHua = curHua;
         }
 
-        public void SetCurJu(int curJu)
+        public void SetCurJuAK(int curJu,int curKey)
         {
             this.curJu = curJu;
+            this.curKey = curKey;
         }
 
         public void SetCurType(int curType)
@@ -116,6 +118,7 @@ namespace ETHotfix
             info.Hua = curHua;
             info.Ju = curJu;
             info.IsPublic = curType;
+            info.KeyCount = curKey;
 
             UINetLoadingComponent.showNetLoading();
             G2C_CreateFriendRoom c2gCreate = (G2C_CreateFriendRoom) await SessionComponent.Instance.Session.Call(new C2G_CreateFriendRoom
@@ -123,8 +126,17 @@ namespace ETHotfix
                   FriendRoomInfo = info,
                   UserId = PlayerInfoComponent.Instance.uid
             });
-            await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
             UINetLoadingComponent.closeNetLoading();
+
+            if(c2gCreate.Error != ErrorCode.ERR_Success)
+            {
+                ToastScript.createToast(c2gCreate.Message);
+                return;
+            }
+
+            await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
+            
+
         }
 
         private void Init()

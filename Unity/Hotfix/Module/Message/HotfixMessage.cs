@@ -2665,6 +2665,9 @@ namespace ETHotfix
 		[ProtoMember(5, IsRequired = true)]
 		public int IsPublic;
 
+		[ProtoMember(6, IsRequired = true)]
+		public int KeyCount;
+
 	}
 
 	[Message(HotfixOpcode.C2G_FriendRoomInfo)]
