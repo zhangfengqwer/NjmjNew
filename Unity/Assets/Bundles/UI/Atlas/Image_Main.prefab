@@ -116,8 +116,6 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: 5eb22e826ae726e44a5098fc607e6e35, type: 3}
   - key: touxiangkuang_vip
     gameObject: {fileID: 21300000, guid: 8062f519abb6197499f8f8e0d53b6aab, type: 3}
-  - key: usehuafei_bg
-    gameObject: {fileID: 21300000, guid: 5b211827b41c6d7418e554443fc14777, type: 3}
   - key: Rank_1
     gameObject: {fileID: 21300000, guid: 04a7b44b3fbe0484692f8ccee04f50cd, type: 3}
   - key: Rank_2
@@ -130,3 +128,7 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: d20eaebd2461ec54f8ed40398c9b7d89, type: 3}
   - key: 2
     gameObject: {fileID: 21300000, guid: 8f567c7fe164dbb49b5b5fe8a40c4de0, type: 3}
+  - key: DayDo_tomorrow
+    gameObject: {fileID: 21300000, guid: 89c1ce1af4f9b684480aae6ace9b07dd, type: 3}
+  - key: DayDo_free
+    gameObject: {fileID: 21300000, guid: c858b3e22f215ca4c8c0795f7cc79458, type: 3}
