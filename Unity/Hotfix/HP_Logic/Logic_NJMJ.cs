@@ -1271,5 +1271,63 @@ namespace ETHotfix
             }
         }
 
+        public int getFengKeHuaShu(List<MahjongInfo> list)
+        {
+            int huashu = 0;
+
+            List<MahjongInfo>  temp = selectThree(list);
+            for (int i = 0; i < temp.Count; i++)
+            {
+                if (getMahjongType(temp[i]) == MahjongType.Feng)
+                {
+                    // 一个风刻+1花
+                    ++huashu;
+                }
+            }
+
+            return huashu;
+        }
+
+        public int getQueYiMenHuaShu(List<MahjongInfo> list)
+        {
+            int menNum = 0;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (getMahjongType(list[i]) == MahjongType.Wan)
+                {
+                    ++menNum;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (getMahjongType(list[i]) == MahjongType.Tiao)
+                {
+                    ++menNum;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (getMahjongType(list[i]) == MahjongType.Tong)
+                {
+                    ++menNum;
+                    break;
+                }
+            }
+
+            // 缺一门
+            if (menNum == 2)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
