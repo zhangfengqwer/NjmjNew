@@ -996,9 +996,14 @@ message Actor_GamerRoomDismiss // IActorMessage
 message Actor_GamerKickOff // IActorMessage
 {
    	optional long KickedUserId = 1;
+}
 
+message C2G_MyFriendRank //IRequest
+{
+	required long UId = 1;
+}
 
-
-
-
+message G2C_MyFriendRank //IResponse
+{
+	required string Data = 1;
 }
