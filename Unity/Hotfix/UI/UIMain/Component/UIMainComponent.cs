@@ -53,6 +53,7 @@ namespace ETHotfix
         private Button CloseFrRoomBtn;
         private Button RefreshBtn;
         private Text ScoreTxt;
+        private Button GameBtn;
 
         private List<GameObject> roomItems = new List<GameObject>();
         private List<UI> uiFList = new List<UI>();
@@ -120,6 +121,7 @@ namespace ETHotfix
             CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
             RefreshBtn = rc.Get<GameObject>("RefreshBtn").GetComponent<Button>();
             ScoreTxt = rc.Get<GameObject>("ScoreTxt").GetComponent<Text>();
+            GameBtn = rc.Get<GameObject>("GameBtn").GetComponent<Button>();
 
             roomItem = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomItem);
             #endregion
@@ -132,6 +134,12 @@ namespace ETHotfix
             JoinRoomBtn.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIJoinRoom);
+            });
+
+            //我的战绩
+            GameBtn.onClick.Add(() =>
+            {
+                Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomRank);
             });
 
             //关闭好友房界面
@@ -404,12 +412,14 @@ namespace ETHotfix
         #region 好友房
         private async void GetRoomInfoReq()
         {
-            ScoreTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Score.ToString();
             #region 向服务器请求信息
             UINetLoadingComponent.showNetLoading();
+
             G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
 
             UINetLoadingComponent.closeNetLoading();
+
+            ScoreTxt.text = m2cFriend.Score.ToString();
 
             //今天沒有贈送好友房钥匙
             if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)

@@ -158,5 +158,7 @@ namespace ETHotfix
 		 public const ushort Actor_GamerAgreeRoomDismiss = 10154;
 		 public const ushort Actor_GamerCancelRoomDismiss = 10155;
 		 public const ushort Actor_GamerRoomDismiss = 10156;
+		 public const ushort C2G_MyFriendRank = 10157;
+		 public const ushort G2C_MyFriendRank = 10158;
 	}
 }
