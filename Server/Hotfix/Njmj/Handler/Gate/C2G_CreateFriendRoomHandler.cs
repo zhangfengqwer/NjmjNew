@@ -23,6 +23,15 @@ namespace ETHotfix
                 IPEndPoint mapIPEndPoint = config.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
                 Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapIPEndPoint);
 
+                int keyCount = await DBCommonUtil.GetUserFriendKeyNum(message.UserId);
+                if(keyCount < message.FriendRoomInfo.KeyCount)
+                {
+                    response.Error = ErrorCode.ERR_Common;
+                    response.Message = "钥匙数量不够！";
+                    reply(response);
+                    return;
+                }
+
                 M2G_CreateFriendRoom m2G_CreateFriendRoom = (M2G_CreateFriendRoom) await mapSession.Call(new G2M_CreateFriendRoom()
                 {
                     UserId = message.UserId,

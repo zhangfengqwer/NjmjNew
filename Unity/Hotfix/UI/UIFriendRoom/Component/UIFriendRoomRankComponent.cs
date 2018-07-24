@@ -57,7 +57,7 @@ namespace ETHotfix
             try
             {
                 friendRoomRecordInfoList = JsonMapper.ToObject<List<FriendRoomRecordInfo>>(mr.Data);
-                Log.Debug(mr.Data);
+
                 JsonData jd = JsonMapper.ToObject(mr.Data);
 
                 #region inv

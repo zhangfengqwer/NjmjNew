@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 224544552704271692}
   - component: {fileID: 222266939053863536}
   - component: {fileID: 114548148280661752}
-  - component: {fileID: 114036463063971158}
   m_Layer: 5
   m_Name: ScoreTxt
   m_TagString: Untagged
@@ -168,19 +167,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114036463063971158
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1554114561173504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &114053255861947136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,8 +389,8 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 30
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
+    m_BestFit: 1
+    m_MinSize: 5
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -604,8 +590,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -303.75006, y: 2}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -299.3, y: 2}
+  m_SizeDelta: {x: 93.77, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224682035869813782
 RectTransform:
@@ -622,7 +608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -422.75003, y: 5}
+  m_AnchoredPosition: {x: -410.3, y: -1.2}
   m_SizeDelta: {x: 63, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224715078401080114

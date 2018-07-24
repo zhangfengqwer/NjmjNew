@@ -926,6 +926,7 @@ message FriendRoomInfo //IMessage
 	required int Ju = 3;//局数
 	required int Hua = 4;//每花多少
 	required int IsPublic = 5;//是否为公开房间
+	required int KeyCount = 6;
 }
 
 message C2G_FriendRoomInfo //IRequest
