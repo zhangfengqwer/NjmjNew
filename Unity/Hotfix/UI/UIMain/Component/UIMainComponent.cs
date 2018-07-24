@@ -170,7 +170,7 @@ namespace ETHotfix
                 {
                     BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-392.0f, 73.6f), 0.5f, false).OnComplete(() =>
                     {
-                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = Vector3.zero;
+                        PlayerInfoBg.transform.Find("HuaFeiBg").transform.localScale = Vector3.zero;
                     });
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main","btn_you");
                 }
@@ -179,7 +179,7 @@ namespace ETHotfix
                 {
                     BtnList_Down.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-127.4f, 73.6f), 0.5f, false).OnComplete(() =>
                     {
-                        PlayerInfoBg.transform.Find("GoldBg").transform.localScale = new Vector3(1, 1, 1);
+                        PlayerInfoBg.transform.Find("HuaFeiBg").transform.localScale = new Vector3(1, 1, 1);
                     });
 
                     BtnList_Down.transform.Find("Btn_JianTou").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("image_main", "btn_zuo");
