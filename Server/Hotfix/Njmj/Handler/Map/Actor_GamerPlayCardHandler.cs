@@ -87,6 +87,15 @@ namespace ETHotfix
 	                gamer.IsCanPeng = false;
 	                gamer.IsCanGang = false;
 
+                    #region 4个人连续出同样的牌，第一个出牌的人立即支付其他三人
+
+                    foreach (var _gamer in room.GetAll())
+                    {
+                        
+                    }
+
+                    #endregion
+
                     #region 一个人出4张一样的牌
                     //4个人出一样的牌
                     int temp = 0;
@@ -161,7 +170,7 @@ namespace ETHotfix
 
 	                    List<MahjongInfo> cards = _gamer.GetComponent<HandCardsComponent>().GetAll();
 
-                        if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards))
+                        if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards)) 
 	                    {
 	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
 	                        canOperation.Uid = _gamer.UserID;
@@ -267,7 +276,6 @@ namespace ETHotfix
                         //发牌
                         room.GamerGrabCard();
 	                    room.IsPlayingCard = false;
-
                     }
                 }
 	            else

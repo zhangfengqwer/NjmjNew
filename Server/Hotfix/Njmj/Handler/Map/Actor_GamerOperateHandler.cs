@@ -394,7 +394,7 @@ namespace ETHotfix
             huPaiNeedData.my_gangList = handCards.GangCards;
             huPaiNeedData.my_pengList = handCards.PengCards;
 
-           List <List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
+            List<List<MahjongInfo>> temp = new List<List<MahjongInfo>>();
 
             foreach (var _gamer in room.GetAll())
             {
