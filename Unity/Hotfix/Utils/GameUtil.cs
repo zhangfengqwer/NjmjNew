@@ -218,6 +218,7 @@ namespace ETHotfix
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoomDismiss);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
         }
 
         public static UI CreateUI(string type)

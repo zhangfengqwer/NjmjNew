@@ -15,10 +15,10 @@ namespace ETHotfix
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
             long cost = controllerComponent.RoomConfig.ServiceCharge;
-            
+
             foreach (var gamer in room.GetAll())
             {
-                ChangeGamerGold(room, gamer, (int) - cost, controllerComponent.RoomConfig.Name + "报名费");
+                ChangeGamerGold(room, gamer, (int) -cost, controllerComponent.RoomConfig.Name + "报名费");
             }
         }
 
@@ -29,12 +29,12 @@ namespace ETHotfix
         /// <param name="gamer"></param>
         /// <param name="amount"></param>
         /// <param name="msg"></param>
-        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount,string msg = "游戏内改变金币")
+        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, string msg = "游戏内改变金币")
         {
             if (amount == 0) return;
 
             await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg, room);
-
+            gamer.ChangeGold = amount;
             room.Broadcast(new Actor_GamerChangeGold()
             {
                 Uid = gamer.UserID,
@@ -49,4 +49,5 @@ namespace ETHotfix
             room?.Dispose();
         }
     }
+
 }

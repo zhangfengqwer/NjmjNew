@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ETModel;
@@ -86,6 +87,15 @@ namespace ETHotfix
 	                gamer.IsCanPeng = false;
 	                gamer.IsCanGang = false;
 
+                    #region 4个人连续出同样的牌，第一个出牌的人立即支付其他三人
+
+                    foreach (var _gamer in room.GetAll())
+                    {
+                        
+                    }
+
+                    #endregion
+
                     #region 一个人出4张一样的牌
                     //4个人出一样的牌
                     int temp = 0;
@@ -115,9 +125,40 @@ namespace ETHotfix
                     }
                     #endregion
 
+                    #region 一人前四次出牌打出东南西北（不必按顺序），则其他每名玩家立即支付给该玩家
+
+                    if (handCardsComponent.PlayCards.Count == 4)
+                    {
+                        int Feng_Dong = handCardsComponent.PlayCards.Count(a => a.m_weight == Consts.MahjongWeight.Feng_Dong);
+                        int Feng_Nan = handCardsComponent.PlayCards.Count(a => a.m_weight == Consts.MahjongWeight.Feng_Nan);
+                        int Feng_Xi = handCardsComponent.PlayCards.Count(a => a.m_weight == Consts.MahjongWeight.Feng_Xi);
+                        int Feng_Bei = handCardsComponent.PlayCards.Count(a => a.m_weight == Consts.MahjongWeight.Feng_Bei);
+
+                        if (Feng_Dong == 1 && Feng_Nan == 1 && Feng_Xi == 1 && Feng_Bei == 1)
+                        {
+                            //四连风
+                            foreach (var _gamer in room.GetAll())
+                            {
+                                if (_gamer.UserID == gamer.UserID)
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, 5 * gameController.RoomConfig.Multiples * 3);
+                                }
+                                else
+                                {
+                                    GameHelp.ChangeGamerGold(room, _gamer, -5 * gameController.RoomConfig.Multiples);
+                                }
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
                     #region 等待客户端有没有人碰杠胡   
                     //等待客户端有没有人碰
                     bool isNeedWait = false;
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
 	                foreach (var _gamer in room.GetAll())
 	                {
 	                    if (_gamer == null)
@@ -129,7 +170,7 @@ namespace ETHotfix
 
 	                    List<MahjongInfo> cards = _gamer.GetComponent<HandCardsComponent>().GetAll();
 
-                        if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards))
+                        if (Logic_NJMJ.getInstance().isCanPeng(mahjongInfo, cards)) 
 	                    {
 	                        Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
 	                        canOperation.Uid = _gamer.UserID;
@@ -154,44 +195,74 @@ namespace ETHotfix
                             room.GamerBroadcast(_gamer, canOperation);
                         }
 
-                        //判断小胡,4个花以上才能胡
-                        if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
+	                    if (room.CanHu(mahjongInfo, cards))
 	                    {
-                            if (currentCards.FaceCards.Count >= 4)
+	                         _gamer.huPaiNeedData.my_lastMahjong = room.my_lastMahjong;
+	                         _gamer.huPaiNeedData.restMahjongCount = deskComponent.RestLibrary.Count;
+	                         _gamer.huPaiNeedData.isSelfZhuaPai = orderController.CurrentAuthority == _gamer.UserID;
+	                         _gamer.huPaiNeedData.isZhuangJia = currentCards.IsBanker;
+	                         _gamer.huPaiNeedData.isGetYingHuaBuPai = _gamer.isGetYingHuaBuPai;
+	                         _gamer.huPaiNeedData.isGangEndBuPai = _gamer.isGangEndBuPai;
+	                         _gamer.huPaiNeedData.isGangFaWanPai = _gamer.isGangFaWanPai;
+	                         _gamer.huPaiNeedData.isFaWanPaiTingPai = _gamer.isFaWanPaiTingPai;
+	                         _gamer.huPaiNeedData.my_yingHuaList = currentCards.FaceCards;
+	                         _gamer.huPaiNeedData.my_gangList = currentCards.GangCards;
+	                         _gamer.huPaiNeedData.my_pengList = currentCards.PengCards;
+	                        List<List<MahjongInfo>> tempList = new List<List<MahjongInfo>>();
+                            for (int i = 0; i < room.GetAll().Length; i++)
 	                        {
-	                            if (room.CanHu(mahjongInfo, cards))
+	                            if (_gamer.UserID == room.GetAll()[i].UserID)
+	                                continue;
+	                            tempList.Add(room.GetAll()[i].GetComponent<HandCardsComponent>().PengCards);
+                            }
+
+                            _gamer.huPaiNeedData.other1_pengList = tempList[0];
+	                        _gamer.huPaiNeedData.other2_pengList = tempList[1];
+	                        _gamer.huPaiNeedData.other3_pengList = tempList[2];
+
+	                        List<MahjongInfo> infos = new List<MahjongInfo>(cards);
+	                        infos.Add(mahjongInfo);
+
+	                        List<Consts.HuPaiType> huPaiTypes = Logic_NJMJ.getInstance().getHuPaiType(infos, _gamer.huPaiNeedData);
+
+	                        Log.Info(JsonHelper.ToJson(_gamer.huPaiNeedData));
+	                        Log.Info(JsonHelper.ToJson(huPaiTypes));
+
+	                        if (huPaiTypes.Count > 0)
+	                        {
+	                            //判断小胡,4个花以上才能胡
+                                if (huPaiTypes[0] == Consts.HuPaiType.Normal)
 	                            {
-	                                Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
-	                                canOperation.Uid = _gamer.UserID;
-
-                                    _gamer.IsCanHu = true;
-	                                isNeedWait = true;
-
-	                                canOperation.OperationType = 2;
-	                                room.GamerBroadcast(_gamer, canOperation);
+	                                if (currentCards.PengGangCards.Count > 0 || currentCards.PengCards.Count > 0)
+	                                {
+	                                    if (currentCards.FaceCards.Count >= 4)
+	                                    {
+	                                        _gamer.IsCanHu = true;
+	                                        isNeedWait = true;
+                                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+	                                        canOperation.Uid = _gamer.UserID;
+	                                        canOperation.OperationType = 2;
+	                                        room.GamerBroadcast(_gamer, canOperation);
+                                        }
+	                                }
                                 }
-	                            else
-	                            {
-//	                                Log.Debug("buneng");
+                                else
+                                {
+                                    _gamer.IsCanHu = true;
+                                    isNeedWait = true;
+                                    Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
+                                    canOperation.Uid = _gamer.UserID;
+                                    canOperation.OperationType = 2;
+                                    room.GamerBroadcast(_gamer, canOperation);
                                 }
 	                        }
 	                    }
-	                    else
-	                    {
-	                        if (room.CanHu(mahjongInfo, cards))
-	                        {
-	                            _gamer.IsCanHu = true;
-	                            isNeedWait = true;
-	                            Actor_GamerCanOperation canOperation = new Actor_GamerCanOperation();
-	                            canOperation.Uid = _gamer.UserID;
-
-                                canOperation.OperationType = 2;
-	                            room.GamerBroadcast(_gamer, canOperation);
-                            }
-	                    }
 	                }
-                    #endregion
 
+                    sw.Stop();
+                    Log.Info("判断碰刚胡时间:" + sw.ElapsedMilliseconds);
+
+                    #endregion
 
                     if (isNeedWait)
 	                {
@@ -205,7 +276,6 @@ namespace ETHotfix
                         //发牌
                         room.GamerGrabCard();
 	                    room.IsPlayingCard = false;
-
                     }
                 }
 	            else

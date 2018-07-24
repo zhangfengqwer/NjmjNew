@@ -227,7 +227,18 @@ namespace ETHotfix
         {
             try
             {
-                SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
+                script.setOnClickOkEvent(() =>
+                {
+                    SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                });
+
+                script.setOnClickCloseEvent(() =>
+                {
+                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                });
+
+                script.getTextObj().alignment = TextAnchor.MiddleCenter;
                 if (ISGaming)
                 {
                     Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
