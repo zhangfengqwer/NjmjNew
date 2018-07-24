@@ -22,7 +22,7 @@ namespace ETModel
         public int MaxHua { get; set; }
         public bool IsGiveFriendKey { get; set; }
         public int FriendKeyCount { get; set; }
-        public int Score { get; set; }
+        public long Score { get; set; }
         public PlayerBaseInfo() : base()
         {
             GoldNum = 30000;

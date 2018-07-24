@@ -55,6 +55,7 @@ namespace ETHotfix
                     PlayerInfoComponent.Instance.GetPlayerInfo().WingNum = 0;
                 }
             }
+            //话费
             else if (id == 3)
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum += num;
@@ -63,6 +64,11 @@ namespace ETHotfix
                 {
                     PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum = 0;
                 }
+            }
+            //积分
+            else if(id == 4)
+            {
+                PlayerInfoComponent.Instance.GetPlayerInfo().Score += num;
             }
             else
             {

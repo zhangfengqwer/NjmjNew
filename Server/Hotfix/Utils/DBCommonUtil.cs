@@ -341,6 +341,16 @@ namespace ETHotfix
                             await proxyComponent.Save(playerBaseInfos[0]);
                         }
                         break;
+                    //积分
+                    case 4:
+                        {
+                            List<PlayerBaseInfo> playerBaseInfos =
+                                await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{uid}}}");
+                            playerBaseInfos[0].Score += propNum;
+
+                            await proxyComponent.Save(playerBaseInfos[0]);
+                        }
+                        break;
 
                     // 其他道具
                     default:
