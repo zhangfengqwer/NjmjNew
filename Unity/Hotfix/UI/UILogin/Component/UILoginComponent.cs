@@ -218,7 +218,7 @@ namespace ETHotfix
         public async void onClickGuestLogin()
         {
             string Third_Id = CommonUtil.getCurTime();
-
+            await OnThirdLogin(Third_Id,"","");
         }
 
         public async void onThirdLoginCallback(ThirdLoginData thirdLoginData)
