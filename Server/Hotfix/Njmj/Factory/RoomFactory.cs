@@ -52,6 +52,7 @@ namespace ETHotfix
                 roomConfig.MasterUserId = message.UserId;
                 roomConfig.Id = 3;
                 roomConfig.Name = "好友房";
+                roomConfig.KeyCount = friendRoomInfo.KeyCount;
                 controllerComponent.RoomConfig = roomConfig;
                 controllerComponent.RoomName = RoomName.Friend;
 

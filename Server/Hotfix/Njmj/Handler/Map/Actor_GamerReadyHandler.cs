@@ -49,9 +49,9 @@ namespace ETHotfix
 
 	                if (room.IsFriendRoom && room.CurrentJuCount == 1)
 	                {
-
+	                    RoomConfig roomConfig = room.GetComponent<GameControllerComponent>().RoomConfig;
+	                    await DBCommonUtil.DeleteFriendKey(roomConfig.MasterUserId, roomConfig.KeyCount, "好友房房主扣除钥匙");
 	                }
-
 	                #endregion
                     //设置比下胡
                     if (room.LastBiXiaHu)

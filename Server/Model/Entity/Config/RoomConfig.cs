@@ -32,5 +32,10 @@ namespace ETModel
 	    /// 是否公开
 	    /// </summary>
 	    public bool IsPublic { get; set; }
-    }
+
+        /// <summary>
+        /// 房间钥匙
+        /// </summary>
+	    public int KeyCount { get; set; }
+	}
 }
