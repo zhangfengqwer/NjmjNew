@@ -34,6 +34,8 @@ namespace ETHotfix
                     FriendRoomInfo = message.FriendRoomInfo
                 });
                 response.RoomId = m2G_CreateFriendRoom.RoomId;
+                response.Error = m2G_CreateFriendRoom.Error;
+                response.Message = m2G_CreateFriendRoom.Message;
                 reply(response);
             }
 			catch (Exception e)
