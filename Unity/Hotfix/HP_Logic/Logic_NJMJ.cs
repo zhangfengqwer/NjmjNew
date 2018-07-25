@@ -810,9 +810,9 @@ namespace ETHotfix
                 }
 
                 // 杠掉的牌
-                for (int i = 0; i < huPaiNeedData.my_pengList.Count; i++)
+                for (int i = 0; i < huPaiNeedData.my_gangList.Count; i++)
                 {
-                    MahjongType mahjongType = getMahjongType(huPaiNeedData.my_pengList[i]);
+                    MahjongType mahjongType = getMahjongType(huPaiNeedData.my_gangList[i]);
 
                     bool isFind = false;
                     for (int j = 0; j < tempList.Count; j++)
@@ -887,9 +887,9 @@ namespace ETHotfix
                 }
 
                 // 杠掉的牌
-                for (int i = 0; i < huPaiNeedData.my_pengList.Count; i++)
+                for (int i = 0; i < huPaiNeedData.my_gangList.Count; i++)
                 {
-                    MahjongType mahjongType = getMahjongType(huPaiNeedData.my_pengList[i]);
+                    MahjongType mahjongType = getMahjongType(huPaiNeedData.my_gangList[i]);
 
                     bool isFind = false;
                     for (int j = 0; j < tempList.Count; j++)
