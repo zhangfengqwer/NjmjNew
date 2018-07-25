@@ -93,7 +93,7 @@ namespace ETHotfix
             }
 
             jsonData = JsonConvert.SerializeObject(listData);
-            Log.Info("------------------" + jsonData);
+            Log.Debug("------------------" + jsonData);
             return jsonData;
         }
     }
