@@ -60,6 +60,8 @@ namespace ETHotfix
 
                 JsonData jd = JsonMapper.ToObject(mr.Data);
 
+                Log.Debug(mr.Data);
+
                 #region inv
                 //for (int i = 0; i < jd.Count; i++)
                 //{

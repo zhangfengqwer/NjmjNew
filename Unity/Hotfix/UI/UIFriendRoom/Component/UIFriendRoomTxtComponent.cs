@@ -43,7 +43,7 @@ namespace ETHotfix
             }
             else if (score < 0)
             {
-                AllScoreTxt.text = "-" + score;
+                AllScoreTxt.text = score.ToString();
             }
             if(name.Length > 2)
             {
