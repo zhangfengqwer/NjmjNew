@@ -498,7 +498,13 @@ namespace ETHotfix
                 }
             }
 
-            huaCount += actorGamerHuPai.RuanHuaCount;
+            int queYiMenHuaShu = Logic_NJMJ.getInstance().getQueYiMenHuaShu(mahjongInfos);
+            int fengKeHuaShu = Logic_NJMJ.getInstance().getFengKeHuaShu(mahjongInfos);
+
+            actorGamerHuPai.RuanHuaCount += queYiMenHuaShu;
+            actorGamerHuPai.RuanHuaCount += fengKeHuaShu;
+
+           huaCount += actorGamerHuPai.RuanHuaCount;
             //胡牌类型
             foreach (var type in huPaiTypes)
             {

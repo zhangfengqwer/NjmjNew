@@ -66,7 +66,7 @@ namespace ETHotfix
         public int RoomType { get; set; }
         //当前出牌或者抓牌
         public MahjongInfo CurrentMahjong { get; set; }
-        public bool IsFriendRoom { get; set; }
+        public bool IsFriendRoom;
         public int JuCount { get; set; }
 
         public void Awake()

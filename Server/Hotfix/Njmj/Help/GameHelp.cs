@@ -28,12 +28,19 @@ namespace ETHotfix
         /// <param name="room"></param>
         /// <param name="gamer"></param>
         /// <param name="amount"></param>
+        /// <param name="isFriendRoom"></param>
         /// <param name="msg"></param>
         public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, string msg = "游戏内改变金币")
         {
             if (amount == 0) return;
-
-            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg, room);
+            if (room.IsFriendRoom)
+            {
+                await DBCommonUtil.ChangeWealth(gamer.UserID, 4, amount, msg, room);
+            }
+            else
+            {
+                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg, room);
+            }
             gamer.ChangeGold = amount;
             room.Broadcast(new Actor_GamerChangeGold()
             {
