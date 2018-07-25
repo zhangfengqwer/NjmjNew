@@ -170,6 +170,9 @@ namespace ETHotfix
         {
             base.Dispose();
             clickBtns.Clear();
+            curEnterValue = "";
+            EnterTxt.text = "";
+            builder.Clear();
         }
     }
 }

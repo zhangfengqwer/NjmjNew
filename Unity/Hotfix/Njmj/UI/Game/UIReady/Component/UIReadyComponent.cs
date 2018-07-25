@@ -38,6 +38,7 @@ namespace ETHotfix
         private Text roomIdText;
         private string roomId;
         private UIRoomComponent uiRoomComponent;
+        private GameObject roomIdObj;
 
         public void Awake()
         {
@@ -46,7 +47,7 @@ namespace ETHotfix
             this.changeTableBtn = rc.Get<GameObject>("ChangeTableBtn").GetComponent<Button>();
             this.readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             this.weChatBtn = rc.Get<GameObject>("WeChat").GetComponent<Button>();
-            this.roomIdText = rc.Get<GameObject>("RoomId").GetComponent<Text>();
+            this.roomIdObj = rc.Get<GameObject>("RoomId");
 
             this.head = rc.Get<GameObject>("Head");
             this.readyTimeout = rc.Get<GameObject>("ReadyTimeout");
@@ -164,7 +165,8 @@ namespace ETHotfix
         public void ShowWeChat(string roomId)
         {
             this.roomId = roomId;
-            roomIdText.text = $"房间号：{roomId}";
+            GameHelp.SetRoomId(roomIdObj, Convert.ToInt32(roomId));
+            // roomIdText.text = $"房间号：{roomId}";
             weChatBtn.gameObject.SetActive(true);
         }
 
@@ -179,6 +181,16 @@ namespace ETHotfix
             timeOut = 20;
         }
 
-       
+        public void SetFriendRoom(bool isFriend)
+        {
+            if (!isFriend)
+            {
+                roomIdObj.GetComponentInParent<Image>().gameObject.SetActive(false);
+            }
+            else
+            {
+                roomIdObj.GetComponentInParent<Image>().gameObject.SetActive(true);
+            }
+        }
     }
 }
