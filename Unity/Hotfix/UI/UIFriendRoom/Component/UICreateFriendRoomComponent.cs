@@ -127,16 +127,15 @@ namespace ETHotfix
                   UserId = PlayerInfoComponent.Instance.uid
             });
 
-            if(c2gCreate.Error != ErrorCode.ERR_Success)
+            if (c2gCreate.Error != ErrorCode.ERR_Success)
             {
                 ToastScript.createToast(c2gCreate.Message);
+                UINetLoadingComponent.closeNetLoading();
                 return;
             }
 
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
-
             UINetLoadingComponent.closeNetLoading();
-
         }
 
         private void Init()
