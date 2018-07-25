@@ -325,7 +325,7 @@ namespace ETHotfix
             players.SetActive(false);
             isTreasureFinish = true;
             treasure.SetActive(false);
-
+            faceCardObj.SetActive(false);
             //剩余牌数
             restText.text = $"";
             GamerComponent gamerComponent = this.GetParent<UI>().GetComponent<GamerComponent>();

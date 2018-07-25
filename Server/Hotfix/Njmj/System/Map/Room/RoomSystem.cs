@@ -357,6 +357,7 @@ namespace ETHotfix
                         temp++;
                     }
                 }
+
                 if (temp == 4)
                 {
                     foreach (var _gamer in room.GetAll())

@@ -195,8 +195,7 @@ namespace ETHotfix
                     #region 等待客户端有没有人碰杠胡   
                     //等待客户端有没有人碰
                     bool isNeedWait = false;
-                    Stopwatch sw = new Stopwatch();
-                    sw.Start();
+                
 	                foreach (var _gamer in room.GetAll())
 	                {
 	                    if (_gamer == null)
@@ -296,9 +295,6 @@ namespace ETHotfix
 	                        }
 	                    }
 	                }
-
-                    sw.Stop();
-                    Log.Info("判断碰刚胡时间:" + sw.ElapsedMilliseconds);
 
                     #endregion
 

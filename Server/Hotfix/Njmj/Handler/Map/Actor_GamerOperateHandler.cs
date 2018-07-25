@@ -529,8 +529,6 @@ namespace ETHotfix
 
             int queYiMenHuaShu = Logic_NJMJ.getInstance().getQueYiMenHuaShu(mahjongInfos);
 
-
-
             actorGamerHuPai.RuanHuaCount += queYiMenHuaShu;
             actorGamerHuPai.RuanHuaCount += fengKeHuaShu;
 
