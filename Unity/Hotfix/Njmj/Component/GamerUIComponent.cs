@@ -46,12 +46,14 @@ namespace ETHotfix
         private CancellationTokenSource tokenSource;
         private GameObject buHua;
         private GameObject headReadyInfo;
+        private UIRoomComponent uiRoomComponent;
 
         public int Index { get; set; }
 
         public void Start()
         {
-//           
+            UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
+            this.uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
         }
 
         /// <summary>
@@ -211,7 +213,14 @@ namespace ETHotfix
                 if (Index != 0)
                 {
                     uidText.text = playerInfo.Name;
-                    jinbiText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+                    if (uiRoomComponent.IsFriendRoom)
+                    {
+                        jinbiText.text = $"积 分:<color=#FFF089FF>{playerInfo.Score}</color>";
+                    }
+                    else
+                    {
+                        jinbiText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+                    }
 
                     float i;
                     if (playerInfo.TotalGameCount == 0)
@@ -333,7 +342,15 @@ namespace ETHotfix
                         }
                     });
                     uidReadyText.text = playerInfo.Name;
-                    shenglvReadyText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+
+                    if (uiRoomComponent.IsFriendRoom)
+                    {
+                        shenglvReadyText.text = $"积 分:<color=#FFF089FF>{playerInfo.Score}</color>";
+                    }
+                    else
+                    {
+                        shenglvReadyText.text = $"金 币:<color=#FFF089FF>{playerInfo.GoldNum}</color>";
+                    }
 
                     float i;
                     if (playerInfo.TotalGameCount == 0)
@@ -393,6 +410,7 @@ namespace ETHotfix
 
         public void SetReady()
         {
+            if(readyText == null) return;
             readyText.text = "已准备";
         }
 

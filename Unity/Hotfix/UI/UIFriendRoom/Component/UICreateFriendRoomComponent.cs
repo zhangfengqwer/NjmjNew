@@ -126,7 +126,6 @@ namespace ETHotfix
                   FriendRoomInfo = info,
                   UserId = PlayerInfoComponent.Instance.uid
             });
-            UINetLoadingComponent.closeNetLoading();
 
             if(c2gCreate.Error != ErrorCode.ERR_Success)
             {
@@ -135,7 +134,8 @@ namespace ETHotfix
             }
 
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
-            
+
+            UINetLoadingComponent.closeNetLoading();
 
         }
 
