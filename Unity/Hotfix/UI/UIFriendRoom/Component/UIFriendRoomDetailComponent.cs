@@ -54,6 +54,8 @@ namespace ETHotfix
             {
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIFriendRoomDetail);
             });
+
+            UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
         public void SetInfo(FriendRoomRecordInfo info)

@@ -43,6 +43,7 @@ namespace ETHotfix
             });
 
             GetInfoReq();
+            UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
         private async void GetInfoReq()

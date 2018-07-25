@@ -103,7 +103,7 @@ namespace ETHotfix
             }
             else
             {
-                ScoreTxt.text = "-" + allScore.ToString();
+                ScoreTxt.text = allScore.ToString();
             }
             Result.sprite = CommonUtil.getSpriteByBundle("image_main", allScore >= 0 ? "1" : "2");
 

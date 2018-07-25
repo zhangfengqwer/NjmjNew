@@ -80,6 +80,7 @@ namespace ETHotfix
             });
 
             CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+            UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
         private void AddClick()

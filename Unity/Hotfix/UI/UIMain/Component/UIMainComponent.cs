@@ -51,7 +51,6 @@ namespace ETHotfix
         private Button JoinRoomBtn;
         private Button CreateRoomBtn;
         private Button CloseFrRoomBtn;
-        private Button RefreshBtn;
         private Text ScoreTxt;
         private Button GameBtn;
 
@@ -119,7 +118,6 @@ namespace ETHotfix
             JoinRoomBtn = rc.Get<GameObject>("JoinRoomBtn").GetComponent<Button>();
             CreateRoomBtn = rc.Get<GameObject>("CreateRoomBtn").GetComponent<Button>();
             CloseFrRoomBtn = rc.Get<GameObject>("CloseFrRoomBtn").GetComponent<Button>();
-            RefreshBtn = rc.Get<GameObject>("RefreshBtn").GetComponent<Button>();
             ScoreTxt = rc.Get<GameObject>("ScoreTxt").GetComponent<Text>();
             GameBtn = rc.Get<GameObject>("GameBtn").GetComponent<Button>();
 
@@ -146,6 +144,7 @@ namespace ETHotfix
             CloseFrRoomBtn.onClick.Add(() =>
             {
                 SetUIShow(true);
+                isStop = true;
             });
 
             ////打开创建房间UI
@@ -264,12 +263,6 @@ namespace ETHotfix
                 //ToastScript.createToast("暂未开放：比赛场");
                 //return
                 ShowFriendRoom();
-            });
-
-            //点击刷新好友房
-            RefreshBtn.onClick.Add(() =>
-            {
-                GetRoomInfoReq();
             });
 
             // 休闲场返回按钮
@@ -403,13 +396,35 @@ namespace ETHotfix
             FriendRoom.SetActive(!isActive);
         }
 
-        public void ShowFriendRoom()
+        long m_durTime = 10000;
+        bool isStop = false;
+
+        public async void ShowFriendRoom()
         {
             SetUIShow(false);
             GetRoomInfoReq();
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);
+            StartFriendReq();
+        }
+
+        public async void StartFriendReq()
+        {
+            isStop = false;
+
+            while (!isStop)
+            {
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);
+                GetRoomReqX();
+            }
         }
 
         #region 好友房
+        private async void GetRoomReqX()
+        {
+            G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
+            CreateUI(m2cFriend);
+        }
+
         private async void GetRoomInfoReq()
         {
             #region 向服务器请求信息
@@ -419,6 +434,11 @@ namespace ETHotfix
 
             UINetLoadingComponent.closeNetLoading();
 
+            CreateUI(m2cFriend);
+        }
+
+        private void CreateUI(G2C_FriendRoomInfo m2cFriend)
+        {
             ScoreTxt.text = m2cFriend.Score.ToString();
 
             //今天沒有贈送好友房钥匙
@@ -439,8 +459,8 @@ namespace ETHotfix
             else
             {
                 NoRoomTipTxt.SetActive(false);
-                CreateRoomItemss(m2cFriend.Info);
             }
+            CreateRoomItemss(m2cFriend.Info);
         }
 
         /// <summary>
@@ -448,11 +468,17 @@ namespace ETHotfix
         /// </summary>
         private void CreateRoomItemss(List<FriendRoomInfo> roomInfos)
         {
+            if(roomInfos.Count <= 0)
+            {
+                HideMore(0);
+            }
+
             GameObject obj = null;
             for (int i = 0; i < roomInfos.Count; ++i)
             {
                 if (i < roomItems.Count)
                 {
+                    roomItems[i].SetActive(true);
                     obj = roomItems[i];
                 }
                 else
@@ -466,6 +492,15 @@ namespace ETHotfix
                     uiFList.Add(ui);
                 }
                 uiFList[i].GetComponent<UIFriendRoomItemComponent>().SetItemInfo(roomInfos[i]);
+            }
+            HideMore(roomInfos.Count);
+        }
+
+        private void HideMore(int index)
+        {
+            for(int i = index;i< roomItems.Count;++i)
+            {
+                roomItems[i].SetActive(false);
             }
         }
         #endregion
@@ -619,7 +654,7 @@ namespace ETHotfix
             }
 
             base.Dispose();
-
+            isStop = true;
             isDispose = true;
             wealthRankList.Clear();
             gameRankList.Clear();
