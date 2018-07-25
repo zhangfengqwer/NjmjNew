@@ -147,8 +147,6 @@ namespace App
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
 
-			    Log.Info((3 << 1) +"");
-
                 while (true)
 				{
 					try

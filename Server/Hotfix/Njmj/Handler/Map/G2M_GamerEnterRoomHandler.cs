@@ -17,7 +17,7 @@ namespace ETHotfix
 			    Gamer gamer = null;
                 Room room = null;
 
-			    foreach (var _room in roomCompnent.gameRooms.Values)
+			    foreach (var _room in roomCompnent.rooms.Values)
 			    {
 			        room = _room;
 			        gamer = room.Get(message.UserId);
@@ -27,10 +27,19 @@ namespace ETHotfix
                         break;
 			        }
                 }
-                
+
                 //断线重连
 			    if (gamer != null)
 			    {
+                    //在空闲房间内
+			        if (room.State == RoomState.Idle)
+			        {
+			            response.Message = "已经进入房间";
+			            response.Error = ErrorCode.ERR_Common;
+			            Log.Error("玩家多次进入空闲房间");
+                        reply(response);
+                        return;
+			        }
 			        DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
                     //重新更新actor
@@ -112,15 +121,10 @@ namespace ETHotfix
 			        }
                     room.GamerReconnect(gamer, reconnet);
 
-                    //等待客户端重连
-                    //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
-
 			        gamer.isOffline = false;
 			        gamer.RemoveComponent<TrusteeshipComponent>();
 			        Log.Info($"玩家{message.UserId}断线重连");
-
                     gamer.StartTime = DateTime.Now;
-			        //DBCommonUtil.RecordGamerTime(gamer.EndTime, false, gamer.UserID);
                 }
                 else
 			    {

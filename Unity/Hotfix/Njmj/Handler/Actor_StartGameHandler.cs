@@ -206,18 +206,13 @@ namespace ETHotfix
                 }
 
                 uiRoom.GameObject.SetActive(true);
-                uiRoomComponent.ISGaming = true;
-
-              
+                UIRoomComponent.ISGaming = true;
 
                 uiRoomComponent.tip.SetActive(true);
                 uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "shangji_tip");
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                
                 uiRoomComponent?.tip?.SetActive(false);
-
-             
-                
             }
             catch (Exception e)
             {

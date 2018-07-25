@@ -129,13 +129,13 @@ namespace ETHotfix
 
             if (c2gCreate.Error != ErrorCode.ERR_Success)
             {
-                ToastScript.createToast(c2gCreate.Message);
+                UICommonPanelComponent.showCommonPanel("提示", c2gCreate.Message);
                 UINetLoadingComponent.closeNetLoading();
                 return;
             }
 
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
-            UINetLoadingComponent.closeNetLoading();
+
         }
 
         private void Init()

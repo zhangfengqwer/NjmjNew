@@ -19,7 +19,7 @@ namespace ETHotfix
 
     public class UIRoomComponent: Component
     {
-        public bool ISGaming = false;
+        public static bool ISGaming = false;
         public RoomConfig RoomConfig = new RoomConfig();
         public readonly GameObject[] GamersPanel = new GameObject[4];
         public readonly GameObject[] HeadPanel = new GameObject[4];
@@ -117,6 +117,8 @@ namespace ETHotfix
             this.settingBtn.onClick.Add(OnSetting);
             this.exitBtn.onClick.Add(OnExit);
             this.readyBtn.onClick.Add(OnReady);
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
 
             #region 托管
 
@@ -223,7 +225,7 @@ namespace ETHotfix
             SessionComponent.Instance.Session.Send(new Actor_GamerReady() { Uid = PlayerInfoComponent.Instance.uid });
         }
 
-        private async void OnExit()
+        public static void OnExit()
         {
             try
             {
@@ -231,6 +233,11 @@ namespace ETHotfix
                 script.setOnClickOkEvent(() =>
                 {
                     SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                    if (ISGaming)
+                    {
+                        CommonUtil.ShowUI(UIType.UIMain);
+                        GameUtil.Back2Main();
+                    }
                 });
 
                 script.setOnClickCloseEvent(() =>
@@ -239,15 +246,6 @@ namespace ETHotfix
                 });
 
                 script.getTextObj().alignment = TextAnchor.MiddleCenter;
-                if (ISGaming)
-                {
-                    Game.Scene.GetComponent<UIComponent>().Create(UIType.UIMain);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIRoom);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChatShow);
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIChat);
-                    Debug.Log("remove");
-                }
             }
             catch (Exception e)
             {
@@ -325,7 +323,7 @@ namespace ETHotfix
             players.SetActive(false);
             isTreasureFinish = true;
             treasure.SetActive(false);
-            faceCardObj.SetActive(false);
+             faceCardObj.SetActive(false);
             //剩余牌数
             restText.text = $"";
             GamerComponent gamerComponent = this.GetParent<UI>().GetComponent<GamerComponent>();
@@ -560,7 +558,6 @@ namespace ETHotfix
                     else
                     {
                         timeText.text = $"{minute}:{second}";
-
                     }
                 }
 

@@ -79,6 +79,14 @@ namespace ETHotfix
             }
             juTxt.text = info.Ju + "局";
             huaTxt.text = "每花" + info.Hua;
+            if (info.Icons.Count >= 4)
+            {
+                EnterBtn.gameObject.SetActive(false);
+            }
+            else
+            {
+                EnterBtn.gameObject.SetActive(true);
+            }
             CreateItems(info.Icons);
         }
 

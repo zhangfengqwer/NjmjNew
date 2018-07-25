@@ -27,6 +27,8 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             AllScoreTxt = rc.Get<GameObject>("AllScoreTxt").GetComponent<Text>();
             NameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         public void SetInfo(string name, List<int> list)

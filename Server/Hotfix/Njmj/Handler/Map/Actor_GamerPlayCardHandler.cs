@@ -297,7 +297,6 @@ namespace ETHotfix
 	                }
 
                     #endregion
-
                     if (isNeedWait)
 	                {
 	                    room.IsNeedWaitOperate = true;

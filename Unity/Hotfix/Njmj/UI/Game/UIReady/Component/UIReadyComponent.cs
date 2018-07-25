@@ -61,6 +61,8 @@ namespace ETHotfix
             this.readyBtn.onClick.Add(OnReady);
             weChatBtn.onClick.Add(OnInviteWeChat);
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             timeOut = 20;
             SetTimeOut();
 

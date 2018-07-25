@@ -55,6 +55,8 @@ namespace ETHotfix
 
             cancelCount = 0;
             SetPlayInfo();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         /// <summary>

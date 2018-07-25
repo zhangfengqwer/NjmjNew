@@ -537,7 +537,7 @@ namespace ETHotfix
             foreach (var type in huPaiTypes)
             {
                 actorGamerHuPai.HuPaiTypes.Add((int) type);
-            }
+            }   
 
             room.Broadcast(actorGamerHuPai);
 

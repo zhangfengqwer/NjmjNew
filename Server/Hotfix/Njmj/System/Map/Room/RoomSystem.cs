@@ -266,7 +266,7 @@ namespace ETHotfix
                     gamer.IsCanGang = false;
                     gamer.IsCanHu = false;
                 }
-                Log.Info($"碰刚超时，发牌");
+                //Log.Info($"碰刚超时，发牌");
                 self.GamerGrabCard();
                 //                Log.Debug("OperateTime超时");
             }
@@ -345,7 +345,6 @@ namespace ETHotfix
 
                 //从手牌中删除花牌
                 Log.Info($"{currentGamer.UserID}补花");
-//                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 #region 花杠
@@ -355,6 +354,18 @@ namespace ETHotfix
                     if (faceCard.m_weight == grabMahjong.m_weight)
                     {
                         temp++;
+                    }
+                }
+
+                Logic_NJMJ.getInstance().SortMahjong(cardsComponent.FaceCards);
+                //春夏秋冬
+                for (int i = 0; i < cardsComponent.FaceCards.Count - 4; i+=4)
+                {
+                    if (cardsComponent.FaceCards[i + 3].m_weight - cardsComponent.FaceCards[i + 2].m_weight == 2 &&
+                        cardsComponent.FaceCards[i + 2].m_weight - cardsComponent.FaceCards[i + 1].m_weight == 2 &&
+                        cardsComponent.FaceCards[i + 1].m_weight - cardsComponent.FaceCards[i].m_weight == 2)
+                    {
+                        temp = 4;
                     }
                 }
 
@@ -377,11 +388,12 @@ namespace ETHotfix
 
                 #endregion
 
-                //等待客户端显示
-                //                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(500);
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
+                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+
                 grabMahjong = GrabMahjong(room);
+
                 if (grabMahjong == null)
                 {
                     Log.Info("没牌流局了");

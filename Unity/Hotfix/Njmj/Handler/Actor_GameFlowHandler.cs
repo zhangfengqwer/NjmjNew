@@ -28,8 +28,12 @@ namespace ETHotfix
                     gameResultComponent.SetFriendRoom();
                     gameResultComponent.startTimer(5);
                 }
+                else
+                {
+                    gameResultComponent.startTimer();
+                }
                 gameResultComponent.SetFlowGame(message, gamerComponent);
-                uiRoomComponent.ISGaming = false;
+                UIRoomComponent.ISGaming = false;
 
             }
             catch (Exception e)
