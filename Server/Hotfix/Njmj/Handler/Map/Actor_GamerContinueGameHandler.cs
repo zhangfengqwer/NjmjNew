@@ -76,6 +76,7 @@ namespace ETHotfix
                     actorGamerEnterRoom.MasterUserId = gameControllerComponent.RoomConfig.MasterUserId;
                     actorGamerEnterRoom.JuCount = gameControllerComponent.RoomConfig.JuCount;
                     actorGamerEnterRoom.Multiples = gameControllerComponent.RoomConfig.Multiples;
+                    actorGamerEnterRoom.CurrentJuCount = room.CurrentJuCount;
                 }
 
                 room.Broadcast(actorGamerEnterRoom);

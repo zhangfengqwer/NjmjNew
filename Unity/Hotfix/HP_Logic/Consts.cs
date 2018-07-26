@@ -72,9 +72,9 @@ namespace ETHotfix
 
             // 风
             Feng_Dong = 31,
-            Feng_Xi = 33,
-            Feng_Nan = 35,
-            Feng_Bei = 37,
+            Feng_Nan = 33,
+            Feng_Xi = 35,
+            Feng_Bei = 37,  
 
             // 花：普通
             Hua_HongZhong = 41,

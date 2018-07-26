@@ -320,6 +320,7 @@ message Actor_GamerEnterRoom // IActorMessage
  	required long MasterUserId = 4;
  	required int JuCount = 5;
  	required int Multiples = 6;
+ 	required int CurrentJuCount = 7;
 }
 
 message Actor_GamerJionRoom // IActorMessage
