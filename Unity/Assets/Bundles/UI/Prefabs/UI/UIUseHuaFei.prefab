@@ -235,10 +235,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-  - key: Button_OK
-    gameObject: {fileID: 1029232102864984}
   - key: Button_cancel
     gameObject: {fileID: 1099205611286202}
+  - key: Button_HuaFei
+    gameObject: {fileID: 1029232102864984}
+  - key: Button_Key
+    gameObject: {fileID: 1764010156840324}
 --- !u!114 &114280894032409250
 MonoBehaviour:
   m_ObjectHideFlags: 1

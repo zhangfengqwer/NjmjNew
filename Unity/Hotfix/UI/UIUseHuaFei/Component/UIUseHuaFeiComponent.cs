@@ -39,7 +39,7 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             Button_cancel = rc.Get<GameObject>("Button_cancel").GetComponent<Button>();
-            Button_HuaFei = rc.Get<GameObject>("Button_OK").GetComponent<Button>();
+            Button_HuaFei = rc.Get<GameObject>("Button_HuaFei").GetComponent<Button>();
             Button_Key = rc.Get<GameObject>("Button_Key").GetComponent<Button>();
 
             Button_HuaFei.onClick.Add(onClick_huafei5);
@@ -122,7 +122,7 @@ namespace ETHotfix
                 ToastScript.createToast((huafei / 100.0f).ToString() + "元话费兑换成功");
             }
             // 兑换元宝
-            else if (type == 1)
+            else if (type == 2)
             {
                 ++YuanBao_RestCount;
                 GameUtil.changeDataWithStr(g2cUseHuaFei.Reward);
