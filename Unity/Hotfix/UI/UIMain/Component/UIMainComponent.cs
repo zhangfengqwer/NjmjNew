@@ -393,7 +393,7 @@ namespace ETHotfix
             FriendRoom.SetActive(!isActive);
         }
 
-        long m_durTime = 10000;
+        long m_durTime = 5000;
         bool isStop = false;
 
         public async void ShowFriendRoom()

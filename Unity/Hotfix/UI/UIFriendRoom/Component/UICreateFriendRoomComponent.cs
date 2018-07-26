@@ -101,7 +101,6 @@ namespace ETHotfix
         public void SetCurHua(int curHua)
         {
             this.curHua = curHua;
-            Log.Debug(curHua + "花");
         }
 
         public void SetCurJuAK(int curJu,int curKey)
