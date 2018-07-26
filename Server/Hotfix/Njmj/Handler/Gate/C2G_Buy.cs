@@ -51,6 +51,12 @@ namespace ETHotfix
                     response.Count = count;
                     reply(response);
                 }
+                else if(shopId == 112)
+                {
+                    await DBCommonUtil.AddFriendKey(message.UId, count, "-1", $"商城购买{count}个{config.Name}道具");
+                    response.Count = count;
+                    reply(response);
+                }
                 else
                 {
                     List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{shopId}}}");
