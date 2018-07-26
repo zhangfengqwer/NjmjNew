@@ -22,6 +22,9 @@ namespace ETHotfix
         private Button Button_HuaFei;
         private Button Button_Key;
 
+        int HuaFei_5_RestCount = 0;
+        int YuanBao_RestCount = 0;
+
         public void Awake()
 		{
             ToastScript.clear();
@@ -90,9 +93,11 @@ namespace ETHotfix
             G2C_UseHuaFeiState g2cUseHuaFeiState = (G2C_UseHuaFeiState)await SessionComponent.Instance.Session.Call(new C2G_UseHuaFeiState { Uid = PlayerInfoComponent.Instance.uid});
             UINetLoadingComponent.closeNetLoading();
 
-            int HuaFei_5_RestCount = g2cUseHuaFeiState.HuaFei_5_RestCount;
-            
-            Log.Debug("话费5次数：" + HuaFei_5_RestCount.ToString());
+            HuaFei_5_RestCount = g2cUseHuaFeiState.HuaFei_5_Count;
+            YuanBao_RestCount = g2cUseHuaFeiState.YuanBao_Count;
+
+            Button_HuaFei.transform.Find("Text").GetComponent<Text>().text = "兑换 " + HuaFei_5_RestCount + "/1";
+            Button_Key.transform.Find("Text").GetComponent<Text>().text = "兑换 " + YuanBao_RestCount + "/10";
         }
 
         private async void RequestUseHuaFei(int huafei,int type)
@@ -113,14 +118,19 @@ namespace ETHotfix
             // 兑换话费
             if (type == 1)
             {
+                ++HuaFei_5_RestCount;
                 ToastScript.createToast((huafei / 100.0f).ToString() + "元话费兑换成功");
             }
             // 兑换元宝
             else if (type == 1)
             {
+                ++YuanBao_RestCount;
                 GameUtil.changeDataWithStr(g2cUseHuaFei.Reward);
                 ShowRewardUtil.Show(g2cUseHuaFei.Reward);
             }
+
+            Button_HuaFei.transform.Find("Text").GetComponent<Text>().text = "兑换 " + HuaFei_5_RestCount + "/1";
+            Button_Key.transform.Find("Text").GetComponent<Text>().text = "兑换 " + YuanBao_RestCount + "/10";
         }
     }
 }

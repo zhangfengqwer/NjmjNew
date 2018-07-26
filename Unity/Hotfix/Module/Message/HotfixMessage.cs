@@ -2070,16 +2070,10 @@ namespace ETHotfix
 		public string Message { get; set; }
 
 		[ProtoMember(1, IsRequired = true)]
-		public int HuaFei_1_RestCount;
+		public int HuaFei_5_Count;
 
 		[ProtoMember(2, IsRequired = true)]
-		public int HuaFei_5_RestCount;
-
-		[ProtoMember(3, IsRequired = true)]
-		public int HuaFei_10_RestCount;
-
-		[ProtoMember(4, IsRequired = true)]
-		public int HuaFei_20_RestCount;
+		public int YuanBao_Count;
 
 	}
 
