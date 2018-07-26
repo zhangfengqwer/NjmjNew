@@ -192,5 +192,13 @@ namespace ETHotfix
                 roomIdObj.GetComponentInParent<Image>().gameObject.SetActive(true);
             }
         }
+
+        /// <summary>
+        /// 好友局过程中微信按钮
+        /// </summary>
+        public void CloseBtn()
+        {
+            weChatBtn.gameObject.SetActive(false);
+        }
     }
 }

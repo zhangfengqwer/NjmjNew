@@ -37,6 +37,19 @@ namespace ETHotfix
                 }
                 else
 	            {
+	                if (room.IsFriendRoom && room.State == RoomState.Idle)
+	                {
+	                    GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+	                    if (gameControllerComponent.RoomConfig.MasterUserId == gamer.UserID)
+	                    {
+	                        room.Broadcast(new Actor_GamerReadyTimeOut()
+	                        {
+	                            Message = "房主解散房间"
+	                        });
+	                        GameHelp.RoomDispose(room);
+	                        return;
+                        }
+	                }
 
 	                //玩家主动退出 通知gate
 	                if (message.IsFromClient)

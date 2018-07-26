@@ -194,6 +194,7 @@ namespace ETHotfix
             tokenSource.Cancel();
             handCards.Clear();
             playCards.Clear();
+            showCard?.SetActive(false);
         }
 
         /// <summary>

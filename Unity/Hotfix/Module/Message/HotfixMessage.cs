@@ -914,6 +914,9 @@ namespace ETHotfix
 		[ProtoMember(6, IsRequired = true)]
 		public int Multiples;
 
+		[ProtoMember(7, IsRequired = true)]
+		public int CurrentJuCount;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerJionRoom)]
