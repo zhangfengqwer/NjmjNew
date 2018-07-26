@@ -54,6 +54,11 @@ namespace ETHotfix
 
                     //Game.Scene.GetComponent<UIComponent>().Create(UIType.UINetError);
 
+                    if (GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain) != null)
+                    {
+                        GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).StopFriendReq();
+                    }
+
                     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("提示", "与服务器断开连接，请重新登录。");
                     script.setOnClickOkEvent(() =>
                     {

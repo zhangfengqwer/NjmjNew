@@ -37,9 +37,11 @@ namespace ETHotfix
                 }
                 else
 	            {
-	                if (room.IsFriendRoom && room.State == RoomState.Idle)
+	                GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
+
+                    //好友房还没开局房主掉线,房间解散
+                    if (room.IsFriendRoom && room.State == RoomState.Idle && room.CurrentJuCount == 0)
 	                {
-	                    GameControllerComponent gameControllerComponent = room.GetComponent<GameControllerComponent>();
 	                    if (gameControllerComponent.RoomConfig.MasterUserId == gamer.UserID)
 	                    {
 	                        room.Broadcast(new Actor_GamerReadyTimeOut()
@@ -49,6 +51,12 @@ namespace ETHotfix
 	                        GameHelp.RoomDispose(room);
 	                        return;
                         }
+	                }
+	                //好友房开局后,掉线后不能退出
+                    if (room.IsFriendRoom && room.CurrentJuCount > 0  && room.CurrentJuCount< gameControllerComponent.RoomConfig.JuCount)
+                    {
+                        Log.Info($"{gamer.UserID} 好友房开局后,掉线后不能退出");
+	                    return;
 	                }
 
 	                //玩家主动退出 通知gate

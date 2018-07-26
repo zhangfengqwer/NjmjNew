@@ -25,6 +25,10 @@ namespace ETHotfix
 //            RoomDispose(self);
         }
 
+        /// <summary>
+        /// 一局10分钟超时解散
+        /// </summary>
+        /// <param name="self"></param>
         public static async void RoomDispose(this Room self)
         {
             if (self.roomTokenSource != null)
@@ -225,7 +229,7 @@ namespace ETHotfix
         }
 
         /// <summary>
-        /// 
+        /// 好友房结束后准备倒计时
         /// </summary>
         /// <param name="self"></param>
         public static async void StartReady(this Room self)
@@ -243,6 +247,10 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 碰杠胡倒计时
+        /// </summary>
+        /// <param name="self"></param>
         public static async void StartOperateTime(this Room self)
         {
             self.tokenSource?.Cancel();
@@ -319,21 +327,31 @@ namespace ETHotfix
             }
 
             OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
-            GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 
             orderController.Turn();
             var currentGamer = room.Get(orderController.CurrentAuthority);
-            HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
 
-//            Log.Debug("当前:"+ orderController.CurrentAuthority);
             currentGamer.isGangEndBuPai = false;
             currentGamer.isGetYingHuaBuPai = false;
+            await room.GrabMahjongNoHua(currentGamer);
+        }
+
+        /// <summary>
+        /// 给当前玩家发一张不是花牌的牌
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="currentGamer"></param>
+        /// <returns></returns>
+        public static async Task<MahjongInfo> GrabMahjongNoHua(this Room room, Gamer currentGamer)
+        {
+            GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
+            HandCardsComponent cardsComponent = currentGamer.GetComponent<HandCardsComponent>();
             var grabMahjong = GrabMahjong(room);
             if (grabMahjong == null)
             {
                 Log.Info("没牌流局了");
                 await gameController.GameOver(0);
-                return;
+                return null;
             }
             while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
             {
@@ -345,7 +363,7 @@ namespace ETHotfix
                 room.Broadcast(actorGamerBuHua);
 
                 //从手牌中删除花牌
-                Log.Info($"{currentGamer.UserID}补花");
+                Log.Info($"{currentGamer.UserID}补花,{grabMahjong.m_weight}");
                 cardsComponent.FaceCards.Add(grabMahjong);
 
                 #region 花杠
@@ -360,7 +378,7 @@ namespace ETHotfix
 
                 Logic_NJMJ.getInstance().SortMahjong(cardsComponent.FaceCards);
                 //春夏秋冬
-                for (int i = 0; i < cardsComponent.FaceCards.Count - 4; i+=4)
+                for (int i = 0; i < cardsComponent.FaceCards.Count - 4; i += 4)
                 {
                     if (cardsComponent.FaceCards[i + 3].m_weight - cardsComponent.FaceCards[i + 2].m_weight == 2 &&
                         cardsComponent.FaceCards[i + 2].m_weight - cardsComponent.FaceCards[i + 1].m_weight == 2 &&
@@ -388,10 +406,8 @@ namespace ETHotfix
                 }
 
                 #endregion
-
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
-                //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
 
                 grabMahjong = GrabMahjong(room);
 
@@ -399,12 +415,14 @@ namespace ETHotfix
                 {
                     Log.Info("没牌流局了");
                     await gameController.GameOver(0);
-                    return;
+                    return null; ;
                 }
             }
 
             room.StartTime();
+            return grabMahjong;
         }
+
 
         /// <summary>
         /// 抓牌
@@ -605,7 +623,7 @@ namespace ETHotfix
 
             foreach (var gamer in self.GetAll())
             {
-                if (gamer.DismissState == DismissState.None)
+                if (gamer?.DismissState == DismissState.None)
                 {
                     await Actor_GamerAgreeRoomDismissHandler.GamerAgreeRoomDismiss(gamer);
                 }

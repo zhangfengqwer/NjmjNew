@@ -396,6 +396,11 @@ namespace ETHotfix
         long m_durTime = 5000;
         bool isStop = false;
 
+        public void StopFriendReq()
+        {
+            isStop = true;
+        }
+
         public async void ShowFriendRoom()
         {
             SetUIShow(false);
