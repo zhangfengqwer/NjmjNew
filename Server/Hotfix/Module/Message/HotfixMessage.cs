@@ -519,7 +519,7 @@ namespace ETHotfix
 		public long Wealth;
 
 		[ProtoMember(3, IsRequired = true)]
-		public int CurrencyType;
+		public int ShopType;
 
 	}
 
@@ -2898,6 +2898,73 @@ namespace ETHotfix
 
 		[ProtoMember(1, IsRequired = true)]
 		public string Data;
+
+	}
+
+//好友房活动
+	[Message(HotfixOpcode.C2G_GetFriendTreasure)]
+	[ProtoContract]
+	public partial class C2G_GetFriendTreasure: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_GetFriendTreasure)]
+	[ProtoContract]
+	public partial class G2C_GetFriendTreasure: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int KeyCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int AlGetCount;
+
+	}
+
+	[Message(HotfixOpcode.C2G_FriendActInfo)]
+	[ProtoContract]
+	public partial class C2G_FriendActInfo: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+	}
+
+	[Message(HotfixOpcode.G2C_FriendActInfo)]
+	[ProtoContract]
+	public partial class G2C_FriendActInfo: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int ConsumCount;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int GetCount;
 
 	}
 

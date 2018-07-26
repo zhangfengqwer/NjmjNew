@@ -220,6 +220,7 @@
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomDetailComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomItemComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomTxtComponent.cs" />
+    <Compile Include="UI\UIFriendRoom\Component\UIFriendActivityComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIMyRankItemComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UIFriendRoomRankComponent.cs" />
     <Compile Include="UI\UIFriendRoom\Component\UITypeToggleComponent.cs" />

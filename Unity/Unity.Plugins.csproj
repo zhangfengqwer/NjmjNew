@@ -612,14 +612,8 @@
     <None Include="Assets\Plugins\DOTween\readme.txt" />
     <None Include="Assets\Res\Config\BuffConfig.txt" />
     <None Include="Assets\Res\Config\ChatConfig.txt" />
-    <None Include="Assets\Res\Config\ChengjiuConfig.txt" />
-    <None Include="Assets\Res\Config\DuanwuActivityConfig.txt" />
     <None Include="Assets\Res\Config\GlobalProto.txt" />
-    <None Include="Assets\Res\Config\NoticeConfig.txt" />
     <None Include="Assets\Res\Config\RoomConfig.txt" />
-    <None Include="Assets\Res\Config\ShopConfig.txt" />
-    <None Include="Assets\Res\Config\TaskConfig.txt" />
-    <None Include="Assets\Res\Config\TreasureConfig.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\Res\Config\stopwords.txt" />
     <None Include="Assets\StreamingAssets\Version.txt" />

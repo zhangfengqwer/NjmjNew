@@ -131,13 +131,29 @@ namespace ETHotfix
 
             if (c2gCreate.Error != ErrorCode.ERR_Success)
             {
-                UICommonPanelComponent.showCommonPanel("提示", c2gCreate.Message);
+                UICommonPanelComponent panel = UICommonPanelComponent.showCommonPanel("提示", c2gCreate.Message);
+                panel.setOnClickOkEvent(OpenShop);
                 UINetLoadingComponent.closeNetLoading();
                 return;
             }
 
             await UIJoinRoomComponent.EnterFriendRoom(c2gCreate.RoomId.ToString());
 
+        }
+
+        private void OpenShop()
+        {
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICreateFriendRoom);
+            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+            Game.Scene.GetComponent<UIComponent>().Create(UIType.UIShop);
+
+            if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop) != null)
+            {
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>() != null)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().ShowPropTab();
+                }
+            }
         }
 
         private void Init()

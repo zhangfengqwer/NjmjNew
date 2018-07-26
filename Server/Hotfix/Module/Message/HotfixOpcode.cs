@@ -161,5 +161,9 @@ namespace ETHotfix
 		 public const ushort Actor_GamerKickOff = 10157;
 		 public const ushort C2G_MyFriendRank = 10158;
 		 public const ushort G2C_MyFriendRank = 10159;
+		 public const ushort C2G_GetFriendTreasure = 10160;
+		 public const ushort G2C_GetFriendTreasure = 10161;
+		 public const ushort C2G_FriendActInfo = 10162;
+		 public const ushort G2C_FriendActInfo = 10163;
 	}
 }

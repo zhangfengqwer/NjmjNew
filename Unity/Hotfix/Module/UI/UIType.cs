@@ -72,5 +72,6 @@ namespace ETHotfix
         public const string UIFriendRoomTxt = "UIFriendRoomTxt";
         public const string UIFriendRoomDetail = "UIFriendRoomDetail";
         public const string UIFriendDetail = "UIFriendDetail";
+        public const string UIFriendActivity = "UIActivity_102";
     }
 }

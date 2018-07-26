@@ -11,8 +11,8 @@ namespace ETHotfix
     {
         Wing = 1,
         Gold = 2,
-        Prop = 3,
-        Vip = 4
+        Prop = 5,
+        Vip = 6
     }
 
     [ObjectSystem]
@@ -251,11 +251,11 @@ namespace ETHotfix
 
             ToastScript.createToast("购买成功");
             GameUtil.changeData(shopId, (int)g2cBuyItem.Count);
-            if (g2cBuyItem.CurrencyType == 1)
+            if (g2cBuyItem.ShopType == 2)
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum = g2cBuyItem.Wealth;
             }
-            if (g2cBuyItem.CurrencyType == 2)
+            if (g2cBuyItem.ShopType == 1)
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().WingNum = g2cBuyItem.Wealth;
             }
@@ -370,6 +370,15 @@ namespace ETHotfix
         public void ShowVipTab()
         {
             ButtonClick(ShopType.Vip, UIType.UIVipItem, vipGrid.transform);
+        }
+
+
+        /// <summary>
+        /// 显示道具商城
+        /// </summary>
+        public void ShowPropTab()
+        {
+            ButtonClick(ShopType.Prop, UIType.UIPropItem, propGrid.transform);
         }
 
         /// <summary>
