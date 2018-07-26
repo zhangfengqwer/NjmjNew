@@ -2018,6 +2018,9 @@ namespace ETHotfix
 		[ProtoMember(3, IsRequired = true)]
 		public string Phone;
 
+		[ProtoMember(4, IsRequired = true)]
+		public int Type;
+
 	}
 
 	[Message(HotfixOpcode.G2C_UseHuaFei)]
@@ -2032,6 +2035,9 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public string Reward;
 
 	}
 
