@@ -78,7 +78,7 @@ namespace ETHotfix
                 RoomIdTxt.text = "私密房间";
             }
             juTxt.text = info.Ju + "局";
-            huaTxt.text = "每花" + info.Hua;
+            huaTxt.text = info.Hua + "/花";
             if (info.Icons.Count >= 4)
             {
                 EnterBtn.gameObject.SetActive(false);

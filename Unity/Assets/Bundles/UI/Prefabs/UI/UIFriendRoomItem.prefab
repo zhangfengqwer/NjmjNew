@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 224421432939849860}
   - component: {fileID: 222923032276955492}
   - component: {fileID: 114468480333813192}
-  - component: {fileID: 114471489847448250}
   m_Layer: 5
   m_Name: huaTxt
   m_TagString: Untagged
@@ -205,7 +204,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u623F\u53F7:000000"
+  m_Text: "\u623F\u53F7:"
 --- !u!114 &114187549538807960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,7 +237,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "16\u5C40"
+  m_Text: "\u5C40"
 --- !u!114 &114191065604629806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,8 +288,8 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
+    m_BestFit: 1
+    m_MinSize: 5
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -298,20 +297,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "100/\u82B1"
---- !u!114 &114471489847448250
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1417371159585094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
+  m_Text: "\u82B1"
 --- !u!114 &114529410977285976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -517,9 +503,9 @@ RectTransform:
   m_Father: {fileID: 224122899207907298}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.620102, y: 31.300003}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -10.620102, y: -36.699997}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224081776287061770
@@ -578,9 +564,9 @@ RectTransform:
   m_Father: {fileID: 224122899207907298}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.12001, y: -13.800004}
+  m_AnchorMin: {x: 0.41944262, y: 0.38264707}
+  m_AnchorMax: {x: 0.41944262, y: 0.38264707}
+  m_AnchoredPosition: {x: 14.87999, y: 2.199996}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224392950562952610
@@ -614,10 +600,10 @@ RectTransform:
   m_Father: {fileID: 224122899207907298}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58.779922, y: -13.800034}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0.4044117}
+  m_AnchorMax: {x: 1, y: 0.4044117}
+  m_AnchoredPosition: {x: -93.22008, y: -0.80003357}
+  m_SizeDelta: {x: 74, y: 28}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224517904162786098
 RectTransform:
