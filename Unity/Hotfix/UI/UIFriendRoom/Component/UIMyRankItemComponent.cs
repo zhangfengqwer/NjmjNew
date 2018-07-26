@@ -33,6 +33,7 @@ namespace ETHotfix
         private int index;
         private List<UI> uiList = new List<UI>();
         private Dictionary<string, List<int>> scoreDic = new Dictionary<string, List<int>>();
+        private Dictionary<long, List<int>> scoreDicU = new Dictionary<long, List<int>>();
 
         public void Start()
         {

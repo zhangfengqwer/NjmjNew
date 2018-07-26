@@ -94,13 +94,14 @@ namespace ETHotfix
             UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
-        int curHua = 100;
+        int curHua = 1;
         int curJu = 4;
         int curType = 1;
         int curKey = 3;
         public void SetCurHua(int curHua)
         {
             this.curHua = curHua;
+            Log.Debug(curHua + "花");
         }
 
         public void SetCurJuAK(int curJu,int curKey)
