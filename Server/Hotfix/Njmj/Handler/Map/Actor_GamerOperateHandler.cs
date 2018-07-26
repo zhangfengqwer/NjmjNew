@@ -30,7 +30,7 @@ namespace ETHotfix
                 HandCardsComponent handCards = gamer.GetComponent<HandCardsComponent>();
                 if (handCards == null) return;
                 List<MahjongInfo> mahjongInfos = handCards.GetAll();
-                Log.Info($"玩家{gamer.UserID}碰或刚{message.OperationType},当前出牌");
+                Log.Info($"玩家{gamer.UserID}碰或刚{message.OperationType},当前出牌:{deskComponent.CurrentCard.m_weight}");
 
                 //胡牌
                 int huaCount = 0;

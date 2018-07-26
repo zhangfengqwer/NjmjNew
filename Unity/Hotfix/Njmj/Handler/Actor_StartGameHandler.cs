@@ -129,7 +129,7 @@ namespace ETHotfix
 
                 uiRoomComponent.StartGame(message.restCount);
                 //将退出变成解散
-                if (uiRoomComponent.IsFriendRoom)
+                if (UIRoomComponent.IsFriendRoom)
                 {
                     uiRoomComponent.SetFriendSetting(PlayerInfoComponent.Instance.uid);
                     uiRoomComponent.SetCurrentJuCount(message.CurrentJuCount);
