@@ -324,9 +324,13 @@ namespace ETHotfix
             GameObject obj = (GameObject) this.resourcesComponent.GetAsset("Image_Top_Card.unity3d", "Image_Top_Card");
             showCard.GetComponent<Image>().sprite = obj.Get<Sprite>("card_" + mahjongWeight);
 
-            showCard.SetActive(true);
+            showCard?.SetActive(true);
             await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000, tokenSource.Token);
-            showCard.SetActive(false);
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            showCard?.SetActive(false);
         }
 
         /// <summary>

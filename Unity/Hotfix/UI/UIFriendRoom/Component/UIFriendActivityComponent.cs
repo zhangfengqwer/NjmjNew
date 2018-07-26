@@ -44,7 +44,7 @@ namespace ETHotfix
                 GetTreasure();
             });
 
-            //GetFriendActInfo();
+            GetFriendActInfo();
         }
 
         private async void GetTreasure()

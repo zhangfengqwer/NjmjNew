@@ -43,20 +43,23 @@ namespace ETHotfix
                     PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamerInfo.UserID);
 
                     //判断金币是否不够
-                    if (playerBaseInfo.GoldNum < gameControllerComponent.RoomConfig.MinThreshold)
+                    if (!room.IsFriendRoom)
                     {
-                        room.GamerBroadcast(_gamer, new Actor_GamerReadyTimeOut()
+                        if (playerBaseInfo.GoldNum < gameControllerComponent.RoomConfig.MinThreshold)
                         {
-                            Message = "金币不足"
-                        });
-                        room.Remove(_gamer.UserID);
-                        _gamer.Dispose();
-                        if (room.Count == 0)
-                        {
-                            GameHelp.RoomDispose(room);
-                            return;
+                            room.GamerBroadcast(_gamer, new Actor_GamerReadyTimeOut()
+                            {
+                                Message = "金币不足"
+                            });
+                            room.Remove(_gamer.UserID);
+                            _gamer.Dispose();
+                            if (room.Count == 0)
+                            {
+                                GameHelp.RoomDispose(room);
+                                return;
+                            }
+                            continue;
                         }
-                        continue;
                     }
 
                     PlayerInfo playerInfo = PlayerInfoFactory.Create(playerBaseInfo);
