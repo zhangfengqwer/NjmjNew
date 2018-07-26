@@ -212,7 +212,7 @@ namespace ETHotfix
                 if (Index != 0)
                 {
                     uidText.text = playerInfo.Name;
-                    if (uiRoomComponent.IsFriendRoom)
+                    if (UIRoomComponent.IsFriendRoom)
                     {
                         jinbiText.text = $"积 分:<color=#FFF089FF>{playerInfo.Score}</color>";
                     }
@@ -345,7 +345,7 @@ namespace ETHotfix
 
                     UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
                     this.uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
-                    if (uiRoomComponent.IsFriendRoom)
+                    if (UIRoomComponent.IsFriendRoom)
                     {
                         shenglvReadyText.text = $"积 分:<color=#FFF089FF>{playerInfo.Score}</color>";
                     }

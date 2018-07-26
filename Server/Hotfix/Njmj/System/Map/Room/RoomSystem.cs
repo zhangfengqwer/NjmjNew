@@ -390,7 +390,7 @@ namespace ETHotfix
 
                 currentGamer.isGangEndBuPai = false;
                 currentGamer.isGetYingHuaBuPai = true;
-                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
+                //await Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
 
                 grabMahjong = GrabMahjong(room);
 
@@ -460,7 +460,6 @@ namespace ETHotfix
                 Logic_NJMJ.getInstance().SortMahjong(cardsComponent.GetAll());
 
                 //发送抓牌消息
-                //
                 ActorMessageSenderComponent actorMessageSenderComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
              
                 foreach (Gamer _gamer in room.gamers)

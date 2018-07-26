@@ -82,7 +82,7 @@ namespace ETHotfix
                 //好友房处理
                 if (message.RoomType == 3)
                 {
-                    roomComponent.IsFriendRoom = true;
+                    UIRoomComponent.IsFriendRoom = true;
                     roomComponent.JuCount = message.JuCount;
                     uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
                     uiReady?.GetComponent<UIReadyComponent>()?.SetFriendRoom(true);
@@ -93,7 +93,7 @@ namespace ETHotfix
                 else
                 {
                     uiReady?.GetComponent<UIReadyComponent>()?.SetFriendRoom(false);
-                    roomComponent.IsFriendRoom = false;
+                    UIRoomComponent.IsFriendRoom = false;
                 }
 
                 for (int i = 0; i < message.Gamers.Count; i++)

@@ -66,7 +66,7 @@ namespace ETHotfix
         public int RoomType { get; set; }
         //当前出牌或者抓牌
         public MahjongInfo CurrentMahjong { get; set; }
-        public bool IsFriendRoom;
+        public static bool IsFriendRoom;
         public int JuCount { get; set; }
 
         public void Awake()
@@ -229,29 +229,55 @@ namespace ETHotfix
         {
             try
             {
-                UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
-                script.setOnClickOkEvent(() =>
+                if (!IsFriendRoom)
                 {
-                    SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
-                    if (ISGaming)
+                    UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
+                    script.setOnClickOkEvent(() =>
                     {
-                        CommonUtil.ShowUI(UIType.UIMain);
-                        GameUtil.Back2Main();
-                    }
-                });
+                        SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                        if (ISGaming)
+                        {
+                            CommonUtil.ShowUI(UIType.UIMain);
+                            GameUtil.Back2Main();
+                        }
+                    });
 
-                script.setOnClickCloseEvent(() =>
+                    script.setOnClickCloseEvent(() =>
+                    {
+                        Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                    });
+
+                    script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                }
+                else
                 {
-                    Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
-                });
+                    if (!ISGaming)
+                    {
+                        UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
+                        script.setOnClickOkEvent(() =>
+                        {
+                            SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                            if (ISGaming)
+                            {
+                                CommonUtil.ShowUI(UIType.UIMain);
+                                GameUtil.Back2Main();
+                            }
+                        });
 
-                script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                        script.setOnClickCloseEvent(() =>
+                        {
+                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                        });
+
+                        script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                    }
+                }
+               
             }
             catch (Exception e)
             {
                 Log.Error(e);
             }
-         
         }
 
         private async void OnSetting()

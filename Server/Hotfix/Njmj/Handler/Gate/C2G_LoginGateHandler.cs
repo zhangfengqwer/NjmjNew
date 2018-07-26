@@ -36,7 +36,7 @@ namespace ETHotfix
                 session.AddComponent<SessionUserComponent>().User = user;
 
 			    //添加消息转发组件
-			    await session.AddComponent<MailBoxComponent, string>(ActorType.GateSession).AddLocation();
+			    session.AddComponent<MailBoxComponent, string>(ActorType.GateSession);
 
 			    response.PlayerId = user.Id;
 			    response.Uid = userId;
