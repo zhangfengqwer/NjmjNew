@@ -240,7 +240,7 @@ namespace ETHotfix
 
             foreach (var gamer in self.GetAll())
             {
-                if (gamer.isOffline)
+                if (gamer.isOffline || !gamer.IsReady)
                 {
                     await Actor_GamerReadyHandler.GamerReady(gamer, new Actor_GamerReady() { });
                 }
