@@ -18,10 +18,9 @@ namespace ETHotfix
 	
 	public class UIUseHuaFeiComponent : Component
 	{
-        private GameObject huafei_5;
-
         private Button Button_cancel;
-        private Button Button_OK;
+        private Button Button_HuaFei;
+        private Button Button_Key;
 
         public void Awake()
 		{
@@ -37,13 +36,15 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             Button_cancel = rc.Get<GameObject>("Button_cancel").GetComponent<Button>();
-            Button_OK = rc.Get<GameObject>("Button_OK").GetComponent<Button>();
+            Button_HuaFei = rc.Get<GameObject>("Button_OK").GetComponent<Button>();
+            Button_Key = rc.Get<GameObject>("Button_Key").GetComponent<Button>();
 
-            Button_OK.onClick.Add(onClick_huafei5);
+            Button_HuaFei.onClick.Add(onClick_huafei5);
+            Button_Key.onClick.Add(onClick_duihuanyuanbao);
             Button_cancel.onClick.Add(onClick_close);
 
-            CommonUtil.SetTextFont(Button_OK.transform.parent.gameObject);
-            UIAnimation.ShowLayer(Button_OK.transform.parent.gameObject);
+            CommonUtil.SetTextFont(Button_HuaFei.transform.parent.gameObject);
+            UIAnimation.ShowLayer(Button_HuaFei.transform.parent.gameObject);
         }
 
         public void onClick_close()
@@ -68,9 +69,21 @@ namespace ETHotfix
                 return;
             }
 
-            RequestUseHuaFei(5 * 100);
+            RequestUseHuaFei(5 * 100,1);
         }
-        
+
+        public void onClick_duihuanyuanbao()
+        {
+            if (PlayerInfoComponent.Instance.GetPlayerInfo().HuaFeiNum < 100)
+            {
+                ToastScript.createToast("您的话费余额不足");
+
+                return;
+            }
+
+            RequestUseHuaFei(1 * 100,2);
+        }
+
         private async void RequestUseHuaFeiState()
         {
             UINetLoadingComponent.showNetLoading();
@@ -82,10 +95,10 @@ namespace ETHotfix
             Log.Debug("话费5次数：" + HuaFei_5_RestCount.ToString());
         }
 
-        private async void RequestUseHuaFei(int huafei)
+        private async void RequestUseHuaFei(int huafei,int type)
         {
             UINetLoadingComponent.showNetLoading();
-            G2C_UseHuaFei g2cUseHuaFei = (G2C_UseHuaFei)await SessionComponent.Instance.Session.Call(new C2G_UseHuaFei { Uid = PlayerInfoComponent.Instance.uid, HuaFei = huafei, Phone = PlayerInfoComponent.Instance.GetPlayerInfo().Phone });
+            G2C_UseHuaFei g2cUseHuaFei = (G2C_UseHuaFei)await SessionComponent.Instance.Session.Call(new C2G_UseHuaFei { Uid = PlayerInfoComponent.Instance.uid, HuaFei = huafei, Phone = PlayerInfoComponent.Instance.GetPlayerInfo().Phone,Type = type });
             UINetLoadingComponent.closeNetLoading();
 
             if (g2cUseHuaFei.Error != ErrorCode.ERR_Success)
@@ -94,8 +107,20 @@ namespace ETHotfix
 
                 return;
             }
-            GameUtil.changeData(3, -5 * 100);
-            ToastScript.createToast((huafei / 100.0f).ToString() + "元话费兑换成功");
+
+            GameUtil.changeData(3, -huafei);
+
+            // 兑换话费
+            if (type == 1)
+            {
+                ToastScript.createToast((huafei / 100.0f).ToString() + "元话费兑换成功");
+            }
+            // 兑换元宝
+            else if (type == 1)
+            {
+                GameUtil.changeDataWithStr(g2cUseHuaFei.Reward);
+                ShowRewardUtil.Show(g2cUseHuaFei.Reward);
+            }
         }
     }
 }

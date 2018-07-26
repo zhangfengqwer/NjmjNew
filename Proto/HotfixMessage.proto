@@ -705,10 +705,12 @@ message C2G_UseHuaFei // IRequest
 	required long	Uid	 = 1;
 	required int	HuaFei	 = 2;
 	required string	Phone	 = 3;
+	required int	Type	 = 4;
 }
 
 message G2C_UseHuaFei // IResponse
 {
+	required string Reward = 1;
 }
 
 message C2G_UseHuaFeiState // IRequest
