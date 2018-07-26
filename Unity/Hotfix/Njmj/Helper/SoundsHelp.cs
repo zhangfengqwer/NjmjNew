@@ -19,9 +19,6 @@ namespace ETHotfix
                 if (instance != null)
                     return instance;
                 instance = new SoundsHelp();
-
-//                instance.SoundMute(PlayerPrefs.GetInt("isOpenSound", 1) == 1);
-
                 return instance;
             }
         }
@@ -191,15 +188,15 @@ namespace ETHotfix
             this.isReturn = isReturn;
         }
 
-        public void SoundMute(bool isMute)
+        public void IsOpenSound(bool isOpenSound)
         {
-            if (isMute)
+            if (isOpenSound)
             {
-                ETModel.Game.Scene.GetComponent<SoundComponent>().SoundVolume = 0;
+                ETModel.Game.Scene.GetComponent<SoundComponent>().SoundVolume = 1;
             }
             else
             {
-                ETModel.Game.Scene.GetComponent<SoundComponent>().SoundVolume = 1;
+                ETModel.Game.Scene.GetComponent<SoundComponent>().SoundVolume = 0;
             }
         }
 

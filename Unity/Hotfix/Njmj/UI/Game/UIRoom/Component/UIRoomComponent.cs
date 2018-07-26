@@ -572,7 +572,7 @@ namespace ETHotfix
                 while (onlineSeconds > 0)
                 {
                     await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
-                    if (isTreasureFinish) return;
+                    if (isTreasureFinish || this.IsDisposed) return;
                     onlineSeconds--;
                     int second = onlineSeconds % 60;
                     int minute = onlineSeconds / 60;

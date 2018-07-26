@@ -185,12 +185,20 @@ namespace ETHotfix
         {
             if (!isFriend)
             {
-                roomIdObj.GetComponentInParent<Image>().gameObject.SetActive(false);
+                roomIdObj?.GetComponentInParent<Image>()?.gameObject?.SetActive(false);
             }
             else
             {
-                roomIdObj.GetComponentInParent<Image>().gameObject.SetActive(true);
+                roomIdObj?.GetComponentInParent<Image>()?.gameObject?.SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// 好友局过程中微信按钮
+        /// </summary>
+        public void CloseBtn()
+        {
+            weChatBtn.gameObject.SetActive(false);
         }
     }
 }

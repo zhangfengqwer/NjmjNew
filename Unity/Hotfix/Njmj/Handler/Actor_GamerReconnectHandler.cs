@@ -16,7 +16,7 @@ namespace ETHotfix
             try
             {
                 Log.Info($"断线重连:");
-                SoundsHelp.Instance.SoundMute(true);
+                SoundsHelp.Instance.IsOpenSound(false);
 
                 GameObject mask = GameObject.Instantiate(CommonUtil.getGameObjByBundle("Image_Desk_Card", "RoomMask"),GameObject.Find("Global/UI/CommonCanvas").transform);
 
@@ -149,8 +149,9 @@ namespace ETHotfix
                 }
 
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
-                bool b = PlayerPrefs.GetInt("isOpenSound", 0) == 0;
-                SoundsHelp.Instance.SoundMute(b);
+                int openSound = PlayerPrefs.GetInt("isOpenSound", 0);
+                bool b = openSound == 1;
+                SoundsHelp.Instance.IsOpenSound(b);
                 GameObject.Destroy(mask);
             }
             catch (Exception e)

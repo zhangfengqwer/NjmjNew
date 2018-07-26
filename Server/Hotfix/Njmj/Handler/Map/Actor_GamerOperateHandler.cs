@@ -99,7 +99,7 @@ namespace ETHotfix
                     //有没有人胡牌
                     while (true)
                     {
-                        if (!GetCanHu(room))
+                        if (!GetCanHu(room, gamer))
                         {
                             break;
                         }
@@ -118,6 +118,9 @@ namespace ETHotfix
                     {
                         if (Logic_NJMJ.getInstance().isCanPeng(deskComponent.CurrentCard, mahjongInfos))
                         {
+                            room.tokenSource.Cancel();
+                            Log.Info("11111");
+
                             gamerOperation.OperationType = 0;
                             gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
                             room.Broadcast(gamerOperation);
@@ -128,7 +131,7 @@ namespace ETHotfix
                                 int index = Logic_NJMJ.getInstance().GetIndex(mahjongInfos, deskComponent.CurrentCard);
                                 mahjongInfos.RemoveAt(index);
                             }
-
+                            Log.Info("222222");
                             handCards.PengCards.Add(deskComponent.CurrentCard);
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
 
@@ -140,11 +143,13 @@ namespace ETHotfix
                             pengOrBar.BarType = BarType.None;
 
                             handCards.PengOrBars.Add(pengOrBar);
-                        }
 
-                        //碰完当前玩家出牌
-                        orderController.CurrentAuthority = gamer.UserID;
-                        room.StartTime();
+                            Log.Debug("PengOrBars:" + handCards.PengOrBars.Count);
+
+                            //碰完当前玩家出牌
+                            orderController.CurrentAuthority = gamer.UserID;
+                            room.StartTime();
+                        }
                     }
                     // 杠
                     else
@@ -570,10 +575,14 @@ namespace ETHotfix
             return huaCount;
         }
 
-        private static bool GetCanHu(Room room)
+        private static bool GetCanHu(Room room,Gamer selfGamer)
         {
             foreach (var _gamer in room.GetAll())
             {
+                if (selfGamer.UserID == _gamer.UserID)
+                {
+                    continue;
+                }
                 if (_gamer.IsCanHu)
                 {
                     return true;
