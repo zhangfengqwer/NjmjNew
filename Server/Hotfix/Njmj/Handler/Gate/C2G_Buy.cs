@@ -36,34 +36,31 @@ namespace ETHotfix
                     //金币
                     case 1:
                         response.Wealth = playerBaseInfos[0].GoldNum;
-                        response.CurrencyType = 1;
+                        response.ShopType = 2;
                         break;
                     //元宝
                     case 2:
                         response.Wealth = playerBaseInfos[0].WingNum;
-                        response.CurrencyType = 2;
+                        response.ShopType = 1;
                         break;
                 }
                 //购买金币
                 if (shopId == 1)
                 {
                     await DBCommonUtil.ChangeWealth(message.UId, 1,count, $"商城购买{count}金币");
-                    response.Count = count;
-                    reply(response);
                 }
                 else if(shopId == 112)
                 {
                     await DBCommonUtil.AddFriendKey(message.UId, count, "-1", $"商城购买{count}个{config.Name}道具");
-                    response.Count = count;
-                    reply(response);
                 }
                 else
                 {
                     List<UserBag> itemInfos = await proxyComponent.QueryJson<UserBag>($"{{UId:{message.UId},BagId:{shopId}}}");
                     await DBCommonUtil.ChangeWealth(message.UId, shopId, count, $"商城购买{count}个{config.Name}道具");
-                    response.Count = count;
-                    reply(response);
                 }
+
+                response.Count = count;
+                reply(response);
             }
             catch(Exception e)
             {

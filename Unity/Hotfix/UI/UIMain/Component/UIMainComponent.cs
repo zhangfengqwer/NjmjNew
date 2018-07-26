@@ -399,15 +399,13 @@ namespace ETHotfix
         public async void ShowFriendRoom()
         {
             SetUIShow(false);
-            GetRoomInfoReq();
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);
             StartFriendReq();
         }
 
         public async void StartFriendReq()
         {
             isStop = false;
-
+            GetRoomInfoReq();
             while (!isStop)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);

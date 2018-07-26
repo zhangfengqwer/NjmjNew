@@ -177,7 +177,7 @@ message G2C_BuyItem //IResponse
 {
 	required long Count = 1;
 	required long Wealth = 2;
-	required int CurrencyType = 3;
+	required int ShopType = 3;
 }
 
 message C2G_GetTaskReward //IRequest
@@ -1008,4 +1008,27 @@ message C2G_MyFriendRank //IRequest
 message G2C_MyFriendRank //IResponse
 {
 	required string Data = 1;
+}
+
+//好友房活动
+message C2G_GetFriendTreasure //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_GetFriendTreasure //IResponse
+{
+	required int KeyCount = 1;
+	required int AlGetCount = 2;
+}
+
+message C2G_FriendActInfo //IRequest
+{
+	required long UId = 1;
+}
+
+message G2C_FriendActInfo //IResponse
+{
+	required int ConsumCount = 1;
+	required int GetCount = 2;
 }

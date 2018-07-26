@@ -967,6 +967,24 @@ namespace ETHotfix
                 await Log_ChangeWealth(uid, 112, -num, reason);
 
                 //Log.Info("修改完后玩家：" + uid + "钥匙数量为：" + await GetUserFriendKeyNum(uid));
+
+                // 好友房活动
+                {
+                    List<FriendKeyConsum> consums = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{uid},CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}");
+                    if(consums.Count > 0)
+                    {
+                        consums[0].ConsumCount += count;
+                        await proxyComponent.Save(consums[0]);
+                    }
+                    else
+                    {
+                        FriendKeyConsum consum = ComponentFactory.CreateWithId<FriendKeyConsum>(IdGenerater.GenerateId());
+                        consum.UId = uid;
+                        consum.ConsumCount = count;
+                        consum.GetCount = 0;
+                        await proxyComponent.Save(consum);
+                    }
+                }
             }
             catch (Exception e)
             {
