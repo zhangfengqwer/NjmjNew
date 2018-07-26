@@ -30,7 +30,7 @@ namespace ETHotfix
 			    {
                     RoomType = message.RoomType,
 			        UserId = user.UserID,
-			        SessionId = session.Id,
+			        SessionId = session.InstanceId,
 			        PlayerId = user.Id,
                     RoomId = message.RoomId
 			    });

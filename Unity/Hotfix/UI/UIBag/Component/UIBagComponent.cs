@@ -77,12 +77,26 @@ namespace ETHotfix
                     ToastScript.createToast("暂无道具");
                     return;
                 }
-                useBg.SetActive(true);
-                UIAnimation.ShowLayer(UseBgS);
-                useTxt.text = new StringBuilder().Append("是否使用道具")
-                                                 .Append("\"")
-                                                 .Append(propInfo.prop_name)
-                                                 .Append("\"").ToString();
+                switch (item.ItemId)
+                {
+                    case 112:
+                        {
+                            GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).ShowFriendRoom();
+                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);
+                        }
+                        break;
+                    default:
+                        {
+                            useBg.SetActive(true);
+                            UIAnimation.ShowLayer(UseBgS);
+                            useTxt.text = new StringBuilder().Append("是否使用道具")
+                                                             .Append("\"")
+                                                             .Append(propInfo.prop_name)
+                                                             .Append("\"").ToString();
+                        }
+                        break;
+                }
+                
             });
             sureBtn.onClick.Add(() =>
             {
@@ -198,7 +212,7 @@ namespace ETHotfix
             descTxt.text = propInfo.desc;
         }
 
-        private async void UseItem(Bag item)
+        public async void UseItem(Bag item)
         {
             try
             {

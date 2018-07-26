@@ -33,6 +33,7 @@ namespace ETHotfix
         private int index;
         private List<UI> uiList = new List<UI>();
         private Dictionary<string, List<int>> scoreDic = new Dictionary<string, List<int>>();
+        private Dictionary<long, List<int>> scoreDicU = new Dictionary<long, List<int>>();
 
         public void Start()
         {
@@ -74,11 +75,26 @@ namespace ETHotfix
             }
         }
 
-        private List<int> MyScore(string name)
+        private void MyAccountAllScore()
         {
-            if (scoreDic.ContainsKey(name))
+            for (int j = 0; j < info.gameList.Count; ++j)
             {
-                return scoreDic[name];
+                for (int k = 0; k < info.gameList[j].uidList.Count; ++k)
+                {
+                    if (!scoreDicU.ContainsKey(info.gameList[j].uidList[k]))
+                    {
+                        scoreDicU.Add(info.gameList[j].uidList[k], new List<int>());
+                    }
+                    scoreDicU[info.gameList[j].uidList[k]].Add(info.gameList[j].scoreList[k]);
+                }
+            }
+        }
+
+        private List<int> MyScore(long uid)
+        {
+            if (scoreDicU.ContainsKey(uid))
+            {
+                return scoreDicU[uid];
             }
             return null;
         }
@@ -88,9 +104,9 @@ namespace ETHotfix
             this.info = info;
             this.index = id;
             AccountAllScore();
-
+            MyAccountAllScore();
             int allScore = 0;
-            List<int> myList = MyScore(PlayerInfoComponent.Instance.GetPlayerInfo().Name);
+            List<int> myList = MyScore(PlayerInfoComponent.Instance.uid);
             if(myList != null)
             {
                 for(int i = 0;i< myList.Count; ++i)
@@ -105,7 +121,7 @@ namespace ETHotfix
             }
             else
             {
-                ScoreTxt.text = "-" + allScore.ToString();
+                ScoreTxt.text = allScore.ToString();
             }
             Result.sprite = CommonUtil.getSpriteByBundle("image_main", allScore >= 0 ? "1" : "2");
 

@@ -43,6 +43,7 @@ namespace ETHotfix
             });
 
             GetInfoReq();
+            UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
         private async void GetInfoReq()
@@ -153,11 +154,12 @@ namespace ETHotfix
         // 一个对象代表一小局
         public class ResultDetails
         {
+            public List<long> uidList = new List<long>();
             public List<string> nameList = new List<string>();
             public List<int> scoreList = new List<int>();
             public string time;
 
-            public ResultDetails(List<string> _gameInfoList, List<int> _scoreList, string _time)
+            public ResultDetails(List<string> _gameInfoList, List<int> _scoreList,List<long> _uidList, string _time)
             {
                 time = _time;
                 nameList = _gameInfoList;

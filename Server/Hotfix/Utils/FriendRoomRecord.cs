@@ -27,6 +27,7 @@ namespace ETHotfix
             // 一个对象代表一小局
             public class ResultDetails
             {
+                public List<long> uidList = new List<long>();
                 public List<string> nameList = new List<string>();
                 public List<int> scoreList = new List<int>();
                 public string time;
@@ -42,6 +43,7 @@ namespace ETHotfix
 
                         if (list.Count == 3)
                         {
+                            uidList.Add(long.Parse(list[0]));
                             nameList.Add(list[1]);
                             scoreList.Add(int.Parse(list[2]));
                         }
@@ -93,7 +95,7 @@ namespace ETHotfix
             }
 
             jsonData = JsonConvert.SerializeObject(listData);
-            Log.Info("------------------" + jsonData);
+            Log.Debug("------------------" + jsonData);
             return jsonData;
         }
     }

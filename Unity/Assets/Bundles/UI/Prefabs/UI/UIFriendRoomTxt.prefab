@@ -54,7 +54,6 @@ GameObject:
   - component: {fileID: 224656449138074844}
   - component: {fileID: 222653496826666328}
   - component: {fileID: 114034653063794968}
-  - component: {fileID: 114693577037574682}
   m_Layer: 5
   m_Name: AllScoreTxt
   m_TagString: Untagged
@@ -85,16 +84,16 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 25
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 4
+    m_BestFit: 1
+    m_MinSize: 5
+    m_MaxSize: 25
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +1233
+  m_Text: 
 --- !u!114 &114294403114820690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,19 +110,6 @@ MonoBehaviour:
     gameObject: {fileID: 1643796591750636}
   - key: AllScoreTxt
     gameObject: {fileID: 1646635023073592}
---- !u!114 &114693577037574682
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1646635023073592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &114949357356366988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,7 +142,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 121212
+  m_Text: 
 --- !u!222 &222421986178811570
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -223,5 +209,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 56.3, y: -23.95}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 84, y: 28}
   m_Pivot: {x: 0, y: 0.5}

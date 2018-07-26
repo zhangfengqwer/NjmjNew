@@ -50,7 +50,7 @@ namespace ETHotfix
 
             if (name.Length > 2)
             {
-                NameTxt.text = name.Substring(name.Length - 2) + "...";
+                NameTxt.text = name.Substring(0, 2) + "...";
             }
             else
             {

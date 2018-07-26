@@ -1117,7 +1117,6 @@ namespace ETHotfix
             // 小胡：最普通的胡牌
             if(type_list.Count == 0)
             {
-                if (huPaiNeedData.my_yingHuaList.Count >= 4)
                 {
                     type_list.Add(HuPaiType.Normal);
                 }

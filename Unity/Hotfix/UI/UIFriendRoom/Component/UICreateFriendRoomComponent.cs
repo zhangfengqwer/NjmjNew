@@ -90,9 +90,11 @@ namespace ETHotfix
             CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
 
             Init();
+
+            UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
         }
 
-        int curHua = 100;
+        int curHua = 1;
         int curJu = 4;
         int curType = 1;
         int curKey = 3;
