@@ -267,17 +267,6 @@ namespace ETHotfix
                     }
                 }
 
-                // MahjongInfo info = handCards[index];
-                //
-                // if (info.weight == mahjong.weight)
-                // {
-                //     GameObject gameObject = this.GetSprite(index);
-                //     GameObject.Destroy(gameObject);
-                //     handCards.RemoveAt(index);
-                //     playCards.Add(info);
-                //     ItemCards.RemoveAt(index);
-                // }
-
                 UpdateCards();
 
                 //显示出牌

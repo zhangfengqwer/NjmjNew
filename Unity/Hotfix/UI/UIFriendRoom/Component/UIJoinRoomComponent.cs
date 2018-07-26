@@ -118,7 +118,7 @@ namespace ETHotfix
                 }
                 
                 //向服务器发送消息
-                ToastScript.createToast("房间号已经输入完成");
+                //ToastScript.createToast("房间号已经输入完成");
                 curEnterValue = curEnterValue.Replace(" ", "");
                 await EnterFriendRoom(curEnterValue);
                 return;

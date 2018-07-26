@@ -89,6 +89,7 @@ namespace ETHotfix
                     uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
                     roomComponent.RoomConfig.Multiples = message.Multiples;
                     roomComponent.SetFriendSetting(message.MasterUserId);
+
                     if (message.CurrentJuCount > 0)
                     {
                         uiReady?.GetComponent<UIReadyComponent>()?.CloseBtn();
