@@ -29,12 +29,11 @@ namespace ETHotfix
             UIChatItem = rc.Get<GameObject>("UIChatItem").GetComponent<Button>();
             ChatTxt = rc.Get<GameObject>("ChatTxt").GetComponent<Text>();
 
-            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
-
             UIChatItem.GetComponent<Button>().onClick.Add(() =>
             {
                 RequestChat();
             });
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         private void RequestChat()

@@ -85,12 +85,14 @@ namespace ETHotfix
                     roomComponent.IsFriendRoom = true;
                     roomComponent.JuCount = message.JuCount;
                     uiReady?.GetComponent<UIReadyComponent>()?.ClosePropt();
+                    uiReady?.GetComponent<UIReadyComponent>()?.SetFriendRoom(true);
                     uiReady?.GetComponent<UIReadyComponent>()?.ShowWeChat(message.RoomId.ToString());
                     roomComponent.RoomConfig.Multiples = message.Multiples;
                     roomComponent.SetFriendSetting(message.MasterUserId);
                 }
                 else
                 {
+                    uiReady?.GetComponent<UIReadyComponent>()?.SetFriendRoom(false);
                     roomComponent.IsFriendRoom = false;
                 }
 

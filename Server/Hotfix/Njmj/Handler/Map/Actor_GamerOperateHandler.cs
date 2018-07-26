@@ -498,8 +498,36 @@ namespace ETHotfix
                 }
             }
 
-            int queYiMenHuaShu = Logic_NJMJ.getInstance().getQueYiMenHuaShu(mahjongInfos);
             int fengKeHuaShu = Logic_NJMJ.getInstance().getFengKeHuaShu(mahjongInfos);
+
+            //将碰刚将入手牌
+            foreach (var pengorbar in handCards.PengOrBars)
+            {
+                if (pengorbar.OperateType == OperateType.Peng)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        mahjongInfos.Add(new MahjongInfo()
+                        {
+                            m_weight = (Consts.MahjongWeight)pengorbar.Weight,
+                            weight = (byte)pengorbar.Weight
+                        });
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        mahjongInfos.Add(new MahjongInfo()
+                        {
+                            m_weight = (Consts.MahjongWeight)pengorbar.Weight,
+                            weight = (byte)pengorbar.Weight
+                        });
+                    }
+                }
+            }
+
+            int queYiMenHuaShu = Logic_NJMJ.getInstance().getQueYiMenHuaShu(mahjongInfos);
 
             actorGamerHuPai.RuanHuaCount += queYiMenHuaShu;
             actorGamerHuPai.RuanHuaCount += fengKeHuaShu;
@@ -509,7 +537,7 @@ namespace ETHotfix
             foreach (var type in huPaiTypes)
             {
                 actorGamerHuPai.HuPaiTypes.Add((int) type);
-            }
+            }   
 
             room.Broadcast(actorGamerHuPai);
 

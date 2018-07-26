@@ -683,8 +683,8 @@ namespace ETHotfix
             TreasureConfig treasureConfig =
                 configComponent.Get(typeof(TreasureConfig), ++gamerInfo.DailyTreasureCount) as TreasureConfig;
 
-            Log.Debug(gamerInfo.DailyTreasureCount + "");
-            Log.Debug(JsonHelper.ToJson(treasureConfig));
+//            Log.Debug(gamerInfo.DailyTreasureCount + "");
+//            Log.Debug(JsonHelper.ToJson(treasureConfig));
 
 
             if (gamerInfo.DailyOnlineTime > treasureConfig?.TotalTime)
@@ -735,9 +735,9 @@ namespace ETHotfix
             }
 
             int i = treasureConfig.TotalTime - gamerInfos[0].DailyOnlineTime;
-            Log.Debug("TotalTime" + treasureConfig.TotalTime);
-            Log.Debug("gamerInfos[0].DailyOnlineTime" + gamerInfos[0].DailyOnlineTime);
-            Log.Debug("还剩" + i);
+//            Log.Debug("TotalTime" + treasureConfig.TotalTime);
+//            Log.Debug("gamerInfos[0].DailyOnlineTime" + gamerInfos[0].DailyOnlineTime);
+//            Log.Debug("还剩" + i);
 
             return i;
         }

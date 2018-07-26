@@ -374,9 +374,6 @@ namespace ETHotfix
                             .Append(RealNameTip.GetComponent<RectTransform>().DOAnchorPos(new Vector2(117.3f, 97.1f), 0.8f, false)).SetLoops(-1).Play();
                     }
                 }
-
-                GameObject obj = CommonUtil.getGameObjByBundle("test1");
-                GameObject.Instantiate(obj, BtnList_Down.transform.Find("Grid/Btn_Shop").transform);
             }
             catch (Exception ex)
             {

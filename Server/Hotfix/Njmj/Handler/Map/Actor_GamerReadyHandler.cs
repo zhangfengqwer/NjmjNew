@@ -22,7 +22,7 @@ namespace ETHotfix
 	            RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();
 	            Room room = roomComponent.Get(gamer.RoomID);
 
-	            if (gamer == null || gamer.IsReady || room.State == RoomState.Game)
+	            if (room == null || gamer == null || gamer.IsReady || room.State == RoomState.Game)
 	            {
 	                return;
 	            }
@@ -30,11 +30,6 @@ namespace ETHotfix
 	            gamer.IsReady = true;
 	            //消息广播给其他人
 	            room?.Broadcast(new Actor_GamerReady() {Uid = gamer.UserID});
-	            if (room == null)
-	            {
-	                Log.Warning("room = null");
-	                return;
-	            }
 
 	            Gamer[] gamers = room.GetAll();
 	            //房间内有4名玩家且全部准备则开始游戏
@@ -87,7 +82,10 @@ namespace ETHotfix
 	                    _gamer.IsReady = false;
 	                }
 
-	                GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
+	                Log.Info($"{room.Id}房间开始,玩家:{JsonHelper.ToJson(room.UserIds)}");
+
+
+                    GameControllerComponent gameController = room.GetComponent<GameControllerComponent>();
 	                OrderControllerComponent orderController = room.GetComponent<OrderControllerComponent>();
 	                DeskComponent deskComponent = room.GetComponent<DeskComponent>();
 
@@ -267,10 +265,14 @@ namespace ETHotfix
 
 	                //等客户端掷骰子
 	                //是否超时
-	                room.StartTime(20);
+	                await Game.Scene.GetComponent<TimerComponent>().WaitAsync(10 * 1000);
+                    room.StartTime();
 	                //扣服务费
-	                GameHelp.CostServiceCharge(room);
-	            }
+	                if (!room.IsFriendRoom)
+	                {
+	                    GameHelp.CostServiceCharge(room);
+                    }
+                }
 	        }
 	        catch (Exception e)
 	        {

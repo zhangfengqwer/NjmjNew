@@ -29,12 +29,13 @@ namespace ETHotfix
         {
             this.ItemCard = this.GetParent<UI>().GameObject;
             Button button = this.ItemCard.GetComponent<Button>();
-
             UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
             GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
             this.handCardsComponent = gamerComponent.LocalGamer.GetComponent<HandCardsComponent>();
             button.onClick.RemoveAllListeners();
             button.onClick.Add(() => { OnClick(); });
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
         public void OnClick()

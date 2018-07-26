@@ -11,11 +11,10 @@ namespace ETHotfix
         protected override async void Run(Session session, G2M_FriendRoomInfo message, Action<M2G_FriendRoomInfo> reply)
         {
             M2G_FriendRoomInfo response = new M2G_FriendRoomInfo();
-            Log.Info("G2M_FriendRoomInfo");
+            //Log.Info("G2M_FriendRoomInfo");
             try
             {
                 //获取房间信息
-                DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
                 {
                     //获取所有空闲房间接口
                     RoomComponent roomComponent = Game.Scene.GetComponent<RoomComponent>();

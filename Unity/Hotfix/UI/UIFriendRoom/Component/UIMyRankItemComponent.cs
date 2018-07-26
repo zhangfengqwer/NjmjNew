@@ -48,6 +48,8 @@ namespace ETHotfix
 
             item = CommonUtil.getGameObjByBundle(UIType.UIFriendRoomTxt);
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             View.onClick.Add(() =>
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UIFriendRoomDetail);

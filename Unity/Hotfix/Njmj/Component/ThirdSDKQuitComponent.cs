@@ -62,18 +62,7 @@ namespace ETHotfix
                     // 在游戏内，退回到主界面
                     else
                     {
-                        UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
-                        script.setOnClickOkEvent(() =>
-                        {
-                            SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
-                        });
-
-                        script.setOnClickCloseEvent(() =>
-                        {
-                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
-                        });
-
-                        script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                        UIRoomComponent.OnExit();
                     }
                 }
             }

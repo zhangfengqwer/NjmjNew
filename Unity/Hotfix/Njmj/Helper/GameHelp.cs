@@ -90,7 +90,7 @@ namespace ETHotfix
 
             //第一位是否是0
             bool isStart = true;
-            for (int i = 5; i >= 0; i--)
+            for (int i = 6; i >= 0; i--)
             {
                 int pow = (int)Math.Pow(10, i);
                 int temp = num / pow % 10;
@@ -140,6 +140,47 @@ namespace ETHotfix
             {
                 GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
             }
+        }
+
+        public static void SetRoomId(GameObject gameObject, int num)
+        {
+            numList.Clear();
+            //            int unitPlace = num / 1 % 10;
+            //            int tenPlace = num / 10 % 10;
+            //            int hundredPlace = num / 100 % 10;
+            //            int thousandPlace = num / 1000 % 10;
+            //            int wPlace = num / 10000 % 10;
+
+            //第一位是否是0
+            bool isStart = true;
+            for (int i = 6; i >= 0; i--)
+            {
+                int pow = (int)Math.Pow(10, i);
+                int temp = num / pow % 10;
+                if (isStart)
+                {
+                    if (temp > 0)
+                    {
+                        numList.Add(temp);
+                        isStart = false;
+                    }
+                }
+                else
+                {
+                    numList.Add(temp);
+                }
+            }
+
+            foreach (var item in numList)
+            {
+                GameObject obj = new GameObject();
+                Image image = obj.AddComponent<Image>();
+                image.sprite = CommonUtil.getSpriteByBundle("Image_RoomId", item + "");
+                obj.transform.SetParent(gameObject.transform);
+                obj.transform.localScale = Vector3.one;
+                obj.transform.localPosition = Vector3.one;
+            }
+
         }
     }
 }

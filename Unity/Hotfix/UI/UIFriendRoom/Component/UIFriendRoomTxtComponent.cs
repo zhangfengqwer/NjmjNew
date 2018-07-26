@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UIFriendRoomTxtComponentSystem : AwakeSystem<UIFriendRoomTxtComponent>
+    public class UIFriendRoomTxtComponentSystem: AwakeSystem<UIFriendRoomTxtComponent>
     {
         public override void Awake(UIFriendRoomTxtComponent self)
         {
@@ -17,7 +17,7 @@ namespace ETHotfix
         }
     }
 
-    public class UIFriendRoomTxtComponent : Component
+    public class UIFriendRoomTxtComponent: Component
     {
         private Text AllScoreTxt;
         private Text NameTxt;
@@ -26,18 +26,20 @@ namespace ETHotfix
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             AllScoreTxt = rc.Get<GameObject>("AllScoreTxt").GetComponent<Text>();
-            NameTxt  = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
+            NameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
         }
 
-        public void SetInfo(string name,List<int> list)
+        public void SetInfo(string name, List<int> list)
         {
             int score = 0;
-            for(int i = 0;i< list.Count; ++i)
+            for (int i = 0; i < list.Count; ++i)
             {
                 score += list[i];
             }
 
-            if(score >= 0)
+            if (score >= 0)
             {
                 AllScoreTxt.text = "+" + score;
             }
@@ -45,7 +47,8 @@ namespace ETHotfix
             {
                 AllScoreTxt.text = score.ToString();
             }
-            if(name.Length > 2)
+
+            if (name.Length > 2)
             {
                 NameTxt.text = name.Substring(0, 2) + "...";
             }

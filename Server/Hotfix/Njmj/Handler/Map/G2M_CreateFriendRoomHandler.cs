@@ -39,7 +39,7 @@ namespace ETHotfix
                 else
                 {
                     response.Error = ErrorCode.ERR_Common;
-                    response.Message = "在房间里";
+                    response.Message = "正在游戏内,无法创建有游戏";
                 }
 
                 reply(response);

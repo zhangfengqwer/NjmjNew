@@ -42,6 +42,8 @@ namespace ETHotfix
             Player3Txt = rc.Get<GameObject>("Player3Txt").GetComponent<Text>();
             Player4Txt = rc.Get<GameObject>("Player4Txt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             textList.Add(Player1Txt);
             textList.Add(Player2Txt);
             textList.Add(Player3Txt);

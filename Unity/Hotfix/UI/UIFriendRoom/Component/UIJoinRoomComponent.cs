@@ -141,7 +141,7 @@ namespace ETHotfix
             if (curEnterValue.Length >= 6)
             {
                 //向服务器发送消息
-                ToastScript.createToast(curEnterValue);
+                // ToastScript.createToast(curEnterValue);
                 //如果curRoomId不为0，则是点击私密房间
                 if (curRoomId != 0)
                 {
@@ -151,14 +151,15 @@ namespace ETHotfix
                         return;
                     }
                 }
-
-                G2C_EnterRoom g2CEnterRoom =
-                        (G2C_EnterRoom) await SessionComponent.Instance.Session.Call(new C2G_EnterRoom()
-                        {
-                                RoomType = 3,
-                                RoomId = Convert.ToInt32(curEnterValue)
-                        });
-                if(g2CEnterRoom.Error != ErrorCode.ERR_Success)
+                UINetLoadingComponent.showNetLoading();
+                G2C_EnterRoom g2CEnterRoom = (G2C_EnterRoom) await SessionComponent.Instance.Session.Call(new C2G_EnterRoom()
+                {
+                    RoomType = 3,
+                    RoomId = Convert.ToInt32(curEnterValue)
+                });
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIJoinRoom);
+                UINetLoadingComponent.closeNetLoading();
+                if (g2CEnterRoom.Error != ErrorCode.ERR_Success)
                 {
                     UICommonPanelComponent.showCommonPanel("提示", g2CEnterRoom.Message);
                     return;
@@ -170,6 +171,9 @@ namespace ETHotfix
         {
             base.Dispose();
             clickBtns.Clear();
+            curEnterValue = "";
+            EnterTxt.text = "";
+            builder.Clear();
         }
     }
 }

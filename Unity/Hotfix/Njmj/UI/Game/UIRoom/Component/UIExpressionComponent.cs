@@ -26,6 +26,9 @@ namespace ETHotfix
         {
             ReferenceCollector rc = GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             UIExpression = rc.Get<GameObject>("UIExpression");
+
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
+
             UIExpression.GetComponent<Button>().onClick.Add(() =>
             {
                 if (GameUtil.isCanUseEmoji())

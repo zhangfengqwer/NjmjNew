@@ -246,7 +246,10 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().RemoveAll();
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UILogin);
                 //给android发送切换账号回调
-                PlatformHelper.setLogoutCallback("", "", "");
+                if ("qihoo360".Equals(PlatformHelper.GetChannelName()))
+                {
+                    PlatformHelper.setLogoutCallback("", "", "");
+                }
 
                 HeartBeat.getInstance().stopHeartBeat();
             }

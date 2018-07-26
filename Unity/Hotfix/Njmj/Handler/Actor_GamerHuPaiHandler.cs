@@ -66,7 +66,7 @@ namespace ETHotfix
                     gameResultComponent.startTimer(20);
                 }
                 gameResultComponent.setData(message, gamerComponent, roomConfig.Multiples);
-                uiRoomComponent.ISGaming = false;
+                UIRoomComponent.ISGaming = false;
                 uiRoomComponent.ClosePropmtBtn();
             }
             catch (Exception e)
