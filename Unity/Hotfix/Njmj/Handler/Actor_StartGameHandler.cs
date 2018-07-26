@@ -26,12 +26,13 @@ namespace ETHotfix
                 UI uiRoom = Game.Scene.GetComponent<UIComponent>().Get(UIType.UIRoom);
 
                 if (uiRoom == null) uiRoom = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
-
+                
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
 
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
-
+                UIRoomComponent.ISGaming = true;
+                uiRoomComponent.ContinueGamer();
                 //先掷骰子
                 if (!isReconnect)
                 {

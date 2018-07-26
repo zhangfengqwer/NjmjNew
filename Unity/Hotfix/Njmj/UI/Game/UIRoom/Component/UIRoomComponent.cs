@@ -333,7 +333,7 @@ namespace ETHotfix
         /// </summary>
         public void ContinueGamer()
         {
-            players.SetActive(false);
+            players?.SetActive(false);
             this.changeTableBtn.gameObject.SetActive(true);
             this.readyBtn.gameObject.SetActive(true);
             this.desk.SetActive(false);

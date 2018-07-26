@@ -55,6 +55,7 @@ namespace ETHotfix
 	                //好友房开局后,掉线后不能退出
                     if (room.IsFriendRoom && room.CurrentJuCount > 0  && room.CurrentJuCount< gameControllerComponent.RoomConfig.JuCount)
                     {
+                        gamer.isOffline = true;
                         Log.Info($"{gamer.UserID} 好友房开局后,掉线后不能退出");
 	                    return;
 	                }
