@@ -298,41 +298,8 @@ namespace ETHotfix
                             gamer.isGetYingHuaBuPai = false;
                             //杠完后是本人出牌
                             orderController.CurrentAuthority = gamer.UserID;
-                            HandCardsComponent cardsComponent = gamer.GetComponent<HandCardsComponent>();
                             //杠完之后抓牌
-                            MahjongInfo grabMahjong = room.GrabMahjong();
-                            if (grabMahjong == null)
-                            {
-                                Log.Info("没牌流局了");
-                                await gameController.GameOver(0);
-                                return;
-                            }
-                            while (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
-                            {
-                                Actor_GamerBuHua actorGamerBuHua = new Actor_GamerBuHua()
-                                {
-                                    Uid = gamer.UserID,
-                                    weight = grabMahjong.weight
-                                };
-                                room.Broadcast(actorGamerBuHua);
-
-                                //从手牌中删除花牌
-                                Log.Info("补花");
-                                Logic_NJMJ.getInstance().RemoveCard(cardsComponent.GetAll(), grabMahjong);
-                                cardsComponent.FaceCards.Add(grabMahjong);
-
-                                //等待客户端显示
-                                gamer.isGangEndBuPai = false;
-                                gamer.isGetYingHuaBuPai = true;
-                                grabMahjong = room.GrabMahjong();
-                                if (grabMahjong == null)
-                                {
-                                    Log.Info("没牌流局了");
-                                    await gameController.GameOver(0);
-                                    return;
-                                }
-                            }
-                            room.StartTime();
+                            await room.GrabMahjongNoHua(gamer);
 
                             #region 比下胡 累计2个暗杠或3个明杠（同一个玩家）
 

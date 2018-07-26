@@ -720,10 +720,8 @@ message C2G_UseHuaFeiState // IRequest
 
 message G2C_UseHuaFeiState // IResponse
 {
-	required int	HuaFei_1_RestCount	 = 1;
-	required int	HuaFei_5_RestCount	 = 2;
-	required int	HuaFei_10_RestCount	 = 3;
-	required int	HuaFei_20_RestCount	 = 4;
+	required int	HuaFei_5_Count	 = 1;
+	required int	YuanBao_Count	 = 2;
 }
 
 message C2G_SetPlayerSound // IRequest

@@ -198,7 +198,8 @@ namespace ETHotfix
         /// </summary>
         public void CloseBtn()
         {
-            weChatBtn.gameObject.SetActive(false);
+            weChatBtn?.gameObject?.SetActive(false);
+            roomIdObj?.GetComponentInParent<Image>()?.gameObject?.SetActive(false);
         }
     }
 }
