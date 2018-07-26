@@ -15,15 +15,16 @@ namespace ETHotfix
             {
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
 
-                // 5元
-                List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{5}}}");
-                if (useHuaFeis.Count > 0)
+                // 5元兑换
                 {
-                    response.HuaFei_5_RestCount = 0;
+                    List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{500}}}");
+                    response.HuaFei_5_Count = useHuaFeis.Count;
                 }
-                else
+
+                // 元宝兑换
                 {
-                    response.HuaFei_5_RestCount = 1;
+                    List<UseHuaFei> useHuaFeis = await proxyComponent.QueryJson<UseHuaFei>($"{{CreateTime:/^{DateTime.Now.GetCurrentDay()}/,Uid:{message.Uid},HuaFei:{100}}}");
+                    response.YuanBao_Count = useHuaFeis.Count;
                 }
 
                 reply(response);

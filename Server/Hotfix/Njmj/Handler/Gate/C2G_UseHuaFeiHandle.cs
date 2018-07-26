@@ -36,18 +36,18 @@ namespace ETHotfix
                             {
                                 // 充值话费
                                 {
-                                    //string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString().Substring(1), "话费", "5", message.Phone, "3", "1");
-                                    //Log.Debug("=======" + str);
+                                    string str = HttpUtil.PhoneFeeRecharge(message.Uid.ToString().Substring(1), "话费", "5", message.Phone, "3", "1");
+                                    Log.Debug("=======" + str);
 
-                                    //if (!CommonUtil.checkHuaFeiChongZhiResult(str))
-                                    //{
-                                    //    response.Message = "充值失败";
-                                    //    response.Error = ErrorCode.ERR_PhoneCodeError;
-                                    //    reply(response);
-                                    //    return;
-                                    //}
-                                    //// 充值成功
-                                    //else
+                                    if (!CommonUtil.checkHuaFeiChongZhiResult(str))
+                                    {
+                                        response.Message = "充值失败";
+                                        response.Error = ErrorCode.ERR_PhoneCodeError;
+                                        reply(response);
+                                        return;
+                                    }
+                                    // 充值成功
+                                    else
                                     {
                                         // 充值话费
                                         UseHuaFei useHuaFei = ComponentFactory.CreateWithId<UseHuaFei>(IdGenerater.GenerateId());
@@ -83,7 +83,7 @@ namespace ETHotfix
                     }
                 }
                 // 兑换元宝
-                else
+                else if (message.Type == 2)
                 {
                     if (message.HuaFei == 1 * 100)
                     {
