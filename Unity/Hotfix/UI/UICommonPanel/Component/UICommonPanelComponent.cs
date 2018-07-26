@@ -23,7 +23,7 @@ namespace ETHotfix
         public OnClickOkEvent onCallBack_ok = null;
 
         public delegate void OnClickCloseEvent();
-        public OnClickCloseEvent onCallBack_close = null;
+        public static OnClickCloseEvent onCallBack_close = null;
 
         public Button Button_OK;
         public Button Button_close;
@@ -37,6 +37,8 @@ namespace ETHotfix
 
         public static UICommonPanelComponent showCommonPanel(string title,string content)
         {
+            onCallBack_close = null;
+
             if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) == null)
             {
                 Game.Scene.GetComponent<UIComponent>().Create(UIType.UICommonPanel);
