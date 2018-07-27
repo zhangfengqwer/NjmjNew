@@ -59,6 +59,8 @@ namespace ETHotfix
                 return;
             }
 
+            GameUtil.changeDataWithStr(g2cFrd.Reward);
+
             GetFriendActInfo();
         }
 

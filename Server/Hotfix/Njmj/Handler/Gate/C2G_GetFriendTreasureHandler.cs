@@ -38,16 +38,19 @@ namespace ETHotfix
                             {
                                 //一个话费红包和五千金币
                                 await DBCommonUtil.changeWealthWithStr(message.UId, "111:1;1:5000","好友房开启宝箱获得");
+                                response.Reward = "111:1;1:5000";
                             }
                             else if(rd >= 69 && rd < 99)
                             {
                                 //二个话费红包和一千金币
-                                await DBCommonUtil.changeWealthWithStr(message.UId, "111:2;1:1000", "好友房开启宝箱获得");
+                                await DBCommonUtil.changeWealthWithStr(message.UId, "111:2;1:10000", "好友房开启宝箱获得");
+                                response.Reward = "111:2;1:10000";
                             }
                             else 
                             {
                                 //五个话费红包和一千金币
-                                await DBCommonUtil.changeWealthWithStr(message.UId, "111:5;1:5000", "好友房开启宝箱获得");
+                                await DBCommonUtil.changeWealthWithStr(message.UId, "111:5;1:10000", "好友房开启宝箱获得");
+                                response.Reward = "111:5;1:10000";
                             }
 
                             response.AlGetCount = consums[0].GetCount;
