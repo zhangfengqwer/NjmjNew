@@ -45,11 +45,24 @@ namespace ETHotfix
                     long yuan = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum;
                     if (GameUtil.isVIP())
                     {
-                        ShowBuy(yuan, shopInfo.VipPrice);
+                        ShowBuy(yuan, shopInfo.VipPrice,"元宝购买");
                     }
                     else
                     {
-                        ShowBuy(yuan, shopInfo.Price);
+                        ShowBuy(yuan, shopInfo.Price,"元宝购买");
+                    }
+                }
+                else if(shopInfo.CurrencyType == 1)
+                {
+                    //用元宝购买
+                    long gold = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum;
+                    if (GameUtil.isVIP())
+                    {
+                        ShowBuy(gold, shopInfo.VipPrice,"金币购买");
+                    }
+                    else
+                    {
+                        ShowBuy(gold, shopInfo.Price,"金币购买");
                     }
                 }
                 else
@@ -106,7 +119,7 @@ namespace ETHotfix
             return data;
         }
 
-        public void ShowBuy(long own,long price)
+        public void ShowBuy(long own,long price,string content)
         {
             string tip = "";
             bool isCanBuy = false;
@@ -115,7 +128,7 @@ namespace ETHotfix
                 //可以购买
                 tip = new StringBuilder().Append("确定花费")
                                                 .Append(price)
-                                                .Append("元宝购买")
+                                                .Append(content)
                                                 .Append(shopInfo.Name)
                                                 .Append("吗").ToString();
                 isCanBuy = true;

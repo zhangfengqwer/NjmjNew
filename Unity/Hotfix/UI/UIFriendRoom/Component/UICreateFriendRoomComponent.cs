@@ -246,6 +246,10 @@ namespace ETHotfix
             huaUIList.Clear();
             typeToggles.Clear();
             typeUIList.Clear();
+            if(GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain) != null)
+            {
+                GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).StopFriendReq();
+            }
         }
     }
 }

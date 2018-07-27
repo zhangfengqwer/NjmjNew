@@ -151,7 +151,7 @@ namespace ETHotfix
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                 int openSound = PlayerPrefs.GetInt("isOpenSound", 0);
                 bool b = openSound == 1;
-                SoundsHelp.Instance.IsOpenSound(b);
+                SoundsHelp.Instance.IsOpenSound(true);
                 GameObject.Destroy(mask);
             }
             catch (Exception e)
