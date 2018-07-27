@@ -160,6 +160,7 @@ namespace ETHotfix
 	                            handCards.RemoveAt(j);
 	                            mahjongInfo.weight = (byte) mahjongInfo.m_weight;
 	                            handCardsComponent.FaceCards.Add(mahjongInfo);
+	                            handCardsComponent.FaceGangCards.Add(mahjongInfo);
 	                        }
 	                    }
 
@@ -300,6 +301,7 @@ namespace ETHotfix
                 if (grabMahjong.m_weight >= Consts.MahjongWeight.Hua_HongZhong)
 	            {
 	                handCardsComponent.FaceCards.Add(grabMahjong);
+	                handCardsComponent.FaceGangCards.Add(grabMahjong);
                 }
 	            else
 	            {

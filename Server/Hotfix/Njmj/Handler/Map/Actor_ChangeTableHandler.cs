@@ -65,7 +65,7 @@ namespace ETHotfix
                 gamer.IsReady = false;
                 gamer.ReadyTimeOut = 0;
                 idleRoom.Add(gamer);
-                idleRoom.BroadGamerEnter(gamer.UserID);
+                await idleRoom.BroadGamerEnter(gamer.UserID);
                 Log.Info($"收到玩家{gamer.UserID}换桌后：" + gamer.RoomID);
 
                 gamerRoom?.Broadcast(new Actor_GamerExitRoom() { Uid = gamer.UserID });

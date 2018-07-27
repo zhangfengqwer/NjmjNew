@@ -168,7 +168,7 @@ namespace ETHotfix
                     }
 			        idleRoom.Add(gamer);
 
-			        idleRoom.BroadGamerEnter(gamer.UserID);
+			        await idleRoom.BroadGamerEnter(gamer.UserID);
                 }
 			    response.GameId = gamer.Id;
 			    reply(response);

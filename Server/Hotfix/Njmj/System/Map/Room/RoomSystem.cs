@@ -94,7 +94,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="self"></param>
         /// <param name="userId"></param>
-        public static async void BroadGamerEnter(this Room self, long userId)
+        public static async Task BroadGamerEnter(this Room self, long userId)
         {
             List<GamerInfo> gamerInfos = new List<GamerInfo>();
             long roomType = self.GetComponent<GameControllerComponent>().RoomConfig.Id;
@@ -175,8 +175,8 @@ namespace ETHotfix
             }
 
             self.tokenSource = new CancellationTokenSource();
-            OrderControllerComponent controllerComponent = self.GetComponent<OrderControllerComponent>();
-            Gamer gamer = self.Get(controllerComponent.CurrentAuthority);
+            OrderControllerComponent controllerComponent = self?.GetComponent<OrderControllerComponent>();
+            Gamer gamer = self?.Get(controllerComponent.CurrentAuthority);
             if (gamer == null)
             {
                 return;
@@ -372,6 +372,7 @@ namespace ETHotfix
                 //从手牌中删除花牌
                 Log.Info($"{currentGamer.UserID}补花,{grabMahjong.m_weight}");
                 cardsComponent.FaceCards.Add(grabMahjong);
+                cardsComponent.FaceGangCards.Add(grabMahjong);
 
                 #region 花杠
                 int temp = 0;
@@ -385,13 +386,18 @@ namespace ETHotfix
 
                 Logic_NJMJ.getInstance().SortMahjong(cardsComponent.FaceCards);
                 //春夏秋冬
-                for (int i = 0; i < cardsComponent.FaceCards.Count - 4; i += 4)
+                for (int i = 0; i < cardsComponent.FaceGangCards.Count - 3; i ++)
                 {
                     if (cardsComponent.FaceCards[i + 3].m_weight - cardsComponent.FaceCards[i + 2].m_weight == 2 &&
                         cardsComponent.FaceCards[i + 2].m_weight - cardsComponent.FaceCards[i + 1].m_weight == 2 &&
                         cardsComponent.FaceCards[i + 1].m_weight - cardsComponent.FaceCards[i].m_weight == 2)
                     {
+
                         temp = 4;
+                        cardsComponent.FaceGangCards.RemoveAt(i + 3);
+                        cardsComponent.FaceGangCards.RemoveAt(i + 2);
+                        cardsComponent.FaceGangCards.RemoveAt(i + 1);
+                        cardsComponent.FaceGangCards.RemoveAt(i);
                     }
                 }
 

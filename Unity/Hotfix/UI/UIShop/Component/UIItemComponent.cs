@@ -75,7 +75,7 @@ namespace ETHotfix
                         }
                         else
                         {
-                            ToastScript.createToast("可以充值");
+                            //ToastScript.createToast("可以充值");
                         }
                     }
 

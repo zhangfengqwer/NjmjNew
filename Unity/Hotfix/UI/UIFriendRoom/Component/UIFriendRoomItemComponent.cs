@@ -69,7 +69,7 @@ namespace ETHotfix
         public void SetItemInfo(FriendRoomInfo info)
         {
             this.info = info;
-            Log.Info("info.IsPublic" + info.IsPublic);
+            //Log.Info("info.IsPublic" + info.IsPublic);
 
             if(info.IsPublic == 1)
             {
