@@ -20,7 +20,7 @@ namespace ETHotfix
                 {
                     if(consums[0].ConsumCount > 5)
                     {
-                        if(consums[0].ConsumCount >= 5)
+                        if(consums[0].GetCount >= 5)
                         {
                             response.Error = ErrorCode.ERR_Common;
                             response.Message = "今日领取次数已经满5次，不能领取";
