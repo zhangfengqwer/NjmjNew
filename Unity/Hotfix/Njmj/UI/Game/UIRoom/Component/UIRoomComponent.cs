@@ -249,28 +249,29 @@ namespace ETHotfix
 
                     script.getTextObj().alignment = TextAnchor.MiddleCenter;
                 }
+                //好友房硬件返回屏蔽
                 else
                 {
-                    if (!ISGaming)
-                    {
-                        UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
-                        script.setOnClickOkEvent(() =>
-                        {
-                            SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
-                            if (ISGaming)
-                            {
-                                CommonUtil.ShowUI(UIType.UIMain);
-                                GameUtil.Back2Main();
-                            }
-                        });
-
-                        script.setOnClickCloseEvent(() =>
-                        {
-                            Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
-                        });
-
-                        script.getTextObj().alignment = TextAnchor.MiddleCenter;
-                    }
+                    // if (!ISGaming)
+                    // {
+                    //     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
+                    //     script.setOnClickOkEvent(() =>
+                    //     {
+                    //         SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                    //         if (ISGaming)
+                    //         {
+                    //             CommonUtil.ShowUI(UIType.UIMain);
+                    //             GameUtil.Back2Main();
+                    //         }
+                    //     });
+                    //
+                    //     script.setOnClickCloseEvent(() =>
+                    //     {
+                    //         Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                    //     });
+                    //
+                    //     script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                    // }
                 }
                
             }
