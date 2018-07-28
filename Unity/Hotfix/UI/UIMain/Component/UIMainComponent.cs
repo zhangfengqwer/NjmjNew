@@ -629,8 +629,11 @@ namespace ETHotfix
                     BtnList_Up.transform.Find("Btn_Mail/Tip/Count").GetComponent<Text>().text = count.ToString();
                     break;
             }
-
-            if (int.Parse(BtnList_Down.transform.Find("Grid/Btn_Task/Tip/Count").GetComponent<Text>().text) > 0)
+            if(int.Parse(BtnList_Down.transform.Find("Grid/Btn_Activity/Tip/Count").GetComponent<Text>().text) > 0)
+            {
+                FingerAnimation.Show(BtnList_Down.transform.Find("Grid/Btn_Activity").gameObject);
+            }
+            else if (int.Parse(BtnList_Down.transform.Find("Grid/Btn_Task/Tip/Count").GetComponent<Text>().text) > 0)
             {
                 FingerAnimation.Show(BtnList_Down.transform.Find("Grid/Btn_Task").gameObject);
             }

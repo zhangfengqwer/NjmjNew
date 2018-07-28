@@ -68,7 +68,7 @@ namespace ETHotfix
             }
 
             //GameUtil.changeDataWithStr(g2cFrd.Reward);
-
+            DeCount();
             GetFriendActInfo();
 
             SetButtonEnable();
@@ -83,11 +83,58 @@ namespace ETHotfix
             }
         }
 
+        int notGetcount = 0;
+        private int GetNoGetCount(G2C_FriendActInfo info)
+        {
+            if (info.ConsumCount >= 5 && info.GetCount < 5)
+            {
+                if (((int)(info.ConsumCount / 5)) >= (5 - info.GetCount))
+                {
+                    notGetcount = 5 - info.GetCount;
+                }
+                else
+                {
+                    notGetcount = (int)(info.ConsumCount / 5);
+                }
+            }
+            else
+            {
+                notGetcount = 0;
+            }
+            return notGetcount;
+        }
+
+        public void DeCount()
+        {
+            --notGetcount;
+            if (notGetcount <= 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(3, false);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(3, true, notGetcount);
+            }
+        }
+
         private async void GetFriendActInfo()
         {
             UINetLoadingComponent.showNetLoading();
             G2C_FriendActInfo g2cFrd = (G2C_FriendActInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendActInfo() { UId = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
+
+            notGetcount = 0;
+            GetNoGetCount(g2cFrd);
+
+            if (notGetcount != 0)
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(3, true, notGetcount);
+            }
+            else
+            {
+                Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(3, false);
+            }
+
 
             ShowText.text = g2cFrd.ConsumCount.ToString();
             LeftTxt.text = "剩余次数" + (MaxCount - g2cFrd.GetCount) + "次";
@@ -101,6 +148,12 @@ namespace ETHotfix
                 GetBtn.enabled = true;
                 GetBtn.GetComponent<Image>().color = Color.white;
             }
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            notGetcount = 0;
         }
     }
 }

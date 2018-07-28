@@ -109,6 +109,21 @@ namespace ETHotfix
             CreateActivityItems(ActivityConfig.getInstance().getActivityInfoList());
         }
 
+        public void SetSelect(int id)
+        {
+            for(int i = 0;i< acUiList.Count; ++i)
+            {
+                if(acUiList[i].GetComponent<UIActivityItemComponent>().info.id == id)
+                {
+                    acUiList[i].GetComponent<UIActivityItemComponent>().UIActivityTitle.GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    acUiList[i].GetComponent<UIActivityItemComponent>().UIActivityTitle.GetComponent<Image>().color = Color.red;
+                }
+            }
+        }
+
         /// <summary>
         /// 创建活动列表
         /// </summary>
@@ -132,13 +147,15 @@ namespace ETHotfix
                     activityItemList.Add(obj);
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIActivityItemComponent>();
-                    if (i == 0)
-                    {
-                        ui.GetComponent<UIActivityItemComponent>().OnClick(activityList[i].id);
-                    }
                     acUiList.Add(ui);
                 }
                 acUiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
+
+                if (i == 0)
+                {
+                    acUiList[i].GetComponent<UIActivityItemComponent>().OnClick(activityList[i].id);
+                }
+                
             }
         }
 
