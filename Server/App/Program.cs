@@ -85,6 +85,10 @@ namespace App
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
                         break;
+//                    case AppType.Http:
+//                        Game.Scene.AddComponent<DBProxyComponent>();
+//                        Game.Scene.AddComponent<HttpComponent>();
+//                        break;
 					case AppType.Location:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationComponent>();

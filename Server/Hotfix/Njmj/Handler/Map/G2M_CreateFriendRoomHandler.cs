@@ -38,7 +38,7 @@ namespace ETHotfix
                 }
                 else
                 {
-                    response.Error = ErrorCode.ERR_Common;
+                    response.Error = ErrorCode.ERR_RoomNoExist;
                     response.Message = "正在游戏内,无法创建房间";
                 }
 

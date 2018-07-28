@@ -90,7 +90,8 @@ namespace ETHotfix
                 {
                     await DBCommonUtil.RecordWeekRankLog(room.huPaiUid, 0, 1);
                 }
-
+                Log.Info(
+                    $"当前{room.CurrentJuCount}局，改变了{room.GetAll()[0].ChangeGold}，{room.GetAll()[1].ChangeGold}，{room.GetAll()[2].ChangeGold}，{room.GetAll()[3].ChangeGold}");
                 //更新任务
                 List<Task> tasks = new List<Task>();
                 Task updateTask = UpdateTask(room);
@@ -146,6 +147,7 @@ namespace ETHotfix
                     gamer.IsCanHu = false;
                     gamer.IsWinner = false;
                     gamer.IsTrusteeship = false;
+                    gamer.ChangeGold = 0;
                     //离线踢出
                     if (gamer.isOffline && !room.IsFriendRoom)
                     {
@@ -326,6 +328,7 @@ namespace ETHotfix
                         if (gamer.UserID == room.huPaiUid)
                         {
                             GameHelp.ChangeGamerGold(room, gamer, amount * 3, self.RoomConfig.Name + "结算");
+                            gamer.ChangeGold = amount * 3;
 //                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount * 3,self.RoomConfig.Name + "结算");
                             UpdateTask(gamer, amount * 3);
                         }
@@ -334,6 +337,7 @@ namespace ETHotfix
 //                            Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
 //                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
                             GameHelp.ChangeGamerGold(room, gamer, -amount, self.RoomConfig.Name + "结算");
+                            gamer.ChangeGold = -amount;
                         }
                     }
                     else
@@ -342,6 +346,7 @@ namespace ETHotfix
                         {
 //                            await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, self.RoomConfig.Name + "结算");
                             GameHelp.ChangeGamerGold(room, gamer, amount, self.RoomConfig.Name + "结算");
+                            gamer.ChangeGold = amount;
                             UpdateTask(gamer, amount);
                         }
                         else
@@ -351,6 +356,7 @@ namespace ETHotfix
 //                                Log.Debug($"玩家：{gamer.UserID} 输了{amount}");
 //                                await DBCommonUtil.ChangeWealth(gamer.UserID, 1, -amount, self.RoomConfig.Name + "结算");
                                 GameHelp.ChangeGamerGold(room, gamer, -amount, self.RoomConfig.Name + "结算");
+                                gamer.ChangeGold = -amount;
                             }
                         }
                     }

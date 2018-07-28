@@ -32,8 +32,7 @@ namespace ETHotfix
                         foreach (var gamer in room.GetAll())
                         {
                             if (gamer == null) continue;
-                            PlayerBaseInfo playerBaseInfo = await DBCommonUtil.getPlayerBaseInfo(gamer.UserID);
-                            friendRoomInfo.Icons.Add(playerBaseInfo.Icon);
+                            friendRoomInfo.Icons.Add(gamer.playerBaseInfo.Icon);
                         }
                         response.Info.Add(friendRoomInfo);
                     }

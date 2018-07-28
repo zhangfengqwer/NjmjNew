@@ -127,7 +127,7 @@ namespace ETHotfix
             Vector3 localPosition = gameObject.transform.localPosition;
             gameObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(localPosition.x, localPosition.y + 30), 1.5f, false).OnComplete(() =>
             {
-                Log.Debug("完成");
+                //Log.Debug("完成");
                 gameObject.transform.localPosition = localPosition;
                 DeleteAllItem(gameObject);
             });

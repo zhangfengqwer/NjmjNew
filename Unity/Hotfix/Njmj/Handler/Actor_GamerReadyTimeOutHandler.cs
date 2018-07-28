@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -29,6 +30,8 @@ namespace ETHotfix
                     {
                         Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
                     });
+
+                    script.getTextObj().alignment = TextAnchor.MiddleCenter;
                 }
             }
             catch (Exception e)

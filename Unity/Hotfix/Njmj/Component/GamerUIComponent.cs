@@ -42,7 +42,7 @@ namespace ETHotfix
         private GameObject changeMoney;
         private GameObject vip;
         public GameObject FaceObj { get; set; }
-        private GameObject zhuang;
+        public GameObject zhuang;
         private CancellationTokenSource tokenSource;
         private GameObject buHua;
         private GameObject headReadyInfo;

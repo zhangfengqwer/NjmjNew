@@ -28,11 +28,17 @@ namespace ETHotfix
                 if (uiRoom == null) uiRoom = Game.Scene.GetComponent<UIComponent>().Create(UIType.UIRoom);
                 
                 Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIReady);
-
+                Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIGameResult);
                 GamerComponent gamerComponent = uiRoom.GetComponent<GamerComponent>();
                 UIRoomComponent uiRoomComponent = uiRoom.GetComponent<UIRoomComponent>();
                 UIRoomComponent.ISGaming = true;
                 uiRoomComponent.ContinueGamer();
+                //好友房设置将退出变成解散
+                if (UIRoomComponent.IsFriendRoom)
+                {
+                    uiRoomComponent.SetFriendSetting(PlayerInfoComponent.Instance.uid);
+                    uiRoomComponent.SetCurrentJuCount(message.CurrentJuCount);
+                }
                 //先掷骰子
                 if (!isReconnect)
                 {
@@ -129,12 +135,6 @@ namespace ETHotfix
                 }
 
                 uiRoomComponent.StartGame(message.restCount);
-                //将退出变成解散
-                if (UIRoomComponent.IsFriendRoom)
-                {
-                    uiRoomComponent.SetFriendSetting(PlayerInfoComponent.Instance.uid);
-                    uiRoomComponent.SetCurrentJuCount(message.CurrentJuCount);
-                }
                 uiRoomComponent.exitBtn.interactable = true;
                 // uiRoomComponent.SetRoomType(message.RoomType);
 
@@ -209,7 +209,7 @@ namespace ETHotfix
                 uiRoom.GameObject.SetActive(true);
                 UIRoomComponent.ISGaming = true;
 
-                uiRoomComponent.tip.SetActive(true);
+                uiRoomComponent?.tip?.SetActive(true);
                 uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "shangji_tip");
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                

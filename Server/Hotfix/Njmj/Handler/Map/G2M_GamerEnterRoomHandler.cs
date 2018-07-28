@@ -130,7 +130,7 @@ namespace ETHotfix
 			    {
 			        Log.Info($"{message.UserId}进入房间");
 
-                    gamer = GamerFactory.Create(message.PlayerId, message.UserId);
+                    gamer = await GamerFactory.Create(message.PlayerId, message.UserId);
 			        await gamer.AddComponent<MailBoxComponent>().AddLocation();
 			        gamer.AddComponent<UnitGateComponent, long>(message.SessionId);
 

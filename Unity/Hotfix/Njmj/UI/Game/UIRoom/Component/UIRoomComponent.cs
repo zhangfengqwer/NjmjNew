@@ -67,6 +67,7 @@ namespace ETHotfix
         //当前出牌或者抓牌
         public MahjongInfo CurrentMahjong { get; set; }
         public static bool IsFriendRoom;
+        private static int CurrentJuCount;
         public int JuCount { get; set; }
 
         public void Awake()
@@ -252,26 +253,26 @@ namespace ETHotfix
                 //好友房硬件返回屏蔽
                 else
                 {
-                    // if (!ISGaming)
-                    // {
-                    //     UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
-                    //     script.setOnClickOkEvent(() =>
-                    //     {
-                    //         SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
-                    //         if (ISGaming)
-                    //         {
-                    //             CommonUtil.ShowUI(UIType.UIMain);
-                    //             GameUtil.Back2Main();
-                    //         }
-                    //     });
-                    //
-                    //     script.setOnClickCloseEvent(() =>
-                    //     {
-                    //         Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
-                    //     });
-                    //
-                    //     script.getTextObj().alignment = TextAnchor.MiddleCenter;
-                    // }
+                     if (!ISGaming && CurrentJuCount == 0)
+                     {
+                         UICommonPanelComponent script = UICommonPanelComponent.showCommonPanel("通知", "是否退出房间？");
+                         script.setOnClickOkEvent(() =>
+                         {
+                             SessionComponent.Instance.Session.Send(new Actor_GamerExitRoom() { IsFromClient = true });
+                             if (ISGaming)
+                             {
+                                 CommonUtil.ShowUI(UIType.UIMain);
+                                 GameUtil.Back2Main();
+                             }
+                         });
+                    
+                         script.setOnClickCloseEvent(() =>
+                         {
+                             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UICommonPanel);
+                         });
+                    
+                         script.getTextObj().alignment = TextAnchor.MiddleCenter;
+                     }
                 }
                
             }
@@ -362,6 +363,7 @@ namespace ETHotfix
                 if (gamer == null)
                     continue;
                 gamer?.GetComponent<HandCardsComponent>()?.ClearAll();
+                gamer?.GetComponent<GamerUIComponent>()?.zhuang.SetActive(false);
                 gamer?.RemoveComponent<HandCardsComponent>();
             }
         }
@@ -685,6 +687,7 @@ namespace ETHotfix
         /// <param name="currentJuCount"></param>
         public void SetCurrentJuCount(int currentJuCount)
         {
+            CurrentJuCount = currentJuCount;
             currentJuCountText.text = $"{currentJuCount}/{JuCount}局";
         }
     }

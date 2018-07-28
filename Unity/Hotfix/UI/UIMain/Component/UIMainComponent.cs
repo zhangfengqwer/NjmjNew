@@ -433,6 +433,7 @@ namespace ETHotfix
             G2C_FriendRoomInfo m2cFriend = (G2C_FriendRoomInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendRoomInfo { UId = PlayerInfoComponent.Instance.uid });
 
             UINetLoadingComponent.closeNetLoading();
+            PlayerInfoComponent.Instance.GetPlayerInfo().FriendKeyCount = m2cFriend.KeyCount;
 
             CreateUI(m2cFriend);
         }
@@ -950,8 +951,7 @@ namespace ETHotfix
             catch (Exception e)
             {
                 Log.Error(e);
-            }   
-            
+            }
         }
 
         /// <summary>

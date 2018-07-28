@@ -144,7 +144,10 @@ namespace ETHotfix
             if (c2gCreate.Error != ErrorCode.ERR_Success)
             {
                 UICommonPanelComponent panel = UICommonPanelComponent.showCommonPanel("提示", c2gCreate.Message);
-                panel.setOnClickOkEvent(OpenShop);
+                if (c2gCreate.Error != ErrorCode.ERR_RoomNoExist)
+                {
+                    panel.setOnClickOkEvent(OpenShop);
+                }
                 UINetLoadingComponent.closeNetLoading();
                 return;
             }

@@ -18,7 +18,7 @@ namespace ETHotfix
                 List<FriendKeyConsum> consums = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{message.UId},CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}");
                 if(consums.Count > 0)
                 {
-                    if(consums[0].ConsumCount > 5)
+                    if(consums[0].ConsumCount >= 5)
                     {
                         if(consums[0].GetCount >= 5)
                         {
