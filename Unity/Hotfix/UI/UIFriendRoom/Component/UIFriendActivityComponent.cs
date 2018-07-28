@@ -23,8 +23,11 @@ namespace ETHotfix
         private Button CloseBtn;
         private Button GetBtn;
         private Text ShowText;
+        private Text LeftTxt;
+        private Text TimeTxt;
 
         private int count = 5;
+        private int MaxCount = 5;
 
         public void Start()
         {
@@ -33,7 +36,10 @@ namespace ETHotfix
            /* CloseBtn = rc.Get<GameObject>("CloseBtn").GetComponent<Button>();*/
             GetBtn = rc.Get<GameObject>("GetBtn").GetComponent<Button>();
             ShowText = rc.Get<GameObject>("ShowText").GetComponent<Text>();
+            LeftTxt  = rc.Get<GameObject>("LeftTxt").GetComponent<Text>();
+            TimeTxt  = rc.Get<GameObject>("TimeTxt").GetComponent<Text>();
 
+            CommonUtil.SetTextFont(this.GetParent<UI>().GameObject);
             //CloseBtn.onClick.Add(() =>
             //{
             //    this.GetParent<UI>().GameObject.SetActive(false);
@@ -61,7 +67,7 @@ namespace ETHotfix
                 return;
             }
 
-            GameUtil.changeDataWithStr(g2cFrd.Reward);
+            //GameUtil.changeDataWithStr(g2cFrd.Reward);
 
             GetFriendActInfo();
 
@@ -83,15 +89,17 @@ namespace ETHotfix
             G2C_FriendActInfo g2cFrd = (G2C_FriendActInfo)await SessionComponent.Instance.Session.Call(new C2G_FriendActInfo() { UId = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
 
-            ShowText.text = g2cFrd.ConsumCount + "/" + count; 
-
-            if(g2cFrd.GetCount >= 5)
+            ShowText.text = g2cFrd.ConsumCount.ToString();
+            LeftTxt.text = "剩余次数" + (MaxCount - g2cFrd.GetCount) + "次";
+            if (g2cFrd.GetCount >= 5)
             {
                 GetBtn.enabled = false;
+                GetBtn.GetComponent<Image>().color = Color.grey;
             }
             else
             {
                 GetBtn.enabled = true;
+                GetBtn.GetComponent<Image>().color = Color.white;
             }
         }
     }

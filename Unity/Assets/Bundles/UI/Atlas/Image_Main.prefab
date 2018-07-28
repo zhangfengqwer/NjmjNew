@@ -124,11 +124,11 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: dd6372ae6ed0211469cc19c89e8468b8, type: 3}
   - key: finger
     gameObject: {fileID: 21300000, guid: c6364c4dca30c4940aa197391f547b88, type: 3}
-  - key: 1
-    gameObject: {fileID: 21300000, guid: d20eaebd2461ec54f8ed40398c9b7d89, type: 3}
-  - key: 2
-    gameObject: {fileID: 21300000, guid: 8f567c7fe164dbb49b5b5fe8a40c4de0, type: 3}
   - key: DayDo_tomorrow
     gameObject: {fileID: 21300000, guid: 89c1ce1af4f9b684480aae6ace9b07dd, type: 3}
   - key: DayDo_free
     gameObject: {fileID: 21300000, guid: c858b3e22f215ca4c8c0795f7cc79458, type: 3}
+  - key: win
+    gameObject: {fileID: 21300000, guid: d20eaebd2461ec54f8ed40398c9b7d89, type: 3}
+  - key: fail
+    gameObject: {fileID: 21300000, guid: 8f567c7fe164dbb49b5b5fe8a40c4de0, type: 3}

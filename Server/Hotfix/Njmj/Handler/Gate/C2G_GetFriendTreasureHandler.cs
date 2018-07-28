@@ -60,7 +60,7 @@ namespace ETHotfix
                     else
                     {
                         response.Error = ErrorCode.ERR_Common;
-                        response.Message = "今日消耗的钥匙不足五个，不能领取";
+                        response.Message = "今日剩余消耗的钥匙次数不满五个，不能领取";
                         reply(response);
                         return;
                     }

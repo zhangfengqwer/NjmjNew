@@ -66,6 +66,7 @@ namespace ETHotfix
         private Image Icon;
         private GameObject RankImg;
         private Button RewardBtn;
+        private Image Img;
         #endregion
 
         private List<WealthRank> wealthRankList = new List<WealthRank>();
@@ -110,6 +111,7 @@ namespace ETHotfix
             RankImg = rc.Get<GameObject>("RankImg");
             RewardBtn = rc.Get<GameObject>("RewardBtn").GetComponent<Button>();
             DetailBtn = rc.Get<GameObject>("DetailBtn").GetComponent<Button>();
+            Img  = rc.Get<GameObject>("Img").GetComponent<Image>();
 
             #region 好友房
             FriendGrid = rc.Get<GameObject>("FriendGrid");
@@ -886,8 +888,8 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownWealthRank.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("金币:")
-                                              .Append(ownWealthRank.GoldNum)
+            Img.sprite = CommonUtil.getSpriteByBundle("image_shop", "icon_jinbi");
+            GoldTxt.text = new StringBuilder().Append(ownWealthRank.GoldNum)
                                               .ToString();
             RewardBtn.gameObject.SetActive(g2cWeek.IsGetGoldRank);
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
@@ -924,9 +926,9 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownGameRank.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("获胜局数:")
-                                              .Append(ownGameRank.WinCount)
+            GoldTxt.text = new StringBuilder().Append(ownGameRank.WinCount)
                                               .ToString();
+            Img.sprite = CommonUtil.getSpriteByBundle("image_main", "win");
             RewardBtn.gameObject.SetActive(g2cWeek.IsGetGameRank);
             HeadManager.setHeadSprite(Icon, PlayerInfoComponent.Instance.GetPlayerInfo().Icon);
         }
