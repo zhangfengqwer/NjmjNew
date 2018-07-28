@@ -85,6 +85,34 @@ namespace ETHotfix
                     }
                     response.EmailCount = count;
                 }
+                {
+                    //活动
+                    List<FriendKeyConsum> fkcs = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{message.UId}}}");
+                    response.IsInActivity = false;
+                    int count = 0;
+                    if (fkcs.Count > 0)
+                    {
+                        if (fkcs[0].ConsumCount >= 5 && fkcs[0].GetCount < 5)
+                        {
+                            response.IsInActivity = true;
+                            if(((int)(fkcs[0].ConsumCount / 5)) >= (5 - fkcs[0].GetCount))
+                            {
+                                count = 5 - fkcs[0].GetCount;
+                            }
+                            else
+                            {
+                                count = (int)(fkcs[0].ConsumCount / 5);
+                            }
+                        }
+                        else
+                        {
+                            response.IsInActivity = false;
+                            count = 0;
+                        }
+                    }
+                    response.ActivityCompleteCount = count;
+                }
+
                 reply(response);
             }
             catch(Exception e)

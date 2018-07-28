@@ -18,9 +18,9 @@ namespace ETHotfix
 
     public class UIActivityItemComponent : Component
     {
-        private Button UIActivityTitle;
+        public Button UIActivityTitle;
         private Text TitleTxt;
-        private ActivityInfo info;
+        public ActivityInfo info;
 
         private Dictionary<int, GameObject> activityDic = new Dictionary<int, GameObject>();
 
@@ -34,10 +34,13 @@ namespace ETHotfix
             {
                 OnClick(info.id);
             });
+
+            UIActivityTitle.GetComponent<Image>().color = Color.red;
         }
 
         public void OnClick(int id)
         {
+            GameUtil.GetComponentByType<UIActivityComponent>(UIType.UIActivity).SetSelect(id);
             if (activityDic.ContainsKey(id))
             {
                 SetActive(id);
@@ -55,7 +58,6 @@ namespace ETHotfix
                 if (id == 101)
                 {
                     ui.AddComponent<UIActivity101Component>();
-
                 }
                 if (id == 102)
                 {

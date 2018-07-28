@@ -21,6 +21,7 @@ namespace ETHotfix
         private Image RankImg;
         private Text RankTxt;
         private Image Icon;
+        private Image Img;
 
         public void Awake()
         {
@@ -30,6 +31,7 @@ namespace ETHotfix
             RankImg = rc.Get<GameObject>("RankImg").GetComponent<Image>();
             Icon = rc.Get<GameObject>("Icon").GetComponent<Image>();
             RankTxt = rc.Get<GameObject>("RankTxt").GetComponent<Text>();
+            Img = rc.Get<GameObject>("Img").GetComponent<Image>();
         }
 
         public void SetGoldItem(WealthRank wealth, int index)
@@ -39,9 +41,9 @@ namespace ETHotfix
             if (RankTxt.gameObject.activeInHierarchy)
                 RankTxt.text = (index + 1).ToString();
             NameTxt.text = wealth.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("金币:")
-                                              .Append(wealth.GoldNum)
+            GoldTxt.text = new StringBuilder().Append(wealth.GoldNum)
                                               .ToString();
+            Img.sprite = CommonUtil.getSpriteByBundle("image_shop", "icon_jinbi");
             HeadManager.setHeadSprite(Icon, wealth.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                               .Append(index + 1)
@@ -55,8 +57,8 @@ namespace ETHotfix
             RankImg.gameObject.SetActive(index < 3);
             RankTxt.gameObject.SetActive(index >= 3);
             NameTxt.text = gameRank.PlayerName;
-            GoldTxt.text = new StringBuilder().Append("获胜局数:")
-                                              .Append(gameRank.WinCount)
+            Img.sprite = CommonUtil.getSpriteByBundle("image_main", "win");
+            GoldTxt.text = new StringBuilder().Append(gameRank.WinCount)
                                               .ToString();
             if (RankTxt.gameObject.activeInHierarchy)
                 RankTxt.text = (index + 1).ToString();

@@ -123,7 +123,7 @@ namespace ETHotfix
             {
                 ScoreTxt.text = allScore.ToString();
             }
-            Result.sprite = CommonUtil.getSpriteByBundle("image_main", allScore >= 0 ? "1" : "2");
+            Result.sprite = CommonUtil.getSpriteByBundle("image_main", allScore >= 0 ? "win" : "fail");
 
             RoomIdTxt.text = info.roomNum.ToString();
             TimeTxt.text = info.time.ToString();

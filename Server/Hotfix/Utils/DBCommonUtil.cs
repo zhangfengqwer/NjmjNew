@@ -981,19 +981,25 @@ namespace ETHotfix
 
                 // 好友房活动
                 {
-                    List<FriendKeyConsum> consums = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{uid},CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}");
-                    if(consums.Count > 0)
+                    string startTime = "2018-07-31";
+                    string endTime = "2018-08-06";
+                    if (String.CompareOrdinal(DateTime.Now.ToString("yyyy-MM-dd"), startTime) >= 1
+                        && String.CompareOrdinal(DateTime.Now.ToString("yyyy-MM-dd"), endTime) <= 0)
                     {
-                        consums[0].ConsumCount += count;
-                        await proxyComponent.Save(consums[0]);
-                    }
-                    else
-                    {
-                        FriendKeyConsum consum = ComponentFactory.CreateWithId<FriendKeyConsum>(IdGenerater.GenerateId());
-                        consum.UId = uid;
-                        consum.ConsumCount = count;
-                        consum.GetCount = 0;
-                        await proxyComponent.Save(consum);
+                        List<FriendKeyConsum> consums = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{uid},CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}");
+                        if (consums.Count > 0)
+                        {
+                            consums[0].ConsumCount += count;
+                            await proxyComponent.Save(consums[0]);
+                        }
+                        else
+                        {
+                            FriendKeyConsum consum = ComponentFactory.CreateWithId<FriendKeyConsum>(IdGenerater.GenerateId());
+                            consum.UId = uid;
+                            consum.ConsumCount = count;
+                            consum.GetCount = 0;
+                            await proxyComponent.Save(consum);
+                        }
                     }
                 }
             }
