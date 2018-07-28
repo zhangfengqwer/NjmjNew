@@ -5002,7 +5002,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 50000
+  m_Text: 100000
 --- !u!114 &114816024199731110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5403,7 +5403,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 500
+  m_Text: 1000
 --- !u!114 &114899557512043224
 MonoBehaviour:
   m_ObjectHideFlags: 1
