@@ -416,6 +416,12 @@ namespace ETHotfix
             while (!isStop)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);
+
+                if (isStop)
+                {
+                    break;
+                }
+
                 GetRoomReqX();
             }
         }
