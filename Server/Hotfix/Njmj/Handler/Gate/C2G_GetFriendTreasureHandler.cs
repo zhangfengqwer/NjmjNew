@@ -68,7 +68,7 @@ namespace ETHotfix
                 else
                 {
                     response.Error = ErrorCode.ERR_Common;
-                    response.Message = "数据库不存在使用钥匙的记录,请检查数据";
+                    response.Message = "今日消耗的钥匙不足五个，不能领取";
                     reply(response);
                     return;
                 }
