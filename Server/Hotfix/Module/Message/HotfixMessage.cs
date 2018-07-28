@@ -2974,4 +2974,34 @@ namespace ETHotfix
 
 	}
 
+	[Message(HotfixOpcode.H2G_GamerCharge)]
+	[ProtoContract]
+	public partial class H2G_GamerCharge: IRequest
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public long UId;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int goodsId;
+
+	}
+
+	[Message(HotfixOpcode.G2H_GamerCharge)]
+	[ProtoContract]
+	public partial class G2H_GamerCharge: IResponse
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(91, IsRequired = true)]
+		public int Error { get; set; }
+
+		[ProtoMember(92, IsRequired = true)]
+		public string Message { get; set; }
+
+	}
+
 }

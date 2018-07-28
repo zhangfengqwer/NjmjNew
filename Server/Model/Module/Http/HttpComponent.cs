@@ -180,14 +180,21 @@ namespace ETModel
 			
 			while (true)
 			{
-				if (this.InstanceId != instanceId)
-				{
-					return;
-				}
+			    try
+			    {
+			        if (this.InstanceId != instanceId)
+			        {
+			            return;
+			        }
 
-				HttpListenerContext context = await this.listener.GetContextAsync();
-				await InvokeHandler(context);
-				context.Response.Close();
+			        HttpListenerContext context = await this.listener.GetContextAsync();
+			        await InvokeHandler(context);
+			        context.Response.Close();
+                }
+			    catch (Exception e)
+			    {
+			        Log.Error(e);
+			    }
 			}
 		}
 
@@ -202,6 +209,7 @@ namespace ETModel
 			MethodInfo methodInfo = null;
 			IHttpHandler httpHandler = null;
 			string postbody = "";
+		    //Log.Info("web请求path:"+ context.Request.Url.AbsolutePath);
 			switch (context.Request.HttpMethod)
 			{
 				case "GET":

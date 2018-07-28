@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -770,13 +771,23 @@ namespace ETHotfix
 
                 await DBCommonUtil.changeWealthWithStr(userId, reward, "购买元宝");
 
-                UserComponent userComponent = Game.Scene.GetComponent<UserComponent>();
-                User user = userComponent.Get(userId);
-                //给玩家发送消息
-                user?.session?.Send(new Actor_GamerBuyYuanBao()
+                //向map服务器发送请求
+                StartConfigComponent startConfig = Game.Scene.GetComponent<StartConfigComponent>();
+                IPEndPoint gateIPEndPoint = startConfig.GateConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
+                Session gateSession = Game.Scene.GetComponent<NetInnerComponent>().Get(gateIPEndPoint);
+
+                G2H_GamerCharge g2HGamerCharge = (G2H_GamerCharge)await gateSession.Call(new H2G_GamerCharge()
                 {
-                    goodsId = goodsId
+                    goodsId = goodsId,
+                    UId = userId
                 });
+//                UserComponent userComponent = Game.Scene.GetComponent<UserComponent>();
+//                User user = userComponent.Get(userId);
+//                //给玩家发送消息
+//                user?.session?.Send(new Actor_GamerBuyYuanBao()
+//                {
+//                    goodsId = goodsId
+//                });
 
                 // 记录日志
                 {

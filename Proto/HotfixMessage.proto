@@ -1033,3 +1033,15 @@ message G2C_FriendActInfo //IResponse
 	required int ConsumCount = 1;
 	required int GetCount = 2;
 }
+
+message H2G_GamerCharge //IRequest
+{
+	required long UId = 1;
+	required int goodsId = 2;
+}
+
+message G2H_GamerCharge //IResponse
+{
+
+}
+
