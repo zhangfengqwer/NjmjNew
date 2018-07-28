@@ -68,7 +68,7 @@ namespace ETHotfix
                             Log.Warning("room的GameControllerComponent为null");
                             continue;
                         }
-                        if (controllerComponent.RoomConfig.Id == roomType && room.Count < 4)
+                        if (controllerComponent.RoomConfig.Id == roomType && room.Count < 3)
                         {
                             return room;
                         }

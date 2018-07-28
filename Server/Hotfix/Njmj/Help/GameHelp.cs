@@ -41,7 +41,6 @@ namespace ETHotfix
             {
                 await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg, room);
             }
-            gamer.ChangeGold = amount;
             room.Broadcast(new Actor_GamerChangeGold()
             {
                 Uid = gamer.UserID,

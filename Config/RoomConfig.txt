@@ -1,2 +1,2 @@
-{"_id":1,"Name":"新手场","ServiceCharge":500,"Multiples":100,"MinThreshold":500}
-{"_id":2,"Name":"精英场","ServiceCharge":2000,"Multiples":500,"MinThreshold":50000}
+{"_id":1,"Name":"新手场","ServiceCharge":200,"Multiples":100,"MinThreshold":500}
+{"_id":2,"Name":"精英场","ServiceCharge":1000,"Multiples":1000,"MinThreshold":100000}

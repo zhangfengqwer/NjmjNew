@@ -119,7 +119,7 @@ namespace ETHotfix
                         if (Logic_NJMJ.getInstance().isCanPeng(deskComponent.CurrentCard, mahjongInfos))
                         {
                             room.tokenSource.Cancel();
-                            Log.Info("11111");
+                            //Log.Info("11111");
 
                             gamerOperation.OperationType = 0;
                             gamerOperation.OperatedUid = deskComponent.CurrentAuthority;
@@ -131,7 +131,7 @@ namespace ETHotfix
                                 int index = Logic_NJMJ.getInstance().GetIndex(mahjongInfos, deskComponent.CurrentCard);
                                 mahjongInfos.RemoveAt(index);
                             }
-                            Log.Info("222222");
+                            //Log.Info("222222");
                             handCards.PengCards.Add(deskComponent.CurrentCard);
                             currentGamer.GetComponent<HandCardsComponent>().PlayCards.Remove(deskComponent.CurrentCard);
 

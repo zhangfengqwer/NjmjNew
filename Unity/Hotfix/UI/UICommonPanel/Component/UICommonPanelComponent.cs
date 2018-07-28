@@ -20,7 +20,7 @@ namespace ETHotfix
 	public class UICommonPanelComponent : Component
 	{
         public delegate void OnClickOkEvent();
-        public OnClickOkEvent onCallBack_ok = null;
+        public static OnClickOkEvent onCallBack_ok = null;
 
         public delegate void OnClickCloseEvent();
         public static OnClickCloseEvent onCallBack_close = null;
@@ -38,6 +38,7 @@ namespace ETHotfix
         public static UICommonPanelComponent showCommonPanel(string title,string content)
         {
             onCallBack_close = null;
+            onCallBack_ok = null;
 
             if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UICommonPanel) == null)
             {

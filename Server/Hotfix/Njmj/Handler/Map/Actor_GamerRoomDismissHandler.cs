@@ -29,6 +29,10 @@ namespace ETHotfix
                     }
                     else
                     {
+                        if (room.CurrentJuCount > 0)
+                        {
+                            return;
+                        }
                         room.Broadcast(new Actor_GamerReadyTimeOut()
                         {
                             Message = "房主解散房间"

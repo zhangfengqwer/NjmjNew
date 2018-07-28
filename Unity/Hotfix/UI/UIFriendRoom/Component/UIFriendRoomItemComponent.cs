@@ -69,6 +69,8 @@ namespace ETHotfix
         public void SetItemInfo(FriendRoomInfo info)
         {
             this.info = info;
+            //Log.Info("info.IsPublic" + info.IsPublic);
+
             if(info.IsPublic == 1)
             {
                 RoomIdTxt.text = "房号:" + info.RoomId;

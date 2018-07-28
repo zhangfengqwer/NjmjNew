@@ -85,6 +85,10 @@ namespace App
 					    Game.Scene.AddComponent<UserComponent>();
 					    Game.Scene.AddComponent<NjmjGateSessionKeyComponent>();
                         break;
+//                    case AppType.Http:
+//                        Game.Scene.AddComponent<DBProxyComponent>();
+//                        Game.Scene.AddComponent<HttpComponent>();
+//                        break;
 					case AppType.Location:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
 						Game.Scene.AddComponent<LocationComponent>();
@@ -147,7 +151,7 @@ namespace App
 						throw new Exception($"命令行参数没有设置正确的AppType: {startConfig.AppType}");
 				}
 
-                while (true)
+			    while (true)
 				{
 					try
 					{

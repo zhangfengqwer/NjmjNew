@@ -14,6 +14,9 @@ namespace ETModel
         //硬花牌
         public readonly List<MahjongInfo> FaceCards = new List<MahjongInfo>();
 
+        //硬花杠牌
+        public readonly List<MahjongInfo> FaceGangCards = new List<MahjongInfo>();
+
         //碰
         public readonly List<MahjongInfo> PengCards = new List<MahjongInfo>();
 
@@ -54,6 +57,7 @@ namespace ETModel
             Log.Debug("手牌清空");
             PlayCards.Clear();
             FaceCards.Clear();
+            FaceGangCards.Clear();
             PengCards.Clear();
             GangCards.Clear();
             PengGangCards.Clear();

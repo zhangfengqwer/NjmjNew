@@ -70,6 +70,11 @@ namespace ETHotfix
             {
                 PlayerInfoComponent.Instance.GetPlayerInfo().Score += num;
             }
+            //钥匙
+            else if (id == 112)
+            {
+                PlayerInfoComponent.Instance.GetPlayerInfo().FriendKeyCount += num;
+            }
             else
             {
                 bool isFind = false;

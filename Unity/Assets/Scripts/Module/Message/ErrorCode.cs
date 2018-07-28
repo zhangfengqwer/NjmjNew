@@ -2,7 +2,7 @@ namespace ETModel
 {
 	public static class ErrorCode
 	{
-		public const int ERR_Success = 0;
+	    public const int ERR_Success = 0;
 		
 		// 100000 以上，避免跟SocketError冲突
 		public const int ERR_MyErrorCode = 100000;
@@ -29,14 +29,14 @@ namespace ETModel
         public const int TodayHasSign = 200115;
         public const int TaskNotComplete = 200116;
 	    public const int ERR_Common = 200117;
+	    public const int ERR_RoomNoExist = 200118;
 
-
-		public const int ERR_RpcFail = 202001;
+        public const int ERR_RpcFail = 202001;
 		public const int ERR_SocketDisconnected = 202002;
 		public const int ERR_ReloadFail = 202003;
 		public const int ERR_ActorLocationNotFound = 202004;
 
-		public static bool IsRpcNeedThrowException(int error)
+	    public static bool IsRpcNeedThrowException(int error)
 		{
 			if (error == 0)
 			{

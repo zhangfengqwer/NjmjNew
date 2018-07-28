@@ -79,6 +79,10 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: ca2a6c137b2b96048bec8705de04f494, type: 3}
   - key: 112
     gameObject: {fileID: 21300000, guid: cd02a1a30d442f54293918d312cf58ae, type: 3}
+  - key: icon_yb
+    gameObject: {fileID: 21300000, guid: f2ea3f0a0fb7966448517182a2ec3ad0, type: 3}
+  - key: icon_jinbi
+    gameObject: {fileID: 21300000, guid: de183529aa2629b41a84f53cbc737dde, type: 3}
 --- !u!224 &224533785993547676
 RectTransform:
   m_ObjectHideFlags: 1

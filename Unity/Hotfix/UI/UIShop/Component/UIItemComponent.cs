@@ -88,7 +88,7 @@ namespace ETHotfix
                         }
                         else
                         {
-                            ToastScript.createToast("可以充值");
+                            //ToastScript.createToast("可以充值");
                         }
                     }
 
@@ -192,6 +192,14 @@ namespace ETHotfix
                     case ShopType.Prop:
                         Text descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
                         Text disCountTxt = rc.Get<GameObject>("DisCountTxt").GetComponent<Text>();
+                        if (prop_id == 112)
+                        {
+                            this.GetParent<UI>().GameObject.transform.Find("Yuan").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Shop", "icon_jinbi");
+                        }
+                        else
+                        {
+                            this.GetParent<UI>().GameObject.transform.Find("Yuan").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Shop", "icon_yb");
+                        }
                         string[] strArr = info.Desc.Split(';');
                         descTxt.text = strArr[0];
                         disCountTxt.text = strArr[1];

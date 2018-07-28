@@ -20,7 +20,7 @@ namespace ETHotfix
             try
             {
                 //玩家还在结算画面
-                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIGameResult) != null)
+                if (Game.Scene.GetComponent<UIComponent>().Get(UIType.UIGameResult) != null || UIRoomComponent.ISGaming)
                 {
                     return;
                 }

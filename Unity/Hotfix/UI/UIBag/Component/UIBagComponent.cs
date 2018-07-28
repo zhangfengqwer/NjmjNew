@@ -235,6 +235,10 @@ namespace ETHotfix
                     case 112:
                         {
                             GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).ShowFriendRoom();
+                            if (GameUtil.GetComponentByType<UICreateFriendRoomComponent>(UIType.UICreateFriendRoom) == null)
+                            {
+                                Game.Scene.GetComponent<UIComponent>().Create(UIType.UICreateFriendRoom);
+                            }
                             Game.Scene.GetComponent<UIComponent>().Remove(UIType.UIBag);
                         }
                         break;
