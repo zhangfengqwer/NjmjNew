@@ -78,6 +78,12 @@ namespace ETHotfix
                 // 如果房间号跟之前的不一样，说明这是另一局的
                 if (list[i].RoomNum != roomNum)
                 {
+                    // 最多显示50条
+                    if (listData.Count >= 50)
+                    {
+                        break;
+                    }
+
                     roomNum = list[i].RoomNum;
                     FriendRoomRecordInfo = new FriendRoomRecordInfo();
                     listData.Add(FriendRoomRecordInfo);
