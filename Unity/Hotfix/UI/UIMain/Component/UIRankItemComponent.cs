@@ -43,7 +43,7 @@ namespace ETHotfix
             NameTxt.text = wealth.PlayerName;
             GoldTxt.text = new StringBuilder().Append(wealth.GoldNum)
                                               .ToString();
-            Img.sprite = CommonUtil.getSpriteByBundle("image_main","icon_jinbi");
+            Img.sprite = CommonUtil.getSpriteByBundle("image_shop", "icon_jinbi");
             HeadManager.setHeadSprite(Icon, wealth.Icon);
             string rIcon = new StringBuilder().Append("Rank_")
                                               .Append(index + 1)

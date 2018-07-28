@@ -888,7 +888,7 @@ namespace ETHotfix
             }
             RankTxt.text = str;
             NameTxt.text = ownWealthRank.PlayerName;
-            Img.sprite = CommonUtil.getSpriteByBundle("image_main", "icon_jinbi");
+            Img.sprite = CommonUtil.getSpriteByBundle("image_shop", "icon_jinbi");
             GoldTxt.text = new StringBuilder().Append(ownWealthRank.GoldNum)
                                               .ToString();
             RewardBtn.gameObject.SetActive(g2cWeek.IsGetGoldRank);
