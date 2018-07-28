@@ -2936,6 +2936,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int AlGetCount;
 
+		[ProtoMember(3, IsRequired = true)]
+		public string Reward;
+
 	}
 
 	[Message(HotfixOpcode.C2G_FriendActInfo)]

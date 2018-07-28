@@ -41,6 +41,7 @@ namespace ETHotfix
 
             GetBtn.onClick.Add(() =>
             {
+                GetBtn.enabled = false;
                 GetTreasure();
             });
 
@@ -53,13 +54,27 @@ namespace ETHotfix
             G2C_GetFriendTreasure g2cFrd = (G2C_GetFriendTreasure)await SessionComponent.Instance.Session.Call(new C2G_GetFriendTreasure() { UId = PlayerInfoComponent.Instance.uid });
             UINetLoadingComponent.closeNetLoading();
 
-            if(g2cFrd.Error != ErrorCode.ERR_Success)
+            if (g2cFrd.Error != ErrorCode.ERR_Success)
             {
                 ToastScript.createToast(g2cFrd.Message);
+                SetButtonEnable();
                 return;
             }
 
+            GameUtil.changeDataWithStr(g2cFrd.Reward);
+
             GetFriendActInfo();
+
+            SetButtonEnable();
+        }
+
+        private async void SetButtonEnable()
+        {
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(2000);
+            if (GetBtn != null)
+            {
+                GetBtn.enabled = true;
+            }
         }
 
         private async void GetFriendActInfo()

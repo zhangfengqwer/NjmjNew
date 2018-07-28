@@ -401,7 +401,7 @@ namespace ETHotfix
             isStop = true;
         }
 
-        public async void ShowFriendRoom()
+        public void ShowFriendRoom()
         {
             SetUIShow(false);
             StartFriendReq();

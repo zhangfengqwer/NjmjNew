@@ -1020,6 +1020,7 @@ message G2C_GetFriendTreasure //IResponse
 {
 	required int KeyCount = 1;
 	required int AlGetCount = 2;
+	required string Reward = 3;
 }
 
 message C2G_FriendActInfo //IRequest

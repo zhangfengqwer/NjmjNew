@@ -116,10 +116,13 @@ namespace ETHotfix
         private void CreateActivityItems(List<ActivityInfo> activityList)
         {
             GameObject obj = null;
-            for(int i = 0;i< activityList.Count; ++i)
+            activityList.Reverse();
+            for (int i = 0;i< activityList.Count; ++i)
             {
                 if (i < activityItemList.Count)
+                {
                     obj = activityItemList[i];
+                }
                 else
                 {
                     obj = GameObject.Instantiate(activityItem);
@@ -130,7 +133,9 @@ namespace ETHotfix
                     UI ui = ComponentFactory.Create<UI, GameObject>(obj);
                     ui.AddComponent<UIActivityItemComponent>();
                     if (i == 0)
+                    {
                         ui.GetComponent<UIActivityItemComponent>().OnClick(activityList[i].id);
+                    }
                     acUiList.Add(ui);
                 }
                 acUiList[i].GetComponent<UIActivityItemComponent>().SetInfo(activityList[i]);
