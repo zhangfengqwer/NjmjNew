@@ -41,8 +41,15 @@ namespace ETHotfix
 
                 if (sprite != null)
                 {
-                    image.sprite = sprite;
-                    await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(durtime);
+                    if (image != null)
+                    {
+                        image.sprite = sprite;
+                        await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(durtime);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 else
                 {
