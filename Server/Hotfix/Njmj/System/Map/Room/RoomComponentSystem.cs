@@ -54,6 +54,12 @@ namespace ETHotfix
             }
         }
 
+        /// <summary>
+        /// 从空闲房间中获得一个有位置的房间
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="roomType"></param>
+        /// <returns></returns>
         public static Room GetIdleRoomById(this RoomComponent self, int roomType)
         {
             if (self.IdleRoomCount > 0)

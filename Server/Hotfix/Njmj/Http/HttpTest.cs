@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ETHotfix
 {
-    [HttpHandler(AppType.Gate, "/")]
+    [HttpHandler(AppType.Http, "/")]
     public class HttpTest : AHttpHandler
     {
         [Get] // url-> /Login?name=11&age=1111
@@ -73,7 +73,7 @@ namespace ETHotfix
                     return Error("账号错误");
                 }
 
-                ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+                ShopConfig config = ConfigHelp.Get<ShopConfig>(goodsId);
 
                 if (config == null)
                 {
