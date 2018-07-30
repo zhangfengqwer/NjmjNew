@@ -331,28 +331,55 @@ namespace ETHotfix
                     case 8:
                         {
                             //更改用户信息
-                            List<PlayerBaseInfo> playerInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
-                            if (playerInfos.Count > 0)
+                            if (message.UId == -1)
                             {
-                                if (!message.Icon.Equals("0"))
+                                List<PlayerBaseInfo> playerBaseInfos = await proxyComponent.QueryJsonDBInfos<PlayerBaseInfo>();
+                                if (playerBaseInfos.Count > 0)
                                 {
-                                    playerInfos[0].Icon = message.Icon;
-                                    await proxyComponent.Save(playerInfos[0]);
-                                }
-                                if (message.RestChangeNameCount != 0)
-                                {
-                                    playerInfos[0].RestChangeNameCount = message.RestChangeNameCount;
-                                    await proxyComponent.Save(playerInfos[0]);
-                                }
-                                if (!message.Prop.Equals("0"))
-                                {
-                                    await DBCommonUtil.changeWealthWithStr(message.UId,message.Prop,"GM中增加玩家道具");
+                                    for (int i = 0; i < playerBaseInfos.Count; ++i)
+                                    {
+                                        if (!message.Icon.Equals("0"))
+                                        {
+                                            playerBaseInfos[0].Icon = message.Icon;
+                                            await proxyComponent.Save(playerBaseInfos[0]);
+                                        }
+                                        if (message.RestChangeNameCount != 0)
+                                        {
+                                            playerBaseInfos[0].RestChangeNameCount = message.RestChangeNameCount;
+                                            await proxyComponent.Save(playerBaseInfos[0]);
+                                        }
+                                        if (!message.Prop.Equals("0"))
+                                        {
+                                            await DBCommonUtil.changeWealthWithStr(playerBaseInfos[i].Id, message.Prop, "GM中增加玩家道具");
+                                        }
+                                    }
                                 }
                             }
                             else
                             {
-                                response.Error = ErrorCode.ERR_Exception;
-                                response.Message = "用户不存在，请检查UID是否正确";
+                                List<PlayerBaseInfo> playerInfos = await proxyComponent.QueryJson<PlayerBaseInfo>($"{{_id:{message.UId}}}");
+                                if (playerInfos.Count > 0)
+                                {
+                                    if (!message.Icon.Equals("0"))
+                                    {
+                                        playerInfos[0].Icon = message.Icon;
+                                        await proxyComponent.Save(playerInfos[0]);
+                                    }
+                                    if (message.RestChangeNameCount != 0)
+                                    {
+                                        playerInfos[0].RestChangeNameCount = message.RestChangeNameCount;
+                                        await proxyComponent.Save(playerInfos[0]);
+                                    }
+                                    if (!message.Prop.Equals("0"))
+                                    {
+                                        await DBCommonUtil.changeWealthWithStr(message.UId, message.Prop, "GM中增加玩家道具");
+                                    }
+                                }
+                                else
+                                {
+                                    response.Error = ErrorCode.ERR_Exception;
+                                    response.Message = "用户不存在，请检查UID是否正确";
+                                }
                             }
                         }
                         break;
