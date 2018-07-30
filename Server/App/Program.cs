@@ -88,6 +88,8 @@ namespace App
                     case AppType.Http:
                         Game.Scene.AddComponent<DBProxyComponent>();
                         Game.Scene.AddComponent<HttpComponent>();
+                        Game.Scene.AddComponent<ConfigComponent>();
+                        Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);
                         break;
 					case AppType.Location:
 						Game.Scene.AddComponent<NetInnerComponent, IPEndPoint>(innerConfig.IPEndPoint);

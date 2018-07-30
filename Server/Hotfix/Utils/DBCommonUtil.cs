@@ -757,7 +757,7 @@ namespace ETHotfix
             {
                 string reward = "";
                 DBProxyComponent proxyComponent = Game.Scene.GetComponent<DBProxyComponent>();
-                ShopConfig config = ShopData.getInstance().GetDataByShopId(goodsId);
+                ShopConfig config = ConfigHelp.Get<ShopConfig>(goodsId);
 
                 List<Log_Recharge> log_Recharge = await proxyComponent.QueryJson<Log_Recharge>($"{{Uid:{userId}}}");
 
@@ -771,7 +771,7 @@ namespace ETHotfix
 
                 await DBCommonUtil.changeWealthWithStr(userId, reward, "购买元宝");
 
-                //向map服务器发送请求
+                //向gate服务器发送请求
                 StartConfigComponent startConfig = Game.Scene.GetComponent<StartConfigComponent>();
                 IPEndPoint gateIPEndPoint = startConfig.GateConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
                 Session gateSession = Game.Scene.GetComponent<NetInnerComponent>().Get(gateIPEndPoint);

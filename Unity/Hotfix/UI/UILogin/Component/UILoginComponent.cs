@@ -57,6 +57,7 @@ namespace ETHotfix
         private Button btn_third;
         public static UILoginComponent Instance { get; set; }
         private bool isLogining;
+        private Button pressTestButton;
 
         public async void Awake()
         {
@@ -137,6 +138,45 @@ namespace ETHotfix
                 }
             }
             #endregion
+
+            #region 压力测试
+            // pressTestButton = rc.Get<GameObject>("PressTestButton").GetComponent<Button>();
+            // pressTestButton.onClick.Add(this.OnClickPressTest);
+            // if (!NetConfig.getInstance().isFormal)
+            // {
+            //     pressTestButton.gameObject.SetActive(true);
+            // }
+            // else
+            // {
+            //     pressTestButton.gameObject.SetActive(false);
+            // }
+            #endregion
+        }
+
+        private async void OnClickPressTest()
+        {
+
+            Session sessionWrap = null;
+            try
+            {
+
+                //IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint(GlobalConfigComponent.Instance.GlobalProto.Address);
+                IPEndPoint connetEndPoint = NetworkHelper.ToIPEndPoint("10.224.4.158:10006");
+                ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(connetEndPoint);
+
+                sessionWrap = ComponentFactory.Create<Session, ETModel.Session>(session);
+
+                G2C_PressTest g2C_PressTest = (G2C_PressTest)await sessionWrap.Call(new C2G_PressTest());
+                UINetLoadingComponent.closeNetLoading();
+
+                sessionWrap.Dispose();
+
+            }
+            catch (Exception e)
+            {
+                sessionWrap?.Dispose();
+                Log.Error(e);
+            }
         }
 
         public void onClickDebugAccount1()

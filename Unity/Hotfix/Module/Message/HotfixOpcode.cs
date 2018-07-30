@@ -167,5 +167,7 @@ namespace ETHotfix
 		 public const ushort G2C_FriendActInfo = 10163;
 		 public const ushort H2G_GamerCharge = 10164;
 		 public const ushort G2H_GamerCharge = 10165;
+		 public const ushort C2G_PressTest = 10166;
+		 public const ushort G2C_PressTest = 10167;
 	}
 }

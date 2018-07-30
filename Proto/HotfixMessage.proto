@@ -1045,3 +1045,13 @@ message G2H_GamerCharge //IResponse
 
 }
 
+message C2G_PressTest //IRequest
+{
+	
+}
+
+message G2C_PressTest  //IResponse
+{
+	
+}
+
