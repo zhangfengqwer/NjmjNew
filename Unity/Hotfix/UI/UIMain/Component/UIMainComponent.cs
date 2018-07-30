@@ -113,6 +113,19 @@ namespace ETHotfix
             DetailBtn = rc.Get<GameObject>("DetailBtn").GetComponent<Button>();
             Img  = rc.Get<GameObject>("Img").GetComponent<Image>();
 
+            // 休闲场和好友房两个按钮动画
+            {
+                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_relax").GetComponent<Image>(),
+                                 "image_frameanimation", "xiuxian00",
+                                 70,
+                                 null, true,true);
+
+                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Image>(),
+                                 "image_frameanimation", "haoyou00",
+                                 70,
+                                 null, true,true);
+            }
+
             #region 好友房
             FriendGrid = rc.Get<GameObject>("FriendGrid");
             FriendRoom  = rc.Get<GameObject>("FriendRoom");

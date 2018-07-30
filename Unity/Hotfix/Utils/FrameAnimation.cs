@@ -13,12 +13,32 @@ namespace ETHotfix
     {
         public delegate void CallBack();
 
-        public static async void Start(Image image,string bundleName ,string animationName,long durtime,CallBack callBack)
+        public static async void Start(Image image,string bundleName ,string animationName,long durtime,CallBack callBack,bool isLoop = false,bool indexIsGuDingLength = false)
         {
             int i = 0;
             while (true)
             {
-                Sprite sprite = CommonUtil.getSpriteByBundle(bundleName, animationName + (++i));
+                Sprite sprite;
+
+                if (!indexIsGuDingLength)
+                {
+                    sprite = CommonUtil.getSpriteByBundle(bundleName, animationName + (++i));
+                }
+                else
+                {
+                    string name = animationName;;
+                    if (++i > 9)
+                    {
+                        name += i;
+                    }
+                    else
+                    {
+                        name += ("0" + i);
+                    }
+
+                    sprite = CommonUtil.getSpriteByBundle(bundleName, name);
+                }
+
                 if (sprite != null)
                 {
                     image.sprite = sprite;
@@ -26,7 +46,14 @@ namespace ETHotfix
                 }
                 else
                 {
-                    break;
+                    if (isLoop)
+                    {
+                        i = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
