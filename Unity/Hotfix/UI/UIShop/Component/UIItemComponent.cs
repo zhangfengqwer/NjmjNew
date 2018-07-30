@@ -192,7 +192,7 @@ namespace ETHotfix
                     case ShopType.Prop:
                         Text descTxt = rc.Get<GameObject>("DescTxt").GetComponent<Text>();
                         Text disCountTxt = rc.Get<GameObject>("DisCountTxt").GetComponent<Text>();
-                        if (prop_id == 112)
+                        if (prop_id == 112 && info.CurrencyType == 1)
                         {
                             this.GetParent<UI>().GameObject.transform.Find("Yuan").GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Shop", "icon_jinbi");
                         }

@@ -136,8 +136,8 @@ namespace ETHotfix
                 Game.Scene.GetComponent<UIComponent>().Get(UIType.UIMain).GetComponent<UIMainComponent>().SetRedTip(3, false);
             }
 
-            ShowText.text = g2cFrd.ConsumCount.ToString();
-            LeftTxt.text = "剩余次数" + (MaxCount - g2cFrd.GetCount) + "次";
+            ShowText.text = g2cFrd.ConsumCount.ToString() + "/" + count;
+            LeftTxt.text = "剩余次数" + "<Color=#F5E724FF>" + (MaxCount - g2cFrd.GetCount) + "</Color>" + "次";
             if (g2cFrd.GetCount >= 5)
             {
                 GetBtn.enabled = false;
