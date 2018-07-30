@@ -146,7 +146,7 @@ namespace ETHotfix
             CloseFrRoomBtn.onClick.Add(() =>
             {
                 SetUIShow(true);
-                isStop = true;
+                isFriendReqStop = true;
             });
 
             ////打开创建房间UI
@@ -259,7 +259,7 @@ namespace ETHotfix
                 ChoiceRoomType.transform.Find("Relax").transform.localScale = new Vector3(1,1,1);
             });
 
-            // 比赛场
+            // 好友房
             ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Button>().onClick.Add(() =>
             {
                 //ToastScript.createToast("暂未开放：比赛场");
@@ -316,6 +316,10 @@ namespace ETHotfix
             
             Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
             {
+                if (curType == 1)
+                {
+                    return;
+                }
                 curType = 1;
                 ShowGoldRank();
                 SetMyRank();
@@ -324,6 +328,10 @@ namespace ETHotfix
 
             Rank.transform.Find("Btn_game").GetComponent<Button>().onClick.Add(() =>
             {
+                if(curType == 2)
+                {
+                    return;
+                }
                 curType = 2;
                 ShowGameRank();
                 SetMyGameRank();
@@ -396,11 +404,11 @@ namespace ETHotfix
         }
 
         long m_durTime = 5000;
-        bool isStop = false;
+        bool isFriendReqStop = false;
 
         public void StopFriendReq()
         {
-            isStop = true;
+            isFriendReqStop = true;
         }
 
         public void ShowFriendRoom()
@@ -411,13 +419,13 @@ namespace ETHotfix
 
         public async void StartFriendReq()
         {
-            isStop = false;
+            isFriendReqStop = false;
             GetRoomInfoReq();
-            while (!isStop)
+            while (!isFriendReqStop)
             {
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(m_durTime);
 
-                if (isStop)
+                if (isFriendReqStop)
                 {
                     break;
                 }
@@ -666,7 +674,7 @@ namespace ETHotfix
             }
 
             base.Dispose();
-            isStop = true;
+            isFriendReqStop = true;
             isDispose = true;
             wealthRankList.Clear();
             gameRankList.Clear();

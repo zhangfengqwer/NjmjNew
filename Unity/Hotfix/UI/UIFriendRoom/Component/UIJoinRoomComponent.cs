@@ -174,10 +174,6 @@ namespace ETHotfix
             curEnterValue = "";
             EnterTxt.text = "";
             builder.Clear();
-            if (GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain) != null)
-            {
-                GameUtil.GetComponentByType<UIMainComponent>(UIType.UIMain).StopFriendReq();
-            }
         }
     }
 }
