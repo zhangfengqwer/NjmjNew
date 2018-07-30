@@ -68,6 +68,7 @@ namespace ETHotfix
         public MahjongInfo CurrentMahjong { get; set; }
         public static bool IsFriendRoom;
         private static int CurrentJuCount;
+        private Image showAnimImage;
         public int JuCount { get; set; }
 
         public void Awake()
@@ -210,6 +211,12 @@ namespace ETHotfix
             this.tip = rc.Get<GameObject>("Tip");
             #endregion
 
+            #region 四连风等
+
+            this.showAnimImage = rc.Get<GameObject>("ShowAnim").GetComponent<Image>();
+            this.showAnimImage.gameObject.SetActive(false);
+
+            #endregion
         }
 
         /// <summary>
@@ -695,5 +702,37 @@ namespace ETHotfix
             CurrentJuCount = currentJuCount;
             currentJuCountText.text = $"{currentJuCount}/{JuCount}局";
         }
+
+        /// <summary>
+        /// 显示四连风 1,四连风；2，fafen
+        /// </summary>
+        /// <param name="type"></param>
+        public async void ShowAnim(int type)
+        {
+            switch (type)
+            {
+                case 1:
+                    break;
+                case 2:
+                    showAnimImage.sprite = CommonUtil.getSpriteByBundle("Image_GameAnimation", "silianfeng");
+                    break;
+                case 3:
+                    showAnimImage.sprite = CommonUtil.getSpriteByBundle("Image_GameAnimation", "fafen");
+                    break;
+                case 4:
+                    break;
+            }
+
+            showAnimImage.gameObject.SetActive(true);
+
+            showAnimImage.SetNativeSize();
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1500);
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            showAnimImage.gameObject.SetActive(false);
+        }   
     }
 }

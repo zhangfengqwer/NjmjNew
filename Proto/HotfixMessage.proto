@@ -398,6 +398,7 @@ message Actor_GamerChangeGold // IActorMessage
 {
     required long Uid = 1;
     required int GoldAmount = 2;
+    required int Type = 3;
 }
 
 message Actor_GamerCheat // IActorMessage
@@ -1053,5 +1054,11 @@ message C2G_PressTest //IRequest
 message G2C_PressTest  //IResponse
 {
 	
+}
+
+message Actor_ShowAnimType //IActorMessage
+{
+	required int Type = 1;
+	required int Count = 2;
 }
 

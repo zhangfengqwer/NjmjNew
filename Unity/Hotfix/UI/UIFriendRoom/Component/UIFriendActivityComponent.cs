@@ -137,7 +137,7 @@ namespace ETHotfix
             }
 
             ShowText.text = g2cFrd.ConsumCount.ToString() + "/" + count;
-            LeftTxt.text = "剩余次数" + "<Color=#F5E724FF>" + (MaxCount - g2cFrd.GetCount) + "</Color>" + "次";
+            LeftTxt.text = "次数" + "<Color=#F5E724FF>" + (g2cFrd.GetCount) + "/" + count + "</Color>";
             if (g2cFrd.GetCount >= 5)
             {
                 GetBtn.enabled = false;

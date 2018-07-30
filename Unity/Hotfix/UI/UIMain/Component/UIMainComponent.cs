@@ -42,6 +42,7 @@ namespace ETHotfix
         private GameObject Btn_GoldSelect;
         private GameObject Btn_GameSelect;
         private GameObject Grid;
+        private GameObject WealthGrid;
         private Button DetailBtn;
 
         #region 好友房
@@ -103,6 +104,7 @@ namespace ETHotfix
             Btn_GoldSelect = rc.Get<GameObject>("Btn_GoldSelect");
             Btn_GameSelect = rc.Get<GameObject>("Btn_GameSelect");
             Grid = rc.Get<GameObject>("Grid");
+            WealthGrid = rc.Get<GameObject>("WealthGrid");
 
             GoldTxt = rc.Get<GameObject>("GoldTxt").GetComponent<Text>();
             NameTxt = rc.Get<GameObject>("NameTxt").GetComponent<Text>();
@@ -329,8 +331,8 @@ namespace ETHotfix
             });
 
             RankItem = CommonUtil.getGameObjByBundle(UIType.UIRankItem);
-            
-            
+
+            curType = 2;
             Rank.transform.Find("Btn_gold").GetComponent<Button>().onClick.Add(() =>
             {
                 if (curType == 1)
@@ -503,17 +505,11 @@ namespace ETHotfix
         /// </summary>
         private void CreateRoomItemss(List<FriendRoomInfo> roomInfos)
         {
-            if(roomInfos.Count <= 0)
-            {
-                HideMore(0);
-            }
-
             GameObject obj = null;
             for (int i = 0; i < roomInfos.Count; ++i)
             {
                 if (i < roomItems.Count)
                 {
-                    roomItems[i].SetActive(true);
                     obj = roomItems[i];
                 }
                 else
@@ -528,16 +524,8 @@ namespace ETHotfix
                 }
                 uiFList[i].GetComponent<UIFriendRoomItemComponent>().SetItemInfo(roomInfos[i]);
             }
-            HideMore(roomInfos.Count);
         }
 
-        private void HideMore(int index)
-        {
-            for(int i = index;i< roomItems.Count;++i)
-            {
-                roomItems[i].SetActive(false);
-            }
-        }
         #endregion
 
         private int curType = 2;
@@ -710,35 +698,33 @@ namespace ETHotfix
         private void ShowGoldRank()
         {
             GameObject obj = null;
-            Btn_GoldSelect.gameObject.SetActive(true);
-            Btn_GameSelect.gameObject.SetActive(false);
+            SetUIState(0, 1);
             //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             for (int i = 0; i < wealthRankList.Count; ++i)
             {
                 if (i < rankItemList.Count)
                 {
-                    rankItemList[i].SetActive(true);
                     obj = rankItemList[i];
                 }
                 else
                 {
                     obj = GameObject.Instantiate(RankItem);
-                    obj.transform.SetParent(Grid.transform);
+                    obj.transform.SetParent(WealthGrid.transform);
                     obj.transform.localPosition = Vector3.zero;
                     obj.transform.localScale = Vector3.one;
                     rankItemList.Add(obj);
-                }
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                uiList.Add(ui);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    uiList.Add(ui);
 
-                if (i >= ownRank)
-                {   
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i + 1);
-                }
-                else
-                {
-                    uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+                    if (i >= ownRank)
+                    {
+                        uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i + 1);
+                    }
+                    else
+                    {
+                        uiList[i].GetComponent<UIRankItemComponent>().SetGoldItem(wealthRankList[i], i);
+                    }
                 }
             }
             SetMoreHide(wealthRankList.Count, rankItemList);
@@ -757,16 +743,15 @@ namespace ETHotfix
         /// </summary>
         private void ShowGameRank()
         {
-            Btn_GoldSelect.gameObject.SetActive(false);
-            Btn_GameSelect.gameObject.SetActive(true);
             //Grid.transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 1);
             GameObject obj = null;
+            SetUIState(1,0);
             for (int i = 0; i < gameRankList.Count; ++i)
             {
-                if (i < rankItemList.Count)
+                if (i < gameItemList.Count)
                 {
-                    rankItemList[i].SetActive(true);
-                    obj = rankItemList[i];
+                    gameItemList[i].SetActive(true);
+                    obj = gameItemList[i];
                 }
                 else
                 {
@@ -774,23 +759,30 @@ namespace ETHotfix
                     obj.transform.SetParent(Grid.transform);
                     obj.transform.localScale = Vector3.one;
                     obj.transform.localPosition = Vector3.zero;
-                    rankItemList.Add(obj);
-                }
+                    gameItemList.Add(obj);
+                    UI ui = ComponentFactory.Create<UI, GameObject>(obj);
+                    ui.AddComponent<UIRankItemComponent>();
+                    gameUiList.Add(ui);
 
-                UI ui = ComponentFactory.Create<UI, GameObject>(obj);
-                ui.AddComponent<UIRankItemComponent>();
-                gameUiList.Add(ui);
-
-                if (i >= ownGame)
-                {
-                    gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i + 1);
-                }
-                else
-                {
-                    gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+                    if (i >= ownGame)
+                    {
+                        gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i + 1);
+                    }
+                    else
+                    {
+                        gameUiList[i].GetComponent<UIRankItemComponent>().SetGameItem(gameRankList[i], i);
+                    }
                 }
             }
-            SetMoreHide(gameRankList.Count, rankItemList);
+            SetMoreHide(gameRankList.Count, gameItemList);
+        }
+
+        private void SetUIState(int gameScale,int wealthScale)
+        {
+            Btn_GoldSelect.transform.localScale = new Vector3(wealthScale, 1, wealthScale);
+            Btn_GameSelect.transform.localScale= new Vector3(gameScale, 1, gameScale);
+            Grid.transform.parent.localScale = new Vector3(gameScale, 1, gameScale);
+            WealthGrid.transform.parent.localScale = new Vector3(wealthScale, 1, wealthScale);
         }
 
         /// <summary>

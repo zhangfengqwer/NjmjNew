@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 224057796186540452}
   - component: {fileID: 222579983056600476}
   - component: {fileID: 114613365611749594}
-  - component: {fileID: 114461055246353430}
   m_Layer: 5
   m_Name: ScoreTxt
   m_TagString: Untagged
@@ -333,19 +332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &114461055246353430
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1306911335384416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &114485265698931806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -423,10 +409,10 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -574,7 +560,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -771,8 +757,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -360.49695, y: 191}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -400.6, y: 188.30988}
+  m_SizeDelta: {x: 154, y: 28.219}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224074160671736014
 RectTransform:
@@ -869,7 +855,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3745625, y: 0.8646042}
   m_AnchorMax: {x: 0.3745625, y: 0.8646042}
-  m_AnchoredPosition: {x: -276, y: 12}
+  m_AnchoredPosition: {x: -315.19995, y: 8.299988}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224611388623823168

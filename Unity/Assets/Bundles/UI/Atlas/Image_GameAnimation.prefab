@@ -131,6 +131,10 @@ MonoBehaviour:
     gameObject: {fileID: 21300000, guid: e8c5e76ae44fb154ab052d8bc3b049e0, type: 3}
   - key: zimo_17
     gameObject: {fileID: 21300000, guid: 83514e6a0ae9da7438b0ba225892d112, type: 3}
+  - key: fafen
+    gameObject: {fileID: 21300000, guid: 480c27e605658da43a3cdbe309f7f919, type: 3}
+  - key: silianfeng
+    gameObject: {fileID: 21300000, guid: d0a7e35014d18c7419c32d4d2f4be148, type: 3}
 --- !u!224 &224957057828835144
 RectTransform:
   m_ObjectHideFlags: 1

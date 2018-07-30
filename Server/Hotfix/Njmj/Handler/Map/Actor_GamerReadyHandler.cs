@@ -271,7 +271,9 @@ namespace ETHotfix
 	                //扣服务费
 	                if (!room.IsFriendRoom)
 	                {
-	                    GameHelp.CostServiceCharge(room);
+                        //不要动画
+	                    GameHelp.CostServiceCharge(room, false);
+	                   
                     }
                 }
 	        }

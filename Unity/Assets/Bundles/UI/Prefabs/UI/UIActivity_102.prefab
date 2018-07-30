@@ -181,7 +181,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5269\u4F59\u6B21\u6570<Color=#F5E724FF>5</Color>\u6B21"
+  m_Text: "\u5269\u4F59\u6B21\u6570<Color=#F5E724FF>0/5</Color>"
 --- !u!114 &114053435069063718
 MonoBehaviour:
   m_ObjectHideFlags: 1

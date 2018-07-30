@@ -169,5 +169,6 @@ namespace ETHotfix
 		 public const ushort G2H_GamerCharge = 10165;
 		 public const ushort C2G_PressTest = 10166;
 		 public const ushort G2C_PressTest = 10167;
+		 public const ushort Actor_ShowAnimType = 10168;
 	}
 }

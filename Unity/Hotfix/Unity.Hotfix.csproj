@@ -123,6 +123,7 @@
     <Compile Include="Njmj\Component\HeartBeatComponent.cs" />
     <Compile Include="Njmj\Entity\Constants.cs" />
     <Compile Include="Njmj\Entity\Type.cs" />
+    <Compile Include="Njmj\Handler\Actor_ShowAnimHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_EmergencyNoticeHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerApplyRoomDismissHandler.cs" />
     <Compile Include="Njmj\Handler\Actor_GamerAgreeRoomDismissHandler.cs" />

@@ -128,6 +128,12 @@ namespace ETHotfix
                                 {
                                     GameHelp.ChangeGamerGold(room, _gamer, 10 * gameController.RoomConfig.Multiples);
                                 }
+
+                                room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
+                                {
+                                    Type = 2,
+                                    Count = 0
+                                });
                             }
                             room.LastBiXiaHu = true;
                         }
@@ -157,6 +163,12 @@ namespace ETHotfix
                             {
                                 GameHelp.ChangeGamerGold(room, _gamer, 10 * gameController.RoomConfig.Multiples);
                             }
+
+                            room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
+                            {
+                                Type = 2,
+                                Count = 0
+                            });
                         }
 
                         room.LastBiXiaHu = true;
@@ -185,6 +197,12 @@ namespace ETHotfix
                                 {
                                     GameHelp.ChangeGamerGold(room, _gamer, -5 * gameController.RoomConfig.Multiples);
                                 }
+
+                                room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
+                                {
+                                    Type = 1,
+                                    Count = 0
+                                });
                             }
                         }
 

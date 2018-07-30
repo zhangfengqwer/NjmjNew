@@ -213,7 +213,13 @@ namespace ETHotfix
                 uiRoomComponent.tip.GetComponentInChildren<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Desk_Card", "shangji_tip");
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(3000);
                
-                uiRoomComponent?.tip?.SetActive(false);
+                if(uiRoomComponent != null)
+                {
+                    if (uiRoomComponent.tip != null)
+                    {
+                        uiRoomComponent?.tip?.SetActive(false);
+                    }
+                }
             }
             catch (Exception e)
             {

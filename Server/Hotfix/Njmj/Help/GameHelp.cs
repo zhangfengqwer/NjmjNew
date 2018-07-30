@@ -11,14 +11,19 @@ namespace ETHotfix
         /// 收服务费
         /// </summary>
         /// <param name="room"></param>
-        public static void CostServiceCharge(Room room)
+        public static void CostServiceCharge(Room room, bool isNeedAnim = true)
         {
             GameControllerComponent controllerComponent = room.GetComponent<GameControllerComponent>();
             long cost = controllerComponent.RoomConfig.ServiceCharge;
-
             foreach (var gamer in room.GetAll())
             {
-                ChangeGamerGold(room, gamer, (int) -cost, controllerComponent.RoomConfig.Name + "报名费");
+                ChangeGamerGold(room, gamer, (int) -cost, controllerComponent.RoomConfig.Name + "报名费", isNeedAnim);
+                room.GamerBroadcast(gamer, new Actor_ShowAnimType()
+                {
+                    Type = 1,
+                    Count = (int) cost
+
+                });
             }
         }
 
@@ -30,7 +35,7 @@ namespace ETHotfix
         /// <param name="amount"></param>
         /// <param name="isFriendRoom"></param>
         /// <param name="msg"></param>
-        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, string msg = "游戏内改变金币")
+        public static async void ChangeGamerGold(Room room, Gamer gamer, int amount, string msg = "游戏内改变金币", bool isNeedAnim = true)
         {
             if (amount == 0) return;
             if (room.IsFriendRoom)
@@ -41,11 +46,15 @@ namespace ETHotfix
             {
                 await DBCommonUtil.ChangeWealth(gamer.UserID, 1, amount, msg, room);
             }
-            room.Broadcast(new Actor_GamerChangeGold()
+
+            if (isNeedAnim)
             {
-                Uid = gamer.UserID,
-                GoldAmount = amount
-            });
+                room.Broadcast(new Actor_GamerChangeGold()
+                {
+                    Uid = gamer.UserID,
+                    GoldAmount = amount
+                });
+            }
         }
 
         public static void RoomDispose(Room room)

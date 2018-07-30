@@ -1148,6 +1148,9 @@ namespace ETHotfix
 		[ProtoMember(2, IsRequired = true)]
 		public int GoldAmount;
 
+		[ProtoMember(3, IsRequired = true)]
+		public int Type;
+
 	}
 
 	[Message(HotfixOpcode.Actor_GamerCheat)]
@@ -3025,6 +3028,24 @@ namespace ETHotfix
 
 		[ProtoMember(92, IsRequired = true)]
 		public string Message { get; set; }
+
+	}
+
+	[Message(HotfixOpcode.Actor_ShowAnimType)]
+	[ProtoContract]
+	public partial class Actor_ShowAnimType: IActorMessage
+	{
+		[ProtoMember(90, IsRequired = true)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(93, IsRequired = true)]
+		public long ActorId { get; set; }
+
+		[ProtoMember(1, IsRequired = true)]
+		public int Type;
+
+		[ProtoMember(2, IsRequired = true)]
+		public int Count;
 
 	}
 
