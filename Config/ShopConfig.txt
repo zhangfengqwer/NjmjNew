@@ -8,7 +8,8 @@
 {"_id":1008,"shopType":2,"Name":"金币箱","Desc":"购买获得1150000金币;VIP折扣价800","CurrencyType":2,"Price":1000,"Items":"1:1150000","Icon":"item4_1","VipPrice":800}
 {"_id":1009,"shopType":5,"Name":"30天表情包","Desc":"使用后可在房间使用特殊表情;VIP折扣价96","CurrencyType":2,"Price":120,"Items":"104:1","Icon":"104","VipPrice":96}
 {"_id":1010,"shopType":5,"Name":"喇叭","Desc":"喇叭喊话全服可见;VIP折扣价8","CurrencyType":2,"Price":10,"Items":"105:1","Icon":"105","VipPrice":8}
-{"_id":1011,"shopType":5,"Name":"钥匙","Desc":"用来创建好友房","CurrencyType":1,"Price":10,"Items":"112:1","Icon":"112","VipPrice":8}
-{"_id":1012,"shopType":6,"Name":"vip7天体验卡","Desc":"vip7天体验卡","CurrencyType":2,"Price":70,"Items":"107:1","Icon":"107","VipPrice":70}
-{"_id":1013,"shopType":6,"Name":"vip月卡","Desc":"vip月卡","CurrencyType":2,"Price":300,"Items":"108:1","Icon":"108","VipPrice":300}
-{"_id":1014,"shopType":6,"Name":"vip季卡","Desc":"vip季卡","CurrencyType":2,"Price":800,"Items":"109:1","Icon":"109","VipPrice":800}
+{"_id":1011,"shopType":5,"Name":"钥匙","Desc":"用来创建好友房;VIP折扣价13333","CurrencyType":1,"Price":16666,"Items":"112:1","Icon":"112","VipPrice":13333}
+{"_id":1012,"shopType":5,"Name":"钥匙","Desc":"用来创建好友房;VIP折扣价10","CurrencyType":2,"Price":10,"Items":"112:1","Icon":"112","VipPrice":8}
+{"_id":1013,"shopType":6,"Name":"vip7天体验卡","Desc":"vip7天体验卡","CurrencyType":2,"Price":70,"Items":"107:1","Icon":"107","VipPrice":70}
+{"_id":1014,"shopType":6,"Name":"vip月卡","Desc":"vip月卡","CurrencyType":2,"Price":300,"Items":"108:1","Icon":"108","VipPrice":300}
+{"_id":1015,"shopType":6,"Name":"vip季卡","Desc":"vip季卡","CurrencyType":2,"Price":800,"Items":"109:1","Icon":"109","VipPrice":800}
