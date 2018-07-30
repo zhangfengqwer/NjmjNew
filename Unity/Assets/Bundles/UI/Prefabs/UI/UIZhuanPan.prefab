@@ -2035,7 +2035,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6BCF\u65E5\u5206\u4EAB\u53EA\u53EF\u83B7\u5F97\u4E00\u6B21\u62BD\u5956\u673A\u4F1A\uFF01"
+  m_Text: "\u6BCF\u65E5\u5206\u4EAB\u53EF\u989D\u5916\u83B7\u5F97\u4E00\u6B21\u62BD\u5956\u673A\u4F1A\uFF01"
 --- !u!114 &114605851107139598
 MonoBehaviour:
   m_ObjectHideFlags: 1
