@@ -983,8 +983,8 @@ namespace ETHotfix
                 {
                     string startTime = "2018-07-31";
                     string endTime = "2018-08-06";
-                    if (String.CompareOrdinal(DateTime.Now.ToString("yyyy-MM-dd"), startTime) >= 1
-                        && String.CompareOrdinal(DateTime.Now.ToString("yyyy-MM-dd"), endTime) <= 0)
+                    if (String.CompareOrdinal(CommonUtil.getCurDataNormalFormat(), startTime) >= 1
+                        && String.CompareOrdinal(CommonUtil.getCurDataNormalFormat(), endTime) <= 0)
                     {
                         List<FriendKeyConsum> consums = await proxyComponent.QueryJson<FriendKeyConsum>($"{{UId:{uid},CreateTime:/^{DateTime.Now.GetCurrentDay()}/}}");
                         if (consums.Count > 0)
