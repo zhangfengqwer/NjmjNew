@@ -981,8 +981,8 @@ namespace ETHotfix
 
                 // 好友房活动
                 {
-                    string startTime = "2018-07-31";
-                    string endTime = "2018-08-06";
+                    string startTime = "2018-08-01";
+                    string endTime = "2018-08-07";
                     if (String.CompareOrdinal(CommonUtil.getCurDataNormalFormat(), startTime) >= 1
                         && String.CompareOrdinal(CommonUtil.getCurDataNormalFormat(), endTime) <= 0)
                     {
