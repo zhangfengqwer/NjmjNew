@@ -45,11 +45,11 @@ namespace ETHotfix
                     long yuan = PlayerInfoComponent.Instance.GetPlayerInfo().WingNum;
                     if (GameUtil.isVIP())
                     {
-                        ShowBuy(yuan, shopInfo.VipPrice,"元宝购买");
+                        ShowBuy(yuan, shopInfo.VipPrice,"元宝");
                     }
                     else
                     {
-                        ShowBuy(yuan, shopInfo.Price,"元宝购买");
+                        ShowBuy(yuan, shopInfo.Price,"元宝");
                     }
                 }
                 else if(shopInfo.CurrencyType == 1)
@@ -58,11 +58,11 @@ namespace ETHotfix
                     long gold = PlayerInfoComponent.Instance.GetPlayerInfo().GoldNum;
                     if (GameUtil.isVIP())
                     {
-                        ShowBuy(gold, shopInfo.VipPrice,"金币购买");
+                        ShowBuy(gold, shopInfo.VipPrice,"金币");
                     }
                     else
                     {
-                        ShowBuy(gold, shopInfo.Price,"金币购买");
+                        ShowBuy(gold, shopInfo.Price,"金币");
                     }
                 }
                 else
@@ -129,14 +129,15 @@ namespace ETHotfix
                 tip = new StringBuilder().Append("确定花费")
                                                 .Append(price)
                                                 .Append(content)
+                                                .Append("购买")
                                                 .Append(shopInfo.Name)
                                                 .Append("吗").ToString();
                 isCanBuy = true;
             }
             else
             {
-                //元宝不够
-                tip = "您还没有足够的元宝，现在去充值吧！";
+                //财富不够
+                tip = $"{content}不足!";
                 isCanBuy = false;
             }
             Game.Scene.GetComponent<UIComponent>().Get(UIType.UIShop).GetComponent<UIShopComponent>().BuyTip(shopInfo, tip, isCanBuy);
