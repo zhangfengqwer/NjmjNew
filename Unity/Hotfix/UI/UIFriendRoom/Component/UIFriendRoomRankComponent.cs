@@ -23,6 +23,7 @@ namespace ETHotfix
     {
         private Button CloseBtn;
         private GameObject UIFriendGrid;
+        private Text ScoreTxt;
 
         private List<GameObject> objList = new List<GameObject>();
         private GameObject item = null;
@@ -34,6 +35,7 @@ namespace ETHotfix
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             CloseBtn = rc.Get<GameObject>("CloseBtn").GetComponent<Button>();
             UIFriendGrid = rc.Get<GameObject>("UIFriendGrid");
+            ScoreTxt = rc.Get<GameObject>("ScoreTxt").GetComponent<Text>();
 
             item = CommonUtil.getGameObjByBundle(UIType.UIMyRankItem);
 
@@ -43,7 +45,13 @@ namespace ETHotfix
             });
 
             GetInfoReq();
+            Init();
             UIAnimation.ShowLayer(this.GetParent<UI>().GameObject);
+        }
+
+        private void Init()
+        {
+            ScoreTxt.text = PlayerInfoComponent.Instance.GetPlayerInfo().Score.ToString();   
         }
 
         private async void GetInfoReq()

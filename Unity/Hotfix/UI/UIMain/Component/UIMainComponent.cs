@@ -115,12 +115,12 @@ namespace ETHotfix
 
             // 休闲场和好友房两个按钮动画
             {
-                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_relax").GetComponent<Image>(),
+                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_relax1").GetComponent<Image>(),
                                  "image_frameanimation", "xiuxian00",
                                  70,
                                  null, true,true);
 
-                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_pvp").GetComponent<Image>(),
+                FrameAnimation.Start(ChoiceRoomType.transform.Find("Btn_pvp1").GetComponent<Image>(),
                                  "image_frameanimation", "haoyou00",
                                  70,
                                  null, true,true);
@@ -266,6 +266,8 @@ namespace ETHotfix
             // 休闲场
             ChoiceRoomType.transform.Find("Btn_relax").GetComponent<Button>().onClick.Add(() =>
             {
+                ChoiceRoomType.transform.Find("Btn_relax1").transform.localScale = Vector3.zero;
+                ChoiceRoomType.transform.Find("Btn_pvp1").transform.localScale = Vector3.zero;
                 ChoiceRoomType.transform.Find("Btn_relax").transform.localScale = Vector3.zero;
                 ChoiceRoomType.transform.Find("Btn_pvp").transform.localScale = Vector3.zero;
 
@@ -285,6 +287,8 @@ namespace ETHotfix
             {
                 ChoiceRoomType.transform.Find("Btn_relax").transform.localScale = new Vector3(1, 1, 1);
                 ChoiceRoomType.transform.Find("Btn_pvp").transform.localScale = new Vector3(1, 1, 1);
+                ChoiceRoomType.transform.Find("Btn_relax1").transform.localScale = new Vector3(1, 1, 1);
+                ChoiceRoomType.transform.Find("Btn_pvp1").transform.localScale = new Vector3(1, 1, 1);
 
                 ChoiceRoomType.transform.Find("Relax").transform.localScale = Vector3.zero;
             });
@@ -470,6 +474,7 @@ namespace ETHotfix
         private void CreateUI(G2C_FriendRoomInfo m2cFriend)
         {
             ScoreTxt.text = m2cFriend.Score.ToString();
+            PlayerInfoComponent.Instance.GetPlayerInfo().Score = m2cFriend.Score;
 
             //今天沒有贈送好友房钥匙
             if (!PlayerInfoComponent.Instance.GetPlayerInfo().IsGiveFriendKey)

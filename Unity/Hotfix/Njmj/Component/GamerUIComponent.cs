@@ -126,7 +126,7 @@ namespace ETHotfix
                 GameObject obj = CommonUtil.getGameObjByBundle("Item_Top_Card");
                 obj.GetComponent<Image>().sprite = CommonUtil.getSpriteByBundle("Image_Top_Card", "card_" + weight);
                 GameObject.Instantiate(obj, FaceObj.transform);
-              
+                
             }
             catch (Exception e)
             {

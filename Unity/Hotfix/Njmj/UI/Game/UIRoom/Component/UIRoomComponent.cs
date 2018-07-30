@@ -351,7 +351,7 @@ namespace ETHotfix
             players.SetActive(false);
             isTreasureFinish = true;
             treasure.SetActive(false);
-             faceCardObj.SetActive(false);
+            faceCardObj.SetActive(false);
             //剩余牌数
             restText.text = $"";
             GamerComponent gamerComponent = this.GetParent<UI>().GetComponent<GamerComponent>();
@@ -365,6 +365,11 @@ namespace ETHotfix
                 gamer?.GetComponent<HandCardsComponent>()?.ClearAll();
                 gamer?.GetComponent<GamerUIComponent>()?.zhuang.SetActive(false);
                 gamer?.RemoveComponent<HandCardsComponent>();
+            }
+
+            foreach (var face in FacePanel)
+            {
+                GameHelp.DeleteAllItem(face.gameObject);
             }
         }
 

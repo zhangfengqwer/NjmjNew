@@ -39,6 +39,7 @@ namespace ETHotfix
 			            response.Message = "已经进入房间";
 			            response.Error = ErrorCode.ERR_Common;
 			            Log.Error("玩家多次进入空闲房间");
+			            room.Remove(gamer.UserID);
                         reply(response);
                         return;
 			        }
