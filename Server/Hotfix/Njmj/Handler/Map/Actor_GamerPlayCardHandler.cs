@@ -131,7 +131,7 @@ namespace ETHotfix
 
                                 room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
                                 {
-                                    Type = 2,
+                                    Type = 3,
                                     Count = 0
                                 });
                             }
@@ -166,7 +166,7 @@ namespace ETHotfix
 
                             room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
                             {
-                                Type = 2,
+                                Type = 3,
                                 Count = 0
                             });
                         }
@@ -200,7 +200,7 @@ namespace ETHotfix
 
                                 room.GamerBroadcast(_gamer, new Actor_ShowAnimType()
                                 {
-                                    Type = 1,
+                                    Type = 2,
                                     Count = 0
                                 });
                             }

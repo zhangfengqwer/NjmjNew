@@ -704,7 +704,7 @@ namespace ETHotfix
         }
 
         /// <summary>
-        /// 显示四连风 1,四连风；2，fafen
+        /// 显示四连风 2,四连风；3，fafen
         /// </summary>
         /// <param name="type"></param>
         public async void ShowAnim(int type)
